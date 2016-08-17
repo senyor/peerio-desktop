@@ -8,13 +8,14 @@
     "pack": "build --dir",
     "dist": "build",
     "dist-win": "build --win --x64",
-    "dist-lin": "build -l"
+    "dist-lin": "build -l",
+    "build-tools": "brew install wine --with-win64 --without-x11 --devel && brew install mono && brew install gnu-tar libicns graphicsmagick xz"
   },
   "repository": {
     "type": "git",
     "url": "git+https://anri-asaturov@github.com/PeerioTechnologies/peerio-desktop.git"
   },
-  "author": "",
+  "author": "Anri Asaturov <anri82@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/PeerioTechnologies/peerio-desktop/issues"

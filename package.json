@@ -6,7 +6,9 @@
   "scripts": {
     "start": "NODE_ENV=development electron .",
     "pack": "build --dir",
-    "dist": "build"
+    "dist": "build",
+    "dist-win": "build --win --x64",
+    "dist-lin": "build -l"
   },
   "repository": {
     "type": "git",
@@ -32,6 +34,10 @@
     "appId": "com.peerio.peeriomac",
     "category": "public.app-category.productivity",
     "win": {
+      "target": ["squirrel"],
+      "title": "Peerio",
+      "version": "1.0.0",
+      "msi": true
     },
     "dmg": {
       "contents": [

@@ -26,17 +26,28 @@
     "eslint-config-peerio": "*"
   },
   "dependencies": {
-    "electron-json-storage": "2.0.0"
+    "electron-json-storage": "2.0.0",
+    "peerio-icebear": "git+https://github.com/PeerioTechnologies/peerio-icebear.git"
   },
   "build": {
     "appId": "com.peerio.peeriomac",
     "category": "public.app-category.productivity",
-    "win": {
-    },
+    "asar": false,
+    "win": {},
     "dmg": {
       "contents": [
-        { "x": 290, "y": 180, "type": "link", "path": "/Applications" },
-        { "x": 110, "y": 180, "type": "file", "path": "computed by electron-builder, ignored here" }
+        {
+          "x": 290,
+          "y": 180,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 110,
+          "y": 180,
+          "type": "file",
+          "path": "computed by electron-builder, ignored here"
+        }
       ]
     }
   }

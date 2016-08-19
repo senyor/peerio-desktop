@@ -6,13 +6,16 @@
   "scripts": {
     "start": "NODE_ENV=development electron .",
     "pack": "build --dir",
-    "dist": "build"
+    "dist": "build",
+    "dist-win": "build --win --x64",
+    "dist-lin": "build -l",
+    "build-tools": "brew install wine --with-win64 --without-x11 --devel && brew install mono && brew install gnu-tar libicns graphicsmagick xz"
   },
   "repository": {
     "type": "git",
     "url": "git+https://anri-asaturov@github.com/PeerioTechnologies/peerio-desktop.git"
   },
-  "author": "",
+  "author": "Anri Asaturov <anri82@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/PeerioTechnologies/peerio-desktop/issues"
@@ -26,28 +29,21 @@
     "eslint-config-peerio": "*"
   },
   "dependencies": {
-    "electron-json-storage": "2.0.0",
-    "peerio-icebear": "git+https://github.com/PeerioTechnologies/peerio-icebear.git"
+    "electron-json-storage": "2.0.0"
   },
   "build": {
     "appId": "com.peerio.peeriomac",
     "category": "public.app-category.productivity",
-    "asar": false,
-    "win": {},
+    "win": {
+      "target": ["squirrel"],
+      "title": "Peerio",
+      "version": "1.0.0",
+      "msi": true
+    },
     "dmg": {
       "contents": [
-        {
-          "x": 290,
-          "y": 180,
-          "type": "link",
-          "path": "/Applications"
-        },
-        {
-          "x": 110,
-          "y": 180,
-          "type": "file",
-          "path": "computed by electron-builder, ignored here"
-        }
+        { "x": 290, "y": 180, "type": "link", "path": "/Applications" },
+        { "x": 110, "y": 180, "type": "file", "path": "computed by electron-builder, ignored here" }
       ]
     }
   }

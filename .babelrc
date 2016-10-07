@@ -1,0 +1,28 @@
+{
+    "sourceRoot": "src",
+    "compact": "false",
+    "plugins": [
+        "transform-flow-strip-types",
+        "transform-inline-environment-variables",
+        "transform-react-jsx"
+    ],
+    "env": {
+        "production": {
+            "sourceMaps":false,
+            "comments":false,
+            "plugins": [
+                "transform-react-constant-elements",
+                "transform-react-inline-elements",
+                "transform-remove-debugger"
+            ]
+        },
+        "development": {
+            "sourceMaps":true,
+            "plugins": [
+                "transform-react-display-name",
+                "transform-react-jsx-self",
+                "transform-react-jsx-source"
+            ]
+        }
+    }
+}

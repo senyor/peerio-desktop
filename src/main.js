@@ -2,10 +2,13 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const storage = require('electron-json-storage');
 
+if (process.env.NODE_ENV === 'development') {
+    require('electron-reload')(__dirname/* , { electron: require('electron-prebuilt') }*/);
+}
 let mainWindow;
 
 app.on('ready', onAppReady);
-
+//
 // app.on('window-all-closed',);
 // this event is fired before all windows are closed
 // app.on('before-quit', event =>{} );
@@ -14,7 +17,7 @@ app.on('ready', onAppReady);
 // app.on('quit', (event, exitCode) =>{});
 
 function onAppReady() {
-    getSavedWindowState().then(state => {
+    getSavedWindowState().then((state) => {
         mainWindow = new BrowserWindow(Object.assign(state, { show: false }));
         mainWindow.loadURL(`file://${__dirname}/index.html`);
 
@@ -42,17 +45,19 @@ function onAppReady() {
 
 function saveWindowState(state) {
     console.log('Saving window state: ', state);
-    return new Promise(resolve => {
-        storage.set('windowState', state, error => {
-            if (error) console.error(error);
+    return new Promise((resolve) => {
+        storage.set('windowState', state, (error) => {
+            if (error) {
+                console.error(error);
+            }
             resolve();
         });
     });
 }
 
 function getSavedWindowState() {
-    console.log('Loading window state');
-    return new Promise(resolve => {
+    console.log('!Loading window state');
+    return new Promise((resolve) => {
         const winState = {
             width: 1024,
             height: 728
@@ -76,12 +81,14 @@ function enableDevModeOnWindow(win) {
     win.webContents.on('context-menu', (e, props) => {
         const { x, y } = props;
 
-        Menu.buildFromTemplate([{
-            label: 'Inspect element',
-            click() {
-                win.inspectElement(x, y);
+        Menu.buildFromTemplate([
+            {
+                label: 'Inspect element',
+                click() {
+                    win.inspectElement(x, y);
+                }
             }
-        }]).popup(win);
+        ]).popup(win);
     });
 }
 
@@ -89,14 +96,13 @@ function installExtensions(forceReinstall) {
     console.log('installing extensions');
     const devtron = require('devtron'); // eslint-disable-line import/no-extraneous-dependencies
 
-    if (forceReinstall) devtron.uninstall();
+    if (forceReinstall) {
+        devtron.uninstall();
+    }
     devtron.install();
 
     const installer = require('electron-devtools-installer'); // eslint-disable-line import/no-extraneous-dependencies
-    const extensions = [
-        'REACT_DEVELOPER_TOOLS',
-        'REACT_PERF'
-    ];
+    const extensions = ['REACT_DEVELOPER_TOOLS', 'REACT_PERF'];
     for (const name of extensions) {
         console.log('installing %s', name);
         try {

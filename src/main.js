@@ -2,7 +2,10 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const storage = require('electron-json-storage');
 
-if (process.env.NODE_ENV === 'development') {
+const isDevEnv = process.env.NODE_ENV !== 'production';
+
+if (isDevEnv) {
+    //eslint-disable-next-line
     require('electron-reload')(__dirname/* , { electron: require('electron-prebuilt') }*/);
 }
 let mainWindow;
@@ -26,8 +29,6 @@ function onAppReady() {
             mainWindow.focus();
         });
 
-        mainWindow.webContents.openDevTools();
-
         mainWindow.on('close', () => {
             const bounds = mainWindow.getBounds();
             saveWindowState(bounds);
@@ -37,7 +38,8 @@ function onAppReady() {
             mainWindow = null;
         });
 
-        if (process.env.NODE_ENV === 'development') {
+        if (isDevEnv) {
+            mainWindow.webContents.openDevTools();
             enableDevModeOnWindow(mainWindow);
         }
     });

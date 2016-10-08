@@ -1,0 +1,14 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/.*/test/
+<PROJECT_ROOT>/package.json
+
+[include]
+
+[libs]
+node_modules/iflow-bluebird/index.js.flow
+src/declarations/
+
+[options]
+all=false
+suppress_comment= \\(.\\|\n\\)*\\$FlowBug
+unsafe.enable_getters_and_setters=true

@@ -6,6 +6,6 @@ const Login = require('./components/Login');
 
 module.exports = (
   <Route path="/" component={App}>
-      <IndexRoute component={Login} />
+    <IndexRoute component={Login} />
   </Route>
 );

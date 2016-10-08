@@ -19,9 +19,7 @@
         "development": {
             "sourceMaps":true,
             "plugins": [
-                "transform-react-display-name",
-                "transform-react-jsx-self",
-                "transform-react-jsx-source"
+                "transform-react-display-name"
             ]
         }
     }

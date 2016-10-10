@@ -8,7 +8,7 @@
         "start": "npm-run-all compile --parallel babel:watch sass:watch electron",
         "compile": "npm-run-all cleanup copy-static babel sass",
         "cleanup": "rm -rf build && mkdir -p build",
-        "copy-static": "cp -f src/index.html build/index.html",
+        "copy-static": "cp -f src/index.html build/index.html && cp -R locales build",
         "babel": "babel src --out-dir build",
         "babel:watch": "npm run babel -- -w",
         "sass": "node-sass src/sass/main.scss build/style.css",
@@ -23,7 +23,8 @@
         "flow": "flow check",
         "flow:coverage": "for n in src/**/*.js?; do echo \"$n\"; flow coverage \"$n\"; done",
         "flow:suggest": "flow suggest src/**/*.js? | ./node_modules/diff2html-cli/bin/diff2html -i stdin",
-        "install-win-build-tools": "./scripts/install-build-tools.sh"
+        "install-win-build-tools": "./scripts/install-build-tools.sh",
+        "get-locales": "cp node_modules/peerio-copy/client_en.json locales/en.json && tx pull -af"
     },
     "repository": {
         "type": "git",
@@ -66,6 +67,8 @@
     },
     "dependencies": {
         "electron-json-storage": "2.0.1",
+        "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#dev",
+        "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
         "react": "15.3.2",
         "react-dom": "15.3.2",
         "react-router": "2.8.1"

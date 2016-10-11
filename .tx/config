@@ -2,7 +2,7 @@
 host = https://www.transifex.com
 
 [peerio.client]
-file_filter = locales/<lang>.json
-source_file = locales/en.json
+file_filter = static/locales/<lang>.json
+source_file = static/locales/en.json
 source_lang = en
 type = JSON

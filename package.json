@@ -8,7 +8,7 @@
         "start": "npm-run-all compile --parallel babel:watch sass:watch electron",
         "compile": "npm-run-all cleanup copy-static babel sass",
         "cleanup": "rm -rf build && mkdir -p build",
-        "copy-static": "cp -f src/index.html build/index.html && cp -R locales build",
+        "copy-static": "cp -f src/index.html build/index.html && cp -R static/* build",
         "babel": "babel src --out-dir build",
         "babel:watch": "npm run babel -- -w",
         "sass": "node-sass src/sass/main.scss build/style.css",
@@ -67,6 +67,7 @@
     },
     "dependencies": {
         "electron-json-storage": "2.0.1",
+        "normalize.css": "5.0.0",
         "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#dev",
         "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
         "react": "15.3.2",

@@ -24,7 +24,7 @@
         "flow:coverage": "for n in src/**/*.js?; do echo \"$n\"; flow coverage \"$n\"; done",
         "flow:suggest": "flow suggest src/**/*.js? | ./node_modules/diff2html-cli/bin/diff2html -i stdin",
         "install-win-build-tools": "./scripts/install-build-tools.sh",
-        "get-locales": "cp node_modules/peerio-copy/client_en.json locales/en.json && tx pull -af"
+        "get-locales": "./scripts/get-locales.sh"
     },
     "repository": {
         "type": "git",
@@ -102,7 +102,7 @@
         }
     },
     "directories": {
-        "buildResources": "build-assets"
+        "buildResources": "dist-assets"
     },
     "build": {
         "appId": "com.peerio.desktop",

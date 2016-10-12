@@ -24,7 +24,9 @@
         "flow:coverage": "for n in src/**/*.js?; do echo \"$n\"; flow coverage \"$n\"; done",
         "flow:suggest": "flow suggest src/**/*.js? | ./node_modules/diff2html-cli/bin/diff2html -i stdin",
         "install-win-build-tools": "./scripts/install-build-tools.sh",
-        "get-locales": "./scripts/get-locales.sh"
+        "get-locales": "./scripts/get-locales.sh",
+        "storybook": "start-storybook -p 6006 -c .storybook",
+        "build-storybook": "build-storybook"
     },
     "repository": {
         "type": "git",
@@ -37,9 +39,11 @@
     },
     "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
     "devDependencies": {
+        "@kadira/storybook": "^2.21.0",
         "babel-cli": "6.16.0",
         "babel-plugin-syntax-flow": "6.13.0",
         "babel-plugin-syntax-jsx": "6.13.0",
+        "babel-plugin-transform-es2015-modules-commonjs": "6.16.0",
         "babel-plugin-transform-flow-strip-types": "6.14.0",
         "babel-plugin-transform-inline-environment-variables": "6.8.0",
         "babel-plugin-transform-react-constant-elements": "6.9.1",
@@ -67,12 +71,16 @@
     },
     "dependencies": {
         "electron-json-storage": "2.0.1",
+        "immutability-helper": "2.0.0",
+        "material-design-icons": "3.0.1",
         "normalize.css": "5.0.0",
         "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#dev",
         "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
         "react": "15.3.2",
+        "react-addons-css-transition-group": "15.3.2",
         "react-dom": "15.3.2",
-        "react-router": "2.8.1"
+        "react-router": "2.8.1",
+        "react-toolbox": "1.2.2"
     },
     "config": {
         "ghooks": {

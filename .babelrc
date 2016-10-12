@@ -4,6 +4,7 @@
     "plugins": [
         "transform-flow-strip-types",
         "transform-inline-environment-variables",
+        "transform-es2015-modules-commonjs",
         "transform-react-jsx"
     ],
     "env": {

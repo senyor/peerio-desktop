@@ -1,8 +1,8 @@
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, Menu } = require('electron');
 const storage = require('electron-json-storage');
-
 const isDevEnv = process.env.NODE_ENV !== 'production';
+require('./update')(app.getVersion());
 
 if (isDevEnv) {
     //eslint-disable-next-line

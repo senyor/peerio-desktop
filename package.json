@@ -14,7 +14,7 @@
         "sass": "node-sass src/sass/main.scss build/style.css",
         "sass:watch": "npm run sass -- -w",
         "electron": "sleep 3 && electron .",
-        "dist": "NODE_ENV=production npm-run-all compile dist:mac dist:win dist:linux",
+        "dist": "NODE_ENV=production npm-run-all compile dist:mac",
         "dist:mac": "build --mac --x64",
         "dist:win": "build --win --x64",
         "dist:linux": "build -l",
@@ -73,6 +73,7 @@
         "electron-json-storage": "2.0.1",
         "immutability-helper": "2.0.0",
         "material-design-icons": "3.0.1",
+        "mobx": "2.6.0",
         "normalize.css": "5.0.0",
         "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#dev",
         "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
@@ -115,7 +116,6 @@
     },
     "build": {
         "appId": "com.peerio.desktop",
-        "category": "public.app-category.productivity",
         "files": [
             "build/**",
             "package.json",
@@ -132,20 +132,7 @@
             "msi": true
         },
         "mac": {
-            "target": [
-                "dmg"
-            ]
-        },
-        "dmg": {
-            "contents": [{
-                "x": 290,
-                "y": 180,
-                "type": "link",
-                "path": "/Applications"
-            }, {
-                "x": 110,
-                "y": 180
-            }]
+            "category": "public.app-category.productivity"
         },
         "linux": {
             "target": [

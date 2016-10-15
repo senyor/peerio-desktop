@@ -1,12 +1,19 @@
 [ignore]
-<PROJECT_ROOT>/node_modules/.*/test/
-<PROJECT_ROOT>/package.json
+<PROJECT_ROOT>/.idea/.*
+<PROJECT_ROOT>/.storybook/.*
+<PROJECT_ROOT>/.tx/.*
+<PROJECT_ROOT>/dist/.*
+<PROJECT_ROOT>/dist-assets/.*
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/scripts/.*
+<PROJECT_ROOT>/src/.*
+<PROJECT_ROOT>/static/.*
 
 [include]
+./build/.*
 
 [libs]
 node_modules/iflow-bluebird/index.js.flow
-src/declarations/
 
 [options]
 all=false

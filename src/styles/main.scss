@@ -1,10 +1,10 @@
-//@import '../node_modules/normalize.css/normalize.css';
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
 @import './fonts/OpenSans/opensans.css';
+@import './login';
 
 html {
   //box-sizing: border-box;
-  //overflow: hidden;
+  overflow: hidden;
 }
 
 //*,
@@ -13,17 +13,23 @@ html {
 //  box-sizing: inherit;
 //}
 
-body {
-  color: black;
+body,
+#root {
   background-color: white;
-//  display: flex;
-//  flex-direction: column;
+  color: black;
+  display: flex;
+  flex-direction: column;
   font-family: 'Open Sans', sans-serif;
- // font-size: 12px;
- // font-weight: 300;
-//  height: 100vh;
- // line-height: 1.5;
-//  margin: 0;
- // overflow: hidden;
-//  padding: 0;
+  // font-size: 12px;
+  // font-weight: 300;
+  height: 100vh;
+  // line-height: 1.5;
+  //  margin: 0;
+  overflow: hidden;
+
+  //  padding: 0;
+}
+
+[data-react-toolbox="layout"] {
+  height: 100vh;
 }

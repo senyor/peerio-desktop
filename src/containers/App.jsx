@@ -1,5 +1,5 @@
-// @flow
 const React = require('react');
+
 //eslint-disable-next-line
 class App extends React.Component {
     render() {

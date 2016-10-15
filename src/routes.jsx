@@ -1,4 +1,3 @@
-// @flow
 const React = require('react');
 const { Route, IndexRoute } = require('react-router');
 const App = require('./containers/App');

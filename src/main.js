@@ -1,6 +1,6 @@
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, Menu } = require('electron');
-const storage = require('electron-json-storage');
+const storage = require('./stores/tiny-db');
 const isDevEnv = process.env.NODE_ENV !== 'production';
 
 if (isDevEnv) {
@@ -19,7 +19,7 @@ app.on('ready', onAppReady);
 // app.on('quit', (event, exitCode) =>{});
 
 function onAppReady() {
-    getSavedWindowState().then((state) => {
+    getSavedWindowState().then(state => {
         mainWindow = new BrowserWindow(Object.assign(state, { show: false }));
         mainWindow.loadURL(`file://${__dirname}/index.html`);
 
@@ -45,37 +45,20 @@ function onAppReady() {
 }
 
 function saveWindowState(state) {
-    console.log('Saving window state: ', state);
-    return new Promise((resolve) => {
-        storage.set('windowState', state, (error) => {
-            if (error) {
-                console.error(error);
-            }
-            resolve();
-        });
-    });
+    storage.set('windowState', state);
 }
 
 function getSavedWindowState() {
-    console.log('!Loading window state');
-    return new Promise((resolve) => {
-        const winState = {
-            width: 1024,
-            height: 728
-        };
-        storage.get('windowState', (error, data) => {
-            if (error) {
-                console.error(error);
-                resolve(winState);
-            }
-            console.log('Got saved window state: ', data);
-            Object.assign(winState, data);
-            console.log('Merged windows state: ', data);
-            resolve(data);
-        });
-    });
+    const defaultState = {
+        width: 1024,
+        height: 728
+    };
+    return storage.get('windowState')
+        .then(data => Object.assign(defaultState, data))
+        .catch(() => defaultState);
 }
 
+// dev mode
 function enableDevModeOnWindow(win) {
     win.openDevTools();
     installExtensions();
@@ -93,6 +76,7 @@ function enableDevModeOnWindow(win) {
     });
 }
 
+// dev mode
 function installExtensions(forceReinstall) {
     console.log('installing extensions');
     const devtron = require('devtron'); // eslint-disable-line import/no-extraneous-dependencies

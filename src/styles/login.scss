@@ -25,12 +25,25 @@
 
   .rt-input-label,
   .rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label:not(.rt-input-fixed) {
-    color: white;
+    color: #c3eaff;
   }
 
   .rt-input-bar::before,
   .rt-input-bar::after {
     background-color: white;
+  }
+
+  .rt-dropdown-values {
+    background-color: #53aee0;
+    color: white;
+  }
+
+  .rt-dropdown-values > *:hover {
+    background-color: #83c7ec;
+  }
+
+  .rt-dropdown-values > *.rt-dropdown-selected {
+    color: inherit;
   }
 }
 
@@ -43,6 +56,8 @@
 
 .ice-gif {
   align-self: flex-end;
-  border-top-left-radius: 200px;
+  border-top-left-radius: 140px;
+  max-height: 200px;
+  max-width: 330px;
 }
 

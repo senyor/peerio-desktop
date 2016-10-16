@@ -89,6 +89,7 @@
     "writefile": "0.2.8"
   },
   "dependencies": {
+    "dexie": "2.0.0-beta.2",
     "electron-json-storage": "2.0.1",
     "immutability-helper": "2.0.0",
     "material-design-icons": "3.0.1",
@@ -107,8 +108,8 @@
   "config": {
     "ghooks": {
       "pre-push": "npm run validate",
-      "post-checkout": "npm update",
-      "post-merge": "npm update",
+      "post-checkout": "",
+      "post-merge": "",
       "commit-msg": "validate-commit-msg"
     },
     "commitizen": {

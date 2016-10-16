@@ -1,10 +1,11 @@
 const React = require('react');
 const { Component } = require('react');
-const { Layout, Panel, Input } = require('react-toolbox');
+const { Layout, Panel, Input, Dropdown } = require('react-toolbox');
 const { crypto } = require('../icebear'); // eslint-disable-line
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
+const languageStore = require('../stores/language-store');
 
 @observer class Login extends Component {
     @observable username: string ='';
@@ -23,8 +24,10 @@ const { t } = require('peerio-translator');
               <img role="presentation" className="login-logo" src="img/peerio-logo-white.png" />
               <Input type="text" className="login-input" label={t('username')}
                   value={this.username} onChange={this.usernameUpdater} />
-              <Input type="password" className="login-input" label={t('password')}
+              <Input type="password" className="login-input" label={t('passphrase')}
                   value={this.password} onChange={this.passwordUpdater} />
+              <Dropdown className="login-input" value={languageStore.language}
+                  source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
             </Panel>
             <Panel className="welcome">{randomGif()}</Panel>
           </Layout>

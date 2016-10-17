@@ -51,7 +51,19 @@
 .welcome {
   align-items: center;
   flex: 1 1 auto;
-  justify-content: flex-end;
+  justify-content: space-between;
+
+}
+.welcome-text {
+      padding:20px;
+     align-self: flex-start;
+}
+.welcome-title{
+    margin-bottom: 50px;
+    font-size: 170%;
+    color: #4a8fb5;
+    border-bottom: 1px dotted #4a8fb5;
+    padding-bottom: 10px;
 }
 
 .ice-gif {

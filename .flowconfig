@@ -7,7 +7,6 @@
 <PROJECT_ROOT>/node_modules/.*
 <PROJECT_ROOT>/scripts/.*
 <PROJECT_ROOT>/src/.*
-<PROJECT_ROOT>/static/.*
 .*/peerio-icebear/.*
 
 [include]

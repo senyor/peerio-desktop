@@ -21,7 +21,7 @@ const languageStore = require('../stores/language-store');
         return (
           <Layout>
             <Panel className="login">
-              <img role="presentation" className="login-logo" src="img/peerio-logo-white.png" />
+              <img role="presentation" className="login-logo" src="static/img/peerio-logo-white.png" />
               <Input type="text" className="login-input" label={t('username')}
                   value={this.username} onChange={this.usernameUpdater} />
               <Input type="password" className="login-input" label={t('passphrase')}
@@ -29,7 +29,19 @@ const languageStore = require('../stores/language-store');
               <Dropdown className="login-input" value={languageStore.language}
                   source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
             </Panel>
-            <Panel className="welcome">{randomGif()}</Panel>
+            <Panel className="welcome">
+              <div className="welcome-text">
+                <div className="welcome-title">Welcome to Peerio Alpha (codename Icebear)</div>
+                [changelog should magically appear here in the nearest future]<br /><br />
+                <div>
+                  In this release you can:<br /><br />
+                  * create an account<br />
+                  * login<br />
+                  * change interface language<br />
+                </div>
+              </div>
+              {randomGif()}
+            </Panel>
           </Layout>
     );
     }
@@ -38,7 +50,7 @@ const languageStore = require('../stores/language-store');
 let cachedGif = null;
 function randomGif() {
     return cachedGif || (cachedGif = (<img role="presentation" className="ice-gif"
-        src={`ice/${crypto.util.getRandomNumber(1, 25)}.gif`} />));
+        src={`static/ice/${crypto.util.getRandomNumber(1, 25)}.gif`} />));
 }
 
 

@@ -1,0 +1,63 @@
+@import './colors';
+
+.login {
+  background-color: $color-base-bg;
+  color: #f0f7fa;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  width: 374px;
+}
+
+.login-logo {
+  align-self: center;
+  margin: 34px 0 70px;
+  width: 300px;
+}
+
+.login-input {
+  align-self: center;
+  width: 276px;
+
+  .rt-input-inputElement {
+    border-bottom-color: #73b7dc;
+    color: white;
+  }
+
+  .rt-input-label,
+  .rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label:not(.rt-input-fixed) {
+    color: #c3eaff;
+  }
+
+  .rt-input-bar::before,
+  .rt-input-bar::after {
+    background-color: white;
+  }
+
+  .rt-dropdown-values {
+    background-color: #53aee0;
+    color: white;
+  }
+
+  .rt-dropdown-values > *:hover {
+    background-color: #83c7ec;
+  }
+
+  .rt-dropdown-values > *.rt-dropdown-selected {
+    color: inherit;
+  }
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+.welcome {
+  align-items: center;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+.ice-gif {
+  align-self: flex-end;
+  border-top-left-radius: 140px;
+  max-height: 200px;
+  max-width: 330px;
+}
+

@@ -1,6 +1,7 @@
 const { observable, action } = require('mobx');
 const { setLocale } = require('peerio-translator');
 const normalizeError = require('../icebear').errors.normalize; //eslint-disable-line
+const storage = require('./tiny-db');
 
 class LanguageStore {
     @observable language = '';
@@ -50,9 +51,14 @@ class LanguageStore {
             const translation = require(`../locales/${code.replace('-', '_')}.json`);
             setLocale(code, translation);
             this.language = code;
+            storage.set('language', code);
         } catch (err) {
             console.error(`Failed switch language to: ${code} ${normalizeError(err)}`);
         }
+    }
+
+    @action loadSavedLanguage() {
+        this.language = storage.get('language') || 'ru';
     }
 
 }

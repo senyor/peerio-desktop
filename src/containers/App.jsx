@@ -7,15 +7,15 @@ class App extends React.Component {
 
     constructor() {
         super();
-        languageStore.language = 'en';
-        this.languageChangeReaction = reaction(
+        languageStore.loadSavedLanguage();
+        this.onLanguageChange = reaction(
             () => languageStore.language,
             () => { this.forceUpdate(); }
         );
     }
 
     componentWillUnmount() {
-        this.languageChagneReaction();
+        this.onLanguageChange();
     }
 
     render() {

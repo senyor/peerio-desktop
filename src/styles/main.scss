@@ -1,10 +1,25 @@
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
 @import './static/fonts/OpenSans/opensans.css';
 @import './login';
+@import './signup';
+@import './misc';
 
 html {
+  font-family: 'Open Sans', sans-serif;
   //box-sizing: border-box;
   overflow: hidden;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: 'Open Sans';
+}
+
+a {
+  color: inherit;
 }
 
 //*,
@@ -23,7 +38,7 @@ body,
   // font-size: 12px;
   // font-weight: 300;
   height: 100vh;
-  // line-height: 1.5;
+  line-height: 1.5;
   //  margin: 0;
   overflow: hidden;
 

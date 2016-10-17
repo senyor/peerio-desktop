@@ -47,23 +47,52 @@
   }
 }
 
+.rt-button-neutral:not([disabled]).rt-button-flat,
+.rt-button-neutral:not([disabled]).rt-button-toggle {
+  color: white;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #4fa6d6;
+  }
+}
+
+.login-button {
+  align-self: center;
+  margin: 45px 0;
+  width: 276px;
+}
+
+.login-reg-button {
+  font-size: 85%;
+  font-weight: 600;
+  text-align: center;
+
+  > a {
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      color: #e0e0ff;
+    }
+  }
+}
 //----------------------------------------------------------------------------------------------------------------------
 .welcome {
   align-items: center;
   flex: 1 1 auto;
   justify-content: space-between;
+}
 
-}
 .welcome-text {
-      padding:20px;
-     align-self: flex-start;
+  align-self: flex-start;
+  padding: 20px;
 }
-.welcome-title{
-    margin-bottom: 50px;
-    font-size: 170%;
-    color: #4a8fb5;
-    border-bottom: 1px dotted #4a8fb5;
-    padding-bottom: 10px;
+
+.welcome-title {
+  color: #4a8fb5;
+  font-size: 170%;
+  margin-bottom: 50px;
 }
 
 .ice-gif {

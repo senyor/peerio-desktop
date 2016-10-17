@@ -38,7 +38,6 @@
         "fix_sqlite3_windows": "npm run fix_sqlite3_windows:1 && npm run fix_sqlite3_windows:2",
         "fix_sqlite3_windows:1": "pushd node_modules\\sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd",
         "fix_sqlite3_windows:2": "pushd node_modules\\sqlite3 && node-gyp rebuild --target=1.4.3 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd"
-
     },
     "repository": {
         "type": "git",
@@ -98,6 +97,7 @@
         "writefile": "0.2.8"
     },
     "dependencies": {
+        "classnames": "2.2.5",
         "immutability-helper": "2.0.0",
         "material-design-icons": "3.0.1",
         "mobx": "2.6.0",

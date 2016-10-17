@@ -1,28 +1,25 @@
-const storage = require('electron-json-storage');
+const electron = require('electron');
 const normalizeError = require('../icebear/errors').normalize; //eslint-disable-line
+const path = require('path');
+const fs = require('fs');
+
+const app = electron.app || electron.remote.app;
+const filePath = path.join(app.getPath('userData'), 'icebear_tinydb.json');
+const fileOpts = { encoding: 'utf8' };
+
+const settings = fs.existsSync(filePath) ? JSON.parse(fs.readFileSync(filePath, fileOpts)) : {};
 
 function get(key) {
-    return new Promise((resolve, reject) => {
-        storage.get(key, (err, data) => {
-            if (err) {
-                const error = normalizeError(err);
-                console.error(error);
-                reject(error);
-            } else resolve(data);
-        });
-    });
+    return settings[key];
 }
 
 function set(key, value) {
-    return new Promise((resolve, reject) => {
-        storage.set(key, value, err => {
-            if (err) {
-                const error = normalizeError(err);
-                console.error(error);
-                reject(error);
-            } else resolve();
-        });
-    });
+    settings[key] = value;
+    save();
+}
+
+function save() {
+    fs.writeFileSync(filePath, JSON.stringify(settings), fileOpts);
 }
 
 module.exports = { get, set };

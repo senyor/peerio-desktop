@@ -97,8 +97,6 @@
         "writefile": "0.2.8"
     },
     "dependencies": {
-        "dexie": "2.0.0-beta.2",
-        "electron-json-storage": "2.0.1",
         "immutability-helper": "2.0.0",
         "material-design-icons": "3.0.1",
         "mobx": "2.6.0",
@@ -133,7 +131,8 @@
                 "perf",
                 "test",
                 "chore",
-                "revert"
+                "revert",
+                "core"
             ],
             "warnOnFail": false,
             "maxSubjectLength": 120,

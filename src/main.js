@@ -19,29 +19,28 @@ app.on('ready', onAppReady);
 // app.on('quit', (event, exitCode) =>{});
 
 function onAppReady() {
-    getSavedWindowState().then(state => {
-        mainWindow = new BrowserWindow(Object.assign(state, { show: false }));
-        mainWindow.loadURL(`file://${__dirname}/index.html`);
+    const state = getSavedWindowState();
+    mainWindow = new BrowserWindow(Object.assign(state, { show: false }));
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-        mainWindow.once('ready-to-show', () => {
-            mainWindow.show();
-            mainWindow.focus();
-        });
-
-        mainWindow.on('close', () => {
-            const bounds = mainWindow.getBounds();
-            saveWindowState(bounds);
-        });
-
-        mainWindow.on('closed', () => {
-            mainWindow = null;
-        });
-
-        if (isDevEnv) {
-            mainWindow.webContents.openDevTools();
-            enableDevModeOnWindow(mainWindow);
-        }
+    mainWindow.once('ready-to-show', () => {
+        mainWindow.show();
+        mainWindow.focus();
     });
+
+    mainWindow.on('close', () => {
+        const bounds = mainWindow.getBounds();
+        saveWindowState(bounds);
+    });
+
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    });
+
+    if (isDevEnv) {
+        mainWindow.webContents.openDevTools();
+        enableDevModeOnWindow(mainWindow);
+    }
 }
 
 function saveWindowState(state) {
@@ -53,9 +52,8 @@ function getSavedWindowState() {
         width: 1024,
         height: 728
     };
-    return storage.get('windowState')
-        .then(data => Object.assign(defaultState, data))
-        .catch(() => defaultState);
+    const savedState = storage.get('windowState');
+    return Object.assign(defaultState, savedState || {});
 }
 
 // dev mode

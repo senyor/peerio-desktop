@@ -1,9 +1,9 @@
-'use strict';
-const {observable}  = require('mobx');
-const os       = require('os');
-const {autoUpdater, app} = require('electron');
+const { observable } = require('mobx');
+const os = require('os');
+const { autoUpdater, app } = require('electron');
+
 const isDevEnv = process.env.NODE_ENV !== 'production';
-const platform = os.platform() + '_' + os.arch();  // usually returns darwin_64
+const platform = `${os.platform()}_${os.arch()}`;  // usually returns darwin_64
 
 /**
  * Handles the electron autoUpdater API and exposes three observables:
@@ -12,15 +12,9 @@ const platform = os.platform() + '_' + os.arch();  // usually returns darwin_64
  * - errors (Array)
  */
 class Updater {
-    @observable updating:boolean           = false;
-    @observable hasUpdateAvailable:boolean = false;
-    @observable errors:array               = [];
-
-    /**
-     * constructor
-     */
-    constructor() {
-    }
+    @observable updating: boolean = false;
+    @observable hasUpdateAvailable: boolean = false;
+    @observable errors: array = [];
 
     /**
      * Set name and description for a new release.
@@ -29,10 +23,10 @@ class Updater {
      * @param {String} releaseMessage
      */
     setRelease(releaseName, releaseMessage) {
-        this.releaseName        = releaseName;
-        this.releaseMessage     = releaseMessage;
+        this.releaseName = releaseName;
+        this.releaseMessage = releaseMessage;
         this.hasUpdateAvailable = true;
-        this.updating           = false;
+        this.updating = false;
     }
 
     /**
@@ -51,11 +45,11 @@ class Updater {
      * @returns {Function}
      */
     get installFn() {
-        return this._installFn
+        return this._installFn;
     }
 }
 
-const updater        = new Updater();
+const updater = new Updater();
 const currentVersion = app.getVersion();
 
 app.on('ready', onAppReady);
@@ -82,10 +76,9 @@ function onAppReady() {
                 updater.updating = false;
                 updater.errors.push(err);
             })
-            .addListener('update-downloaded', (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+            .addListener('update-downloaded', (event, releaseNotes, releaseName) => {
                 updater.setRelease(releaseName, releaseNotes);
             });
-
     } else {
         // autoUpdater will crash if electron executable is not code-signed (e.g. in development)
         console.log('Simulating autoUpdate in dev mode.');
@@ -96,8 +89,8 @@ function onAppReady() {
         setTimeout(() => {
             console.log('Setting update to available.');
             updater.setRelease('0.0.0', 'bogus update');
-        }, 5000)
+        }, 5000);
     }
-};
+}
 
 module.exports = updater;

@@ -1,8 +1,10 @@
 /* eslint-disable global-require, import/newline-after-import */
-const { app, BrowserWindow, Menu } = require('electron');
-const storage = require('./stores/tiny-db');
+const {app, BrowserWindow, dialog, Menu} = require('electron');
+const storage  = require('./stores/tiny-db');
 const isDevEnv = process.env.NODE_ENV !== 'production';
-require('./update')(app.getVersion());
+const {autorun} = require('mobx');
+const updater  = require('./update');
+const {t} = require('peerio-translator');
 
 if (isDevEnv) {
     //eslint-disable-next-line
@@ -21,7 +23,7 @@ app.on('ready', onAppReady);
 
 function onAppReady() {
     const state = getSavedWindowState();
-    mainWindow = new BrowserWindow(Object.assign(state, { show: false }));
+    mainWindow  = new BrowserWindow(Object.assign(state, {show: false}));
     mainWindow.loadURL(`file://${__dirname}/index.html`);
 
     mainWindow.once('ready-to-show', () => {
@@ -42,6 +44,17 @@ function onAppReady() {
         mainWindow.webContents.openDevTools();
         enableDevModeOnWindow(mainWindow);
     }
+
+    autorun(() => {
+        if (updater.hasUpdateAvailable === false) return false;
+        const updateMessage = `${t('updateAvailable', {releaseName: updater.releaseName})}
+                                \n ${t('updateAvailableText', {releaseMessage: updater.releaseMessage})}`;
+        dialog.showMessageBox(mainWindow, {
+            type:    'info',
+            message: updateMessage,
+            buttons: []
+        }, updater.installFn)
+    })
 }
 
 function saveWindowState(state) {
@@ -50,10 +63,10 @@ function saveWindowState(state) {
 
 function getSavedWindowState() {
     const defaultState = {
-        width: 1024,
+        width:  1024,
         height: 728
     };
-    const savedState = storage.get('windowState');
+    const savedState   = storage.get('windowState');
     return Object.assign(defaultState, savedState || {});
 }
 
@@ -62,7 +75,7 @@ function enableDevModeOnWindow(win) {
     win.openDevTools();
     installExtensions();
     win.webContents.on('context-menu', (e, props) => {
-        const { x, y } = props;
+        const {x, y} = props;
 
         Menu.buildFromTemplate([
             {
@@ -85,7 +98,7 @@ function installExtensions(forceReinstall) {
     }
     devtron.install();
 
-    const installer = require('electron-devtools-installer'); // eslint-disable-line import/no-extraneous-dependencies
+    const installer  = require('electron-devtools-installer'); // eslint-disable-line import/no-extraneous-dependencies
     const extensions = ['REACT_DEVELOPER_TOOLS', 'REACT_PERF'];
     for (const name of extensions) {
         console.log('installing %s', name);

@@ -71,7 +71,7 @@
         "cz-conventional-changelog": "1.2.0",
         "devtron": "1.4.0",
         "diff2html-cli": "2.0.3",
-        "electron-builder": "7.13.1",
+        "electron-builder": "7.14.1",
         "electron-devtools-installer": "2.0.1",
         "electron-prebuilt": "1.4.3",
         "electron-reload": "1.0.2",

@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = require('react');
-const { Layout, Panel, Input, Dropdown, Button, ProgressBar } = require('react-toolbox');
+const { Layout, Panel, Button } = require('react-toolbox');
 const { pCrypto, config, User, errors } = require('../icebear'); // eslint-disable-line
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
@@ -9,15 +9,15 @@ const { Link } = require('react-router');
 const css = require('classnames');
 const languageStore = require('../stores/language-store');
 const FullCoverSpinner = require('../components/FullCoverSpinner');
+const { SignupProfile, ProfileStore } = require('./SignupProfile');
 
+//----------------------------------------------------------------------------------------------------------------
 @observer class Signup extends Component {
-    @observable username: string = undefined;
-    @observable email: string ='';
-    @observable firstName: string ='';
-    @observable lastName: string ='';
-    @observable expand: boolean = false;
     @observable busy: boolean = false;
-    @observable usernameError: string = '';
+    @observable expand: boolean = false; // starts expand animation
+    @observable step: number = 1; // 1 -profile, 2- passcode
+    profileStore = new ProfileStore();
+    // passcodeStore = new PasscodeStore();
 
     constructor() {
         super();
@@ -39,11 +39,12 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
     createAccount() {
         this.busy = true;
         const u = this.user = new User();
-        u.username = this.username;
-        u.email = this.email;
-        u.firstName = this.firstName;
-        u.lastName = this.lastName;
+        u.username = this.profileStore.username;
+        u.email = this.profileStore.email;
+        u.firstName = this.profileStore.firstName;
+        u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
+        u.passphrase = 'battery staples';
         u.createAccount()
             .then(() => alert('success'))
             .catch(err => {
@@ -51,6 +52,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                 alert(`Error: ${errors.normalize(err)}`);
             });
     }
+
     render() {
         return (
           <Layout>
@@ -58,22 +60,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
               <img role="presentation" className="signup-logo" src="static/img/peerio-logo-white.png" />
               <Panel className="signup-inner" scrollY>
                 <div className="signup-title">{t('signup')}</div>
-                <div className="signup-subtitle">{t('profile')}</div>
-                <Input type="text" className="login-input" label={t('username')} error={this.usernameError}
-                    value={this.username} onChange={this.usernameUpdater} />
-                <Input type="text" className="login-input" label={t('email')}
-                    value={this.email} onChange={this.emailUpdater} />
-                <Input type="text" className="login-input" label={t('firstName')}
-                    value={this.firstName} onChange={this.firstNameUpdater} />
-                <Input type="text" className="login-input" label={t('lastName')}
-                    value={this.lastName} onChange={this.lastNameUpdater} />
-
-                <Dropdown className="login-input" value={languageStore.language}
-                    source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
-
-                <div className="signup-terms">
-                  {t('signup_TOSRequestText', { tosLink: text => <a href={config.termsUrl}>{text}</a> })}
-                </div>
+                {this.step === 1 ? <SignupProfile store={this.profileStore} /> : 'Hello, Passcode'}
               </Panel>
               <div className="signup-nav">
                 <Link to="/"><Button flat label={t('button_exit')} /></Link>

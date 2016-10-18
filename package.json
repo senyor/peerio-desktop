@@ -111,7 +111,7 @@
         "mobx": "2.6.0",
         "mobx-react": "3.5.8",
         "normalize.css": "5.0.0",
-        "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#dev",
+        "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
         "peerio-icebear": "git+https://github.com/PeerioTechnologies/peerio-icebear.git",
         "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
         "react": "15.3.2",

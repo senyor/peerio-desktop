@@ -21,11 +21,10 @@
         "sass": "node-sass src/sass/main.scss build/style.css",
         "sass:watch": "npm run sass -- -w",
         "electron": "sleep 3 && electron .",
-        "dist": "NODE_ENV=production npm-run-all compile dist:mac",
         "style:compile": "node-sass src/styles/main.scss build/style.css",
         "style:watch": "npm run style:compile -- -w",
         "style:lint": "stylefmt -R src/styles && stylelint src/styles/**/*.*",
-        "dist": "NODE_ENV=production npm-run-all compile dist:mac dist:win dist:linux",
+        "dist": "NODE_ENV=production npm-run-all compile dist:mac",
         "dist:mac": "build --mac --x64",
         "dist:win": "build --win --x64",
         "dist:linux": "build -l",
@@ -171,7 +170,10 @@
             "msi": true
         },
         "mac": {
-            "category": "public.app-category.productivity"
+            "category": "public.app-category.productivity",
+            "target" : [
+                "zip"
+            ]
         },
         "linux": {
             "target": [

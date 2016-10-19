@@ -1,9 +1,4 @@
 {
-    "presets": [
-        "react",
-        "es2015",
-        "stage-1"
-    ],
     "sourceRoot": "src",
     "compact": "false",
     "plugins": [
@@ -20,7 +15,6 @@
             "sourceMaps":false,
             "comments":false,
             "plugins": [
-                "transform-decorators-legacy",
                 "transform-react-constant-elements",
                 "transform-react-inline-elements",
                 "transform-remove-debugger"

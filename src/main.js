@@ -2,9 +2,6 @@
 const { app, BrowserWindow, Menu, shell } = require('electron');
 const storage = require('./stores/tiny-db');
 const isDevEnv = process.env.NODE_ENV !== 'production';
-const { autorun } = require('mobx');
-const updater = require('./update');
-const { t } = require('peerio-translator');
 
 if (isDevEnv) {
     //eslint-disable-next-line
@@ -52,18 +49,6 @@ function onAppReady() {
         mainWindow.webContents.openDevTools();
         enableDevModeOnWindow(mainWindow);
     }
-
-    autorun(() => {
-        if (updater.hasUpdateAvailable === false) return false;
-        const updateMessage = `${t('updateAvailable', { releaseName: updater.releaseName })}
-                                \n ${t('updateAvailableText', { releaseMessage: updater.releaseMessage })}`;
-        dialog.showMessageBox(mainWindow, {
-            type: 'info',
-            message: updateMessage,
-            buttons: []
-        }, updater.installFn);
-        return true;
-    });
 }
 
 function saveWindowState(state) {

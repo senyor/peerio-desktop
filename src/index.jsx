@@ -1,16 +1,30 @@
 /* eslint-disable */
-window.location.hash='';
+window.location.hash = '';
 document.addEventListener('DOMContentLoaded', () => {
-    require.extensions['.css'] = function(m, f) {
+    require.extensions['.css'] = function (m, f) {
         m.exports = require(f.replace('.css', '.json'));
     };
-    const { socket, config } = require('./icebear');
+    const React   = require('react');
+    const {autorun} = require('mobx');
+    const {t} = require('peerio-translator');
+    const {socket, config} = require('./icebear');
+    const {render} = require('react-dom');
+    const {Router, hashHistory} = require('react-router');
+    const {dialog} = require('electron').remote;
+    const updater = require('./update');
+    const routes  = require('./routes');
+
     config.socketServerUrl = 'wss://hocuspocus.peerio.com';
     socket.start();
-    const React = require('react');
-    const { render } = require('react-dom');
-    const { Router, hashHistory } = require('react-router');
-    const routes = require('./routes');
 
-    render(<Router history={hashHistory} routes={routes} />, document.getElementById('root'));
+    autorun(() => {
+        console.log('autoron', updater)
+        if (updater.hasUpdateAvailable === false) return false;
+        const updateMessage = `${t('updateAvailable', {releaseName: updater.releaseName})}
+                                \n ${t('updateAvailableText', {releaseMessage: updater.releaseMessage})}`;
+        alert(updateMessage, updater.installFn);
+        return true;
+    });
+
+    render(<Router history={hashHistory} routes={routes}/>, document.getElementById('root'));
 });

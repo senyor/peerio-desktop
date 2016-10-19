@@ -1,6 +1,6 @@
 const { observable } = require('mobx');
 const os = require('os');
-const { autoUpdater, app } = require('electron');
+const { autoUpdater, app } = require('electron').remote;
 
 const isDevEnv = process.env.NODE_ENV !== 'production';
 const platform = `${os.platform()}_${os.arch()}`;  // usually returns darwin_64
@@ -52,45 +52,41 @@ class Updater {
 const updater = new Updater();
 const currentVersion = app.getVersion();
 
-app.on('ready', onAppReady);
+if (!isDevEnv) {
+    autoUpdater.setFeedURL(`https://leviosa.peerio.com/update/${platform}/${currentVersion}`);
+    autoUpdater.checkForUpdates();
+    updater.installFn = function installFn() {
+        autoUpdater.quitAndInstall();
+    };
 
-function onAppReady() {
-    if (!isDevEnv) {
-        autoUpdater.setFeedURL(`https://leviosa.peerio.com/update/${platform}/${currentVersion}`);
-        autoUpdater.checkForUpdates();
-        updater.installFn = function installFn() {
-            autoUpdater.quitAndInstall();
-        };
-
-        autoUpdater
-            .addListener('checking-for-update', () => {
-                updater.updating = true;
-            })
-            .addListener('update-available', () => {
-                updater.updating = true;
-            })
-            .addListener('update-not-available', () => {
-                updater.updating = false;
-            })
-            .addListener('error', (err) => {
-                updater.updating = false;
-                updater.errors.push(err);
-            })
-            .addListener('update-downloaded', (event, releaseNotes, releaseName) => {
-                updater.setRelease(releaseName, releaseNotes);
-            });
-    } else {
-        // autoUpdater will crash if electron executable is not code-signed (e.g. in development)
-        console.log('Simulating autoUpdate in dev mode.');
-        console.log(`https://leviosa.peerio.com/update/${platform}/${currentVersion}`);
-        updater.installFn = function installFn() {
-            console.log('Called the install function.');
-        };
-        setTimeout(() => {
-            console.log('Setting update to available.');
-            updater.setRelease('0.0.0', 'bogus update');
-        }, 5000);
-    }
+    autoUpdater
+        .addListener('checking-for-update', () => {
+            updater.updating = true;
+        })
+        .addListener('update-available', () => {
+            updater.updating = true;
+        })
+        .addListener('update-not-available', () => {
+            updater.updating = false;
+        })
+        .addListener('error', (err) => {
+            updater.updating = false;
+            updater.errors.push(err);
+        })
+        .addListener('update-downloaded', (event, releaseNotes, releaseName) => {
+            updater.setRelease(releaseName, releaseNotes);
+        });
+} else {
+    // autoUpdater will crash if electron executable is not code-signed (e.g. in development)
+    console.log('Simulating autoUpdate in dev mode.');
+    console.log(`https://leviosa.peerio.com/update/${platform}/${currentVersion}`);
+    updater.installFn = function installFn() {
+        console.log('Called the install function.');
+    };
+    setTimeout(() => {
+        console.log('Setting update to available.');
+        updater.setRelease('0.0.0', 'bogus update');
+    }, 5000);
 }
 
 module.exports = updater;

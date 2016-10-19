@@ -1,0 +1,68 @@
+@import './colors';
+
+.signup {
+  color: #add4e9;
+  justify-content: space-between;
+  transition: width .5s;
+
+  .profile {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  @extend .login;
+}
+
+.signup-logo {
+  margin-bottom: 30px;
+
+  @extend .login-logo;
+}
+
+.signup.expand {
+  width: 100vw;
+}
+
+.signup-inner {
+  align-self: center;
+  max-height: 580px;
+  width: 277px;
+}
+
+.signup-title {
+  font-size: 80%;
+}
+
+.signup-subtitle {
+  font-size: 140%;
+  margin-top: 5px;
+}
+
+.signup-nav {
+  align-self: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  margin-top: 30px;
+  width: 330px;
+}
+
+.signup-terms {
+  font-size: 86%;
+  font-weight: 200;
+
+  > a {
+    color: #bde4f9;
+    font-weight: 500;
+    text-decoration: underline;
+  }
+}
+
+.rt-input-error {
+  color: #ff938c;
+  font-weight: 600;
+}

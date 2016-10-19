@@ -9,7 +9,6 @@ var writeFile = require('writefile')
 const src = './node_modules/react-toolbox/lib/';
 const dst = './build/react-toolbox/';
 function getJSONFromCssModules(cssFileName, json) {
-    //cssFileName = cssFileName.substring(cssFileName.indexOf('/lib/')+4);
     writeFile(`${cssFileName.substring(0, cssFileName.length - 4)}.json`, JSON.stringify(json));
 }
 

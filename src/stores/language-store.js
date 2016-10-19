@@ -48,17 +48,18 @@ class LanguageStore {
 
     @action changeLanguage(code) {
         try {
-            const translation = require(`../locales/${code.replace('-', '_')}.json`);
+            const translation = require(`../static/locales/${code.replace('-', '_')}.json`);
             setLocale(code, translation);
             this.language = code;
             storage.set('language', code);
+            console.log(`Language changed to ${code}`);
         } catch (err) {
             console.error(`Failed switch language to: ${code} ${normalizeError(err)}`);
         }
     }
 
     @action loadSavedLanguage() {
-        this.language = storage.get('language') || 'ru';
+        this.changeLanguage(storage.get('language') || 'en');
     }
 
 }

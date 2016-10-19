@@ -10,7 +10,7 @@
         "compile": "npm-run-all cleanup static:copy code:compile icebear:compile style:compile react-toolbox",
         "cleanup": "rm -rf build && mkdir -p build",
         "electron:run": "sleep 3 && electron .",
-        "static:copy": "cp -f src/index.html build/index.html && cp -R static/* build",
+        "static:copy": "cp -f src/index.html build/index.html && cp -R src/static build",
         "code:compile": "babel src --out-dir build",
         "icebear:compile": "babel node_modules/peerio-icebear/src --out-dir build/icebear",
         "code:watch": "npm run code:compile -- -w",
@@ -29,7 +29,7 @@
         "dist:mac": "build --mac --x64",
         "dist:win": "build --win --x64",
         "dist:linux": "build -l",
-        "validate": "npm-run-all code:lint code:flow style:lint",
+        "validate": "npm-run-all code:lint style:lint",
         "install-win-build-tools": "./scripts/install-build-tools.sh",
         "get-locales": "./scripts/get-locales.sh",
         "storybook": "start-storybook -p 6006 -c .storybook",
@@ -42,7 +42,6 @@
         "fix_sqlite3_windows": "npm run fix_sqlite3_windows:1 && npm run fix_sqlite3_windows:2",
         "fix_sqlite3_windows:1": "pushd node_modules\\sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd",
         "fix_sqlite3_windows:2": "pushd node_modules\\sqlite3 && node-gyp rebuild --target=1.4.3 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd"
-
     },
     "repository": {
         "type": "git",
@@ -80,7 +79,7 @@
         "cz-conventional-changelog": "1.2.0",
         "devtron": "1.4.0",
         "diff2html-cli": "2.0.3",
-        "electron-builder": "7.13.1",
+        "electron-builder": "7.14.1",
         "electron-devtools-installer": "2.0.1",
         "electron-prebuilt": "1.4.3",
         "electron-reload": "1.0.2",
@@ -106,6 +105,7 @@
         "writefile": "0.2.8"
     },
     "dependencies": {
+        "classnames": "2.2.5",
         "immutability-helper": "2.0.0",
         "material-design-icons": "3.0.1",
         "mobx": "2.6.0",

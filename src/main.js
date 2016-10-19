@@ -1,5 +1,5 @@
 /* eslint-disable global-require, import/newline-after-import */
-const { app, BrowserWindow, dialog, Menu } = require('electron');
+const { app, BrowserWindow, Menu, shell } = require('electron');
 const storage = require('./stores/tiny-db');
 const isDevEnv = process.env.NODE_ENV !== 'production';
 const { autorun } = require('mobx');
@@ -8,7 +8,7 @@ const { t } = require('peerio-translator');
 
 if (isDevEnv) {
     //eslint-disable-next-line
-    require('electron-reload')(__dirname/* , { electron: require('electron-prebuilt') }*/);
+    require('electron-reload')(__dirname , { electron: require('electron-prebuilt') });
 }
 let mainWindow;
 
@@ -38,6 +38,14 @@ function onAppReady() {
 
     mainWindow.on('closed', () => {
         mainWindow = null;
+    });
+
+    // make all attempts to navigate browser window open in external browser
+    mainWindow.webContents.on('will-navigate', (e, url) => {
+        if (url !== mainWindow.webContents.getURL()) {
+            e.preventDefault();
+            shell.openExternal(url);
+        }
     });
 
     if (isDevEnv) {

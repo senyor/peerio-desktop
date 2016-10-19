@@ -20,9 +20,12 @@
         "import/no-dynamic-require": 0,
         "react/jsx-indent": [2, 2],
         "react/prop-types": 0,
-        "react/sort-comp": 0
+        "react/sort-comp": 0,
+        "no-alert":0
     },
     "globals":{
-        "document": false
+        "document": false,
+        "alert": false,
+        "confirm": false
     }
 }

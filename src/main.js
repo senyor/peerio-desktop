@@ -45,8 +45,9 @@ function onAppReady() {
         }
     });
 
+
+    mainWindow.webContents.openDevTools();
     if (isDevEnv) {
-        mainWindow.webContents.openDevTools();
         enableDevModeOnWindow(mainWindow);
     }
 }

@@ -1,6 +1,6 @@
 const { observable } = require('mobx');
+const { autoUpdater, app } = require('electron').remote; //renderer context
 const os = require('os');
-const { autoUpdater, app } = require('electron').remote;
 
 const isDevEnv = process.env.NODE_ENV !== 'production';
 const platform = `${os.platform()}_${os.arch()}`;  // usually returns darwin_64

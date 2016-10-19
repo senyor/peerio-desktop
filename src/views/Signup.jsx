@@ -1,7 +1,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { Layout, Panel, Button } = require('react-toolbox');
-const { pCrypto, config, User, errors } = require('../icebear'); // eslint-disable-line
+const {pCrypto, config, User, errors} = require('../icebear'); // eslint-disable-line
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -21,17 +21,28 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
 
     constructor() {
         super();
-        this.usernameUpdater = (val: string) => { this.username = val; };
-        this.emailUpdater = (val: string) => { this.email = val; };
-        this.firstNameUpdater = (val: string) => { this.firstName = val; };
-        this.lastNameUpdater = (val: string) => { this.lastName = val; };
+        this.usernameUpdater = (val: string) => {
+            this.username = val;
+        };
+        this.emailUpdater = (val: string) => {
+            this.email = val;
+        };
+        this.firstNameUpdater = (val: string) => {
+            this.firstName = val;
+        };
+        this.lastNameUpdater = (val: string) => {
+            this.lastName = val;
+        };
         this.createAccount = this.createAccount.bind(this);
         autorunAsync(() => {
             if (this.username === undefined) return;
             User.validateUsername(this.username)
-                .then(res => { this.usernameError = res ? '' : t('usernameNotAvailable'); });
+                .then(res => {
+                    this.usernameError = res ? '' : t('usernameNotAvailable');
+                });
         }, 100);
     }
+
     componentDidMount() {
         this.expand = true;
     }
@@ -55,20 +66,20 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
 
     render() {
         return (
-          <Layout>
-            <Panel className={css('signup', { expand: this.expand })} >
-              <img role="presentation" className="signup-logo" src="static/img/peerio-logo-white.png" />
-              <Panel className="signup-inner" scrollY>
-                <div className="signup-title">{t('signup')}</div>
-                {this.step === 1 ? <SignupProfile store={this.profileStore} /> : 'Hello, Passcode'}
-              </Panel>
-              <div className="signup-nav">
-                <Link to="/"><Button flat label={t('button_exit')} /></Link>
-                <Button flat label={t('next')} onClick={this.createAccount} />
-              </div>
-              <FullCoverSpinner show={this.busy} />
-            </Panel>
-          </Layout>
+            <Layout>
+                <Panel className={css('signup', { expand: this.expand })}>
+                    <img role="presentation" className="signup-logo" src="static/img/peerio-logo-white.png" />
+                    <Panel className="signup-inner" scrollY>
+                        <div className="signup-title">{t('signup')}</div>
+                        {this.step === 1 ? <SignupProfile store={this.profileStore} /> : 'Hello, Passcode'}
+                    </Panel>
+                    <div className="signup-nav">
+                        <Link to="/"><Button flat label={t('button_exit')} /></Link>
+                        <Button flat label={t('next')} onClick={this.createAccount} />
+                    </div>
+                    <FullCoverSpinner show={this.busy} />
+                </Panel>
+            </Layout>
         );
     }
 }

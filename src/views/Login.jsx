@@ -1,24 +1,24 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
-const React            = require('react');
-const {Component} = require('react');
-const {Layout, Panel, Input, Dropdown, Button} = require('react-toolbox');
+const React = require('react');
+const { Component } = require('react');
+const { Layout, Panel, Input, Dropdown, Button } = require('react-toolbox');
 const {pCrypto, config} = require('../icebear'); // eslint-disable-line
-const {observable} = require('mobx');
-const {observer} = require('mobx-react');
-const {t} = require('peerio-translator');
-const languageStore    = require('../stores/language-store');
-const {Link} = require('react-router');
+const { observable } = require('mobx');
+const { observer } = require('mobx-react');
+const { t } = require('peerio-translator');
+const languageStore = require('../stores/language-store');
+const { Link } = require('react-router');
 
 @observer class Login extends Component {
-    @observable username:string = '';
-    @observable password:string = '';
+    @observable username: string = '';
+    @observable password: string = '';
 
     constructor() {
         super();
-        this.usernameUpdater = (val:string) => {
+        this.usernameUpdater = (val: string) => {
             this.username = val;
         };
-        this.passwordUpdater = (val:string) => {
+        this.passwordUpdater = (val: string) => {
             this.password = val;
         };
     }
@@ -31,15 +31,15 @@ const {Link} = require('react-router');
         return (
             <Layout>
                 <Panel className="login">
-                    <img role="presentation" className="login-logo" src="static/img/peerio-logo-white.png"/>
+                    <img role="presentation" className="login-logo" src="static/img/peerio-logo-white.png" />
                     <Input type="text" className="login-input" label={t('username')}
-                           value={this.username} onChange={this.usernameUpdater}/>
+                           value={this.username} onChange={this.usernameUpdater} />
                     <Input type="password" className="login-input" label={t('passphrase')}
-                           value={this.password} onChange={this.passwordUpdater}/>
+                           value={this.password} onChange={this.passwordUpdater} />
                     <Dropdown className="login-input" value={languageStore.language}
                               source={languageStore.translationLangsDataSource}
-                              onChange={languageStore.changeLanguage}/>
-                    <Button className="login-button rt-light-theme" label={t('login')} flat/>
+                              onChange={languageStore.changeLanguage} />
+                    <Button className="login-button rt-light-theme" label={t('login')} flat />
                     <div className="login-reg-button">
                         <a href={config.termsUrl}>{t('terms')}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
                         <Link to="/signup">{t('signup')}</Link>
@@ -70,7 +70,7 @@ const {Link} = require('react-router');
 let cachedGif = null;
 function randomGif() {
     return cachedGif || (cachedGif = (<img role="presentation" className="ice-gif"
-                                           src={`static/ice/${pCrypto.util.getRandomNumber(1, 25)}.gif`}/>));
+                                           src={`static/ice/${pCrypto.util.getRandomNumber(1, 25)}.gif`} />));
 }
 
 

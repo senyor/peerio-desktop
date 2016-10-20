@@ -1,7 +1,8 @@
 const React = require('react');
+const AutoUpdateDialog = require('../components/AutoUpdateDialog');
 const languageStore = require('../stores/language-store');
 const { reaction } = require('mobx');
-const { setLocale } = require('../icebear');  // eslint-disable-line
+const {setLocale} = require('../icebear');  // eslint-disable-line
 
 class App extends React.Component {
 
@@ -10,7 +11,9 @@ class App extends React.Component {
         languageStore.loadSavedLanguage();
         this.onLanguageChange = reaction(
             () => languageStore.language,
-            () => { this.forceUpdate(); }
+            () => {
+                this.forceUpdate();
+            }
         );
     }
 
@@ -19,7 +22,12 @@ class App extends React.Component {
     }
 
     render() {
-        return (<div>{this.props.children}</div>);
+        return (
+            <div>
+                {this.props.children}
+                <AutoUpdateDialog />
+            </div>
+        );
     }
 }
 

@@ -3,7 +3,6 @@ const { app, BrowserWindow, Menu, shell } = require('electron');
 const storage = require('./stores/tiny-db');
 const isDevEnv = process.env.NODE_ENV !== 'production';
 
-
 if (isDevEnv) {
     //eslint-disable-next-line
     require('electron-reload')(__dirname , { electron: require('electron-prebuilt') });
@@ -46,8 +45,9 @@ function onAppReady() {
         }
     });
 
+
+    mainWindow.webContents.openDevTools();
     if (isDevEnv) {
-        mainWindow.webContents.openDevTools();
         enableDevModeOnWindow(mainWindow);
     }
 }

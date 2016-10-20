@@ -44,7 +44,7 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
         u.firstName = this.profileStore.firstName;
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
-        u.passphrase = 'battery staples';
+        u.passphrase = 'icebear';
         u.createAccount()
             .then(() => alert('success'))
             .catch(err => {
@@ -55,20 +55,20 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
 
     render() {
         return (
-          <Layout>
-            <Panel className={css('signup', { expand: this.expand })} >
-              <img role="presentation" className="signup-logo" src="static/img/peerio-logo-white.png" />
-              <Panel className="signup-inner" scrollY>
-                <div className="signup-title">{t('signup')}</div>
-                {this.step === 1 ? <SignupProfile store={this.profileStore} /> : 'Hello, Passcode'}
-              </Panel>
-              <div className="signup-nav">
-                <Link to="/"><Button flat label={t('button_exit')} /></Link>
-                <Button flat label={t('next')} onClick={this.createAccount} />
-              </div>
-              <FullCoverSpinner show={this.busy} />
-            </Panel>
-          </Layout>
+            <Layout>
+                <Panel className={css('signup', { expand: this.expand })} >
+                    <img role="presentation" className="signup-logo" src="static/img/peerio-logo-white.png" />
+                    <Panel className="signup-inner" scrollY>
+                        <div className="signup-title">{t('signup')}</div>
+                        {this.step === 1 ? <SignupProfile store={this.profileStore} /> : 'Hello, Passcode'}
+                    </Panel>
+                    <div className="signup-nav">
+                        <Link to="/"><Button flat label={t('button_exit')} /></Link>
+                        <Button flat label={t('next')} onClick={this.createAccount} />
+                    </div>
+                    <FullCoverSpinner show={this.busy} />
+                </Panel>
+            </Layout>
         );
     }
 }

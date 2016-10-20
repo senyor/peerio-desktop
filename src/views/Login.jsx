@@ -24,36 +24,36 @@ const { Link } = require('react-router');
     }
     render() {
         return (
-          <Layout>
-            <Panel className="login">
-              <img role="presentation" className="login-logo" src="static/img/peerio-logo-white.png" />
-              <Input type="text" className="login-input" label={t('username')}
-                  value={this.username} onChange={this.usernameUpdater} />
-              <Input type="password" className="login-input" label={t('passphrase')}
-                  value={this.password} onChange={this.passwordUpdater} />
-              <Dropdown className="login-input" value={languageStore.language}
-                  source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
-              <Button className="login-button rt-light-theme" label={t('login')} flat />
-              <div className="login-reg-button">
-                <a href={config.termsUrl}>{t('terms')}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                <Link to="/signup">{t('signup')}</Link>
-              </div>
-            </Panel>
-            <Panel className="welcome">
-              <div className="welcome-text">
-                <div className="welcome-title">Welcome to Peerio Alpha (codename Icebear)</div>
-                [changelog should magically appear here in the nearest future]<br /><br />
-                <div>
-                  In this release you can:<br /><br />
-                  * create an account<br />
-                  * login<br />
-                  * change interface language<br />
-                  * eat icecream
-                </div>
-              </div>
-              {randomGif()}
-            </Panel>
-          </Layout>
+            <Layout>
+                <Panel className="login">
+                    <img role="presentation" className="login-logo" src="static/img/peerio-logo-white.png" />
+                    <Input type="text" className="login-input" label={t('username')}
+                        value={this.username} onChange={this.usernameUpdater} />
+                    <Input type="password" className="login-input" label={t('passphrase')}
+                        value={this.password} onChange={this.passwordUpdater} />
+                    <Dropdown className="login-input" value={languageStore.language}
+                        source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
+                    <Button className="login-button rt-light-theme" label={t('login')} flat />
+                    <div className="login-reg-button">
+                        <a href={config.termsUrl}>{t('terms')}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                        <Link to="/signup">{t('signup')}</Link>
+                    </div>
+                </Panel>
+                <Panel className="welcome">
+                    <div className="welcome-text">
+                        <div className="welcome-title">Welcome to Peerio Alpha (codename Icebear)</div>
+                        [changelog should magically appear here in the nearest future]<br /><br />
+                        <div>
+                            In this release you can:<br /><br />
+                            * create an account<br />
+                            * login<br />
+                            * change interface language<br />
+                            * eat icecream
+                        </div>
+                    </div>
+                    {randomGif()}
+                </Panel>
+            </Layout>
         );
     }
 }

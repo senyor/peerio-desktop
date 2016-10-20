@@ -3,9 +3,9 @@ const { ProgressBar } = require('react-toolbox');
 
 function FullCoverSpinner(props) {
     return props.show ? (
-      <div className="full-cover-spinner" >
-        <ProgressBar className="self-center" type="circular" mode="indeterminate" multicolor />
-      </div>
+        <div className="full-cover-spinner" >
+            <ProgressBar className="self-center" type="circular" mode="indeterminate" multicolor />
+        </div>
     ) : null;
 }
 

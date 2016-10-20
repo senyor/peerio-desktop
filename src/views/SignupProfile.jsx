@@ -6,6 +6,7 @@ const { Input, Dropdown } = require('react-toolbox');
 const { pCrypto, config, User, errors } = require('../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const languageStore = require('../stores/language-store');
+const T = require('../components/T');
 
 class ProfileStore {
     @observable username: string = undefined;
@@ -14,7 +15,7 @@ class ProfileStore {
     @observable lastName: string ='';
     @observable usernameError: string = '';
 }
-
+const a = 4;
 @observer class SignupProfile extends Component {
     constructor() {
         super();
@@ -32,24 +33,23 @@ class ProfileStore {
     render() {
         const s = this.props.store;
         return (
-          <div className="profile">
-            <div className="signup-subtitle">{t('profile')}</div>
-            <Input type="text" className="login-input" label={t('username')} error={s.usernameError}
-                value={s.username} onChange={this.usernameUpdater} />
-            <Input type="text" className="login-input" label={t('email')}
-                value={s.email} onChange={this.emailUpdater} />
-            <Input type="text" className="login-input" label={t('firstName')}
-                value={s.firstName} onChange={this.firstNameUpdater} />
-            <Input type="text" className="login-input" label={t('lastName')}
-                value={s.lastName} onChange={this.lastNameUpdater} />
+            <div className="profile">
+                <div className="signup-subtitle">{t('profile')}</div>
+                <Input type="text" className="login-input" label={t('username')} error={s.usernameError}
+                    value={s.username} onChange={this.usernameUpdater} />
+                <Input type="text" className="login-input" label={t('email')}
+                    value={s.email} onChange={this.emailUpdater} />
+                <Input type="text" className="login-input" label={t('firstName')}
+                    value={s.firstName} onChange={this.firstNameUpdater} />
+                <Input type="text" className="login-input" label={t('lastName')}
+                    value={s.lastName} onChange={this.lastNameUpdater} />
 
-            <Dropdown className="login-input" value={languageStore.language}
-                source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
-
-            <div className="signup-terms">
-              {t('signup_TOSRequestText', { tosLink: text => <a href={config.termsUrl}>{text}</a> })}
+                <Dropdown className="login-input" value={languageStore.language}
+                    source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
+                <T k="signup_TOSRequestText" className="signup-terms">
+                    {{ tosLink: text => <a href={config.termsUrl}>{text}</a> }}
+                </T>
             </div>
-          </div>
         );
     }
 }

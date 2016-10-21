@@ -9,20 +9,20 @@ const languageStore = require('../stores/language-store');
 const T = require('../components/T');
 
 class ProfileStore {
-    @observable username: string = undefined;
-    @observable email: string ='';
-    @observable firstName: string ='';
-    @observable lastName: string ='';
-    @observable usernameError: string = '';
+    @observable username = undefined;
+    @observable email ='';
+    @observable firstName ='';
+    @observable lastName ='';
+    @observable usernameError = '';
 }
 const a = 4;
 @observer class SignupProfile extends Component {
     constructor() {
         super();
-        this.usernameUpdater = (val: string) => { this.props.store.username = val; };
-        this.emailUpdater = (val: string) => { this.props.store.email = val; };
-        this.firstNameUpdater = (val: string) => { this.props.store.firstName = val; };
-        this.lastNameUpdater = (val: string) => { this.props.store.lastName = val; };
+        this.usernameUpdater = (val) => { this.props.store.username = val; };
+        this.emailUpdater = (val) => { this.props.store.email = val; };
+        this.firstNameUpdater = (val) => { this.props.store.firstName = val; };
+        this.lastNameUpdater = (val) => { this.props.store.lastName = val; };
         // reaction validates username over server api
         autorunAsync(() => {
             if (this.props.store.username === undefined) return;

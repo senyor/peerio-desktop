@@ -3,7 +3,6 @@
     "compact": "false",
     "plugins": [
         "transform-decorators-legacy",
-        "transform-flow-strip-types",
         "transform-class-properties",
         "transform-inline-environment-variables",
         "transform-es2015-modules-commonjs",

@@ -13,18 +13,18 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
 
 //----------------------------------------------------------------------------------------------------------------
 @observer class Signup extends Component {
-    @observable busy: boolean = false;
-    @observable expand: boolean = false; // starts expand animation
-    @observable step: number = 1; // 1 -profile, 2- passcode
+    @observable busy = false;
+    @observable expand = false; // starts expand animation
+    @observable step = 1; // 1 -profile, 2- passcode
     profileStore = new ProfileStore();
     // passcodeStore = new PasscodeStore();
 
     constructor() {
         super();
-        this.usernameUpdater = (val: string) => { this.username = val; };
-        this.emailUpdater = (val: string) => { this.email = val; };
-        this.firstNameUpdater = (val: string) => { this.firstName = val; };
-        this.lastNameUpdater = (val: string) => { this.lastName = val; };
+        this.usernameUpdater = (val) => { this.username = val; };
+        this.emailUpdater = (val) => { this.email = val; };
+        this.firstNameUpdater = (val) => { this.firstName = val; };
+        this.lastNameUpdater = (val) => { this.lastName = val; };
         this.createAccount = this.createAccount.bind(this);
         autorunAsync(() => {
             if (this.username === undefined) return;

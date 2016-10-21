@@ -10,13 +10,13 @@ const languageStore = require('../stores/language-store');
 const { Link } = require('react-router');
 
 @observer class Login extends Component {
-    @observable username: string ='';
-    @observable password: string ='';
+    @observable username ='';
+    @observable password ='';
 
     constructor() {
         super();
-        this.usernameUpdater = (val: string) => { this.username = val; };
-        this.passwordUpdater = (val: string) => { this.password = val; };
+        this.usernameUpdater = (val) => { this.username = val; };
+        this.passwordUpdater = (val) => { this.password = val; };
     }
 
     navigateToSignup() {

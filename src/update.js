@@ -12,9 +12,9 @@ const platform = `${os.platform()}_${os.arch()}`;  // usually returns darwin_64
  * - errors (Array)
  */
 class Updater {
-    @observable updating: boolean = false;
-    @observable hasUpdateAvailable: boolean = false;
-    @observable errors: array = [];
+    @observable updating = false;
+    @observable hasUpdateAvailable = false;
+    @observable errors = [];
 
     /**
      * Set name and description for a new release.

@@ -1,6 +1,7 @@
 const { observable } = require('mobx');
 const { autoUpdater, app } = require('electron').remote; // renderer context
 const os = require('os');
+const config = require('./config');
 
 const isDevEnv = process.env.NODE_ENV !== 'production';
 const platform = `${os.platform()}_${os.arch()}`;  // usually returns darwin_64
@@ -53,7 +54,8 @@ const updater = new Updater();
 const currentVersion = app.getVersion();
 
 if (!isDevEnv) {
-    autoUpdater.setFeedURL(`https://leviosa.peerio.com/update/${platform}/${currentVersion}`);
+    // todo: move to config file
+    autoUpdater.setFeedURL(`${config.updateUrl}/${platform}/${currentVersion}`);
     autoUpdater.checkForUpdates();
     updater.installFn = function installFn() {
         autoUpdater.quitAndInstall();

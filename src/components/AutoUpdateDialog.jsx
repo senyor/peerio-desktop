@@ -1,5 +1,5 @@
 const React = require('react');
-const updater = require('../update');
+const updater = require('../updater');
 const { t } = require('peerio-translator');
 const { Dialog } = require('react-toolbox');
 const { observer } = require('mobx-react');

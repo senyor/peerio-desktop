@@ -1,94 +1,75 @@
 const { observable } = require('mobx');
-const { autoUpdater, app } = require('electron').remote; // renderer context
+const { autoUpdater } = require('electron').remote;
 const os = require('os');
 const config = require('./config');
+const { normalize } = require('./icebear').errors; // eslint-disable-line
 
 const isDevEnv = process.env.NODE_ENV !== 'production';
 const platform = `${os.platform()}_${os.arch()}`;  // usually returns darwin_64
 
+// todo: release notes not available on windows, so maybe create alternative way to retrieve them
+
 /**
- * Handles the electron autoUpdater API and exposes three observables:
- * - hasUpdateAvailable (Boolean)
- * - updating (Boolean)
- * - errors (Array)
+ * Handles the electron autoUpdater API
  */
 class Updater {
-    @observable updating = false;
-    @observable hasUpdateAvailable = false;
-    @observable errors = [];
+    // it's a singleton so not static, more convenient export
+    states = { IDLE: 0, MONITORING: 1, DOWNLOADING: 2, READY_TO_INSTALL: 3, ERROR: 4 };
 
-    /**
-     * Set name and description for a new release.
-     *
-     * @param {String} releaseName --semver
-     * @param {String} releaseMessage
-     */
-    setRelease(releaseName, releaseMessage) {
+    @observable state = this.states.IDLE;
+    @observable error;
+
+    _updateUrl = `${config.updateUrl}/${platform}/${config.currentVersion}`;
+
+    _setRelease(releaseName) {
         this.releaseName = releaseName;
-        this.releaseMessage = releaseMessage;
-        this.hasUpdateAvailable = true;
-        this.updating = false;
+        this.state = this.states.READY_TO_INSTALL;
     }
 
     /**
-     * Set an installer function.
-     *
-     * @param {Function} value
-     * @return {void}
+     * Starts auto-update process, supposed to be called once at app start.
+     * Safe to call multiple times(ignores 2nd+ calls).
      */
-    set installFn(value) {
-        this._installFn = value;
+    startUpdateMonitoring = () => {
+        if (isDevEnv) {
+            // autoUpdater will crash if electron executable is not code-signed (e.g. in development)
+            console.log('startUpdateMonitoring: Updates are not available in development environment.');
+            this._setRelease('mock');
+        }
+        if (this.state !== this.states.IDLE) return;
+        this.state = this.states.MONITORING;
+        autoUpdater.setFeedURL(this._updateUrl);
+        autoUpdater
+            // .addListener('checking-for-update', () => {})
+            .addListener('update-available', () => {
+                this.state = this.states.DOWNLOADING;
+            })
+            .addListener('update-not-available', () => {
+                this.state = this.states.MONITORING;
+            })
+            .addListener('error', (err) => {
+                console.error('Updater error:', err);
+                this.state = this.states.ERROR;
+                this.error = normalize(err);
+            })
+            .addListener('update-downloaded', (event, releaseNotes, releaseName) => {
+                this.setRelease(releaseName);
+            });
+
+        autoUpdater.checkForUpdates();
     }
 
     /**
-     * Get the installer function.
-     *
-     * @returns {Function}
+     * Installs updated and downloaded app version.
      */
-    get installFn() {
-        return this._installFn;
-    }
-}
-
-const updater = new Updater();
-const currentVersion = app.getVersion();
-
-if (!isDevEnv) {
-    // todo: move to config file
-    autoUpdater.setFeedURL(`${config.updateUrl}/${platform}/${currentVersion}`);
-    autoUpdater.checkForUpdates();
-    updater.installFn = function installFn() {
+    quitAndInstall = () => {
+        if (this.state !== this.states.READY_TO_INSTALL) {
+            console.error('Updater.install() called when updater state is not READY_TO_INSTALL. State:', this.state);
+            return;
+        }
         autoUpdater.quitAndInstall();
-    };
+    }
 
-    autoUpdater
-        .addListener('checking-for-update', () => {
-            updater.updating = true;
-        })
-        .addListener('update-available', () => {
-            updater.updating = true;
-        })
-        .addListener('update-not-available', () => {
-            updater.updating = false;
-        })
-        .addListener('error', (err) => {
-            updater.updating = false;
-            updater.errors.push(err);
-        })
-        .addListener('update-downloaded', (event, releaseNotes, releaseName) => {
-            updater.setRelease(releaseName, releaseNotes);
-        });
-} else {
-    // autoUpdater will crash if electron executable is not code-signed (e.g. in development)
-    console.log('Simulating autoUpdate in dev mode.');
-    console.log(`https://leviosa.peerio.com/update/${platform}/${currentVersion}`);
-    updater.installFn = function installFn() {
-        console.log('Called the install function.');
-    };
-    setTimeout(() => {
-        console.log('Setting update to available.');
-        updater.setRelease('0.0.0', 'bogus update');
-    }, 5000);
 }
 
-module.exports = updater;
+module.exports = new Updater();

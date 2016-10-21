@@ -1,40 +1,40 @@
 const React = require('react');
+const { observable } = require('mobx');
+const { observer } = require('mobx-react');
 const updater = require('../updater');
 const { t } = require('peerio-translator');
 const { Dialog } = require('react-toolbox');
-const { observer } = require('mobx-react');
 
+/**
+ * Current implementation will show update request dialog only once after app is started
+ */
 @observer class AutoUpdateDialog extends React.Component {
-    state = {
-        active: true
+    @observable dismissed = false;
+
+    dismiss = () => {
+        this.dismissed = true;
     };
 
-    handleToggle = () => {
-        this.setState({ active: !this.state.active });
-    };
+    componentDidMount() {
+        // just to give app some time to render and avoid load spike
+        setTimeout(updater.startUpdateMonitoring, 2000);
+    }
 
     actions = [
-        { label: t('cancel'), onClick: this.handleToggle },
-        { label: t('updateDownload'), onClick: updater.installFn }
+        { label: t('cancel'), onClick: this.dismiss },
+        { label: t('updateDownload'), onClick: updater.quitAndInstall }
     ];
 
     render() {
-        if (updater.hasUpdateAvailable === true) {
-            return (
-                <div>
-                    <Dialog
-                        actions={this.actions}
-                        active={this.state.active}
-                        onEscKeyDown={this.handleToggle}
-                        onOverlayClick={this.handleToggle}
-                        title={t('updateAvailable', { releaseName: updater.releaseName })}
-                    >
-                        <p>{t('updateAvailableText', { releaseMessage: updater.releaseMessage })}</p>
-                    </Dialog>
-                </div>
-            );
-        }
-        return (<div />);
+        const active = !this.dismissed && updater.state === updater.states.READY_TO_INSTALL;
+        console.log('render');
+        return (
+            <Dialog actions={this.actions} onEscKeyDown={this.dismiss} onOverlayClick={this.dismiss} active={active}
+                title={t('updateAvailable', { releaseName: updater.releaseName })}>
+
+                <p>{t('updateAvailableText', { releaseMessage: updater.releaseName })}</p>
+            </Dialog>
+        );
     }
 }
 

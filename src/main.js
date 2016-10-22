@@ -5,18 +5,11 @@ const isDevEnv = process.env.NODE_ENV !== 'production';
 
 if (isDevEnv) {
     //eslint-disable-next-line
-    require('electron-reload')(__dirname , { electron: require('electron-prebuilt') });
+    require('electron-reload')(__dirname, { electron: require('electron-prebuilt') });
 }
 let mainWindow;
 
 app.on('ready', onAppReady);
-//
-// app.on('window-all-closed',);
-// this event is fired before all windows are closed
-// app.on('before-quit', event =>{} );
-// this event is fired after all windows are closed
-// app.on('will-quit', event =>{});
-// app.on('quit', (event, exitCode) =>{});
 
 function onAppReady() {
     const state = getSavedWindowState();
@@ -45,8 +38,6 @@ function onAppReady() {
         }
     });
 
-
-    mainWindow.webContents.openDevTools();
     if (isDevEnv) {
         enableDevModeOnWindow(mainWindow);
     }

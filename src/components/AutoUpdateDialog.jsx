@@ -27,7 +27,6 @@ const { Dialog } = require('react-toolbox');
 
     render() {
         const active = !this.dismissed && updater.state === updater.states.READY_TO_INSTALL;
-        console.log('render');
         return (
             <Dialog actions={this.actions} onEscKeyDown={this.dismiss} onOverlayClick={this.dismiss} active={active}
                 title={t('updateAvailable', { releaseName: updater.releaseName })}>

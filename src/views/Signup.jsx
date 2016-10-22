@@ -56,7 +56,7 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
     render() {
         return (
             <Layout>
-                <Panel className={css('signup', { expand: this.expand })} >
+                <Panel className={css('signup', 'rt-light-theme', { expand: this.expand })} >
                     <img role="presentation" className="signup-logo" src="static/img/peerio-logo-white.png" />
                     <Panel className="signup-inner" scrollY>
                         <div className="signup-title">{t('signup')}</div>

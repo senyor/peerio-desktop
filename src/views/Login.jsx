@@ -25,7 +25,7 @@ const { Link } = require('react-router');
     render() {
         return (
             <Layout>
-                <Panel className="login">
+                <Panel className="login rt-light-theme">
                     <img role="presentation" className="login-logo" src="static/img/peerio-logo-white.png" />
                     <Input type="text" className="login-input" label={t('username')}
                         value={this.username} onChange={this.usernameUpdater} />
@@ -33,7 +33,7 @@ const { Link } = require('react-router');
                         value={this.password} onChange={this.passwordUpdater} />
                     <Dropdown className="login-input" value={languageStore.language}
                         source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
-                    <Button className="login-button rt-light-theme" label={t('login')} flat />
+                    <Button className="login-button" label={t('login')} flat />
                     <div className="login-reg-button">
                         <a href={config.termsUrl}>{t('terms')}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
                         <Link to="/signup">{t('signup')}</Link>

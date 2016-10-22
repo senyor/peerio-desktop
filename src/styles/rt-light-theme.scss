@@ -1,0 +1,39 @@
+.rt-light-theme {
+  .rt-input-inputElement {
+    border-bottom-color: #73b7dc;
+    color: white;
+  }
+
+  .rt-input-label,
+  .rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label:not(.rt-input-fixed) {
+    color: #c3eaff;
+  }
+
+  .rt-input-bar::before,
+  .rt-input-bar::after {
+    background-color: white;
+  }
+
+  .rt-dropdown-values {
+    background-color: #53aee0;
+    color: white;
+  }
+
+  .rt-dropdown-values > *:hover {
+    background-color: #83c7ec;
+  }
+
+  .rt-dropdown-values > *.rt-dropdown-selected {
+    color: inherit;
+  }
+
+  .rt-button-neutral:not([disabled]).rt-button-flat,
+  .rt-button-neutral:not([disabled]).rt-button-toggle {
+    color: white;
+    font-weight: 600;
+
+    &:hover {
+      background-color: #4fa6d6;
+    }
+  }
+}

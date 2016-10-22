@@ -34,7 +34,8 @@ class Updater {
         if (isDevEnv) {
             // autoUpdater will crash if electron executable is not code-signed (e.g. in development)
             console.log('startUpdateMonitoring: Updates are not available in development environment.');
-            this._setRelease('mock');
+            // this._setRelease('mock');
+            return;
         }
         if (this.state !== this.states.IDLE) return;
         this.state = this.states.MONITORING;

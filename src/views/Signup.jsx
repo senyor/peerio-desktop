@@ -10,6 +10,7 @@ const css = require('classnames');
 const languageStore = require('../stores/language-store');
 const FullCoverSpinner = require('../components/FullCoverSpinner');
 const { SignupProfile, ProfileStore } = require('./SignupProfile');
+const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
 
 //----------------------------------------------------------------------------------------------------------------
 @observer class Signup extends Component {
@@ -17,7 +18,7 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
     @observable expand = false; // starts expand animation
     @observable step = 1; // 1 -profile, 2- passcode
     profileStore = new ProfileStore();
-    // passcodeStore = new PasscodeStore();
+    passcodeStore = new PasscodeStore();
 
     constructor() {
         super();
@@ -45,8 +46,10 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
         u.passphrase = 'icebear';
-        u.createAccount()
-            .then(() => alert('success'))
+        u.createAccountAndLogin()
+            .then(() => {
+                this.step = 2;
+            })
             .catch(err => {
                 this.busy = false;
                 alert(`Error: ${errors.normalize(err)}`);
@@ -60,14 +63,16 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
                     <img role="presentation" className="signup-logo" src="static/img/peerio-logo-white.png" />
                     <Panel className="signup-inner" scrollY>
                         <div className="signup-title">{t('signup')}</div>
-                        {this.step === 1 ? <SignupProfile store={this.profileStore} /> : 'Hello, Passcode'}
+                        {this.step === 1 ? <SignupProfile store={this.profileStore} /> : <SignupPasscode store={this.passcodeStore} />}
                     </Panel>
+
                     <div className="signup-nav">
                         <Link to="/"><Button flat label={t('button_exit')} /></Link>
                         <Button flat label={t('next')} onClick={this.createAccount} />
                     </div>
                     <FullCoverSpinner show={this.busy} />
                 </Panel>
+
             </Layout>
         );
     }

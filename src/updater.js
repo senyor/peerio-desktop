@@ -54,7 +54,7 @@ class Updater {
                 this.error = normalize(err);
             })
             .addListener('update-downloaded', (event, releaseNotes, releaseName) => {
-                this.setRelease(releaseName);
+                this._setRelease(releaseName);
             });
 
         autoUpdater.checkForUpdates();

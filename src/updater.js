@@ -1,5 +1,5 @@
 const { observable } = require('mobx');
-const { app, autoUpdater } = require('electron').remote;
+const { autoUpdater } = require('electron').remote;
 const os = require('os');
 const config = require('./config');
 const { normalize } = require('./icebear').errors; // eslint-disable-line

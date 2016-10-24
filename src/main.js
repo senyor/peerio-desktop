@@ -121,8 +121,10 @@ function handleSquirrelEvent() {
         let spawnedProcess, error;
 
         try {
-            spawnedProcess = ChildProcess.spawn(command, args, {detached: true});
-        } catch (error) {}
+            spawnedProcess = ChildProcess.spawn(command, args, { detached: true });
+        } catch (err) {
+            console.log(err);
+        }
 
         return spawnedProcess;
     };
@@ -145,5 +147,7 @@ function handleSquirrelEvent() {
         case '--squirrel-obsolete':
             app.quit();
             return true;
+        default:
+            return false;
     }
-};
+}

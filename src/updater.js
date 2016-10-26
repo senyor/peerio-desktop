@@ -21,6 +21,12 @@ class Updater {
 
     _updateUrl = `${config.updateUrl}/${platform}/${config.currentVersion}`;
 
+    /**
+     * Set the release name.
+     *
+     * @param {String} releaseName
+     * @private
+     */
     _setRelease(releaseName) {
         this.releaseName = releaseName;
         this.state = this.states.READY_TO_INSTALL;
@@ -54,7 +60,7 @@ class Updater {
                 this.error = normalize(err);
             })
             .addListener('update-downloaded', (event, releaseNotes, releaseName) => {
-                this.setRelease(releaseName);
+                this._setRelease(releaseName);
             });
 
         autoUpdater.checkForUpdates();

@@ -3,6 +3,9 @@ const { app, BrowserWindow, Menu, shell } = require('electron');
 const storage = require('./stores/tiny-db');
 const isDevEnv = process.env.NODE_ENV !== 'production';
 
+if (require('electron-squirrel-startup')) app.quit();
+if (handleSquirrelEvent()) console.log('Squirrel update!');
+
 if (isDevEnv) {
     //eslint-disable-next-line
     require('electron-reload')(__dirname, { electron: require('electron-prebuilt') });
@@ -93,5 +96,58 @@ function installExtensions(forceReinstall) {
         } catch (e) {
             console.error("Failed to install extension '%s'", name, e);
         }
+    }
+}
+
+/**
+ * Completely stock squirrel installer code. Runs the installer and seamlessly installs the app.
+ *
+ * @todo replace the animation.
+ * @returns {boolean} true if squirrel update is a go
+ */
+function handleSquirrelEvent() {
+    if (process.argv.length === 1) {
+        return false;
+    }
+
+    const ChildProcess = require('child_process');
+    const path = require('path');
+    const appFolder = path.resolve(process.execPath, '..');
+    const rootAtomFolder = path.resolve(appFolder, '..');
+    const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
+    const exeName = path.basename(process.execPath);
+
+    const spawn = function(command, args) {
+        let spawnedProcess, error;
+
+        try {
+            spawnedProcess = ChildProcess.spawn(command, args, { detached: true });
+        } catch (err) {
+            console.log(err);
+        }
+
+        return spawnedProcess;
+    };
+
+    const spawnUpdate = function(args) {
+        return spawn(updateDotExe, args);
+    };
+
+    const squirrelEvent = process.argv[1];
+    switch (squirrelEvent) {
+        case '--squirrel-install':
+        case '--squirrel-updated':
+            spawnUpdate(['--createShortcut', exeName]);
+            setTimeout(app.quit, 1000);
+            return true;
+        case '--squirrel-uninstall':
+            spawnUpdate(['--removeShortcut', exeName]);
+            setTimeout(app.quit, 1000);
+            return true;
+        case '--squirrel-obsolete':
+            app.quit();
+            return true;
+        default:
+            return false;
     }
 }

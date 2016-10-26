@@ -1,0 +1,35 @@
+$font-stack: 'Open Sans', sans-serif;
+
+$font-weight-default: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+%heading {
+  font-size: 24px;
+}
+
+%title {
+  font-size: 20px;
+  font-weight: $font-weight-semibold;
+}
+
+%list-title {
+  font-size: 14px;
+  font-weight: $font-weight-semibold;
+}
+
+%hint-error-label {
+  font-size: 12px;
+}
+
+%button-text {
+  font-size: 14px;
+  font-weight: $font-weight-semibold;
+  text-align: center;
+}
+
+%input-text {
+  font-size: 14px;
+  height: 24px;
+  line-height: 24px;
+}

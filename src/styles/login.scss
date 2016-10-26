@@ -1,7 +1,9 @@
-@import './colors';
+@import './vars/colors';
+@import './vars/fonts';
+@import './vars/layout';
 
 .login {
-  background-color: $color-base-bg;
+  background-color: $color-background-brand;
   color: #f0f7fa;
   flex: 0 0 auto;
   justify-content: flex-start;
@@ -16,13 +18,25 @@
 
 .login-input {
   align-self: center;
-  width: 276px;
+  width: 275px;
+  height: 48px;
+  // TODO border-radius variables
+  border-radius: 2px;
+  background-color: $input-light-inactive;
+  margin-top: 40px;
+
+  // TODO set up states for focused and contains value
+  .rt-input-label {
+    padding-left: 8px;
+    font-size: 14px;
+    top: 17px;
+  }
+
 }
 
 .login-button {
   align-self: center;
   margin: 45px 0;
-  width: 276px;
 }
 
 .login-reg-button {
@@ -31,11 +45,10 @@
   text-align: center;
 
   > a {
-    color: white;
-    cursor: pointer;
+    color: $text-light-primary;
 
     &:hover {
-      color: #e0e0ff;
+      text-decoration: underline;
     }
   }
 }
@@ -63,4 +76,3 @@
   max-height: 200px;
   max-width: 330px;
 }
-

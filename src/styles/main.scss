@@ -6,7 +6,7 @@
 @import './misc';
 
 html {
-  font-family: 'Open Sans', sans-serif;
+  font-family: $font-stack;
   //box-sizing: border-box;
   overflow: hidden;
 }
@@ -16,7 +16,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: 'Open Sans';
+  font-family: $font-stack;
 }
 
 a {
@@ -31,15 +31,14 @@ a {
 
 body,
 #root {
-  background-color: white;
-  color: black;
+  background-color: $color-background-root;
+  color: $text-dark-primary;
   display: flex;
   flex-direction: column;
-  font-family: 'Open Sans', sans-serif;
-  // font-size: 12px;
+  font: 14px/1.35 $font-stack;
   // font-weight: 300;
   height: 100vh;
-  line-height: 1.5;
+
   //  margin: 0;
   overflow: hidden;
 
@@ -48,4 +47,55 @@ body,
 
 [data-react-toolbox="layout"] {
   height: 100vh;
+}
+
+.app-nav {
+  width: 80px;
+  height: 100vh;
+  background-color: $color-background-brand;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  .app-menu {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .rt-avatar-avatar{
+    margin: 24px 0 0;
+  }
+
+  .menu-item {
+    width: 24px;
+    height: 24px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+
+    // TODO transition variables
+    i {
+      transition: color 150ms;
+      color: $icon-light-inactive;
+    }
+
+    &:not(.settings) {
+      margin-top: 32px;
+    }
+
+    &.active, &:hover {
+      i {
+        color: $icon-light-active;
+      }
+    }
+
+    &.settings {
+      margin-top: auto;
+      margin-bottom: 24px;
+    }
+  }
 }

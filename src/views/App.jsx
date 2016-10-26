@@ -2,7 +2,6 @@ const React = require('react');
 const AutoUpdateDialog = require('../components/AutoUpdateDialog');
 const languageStore = require('../stores/language-store');
 const { reaction } = require('mobx');
-const {setLocale} = require('../icebear');  // eslint-disable-line
 
 class App extends React.Component {
 

@@ -4,7 +4,7 @@ const modules = require('postcss-modules');
 const path = require('path');
 const fs = require('fs');
 const cp = require('child_process');
-var writeFile = require('writefile')
+var writeFile = require('writefile');
 
 const src = './node_modules/react-toolbox/lib/';
 const dst = './build/react-toolbox/';
@@ -44,10 +44,10 @@ function compile(file) {
         }),
         modules({
             getJSON: getJSONFromCssModules,
-            generateScopedName: generateScopedName, 
+            generateScopedName: generateScopedName,
             scopeBehaviour : 'local'
-        }), 
-        require('precss')(), 
+        }),
+        require('precss')(),
         require('postcss-reporter')()
 ]).process(css, {
     from: src + file,

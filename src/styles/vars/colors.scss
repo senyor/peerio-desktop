@@ -14,7 +14,7 @@ $color-dark-12: rgba(0, 0, 0, .12);
 $color-dark-06: rgba(0, 0, 0, .06);
 
 // Primary brand color
-$color-brand: rgba(44, 149, 207, 1);
+$color-brand: rgb(44, 149, 207);
 
 // Status (warning/error/etc)
 $color-error: rgba(208, 2, 27, 1);
@@ -22,6 +22,8 @@ $all-good: rgba(44, 207, 132, 1);
 
 // BACKGROUNDS
 $color-background-brand: $color-brand;
+$color-background-message-list: rgba($color-brand, .12);
+$color-background-active-message: $color-light-100;
 $color-background-root: $color-light-100;
 
 // TEXT

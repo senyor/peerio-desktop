@@ -56,8 +56,8 @@
       background-color: $divider-light;
     }
   }
-}
 
-.rt-input-errored {
-  border-bottom: 2px solid $border-error;
+  .rt-input-errored {
+    border-bottom: 2px solid $border-error;
+  }
 }

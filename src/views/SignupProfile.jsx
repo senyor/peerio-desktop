@@ -39,11 +39,12 @@ const a = 4;
                     value={s.username} onChange={this.usernameUpdater} />
                 <Input type="text" className="login-input" label={t('email')}
                     value={s.email} onChange={this.emailUpdater} />
-                <Input type="text" className="login-input" label={t('firstName')}
-                    value={s.firstName} onChange={this.firstNameUpdater} />
-                <Input type="text" className="login-input" label={t('lastName')}
-                    value={s.lastName} onChange={this.lastNameUpdater} />
-
+                <div className="input-row">
+                    <Input type="text" className="login-input" label={t('firstName')}
+                        value={s.firstName} onChange={this.firstNameUpdater} />
+                    <Input type="text" className="login-input" label={t('lastName')}
+                        value={s.lastName} onChange={this.lastNameUpdater} />
+                </div>
                 <Dropdown className="login-input" value={languageStore.language}
                     source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
                 <T k="signup_TOSRequestText" className="signup-terms">

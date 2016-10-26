@@ -2,6 +2,9 @@
 @import './vars/fonts';
 @import './vars/layout';
 
+// TODO create base overwrites
+// TODO create dark theme
+
 .rt-light-theme {
   .rt-input-inputElement {
     @extend %input-text;
@@ -13,6 +16,11 @@
     padding: 0 8px;
 
   }
+
+  .rt-avatar-avatar {
+    flex-shrink: 0;
+  }
+
   .rt-input-label,
   .rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label:not(.rt-input-fixed) {
     color: $text-dark-hint;
@@ -47,10 +55,17 @@
     color: inherit;
   }
 
+
+  .rt-button-icon, .material-icons {
+    color: $icon-dark-active;
+    font-size: 24px;
+  }
+
   .rt-button-neutral:not([disabled]).rt-button-flat,
   .rt-button-neutral:not([disabled]).rt-button-toggle {
     color: $text-light-primary;
     font-weight: $font-weight-semibold;
+    flex-shrink: 0;
 
     &:hover {
       background-color: $divider-light;

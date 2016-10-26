@@ -4,14 +4,18 @@
 
 .login {
   background-color: $color-background-brand;
-  color: #f0f7fa;
   flex: 0 0 auto;
   justify-content: flex-start;
-  width: 374px;
+  width: 375px;
+  align-items: center;
+  color: $text-light-secondary;
+
+  .login-form {
+    width: 275px;
+  }
 }
 
 .login-logo {
-  align-self: center;
   margin: 34px 0 70px;
   width: 300px;
 }

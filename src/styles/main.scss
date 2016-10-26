@@ -71,25 +71,23 @@ body,
   }
 
   .menu-item {
-    width: 24px;
-    height: 24px;
     align-items: center;
     justify-content: center;
     display: flex;
     cursor: pointer;
 
     // TODO transition variables
-    i {
+    .rt-button-icon {
       transition: color 150ms;
       color: $icon-light-inactive;
     }
 
     &:not(.settings) {
-      margin-top: 32px;
+      margin-top: 20px;
     }
 
     &.active, &:hover {
-      i {
+      .rt-button-icon {
         color: $icon-light-active;
       }
     }

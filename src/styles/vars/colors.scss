@@ -24,6 +24,7 @@ $all-good: rgba(44, 207, 132, 1);
 $color-background-brand: $color-brand;
 $color-background-message-list: rgba($color-brand, .12);
 $color-background-active-message: $color-light-100;
+$color-background-hover-message: $color-light-50;
 $color-background-root: $color-light-100;
 
 // TEXT
@@ -48,6 +49,7 @@ $divider-light: $color-light-12;
 // INPUTS
 $input-light-active: $color-light-100;
 $input-light-inactive: $color-light-70;
+$input-dark-border: $color-dark-38;
 
 // BUTTONS
 $button-primary: $color-brand;

@@ -1,8 +1,9 @@
+/* eslint-disable */
 const React = require('react');
 const { Component } = require('react');
 const { Layout, Panel, Avatar, FontIcon, IconButton, Input, List, ListItem, ListSubHeader } = require('react-toolbox');
 
-class Messages extends Component {
+class Messages extends Component { //eslint-disable-next-line
     render() {
         return (
             <Layout className="rt-light-theme">

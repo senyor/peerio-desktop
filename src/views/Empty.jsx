@@ -1,15 +1,15 @@
 const React = require('react');
 
-class App extends React.Component {
+class Empty extends React.Component {
 
     render() {
         return (
             <div>
-                {this.props.children}
+                hey
             </div>
         );
     }
 }
 
 
-module.exports = App;
+module.exports = Empty;

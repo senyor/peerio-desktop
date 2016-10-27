@@ -3,12 +3,12 @@
 @import './vars/layout';
 
 .login {
+  align-items: center;
   background-color: $color-background-brand;
+  color: $text-light-secondary;
   flex: 0 0 auto;
   justify-content: flex-start;
   width: 375px;
-  align-items: center;
-  color: $text-light-secondary;
 
   .login-form {
     width: 275px;
@@ -22,20 +22,19 @@
 
 .login-input {
   align-self: center;
-  width: 275px;
-  height: 48px;
+  background-color: $input-light-inactive;
   // TODO border-radius variables
   border-radius: 2px;
-  background-color: $input-light-inactive;
+  height: 48px;
   margin-top: 40px;
+  width: 275px;
 
   // TODO set up states for focused and contains value
   .rt-input-label {
-    padding-left: 8px;
     font-size: 14px;
+    padding-left: 8px;
     top: 17px;
   }
-
 }
 
 .login-button {

@@ -1,38 +1,18 @@
 const React = require('react');
-const AutoUpdateDialog = require('../components/AutoUpdateDialog');
-const languageStore = require('../stores/language-store');
-const { reaction } = require('mobx');
-const {setLocale} = require('../icebear');  // eslint-disable-line
+const { Layout } = require('react-toolbox');
+const AppNav = require('../components/AppNav');
 
 class App extends React.Component {
 
-    constructor() {
-        super();
-        languageStore.loadSavedLanguage();
-        this.onLanguageChange = reaction(
-            () => languageStore.language,
-            () => {
-                this.forceUpdate();
-            }
-        );
-    }
-
-    componentWillUnmount() {
-        this.onLanguageChange();
-    }
-
     render() {
         return (
-            <div>
+            <Layout className="rt-light-theme">
+                <AppNav />
                 {this.props.children}
-                <AutoUpdateDialog />
-            </div>
+            </Layout>
         );
     }
 }
 
-App.propTypes = {
-    children: React.PropTypes.element.isRequired
-};
 
 module.exports = App;

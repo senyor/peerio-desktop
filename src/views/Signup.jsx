@@ -48,7 +48,9 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         u.passphrase = 'icebear';
         u.createAccountAndLogin()
             .then(() => {
+                window.user = u;
                 this.step = 2;
+                this.context.router.push('/app');
             })
             .catch(err => {
                 this.busy = false;
@@ -77,5 +79,9 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         );
     }
 }
+
+Signup.contextTypes = {
+    router: React.PropTypes.object
+};
 
 module.exports = Signup;

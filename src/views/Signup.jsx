@@ -45,8 +45,11 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
         u.passphrase = 'icebear';
-        u.createAccount()
-            .then(() => alert('success'))
+        u.createAccountAndLogin()
+            .then(() => {
+                window.user = u;
+                this.context.router.push('/app');
+            })
             .catch(err => {
                 this.busy = false;
                 alert(`Error: ${errors.normalize(err)}`);
@@ -72,5 +75,9 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
         );
     }
 }
+
+Signup.contextTypes = {
+    router: React.PropTypes.object
+};
 
 module.exports = Signup;

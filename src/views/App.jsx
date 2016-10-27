@@ -1,12 +1,15 @@
 const React = require('react');
+const { Layout } = require('react-toolbox');
+const AppNav = require('../components/AppNav');
 
 class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <Layout className="rt-light-theme">
+                <AppNav/>
                 {this.props.children}
-            </div>
+            </Layout>
         );
     }
 }

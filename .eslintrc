@@ -20,11 +20,14 @@
         "import/no-dynamic-require": 0,
         "react/prop-types": 0,
         "react/sort-comp": 0,
+        "react/prefer-stateless-function": 0,
+        "react/no-unescaped-entities": 0,
         "no-alert":0
     },
     "globals":{
         "document": false,
         "alert": false,
-        "confirm": false
+        "confirm": false,
+        "window": false
     }
 }

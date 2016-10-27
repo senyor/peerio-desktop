@@ -4,14 +4,14 @@ const App = require('./views/App');
 const Root = require('./views/Root');
 const Login = require('./views/Login');
 const Signup = require('./views/Signup');
-const Empty = require('./views/Empty');
+const Messages = require('./views/Messages');
 
 module.exports = (
     <Route path="/" component={Root}>
         <IndexRoute component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/app" component={App} >
-            <IndexRoute component={Empty} />
+            <IndexRoute component={Messages} />
         </Route>
     </Route>
 );

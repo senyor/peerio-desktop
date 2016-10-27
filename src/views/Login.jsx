@@ -20,7 +20,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         this.errorVisible = false;
     };
 
-    actions = [{ label: t('ok'), onClick: this.hideDialog }];
+    actions = [{ label: t('ok then'), onClick: this.hideDialog }];
 
     constructor() {
         super();

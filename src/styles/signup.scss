@@ -40,7 +40,7 @@
 
 .signup-subtitle {
   color: $text-light-secondary;
-  margin-top: 4px;
+  margin-top: $margin-tiny;
 
   @extend %heading;
 }

@@ -7,18 +7,16 @@ const { Panel, Avatar, FontIcon, IconButton,
 class Messages extends Component {
     render() {
         return (
-            <Panel>
+            <Panel className="rt-dark-theme">
                 <div className="messages">
                     <div className="message-list">
-                        {/* Not sure that we should use the react-toolbox list items.
-                         the ones we have are more custom than what these seem to allow. */}
-                        <List>
+                        <List selectable ripple>
                             <ListSubHeader caption="Direct messages"/>
-                            <ListItem caption="Alice" className="online active"/>
-                            <ListItem caption="Albert"/>
-                            <ListItem caption="Bob"/>
-                            <ListItem caption="Jeff"/>
-                            <ListItem caption="Steve"/>
+                            <ListItem caption="Alice" className="online active" leftIcon="fiber_manual_record"/>
+                            <ListItem caption="Albert" leftIcon="fiber_manual_record" />
+                            <ListItem caption="Bill" className="online" leftIcon="fiber_manual_record" rightIcon={<div className="notification">12</div>} />
+                            <ListItem caption="Jeff" className="online" leftIcon="fiber_manual_record" />
+                            <ListItem caption="Steve" leftIcon="fiber_manual_record" />
                         </List>
                     </div>
                     <div className="message-view">

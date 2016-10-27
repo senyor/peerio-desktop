@@ -16,7 +16,7 @@
 }
 
 .login-logo {
-  margin: 34px 0 70px;
+  margin: 64px 0 74px;
   width: 300px;
 }
 
@@ -39,38 +39,34 @@
 
 .login-button {
   align-self: center;
-  margin: 45px 0;
+  margin: 48px 0;
 }
 
 .login-reg-button {
-  font-size: 85%;
+  color: $text-light-secondary;
   font-weight: 600;
   text-align: center;
 
-  > a {
+  > a:hover {
     color: $text-light-primary;
-
-    &:hover {
-      text-decoration: underline;
-    }
+    text-decoration: underline;
   }
 }
 //----------------------------------------------------------------------------------------------------------------------
 .welcome {
-  align-items: center;
   flex: 1 1 auto;
-  justify-content: space-between;
 }
 
 .welcome-text {
-  align-self: flex-start;
-  padding: 20px;
+  padding: 24px;
 }
 
 .welcome-title {
-  color: #4a8fb5;
-  font-size: 170%;
+  color: $color-brand;
+
   margin-bottom: 50px;
+
+  @extend %title;
 }
 
 .ice-gif {

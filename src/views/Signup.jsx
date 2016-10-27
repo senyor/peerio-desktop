@@ -38,7 +38,7 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
 
     createAccount() {
         this.busy = true;
-        const u = this.user = new User();
+        const u = new User();
         u.username = this.profileStore.username;
         u.email = this.profileStore.email;
         u.firstName = this.profileStore.firstName;
@@ -47,7 +47,7 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
         u.passphrase = 'icebear';
         u.createAccountAndLogin()
             .then(() => {
-                window.user = u;
+                User.current = u;
                 this.context.router.push('/app');
             })
             .catch(err => {

@@ -37,7 +37,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         user.username = this.username;
         user.passphrase = this.passphrase;
         user.login().then(() => {
-            window.user = user;
+            User.current = user;
             this.context.router.push('/app');
         }).catch(err => {
             console.error(err);

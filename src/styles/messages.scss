@@ -4,96 +4,93 @@
 }
 
 .message-view {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .message-toolbar {
+    align-items: center;
+    border-bottom: 1px solid $divider-dark;
     display: flex;
-    flex-direction: column;
+    flex: 0 0 64px;
+    padding: 0 8px 0 24px;
+
+    .title {
+      margin-right: auto;
+
+      @extend %title;
+    }
+    // TODO extract this for more general use.
+    .search {
+      align-items: center;
+      border: 1px solid $input-dark-border;
+      display: flex;
+      height: 36px;
+      justify-content: flex-start;
+      width: 256px;
+
+      .search-icon {
+        padding: 6px 0 6px 8px;
+      }
+    }
+  }
+
+  .message {
+    align-items: flex-start;
+    display: flex;
+    flex: 1 1 100vh;
+    overflow: auto;
+    padding: 24px;
+
+    .message-content {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 0;
+
+      .meta-data {
+        display: flex;
+
+        .user {
+          font-weight: $font-weight-bold;
+          margin: 0 8px 0 16px;
+        }
+      }
+
+      p {
+        margin-left: 16px;
+      }
+    }
+  }
+
+  .message-input {
+    align-items: center;
+    border-top: 1px solid $divider-dark;
+    display: flex;
     flex-grow: 1;
-
-    .message-toolbar {
-      flex: 0 0 64px;
-      border-bottom: 1px solid $divider-dark;
-      display: flex;
-      align-items: center;
-      padding: 0 8px 0 24px;
-
-      .title {
-        @extend %title;
-        margin-right: auto;
-      }
-
-      // TODO extract this for more general use.
-      .search {
-        width: 256px;
-        height: 36px;
-        border: 1px solid $input-dark-border;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-
-        .search-icon {
-          padding: 6px 0 6px 8px;
-        }
-
-      }
-    }
-
-    .message {
-      padding: 24px;
-      flex: 1 1 100vh;
-      overflow: auto;
-      display: flex;
-      align-items: flex-start;
-
-      .message-content {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 0;
-
-        .meta-data{
-          display: flex;
-
-          .user {
-            font-weight: $font-weight-bold;
-            margin: 0 8px 0 16px;
-          }
-        }
-
-        p {
-          margin-left: 16px;
-        }
-      }
-    }
-
-    .message-input {
-      border-top: 1px solid $divider-dark;
-      height: 64px;
-      flex-grow: 1;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-    }
-
-
+    flex-shrink: 0;
+    height: 64px;
+    padding: 0 16px;
+  }
 }
 
-
 .message-list {
-  width: 224px;
   background-color: $color-background-message-list;
-  height: 100vh;
   flex-shrink: 0;
+  height: 100vh;
+  width: 224px;
 
-  .active, .rt-list-listItem:hover {
+  .active,
+  .rt-list-listItem:hover {
     border-radius: 0 24px 24px 0;
-    margin-right: 12px;
     font-weight: $font-weight-bold;
-
+    margin-right: 12px;
   }
 
   .active {
     background: $color-background-active-message;
   }
-  .rt-list-listItem{
+
+  .rt-list-listItem {
     cursor: pointer;
 
     &:hover {
@@ -109,13 +106,12 @@
 // Kind of a hackish way to add status indicators to list items.
 .rt-list-item {
   &:before {
-    content: '';
-    border: 4px solid rgba(0,0,0,.12);
+    border: 4px solid rgba(0, 0, 0, .12);
     border-radius: 4px;
-    text-align: center;
-    margin-right: 16px;
+    content: '';
     display: block;
-
+    margin-right: 16px;
+    text-align: center;
   }
 }
 

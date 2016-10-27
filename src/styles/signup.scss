@@ -40,8 +40,9 @@
 
 .signup-subtitle {
   color: $text-light-secondary;
-  @extend %heading;
   margin-top: 4px;
+
+  @extend %heading;
 }
 
 .signup-nav {
@@ -54,9 +55,9 @@
 }
 
 .signup-terms {
+  color: $text-light-secondary;
   display: block;
   margin-top: 48px;
-  color: $text-light-secondary;
 
   > a {
     color: $text-light-primary;
@@ -69,7 +70,6 @@
   color: $text-light-error;
   display: block;
   margin-top: 2px;
-
 }
 
 .input-row {

@@ -7,7 +7,7 @@ class App extends React.Component {
     render() {
         return (
             <Layout className="rt-light-theme">
-                <AppNav/>
+                <AppNav />
                 {this.props.children}
             </Layout>
         );

@@ -61,7 +61,7 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
             <Layout>
                 <Panel className={css('signup', 'rt-light-theme', { expand: this.expand })} >
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
-                    <Panel className="signup-inner" scrollY>
+                    <Panel className="signup-form" scrollY>
                         <div className="signup-title">{t('signup')}</div>
                         {this.step === 1 ? <SignupProfile store={this.profileStore} /> : 'Hello, Passcode'}
                     </Panel>

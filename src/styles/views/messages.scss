@@ -89,7 +89,7 @@
 }
 
 .message-list {
-  background-color: $color-background-message-list;
+  background-color: $background-message-list;
   flex-shrink: 0;
   height: 100vh;
   width: 224px;
@@ -111,11 +111,11 @@
   }
 
   .active {
-    background: $color-background-active-message;
+    background: $background-active-message;
   }
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover {
-    background: $color-background-hover-message;
+    background: $background-hover-message;
     padding-right: $padding-tiny;
   }
 

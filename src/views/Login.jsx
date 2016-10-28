@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
 const { Component } = require('react');
-const { Layout, Panel, Input, Dropdown, Button, Dialog } = require('react-toolbox');
+const { Layout, Panel, Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
 const { pCrypto, config, User } = require('../icebear'); // eslint-disable-line
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
@@ -17,7 +17,6 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
     @observable errorVisible = false;
 
     hideDialog = () => {
-        this.busy = false;
         this.errorVisible = false;
     };
 
@@ -44,6 +43,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
             console.error(err);
             this.errorMsg = t('error_loginFailed');
             this.errorVisible = true;
+            this.busy = false;
         });
     }
     render() {
@@ -54,8 +54,11 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                     <div className="login-form">
                         <Input type="text" label={t('username')}
                             value={this.username} onChange={this.usernameUpdater} />
-                        <Input type="password" label={t('passphrase')}
-                            value={this.passphrase} onChange={this.passphraseUpdater} />
+                        <div className="password">
+                            <Input type="password" label={t('passphrase')}
+                                value={this.passphrase} onChange={this.passphraseUpdater} />
+                            <IconButton icon="visibility" />
+                        </div>
                         <Dropdown value={languageStore.language}
                             source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
                     </div>
@@ -64,7 +67,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                         <a href={config.termsUrl}>{t('terms')}</a> | <Link to="/signup">{t('signup')}</Link>
                     </div>
                     {/* TODO: - After Alpha -
-                        remove fullcover spinner
+                        remove FullCoverSpinner
                        change login button to spinner while working
                        disable inputs while spinner is active */}
                     <FullCoverSpinner show={this.busy} />

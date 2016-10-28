@@ -2,12 +2,34 @@
   // INPUTS
   .rt-input-input {
     background-color: $input-light-inactive;
+    box-shadow: $shadow-2;
     height: 48px;
     margin-top: 40px;
+    transition: 150ms;
+    will-change: box-shadow background-color;
+
+
+    &:hover {
+      background: white;
+      box-shadow: $shadow-8;
+    }
   }
 
-  .rt-dropdown-value:after {
-    border-top: 6px solid $icon-dark-inactive;
+
+  .rt-dropdown-value{
+    background: $background-light-dropdown;
+
+    &:hover {
+      background: $background-light-dropdown;
+    }
+
+    .rt-input-inputElement{
+      color: $text-light-primary;
+    }
+
+    &:after {
+      border-top: 6px solid $icon-light-active;
+    }
   }
 
   .rt-dropdown-values {

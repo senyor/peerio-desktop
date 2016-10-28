@@ -30,7 +30,7 @@ function compile(file) {
             features: {
                 customProperties: {
                     variables: {
-                        'color-primary': 'var(--palette-indigo-500)',
+                        'color-primary': 'rgb(44, 149, 207)',
                         'color-primary-dark': 'var(--palette-indigo-700)',
                         'color-primary-light': 'var(--palette-indigo-500)',
                         'color-accent': 'var(--palette-pink-a200)',

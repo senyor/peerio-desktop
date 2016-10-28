@@ -1,43 +1,32 @@
-@import './vars/colors';
-@import './vars/fonts';
-@import './vars/layout';
-
-// TODO create base overwrites
-// TODO create dark theme
-
 .rt-light-theme {
-  .rt-input-inputElement {
-    background-color: transparent;
-    border-bottom-color: transparent;
-    color: $text-dark-primary;
-    margin-top: 2px;
-    padding: 0 8px;
+  // INPUTS
+  .rt-input-input {
+    background-color: $input-light-inactive;
+    box-shadow: $shadow-2;
+    height: 48px;
+    margin-top: 40px;
+    transition: 150ms;
+    will-change: box-shadow background-color;
 
-    @extend %input-text;
-  }
-
-  .rt-avatar-avatar {
-    flex-shrink: 0;
-  }
-
-  .rt-input-label,
-  .rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label:not(.rt-input-fixed) {
-    color: $text-dark-hint;
-  }
-
-  .rt-input-bar::before,
-  .rt-input-bar::after {
-    background-color: transparent;
+    &:hover {
+      background: white;
+      box-shadow: $shadow-8;
+    }
   }
 
   .rt-dropdown-value {
-    align-items: center;
-    display: flex;
-    height: 48px;
-    padding: 0;
+    background: $background-light-dropdown;
+
+    &:hover {
+      background: $background-light-dropdown;
+    }
+
+    .rt-input-inputElement {
+      color: $text-light-primary;
+    }
 
     &:after {
-      border-top: 6px solid $icon-dark-inactive;
+      border-top: 6px solid $icon-light-active;
     }
   }
 
@@ -56,15 +45,13 @@
 
   .rt-button-icon,
   .material-icons {
-    color: $icon-dark-active;
+    color: $icon-light-active;
     font-size: 24px;
   }
 
   .rt-button-neutral:not([disabled]).rt-button-flat,
   .rt-button-neutral:not([disabled]).rt-button-toggle {
     color: $text-light-primary;
-    flex-shrink: 0;
-    font-weight: $font-weight-semibold;
 
     &:hover {
       background-color: $divider-light;

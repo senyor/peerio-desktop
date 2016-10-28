@@ -1,15 +1,18 @@
 .full-cover-spinner {
-  background-color: rgba(24, 75, 103, .6);
-  bottom: 0;
+  background-color: $background-overlay;
   display: flex;
+  height: 100vh;
   justify-content: center;
-  left: 0;
   overflow: hidden;
   position: absolute;
-  right: 0;
-  top: 0;
+  width: 100vw;
 }
 
 .self-center {
   align-self: center;
+}
+
+.logo {
+  margin: 64px 0 48px;
+  width: 300px;
 }

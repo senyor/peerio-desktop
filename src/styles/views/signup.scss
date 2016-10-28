@@ -1,56 +1,39 @@
-@import './vars/colors';
-@import './vars/fonts';
-@import './vars/layout';
-
 .signup {
-  justify-content: space-between;
+  align-items: center;
+  background-color: $background-brand;
   transition: width .5s;
 
   .profile {
-    align-self: stretch;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
   }
-  @extend .login;
-}
-
-.signup-logo {
-  margin-bottom: 30px;
-
-  @extend .login-logo;
 }
 
 .signup.expand {
   width: 100vw;
 }
 
-.signup-inner {
-  align-self: center;
-  max-height: 580px;
-  width: 275px;
+.signup-form {
+  justify-content: flex-start;
+  padding: 0 $padding-default;
+  width: 307px;
 }
 
-.signup-title {
+.signup-title,
+.signup-subtitle {
   color: $text-light-secondary;
-  font-size: 14px;
 }
 
 .signup-subtitle {
-  color: $text-light-secondary;
-  margin-top: 4px;
+  margin-top: $margin-tiny;
 
   @extend %heading;
 }
 
 .signup-nav {
-  align-self: center;
   display: flex;
   justify-content: space-between;
   margin-bottom: 36px;
-  margin-top: 30px;
   width: 330px;
 }
 
@@ -75,7 +58,7 @@
 .input-row {
   display: flex;
 
-  .login-input:first-of-type {
+  .rt-input-input:first-of-type {
     margin-right: 1px;
   }
 }

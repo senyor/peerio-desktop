@@ -1,8 +1,8 @@
 /* eslint-disable */
 const React = require('react');
 const { Component } = require('react');
-const { Panel, Avatar, FontIcon, IconButton,
-        Input, List, ListItem, ListSubHeader } = require('react-toolbox');
+const { Avatar, Button, Checkbox, FontIcon, IconButton,
+        Input, List, ListItem, ListSubHeader, Panel } = require('react-toolbox');
 
 class Messages extends Component {
     render() {
@@ -10,15 +10,13 @@ class Messages extends Component {
             <Panel>
                 <div className="messages">
                     <div className="message-list">
-                        {/* Not sure that we should use the react-toolbox list items.
-                         the ones we have are more custom than what these seem to allow. */}
-                        <List>
+                        <List selectable ripple>
                             <ListSubHeader caption="Direct messages"/>
-                            <ListItem caption="Alice" className="online active"/>
-                            <ListItem caption="Albert"/>
-                            <ListItem caption="Bob"/>
-                            <ListItem caption="Jeff"/>
-                            <ListItem caption="Steve"/>
+                            <ListItem caption="Alice" className="online active" leftIcon="fiber_manual_record"/>
+                            <ListItem caption="Albert" leftIcon="fiber_manual_record" />
+                            <ListItem caption="Bill" className="online" leftIcon="fiber_manual_record" rightIcon={<div className="notification">12</div>} />
+                            <ListItem caption="Jeff" className="online" leftIcon="fiber_manual_record" />
+                            <ListItem caption="Steve" className="busy" leftIcon="fiber_manual_record" />
                         </List>
                     </div>
                     <div className="message-view">
@@ -49,6 +47,16 @@ class Messages extends Component {
                         <div className="message-input">
                             <IconButton icon="add_circle_outline"/>
                             <Input multiline type="text" placeholder="Messages Alice"/>
+                            {/* <Checkbox
+                                checked
+                                label="Send on enter" /> */}
+                            <IconButton icon="thumb_up"/>
+                            {/*
+                                depending on how users react to no send button
+                                maybe flip between this and thumbs_up?
+
+                                <IconButton icon="send" />
+                            */}
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
 const { Component } = require('react');
-const { Layout, Panel, Input, Dropdown, Button, Dialog } = require('react-toolbox');
+const { Layout, Panel, Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
 const { pCrypto, config, User } = require('../icebear'); // eslint-disable-line
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
@@ -37,7 +37,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         user.username = this.username;
         user.passphrase = this.passphrase;
         user.login().then(() => {
-            window.user = user;
+            User.current = user;
             this.context.router.push('/app');
         }).catch(err => {
             console.error(err);
@@ -50,25 +50,31 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         return (
             <Layout>
                 <Panel className="login rt-light-theme">
-                    <img role="presentation" className="login-logo" src="static/img/peerio-logo-white.png" />
+                    <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
                     <div className="login-form">
-                        <Input type="text" className="login-input" label={t('username')}
+                        <Input type="text" label={t('username')}
                             value={this.username} onChange={this.usernameUpdater} />
-                        <Input type="password" className="login-input" label={t('passphrase')}
-                            value={this.passphrase} onChange={this.passphraseUpdater} />
-                        <Dropdown className="login-input" value={languageStore.language}
+                        <div className="password">
+                            <Input type="password" label={t('passphrase')}
+                                value={this.passphrase} onChange={this.passphraseUpdater} />
+                            <IconButton icon="visibility" />
+                        </div>
+                        <Dropdown value={languageStore.language}
                             source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
                     </div>
                     <Button className="login-button" label={t('login')} flat onClick={this.login} />
                     <div className="login-reg-button">
-                        <a href={config.termsUrl}>{t('terms')}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                        <Link to="/signup">{t('signup')}</Link>
+                        <a href={config.termsUrl}>{t('terms')}</a> | <Link to="/signup">{t('signup')}</Link>
                     </div>
+                    {/* TODO: - After Alpha -
+                        remove FullCoverSpinner
+                       change login button to spinner while working
+                       disable inputs while spinner is active */}
                     <FullCoverSpinner show={this.busy} />
                 </Panel>
                 <Panel className="welcome">
                     <div className="welcome-text">
-                        <div className="welcome-title">Welcome to Peerio Alpha (codename Icebear)</div>
+                        <div className="display-2">Welcome to Peerio Alpha (codename Icebear)</div>
                         [changelog should magically appear here in the nearest future]<br /><br />
                         <div>
                             In this release you can:<br /><br />

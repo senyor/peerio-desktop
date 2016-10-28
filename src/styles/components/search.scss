@@ -1,0 +1,21 @@
+.search {
+  align-items: center;
+  border: 1px solid $input-dark-border;
+  border-radius: 18px;
+  display: flex;
+  height: 36px;
+  width: 256px;
+
+  .search-icon {
+    padding: 6px 0 6px 8px;
+  }
+  // .rt-input-input,
+  // input {
+  //   margin-top: 0;
+  //   height: 36px;
+  // }
+  //
+  // .rt-input-input {
+  //   padding: 0;
+  // }
+}

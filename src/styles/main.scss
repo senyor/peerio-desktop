@@ -1,10 +1,15 @@
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
 @import './static/fonts/OpenSans/opensans.css';
+@import './rt-base-theme'; // Imports variables. Always first, after lib imports.
 @import './rt-light-theme';
-@import './login';
-@import './signup';
-@import './messages';
+@import './components/app-nav';
+@import './components/search';
+@import './components/notifications';
+@import './views/login';
+@import './views/signup';
+@import './views/messages';
 @import './misc';
+@import './typography';
 
 html {
   font-family: $font-stack;
@@ -32,7 +37,7 @@ a {
 
 body,
 #root {
-  background-color: $color-background-root;
+  background-color: $background-root;
   color: $text-dark-primary;
   display: flex;
   flex-direction: column;
@@ -47,53 +52,4 @@ body,
 
 [data-react-toolbox="layout"] {
   height: 100vh;
-}
-
-.app-nav {
-  align-items: center;
-  background-color: $color-background-brand;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 80px;
-
-  .app-menu {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-
-  .rt-avatar-avatar {
-    margin: 24px 0 0;
-  }
-
-  .menu-item {
-    align-items: center;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-
-    // TODO transition variables
-    .rt-button-icon {
-      color: $icon-light-inactive;
-      transition: color 150ms;
-    }
-
-    &:not(.settings) {
-      margin-top: 20px;
-    }
-
-    &.active,
-    &:hover {
-      .rt-button-icon {
-        color: $icon-light-active;
-      }
-    }
-
-    &.settings {
-      margin-bottom: 24px;
-      margin-top: auto;
-    }
-  }
 }

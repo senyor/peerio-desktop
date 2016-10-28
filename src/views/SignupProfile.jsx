@@ -35,17 +35,17 @@ const a = 4;
         return (
             <div className="profile">
                 <div className="signup-subtitle">{t('profile')}</div>
-                <Input type="text" className="login-input" label={t('username')} error={s.usernameError}
+                <Input type="text" label={t('username')} error={s.usernameError}
                     value={s.username} onChange={this.usernameUpdater} />
-                <Input type="text" className="login-input" label={t('email')}
+                <Input type="text" label={t('email')}
                     value={s.email} onChange={this.emailUpdater} />
                 <div className="input-row">
-                    <Input type="text" className="login-input" label={t('firstName')}
+                    <Input type="text" label={t('firstName')}
                         value={s.firstName} onChange={this.firstNameUpdater} />
-                    <Input type="text" className="login-input" label={t('lastName')}
+                    <Input type="text" label={t('lastName')}
                         value={s.lastName} onChange={this.lastNameUpdater} />
                 </div>
-                <Dropdown className="login-input" value={languageStore.language}
+                <Dropdown value={languageStore.language}
                     source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
                 <T k="signup_TOSRequestText" className="signup-terms">
                     {{ tosLink: text => <a href={config.termsUrl}>{text}</a> }}

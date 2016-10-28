@@ -1,0 +1,76 @@
+.login {
+  align-items: center;
+  background-color: $background-brand;
+  color: $text-light-secondary;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  width: 375px;
+
+  .login-form {
+    width: 275px;
+  }
+
+  .password {
+    align-items: center;
+    background: rgba(255, 255, 255, .7);
+    border-radius: 0 2px 2px 0;
+    box-shadow: $shadow-2;
+    display: flex;
+    margin-top: 40px;
+    transition: 150ms;
+    will-change: box-shadow background-color;
+
+    &:hover {
+      background: white;
+      box-shadow: $shadow-8;
+    }
+
+    & > .rt-input-input {
+      background-color: transparent;
+      box-shadow: none;
+      margin-top: 0;
+    }
+
+    .rt-button-icon {
+      color: $icon-dark-active;
+    }
+  }
+}
+
+.login-button {
+  align-self: center;
+  margin: 48px 0;
+}
+
+.login-reg-button {
+  color: $text-light-secondary;
+  font-weight: 600;
+  text-align: center;
+
+  > a:hover {
+    color: $text-light-primary;
+    text-decoration: underline;
+  }
+}
+//----------------------------------------------------------------------------------------------------------------------
+.welcome {
+  flex: 1 1 auto;
+}
+
+.welcome-text {
+  padding: 24px;
+}
+
+.welcome-title {
+  color: $color-brand;
+  margin-bottom: 50px;
+
+  @extend %title;
+}
+
+.ice-gif {
+  align-self: flex-end;
+  border-top-left-radius: 140px;
+  max-height: 200px;
+  max-width: 330px;
+}

@@ -1,0 +1,99 @@
+//  Base overwrites
+// TODO: removed all #colors
+//       replace padding and margins with variables where applicable
+
+@import './vars/_colors';
+@import './vars/_layout';
+@import './vars/_shadows';
+@import './vars/_typography';
+
+// AVATAR
+.rt-avatar-avatar {
+  flex-shrink: 0;
+}
+
+// BUTTONS and ICONS!
+.rt-button-button > .rt-button-icon,
+.material-icons {
+  color: $icon-dark-active;
+  font-size: 24px;
+}
+
+.rt-button-neutral:not([disabled]).rt-button-flat,
+.rt-button-neutral:not([disabled]).rt-button-toggle {
+  flex-shrink: 0;
+  font-weight: $font-weight-semibold;
+
+  &:hover {
+    background-color: $divider-light;
+  }
+}
+
+.rt-dialog-button {
+  min-width: 64px;
+
+  .rt-dialog-navigation &:last-of-type {
+    color: $color-brand;
+  }
+}
+
+// INPUTS
+.rt-input-bar {
+  display: none;
+}
+
+.rt-input-input {
+  // TODO border-radius variables
+  border-radius: 2px;
+
+  .rt-input-label {
+    font-size: 14px;
+    padding-left: $padding-small;
+    top: 17px;
+  }
+}
+
+.rt-input-inputElement {
+  background-color: transparent;
+  border-bottom-color: transparent;
+  color: $text-dark-primary;
+  margin-top: 2px;
+  padding: 0 $padding-small;
+
+  @extend %input-text;
+}
+
+.rt-input-label,
+.rt-input-inputElement:focus:not([disabled]):not([readonly]) ~ .rt-input-label:not(.rt-input-fixed) {
+  color: $text-dark-hint;
+}
+
+.rt-dropdown-value {
+  align-items: center;
+  display: flex;
+  height: 48px;
+  padding: 0;
+}
+
+.rt-dropdown-values {
+  background-color: #53aee0;
+  color: $text-light-primary;
+}
+
+.rt-dropdown-values > *:hover {
+  background-color: #83c7ec;
+}
+
+.rt-dropdown-values > *.rt-dropdown-selected {
+  color: inherit;
+}
+
+.rt-input-errored > .rt-input-inputElement {
+  border: none;
+  margin-top: 2px;
+}
+
+// OVERLAY
+.rt-overlay-active > .rt-overlay-backdrop {
+  opacity: .5;
+}

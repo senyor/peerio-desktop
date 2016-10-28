@@ -39,7 +39,7 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
 
     createAccount() {
         this.busy = true;
-        const u = this.user = new User();
+        const u = new User();
         u.username = this.profileStore.username;
         u.email = this.profileStore.email;
         u.firstName = this.profileStore.firstName;
@@ -48,7 +48,7 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         u.passphrase = 'icebear';
         u.createAccountAndLogin()
             .then(() => {
-                window.user = u;
+                User.current = u;
                 this.step = 2;
                 this.context.router.push('/app');
             })
@@ -62,8 +62,8 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         return (
             <Layout>
                 <Panel className={css('signup', 'rt-light-theme', { expand: this.expand })} >
-                    <img role="presentation" className="signup-logo" src="static/img/peerio-logo-white.png" />
-                    <Panel className="signup-inner" scrollY>
+                    <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
+                    <Panel className="signup-form" scrollY>
                         <div className="signup-title">{t('signup')}</div>
                         {this.step === 1 ? <SignupProfile store={this.profileStore} /> : <SignupPasscode store={this.passcodeStore} />}
                     </Panel>

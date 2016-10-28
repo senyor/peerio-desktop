@@ -1,0 +1,152 @@
+.messages {
+  display: flex;
+  flex-direction: row;
+}
+
+.message-view {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  .message-toolbar {
+    align-items: center;
+    border-bottom: 1px solid $divider-dark;
+    display: flex;
+    flex: 0 0 64px;
+    padding: 0 8px 0 24px;
+
+    .title {
+      margin-right: auto;
+
+      @extend %title;
+    }
+
+    .search {
+      margin-right: 12px;
+    }
+  }
+
+  .message {
+    align-items: flex-start;
+    display: flex;
+    flex: 1 1 auto;
+    overflow: auto;
+    padding: 24px;
+
+    .message-content {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 0;
+
+      .meta-data {
+        display: flex;
+
+        .user {
+          font-weight: $font-weight-bold;
+          margin: 0 $padding-small 0 $padding-default;
+        }
+      }
+
+      p {
+        margin-left: $margin-default;
+      }
+    }
+  }
+
+  .message-input {
+    align-items: center;
+    border-top: 1px solid $divider-dark;
+    display: flex;
+    //flex-grow: 1; FIXME: only grow when textarea grows.
+    flex-shrink: 0;
+    height: 64px;
+    margin-top: auto;
+    padding: 0 $padding-default;
+
+    //  Only need if we use "Send on enter" UI
+    //
+    // .rt-checkbox-field {
+    //   display: flex;
+    //   margin: 0;
+    //
+    //   .rt-checkbox-check {
+    //     order: 2;
+    //     border-color: $icon-dark-active;
+    //   }
+    //
+    //   .rt-checkbox-checked {
+    //     border-color: $color-brand;
+    //   }
+    //
+    //   .rt-checkbox-text {
+    //     color: $text-dark-secondary;
+    //     order: 1;
+    //     padding: 0 $padding-small 0 0;
+    //
+    //   }
+    // }
+  }
+}
+
+.message-list {
+  background-color: $background-message-list;
+  flex-shrink: 0;
+  height: 100vh;
+  width: 224px;
+
+  .active,
+  .rt-list-listItem:hover {
+    border-radius: 0 24px 24px 0;
+    margin-right: 12px;
+  }
+
+  .active {
+    font-weight: $font-weight-bold;
+  }
+
+  .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,
+  .rt-list-item.selectable:not(.disabled):hover {
+    background-color: transparent;
+    border-radius: 0 24px 24px 0;
+  }
+
+  .active {
+    background: $background-active-message;
+  }
+
+  .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover {
+    background: $background-hover-message;
+    padding-right: $padding-tiny;
+  }
+
+  .rt-ripple-rippleWrapper {
+    border-radius: 0 24px 24px 0;
+  }
+
+  .rt-ripple-ripple {
+    background-color: $color-brand;
+  }
+}
+
+.rt-input-input {
+  width: 100%;
+}
+
+// NEW HACK
+.rt-list-left .rt-list-itemAction {
+  margin: 0;
+
+  .material-icons {
+    font-size: 10px;
+    margin-right: $margin-default;
+    width: 10px;
+  }
+}
+
+.online .rt-list-left .material-icons {
+  color: $status-online;
+}
+
+.busy .rt-list-left .material-icons {
+  color: $status-busy;
+}

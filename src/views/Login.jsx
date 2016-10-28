@@ -20,7 +20,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         this.errorVisible = false;
     };
 
-    actions = [{ label: t('ok then'), onClick: this.hideDialog }];
+    actions = [{ label: t('ok'), onClick: this.hideDialog }];
 
     constructor() {
         super();
@@ -63,6 +63,10 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                     <div className="login-reg-button">
                         <a href={config.termsUrl}>{t('terms')}</a> | <Link to="/signup">{t('signup')}</Link>
                     </div>
+                    {/* TODO: - After Alpha -
+                        remove fullcover spinner
+                       change login button to spinner while working
+                       disable inputs while spinner is active */}
                     <FullCoverSpinner show={this.busy} />
                 </Panel>
                 <Panel className="welcome">

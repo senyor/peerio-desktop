@@ -28,22 +28,30 @@
   }
 }
 
+.rt-dialog-button {
+  min-width: 64px;
+
+  .rt-dialog-navigation &:last-of-type {
+    color: $color-brand;
+  }
+}
+
 // INPUTS
 .rt-input-bar {
   display: none;
 }
+
 .rt-input-input {
   // TODO border-radius variables
   border-radius: 2px;
-
 
   .rt-input-label {
     font-size: 14px;
     padding-left: $padding-small;
     top: 17px;
   }
-
 }
+
 .rt-input-inputElement {
   background-color: transparent;
   border-bottom-color: transparent;
@@ -86,5 +94,5 @@
 
 // OVERLAY
 .rt-overlay-active > .rt-overlay-backdrop {
-    opacity: .5;
+  opacity: .5;
 }

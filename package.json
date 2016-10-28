@@ -121,9 +121,9 @@
     },
     "config": {
         "ghooks": {
-            "pre-push": "npm run validate",
+            "pre-commit": "npm run validate",
             "post-checkout": "",
-            "post-merge": "",
+            "post-merge": "npm update",
             "commit-msg": "validate-commit-msg"
         },
         "commitizen": {

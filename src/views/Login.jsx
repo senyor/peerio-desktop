@@ -17,6 +17,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
     @observable errorVisible = false;
 
     hideDialog = () => {
+        this.busy = false;
         this.errorVisible = false;
     };
 
@@ -43,7 +44,6 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
             console.error(err);
             this.errorMsg = t('error_loginFailed');
             this.errorVisible = true;
-            this.busy = false;
         });
     }
     render() {

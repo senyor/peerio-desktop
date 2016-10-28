@@ -15,7 +15,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
     @observable passphrase ='';
     @observable busy = false;
     @observable errorVisible = false;
-
+    @observable passwordVisible = false;
     hideDialog = () => {
         this.errorVisible = false;
     };
@@ -27,8 +27,12 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         this.usernameUpdater = val => { this.username = val; };
         this.passphraseUpdater = val => { this.passphrase = val; };
         this.login = this.login.bind(this);
+        this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
     }
 
+    togglePasswordVisibility(){
+        this.passwordVisible = !this.passwordVisible;
+    }
 
     login() {
         if (this.busy) return;
@@ -55,9 +59,9 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                         <Input type="text" label={t('username')}
                             value={this.username} onChange={this.usernameUpdater} />
                         <div className="password">
-                            <Input type="password" label={t('passphrase')}
+                            <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passphrase')}
                                 value={this.passphrase} onChange={this.passphraseUpdater} />
-                            <IconButton icon="visibility" />
+                            <IconButton icon="visibility" onClick={this.togglePasswordVisibility} />
                         </div>
                         <Dropdown value={languageStore.language}
                             source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />

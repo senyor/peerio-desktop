@@ -8,22 +8,20 @@
     transition: 150ms;
     will-change: box-shadow background-color;
 
-
     &:hover {
       background: white;
       box-shadow: $shadow-8;
     }
   }
 
-
-  .rt-dropdown-value{
+  .rt-dropdown-value {
     background: $background-light-dropdown;
 
     &:hover {
       background: $background-light-dropdown;
     }
 
-    .rt-input-inputElement{
+    .rt-input-inputElement {
       color: $text-light-primary;
     }
 

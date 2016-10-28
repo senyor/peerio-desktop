@@ -1,7 +1,3 @@
-@import './vars/colors';
-@import './vars/fonts';
-@import './vars/layout';
-
 .login {
   align-items: center;
   background-color: $color-background-brand;
@@ -12,28 +8,6 @@
 
   .login-form {
     width: 275px;
-  }
-}
-
-.login-logo {
-  margin: 64px 0 74px;
-  width: 300px;
-}
-
-.login-input {
-  align-self: center;
-  background-color: $input-light-inactive;
-  // TODO border-radius variables
-  border-radius: 2px;
-  height: 48px;
-  margin-top: 40px;
-  width: 275px;
-
-  // TODO set up states for focused and contains value
-  .rt-input-label {
-    font-size: 14px;
-    padding-left: 8px;
-    top: 17px;
   }
 }
 
@@ -63,7 +37,6 @@
 
 .welcome-title {
   color: $color-brand;
-
   margin-bottom: 50px;
 
   @extend %title;

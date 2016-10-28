@@ -17,8 +17,8 @@ $color-dark-06: rgba(0, 0, 0, .06);
 $color-brand: rgb(44, 149, 207);
 
 // Status (warning/error/etc)
-$color-error: rgba(208, 2, 27, 1);
-$all-good: rgba(44, 207, 132, 1);
+$color-error: rgb(208, 2, 27);
+$color-good: rgb(44, 207, 132);
 
 // BACKGROUNDS
 $color-background-brand: $color-brand;
@@ -26,6 +26,7 @@ $color-background-message-list: rgba($color-brand, .12);
 $color-background-active-message: $color-light-100;
 $color-background-hover-message: $color-light-50;
 $color-background-root: $color-light-100;
+$color-background-overlay: rgba(0, 0, 0, .5);
 
 // TEXT
 $text-dark-primary: $color-dark-87;
@@ -60,3 +61,7 @@ $icon-dark-active: $color-dark-54;
 $icon-dark-inactive: $color-dark-38;
 $icon-light-active: $color-light-100;
 $icon-light-inactive: $color-light-50;
+
+//STATUS
+$status-online: $color-good;
+$status-busy: $color-error;

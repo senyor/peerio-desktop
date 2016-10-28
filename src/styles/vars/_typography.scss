@@ -1,7 +1,24 @@
 $font-stack: 'Open Sans', sans-serif;
-$font-weight-default: 400;
+$font-weight-light: 300;
+$font-weight-regular: 400;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
+
+%display-4 {
+  font-size: 112px;
+}
+
+%display-3 {
+  font-size: 56px;
+}
+
+%display-2 {
+  font-size: 45px;
+}
+
+%display-1 {
+  font-size: 34px;
+}
 
 %heading {
   font-size: 24px;

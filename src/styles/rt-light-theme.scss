@@ -1,5 +1,11 @@
 .rt-light-theme {
   // INPUTS
+  .rt-input-input {
+    background-color: $input-light-inactive;
+    margin-top: 40px;
+    height: 48px; 
+  }
+
   .rt-dropdown-value:after {
     border-top: 6px solid $icon-dark-inactive;
   }

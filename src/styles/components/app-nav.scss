@@ -1,0 +1,48 @@
+.app-nav {
+  align-items: center;
+  background-color: $color-background-brand;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 80px;
+
+  .app-menu {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .rt-avatar-avatar {
+    margin: 24px 0 0;
+  }
+
+  .menu-item {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+
+    // TODO transition variables
+    .rt-button-icon {
+      color: $icon-light-inactive;
+      transition: color 150ms;
+    }
+
+    &:not(.settings) {
+      margin-top: $margin-large;
+    }
+
+    &.active,
+    &:hover {
+      .rt-button-icon {
+        color: $icon-light-active;
+      }
+    }
+
+    &.settings {
+      margin-bottom: 24px;
+      margin-top: auto;
+    }
+  }
+}

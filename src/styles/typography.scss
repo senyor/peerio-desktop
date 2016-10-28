@@ -1,0 +1,11 @@
+.display-2 {
+  @extend %display-2;
+}
+
+.title {
+  @extend %title;
+}
+
+.list-title {
+  @extend %list-title;
+}

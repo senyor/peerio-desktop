@@ -2,9 +2,9 @@
 // TODO: removed all #colors
 //       replace padding and margins with variables where applicable
 
-@import './vars/colors';
-@import './vars/fonts';
-@import './vars/layout';
+@import './vars/_colors';
+@import './vars/_layout';
+@import './vars/_typography';
 
 // AVATAR
 .rt-avatar-avatar {
@@ -29,10 +29,21 @@
 }
 
 // INPUTS
-.rt-input-bar{
+.rt-input-bar {
   display: none;
 }
+.rt-input-input {
+  // TODO border-radius variables
+  border-radius: 2px;
 
+
+  .rt-input-label {
+    font-size: 14px;
+    padding-left: $padding-small;
+    top: 17px;
+  }
+
+}
 .rt-input-inputElement {
   background-color: transparent;
   border-bottom-color: transparent;
@@ -71,4 +82,9 @@
 .rt-input-errored > .rt-input-inputElement {
   border: none;
   margin-top: 2px;
+}
+
+// OVERLAY
+.rt-overlay-active > .rt-overlay-backdrop {
+    opacity: .5;
 }

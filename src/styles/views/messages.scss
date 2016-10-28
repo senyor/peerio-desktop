@@ -20,19 +20,8 @@
 
       @extend %title;
     }
-    // TODO extract this for more general use.
     .search {
-      align-items: center;
-      border: 1px solid $input-dark-border;
-      display: flex;
-      height: 36px;
-      justify-content: flex-start;
-      width: 256px;
-      border-radius: 18px;
-
-      .search-icon {
-        padding: 6px 0 6px 8px;
-      }
+      margin-right: 12px;
     }
   }
 
@@ -72,6 +61,29 @@
     height: 64px;
     margin-top: auto;
     padding: 0 $padding-default;
+
+    //  Only need if we use "Send on enter" UI
+    //
+    // .rt-checkbox-field {
+    //   display: flex;
+    //   margin: 0;
+    //
+    //   .rt-checkbox-check {
+    //     order: 2;
+    //     border-color: $icon-dark-active;
+    //   }
+    //
+    //   .rt-checkbox-checked {
+    //     border-color: $color-brand;
+    //   }
+    //
+    //   .rt-checkbox-text {
+    //     color: $text-dark-secondary;
+    //     order: 1;
+    //     padding: 0 $padding-small 0 0;
+    //
+    //   }
+    // }
   }
 }
 
@@ -96,6 +108,7 @@
     background-color: transparent;
     border-radius: 0 24px 24px 0;
   }
+
   .active {
     background: $color-background-active-message;
   }
@@ -108,6 +121,7 @@
   .rt-ripple-rippleWrapper {
     border-radius: 0 24px 24px 0;
   }
+
   .rt-ripple-ripple {
     background-color: $color-brand;
   }
@@ -123,11 +137,15 @@
 
   .material-icons {
     font-size: 10px;
-    width: 10px;
     margin-right: $margin-default;
+    width: 10px;
   }
 }
 
-.online .rt-list-left .material-icons  {
-  color: $all-good;
+.online .rt-list-left .material-icons {
+  color: $status-online;
+}
+
+.busy .rt-list-left .material-icons {
+  color: $status-busy;
 }

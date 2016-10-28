@@ -50,25 +50,24 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         return (
             <Layout>
                 <Panel className="login rt-light-theme">
-                    <img role="presentation" className="login-logo" src="static/img/peerio-logo-white.png" />
+                    <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
                     <div className="login-form">
-                        <Input type="text" className="login-input" label={t('username')}
+                        <Input type="text" label={t('username')}
                             value={this.username} onChange={this.usernameUpdater} />
-                        <Input type="password" className="login-input" label={t('passphrase')}
+                        <Input type="password" label={t('passphrase')}
                             value={this.passphrase} onChange={this.passphraseUpdater} />
-                        <Dropdown className="login-input" value={languageStore.language}
+                        <Dropdown value={languageStore.language}
                             source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
                     </div>
                     <Button className="login-button" label={t('login')} flat onClick={this.login} />
                     <div className="login-reg-button">
-                        <a href={config.termsUrl}>{t('terms')}</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                        <Link to="/signup">{t('signup')}</Link>
+                        <a href={config.termsUrl}>{t('terms')}</a> | <Link to="/signup">{t('signup')}</Link>
                     </div>
                     <FullCoverSpinner show={this.busy} />
                 </Panel>
                 <Panel className="welcome">
                     <div className="welcome-text">
-                        <div className="welcome-title">Welcome to Peerio Alpha (codename Icebear)</div>
+                        <div className="display-2">Welcome to Peerio Alpha (codename Icebear)</div>
                         [changelog should magically appear here in the nearest future]<br /><br />
                         <div>
                             In this release you can:<br /><br />

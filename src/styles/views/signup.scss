@@ -1,7 +1,3 @@
-@import './vars/colors';
-@import './vars/fonts';
-@import './vars/layout';
-
 .signup {
   justify-content: space-between;
   transition: width .5s;
@@ -15,12 +11,6 @@
     overflow-y: auto;
   }
   @extend .login;
-}
-
-.signup-logo {
-  margin-bottom: 30px;
-
-  @extend .login-logo;
 }
 
 .signup.expand {
@@ -75,7 +65,7 @@
 .input-row {
   display: flex;
 
-  .login-input:first-of-type {
+  .rt-input-input:first-of-type {
     margin-right: 1px;
   }
 }

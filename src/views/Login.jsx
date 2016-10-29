@@ -30,7 +30,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
     }
 
-    togglePasswordVisibility(){
+    togglePasswordVisibility() {
         this.passwordVisible = !this.passwordVisible;
     }
 

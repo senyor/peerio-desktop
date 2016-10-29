@@ -61,7 +61,8 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                         <div className="password">
                             <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passphrase')}
                                 value={this.passphrase} onChange={this.passphraseUpdater} />
-                            <IconButton icon="visibility" onClick={this.togglePasswordVisibility} />
+                            <IconButton icon={this.passwordVisible ? 'visibility_off' : 'visibility'}
+                                onClick={this.togglePasswordVisibility} />
                         </div>
                         <Dropdown value={languageStore.language}
                             source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />

@@ -9,7 +9,7 @@
     will-change: box-shadow background-color;
 
     &:hover {
-      background: white;
+      background: $color-light-100;
       box-shadow: $shadow-8;
     }
   }
@@ -27,6 +27,8 @@
 
     &:after {
       border-top: 6px solid $icon-light-active;
+      right: 12px;
+      top: 21px;
     }
   }
 

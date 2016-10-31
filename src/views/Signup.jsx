@@ -89,12 +89,12 @@ const storage = require('../stores/tiny-db');
                         <div className="signup-title">{t('signup')}</div>
                         {this.step === 1 ?
                             <SignupProfile store={this.profileStore} /> :
-                                <SignupPasscode store={this.passcodeStore} />}
+                            <SignupPasscode store={this.passcodeStore} />}
                     </Panel>
 
                     <div className="signup-nav">
                         <Link to="/"><Button flat label={t('button_exit')} /></Link>
-                        <Button flat label={t('next')}
+                        <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
                                 onClick={this.step === 1 ? this.createAccount : this.setPasscode}
                                 disabled={this.hasError}
                         />

@@ -63,8 +63,22 @@
       background-color: $background-light-button-hover;
     }
   }
+  .rt-button-button[disabled] {
+    color: $text-light-disabled;
+  }
 
   .rt-input-errored {
     border-bottom: 2px solid $border-error;
+  }
+
+  .rt-input-error {
+    color: $text-light-error;
+    display: block;
+    margin-top: 2px;
+  }
+
+
+  strong {
+    color: $text-light-primary;
   }
 }

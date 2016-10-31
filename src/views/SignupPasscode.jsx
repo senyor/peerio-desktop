@@ -56,14 +56,17 @@ class PasscodeStore {
                 <div className="signup-subtitle">{t('signup_desktop_passcodeTitle')}</div>
                 <Input type="password" className="login-input" label={t('signup_passcode')} error={s.passcodeError}
                        value={s.passcode} onChange={this.passcodeUpdater} />
-                <Input type="password" className="login-input" label={t('signup_passcodeRepeat')} error={s.passcodeRepeatError}
+                <Input type="password" className="login-input" label={t('signup_passcodeRepeat')}
+                       error={s.passcodeRepeatError}
                        value={s.passcodeRepeat} onChange={this.passcodeRepeatUpdater} />
 
-                <T k="signup_masterPasswordText" className="signup-terms">
-                    {{ masterPasswordLink: text => <a href={config.masterPasswordUrl}>{text}</a> }}
-                </T>
+                <p>{t('signup_masterPasswordText',
+                    { emphasis: text => <strong>{text}</strong> })}
+                </p>
 
-                <span className="signup-terms">{t('signup_masterPasswordSettings')}</span>
+                <p> {t('signup_masterPasswordSettings',
+                    { emphasis: text => <strong>{text}</strong> })}
+                </p>
 
                 <T k="signup_TOSRequestText" className="signup-terms">
                     {{ tosLink: text => <a href={config.termsUrl}>{text}</a> }}

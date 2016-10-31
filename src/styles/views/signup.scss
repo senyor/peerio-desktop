@@ -1,64 +1,64 @@
 .signup {
   align-items: center;
   background-color: $background-brand;
+  color: $text-light-secondary;
   transition: width .5s;
 
   .profile {
     display: flex;
     flex-direction: column;
   }
-}
 
-.signup.expand {
-  width: 100vw;
-}
+  p, .signup-terms {
+    display: block;
+    // TODO: line-height variables
+    line-height: 1.45;
+    margin-top: 48px;
 
-.signup-form {
-  justify-content: flex-start;
-  padding: 0 $padding-default;
-  width: 307px;
-}
+    + p {
+      margin-top: $margin-large;
+    }
+  }
 
-.signup-title,
-.signup-subtitle {
-  color: $text-light-secondary;
-}
-
-.signup-subtitle {
-  margin-top: $margin-tiny;
-
-  @extend %heading;
-}
-
-.signup-nav {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 36px;
-  width: 330px;
-}
-
-.signup-terms {
-  color: $text-light-secondary;
-  display: block;
-  margin-top: 48px;
-
-  > a {
+  a {
     color: $text-light-primary;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     text-decoration: underline;
   }
-}
 
-.rt-input-error {
-  color: $text-light-error;
-  display: block;
-  margin-top: 2px;
-}
+  &.expand {
+    width: 100vw;
+  }
 
-.input-row {
-  display: flex;
+  .signup-form {
+    justify-content: flex-start;
+    padding: 0 $padding-default;
+    width: 307px;
+  }
 
-  .rt-input-input:first-of-type {
-    margin-right: 1px;
+  .signup-title,
+  .signup-subtitle {
+    color: $text-light-secondary;
+  }
+
+  .signup-subtitle {
+    margin-top: $margin-tiny;
+
+    @extend %heading;
+  }
+
+  .signup-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 36px;
+    width: 330px;
+  }
+
+  .input-row {
+    display: flex;
+
+    .rt-input-input:first-of-type {
+      margin-right: 1px;
+    }
   }
 }

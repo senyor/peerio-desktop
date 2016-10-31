@@ -1,8 +1,8 @@
 /* eslint-disable */
 const React = require('react');
 const { Component } = require('react');
-const { Avatar, FontIcon, IconButton,
-        Input, List, ListItem, ListSubHeader, Panel } = require('react-toolbox');
+const { Avatar, FontIcon, IconButton, IconMenu,
+        Input, List, ListItem, ListSubHeader, MenuItem, Panel } = require('react-toolbox');
 
 class Messages extends Component {
     state = { multiline: '' };
@@ -55,7 +55,10 @@ class Messages extends Component {
                             </div>
                         </div>
                         <div className="message-input">
-                            <IconButton icon="add_circle_outline" />
+                            <IconMenu icon="add_circle_outline">
+                                <MenuItem value='share'  caption='Share from files' />
+                                <MenuItem value='upload'  caption='Upload to DM' />
+                            </IconMenu>
                             <Input multiline type="text" placeholder="Messages Alice"
                                 onChange={this.handleChange.bind(this, 'multiline')} />
                             {/* <Checkbox

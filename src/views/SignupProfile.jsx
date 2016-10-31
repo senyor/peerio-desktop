@@ -1,9 +1,9 @@
 const React = require('react');
 const { Component } = require('react');
-const { observable, autorunAsync } = require('mobx');
+const { observable, autorunAsync, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Input, Dropdown } = require('react-toolbox');
-const { pCrypto, config, User, errors } = require('../icebear'); // eslint-disable-line
+const { config, User } = require('../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const languageStore = require('../stores/language-store');
 const T = require('../components/T');
@@ -14,8 +14,13 @@ class ProfileStore {
     @observable firstName ='';
     @observable lastName ='';
     @observable usernameError = '';
+
+    @computed get hasErrors() {
+        const emptyFields = !this.email || !this.username || !this.firstName || !this.lastName;
+        return emptyFields || (this.usernameError.length > 0);
+    }
 }
-const a = 4;
+
 @observer class SignupProfile extends Component {
     constructor() {
         super();

@@ -2,7 +2,7 @@ const React = require('react');
 const { Component } = require('react');
 const { Layout, Panel, Button } = require('react-toolbox');
 const { pCrypto, config, User, errors } = require('../icebear'); // eslint-disable-line
-const { observable, autorunAsync } = require('mobx');
+const { observable, autorunAsync, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Link } = require('react-router');
@@ -10,6 +10,8 @@ const css = require('classnames');
 const languageStore = require('../stores/language-store');
 const FullCoverSpinner = require('../components/FullCoverSpinner');
 const { SignupProfile, ProfileStore } = require('./SignupProfile');
+const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
+const storage = require('../stores/tiny-db');
 
 //----------------------------------------------------------------------------------------------------------------
 @observer class Signup extends Component {
@@ -17,7 +19,14 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
     @observable expand = false; // starts expand animation
     @observable step = 1; // 1 -profile, 2- passcode
     profileStore = new ProfileStore();
-    // passcodeStore = new PasscodeStore();
+    passcodeStore = new PasscodeStore();
+
+    @computed get hasError() {
+        if (this.step === 1) {
+            return this.profileStore.hasErrors;
+        }
+        return this.passcodeStore.hasErrors;
+    }
 
     constructor() {
         super();
@@ -26,14 +35,28 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
         this.firstNameUpdater = (val) => { this.firstName = val; };
         this.lastNameUpdater = (val) => { this.lastName = val; };
         this.createAccount = this.createAccount.bind(this);
+        this.setPasscode = this.setPasscode.bind(this);
         autorunAsync(() => {
             if (this.username === undefined) return;
             User.validateUsername(this.username)
                 .then(res => { this.usernameError = res ? '' : t('usernameNotAvailable'); });
         }, 100);
     }
+
     componentDidMount() {
         this.expand = true;
+    }
+
+    setPasscode() {
+        if (!this.passcodeStore.hasErrors) {
+            return User.current.getPasscodeSecret(this.passcodeStore.passcode)
+                .then((passcodeSecret) => {
+                    const passcodeSecretToSerialize = Array(...passcodeSecret);
+                    storage.set(`${User.current.username}:passcode`, passcodeSecretToSerialize);
+                    this.context.router.push('/app');
+                });
+        }
+        return false;
     }
 
     createAccount() {
@@ -48,7 +71,8 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
         u.createAccountAndLogin()
             .then(() => {
                 User.current = u;
-                this.context.router.push('/app');
+                this.step = 2;
+                this.busy = false;
             })
             .catch(err => {
                 this.busy = false;
@@ -63,14 +87,21 @@ const { SignupProfile, ProfileStore } = require('./SignupProfile');
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
                     <Panel className="signup-form" scrollY>
                         <div className="signup-title">{t('signup')}</div>
-                        {this.step === 1 ? <SignupProfile store={this.profileStore} /> : 'Hello, Passcode'}
+                        {this.step === 1 ?
+                            <SignupProfile store={this.profileStore} /> :
+                                <SignupPasscode store={this.passcodeStore} />}
                     </Panel>
+
                     <div className="signup-nav">
                         <Link to="/"><Button flat label={t('button_exit')} /></Link>
-                        <Button flat label={t('next')} onClick={this.createAccount} />
+                        <Button flat label={t('next')}
+                                onClick={this.step === 1 ? this.createAccount : this.setPasscode}
+                                disabled={this.hasError}
+                        />
                     </div>
                     <FullCoverSpinner show={this.busy} />
                 </Panel>
+
             </Layout>
         );
     }

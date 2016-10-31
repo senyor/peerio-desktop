@@ -17,7 +17,7 @@ class ProfileStore {
 
     @computed get hasErrors() {
         const emptyFields = !this.email || !this.username || !this.firstName || !this.lastName;
-        return emptyFields || this.usernameError;
+        return emptyFields || (this.usernameError.length > 0);
     }
 }
 

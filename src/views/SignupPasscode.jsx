@@ -21,7 +21,7 @@ class PasscodeStore {
 }
 
 @observer class SignupPasscode extends Component {
-    validatePassword(password) {
+    validatePasswordStrength(password) {
         return zxcvbn(password).score > 2; // FIXME too low?
     }
 
@@ -32,7 +32,7 @@ class PasscodeStore {
         } else {
             this.props.store.passcodeRepeatError = undefined;
         }
-        if (!this.validatePassword(this.props.store.passcode)) {
+        if (!this.validatePasswordStrength(this.props.store.passcode)) {
             this.props.store.passcodeError = t('duh');
         } else {
             this.props.store.passcodeError = undefined;
@@ -54,15 +54,17 @@ class PasscodeStore {
         const s = this.props.store;
         return (
             <div className="passcode">
-                <div className="signup-subtitle">{t('passcode')}</div>
-                <Input type="password" className="login-input" label={t('passcode')} error={s.passcodeError}
+                <div className="signup-subtitle">{t('signup_desktop_passcodeTitle')}</div>
+                <Input type="password" className="login-input" label={t('signup_passcode')} error={s.passcodeError}
                        value={s.passcode} onChange={this.passcodeUpdater} />
-                <Input type="password" className="login-input" label={t('passcodeRepeat')} error={s.passcodeRepeatError}
+                <Input type="password" className="login-input" label={t('signup_passcodeRepeat')} error={s.passcodeRepeatError}
                        value={s.passcodeRepeat} onChange={this.passcodeRepeatUpdater} />
 
-                <T k="signup_MasterPasswordText" className="signup-terms">
-                    {{ masterPasswordLink: text => <a href={config.termsUrl}>{text}</a> }}
+                <T k="signup_masterPasswordText" className="signup-terms">
+                    {{ masterPasswordLink: text => <a href={config.masterPasswordUrl}>{text}</a> }}
                 </T>
+
+                <span className="signup-terms">{t('signup_masterPasswordSettings')}</span>
 
                 <T k="signup_TOSRequestText" className="signup-terms">
                     {{ tosLink: text => <a href={config.termsUrl}>{text}</a> }}

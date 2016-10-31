@@ -48,7 +48,11 @@ class LanguageStore {
 
     @action changeLanguage(code) {
         try {
-            const translation = require(`../static/locales/${code.replace('-', '_')}.json`);
+            const path = `../static/locales/${code.replace('-', '_')}.json`;
+            // to avoid recompilation of already compiled json
+            // todo: maybe do this in json extension hook
+            delete require.cache[require.resolve(path)];
+            const translation = require(path);
             setLocale(code, translation);
             this.language = code;
             storage.set('language', code);

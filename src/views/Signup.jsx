@@ -47,11 +47,12 @@ const storage = require('../stores/tiny-db');
         this.expand = true;
     }
 
-    setPasscode(passcodeString) {
+    setPasscode() {
         if (!this.passcodeStore.hasErrors) {
-            return User.current.getPasscodeSecret(passcodeString)
+            return User.current.getPasscodeSecret(this.passcodeStore.passcode)
                 .then((passcodeSecret) => {
-                    storage.set(`${User.current.username}:passcode`, passcodeSecret);
+                    const passcodeSecretToSerialize = Array.apply(null, passcodeSecret);
+                    storage.set(`${User.current.username}:passcode`, passcodeSecretToSerialize);
                     this.context.router.push('/app');
                 });
         }
@@ -88,7 +89,7 @@ const storage = require('../stores/tiny-db');
                         <div className="signup-title">{t('signup')}</div>
                         {this.step === 1 ?
                             <SignupProfile store={this.profileStore} /> :
-                            <SignupPasscode store={this.passcodeStore} />}
+                                <SignupPasscode store={this.passcodeStore} />}
                     </Panel>
 
                     <div className="signup-nav">

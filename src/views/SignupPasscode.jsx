@@ -8,7 +8,6 @@ const { t } = require('peerio-translator');
 const T = require('../components/T');
 const zxcvbn = require('zxcvbn');
 
-
 class PasscodeStore {
     @observable passcode;
     @observable passcodeRepeat;

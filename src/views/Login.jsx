@@ -9,14 +9,16 @@ const { t } = require('peerio-translator');
 const languageStore = require('../stores/language-store');
 const { Link } = require('react-router');
 const FullCoverSpinner = require('../components/FullCoverSpinner');
+const storage = require('../stores/tiny-db');
+
 
 @observer class Login extends Component {
-    @observable username ='';
-    @observable passphrase ='';
-    @observable busy = false;
-    @observable errorVisible = false;
-    @observable passwordVisible = false;
-    hideDialog = () => {
+    @observable username             ='';
+    @observable passcodeOrPassphrase ='';
+    @observable busy                 = false;
+    @observable errorVisible         = false;
+    @observable passwordVisible      = false;
+                hideDialog           = () => {
         this.errorVisible = false;
     };
 
@@ -25,7 +27,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
     constructor() {
         super();
         this.usernameUpdater = val => { this.username = val; };
-        this.passphraseUpdater = val => { this.passphrase = val; };
+        this.passphraseUpdater = val => { this.passcodeOrPassphrase = val; };
         this.login = this.login.bind(this);
         this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
     }
@@ -39,7 +41,8 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         this.busy = true;
         const user = new User();
         user.username = this.username;
-        user.passphrase = this.passphrase;
+        user.passphrase = this.passcodeOrPassphrase;
+        user.passcodeSecret = new Uint8Array(storage.get(`${this.username}:passcode`));
         user.login().then(() => {
             User.current = user;
             this.context.router.push('/app');
@@ -59,8 +62,8 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                         <Input type="text" label={t('username')}
                             value={this.username} onChange={this.usernameUpdater} />
                         <div className="password">
-                            <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passphrase')}
-                                value={this.passphrase} onChange={this.passphraseUpdater} />
+                            <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passcodeOrPassphrase')}
+                                   value={this.passcodeOrPassphrase} onChange={this.passphraseUpdater} />
                             <IconButton icon={this.passwordVisible ? 'visibility_off' : 'visibility'}
                                 onClick={this.togglePasswordVisibility} />
                         </div>

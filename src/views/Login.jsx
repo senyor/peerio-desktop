@@ -13,12 +13,12 @@ const storage = require('../stores/tiny-db');
 
 
 @observer class Login extends Component {
-    @observable username             ='';
+    @observable username ='';
     @observable passcodeOrPassphrase ='';
-    @observable busy                 = false;
-    @observable errorVisible         = false;
-    @observable passwordVisible      = false;
-                hideDialog           = () => {
+    @observable busy = false;
+    @observable errorVisible = false;
+    @observable passwordVisible = false;
+    hideDialog = () => {
         this.errorVisible = false;
     };
 

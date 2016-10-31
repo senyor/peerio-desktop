@@ -51,7 +51,7 @@ const storage = require('../stores/tiny-db');
         if (!this.passcodeStore.hasErrors) {
             return User.current.getPasscodeSecret(this.passcodeStore.passcode)
                 .then((passcodeSecret) => {
-                    const passcodeSecretToSerialize = Array.apply(null, passcodeSecret);
+                    const passcodeSecretToSerialize = Array(...passcodeSecret);
                     storage.set(`${User.current.username}:passcode`, passcodeSecretToSerialize);
                     this.context.router.push('/app');
                 });

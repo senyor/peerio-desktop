@@ -34,15 +34,19 @@
 
   .rt-dropdown-values {
     background-color: #53aee0;
+
+    li {
+      color: $text-light-hint;
+
+      &:hover {
+        background-color: $background-light-dropdown;
+        color: $text-light-primary;
+      }
+    }
+  }
+
+  .rt-dropdown-values > li.rt-dropdown-selected {
     color: $text-light-primary;
-  }
-
-  .rt-dropdown-values > *:hover {
-    background-color: #83c7ec;
-  }
-
-  .rt-dropdown-values > *.rt-dropdown-selected {
-    color: inherit;
   }
 
   .rt-button-icon,
@@ -56,7 +60,7 @@
     color: $text-light-primary;
 
     &:hover {
-      background-color: $divider-light;
+      background-color: $background-light-button-hover;
     }
   }
 

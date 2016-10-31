@@ -89,7 +89,7 @@
     }
 
     textarea {
-      line-height: 1.35;
+      line-height: 1.45;
       max-height: 96px;
       resize: none;
     }
@@ -158,7 +158,7 @@
   }
 }
 
-// NEW HACK
+// contact status indicator
 .rt-list-left .rt-list-itemAction {
   margin: 0;
 
@@ -168,7 +168,7 @@
     width: 10px;
   }
 }
-
+// status should be applied to list item parent.
 .online .rt-list-left .material-icons {
   color: $status-online;
 }

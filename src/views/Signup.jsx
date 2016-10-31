@@ -89,7 +89,7 @@ const storage = require('../stores/tiny-db');
                         <div className="signup-title">{t('signup')}</div>
                         {this.step === 1 ?
                             <SignupProfile store={this.profileStore} /> :
-                            <SignupPasscode store={this.passcodeStore} />}
+                                <SignupPasscode store={this.passcodeStore} />}
                     </Panel>
 
                     <div className="signup-nav">

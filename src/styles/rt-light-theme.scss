@@ -63,6 +63,7 @@
       background-color: $background-light-button-hover;
     }
   }
+
   .rt-button-button[disabled] {
     color: $text-light-disabled;
   }
@@ -76,7 +77,6 @@
     display: block;
     margin-top: 2px;
   }
-
 
   strong {
     color: $text-light-primary;

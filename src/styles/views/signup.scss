@@ -9,14 +9,14 @@
     flex-direction: column;
   }
 
-  p,
+  .signup-help,
   .signup-terms {
     display: block;
     // TODO: line-height variables
     line-height: 1.45;
     margin-top: 48px;
 
-    + p {
+    + .signup-help {
       margin-top: $margin-large;
     }
   }

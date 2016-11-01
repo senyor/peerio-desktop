@@ -62,6 +62,7 @@
     div:first-of-type {
       margin-right: 1px;
     }
+
     .helper-text {
       @extend %hint-error-label;
     }

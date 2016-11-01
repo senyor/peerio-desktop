@@ -17,7 +17,7 @@ class ProfileStore {
 
     @computed get hasErrors() {
         const emptyFields = !this.email || !this.username || !this.firstName || !this.lastName;
-        return emptyFields || (this.usernameError.length > 0);
+        return !!(emptyFields || (this.usernameError.length > 0));
     }
 }
 
@@ -59,6 +59,7 @@ class ProfileStore {
                 </div>
                 <Dropdown value={languageStore.language}
                     source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
+
                 <T k="signup_TOSRequestText" className="signup-terms">
                     {{
                         emphasis: text => <strong>{text}</strong>,

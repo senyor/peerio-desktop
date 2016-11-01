@@ -15,7 +15,7 @@ class PasscodeStore {
     @observable passcodeRepeatError;
 
     @computed get hasErrors() {
-        return !this.passcode || !this.passcodeRepeat || this.passcodeError || this.passcodeRepeatError;
+        return !!(!this.passcode || !this.passcodeRepeat || this.passcodeError || this.passcodeRepeatError);
     }
 }
 

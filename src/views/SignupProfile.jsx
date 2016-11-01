@@ -53,11 +53,13 @@ class ProfileStore {
                 </div>
                 <Dropdown value={languageStore.language}
                     source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
-                <p>{t('signup_TOSRequestText',
-                    {
-                        emphasis: text => <strong>{text}</strong>,
-                        tosLink: text => <a href={config.termsUrl}>{text}</a>
-                    })}
+                <p>
+                    <T k="signup_TOSRequestText">
+                        {{
+                            emphasis: text => <strong>{text}</strong>,
+                            tosLink: text => <a href={config.termsUrl}>{text}</a>
+                        }}
+                    </T>
                 </p>
             </div>
         );

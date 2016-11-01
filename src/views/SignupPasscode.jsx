@@ -60,16 +60,19 @@ class PasscodeStore {
                        error={s.passcodeRepeatError}
                        value={s.passcodeRepeat} onChange={this.passcodeRepeatUpdater} />
 
-                <p>{t('signup_masterPasswordText',
-                    { emphasis: text => <strong>{text}</strong> })}
-                </p>
+                <T k="signup_masterPasswordText" className="signup-help">
+                    {{ emphasis: text => <strong>{text}</strong> }}
+                </T>
 
-                <p> {t('signup_masterPasswordSettings',
-                    { emphasis: text => <strong>{text}</strong> })}
-                </p>
+                <T k="signup_masterPasswordSettings" className="signup-help">
+                    {{ emphasis: text => <strong>{text}</strong> }}
+                </T>
 
                 <T k="signup_TOSRequestText" className="signup-terms">
-                    {{ tosLink: text => <a href={config.termsUrl}>{text}</a> }}
+                    {{
+                        emphasis: text => <strong>{text}</strong>,
+                        tosLink: text => <a href={config.termsUrl}>{text}</a>
+                    }}
                 </T>
             </div>
         );

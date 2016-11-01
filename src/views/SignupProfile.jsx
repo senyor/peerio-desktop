@@ -56,20 +56,27 @@ class ProfileStore {
                 <Input type="text" label={t('email')}
                     value={s.email} error={s.emailError} onChange={this.emailUpdater} />
                 <div className="input-row">
-                    {/* TODO: Make fields optional. Add optional helper text. */}
-                    <Input type="text" label={t('firstName')}
-                        value={s.firstName} onChange={this.firstNameUpdater} />
-                    <Input type="text" label={t('lastName')}
-                        value={s.lastName} onChange={this.lastNameUpdater} />
+                    {/* TODO: Make fields optional. */}
+                    <div>
+                        <Input type="text" label={t('firstName')}
+                            value={s.firstName} onChange={this.firstNameUpdater} />
+                        <span className="helper-text">Optional</span>
+                    </div>
+                    <div>
+                        <Input type="text" label={t('lastName')}
+                            value={s.lastName} onChange={this.lastNameUpdater} />
+                        <span className="helper-text">Optional</span>
+                    </div>
                 </div>
                 <Dropdown value={languageStore.language}
                     source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
-                <p>{t('signup_TOSRequestText',
-                    {
+
+                <T k="signup_TOSRequestText" className="signup-terms">
+                    {{
                         emphasis: text => <strong>{text}</strong>,
                         tosLink: text => <a href={config.termsUrl}>{text}</a>
-                    })}
-                </p>
+                    }}
+                </T>
             </div>
         );
     }

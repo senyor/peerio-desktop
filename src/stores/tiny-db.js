@@ -18,7 +18,7 @@ function getValue(key) {
     return settings[key];
 }
 
-function getValueAsync(key){
+function getValueAsync(key) {
     return Promise.resolve(getValue(key));
 }
 
@@ -35,7 +35,7 @@ function setValue(key, value) {
     return value;
 }
 
-function setValueAsync(key, value){
+function setValueAsync(key, value) {
     return Promise.resolve(setValue(key, value));
 }
 

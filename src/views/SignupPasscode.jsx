@@ -27,12 +27,12 @@ class PasscodeStore {
     validate() {
         if (this.props.store.passcode === undefined) return;
         if (this.props.store.passcode !== this.props.store.passcodeRepeat) {
-            this.props.store.passcodeRepeatError = t('repeat');
+            this.props.store.passcodeRepeatError = t('signup_passcodeErrorRepeat');
         } else {
             this.props.store.passcodeRepeatError = undefined;
         }
         if (!this.validatePasswordStrength(this.props.store.passcode)) {
-            this.props.store.passcodeError = t('duh');
+            this.props.store.passcodeError = t('signup_passcodeErrorWeak');
         } else {
             this.props.store.passcodeError = undefined;
         }

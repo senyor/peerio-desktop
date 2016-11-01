@@ -68,7 +68,8 @@ const storage = require('../stores/tiny-db');
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
         u.passphrase = 'icebear';
-        u.createAccountAndLogin()
+        if (!this.profileStore.hasErrors) {
+            u.createAccountAndLogin()
             .then(() => {
                 User.current = u;
                 this.step = 2;
@@ -78,6 +79,7 @@ const storage = require('../stores/tiny-db');
                 this.busy = false;
                 alert(`Error: ${errors.normalize(err)}`);
             });
+        }
     }
 
     render() {

@@ -14,10 +14,11 @@ class ProfileStore {
     @observable firstName ='';
     @observable lastName ='';
     @observable usernameError = '';
+    @observable emailError = undefined;
 
     @computed get hasErrors() {
         const emptyFields = !this.email || !this.username || !this.firstName || !this.lastName;
-        return !!(emptyFields || (this.usernameError.length > 0));
+        return !!(emptyFields || (this.usernameError) || this.emailError);
     }
 }
 
@@ -29,12 +30,22 @@ class ProfileStore {
         this.firstNameUpdater = (val) => { this.props.store.firstName = val; };
         this.lastNameUpdater = (val) => { this.props.store.lastName = val; };
         // reaction validates username over server api
-        autorunAsync(() => {
-            if (this.props.store.username === undefined) return;
-            User.validateUsername(this.props.store.username)
-                .then(res => { this.props.store.usernameError = res ? '' : t('usernameNotAvailable'); });
-        }, 100);
+        autorunAsync(() => this.validate(), 100);
     }
+
+    validate() {
+        if (this.props.store.username === undefined) return false;
+        if (!this.props.store.email.match(/.+@.+\..*/)) {
+            this.props.store.emailError = t('signup_emailError');
+        } else {
+            this.props.store.emailError = undefined;
+        }
+        return User.validateUsername(this.props.store.username)
+            .then(res => {
+                this.props.store.usernameError = res ? undefined : t('usernameNotAvailable');
+            });
+    }
+
     render() {
         const s = this.props.store;
         return (
@@ -43,7 +54,7 @@ class ProfileStore {
                 <Input type="text" label={t('username')} error={s.usernameError}
                     value={s.username} onChange={this.usernameUpdater} />
                 <Input type="text" label={t('email')}
-                    value={s.email} onChange={this.emailUpdater} />
+                    value={s.email} error={s.emailError} onChange={this.emailUpdater} />
                 <div className="input-row">
                     {/* TODO: Make fields optional. Add optional helper text. */}
                     <Input type="text" label={t('firstName')}

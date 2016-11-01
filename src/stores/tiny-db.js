@@ -9,15 +9,27 @@ const fileOpts = { encoding: 'utf8' };
 
 if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '{}', fileOpts);
 
-function get(key) {
+/**
+ *
+ * @param key
+ * @returns {Promise.<T>}
+ */
+function getValue(key) {
     const settings = load();
-    return settings[key];
+    return Promise.resolve(settings[key]);
 }
 
-function set(key, value) {
+/**
+ *
+ * @param key
+ * @param value
+ * @returns {Promise.<*>}
+ */
+function setValue(key, value) {
     const settings = load();
     settings[key] = value;
     save(settings);
+    return Promise.resolve(value);
 }
 
 function load() {
@@ -28,4 +40,4 @@ function save(settings) {
     fs.writeFileSync(filePath, JSON.stringify(settings), fileOpts);
 }
 
-module.exports = { get, set };
+module.exports = { getValue, setValue };

@@ -1,6 +1,8 @@
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, Menu, shell } = require('electron');
-const storage = require('./stores/tiny-db');
+const { db, setTinyDbEngine } = require('./icebear');  // eslint-disable-line
+const tinyStorage = require('./stores/tiny-db');
+setTinyDbEngine(tinyStorage);
 const isDevEnv = process.env.NODE_ENV !== 'production';
 
 if (require('electron-squirrel-startup')) app.quit();
@@ -47,7 +49,7 @@ function onAppReady() {
 }
 
 function saveWindowState(state) {
-    storage.set('windowState', state);
+    db.set('windowState', state);
 }
 
 function getSavedWindowState() {
@@ -55,7 +57,7 @@ function getSavedWindowState() {
         width: 1024,
         height: 728
     };
-    const savedState = storage.get('windowState');
+    const savedState = db.get('windowState');
     return Object.assign(defaultState, savedState || {});
 }
 

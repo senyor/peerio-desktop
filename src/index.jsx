@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const {render} = require('react-dom');
     const {Router, hashHistory} = require('react-router');
     const routes = require('./routes');
-    const tinyStorage = require('./stores/tiny-db');
+    const tinyDb = require('./stores/tiny-db');
 
-    setTinyDbEngine(tinyStorage);
+    setTinyDbEngine({getValue: tinyDb.getValueAsync, setValue: tinyDb.setValueAsync});
 
     config.socketServerUrl = 'wss://hocuspocus.peerio.com';
     socket.start();

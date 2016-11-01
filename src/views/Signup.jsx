@@ -11,7 +11,6 @@ const languageStore = require('../stores/language-store');
 const FullCoverSpinner = require('../components/FullCoverSpinner');
 const { SignupProfile, ProfileStore } = require('./SignupProfile');
 const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
-const storage = require('../stores/tiny-db');
 
 //----------------------------------------------------------------------------------------------------------------
 @observer class Signup extends Component {

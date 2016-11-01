@@ -1,5 +1,4 @@
 const electron = require('electron');
-const normalizeError = require('../icebear/errors').normalize; //eslint-disable-line
 const path = require('path');
 const fs = require('fs');
 
@@ -16,7 +15,11 @@ if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '{}', fileOpts);
  */
 function getValue(key) {
     const settings = load();
-    return Promise.resolve(settings[key]);
+    return settings[key];
+}
+
+function getValueAsync(key){
+    return Promise.resolve(getValue(key));
 }
 
 /**
@@ -29,7 +32,11 @@ function setValue(key, value) {
     const settings = load();
     settings[key] = value;
     save(settings);
-    return Promise.resolve(value);
+    return value;
+}
+
+function setValueAsync(key, value){
+    return Promise.resolve(setValue(key, value));
 }
 
 function load() {
@@ -40,4 +47,4 @@ function save(settings) {
     fs.writeFileSync(filePath, JSON.stringify(settings), fileOpts);
 }
 
-module.exports = { getValue, setValue };
+module.exports = { getValue, setValue, getValueAsync, setValueAsync };

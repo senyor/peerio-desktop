@@ -9,8 +9,6 @@ const { t } = require('peerio-translator');
 const languageStore = require('../stores/language-store');
 const { Link } = require('react-router');
 const FullCoverSpinner = require('../components/FullCoverSpinner');
-const storage = require('../stores/tiny-db');
-
 
 @observer class Login extends Component {
     @observable username ='';
@@ -42,7 +40,6 @@ const storage = require('../stores/tiny-db');
         const user = new User();
         user.username = this.username;
         user.passphrase = this.passcodeOrPassphrase;
-        user.passcodeSecret = new Uint8Array(storage.get(`${this.username}:passcode`));
         user.login().then(() => {
             User.current = user;
             this.context.router.push('/app');

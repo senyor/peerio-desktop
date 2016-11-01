@@ -34,8 +34,8 @@ const storage = require('../stores/tiny-db');
         this.emailUpdater = (val) => { this.email = val; };
         this.firstNameUpdater = (val) => { this.firstName = val; };
         this.lastNameUpdater = (val) => { this.lastName = val; };
-        this.createAccount = this.createAccount.bind(this);
-        this.setPasscode = this.setPasscode.bind(this);
+        this.navigateToPasscode = this.navigateToPasscode.bind(this);
+        this.createAccountWithPasscode = this.createAccountWithPasscode.bind(this);
         autorunAsync(() => {
             if (this.username === undefined) return;
             User.validateUsername(this.username)
@@ -47,20 +47,25 @@ const storage = require('../stores/tiny-db');
         this.expand = true;
     }
 
-    setPasscode() {
+    createAccountWithPasscode() {
         if (!this.passcodeStore.hasErrors) {
-            return User.current.getPasscodeSecret(this.passcodeStore.passcode)
-                .then((passcodeSecret) => {
-                    const passcodeSecretToSerialize = Array(...passcodeSecret);
-                    storage.set(`${User.current.username}:passcode`, passcodeSecretToSerialize);
+            return this.createAccount()
+                .then(() => User.current.setPasscode(this.passcodeStore.passcode))
+                .then(() => {
                     this.context.router.push('/app');
                 });
         }
-        return false;
+        return Promise.resolve(false);
+    }
+
+    createAccountWithoutPasscode() {
+        this.createAccount();
+        // then: show passphrase
     }
 
     createAccount() {
         this.busy = true;
+
         const u = new User();
         u.username = this.profileStore.username;
         u.email = this.profileStore.email;
@@ -68,17 +73,25 @@ const storage = require('../stores/tiny-db');
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
         u.passphrase = 'icebear';
-        if (!this.profileStore.hasErrors) {
-            u.createAccountAndLogin()
+
+        return u.createAccountAndLogin()
             .then(() => {
                 User.current = u;
-                this.step = 2;
                 this.busy = false;
+                this.context.router.push('/app');
             })
             .catch(err => {
                 this.busy = false;
                 alert(`Error: ${errors.normalize(err)}`);
             });
+    }
+
+    navigateToPasscode() {
+        this.busy = true;
+
+        if (!this.profileStore.hasErrors) {
+            this.step = 2;
+            this.busy = false;
         }
     }
 
@@ -97,7 +110,7 @@ const storage = require('../stores/tiny-db');
                     <div className="signup-nav">
                         <Link to="/"><Button flat label={t('button_exit')} /></Link>
                         <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
-                                onClick={this.step === 1 ? this.createAccount : this.setPasscode}
+                                onClick={this.step === 1 ? this.navigateToPasscode : this.createAccountWithPasscode}
                                 disabled={this.hasError}
                         />
                     </div>

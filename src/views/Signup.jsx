@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = require('react');
-const { Layout, Panel, Button } = require('react-toolbox');
+const { Layout, Panel, Button, Dialog } = require('react-toolbox');
 const { pCrypto, config, User, errors } = require('../icebear'); // eslint-disable-line
 const { observable, autorunAsync, computed } = require('mobx');
 const { observer } = require('mobx-react');
@@ -12,11 +12,13 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
 const { SignupProfile, ProfileStore } = require('./SignupProfile');
 const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
 
-//----------------------------------------------------------------------------------------------------------------
 @observer class Signup extends Component {
     @observable busy = false;
     @observable expand = false; // starts expand animation
     @observable step = 1; // 1 -profile, 2- passcode
+    @observable errorVisible = false;
+    @observable errorMessage = undefined;
+
     profileStore = new ProfileStore();
     passcodeStore = new PasscodeStore();
 
@@ -33,17 +35,19 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         this.emailUpdater = (val) => { this.email = val; };
         this.firstNameUpdater = (val) => { this.firstName = val; };
         this.lastNameUpdater = (val) => { this.lastName = val; };
-        this.navigateToPasscode = this.navigateToPasscode.bind(this);
+        this.validate = this.validate.bind(this);
         this.createAccountWithPasscode = this.createAccountWithPasscode.bind(this);
-        autorunAsync(() => {
-            if (this.username === undefined) return;
-            User.validateUsername(this.username)
-                .then(res => { this.usernameError = res ? '' : t('usernameNotAvailable'); });
-        }, 100);
+        autorunAsync(() => this.validate, 100);
     }
 
     componentDidMount() {
         this.expand = true;
+    }
+
+    validate() {
+        if (this.username === undefined) return Promise.resolve();
+        return User.validateUsername(this.username)
+            .then(res => { this.usernameError = res ? '' : t('usernameNotAvailable'); });
     }
 
     createAccountWithPasscode() {
@@ -52,14 +56,16 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
                 .then(() => User.current.setPasscode(this.passcodeStore.passcode))
                 .then(() => {
                     this.context.router.push('/app');
-                });
+                })
+                .catch(err => {});
         }
         return Promise.resolve(false);
     }
 
     createAccountWithoutPasscode() {
-        this.createAccount();
-        // then: show passphrase
+        this.createAccount()
+            .catch(err => {});
+        // TODO then: show passphrase
     }
 
     createAccount() {
@@ -81,18 +87,34 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
             })
             .catch(err => {
                 this.busy = false;
-                alert(`Error: ${errors.normalize(err)}`);
+                this.errorVisible = true;
+                this.errorMessage = errors.normalize(err).message; // TODO non-debuggy messages
+                throw err;
             });
     }
 
-    navigateToPasscode() {
+    errorActions = [
+        { label: t('ok'), onClick: this.navigateToProfile }
+    ];
+
+    navigateToPasscode = () => {
         this.busy = true;
 
         if (!this.profileStore.hasErrors) {
             this.step = 2;
             this.busy = false;
         }
-    }
+    };
+
+    navigateToProfile = () => {
+        this.busy = true;
+        return this.validate()
+            .then(() => {
+                this.step = 1;
+                this.busy = false;
+                this.errorVisible = false;
+            });
+    };
 
     render() {
         return (
@@ -114,6 +136,9 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
                         />
                     </div>
                     <FullCoverSpinner show={this.busy} />
+                    <Dialog actions={this.errorActions} active={this.errorVisible}
+                            onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
+                            title={t('error')}>{this.errorMessage}</Dialog>
                 </Panel>
 
             </Layout>

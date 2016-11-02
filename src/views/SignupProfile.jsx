@@ -60,12 +60,10 @@ class ProfileStore {
                     <div>
                         <Input type="text" label={t('firstName')}
                             value={s.firstName} onChange={this.firstNameUpdater} />
-                        <span className="helper-text">Optional</span>
                     </div>
                     <div>
                         <Input type="text" label={t('lastName')}
                             value={s.lastName} onChange={this.lastNameUpdater} />
-                        <span className="helper-text">Optional</span>
                     </div>
                 </div>
                 <Dropdown value={languageStore.language}

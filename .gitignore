@@ -3,5 +3,6 @@ dist
 .DS_Store
 build
 /.idea
+/autologin.json
 npm-debug.log.*
 npm-debug.log

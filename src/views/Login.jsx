@@ -11,8 +11,8 @@ const { Link } = require('react-router');
 const FullCoverSpinner = require('../components/FullCoverSpinner');
 
 @observer class Login extends Component {
-    @observable username ='';
-    @observable passcodeOrPassphrase ='';
+    @observable username = config.autologin ? config.autologin.username : '';
+    @observable passcodeOrPassphrase = config.autologin ? config.autologin.passphrase : '';
     @observable busy = false;
     @observable errorVisible = false;
     @observable passwordVisible = false;

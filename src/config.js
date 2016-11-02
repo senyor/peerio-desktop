@@ -6,7 +6,7 @@ cfg.currentVersion = app.getVersion();
 
 if (process.env.NODE_ENV !== 'production') {
     try {
-        cfg.autologin = require('../autologin.json');
+        cfg.autologin = require('../autologin.json'); // eslint-disable-line
     } catch (err) {
     // don't care
     }

@@ -62,7 +62,7 @@ class PasscodeStore {
                 <div className="signup-subtitle">{t('signup_desktop_passcodeTitle')}</div>
                 <Input type="password" className="login-input" label={t('signup_passcode')} error={s.passcodeError}
                        value={s.passcode} onChange={this.passcodeUpdater}
-                       onKeyPress={this.handleKeyPress}/>
+                       onKeyPress={this.handleKeyPress} />
                 <Input type="password" className="login-input" label={t('signup_passcodeRepeat')}
                        error={s.passcodeRepeatError}
                        value={s.passcodeRepeat} onChange={this.passcodeRepeatUpdater}

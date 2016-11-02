@@ -112,13 +112,13 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
 
     advance = () => {
         if (this.step === 1) {
-            this.navigateToPasscode()
+            this.navigateToPasscode();
         } else {
-            this.createAccountWithPasscode()
+            this.createAccountWithPasscode();
         }
     };
 
-    // todo retreat 
+    // todo retreat
 
     render() {
         return (

@@ -1,7 +1,7 @@
 const { observable, action } = require('mobx');
 const { setLocale } = require('peerio-translator');
 const normalizeError = require('../icebear').errors.normalize; //eslint-disable-line
-const { db } = require('../stores/tiny-db');
+const db = require('../stores/tiny-db');
 
 class LanguageStore {
     @observable language = '';

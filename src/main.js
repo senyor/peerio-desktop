@@ -16,7 +16,11 @@ app.on('ready', onAppReady);
 
 function onAppReady() {
     const state = getSavedWindowState();
-    mainWindow = new BrowserWindow(Object.assign(state, { show: false }));
+    mainWindow = new BrowserWindow(Object.assign(state, {
+        show: false,
+        minWidth: 900,
+        minHeight: 810
+    }));
     mainWindow.loadURL(`file://${__dirname}/index.html`);
 
     mainWindow.once('ready-to-show', () => {

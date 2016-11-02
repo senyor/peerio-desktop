@@ -13,13 +13,13 @@ if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '{}', fileOpts);
  * @param key
  * @returns {Promise.<T>}
  */
-function getValue(key) {
+function get(key) {
     const settings = load();
     return settings[key];
 }
 
 function getValueAsync(key) {
-    return Promise.resolve(getValue(key));
+    return Promise.resolve(get(key));
 }
 
 /**
@@ -28,7 +28,7 @@ function getValueAsync(key) {
  * @param value
  * @returns {Promise.<*>}
  */
-function setValue(key, value) {
+function set(key, value) {
     const settings = load();
     settings[key] = value;
     save(settings);
@@ -36,7 +36,7 @@ function setValue(key, value) {
 }
 
 function setValueAsync(key, value) {
-    return Promise.resolve(setValue(key, value));
+    return Promise.resolve(set(key, value));
 }
 
 function load() {
@@ -47,4 +47,4 @@ function save(settings) {
     fs.writeFileSync(filePath, JSON.stringify(settings), fileOpts);
 }
 
-module.exports = { getValue, setValue, getValueAsync, setValueAsync };
+module.exports = { get, set, getValueAsync, setValueAsync };

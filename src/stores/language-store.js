@@ -55,7 +55,7 @@ class LanguageStore {
             const translation = require(path);
             setLocale(code, translation);
             this.language = code;
-            db.setValue('language', code);
+            db.set('language', code);
             console.log(`Language changed to ${code}`);
         } catch (err) {
             console.error(`Failed switch language to: ${code} ${normalizeError(err)}`);
@@ -63,7 +63,7 @@ class LanguageStore {
     }
 
     @action loadSavedLanguage() {
-        const lang = db.getValue('language');
+        const lang = db.get('language');
         this.changeLanguage(lang || 'en');
     }
 }

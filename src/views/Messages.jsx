@@ -1,15 +1,21 @@
-/* eslint-disable */
 const React = require('react');
 const { Component } = require('react');
 const { Avatar, FontIcon, IconButton, IconMenu,
         Input, List, ListItem, ListSubHeader, MenuItem, Panel } = require('react-toolbox');
+const Search = require('../components/Search');
+const ChatList = require('../components/ChatList');
+const { observable } = require('mobx');
+const { observer } = require('mobx-react');
 
+@observer
 class Messages extends Component {
-    state = { multiline: '' };
 
+    handleTextChange = (newVal, el) => {
+        this.messageInput.refs.wrappedInstance.handleAutoresize();
+    };
 
-    handleChange = (name, value) => {
-        this.setState({ ...this.state, [name]: value });
+    setTextareaRef = (input) => {
+        this.messageInput = input;
     };
 
 
@@ -17,27 +23,11 @@ class Messages extends Component {
         return (
             <Panel>
                 <div className="messages">
-                    <div className="message-list">
-                        <List selectable ripple>
-                            <ListSubHeader caption="Direct messages" />
-                            <ListItem caption="Alice" className="online active" leftIcon="fiber_manual_record" />
-                            <ListItem caption="Albert" leftIcon="fiber_manual_record" />
-                            <ListItem caption="Bill" className="online" leftIcon="fiber_manual_record"
-                                rightIcon={<div className="notification">12</div>} />
-                            <ListItem caption="Jeff" className="online" leftIcon="fiber_manual_record" />
-                            <ListItem caption="Steve" className="busy" leftIcon="fiber_manual_record" />
-                        </List>
-                    </div>
+                    <ChatList />
                     <div className="message-view">
                         <div className="message-toolbar">
                             <div className="title">Alice</div>
-                            {/* TODO create Search component */}
-                            <div className="search">
-                                <FontIcon value="search" className="search-icon" />
-                                <Input placeholder="search" />
-                                {/* FIXME: Should only be visible when input has focus */}
-                                <IconButton icon="highlight_off" />
-                            </div>
+                            <Search />
                             <IconButton icon="info_outline" />
                         </div>
                         <div className="message">
@@ -56,11 +46,11 @@ class Messages extends Component {
                         </div>
                         <div className="message-input">
                             <IconMenu icon="add_circle_outline">
-                                <MenuItem value='share'  caption='Share from files' />
-                                <MenuItem value='upload'  caption='Upload to DM' />
+                                <MenuItem value="share" caption="Share from files" />
+                                <MenuItem value="upload" caption="Upload to DM" />
                             </IconMenu>
                             <Input multiline type="text" placeholder="Messages Alice"
-                                onChange={this.handleChange.bind(this, 'multiline')} />
+                                onChange={this.handleTextChange} ref={this.setTextareaRef} />
                             {/* <Checkbox
                                 checked
                                 label="Send on enter" /> */}

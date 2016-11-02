@@ -51,7 +51,7 @@ function onAppReady() {
 }
 
 function saveWindowState(state) {
-    db.setValue('windowState', state);
+    db.set('windowState', state);
 }
 
 function getSavedWindowState() {
@@ -59,7 +59,7 @@ function getSavedWindowState() {
         width: 1024,
         height: 728
     };
-    const savedState = db.getValue('windowState');
+    const savedState = db.get('windowState');
     return Object.assign(defaultState, savedState || {});
 }
 

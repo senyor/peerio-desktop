@@ -49,16 +49,24 @@ class PasscodeStore {
         autorunAsync(() => this.validate(), 100);
     }
 
+    handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            this.props.returnHandler();
+        }
+    };
+
     render() {
         const s = this.props.store;
         return (
             <div className="passcode">
                 <div className="signup-subtitle">{t('signup_desktop_passcodeTitle')}</div>
                 <Input type="password" className="login-input" label={t('signup_passcode')} error={s.passcodeError}
-                       value={s.passcode} onChange={this.passcodeUpdater} />
+                       value={s.passcode} onChange={this.passcodeUpdater}
+                       onKeyPress={this.handleKeyPress}/>
                 <Input type="password" className="login-input" label={t('signup_passcodeRepeat')}
                        error={s.passcodeRepeatError}
-                       value={s.passcodeRepeat} onChange={this.passcodeRepeatUpdater} />
+                       value={s.passcodeRepeat} onChange={this.passcodeRepeatUpdater}
+                       onKeyPress={this.handleKeyPress} />
 
                 <T k="signup_masterPasswordText" className="signup-help">
                     {{ emphasis: text => <strong>{text}</strong> }}

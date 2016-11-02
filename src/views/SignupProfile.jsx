@@ -46,6 +46,12 @@ class ProfileStore {
             });
     }
 
+    handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            this.props.returnHandler();
+        }
+    };
+
     render() {
         const s = this.props.store;
         return (
@@ -63,7 +69,7 @@ class ProfileStore {
                     </div>
                     <div>
                         <Input type="text" label={t('lastName')}
-                            value={s.lastName} onChange={this.lastNameUpdater} />
+                            value={s.lastName} onChange={this.lastNameUpdater} onKeyPress={this.handleKeyPress} />
                     </div>
                 </div>
                 <Dropdown value={languageStore.language}

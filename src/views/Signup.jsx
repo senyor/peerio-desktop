@@ -98,8 +98,6 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
     ];
 
     navigateToPasscode = () => {
-        this.busy = true;
-
         if (!this.profileStore.hasErrors) {
             this.step = 2;
             this.busy = false;
@@ -107,31 +105,37 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
     };
 
     navigateToProfile = () => {
-        this.busy = true;
-        return this.validate()
-            .then(() => {
-                this.step = 1;
-                this.busy = false;
-                this.errorVisible = false;
-            });
+        this.step = 1;
+        this.busy = false;
+        this.errorVisible = false;
     };
+
+    advance = () => {
+        if (this.step === 1) {
+            this.navigateToPasscode()
+        } else {
+            this.createAccountWithPasscode()
+        }
+    };
+
+    // todo retreat 
 
     render() {
         return (
             <Layout>
-                <Panel className={css('signup', 'rt-light-theme', { expand: this.expand })} >
+                <Panel className={css('signup', 'rt-light-theme', { expand: this.expand })}>
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
                     <Panel className="signup-form" scrollY>
                         <div className="signup-title">{t('signup')}</div>
                         {this.step === 1 ?
-                            <SignupProfile store={this.profileStore} /> :
-                                <SignupPasscode store={this.passcodeStore} />}
+                            <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :
+                                <SignupPasscode store={this.passcodeStore} returnHandler={this.advance} />}
                     </Panel>
 
                     <div className="signup-nav">
                         <Link to="/"><Button flat label={t('button_exit')} /></Link>
                         <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
-                                onClick={this.step === 1 ? this.navigateToPasscode : this.createAccountWithPasscode}
+                                onClick={this.advance}
                                 disabled={this.hasError}
                         />
                     </div>

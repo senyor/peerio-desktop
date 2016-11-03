@@ -35,19 +35,11 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         this.emailUpdater = (val) => { this.email = val; };
         this.firstNameUpdater = (val) => { this.firstName = val; };
         this.lastNameUpdater = (val) => { this.lastName = val; };
-        this.validate = this.validate.bind(this);
         this.createAccountWithPasscode = this.createAccountWithPasscode.bind(this);
-        autorunAsync(() => this.validate, 100);
     }
 
     componentDidMount() {
         this.expand = true;
-    }
-
-    validate() {
-        if (this.username === undefined) return Promise.resolve();
-        return User.validateUsername(this.username)
-            .then(res => { this.usernameError = res ? '' : t('usernameNotAvailable'); });
     }
 
     createAccountWithPasscode() {
@@ -88,13 +80,13 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
             .catch(err => {
                 this.busy = false;
                 this.errorVisible = true;
-                this.errorMessage = errors.normalize(err).message; // TODO non-debuggy messages
+                this.errorMessage = errors.normalize(err).message || t('signup_serverError'); // TODO handle error types
                 throw err;
             });
     }
 
     errorActions = [
-        { label: t('ok'), onClick: this.navigateToProfile }
+        { label: t('ok'), onClick: () => { this.navigateToProfile(); } }
     ];
 
     navigateToPasscode = () => {

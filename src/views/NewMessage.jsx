@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, List, ListItem } = require('react-toolbox');
-const Search = require('../components/Search');
+const { Button, Chip, Input, List, ListItem } = require('react-toolbox');
 
 @observer
 class NewMessage extends React.Component {
@@ -10,8 +9,8 @@ class NewMessage extends React.Component {
         return (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100vw', height: '100vh' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '600px', marginTop: '168px' }} >
-                    <div className="new-message-search">
-                        <Search /> <Button className="confirm" label="Go!" />
+                    <div className="new-message-search"><Chip deletable>user name</Chip>
+                        <Input /> <Button className="confirm" label="Go" />
                     </div>
                     <List>
                         <ListItem

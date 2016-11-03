@@ -6,7 +6,7 @@ const Search = require('../components/Search');
 const ChatList = require('../components/ChatList');
 const MessageInput = require('../components/MessageInput');
 const Message = require('../components/Message');
-const chatStore = require('../stores/chat-store');
+const {chatStore} = require('../icebear');// eslint-disable-line
 
 @observer
 class Messages extends React.Component {

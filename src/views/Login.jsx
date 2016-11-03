@@ -2,7 +2,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
-const { pCrypto, config, User } = require('../icebear'); // eslint-disable-line
+const { cryptoUtil, config, User } = require('../icebear'); // eslint-disable-line
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -120,7 +120,7 @@ Login.contextTypes = {
 let cachedGif = null;
 function randomGif() {
     return cachedGif || (cachedGif = (<img role="presentation" className="ice-gif"
-        src={`static/ice/${pCrypto.util.getRandomNumber(1, 25)}.gif`} />));
+        src={`static/ice/${cryptoUtil.getRandomNumber(1, 25)}.gif`} />));
 }
 
 

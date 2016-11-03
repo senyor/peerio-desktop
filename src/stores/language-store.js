@@ -9,7 +9,7 @@ class LanguageStore {
     constructor() {
         this.changeLanguage = this.changeLanguage.bind(this);
     }
-
+    // this is just a reference object (for language names)
     languages = {
         en: 'English',
         cs: 'Čeština',
@@ -25,7 +25,9 @@ class LanguageStore {
         ru: 'Русский',
         tr: 'Türkçe'
     };
+    // ui
     translationLangs = ['en', 'cs', 'zh-CN', 'de', 'es', 'fr', 'it', 'ja', 'hu', 'nb-NO', 'pt-BR', 'ru', 'tr'];
+    // passphrases
     dictionaryLangs = ['en', 'cs', 'zh-CN', 'de', 'es', 'fr', 'it', 'ja', 'hu', 'nb-NO', 'pt-BR', 'ru', 'tr'];
 
     get translationLangsDataSource() {

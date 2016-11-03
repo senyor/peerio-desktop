@@ -1,8 +1,8 @@
 const React = require('react');
 const { Component } = require('react');
 const { Button, Dialog } = require('react-toolbox');
-const { pCrypto, config, User, errors } = require('../icebear'); // eslint-disable-line
-const { observable, autorunAsync, computed } = require('mobx');
+const { User, errors } = require('../icebear'); // eslint-disable-line
+const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Link } = require('react-router');

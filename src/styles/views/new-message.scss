@@ -1,17 +1,17 @@
 .new-message-search {
   align-items: center;
-  display: flex;
-  border-radius: 24px;
-  height: 48px;
   border: $input-dark-border solid 1px;
+  border-radius: 24px;
   border-right: 0;
+  display: flex;
+  height: 48px;
   padding: 0 0 0 $padding-small;
 
   .rt-button-button {
     background-color: $button-affirmative;
     border-radius: 0 24px 24px 0;
-    min-width: 48px;
     height: 48px;
+    min-width: 48px;
 
     &:hover {
       background-color: $button-affirmative;

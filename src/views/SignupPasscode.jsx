@@ -20,8 +20,26 @@ class PasscodeStore {
 }
 
 @observer class SignupPasscode extends Component {
-    validatePasswordStrength(password) {
-        return zxcvbn(password).score > 2; // FIXME too low?
+    validatePasswordStrength() {
+        if (this.props.store.passcode) {
+            const banList = [
+                this.props.profileStore.username,
+                this.props.profileStore.firstName,
+                this.props.profileStore.lastName,
+                'peerio'
+            ];
+            const zResult = zxcvbn(this.props.store.passcode, banList);
+
+            if (this.props.store.passcode.length < 8) {
+                this.props.store.passcodeError = `${t('signup_passcodeErrorWeak')} ${t('signup_passcodeErrorShort')}`
+            } else if(zResult.guesses_log10 < 8) {
+                this.props.store.passcodeError = `${t('signup_passcodeErrorWeak')} ${
+                    zResult.feedback.suggestions || t('signup_passcodeSuggestionGeneric')
+                    }`;
+            } else {
+                this.props.store.passcodeError = undefined;
+            }
+        }
     }
 
     validate() {
@@ -31,11 +49,7 @@ class PasscodeStore {
         } else {
             this.props.store.passcodeRepeatError = undefined;
         }
-        if (!this.validatePasswordStrength(this.props.store.passcode)) {
-            this.props.store.passcodeError = t('signup_passcodeErrorWeak');
-        } else {
-            this.props.store.passcodeError = undefined;
-        }
+        this.validatePasswordStrength()
     }
 
     constructor() {

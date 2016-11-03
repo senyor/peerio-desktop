@@ -129,7 +129,7 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
                         <div className="signup-title">{t('signup')}</div>
                         {this.step === 1 ?
                             <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :
-                                <SignupPasscode store={this.passcodeStore} returnHandler={this.advance} />}
+                                <SignupPasscode store={this.passcodeStore} profileStore={this.profileStore} returnHandler={this.advance} />}
                     </Panel>
 
                     <div className="signup-nav">

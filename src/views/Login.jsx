@@ -50,6 +50,13 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
             this.busy = false;
         });
     }
+
+    handleKeyPress =(e) => {
+        if (e.key === 'Enter') {
+            this.login();
+        }
+    };
+
     render() {
         return (
             <Layout>
@@ -62,10 +69,10 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
                     <div className="login-form">
                         <Input type="text" label={t('username')}
-                            value={this.username} onChange={this.usernameUpdater} />
+                            value={this.username} onChange={this.usernameUpdater} onKeyPress={this.handleKeyPress} />
                         <div className="password">
                             <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passcodeOrPassphrase')}
-                                   value={this.passcodeOrPassphrase} onChange={this.passphraseUpdater} />
+                                   value={this.passcodeOrPassphrase} onChange={this.passphraseUpdater}  onKeyPress={this.handleKeyPress} />
                             <IconButton icon={this.passwordVisible ? 'visibility_off' : 'visibility'}
                                 onClick={this.togglePasswordVisibility} />
                         </div>

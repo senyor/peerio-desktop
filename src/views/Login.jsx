@@ -67,12 +67,17 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                 <FullCoverSpinner show={this.busy} />
                 <Panel className="login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
+                    <div className="welcome-back">
+                        <div>Welcome back, <strong>User</strong></div>
+                        <div className="subtitle">Not User? Click to change user.</div>
+                    </div>
                     <div className="login-form">
                         <Input type="text" label={t('username')}
                             value={this.username} onChange={this.usernameUpdater} onKeyPress={this.handleKeyPress} />
                         <div className="password">
                             <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passcodeOrPassphrase')}
-                                   value={this.passcodeOrPassphrase} onChange={this.passphraseUpdater} onKeyPress={this.handleKeyPress} />
+                                   value={this.passcodeOrPassphrase}
+                                   onChange={this.passphraseUpdater} onKeyPress={this.handleKeyPress} />
                             <IconButton icon={this.passwordVisible ? 'visibility_off' : 'visibility'}
                                 onClick={this.togglePasswordVisibility} />
                         </div>

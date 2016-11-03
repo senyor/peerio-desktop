@@ -9,23 +9,53 @@
   .login-form {
     width: 275px;
   }
-}
 
-.login-button {
-  align-self: center;
-  margin: 48px 0;
-}
+  .login-button {
+    align-self: center;
+    margin: 48px 0;
+  }
 
-.login-reg-button {
-  color: $text-light-secondary;
-  font-weight: 600;
-  text-align: center;
+  .login-reg-button {
+    color: $text-light-secondary;
+    font-weight: 600;
+    text-align: center;
 
-  > a:hover {
-    color: $text-light-primary;
-    text-decoration: underline;
+    > a:hover {
+      color: $text-light-primary;
+      text-decoration: underline;
+    }
+  }
+
+  .welcome-back {
+    align-items: center;
+    background: $background-welcome-back;
+    color: $text-dark-secondary;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font-weight: $font-weight-light;
+    height: 96px;
+    justify-content: center;
+    // TODO: make transition vars
+    transition: 150ms;
+    width: 375px;
+
+    @extend %title;
+
+    strong {
+      color: $text-dark-primary;
+      font-weight: $font-weight-bold;
+    }
+
+    .subtitle {
+      margin-top: $margin-small;
+
+      @extend %hint-error-label;
+    }
   }
 }
+
+
 //----------------------------------------------------------------------------------------------------------------------
 .welcome {
   flex: 1 1 auto;

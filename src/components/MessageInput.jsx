@@ -18,8 +18,8 @@ class MessageInput extends React.Component {
     handleKeyPress = ev => {
         if (ev.key === 'Enter' && !ev.shiftKey && this.text.trim().length) {
             this.props.onSend(this.text);
-            // this.text = ''
-           // this.handleTextChange();
+            ev.preventDefault();
+            this.handleTextChange('');
         }
     };
 
@@ -34,7 +34,7 @@ class MessageInput extends React.Component {
                     <MenuItem value="share" caption="Share from files" />
                     <MenuItem value="upload" caption="Upload to DM" />
                 </IconMenu>
-                <Input multiline placeholder={t('enterYourMessage')} onKeyPress={this.handleKeyPress}
+                <Input multiline value={this.text} placeholder={t('enterYourMessage')} onKeyPress={this.handleKeyPress}
                                 onChange={this.handleTextChange} ref={this.setTextareaRef} />
                 <IconButton icon={this.inputIsEmpty ? 'thumb_up' : 'send'} />
             </div>

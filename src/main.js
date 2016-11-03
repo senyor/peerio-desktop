@@ -19,7 +19,7 @@ function onAppReady() {
     mainWindow = new BrowserWindow(Object.assign(state, {
         show: false,
         minWidth: 900,
-        minHeight: 810
+        minHeight: 728
     }));
     mainWindow.loadURL(`file://${__dirname}/index.html`);
 

@@ -31,8 +31,8 @@ class PasscodeStore {
             const zResult = zxcvbn(this.props.store.passcode, banList);
 
             if (this.props.store.passcode.length < 8) {
-                this.props.store.passcodeError = `${t('signup_passcodeErrorWeak')} ${t('signup_passcodeErrorShort')}`
-            } else if(zResult.guesses_log10 < 8) {
+                this.props.store.passcodeError = `${t('signup_passcodeErrorWeak')} ${t('signup_passcodeErrorShort')}`;
+            } else if (zResult.guesses_log10 < 8) {
                 this.props.store.passcodeError = `${t('signup_passcodeErrorWeak')} ${
                     zResult.feedback.suggestions || t('signup_passcodeSuggestionGeneric')
                     }`;
@@ -49,7 +49,7 @@ class PasscodeStore {
         } else {
             this.props.store.passcodeRepeatError = undefined;
         }
-        this.validatePasswordStrength()
+        this.validatePasswordStrength();
     }
 
     constructor() {

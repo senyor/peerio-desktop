@@ -3,6 +3,7 @@
 @import './rt-base-theme'; // Imports variables. Always first, after lib imports.
 @import './rt-light-theme';
 @import './components/app-nav';
+@import './components/full-screen-progress';
 @import './components/search';
 @import './components/notifications';
 @import './views/login';
@@ -41,7 +42,7 @@ body,
   color: $text-dark-primary;
   display: flex;
   flex-direction: column;
-  font: 14px/1.35 $font-stack;
+  font: 14px/1.45 $font-stack;
   // font-weight: 300;
   height: 100vh;
   //  margin: 0;

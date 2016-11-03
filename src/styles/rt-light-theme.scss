@@ -16,9 +16,11 @@
 
   .rt-dropdown-value {
     background: $background-light-dropdown;
+    box-shadow: none;
 
     &:hover {
       background: $background-light-dropdown;
+      box-shadow: none;
     }
 
     .rt-input-inputElement {

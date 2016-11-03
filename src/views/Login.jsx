@@ -53,6 +53,11 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
     render() {
         return (
             <Layout>
+                {/* TODO: - After Alpha -
+                    remove FullCoverSpinner
+                   change login button to spinner while working
+                   disable inputs while spinner is active */}
+                <FullCoverSpinner show={this.busy} />
                 <Panel className="login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
                     <div className="login-form">
@@ -71,11 +76,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                     <div className="login-reg-button">
                         <a href={config.termsUrl}>{t('terms')}</a> | <Link to="/signup">{t('signup')}</Link>
                     </div>
-                    {/* TODO: - After Alpha -
-                        remove FullCoverSpinner
-                       change login button to spinner while working
-                       disable inputs while spinner is active */}
-                    <FullCoverSpinner show={this.busy} />
+
                 </Panel>
                 <Panel className="welcome">
                     <div className="welcome-text">

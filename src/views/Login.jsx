@@ -72,7 +72,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                             value={this.username} onChange={this.usernameUpdater} onKeyPress={this.handleKeyPress} />
                         <div className="password">
                             <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passcodeOrPassphrase')}
-                                   value={this.passcodeOrPassphrase} onChange={this.passphraseUpdater}  onKeyPress={this.handleKeyPress} />
+                                   value={this.passcodeOrPassphrase} onChange={this.passphraseUpdater} onKeyPress={this.handleKeyPress} />
                             <IconButton icon={this.passwordVisible ? 'visibility_off' : 'visibility'}
                                 onClick={this.togglePasswordVisibility} />
                         </div>

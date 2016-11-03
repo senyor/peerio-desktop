@@ -17,7 +17,6 @@
 
   .login-reg-button {
     color: $text-light-secondary;
-    font-weight: 600;
     text-align: center;
 
     > a:hover {
@@ -33,14 +32,12 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    font-weight: $font-weight-light;
+    font-size: 20px;
     height: 96px;
     justify-content: center;
     // TODO: make transition vars
     transition: 150ms;
     width: 375px;
-
-    @extend %title;
 
     strong {
       color: $text-dark-primary;

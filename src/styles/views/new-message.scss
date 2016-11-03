@@ -1,0 +1,25 @@
+.new-message-search {
+  align-items: center;
+  display: flex;
+
+  .rt-button-button{
+    background: green;
+    border-radius: 0 24px 24px 0;
+    color: $text-light-primary;
+    height: 48px;
+    min-width: 48px;
+
+    &:hover {
+      background: green;
+    }
+  }
+  .search{
+    border-radius: 24px 0 0 24px;
+    height: 48px;
+
+    // FIXME I am a hack to hide clear search button. remove me. ASAP
+    .rt-button-button {
+      display: none;
+    }
+  }
+}

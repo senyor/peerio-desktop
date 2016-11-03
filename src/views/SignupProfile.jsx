@@ -35,15 +35,19 @@ class ProfileStore {
 
     validate() {
         if (this.props.store.username === undefined) return false;
-        if (!this.props.store.email.match(/.+@.+\..*/)) {
+        if (this.props.store.email && !this.props.store.email.match(/.+@.+\..+/)) {
             this.props.store.emailError = t('signup_emailError');
         } else {
             this.props.store.emailError = undefined;
         }
-        return User.validateUsername(this.props.store.username)
-            .then(res => {
-                this.props.store.usernameError = res ? undefined : t('usernameNotAvailable');
-            });
+        this.props.store.username = this.props.store.username.toLowerCase();
+        if (this.props.store.username) {
+            return User.validateUsername(this.props.store.username)
+                .then(res => {
+                    this.props.store.usernameError = res ? undefined : t('usernameNotAvailable');
+                });
+        }
+        return Promise.resolve();
     }
 
     handleKeyPress = (e) => {

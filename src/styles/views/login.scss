@@ -9,32 +9,6 @@
   .login-form {
     width: 275px;
   }
-
-  .password {
-    align-items: center;
-    background: rgba(255, 255, 255, .7);
-    border-radius: 0 2px 2px 0;
-    box-shadow: $shadow-2;
-    display: flex;
-    margin-top: 40px;
-    transition: 150ms;
-    will-change: box-shadow background-color;
-
-    &:hover {
-      background: white;
-      box-shadow: $shadow-8;
-    }
-
-    & > .rt-input-input {
-      background-color: transparent;
-      box-shadow: none;
-      margin-top: 0;
-    }
-
-    .rt-button-icon {
-      color: $icon-dark-active;
-    }
-  }
 }
 
 .login-button {

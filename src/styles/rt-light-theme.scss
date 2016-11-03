@@ -1,34 +1,46 @@
 .rt-light-theme {
   // INPUTS
   .rt-input-input {
-    background-color: $input-light-inactive;
-    box-shadow: $shadow-2;
     height: 48px;
     margin-top: 40px;
-    transition: 150ms;
-    will-change: box-shadow background-color;
+    padding: 0;
 
-    &:hover {
-      background: $color-light-100;
-      box-shadow: $shadow-8;
+    input {
+      background-color: $input-light-inactive;
+      border-radius: 2px;
+      box-shadow: $shadow-2;
+      height: 48px;
+      margin-top: 0;
+      padding-top: 18px;
+      transition: 150ms;
+
+      &:hover {
+        background: $color-light-100;
+        box-shadow: $shadow-8;
+      }
+
+      &:focus {
+        background: $color-light-100;
+      }
     }
   }
 
-  .rt-dropdown-value {
-    background: $background-light-dropdown;
-    box-shadow: none;
-
-    &:hover {
+  .rt-dropdown-dropdown{
+    input{
       background: $background-light-dropdown;
       box-shadow: none;
-    }
-
-    .rt-input-inputElement {
       color: $text-light-primary;
+      padding: 0 8px;
+
+      &:focus,
+      &:hover {
+        background: $background-light-dropdown;
+        box-shadow: none;
+      }
     }
 
-    &:after {
-      border-top: 6px solid $icon-light-active;
+    .rt-dropdown-value:after {
+      border-top: 6px solid $icon-light-inactive;
       right: 12px;
       top: 21px;
     }
@@ -70,7 +82,7 @@
     color: $text-light-disabled;
   }
 
-  .rt-input-errored {
+  .rt-input-errored input {
     border-bottom: 2px solid $border-error;
   }
 
@@ -83,4 +95,21 @@
   strong {
     color: $text-light-primary;
   }
+
+  .password {
+    margin-top: 40px;
+    position: relative;
+
+    .rt-button-button {
+      color: $icon-dark-active;
+      position: absolute;
+      right: 6px;
+      top: 6px;
+
+      .rt-button-icon {
+        color: $icon-dark-active;
+      }
+    }
+  }
+
 }

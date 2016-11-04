@@ -2,6 +2,7 @@
 @import './static/fonts/OpenSans/opensans.css';
 @import './rt-base-theme'; // Imports variables. Always first, after lib imports.
 @import './rt-light-theme';
+@import './components/grid';
 @import './components/app-nav';
 @import './components/full-screen-progress';
 @import './components/search';
@@ -38,20 +39,12 @@ a {
 //}
 
 body,
-#root {
+#root,
+.app-root {
   background-color: $background-root;
   color: $text-dark-primary;
-  display: flex;
-  flex-direction: column;
   font: 14px/1.45 $font-stack;
-  // font-weight: 300;
   height: 100vh;
-  //  margin: 0;
   overflow: hidden;
-
-  //  padding: 0;
-}
-
-[data-react-toolbox="layout"] {
-  height: 100vh;
+  width: 100vw;
 }

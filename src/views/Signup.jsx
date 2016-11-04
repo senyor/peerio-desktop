@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = require('react');
-const { Layout, Panel, Button, Dialog } = require('react-toolbox');
+const { Button, Dialog } = require('react-toolbox');
 const { pCrypto, config, User, errors } = require('../icebear'); // eslint-disable-line
 const { observable, autorunAsync, computed } = require('mobx');
 const { observer } = require('mobx-react');
@@ -114,39 +114,36 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
 
     render() {
         return (
-            <Layout>
-                <Panel className={css('signup', 'rt-light-theme', { expand: this.expand })}>
-                    <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
-                    <Panel className="signup-form" scrollY>
-                        <div className="signup-title">{t('signup')}</div>
-                        {this.step === 1 ?
-                            <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :
-                                <SignupPasscode
-                                    store={this.passcodeStore}
-                                    profileStore={this.profileStore}
-                                    returnHandler={this.advance} />}
-                    </Panel>
+            <div className={css('signup', 'rt-light-theme', { expand: this.expand })}>
+                <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
+                <div className="signup-form" scrollY>
+                    <div className="signup-title">{t('signup')}</div>
+                    {this.step === 1 ?
+                        <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :
+                            <SignupPasscode
+                                store={this.passcodeStore}
+                                profileStore={this.profileStore}
+                                returnHandler={this.advance} />}
+                </div>
 
-                    <div className="signup-nav">
-                        <Link to="/">
-                            <Button flat label={this.step === 1 ? t('button_exit') : t('button_back')} />
-                        </Link>
-                        <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
-                                onClick={this.advance}
-                                disabled={this.hasError}
-                        />
-                    </div>
-                    <div className="progress">
-                        <div className={`indicator ${this.step === 1 ? 'active' : ''}`} />
-                        <div className={`indicator ${this.step === 2 ? 'active' : ''}`} />
-                    </div>
-                    <FullCoverSpinner show={this.busy} />
-                    <Dialog actions={this.errorActions} active={this.errorVisible}
-                            onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
-                            title={t('error')}>{this.errorMessage}</Dialog>
-                </Panel>
-
-            </Layout>
+                <div className="signup-nav">
+                    <Link to="/">
+                        <Button flat label={this.step === 1 ? t('button_exit') : t('button_back')} />
+                    </Link>
+                    <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
+                            onClick={this.advance}
+                            disabled={this.hasError}
+                    />
+                </div>
+                <div className="progress">
+                    <div className={`indicator ${this.step === 1 ? 'active' : ''}`} />
+                    <div className={`indicator ${this.step === 2 ? 'active' : ''}`} />
+                </div>
+                <FullCoverSpinner show={this.busy} />
+                <Dialog actions={this.errorActions} active={this.errorVisible}
+                        onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
+                        title={t('error')}>{this.errorMessage}</Dialog>
+            </div>
         );
     }
 }

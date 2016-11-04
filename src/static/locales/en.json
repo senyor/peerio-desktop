@@ -489,7 +489,7 @@
     "signup_passcodeSuggestionGeneric":"Mixing case, numbers, and symbols, helps make a stronger password.",
     "signup_masterPasswordText": "To log into a new device your <emphasis>Master Password is required</>.",
     "signup_serverError": "Please check your internet connection, as well as the data you entered, and try again. Contact support if the problem persists.",
-    "signup_masterPasswordSetthis.props.store.usernametings": "Your Master Password is available in the <emphasis>security settings</> of the app.",
+    "signup_masterPasswordSettings": "Your Master Password is available in the <emphasis>security settings</> of the app.",
     "signup_confirmCreateButton": "{#createMyAccount}",
     "signup_desiredUsername": "{#desiredUsername}",
     "signup_optInDescription": "By enabling anonymous data collection, we will collect non-identifying and non-content information to share with researchers and improve Peerio.",

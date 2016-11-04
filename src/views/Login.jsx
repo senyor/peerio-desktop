@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
 const { Component } = require('react');
-const { Layout, Panel, Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
+const { Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
 const { pCrypto, config, User } = require('../icebear'); // eslint-disable-line
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
@@ -59,16 +59,16 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
 
     render() {
         return (
-            <Layout>
+            <div className="flex-row app-root">
                 {/* TODO: - After Alpha -
                     remove FullCoverSpinner
                    change login button to spinner while working
                    disable inputs while spinner is active */}
                 <FullCoverSpinner show={this.busy} />
-                <Panel className="login rt-light-theme">
+                <div className="login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
                     <div className="welcome-back">
-                        <div>Welcome back, <strong>User</strong></div>
+                        <div>{t('login_welcomeBack')} <strong>User</strong></div>
                         <div className="subtitle">Not User? Click to change user.</div>
                     </div>
                     <div className="login-form">
@@ -89,8 +89,8 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                         <a href={config.termsUrl}>{t('terms')}</a> | <Link to="/signup">{t('signup')}</Link>
                     </div>
 
-                </Panel>
-                <Panel className="welcome">
+                </div>
+                <div className="flex-col welcome">
                     <div className="welcome-text">
                         <div className="display-2">Welcome to Peerio Alpha (codename Icebear)</div>
                         [changelog should magically appear here in the nearest future]<br /><br />
@@ -104,11 +104,11 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                         For your convenience passphrase is always 'icebear'
                     </div>
                     {randomGif()}
-                </Panel>
+                </div>
                 <Dialog actions={this.actions} active={this.errorVisible}
                         onEscKeyDown={this.hideDialog} onOverlayClick={this.hideDialog}
                         title={t('error')}>{this.errorMsg}</Dialog>
-            </Layout>
+            </div>
         );
     }
 }

@@ -59,7 +59,7 @@ class ProfileStore {
     render() {
         const s = this.props.store;
         return (
-            <div className="profile">
+            <div className="flex-col profile">
                 <div className="signup-subtitle">{t('profile')}</div>
                 <Input type="text" label={t('username')} error={s.usernameError}
                     value={s.username} onChange={this.usernameUpdater} />

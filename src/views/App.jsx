@@ -1,15 +1,14 @@
 const React = require('react');
-const { Layout } = require('react-toolbox');
 const AppNav = require('../components/AppNav');
 
 class App extends React.Component {
 
     render() {
         return (
-            <Layout>
+            <div className="flex-row app-root">
                 <AppNav />
                 {this.props.children}
-            </Layout>
+            </div>
         );
     }
 }

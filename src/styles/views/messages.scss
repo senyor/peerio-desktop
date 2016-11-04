@@ -24,9 +24,12 @@
 }
 
 .message-view {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  // FIXME remove calc?
+  width: calc(100vw - 304px);
+
+  @extend %flex-col;
+  @extend %flex-grow-1;
+  @extend %flex-shrink-1;
 
   .message-toolbar {
     align-items: center;
@@ -48,14 +51,16 @@
 
   .messages-container {
     align-items: flex-start;
-    display: flex;
     flex: 1 1 auto;
-    flex-direction: column;
     overflow: auto;
     padding: 24px;
 
+    @extend %flex-col;
+
     .message-content-wrapper {
-      display: flex;
+      flex-shrink: 0;
+
+      @extend %flex-row;
 
       + .message-content-wrapper {
         margin-top: $margin-large;
@@ -148,9 +153,10 @@
 
 .message-list {
   background-color: $background-message-list;
-  flex-shrink: 0;
   height: 100vh;
-  width: 224px;
+  width: $message-list-width;
+
+  @extend %flex-shrink-0;
 
   .active,
   .rt-list-listItem:hover {

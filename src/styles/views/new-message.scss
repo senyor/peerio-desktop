@@ -1,4 +1,10 @@
-.new-message {
+.create-new-message {
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+  @extend %flex-col;
+
   .new-message-search {
     align-items: center;
     border: $input-dark-border solid 1px;

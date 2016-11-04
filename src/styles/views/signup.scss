@@ -2,17 +2,15 @@
   align-items: center;
   background-color: $background-brand;
   color: $text-light-secondary;
-  transition: width .5s;
+  height: 100vh;
+  transition: .5s;
 
-  .profile {
-    display: flex;
-    flex-direction: column;
-  }
+  @extend %flex-col;
 
   .signup-help,
   .signup-terms {
     display: block;
-    // TODO: line-height variables
+    // TODO: line-height variables?
     line-height: 1.45;
     margin-top: 48px;
 
@@ -51,6 +49,7 @@
   .signup-nav {
     display: flex;
     justify-content: space-between;
+    margin-top: auto;
     width: 330px;
   }
 

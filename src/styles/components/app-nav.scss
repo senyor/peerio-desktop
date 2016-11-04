@@ -37,6 +37,20 @@
       transition: color 150ms;
     }
 
+    &[disabled] {
+      pointer-events: none;
+
+      .rt-button-icon {
+        color: $text-light-disabled;
+
+        &:hover {
+          .rt-button-icon {
+            color: $text-light-disabled;
+          }
+        }
+      }
+    }
+
     &:not(.settings) {
       margin-top: $margin-large;
     }

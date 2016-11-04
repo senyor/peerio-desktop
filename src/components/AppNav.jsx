@@ -12,11 +12,11 @@ class AppNav extends React.Component {
                     <div className="menu-item active">
                         <IconButton icon="forum" />
                     </div>
-                    <div className="menu-item">
+                    <div className="menu-item" disabled >
                         <IconButton icon="folder" />
                     </div>
 
-                    <div className="menu-item settings">
+                    <div className="menu-item settings" disabled >
                         <IconButton icon="settings" />
                     </div>
                 </div>

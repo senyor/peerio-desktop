@@ -121,11 +121,16 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
                         <div className="signup-title">{t('signup')}</div>
                         {this.step === 1 ?
                             <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :
-                                <SignupPasscode store={this.passcodeStore} profileStore={this.profileStore} returnHandler={this.advance} />}
+                                <SignupPasscode
+                                    store={this.passcodeStore}
+                                    profileStore={this.profileStore}
+                                    returnHandler={this.advance} />}
                     </Panel>
 
                     <div className="signup-nav">
-                        <Link to="/"><Button flat label={t('button_exit')} /></Link>
+                        <Link to="/">
+                            <Button flat label={this.step === 1 ? t('button_exit') : t('button_back')} />
+                        </Link>
                         <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
                                 onClick={this.advance}
                                 disabled={this.hasError}

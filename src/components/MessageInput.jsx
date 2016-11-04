@@ -36,8 +36,8 @@ class MessageInput extends React.Component {
                 </IconMenu>
                 <Input multiline value={this.text} placeholder={t('enterYourMessage')} onKeyPress={this.handleKeyPress}
                                 onChange={this.handleTextChange} ref={this.setTextareaRef} />
-                <IconButton icon={this.inputIsEmpty ? 'thumb_up' : 'send'}
-                    className={this.inputIsEmpty ? 'color-brand' : 'color-affirmative'} />
+                <IconButton icon={this.inputIsEmpty ? 'thumb_up' : ''}
+                    className={this.inputIsEmpty ? 'color-brand' : 'hide'} />
             </div>
         );
     }

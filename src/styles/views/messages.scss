@@ -108,6 +108,14 @@
       padding: $padding-small 0;
     }
 
+    .color-brand > .material-icons {
+      color: $color-brand;
+    }
+
+    .color-affirmative > .material-icons {
+      color: $color-affirmative;
+    }
+
     textarea {
       line-height: 1.45;
       max-height: 96px;

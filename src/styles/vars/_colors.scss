@@ -18,7 +18,7 @@ $color-brand: rgb(44, 149, 207);
 
 // Status (warning/error/etc)
 $color-error: rgb(208, 2, 27);
-$color-good: rgb(44, 207, 132);
+$color-affirmative: rgb(44, 207, 132);
 
 // BACKGROUNDS
 $background-brand: $color-brand;
@@ -35,10 +35,11 @@ $background-welcome-back: $color-light-70;
 $text-dark-primary: $color-dark-87;
 $text-dark-secondary: $color-dark-54;
 $text-dark-hint: $color-dark-38;
+$text-dark-disabled: $color-dark-38;
 $text-light-primary: $color-light-100;
 $text-light-secondary: $color-light-70;
 $text-light-hint: $color-light-50;
-$text-light-disabled: $color-light-50;
+$text-light-disabled: $color-light-12;
 
 // ERRORS
 $text-dark-error: $color-error;
@@ -58,7 +59,7 @@ $input-dark-border: $color-dark-38;
 $button-primary: $color-brand;
 $button-dark-disabled: $color-dark-38;
 $button-light-disabled: $color-light-50;
-$button-affirmative: $color-good;
+$button-affirmative: $color-affirmative;
 
 // ICONS
 // fonts
@@ -68,5 +69,5 @@ $icon-light-active: $color-light-100;
 $icon-light-inactive: $color-light-50;
 
 //STATUS
-$status-online: $color-good;
+$status-online: $color-affirmative;
 $status-busy: $color-error;

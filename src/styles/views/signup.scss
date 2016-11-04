@@ -51,7 +51,6 @@
   .signup-nav {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 36px;
     width: 330px;
   }
 
@@ -66,5 +65,26 @@
     .helper-text {
       @extend %hint-error-label;
     }
+  }
+
+  .progress {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: $margin-default 0;
+
+    .indicator {
+      background-color: $color-light-50;
+      border-radius: 4px;
+      height: 8px;
+      width: 8px;
+      margin: 0 $margin-small;
+
+      &.active {
+        background-color: $color-light-100;
+      }
+    }
+
   }
 }

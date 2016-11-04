@@ -136,6 +136,10 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
                                 disabled={this.hasError}
                         />
                     </div>
+                    <div className="progress">
+                        <div className={`indicator ${this.step === 1 ? 'active' : ''}`} />
+                        <div className={`indicator ${this.step === 2 ? 'active' : ''}`} />
+                    </div>
                     <FullCoverSpinner show={this.busy} />
                     <Dialog actions={this.errorActions} active={this.errorVisible}
                             onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}

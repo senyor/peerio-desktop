@@ -71,20 +71,19 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    width: 100%;
     margin: $margin-default 0;
+    width: 100%;
 
     .indicator {
       background-color: $color-light-50;
       border-radius: 4px;
       height: 8px;
-      width: 8px;
       margin: 0 $margin-small;
+      width: 8px;
 
       &.active {
         background-color: $color-light-100;
       }
     }
-
   }
 }

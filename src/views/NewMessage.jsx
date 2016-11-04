@@ -8,6 +8,7 @@ class NewMessage extends React.Component {
     render() {
         return (
             <div className="new-message"
+                // TODO create layout class and remove inline styles
                 style={{ display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',

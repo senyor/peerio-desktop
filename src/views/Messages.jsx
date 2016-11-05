@@ -28,27 +28,31 @@ class Messages extends React.Component {
                             <Search />
                             <IconButton icon="info_outline" />
                         </div>
-                        {
-                            chatStore.activeChat
-                                ?
-                                    <div className="messages-container">
-                                        {chatStore.activeChat.messages.map(m =>
-                                            <Message key={m.id} username={m.sender.username}
-                                                     timestamp={m.timestamp} text={m.text} />
-                                        )}
-                                    </div>
-                                :
-                                    <div className="flex-col"
-                                        style={{ alignSelf: 'center', justifyContent: 'center', height: '100vh' }}>
-                                    Welcome? Some images? Select chat there?
-                                    </div>
-                        }
+                        {chatStore.activeChat ? <MessageList /> : <NoChatSelected />}
                         <MessageInput show={!!chatStore.activeChat} onSend={(m) => console.log('send: ', m)} />
                     </div>
                 </div>
             </div>
         );
     }
+}
+
+function MessageList() {
+    return (
+        <div className="messages-container">
+            {chatStore.activeChat.messages.map(m =>
+                <Message key={m.id} username={m.sender.username} timestamp={m.timestamp} text={m.text} />
+            )}
+        </div>
+    );
+}
+
+function NoChatSelected() {
+    return (
+        <div className="flex-col" style={{ alignSelf: 'center', justifyContent: 'center', height: '100vh' }}>
+            Welcome? Some images? Select chat there?
+        </div>
+    );
 }
 
 module.exports = Messages;

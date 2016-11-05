@@ -1,4 +1,5 @@
 const React = require('react');
+const { withRouter } = require('react-router');
 const { Button, Dialog } = require('react-toolbox');
 const { User, errors } = require('../icebear'); // eslint-disable-line
 const { observable, computed } = require('mobx');
@@ -46,7 +47,7 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
             return this.createAccount()
                 .then(() => User.current.setPasscode(this.passcodeStore.passcode))
                 .then(() => {
-                    this.context.router.push('/app');
+                    this.props.router.push('/app');
                 })
                 .catch(err => {});
         }
@@ -74,7 +75,7 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
             .then(() => {
                 User.current = u;
                 this.busy = false;
-                this.context.router.push('/app');
+                this.props.router.push('/app');
             })
             .catch(err => {
                 this.busy = false;
@@ -146,8 +147,5 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
     }
 }
 
-Signup.contextTypes = {
-    router: React.PropTypes.object
-};
 
-module.exports = Signup;
+module.exports = withRouter(Signup);

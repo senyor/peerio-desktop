@@ -1,4 +1,5 @@
 const React = require('react');
+const { withRouter } = require('react-router');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
@@ -56,7 +57,7 @@ class NewMessage extends React.Component {
         });
 
         chatStore.startChat(this.selected);
-        this.context.router.push('/app');
+        this.props.router.push('/app');
     };
 
     render() {
@@ -92,8 +93,5 @@ class NewMessage extends React.Component {
     }
 }
 
-NewMessage.contextTypes = {
-    router: React.PropTypes.object
-};
 
-module.exports = NewMessage;
+module.exports = withRouter(NewMessage);

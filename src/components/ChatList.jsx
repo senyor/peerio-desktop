@@ -1,4 +1,5 @@
 const React = require('react');
+const { withRouter } = require('react-router');
 const { t } = require('peerio-translator');
 const { IconButton, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
 const {chatStore} = require('../icebear'); //eslint-disable-line
@@ -15,7 +16,7 @@ class ChatList extends React.Component {
     }
 
     newMessage = () => {
-        this.context.router.push('/app/new-message');
+        this.props.router.push('/app/new-message');
     };
 /* <ListItem caption="Bill" className="online" leftIcon="fiber_manual_record"
    rightIcon={<div className="notification">12</div>} />*/
@@ -42,8 +43,5 @@ class ChatList extends React.Component {
     }
 }
 
-ChatList.contextTypes = {
-    router: React.PropTypes.object
-};
 
-module.exports = ChatList;
+module.exports = withRouter(ChatList);

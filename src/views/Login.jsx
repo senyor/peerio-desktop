@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
+const { withRouter } = require('react-router');
 const { Component } = require('react');
 const { Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
 const { cryptoUtil, config, User } = require('../icebear'); // eslint-disable-line
@@ -42,7 +43,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         user.passphrase = this.passcodeOrPassphrase;
         user.login().then(() => {
             User.current = user;
-            this.context.router.push('/app');
+            this.props.router.push('/app');
         }).catch(err => {
             console.error(err);
             this.errorMsg = t('error_loginFailed');
@@ -113,9 +114,6 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
     }
 }
 
-Login.contextTypes = {
-    router: React.PropTypes.object
-};
 
 let cachedGif = null;
 function randomGif() {
@@ -124,4 +122,4 @@ function randomGif() {
 }
 
 
-module.exports = Login;
+module.exports = withRouter(Login);

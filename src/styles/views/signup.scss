@@ -7,14 +7,14 @@
 
   @extend %flex-col;
 
-  .signup-help,
-  .signup-terms {
+  .help,
+  .terms {
     display: block;
     // TODO: line-height variables?
     line-height: 1.45;
     margin-top: 48px;
 
-    + .signup-help {
+    + .help {
       margin-top: $margin-large;
     }
   }
@@ -48,6 +48,7 @@
 
   .signup-nav {
     display: flex;
+    flex-shrink: 0;
     justify-content: space-between;
     margin-top: auto;
     width: 330px;
@@ -83,6 +84,21 @@
       &.active {
         background-color: $color-light-100;
       }
+    }
+  }
+
+  @media (max-height: $minimum-screen-height) {
+    img {
+      margin: $margin-default 0 24px;
+    }
+
+    .rt-input-input {
+      margin-top: 32px;
+    }
+
+    .help,
+    .terms {
+      margin-top: 32px;
     }
   }
 }

@@ -32,6 +32,7 @@
     background: $background-welcome-back;
     color: $text-dark-secondary;
     cursor: pointer;
+    flex-shrink: 0;
     font-size: 20px;
     height: 96px;
     justify-content: center;

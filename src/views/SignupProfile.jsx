@@ -79,7 +79,7 @@ class ProfileStore {
                 <Dropdown value={languageStore.language}
                     source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
 
-                <T k="signup_TOSRequestText" className="signup-terms">
+                <T k="signup_TOSRequestText" className="terms">
                     {{
                         emphasis: text => <strong>{text}</strong>,
                         tosLink: text => <a href={config.termsUrl}>{text}</a>

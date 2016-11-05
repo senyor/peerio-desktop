@@ -4,7 +4,8 @@
   color: $text-light-secondary;
   height: 100vh;
   transition: .5s;
-
+  width: 375px;
+  
   @extend %flex-col;
 
   .help,

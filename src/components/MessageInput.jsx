@@ -28,6 +28,7 @@ class MessageInput extends React.Component {
     };
 
     render() {
+        if(!this.props.show) return null;
         return (
             <div className="message-input">
                 <IconMenu icon="add_circle_outline">

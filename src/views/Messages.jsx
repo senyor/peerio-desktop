@@ -1,5 +1,5 @@
 const React = require('react');
-const { observable } = require('mobx');
+const { observable, autorun } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconButton } = require('react-toolbox');
 const Search = require('../components/Search');
@@ -10,7 +10,13 @@ const {chatStore} = require('../icebear');// eslint-disable-line
 
 @observer
 class Messages extends React.Component {
-
+    componentWillMount() {
+        if (chatStore.activeChat) chatStore.activeChat.loadMessages();
+        this.loaderDisposer = autorun(() => { chatStore.activeChat && chatStore.activeChat.loadMessages(); });
+    }
+    componentWillUnmount() {
+        this.loaderDisposer();
+    }
     render() {
         return (
             <div className="flex-row">
@@ -37,7 +43,7 @@ class Messages extends React.Component {
                                     Welcome? Some images? Select chat there?
                                     </div>
                         }
-                        <MessageInput onSend={(m) => console.log('send: ', m)} />
+                        <MessageInput show={!!chatStore.activeChat} onSend={(m) => console.log('send: ', m)} />
                     </div>
                 </div>
             </div>

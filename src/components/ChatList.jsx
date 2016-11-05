@@ -30,9 +30,11 @@ class ChatList extends React.Component {
                         <IconButton icon="add_circle_outline" onClick={this.newMessage} />
                     </div>
                     {chatStore.chats.map(c =>
-                        <ListItem className={c.active ? 'active' : ''} key={c.id}
-                                  onClick={() => this.activateChat(c.id)} caption={c.participants[0]}
-                                  leftIcon="fiber_manual_record" />
+                         c.loadingMeta ? <ProgressBar type="linear" mode="indeterminate" key={c.id} />
+                                       : <ListItem className={c.active ? 'active' : ''} key={c.id}
+                                                   onClick={() => this.activateChat(c.id)}
+                                                   caption={c.participants[0].username}
+                                                    leftIcon="fiber_manual_record" />
                     )}
                 </List>
             </div>

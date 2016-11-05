@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
-const { contactStore } = require('../icebear'); //eslint-disable-line
+const { contactStore, chatStore } = require('../icebear'); //eslint-disable-line
 const css = require('classnames');
 
 @observer
@@ -12,6 +12,10 @@ class NewMessage extends React.Component {
 
     @computed get options() {
         return contactStore.contacts.filter(c => !c.loading && !c.notFound && !this.selected.includes(c));
+    }
+
+    @computed get canGO() {
+        return !!this.selected.find(s => !s.loading && !s.notFound);
     }
 
     handleTextChange = newVal => {
@@ -43,6 +47,17 @@ class NewMessage extends React.Component {
         });
         this.query = '';
     }
+    creatingChat = false;
+    go = () => {
+        if (this.creatingChat || !this.canGO) return;
+        this.creatingChat = true;
+        this.selected.forEach(s => {
+            if (s.notFound) this.selected.remove(s);
+        });
+
+        chatStore.startChat(this.selected);
+        this.context.router.push('/app');
+    };
 
     render() {
         return (
@@ -54,17 +69,14 @@ class NewMessage extends React.Component {
                         marginTop: '168px' }}>
                     <div className="new-message-search">
                         {this.selected.map(c =>
-                            <Chip className={css('username', { 'not-found': c.notFound })} deletable
-                                  onDeleteClick={() => this.selected.remove(c)}>
-                                {
-                                    c.loading ? <ProgressBar type="linear" mode="indeterminate" />
-                                              : c.username
-                                }
+                            <Chip key={c.username} className={css('username', { 'not-found': c.notFound })}
+                                  onDeleteClick={() => this.selected.remove(c)} deletable>
+                                { c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username }
                             </Chip>
                         )}
                         <Input placeholder="enter username" value={this.query} onChange={this.handleTextChange}
                                 onKeyDown={this.handleKeyDown} />
-                        <Button className="confirm" label="Go" />
+                        <Button className="confirm" label="Go" onClick={this.go} disabled={!this.canGO} />
                     </div>
                     <List selectable ripple >
                         <ListSubHeader caption="Your contacts" />
@@ -79,5 +91,9 @@ class NewMessage extends React.Component {
         );
     }
 }
+
+NewMessage.contextTypes = {
+    router: React.PropTypes.object
+};
 
 module.exports = NewMessage;

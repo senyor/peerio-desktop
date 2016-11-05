@@ -114,7 +114,7 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         return (
             <div className={css('signup', 'rt-light-theme', { expand: this.expand })}>
                 <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
-                <div className="signup-form" scrollY>
+                <div className="signup-form">
                     <div className="signup-title">{t('signup')}</div>
                     {this.step === 1 ?
                         <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :

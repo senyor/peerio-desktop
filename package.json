@@ -1,215 +1,219 @@
 {
-    "name": "peerio-desktop",
-    "productName": "Icebear",
-    "version": "1.0.0",
-    "description": "Peerio desktop client (codename Icebear)",
-    "main": "build/main.js",
-    "scripts": {
-        "start": "npm-run-all compile --parallel code:watch style:watch electron:run",
-        "start:light": "npm-run-all code:compile style:compile --parallel code:watch style:watch electron:run",
-        "compile": "npm-run-all cleanup static:copy code:compile icebear:compile style:compile react-toolbox",
-        "cleanup": "rm -rf build && mkdir -p build",
-        "electron:run": "sleep 3 && electron .",
-        "static:copy": "cp -f src/index.html build/index.html && cp -R src/static build",
-        "code:compile": "babel src --out-dir build",
-        "icebear:compile": "babel node_modules/peerio-icebear/src --out-dir build/icebear",
-        "code:watch": "npm run code:compile -- -w",
-        "code:lint": "eslint . --fix --ext .js,.jsx",
-        "sass": "node-sass src/sass/main.scss build/style.css",
-        "sass:watch": "npm run sass -- -w",
-        "electron": "sleep 3 && electron .",
-        "style:compile": "node-sass src/styles/main.scss build/style.css",
-        "style:watch": "npm run style:compile -- -w",
-        "style:lint": "stylefmt -R src/styles && stylelint src/styles/**/*.*",
-        "dist": "NODE_ENV=production npm-run-all compile dist:mac dist:win dist:linux",
-        "dist:mac": "build --mac --x64",
-        "dist:win": "build --win --x64",
-        "dist:linux": "build -l",
-        "validate": "npm-run-all code:lint style:lint",
-        "install-win-build-tools": "./scripts/install-build-tools.sh",
-        "get-locales": "./scripts/get-locales.sh",
-        "storybook": "start-storybook -p 6006 -c .storybook",
-        "storybook:build": "build-storybook",
-        "react-toolbox": "node scripts/compile-react-toolbox.js",
-        "install_sqlite3_osx": "export LDFLAGS=\"-L`brew --prefix`/opt/sqlcipher/lib\" && export CPPFLAGS=\"-I`brew --prefix`/opt/sqlcipher/include\" && npm install sqlite3 -S --build-from-source --sqlite_libname=sqlcipher --sqlite=`brew --prefix`",
-        "fix_sqlite3_osx": "npm run fix_sqlite3_osx:1 && npm run fix_sqlite3_osx:2",
-        "fix_sqlite3_osx:1": "pushd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --sqlite_libname=sqlcipher --sqlite=`brew --prefix` --module_path=../lib/binding/electron-v1.4-darwin-x64 && popd",
-        "fix_sqlite3_osx:2": "pushd node_modules/sqlite3 && node-gyp rebuild --target=1.4.3 --arch=x64 --target_platform=darwin --sqlite_libname=sqlcipher --sqlite=`brew --prefix` --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-darwin-x64 && popd",
-        "fix_sqlite3_windows": "npm run fix_sqlite3_windows:1 && npm run fix_sqlite3_windows:2",
-        "fix_sqlite3_windows:1": "pushd node_modules\\sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd",
-        "fix_sqlite3_windows:2": "pushd node_modules\\sqlite3 && node-gyp rebuild --target=1.4.3 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd"
+  "name": "peerio-desktop",
+  "productName": "Icebear",
+  "version": "1.0.0",
+  "description": "Peerio desktop client (codename Icebear)",
+  "main": "build/main.js",
+  "scripts": {
+    "start": "npm-run-all compile --parallel code:watch style:watch electron:run",
+    "start:light": "npm-run-all code:compile style:compile --parallel code:watch style:watch electron:run",
+    "compile": "npm-run-all cleanup static:copy code:compile icebear:compile style:compile react-toolbox",
+    "cleanup": "rm -rf build && mkdir -p build",
+    "electron:run": "sleep 3 && electron .",
+    "static:copy": "cp -f src/index.html build/index.html && cp -R src/static build",
+    "code:compile": "babel src --out-dir build",
+    "icebear:compile": "babel node_modules/peerio-icebear/src --out-dir build/icebear",
+    "code:watch": "npm run code:compile -- -w",
+    "code:lint": "eslint . --fix --ext .js,.jsx",
+    "sass": "node-sass src/sass/main.scss build/style.css",
+    "sass:watch": "npm run sass -- -w",
+    "electron": "sleep 3 && electron .",
+    "style:compile": "node-sass src/styles/main.scss build/style.css",
+    "style:watch": "npm run style:compile -- -w",
+    "style:lint": "stylefmt -R src/styles && stylelint src/styles/**/*.*",
+    "dist": "NODE_ENV=production npm-run-all compile dist:mac dist:win dist:linux",
+    "dist:mac": "build --mac --x64",
+    "dist:win": "build --win --x64",
+    "dist:linux": "build -l",
+    "validate": "npm-run-all code:lint style:lint",
+    "install-win-build-tools": "./scripts/install-build-tools.sh",
+    "get-locales": "./scripts/get-locales.sh",
+    "storybook": "start-storybook -p 6006 -c .storybook",
+    "storybook:build": "build-storybook",
+    "react-toolbox": "node scripts/compile-react-toolbox.js",
+    "install_sqlite3_osx": "export LDFLAGS=\"-L`brew --prefix`/opt/sqlcipher/lib\" && export CPPFLAGS=\"-I`brew --prefix`/opt/sqlcipher/include\" && npm install sqlite3 -S --build-from-source --sqlite_libname=sqlcipher --sqlite=`brew --prefix`",
+    "fix_sqlite3_osx": "npm run fix_sqlite3_osx:1 && npm run fix_sqlite3_osx:2",
+    "fix_sqlite3_osx:1": "pushd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --sqlite_libname=sqlcipher --sqlite=`brew --prefix` --module_path=../lib/binding/electron-v1.4-darwin-x64 && popd",
+    "fix_sqlite3_osx:2": "pushd node_modules/sqlite3 && node-gyp rebuild --target=1.4.3 --arch=x64 --target_platform=darwin --sqlite_libname=sqlcipher --sqlite=`brew --prefix` --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-darwin-x64 && popd",
+    "fix_sqlite3_windows": "npm run fix_sqlite3_windows:1 && npm run fix_sqlite3_windows:2",
+    "fix_sqlite3_windows:1": "pushd node_modules\\sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd",
+    "fix_sqlite3_windows:2": "pushd node_modules\\sqlite3 && node-gyp rebuild --target=1.4.3 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeerioTechnologies/peerio-desktop.git"
+  },
+  "author": "Anri Asaturov <anri82@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PeerioTechnologies/peerio-desktop/issues"
+  },
+  "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
+  "devDependencies": {
+    "@kadira/storybook": "^2.21.0",
+    "babel-cli": "6.18.0",
+    "babel-eslint": "7.1.0",
+    "babel-plugin-syntax-jsx": "6.18.0",
+    "babel-plugin-transform-class-properties": "6.18.0",
+    "babel-plugin-transform-decorators-legacy": "1.3.4",
+    "babel-plugin-transform-es2015-template-literals": "6.8.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.18.0",
+    "babel-plugin-transform-inline-environment-variables": "6.8.0",
+    "babel-plugin-transform-object-rest-spread": "6.16.0",
+    "babel-plugin-transform-react-constant-elements": "6.9.1",
+    "babel-plugin-transform-react-display-name": "6.8.0",
+    "babel-plugin-transform-react-inline-elements": "6.8.0",
+    "babel-plugin-transform-react-jsx": "6.8.0",
+    "babel-plugin-transform-react-jsx-self": "6.11.0",
+    "babel-plugin-transform-react-jsx-source": "6.9.0",
+    "babel-plugin-transform-remove-debugger": "6.8.0",
+    "babel-preset-es2015": "6.18.0",
+    "babel-preset-react": "6.16.0",
+    "babel-preset-stage-0": "6.16.0",
+    "cz-conventional-changelog": "1.2.0",
+    "devtron": "1.4.0",
+    "diff2html-cli": "2.0.3",
+    "electron-builder": "7.21.0",
+    "electron-devtools-installer": "2.0.1",
+    "electron-prebuilt": "1.4.5",
+    "electron-reload": "1.0.2",
+    "eslint-config-peerio": "*",
+    "ghooks": "1.3.2",
+    "node-sass": "3.11.2",
+    "npm-run-all": "3.1.1",
+    "postcss": "5.2.5",
+    "postcss-cssnext": "2.8.0",
+    "postcss-each": "0.9.3",
+    "postcss-import": "8.1.3",
+    "postcss-mixins": "5.4.0",
+    "postcss-modules": "0.5.2",
+    "postcss-reporter": "1.4.1",
+    "precss": "1.4.0",
+    "standard-version": "^3.0.0",
+    "stylefmt": "4.3.1",
+    "stylelint": "7.5.0",
+    "stylelint-config-standard": "14.0.0",
+    "validate-commit-msg": "2.8.2",
+    "writefile": "0.2.8",
+    "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#icebear"
+  },
+  "dependencies": {
+    "blake2s-js": "1.2.0",
+    "buffer": "5.0.0",
+    "classnames": "2.2.5",
+    "electron-squirrel-startup": "1.0.0",
+    "immutability-helper": "2.0.0",
+    "is_js": "0.9.0",
+    "material-design-icons": "3.0.1",
+    "mobx": "2.6.1",
+    "mobx-react": "3.5.8",
+    "nacl-stream": "0.3.3",
+    "normalize.css": "5.0.0",
+    "peerio-icebear": "github:peeriotechnologies/peerio-icebear",
+    "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
+    "react": "15.3.2",
+    "react-addons-css-transition-group": "15.3.2",
+    "react-dom": "15.3.2",
+    "react-motion": "0.4.5",
+    "react-router": "3.0.0",
+    "react-toolbox": "https://github.com/react-toolbox/react-toolbox.git#css-next",
+    "scrypt-async": "1.3.0",
+    "socket.io-client": "1.5.1",
+    "zxcvbn": "4.4.1"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run validate",
+      "post-checkout": "",
+      "post-merge": "npm update",
+      "commit-msg": "validate-commit-msg"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/PeerioTechnologies/peerio-desktop.git"
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     },
-    "author": "Anri Asaturov <anri82@gmail.com>",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/PeerioTechnologies/peerio-desktop/issues"
-    },
-    "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
-    "devDependencies": {
-        "@kadira/storybook": "^2.21.0",
-        "babel-cli": "6.18.0",
-        "babel-eslint": "7.1.0",
-        "babel-plugin-syntax-jsx": "6.18.0",
-        "babel-plugin-transform-class-properties": "6.18.0",
-        "babel-plugin-transform-decorators-legacy": "1.3.4",
-        "babel-plugin-transform-es2015-template-literals": "6.8.0",
-        "babel-plugin-transform-es2015-modules-commonjs": "6.18.0",
-        "babel-plugin-transform-inline-environment-variables": "6.8.0",
-        "babel-plugin-transform-object-rest-spread": "6.16.0",
-        "babel-plugin-transform-react-constant-elements": "6.9.1",
-        "babel-plugin-transform-react-display-name": "6.8.0",
-        "babel-plugin-transform-react-inline-elements": "6.8.0",
-        "babel-plugin-transform-react-jsx": "6.8.0",
-        "babel-plugin-transform-react-jsx-self": "6.11.0",
-        "babel-plugin-transform-react-jsx-source": "6.9.0",
-        "babel-plugin-transform-remove-debugger": "6.8.0",
-        "babel-preset-es2015": "6.18.0",
-        "babel-preset-react": "6.16.0",
-        "babel-preset-stage-0": "6.16.0",
-        "cz-conventional-changelog": "1.2.0",
-        "devtron": "1.4.0",
-        "diff2html-cli": "2.0.3",
-        "electron-builder": "7.15.2",
-        "electron-devtools-installer": "2.0.1",
-        "electron-prebuilt": "1.4.3",
-        "electron-reload": "1.0.2",
-        "eslint-config-peerio": "*",
-        "ghooks": "1.3.2",
-        "node-sass": "https://github.com/sass/node-sass",
-        "npm-run-all": "3.1.1",
-        "postcss": "5.2.5",
-        "postcss-cssnext": "2.8.0",
-        "postcss-each": "0.9.3",
-        "postcss-import": "8.1.2",
-        "postcss-mixins": "5.4.0",
-        "postcss-modules": "0.5.2",
-        "postcss-reporter": "1.4.1",
-        "precss": "1.4.0",
-        "standard-version": "^3.0.0",
-        "stylefmt": "4.3.1",
-        "stylelint": "7.5.0",
-        "stylelint-config-standard": "14.0.0",
-        "validate-commit-msg": "2.8.2",
-        "writefile": "0.2.8",
-        "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#icebear"
-    },
-    "dependencies": {
-        "peerio-icebear": "github:peeriotechnologies/peerio-icebear",
-        "blake2s-js": "1.2.0",
-        "buffer": "5.0.0",
-        "classnames": "2.2.5",
-        "electron-squirrel-startup": "1.0.0",
-        "immutability-helper": "2.0.0",
-        "is_js": "0.9.0",
-        "material-design-icons": "3.0.1",
-        "mobx": "2.6.0",
-        "mobx-react": "3.5.8",
-        "nacl-stream": "0.3.3",
-        "normalize.css": "5.0.0",
-        "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
-        "react": "15.3.2",
-        "react-addons-css-transition-group": "15.3.2",
-        "react-dom": "15.3.2",
-        "react-router": "3.0.0",
-        "react-toolbox": "https://github.com/react-toolbox/react-toolbox.git#6540226b9464cc6957464e6c10758ae9a5964df6",
-        "scrypt-async": "1.3.0",
-        "socket.io-client": "1.5.1",
-        "zxcvbn": "4.4.0"
-    },
-    "config": {
-        "ghooks": {
-            "pre-commit": "npm run validate",
-            "post-checkout": "",
-            "post-merge": "npm update",
-            "commit-msg": "validate-commit-msg"
-        },
-        "commitizen": {
-            "path": "./node_modules/cz-conventional-changelog"
-        },
-        "validate-commit-msg": {
-            "types": [
-                "feat",
-                "fix",
-                "docs",
-                "style",
-                "refactor",
-                "perf",
-                "test",
-                "chore",
-                "revert",
-                "core"
-            ],
-            "warnOnFail": false,
-            "maxSubjectLength": 120,
-            "subjectPattern": ".+",
-            "helpMessage": "Convention: https://goo.gl/3TgTsh"
-        }
-    },
-    "directories": {
-        "buildResources": "dist-assets"
-    },
-    "build": {
-        "appId": "com.peerio.desktop",
-        "files": [
-            "build/**",
-            "package.json",
-            "node_modules/**",
-            "!node_modules/material-design-icons${/*}",
-            "node_modules/material-design-icons/iconfont/*",
-            "!node_modules/peerio-icebear${/*}",
-            "!node_modules/react-toolbox${/*}",
-            "node_modules/react-toolbox/lib/**/{*.js,*.json,*.css}",
-            "node_modules/react-toolbox/package.json",
-
-            "!node_modules/**/{example,examples,demo,demos,test,tests,__test?__,.vscode}${/*}",
-            "!node_modules/**/{*.md,*.markdown,*.ts,*.flow,*.html,*.htm,*.map,*.test.js,*.watchr}",
-            "!node_modules/**/{LICENSE,license,LICENSE.*,LICENSE-MIT,LICENCE,PATENTS,COPYING.txt}",
-            "!node_modules/**/{bower.json,?runtfile.js,?ulpfile.js,?akefile}",
-            "!node_modules/**/",
-            "!node_modules/**/{.npmignore,.eslintrc,.eslintrc.js,.jshintrc,.babelrc, karma.conf.js}",
-            "!node_modules/**/{example.js}"
-        ],
-        "asar": true,
-        "compression": "normal",
-        "win": {
-            "target": [
-                "squirrel"
-            ],
-            "title": "Peerio",
-            "version": "1.0.0",
-            "msi": true
-        },
-        "mac": {
-            "category": "public.app-category.productivity",
-            "target": [
-                "zip", "dmg"
-            ]
-        },
-        "dmg": {
-            "window": {
-                "x": 200,
-                "y": 160,
-                "width": 400,
-                "height": 260
-            },
-            "contents": [{
-                "x": 160,
-                "y": 170
-            }, {
-                "x": 300,
-                "y": 170,
-                "type": "link",
-                "path": "/Applications"
-            }]
-        },
-        "linux": {
-            "target": [
-                "AppImage"
-            ]
-        }
+    "validate-commit-msg": {
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "chore",
+        "revert",
+        "core"
+      ],
+      "warnOnFail": false,
+      "maxSubjectLength": 120,
+      "subjectPattern": ".+",
+      "helpMessage": "Convention: https://goo.gl/3TgTsh"
     }
+  },
+  "directories": {
+    "buildResources": "dist-assets"
+  },
+  "build": {
+    "appId": "com.peerio.desktop",
+    "files": [
+      "build/**",
+      "package.json",
+      "node_modules/**",
+      "!node_modules/material-design-icons${/*}",
+      "node_modules/material-design-icons/iconfont/*",
+      "!node_modules/peerio-icebear${/*}",
+      "!node_modules/react-toolbox${/*}",
+      "node_modules/react-toolbox/lib/**/{*.js,*.json,*.css}",
+      "node_modules/react-toolbox/package.json",
+      "!node_modules/**/{example,examples,demo,demos,test,tests,__test?__,.vscode}${/*}",
+      "!node_modules/**/{*.md,*.markdown,*.ts,*.flow,*.html,*.htm,*.map,*.test.js,*.watchr}",
+      "!node_modules/**/{LICENSE,license,LICENSE.*,LICENSE-MIT,LICENCE,PATENTS,COPYING.txt}",
+      "!node_modules/**/{bower.json,?runtfile.js,?ulpfile.js,?akefile}",
+      "!node_modules/**/",
+      "!node_modules/**/{.npmignore,.eslintrc,.eslintrc.js,.jshintrc,.babelrc, karma.conf.js}",
+      "!node_modules/**/{example.js}"
+    ],
+    "asar": true,
+    "compression": "normal",
+    "win": {
+      "target": [
+        "squirrel"
+      ],
+      "title": "Peerio",
+      "version": "1.0.0",
+      "msi": true
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "zip",
+        "dmg"
+      ]
+    },
+    "dmg": {
+      "window": {
+        "x": 200,
+        "y": 160,
+        "width": 400,
+        "height": 260
+      },
+      "contents": [
+        {
+          "x": 160,
+          "y": 170
+        },
+        {
+          "x": 300,
+          "y": 170,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    }
+  }
 }

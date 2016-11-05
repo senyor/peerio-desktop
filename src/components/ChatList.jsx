@@ -26,16 +26,16 @@ class ChatList extends React.Component {
             <div className="message-list">
                 {chatStore.loading ? <ProgressBar type="linear" mode="indeterminate" /> : null}
                 <List selectable ripple>
-                    <div className="list-header-wrapper">
+                    <div key="list-header" className="list-header-wrapper">
                         <ListSubHeader caption={t('directMessages')} />
                         <IconButton icon="add_circle_outline" onClick={this.newMessage} />
                     </div>
                     {chatStore.chats.map(c =>
-                         c.loadingMeta ? <ProgressBar type="linear" mode="indeterminate" key={c.id} />
-                                       : <ListItem className={c.active ? 'active' : ''} key={c.id}
-                                                   onClick={() => this.activateChat(c.id)}
-                                                   caption={c.participants[0].username}
-                                                    leftIcon="fiber_manual_record" />
+                        <ListItem itemContent={c.loadingMeta ? <ProgressBar type="linear" mode="indeterminate" />
+                                                             : null}
+                                  className={c.active ? 'active' : ''} key={c.id}
+                                         onClick={() => this.activateChat(c.id)}
+                                         caption={c.chatName} leftIcon="fiber_manual_record" />
                     )}
                 </List>
             </div>

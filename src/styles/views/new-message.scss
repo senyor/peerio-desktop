@@ -39,4 +39,16 @@
       margin-right: 24px;
     }
   }
+
+  .username {
+    flex-shrink: 0;
+    min-width: 70px;
+    opacity: 1;
+    transition: all 5s;
+
+    &.not-found {
+      background-color: #ff8585;
+      opacity: .2;
+    }
+  }
 }

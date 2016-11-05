@@ -1,32 +1,78 @@
 const React = require('react');
-const { observable } = require('mobx');
+const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Chip, Input, List, ListItem, ListSubHeader } = require('react-toolbox');
+const { Button, Chip, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
+const { contactStore } = require('../icebear'); //eslint-disable-line
+const css = require('classnames');
 
 @observer
 class NewMessage extends React.Component {
+    @observable selected = [];
+    @observable query = '';
+
+    @computed get options() {
+        return contactStore.contacts.filter(c => !c.loading && !c.notFound && !this.selected.includes(c));
+    }
+
+    handleTextChange = newVal => {
+        if (newVal.length > 1 && ', '.includes(newVal[newVal.length - 1])) {
+            this.query = newVal.substr(0, newVal.length - 1).trim();
+            this.tryAcceptUsername();
+            return;
+        }
+        this.query = newVal.trim();
+    };
+
+    // Don't use onKeyPress it won't catch backspace
+    // Don't use onKeyUp - text change fires earlier
+    handleKeyDown = e => {
+        if (e.key === 'Enter' && this.query !== '') this.tryAcceptUsername();
+        if (e.key === 'Backspace' && this.query === '' && this.selected.length > 0) {
+            this.selected.remove(this.selected[this.selected.length - 1]);
+        }
+    };
+
+    tryAcceptUsername() {
+        if (this.selected.find(s => s.username === this.query)) {
+            return;
+        }
+        const c = contactStore.getContact(this.query);
+        this.selected.push(c);
+        when(() => !c.loading, () => {
+            setTimeout(() => c.notFound && this.selected.remove(c), 3000);
+        });
+        this.query = '';
+    }
+
     render() {
         return (
             <div className="create-new-message">
-                {/* TODO create class */}
                 <div className="flex-col"
                     style={{
                         alignItems: 'center',
                         width: '600px',
                         marginTop: '168px' }}>
-                    <div className="new-message-search"><Chip deletable>user name</Chip>
-                        <Input /> <Button className="confirm" label="Go" />
+                    <div className="new-message-search">
+                        {this.selected.map(c =>
+                            <Chip className={css('username', { 'not-found': c.notFound })} deletable
+                                  onDeleteClick={() => this.selected.remove(c)}>
+                                {
+                                    c.loading ? <ProgressBar type="linear" mode="indeterminate" />
+                                              : c.username
+                                }
+                            </Chip>
+                        )}
+                        <Input placeholder="enter username" value={this.query} onChange={this.handleTextChange}
+                                onKeyDown={this.handleKeyDown} />
+                        <Button className="confirm" label="Go" />
                     </div>
                     <List selectable ripple >
                         <ListSubHeader caption="Your contacts" />
-                        <ListItem
-                            avatar="https://placeimg.com/80/80/animals"
-                            caption="User name"
-                            legend="some text about the user" />
-                        <ListItem
-                            avatar="https://placeimg.com/80/80/animals"
-                            caption="User name"
-                            legend="some text about the user" />
+                        { this.options.map(c =>
+                            <ListItem key={c.username} avatar="https://placeimg.com/80/80/animals"
+                                      caption={c.username} legend="some text about the user"
+                                      onClick={() => this.selected.push(c)} />
+                        )}
                     </List>
                 </div>
             </div>

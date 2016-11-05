@@ -13,7 +13,7 @@ module.exports = (
         <Route path="/signup" component={Signup} />
         <Route path="/app" component={App} >
             <IndexRoute component={Messages} />
-            <Route path="/new-message" component={NewMessage} />
+            <Route path="new-message" component={NewMessage} />
         </Route>
     </Route>
 );

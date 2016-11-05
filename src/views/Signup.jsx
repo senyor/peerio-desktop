@@ -1,5 +1,4 @@
 const React = require('react');
-const { Component } = require('react');
 const { Button, Dialog } = require('react-toolbox');
 const { User, errors } = require('../icebear'); // eslint-disable-line
 const { observable, computed } = require('mobx');
@@ -12,7 +11,7 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
 const { SignupProfile, ProfileStore } = require('./SignupProfile');
 const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
 
-@observer class Signup extends Component {
+@observer class Signup extends React.Component {
     @observable busy = false;
     @observable expand = false; // starts expand animation
     @observable step = 1; // 1 -profile, 2- passcode
@@ -111,7 +110,6 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
     };
 
     // todo retreat
-
     render() {
         return (
             <div className={css('signup', 'rt-light-theme', { expand: this.expand })}>

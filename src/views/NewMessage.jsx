@@ -84,7 +84,7 @@ class NewMessage extends React.Component {
                         <ListSubHeader caption="Your contacts" />
                         { this.options.map(c =>
                             <ListItem key={c.username} avatar={<Avatar contact={c} />}
-                                      caption={c.username} legend="some text about the user"
+                                      caption={c.username} legend={`${c.firstName} ${c.lastName}`}
                                       onClick={() => this.selected.push(c)} />
                         )}
                     </List>

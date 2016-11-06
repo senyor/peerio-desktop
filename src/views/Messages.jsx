@@ -1,5 +1,5 @@
 const React = require('react');
-const { observable, autorun } = require('mobx');
+const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconButton } = require('react-toolbox');
 const Search = require('../components/Search');
@@ -12,10 +12,13 @@ const {chatStore} = require('../icebear');// eslint-disable-line
 class Messages extends React.Component {
     componentWillMount() {
         if (chatStore.activeChat) chatStore.activeChat.loadMessages();
-        this.loaderDisposer = autorun(() => { chatStore.activeChat && chatStore.activeChat.loadMessages(); });
+        this.loaderDisposer = reaction(() => chatStore.activeChat, () => chatStore.activeChat.loadMessages());
     }
     componentWillUnmount() {
         this.loaderDisposer();
+    }
+    sendMessage(m) {
+        chatStore.activeChat.sendMessage(m);
     }
     render() {
         return (
@@ -29,7 +32,7 @@ class Messages extends React.Component {
                             <IconButton icon="info_outline" />
                         </div>
                         {chatStore.activeChat ? <MessageList /> : <NoChatSelected />}
-                        <MessageInput show={!!chatStore.activeChat} onSend={(m) => console.log('send: ', m)} />
+                        <MessageInput show={!!chatStore.activeChat} onSend={this.sendMessage} />
                     </div>
                 </div>
             </div>
@@ -37,15 +40,16 @@ class Messages extends React.Component {
     }
 }
 
-function MessageList() {
+
+const MessageList = observer(() => {
     return (
         <div className="messages-container">
             {chatStore.activeChat.messages.map(m =>
-                <Message key={m.id} username={m.sender.username} timestamp={m.timestamp} text={m.text} />
+                <Message key={m.id || m.tempId} message={m} />
             )}
         </div>
     );
-}
+});
 
 function NoChatSelected() {
     return (

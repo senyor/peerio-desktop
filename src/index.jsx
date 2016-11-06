@@ -17,15 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     config.socketServerUrl = 'wss://hocuspocus.peerio.com';
     socket.start();
-    // development aid, connection breaks while debugging otherwise
-    if (process.env.NODE_ENV !== 'production'){
-        const setTimeout = () => {
-            socket.socket.pingInterval = 60000;
-            socket.socket.pingTimeout = 60000;
-        };
-        socket.subscribe('connect', setTimeout);
-        setTimeout();
-    }
 
     const history = createMemoryHistory();
     render(<Router history={history} routes={routes}/>, document.getElementById('root'));

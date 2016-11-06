@@ -2,7 +2,7 @@ const React = require('react');
 const { Avatar } = require('react-toolbox');
 const { observer } = require('mobx-react');
 
-const Message = observer(props => {
+const Message = observer(({ message }) => {
     return (
         <div className="message-content-wrapper">
             <Avatar>
@@ -10,11 +10,12 @@ const Message = observer(props => {
             </Avatar>
             <div className="message-content">
                 <div className="meta-data">
-                    <div className="user">{props.username}</div>
-                    <div className="timestamp">{new Date(props.timestamp).toLocaleString()}</div>
+                    <div className="user">{message.sender.username}</div>
+                    <div className="timestamp">{message.timestamp.toLocaleTimeString()}</div>
                 </div>
-                <p>{props.text}</p>
+                <p>{message.text}</p>
             </div>
+            {message.sending ? <div className="sending-overlay" /> : null}
         </div>
     );
 });

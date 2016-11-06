@@ -1,13 +1,18 @@
 const React = require('react');
-const { Avatar, IconButton } = require('react-toolbox');
+const { observer } = require('mobx-react');
+const { IconButton } = require('react-toolbox');
+const {User, contactStore} = require('../icebear');//eslint-disable-line
+const Avatar = require('./Avatar');
 
+@observer
 class AppNav extends React.Component {
+    componentWillMount() {
+        this.contact = contactStore.getContact(User.current.username);
+    }
     render() {
         return (
             <div className="app-nav">
-                <Avatar>
-                    <img src="https://placeimg.com/80/80/animals" alt="avatar" />
-                </Avatar>
+                <Avatar contact={this.contact} />
                 <div className="app-menu">
                     <div className="menu-item active">
                         <IconButton icon="forum" />

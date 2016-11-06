@@ -13,6 +13,11 @@
   flex-shrink: 0;
 }
 
+.rt-avatar-letter {
+  text-shadow: 0px 0px 0px #000; // so we can see letters on white background
+  text-transform: capitalize;
+}
+
 // BUTTONS and ICONS!
 .rt-button-button > .rt-button-icon,
 .material-icons {

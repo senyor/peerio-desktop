@@ -1,13 +1,11 @@
 const React = require('react');
-const { Avatar } = require('react-toolbox');
+const Avatar = require('./Avatar');
 const { observer } = require('mobx-react');
 
 const Message = observer(({ message }) => {
     return (
         <div className="message-content-wrapper">
-            <Avatar>
-                <img src="https://placeimg.com/80/80/animals" alt="avatar" />
-            </Avatar>
+            <Avatar contact={message.sender} />
             <div className="message-content">
                 <div className="meta-data">
                     <div className="user">{message.sender.username}</div>

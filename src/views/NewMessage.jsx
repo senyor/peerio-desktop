@@ -5,6 +5,7 @@ const { observer } = require('mobx-react');
 const { Button, Chip, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
 const { contactStore, chatStore } = require('../icebear'); //eslint-disable-line
 const css = require('classnames');
+const Avatar = require('../components/Avatar');
 
 @observer
 class NewMessage extends React.Component {
@@ -82,7 +83,7 @@ class NewMessage extends React.Component {
                     <List selectable ripple >
                         <ListSubHeader caption="Your contacts" />
                         { this.options.map(c =>
-                            <ListItem key={c.username} avatar="https://placeimg.com/80/80/animals"
+                            <ListItem key={c.username} avatar={<Avatar contact={c} />}
                                       caption={c.username} legend="some text about the user"
                                       onClick={() => this.selected.push(c)} />
                         )}

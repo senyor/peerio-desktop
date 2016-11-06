@@ -14,10 +14,10 @@ function getJSONFromCssModules(cssFileName, json) {
 
 function generateScopedName(name, fileName, css) {
     let file = path.basename(fileName, '.css');
-    if(file === 'theme') file = ''; else file = '-'+file;
+    if (file === 'theme') file = ''; else file = '-' + file;
     let folder = path.basename(path.dirname(fileName));
-    if(folder === 'lib') folder = ''; else folder = '-'+ folder;
-    return 'rt'+folder+file+'-'+name;
+    if (folder === 'lib') folder = ''; else folder = '-' + folder;
+    return 'rt' + folder + file + '-' + name;
 }
 
 function compile(file) {
@@ -45,48 +45,49 @@ function compile(file) {
         modules({
             getJSON: getJSONFromCssModules,
             generateScopedName: generateScopedName,
-            scopeBehaviour : 'local'
+            scopeBehaviour: 'local'
         }),
         require('precss')(),
         require('postcss-reporter')()
-]).process(css, {
-    from: src + file,
-    to: dst + file
-}).then((result) => {
-    return writeFile(dst + file, result.css);
-});
-}[
-'commons.css',
-'animations/slide-left.css',
-'animations/slide-right.css',
-'animations/zoom-in.css',
-'animations/zoom-out.css',
-'app_bar/theme.css',
-'autocomplete/theme.css',
-'avatar/theme.css',
-'input/theme.css',
-'button/theme.css',
-'card/theme.css',
-'checkbox/theme.css',
-'chip/theme.css',
-'date_picker/theme.css',
-'dialog/theme.css',
-'drawer/theme.css',
-'dropdown/theme.css',
-'layout/theme.css',
-'link/theme.css',
-'list/theme.css',
-'menu/theme.css',
-'navigation/theme.css',
-'overlay/theme.css',
-'progress_bar/theme.css',
-'radio/theme.css',
-'ripple/theme.css',
-'slider/theme.css',
-'snackbar/theme.css',
-'switch/theme.css',
-'table/theme.css',
-'tabs/theme.css',
-'time_picker/theme.css',
-'tooltip/theme.css'
+    ]).process(css, {
+        from: src + file,
+        to: dst + file
+    }).then((result) => {
+        return writeFile(dst + file, result.css);
+    });
+}
+[
+    'commons.css',
+    'animations/slide-left.css',
+    'animations/slide-right.css',
+    'animations/zoom-in.css',
+    'animations/zoom-out.css',
+    'app_bar/theme.css',
+    'autocomplete/theme.css',
+    'avatar/theme.css',
+    'button/theme.css',
+    'card/theme.css',
+    'checkbox/theme.css',
+    'chip/theme.css',
+    'date_picker/theme.css',
+    'dialog/theme.css',
+    'drawer/theme.css',
+    'dropdown/theme.css',
+    'input/theme.css',
+    'layout/theme.css',
+    'link/theme.css',
+    'list/theme.css',
+    'menu/theme.css',
+    'navigation/theme.css',
+    'overlay/theme.css',
+    'progress_bar/theme.css',
+    'radio/theme.css',
+    'ripple/theme.css',
+    'slider/theme.css',
+    'snackbar/theme.css',
+    'switch/theme.css',
+    'table/theme.css',
+    'tabs/theme.css',
+    'time_picker/theme.css',
+    'tooltip/theme.css'
 ].forEach(f => compile(f));

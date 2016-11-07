@@ -139,28 +139,6 @@
       max-height: 96px;
       resize: none;
     }
-    //  Only need if we use "Send on enter" UI
-    //
-    // .rt-checkbox-field {
-    //   display: flex;
-    //   margin: 0;
-    //
-    //   .rt-checkbox-check {
-    //     order: 2;
-    //     border-color: $icon-dark-active;
-    //   }
-    //
-    //   .rt-checkbox-checked {
-    //     border-color: $color-brand;
-    //   }
-    //
-    //   .rt-checkbox-text {
-    //     color: $text-dark-secondary;
-    //     order: 1;
-    //     padding: 0 $padding-small 0 0;
-    //
-    //   }
-    // }
   }
 }
 
@@ -170,6 +148,8 @@
   width: $message-list-width;
 
   @extend %flex-shrink-0;
+
+
 
   .active,
   .rt-list-listItem:hover {
@@ -208,7 +188,7 @@
 // contact status indicator
 .rt-list-left .rt-list-itemAction {
   margin: 0;
-
+  
   .material-icons {
     font-size: 10px;
     margin-right: $margin-default;

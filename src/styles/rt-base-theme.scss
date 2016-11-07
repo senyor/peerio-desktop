@@ -9,14 +9,13 @@
 @import './vars/transitions';
 @import './vars/_typography';
 
-
 // AVATAR
 .rt-avatar-avatar {
   flex-shrink: 0;
 }
 
 .rt-avatar-letter {
-  text-shadow: 0px 0px 0px #000; // so we can see letters on white background
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0); // so we can see letters on white background 
   text-transform: capitalize;
 }
 

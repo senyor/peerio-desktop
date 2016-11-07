@@ -35,11 +35,7 @@ const T = require('../components/T');
         this.unsetLastUser = this.unsetLastUser.bind(this);
         User.getLastAuthenticated()
             .then((username) => {
-                console.log('user',username)
                 this.lastUser = username;
-            })
-            .catch(err => {
-                console.log('wh',err)
             })
     }
 
@@ -47,11 +43,11 @@ const T = require('../components/T');
         this.passwordVisible = !this.passwordVisible;
     }
 
-    unsetLastUser () {
+    unsetLastUser() {
         return User.removeLastAuthenticated()
             .then(() => {
                 this.lastUser = undefined;
-            })
+            });
     }
 
     login() {
@@ -102,7 +98,7 @@ const T = require('../components/T');
                         <Input type="text" label={t('username')} value={this.username}
                                onChange={this.usernameUpdater}
                                onKeyPress={this.handleKeyPress}
-                               className={this.lastUser ? 'hide' : '' }
+                               className={this.lastUser ? 'hide' : ''}
                         />
                         <div className="password">
                             <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passcodeOrPassphrase')}

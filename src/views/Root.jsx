@@ -14,6 +14,19 @@ class Root extends React.Component {
                 this.forceUpdate();
             }
         );
+        this.devtools = null;
+        if (process.env.NODE_ENV !== 'production') {
+            const MobxTools = require('mobx-react-devtools').default; //eslint-disable-line
+            this.devtools = <MobxTools />;
+            window.hideMobxTools = () => {
+                this.devtools = null;
+                this.forceUpdate();
+            };
+            window.showMobxTools = () => {
+                this.devtools = <MobxTools />;
+                this.forceUpdate();
+            };
+        }
     }
 
     componentWillUnmount() {
@@ -25,6 +38,7 @@ class Root extends React.Component {
             <div>
                 {this.props.children}
                 <AutoUpdateDialog />
+                {this.devtools}
             </div>
         );
     }

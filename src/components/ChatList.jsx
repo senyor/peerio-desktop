@@ -4,6 +4,7 @@ const { t } = require('peerio-translator');
 const { IconButton, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
 const {chatStore} = require('../icebear'); //eslint-disable-line
 const { observer } = require('mobx-react');
+const css = require('classnames');
 
 @observer
 class ChatList extends React.Component {
@@ -31,7 +32,7 @@ class ChatList extends React.Component {
                         <IconButton icon="add_circle_outline" onClick={this.newMessage} />
                     </div>
                     {chatStore.chats.map(c =>
-                        <ListItem key={c.id || c.tempId} className={c.active ? 'active' : ''}
+                        <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
                             itemContent={c.loadingMeta
                                             ? <ProgressBar type="linear" mode="indeterminate" />
                                             : null}

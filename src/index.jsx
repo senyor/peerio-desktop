@@ -1,6 +1,5 @@
 /* eslint-disable */
 document.addEventListener('DOMContentLoaded', () => {
-
     require.extensions['.css'] = function (m, f) {
         m.exports = require(f.replace('.css', '.json'));
     };

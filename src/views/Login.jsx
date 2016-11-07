@@ -36,7 +36,7 @@ const T = require('../components/T');
         User.getLastAuthenticated()
             .then((username) => {
                 this.lastUser = username;
-            })
+            });
     }
 
     togglePasswordVisibility() {
@@ -83,14 +83,11 @@ const T = require('../components/T');
                 <FullCoverSpinner show={this.busy} />
                 <div className="login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
-                    <div className={this.lastUser ? 'welcome-back' : 'hide'} >
+                    <div className={this.lastUser ? 'welcome-back' : 'hide'} onClick={this.unsetLastUser}>
                         <div>{t('login_welcomeBack')} <strong>{this.lastUser}</strong></div>
                         <div className="subtitle">
                             <T k="login_changeUser">
-                                {{
-                                    username: text => <span>{this.lastUser}</span>,
-                                    changeLink: text => <a onClick={this.unsetLastUser}>{text}</a>
-                                }}
+                                {{ username: text => <span>{this.lastUser}</span> }}
                             </T>
                         </div>
                     </div>

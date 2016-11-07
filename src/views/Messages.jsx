@@ -27,7 +27,7 @@ class Messages extends React.Component {
                     <ChatList />
                     <div className="message-view">
                         <div className="message-toolbar">
-                            <div className="title">Alice</div>
+                            <div className="title">{chatStore.activeChat&&chatStore.activeChat.chatName}</div>
                             <Search />
                             <IconButton icon="info_outline" />
                         </div>

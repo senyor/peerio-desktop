@@ -1,9 +1,11 @@
 .signup {
   align-items: center;
   background-color: $background-brand;
+  // background-image: url('static/img/pattern.png');
+  // background-size: 50% 50%;
   color: $text-light-secondary;
   height: 100vh;
-  transition: .5s;
+  transition: width 350ms $transition-ease-out;
   width: 375px;
 
   @extend %flex-col;

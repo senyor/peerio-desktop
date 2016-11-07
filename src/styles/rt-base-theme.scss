@@ -3,10 +3,12 @@
 //       replace padding and margins with variables where applicable
 
 @import './vars/_colors';
+@import './vars/_grid';
 @import './vars/_layout';
 @import './vars/_shadows';
+@import './vars/transitions';
 @import './vars/_typography';
-@import './vars/_grid';
+
 
 // AVATAR
 .rt-avatar-avatar {

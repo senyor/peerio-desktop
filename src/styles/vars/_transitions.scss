@@ -1,0 +1,11 @@
+//This is the most common easing curve. Objects quickly accelerate
+// and slowly decelerate between on-screen locations.
+$transition-default: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+// Objects enter the screen at full velocity from off-screen
+// and slowly decelerate to a resting point.
+$transition-ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+
+// Objects leave the screen at full velocity.
+// They do not decelerate when off-screen.
+$transition-ease-in: cubic-bezier(0.4, 0.0, 1, 1);

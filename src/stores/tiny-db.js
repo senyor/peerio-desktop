@@ -9,24 +9,28 @@ const fileOpts = { encoding: 'utf8' };
 if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '{}', fileOpts);
 
 /**
- *
- * @param key
- * @returns {Promise.<T>}
+ * Get a key
+ * @param {String} key
+ * @returns {String}
  */
 function get(key) {
     const settings = load();
     return settings[key];
 }
-
+/**
+ * Get a promise of a key.
+ * @param {String} key
+ * @returns {Promise<String>}
+ */
 function getValueAsync(key) {
     return Promise.resolve(get(key));
 }
 
 /**
- *
- * @param key
- * @param value
- * @returns {Promise.<*>}
+ * Set a value for a key.
+ * @param {String} key
+ * @param {Object} value -- JSON serializable object
+ * @returns {*}
  */
 function set(key, value) {
     const settings = load();
@@ -35,8 +39,34 @@ function set(key, value) {
     return value;
 }
 
+/**
+ * Async set a value for a key.
+ * @param {String} key
+ * @param {Object} value -- JSON serializable object
+ * @returns {Promise<*>}
+ */
 function setValueAsync(key, value) {
     return Promise.resolve(set(key, value));
+}
+
+/**
+ * Remove a key.
+ * @param {String} key
+ * @returns {void}
+ */
+function remove(key) {
+    const settings = load();
+    delete settings[key];
+    save(settings);
+}
+
+/**
+ * Async remove a key.
+ * @param {String} key
+ * @returns {Promise}
+ */
+function removeAsync(key) {
+    return Promise.resolve(remove(key));
 }
 
 function load() {

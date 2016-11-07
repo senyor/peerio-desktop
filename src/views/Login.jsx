@@ -10,6 +10,7 @@ const { t } = require('peerio-translator');
 const languageStore = require('../stores/language-store');
 const { Link } = require('react-router');
 const FullCoverSpinner = require('../components/FullCoverSpinner');
+const T = require('../components/T');
 
 @observer class Login extends Component {
     @observable username = config.autologin ? config.autologin.username : '';
@@ -17,6 +18,8 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
     @observable busy = false;
     @observable errorVisible = false;
     @observable passwordVisible = false;
+    @observable lastUser = undefined;
+
     hideDialog = () => {
         this.errorVisible = false;
     };
@@ -29,17 +32,33 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
         this.passphraseUpdater = val => { this.passcodeOrPassphrase = val; };
         this.login = this.login.bind(this);
         this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
+        this.unsetLastUser = this.unsetLastUser.bind(this);
+        User.getLastAuthenticated()
+            .then((username) => {
+                console.log('user',username)
+                this.lastUser = username;
+            })
+            .catch(err => {
+                console.log('wh',err)
+            })
     }
 
     togglePasswordVisibility() {
         this.passwordVisible = !this.passwordVisible;
     }
 
+    unsetLastUser () {
+        return User.removeLastAuthenticated()
+            .then(() => {
+                this.lastUser = undefined;
+            })
+    }
+
     login() {
         if (this.busy) return;
         this.busy = true;
         const user = new User();
-        user.username = this.username;
+        user.username = this.username || this.lastUser;
         user.passphrase = this.passcodeOrPassphrase;
         user.login().then(() => {
             User.current = user;
@@ -68,13 +87,23 @@ const FullCoverSpinner = require('../components/FullCoverSpinner');
                 <FullCoverSpinner show={this.busy} />
                 <div className="login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
-                    <div className="welcome-back">
-                        <div>{t('login_welcomeBack')} <strong>User</strong></div>
-                        <div className="subtitle">Not User? Click to change user.</div>
+                    <div className={this.lastUser ? 'welcome-back' : 'hide'} >
+                        <div>{t('login_welcomeBack')} <strong>{this.lastUser}</strong></div>
+                        <div className="subtitle">
+                            <T k="login_changeUser">
+                                {{
+                                    username: text => <span>{this.lastUser}</span>,
+                                    changeLink: text => <a onClick={this.unsetLastUser}>{text}</a>
+                                }}
+                            </T>
+                        </div>
                     </div>
                     <div className="login-form">
-                        <Input type="text" label={t('username')}
-                            value={this.username} onChange={this.usernameUpdater} onKeyPress={this.handleKeyPress} />
+                        <Input type="text" label={t('username')} value={this.username}
+                               onChange={this.usernameUpdater}
+                               onKeyPress={this.handleKeyPress}
+                               className={this.lastUser ? 'hide' : '' }
+                        />
                         <div className="password">
                             <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passcodeOrPassphrase')}
                                    value={this.passcodeOrPassphrase}

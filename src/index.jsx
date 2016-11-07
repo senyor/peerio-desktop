@@ -10,9 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const {Router, createMemoryHistory} = require('react-router');
     const routes = require('./routes');
     const tinyDb = require('./stores/tiny-db');
-
-
-    setTinyDbEngine({getValue: tinyDb.getValueAsync, setValue: tinyDb.setValueAsync});
+    
+    setTinyDbEngine({
+        getValue: tinyDb.getValueAsync,
+        setValue: tinyDb.setValueAsync,
+        removeValue: tinyDb.removeAsync
+    });
 
     config.socketServerUrl = 'wss://hocuspocus.peerio.com';
     socket.start();

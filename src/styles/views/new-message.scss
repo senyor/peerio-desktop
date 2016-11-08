@@ -6,6 +6,7 @@
   @extend %flex-col;
 
   .chat-creation-header {
+    align-items: center;
     flex-shrink: 0;
     margin-bottom: $margin-large;
     padding: $padding-default;

@@ -9,3 +9,16 @@
   text-align: center;
   width: 32px;
 }
+
+.small-notification {
+  background-color: $color-dark-38;
+  border-radius: 2px;
+  color: $text-light-primary;
+  font-size: 12px;
+  font-weight: $font-weight-bold;
+  height: 16px;
+  line-height: 16px;
+  margin: 0;
+  text-align: center;
+  width: 16px;
+}

@@ -149,22 +149,17 @@
 
   @extend %flex-shrink-0;
 
-
-
-  .active,
-  .rt-list-listItem:hover {
-    border-radius: 0 24px 24px 0;
-    margin-right: 12px;
+  .rt-list-itemText{
+    font-size: 14px;
   }
 
   .active {
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
   }
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,
   .rt-list-item.selectable:not(.disabled):hover {
     background-color: transparent;
-    border-radius: 0 24px 24px 0;
   }
 
   .active {
@@ -173,26 +168,27 @@
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover {
     background: $background-hover-message;
-    padding-right: $padding-tiny;
-  }
-
-  .rt-ripple-rippleWrapper {
-    border-radius: 0 24px 24px 0;
   }
 
   .rt-ripple-ripple {
     background-color: $color-brand;
   }
+
+  .rt-list-itemAction {
+    margin: 0;
+  }
 }
 
 // contact status indicator
 .rt-list-left .rt-list-itemAction {
-  margin: 0;
-  
+  [data-react-toolbox='font-icon'] {
+    margin-right: $margin-small;
+    width: 16px;
+  }
   .material-icons {
-    font-size: 10px;
-    margin-right: $margin-default;
-    width: 10px;
+    font-size: 16px;
+    margin-right: $margin-small;
+    width: 16px;
   }
 }
 // status should be applied to list item parent.

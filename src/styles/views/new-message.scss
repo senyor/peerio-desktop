@@ -14,7 +14,7 @@
     height: 48px;
     margin-bottom: 48px;
     padding: 0 0 0 $padding-small;
-      width: 100%;
+    width: 100%;
 
     .rt-button-button {
       background-color: $button-affirmative;
@@ -42,8 +42,8 @@
 
   .username {
     flex-shrink: 0;
-    min-width: 88px;
     max-width: 160px;
+    min-width: 88px;
     transition: 500ms 500ms $transition-ease-out;
 
     span:last-of-type {
@@ -61,7 +61,7 @@
       width: 0;
 
       span:last-of-type {
-        opacity: 0
+        opacity: 0;
       }
     }
   }

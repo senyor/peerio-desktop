@@ -43,8 +43,13 @@ class ChatList extends React.Component {
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
                             itemContent={this.getProgressBar(c.loadingMeta)}
                             onClick={() => this.activateChat(c.id)}
-                            caption={c.chatName} leftIcon="fiber_manual_record"
+                            caption={c.chatName}
+                            leftIcon="fiber_manual_record"
+                            // leftIcon={c.participants.length < 2 ? 'fiber_manual_record' :
+                            //     <div className="small-notification">
+                            //         {c.participants.length}</div>}
                             rightIcon={this.getNotificationIcon(c)} />
+
                     )}
                 </List>
             </div>

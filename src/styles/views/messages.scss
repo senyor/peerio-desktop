@@ -65,7 +65,6 @@
       + .message-content-wrapper {
         margin-top: $margin-large;
         position: relative;
-        white-space: pre-wrap;
 
         .sending-overlay {
           background-color: rgba(255, 255, 255, .7);
@@ -103,6 +102,7 @@
       p {
         line-height: 1.5;
         margin-left: $margin-default;
+        white-space: pre-wrap;
       }
 
       p + p {

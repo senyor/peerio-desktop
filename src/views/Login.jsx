@@ -87,7 +87,7 @@ const T = require('../components/T');
                         <div>{t('login_welcomeBack')} <strong>{this.lastUser}</strong></div>
                         <div className="subtitle">
                             <T k="login_changeUser">
-                                {{ username: text => <span>{this.lastUser}</span> }}
+                                {{ username: this.lastUser }}
                             </T>
                         </div>
                     </div>

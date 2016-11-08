@@ -463,7 +463,7 @@
     "login_loginButton": "{#login}",
     "login_passphraseOrPasscode": "{#passphrase} {#or} {#passcode}",
     "login_signUpButton": "{#signup}",
-    "login_changeUser": "Not <username></>? Click here to change.",
+    "login_changeUser": "Not {username}? Click here to change.",
     "login_welcomeBack": "Welcome back,",
     "login_changeUserButton": "Change User",
     "setup_contactInfoDescription": "Help your contacts find you on Peerio, receive notifications, and enable support services by adding your email address or phone number",

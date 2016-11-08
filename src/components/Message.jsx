@@ -1,6 +1,7 @@
 const React = require('react');
 const Avatar = require('./Avatar');
 const { observer } = require('mobx-react');
+const { time } = require('../helpers/formatter');
 
 const Message = observer(({ message }) => {
     return (
@@ -9,7 +10,7 @@ const Message = observer(({ message }) => {
             <div className="message-content">
                 <div className="meta-data">
                     <div className="user">{message.sender.username}</div>
-                    <div className="timestamp">{message.timestamp.toLocaleTimeString()}</div>
+                    <div className="timestamp">{time.format(message.timestamp)}</div>
                 </div>
                 <p>{message.text}</p>
             </div>

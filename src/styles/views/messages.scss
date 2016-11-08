@@ -149,6 +149,7 @@
 .message-list {
   background-color: $background-message-list;
   height: 100vh;
+  overflow-y: scroll;
   width: $message-list-width;
 
   @extend %flex-shrink-0;

@@ -34,11 +34,11 @@ class ChatList extends React.Component {
         // todo: remove arrow function event handler
         return (
             <div className="message-list">
-              {this.getProgressBar(chatStore.loading)}
-              <List selectable ripple>
-                <div key="list-header" className="list-header-wrapper">
-                  <ListSubHeader caption={t('directMessages')} />
-                  <IconButton icon="add_circle_outline" onClick={this.newMessage} />
+                {this.getProgressBar(chatStore.loading)}
+                <List selectable ripple>
+                    <div key="list-header" className="list-header-wrapper">
+                        <ListSubHeader caption={t('directMessages')} />
+                        <IconButton icon="add_circle_outline" onClick={this.newMessage} />
                     </div>
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}

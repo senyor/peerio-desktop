@@ -151,10 +151,9 @@
 
   .rt-list-itemText {
     font-size: 14px;
-  }
-
-  .active {
-    font-weight: $font-weight-semibold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 132px; // width when there is a notification.
   }
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,

@@ -62,6 +62,10 @@ class NewMessage extends React.Component {
         this.props.router.push('/app');
     };
 
+    handleClose = () => {
+        this.props.router.push('/app');
+    };
+
     render() {
         return (
             <div className="create-new-message">
@@ -71,7 +75,7 @@ class NewMessage extends React.Component {
                         marginTop: '168px' }}>
                     <div className="chat-creation-header">
                         <div className="title">{t('directMessages')}</div>
-                        <IconButton icon="close" />
+                        <IconButton icon="close" onClick={this.handleClose} />
                     </div>
                     <div className="new-message-search">
                         <div className="chip-wrapper">

@@ -153,7 +153,8 @@
     font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 132px; // width when there is a notification.
+    // width when there is a notification.
+    width: 132px;
   }
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,

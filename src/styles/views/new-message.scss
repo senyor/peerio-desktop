@@ -11,6 +11,7 @@
     border-radius: 24px;
     border-right: 0;
     display: flex;
+    flex-shrink: 0;
     height: 48px;
     margin-bottom: 48px;
     padding: 0 0 0 $padding-small;
@@ -30,6 +31,10 @@
         }
       }
     }
+  }
+
+  .rt-list-list {
+    overflow-y: auto;
   }
 
   .rt-list-listItem {

@@ -49,7 +49,6 @@ class ChatList extends React.Component {
                             //     <div className="small-notification">
                             //         {c.participants.length}</div>}
                             rightIcon={this.getNotificationIcon(c)} />
-
                     )}
                 </List>
             </div>

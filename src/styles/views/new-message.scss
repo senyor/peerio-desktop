@@ -6,9 +6,9 @@
   @extend %flex-col;
 
   .chat-creation-header {
+    flex-shrink: 0;
     margin-bottom: $margin-large;
     padding: $padding-default;
-    flex-shrink: 0;
 
     @extend %flex-row;
 
@@ -65,7 +65,7 @@
 
     @extend %flex-col;
 
-    .user-list{
+    .user-list {
       // Temporary fix. We'll want to add sticky headers to lists once multiple
       // lists are shown.
       overflow-y: auto;
@@ -80,6 +80,7 @@
     &:not(:first-of-type) {
       border-top: $divider-dark solid 1px;
     }
+
     .rt-avatar-avatar {
       margin-right: 24px;
     }

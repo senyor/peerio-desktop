@@ -152,9 +152,11 @@
   width: $message-list-width;
 
   @extend %flex-shrink-0;
+
   .rt-list-itemContentRoot {
     overflow: hidden;
   }
+
   .rt-list-itemText {
     font-size: 14px;
     overflow: hidden;
@@ -184,15 +186,16 @@
 
   .rt-list-item {
     padding-right: 12px;
+
     // Styling for chat list item delete
     .rt-button-button {
-      opacity: 0;
       display: none;
+      opacity: 0;
     }
 
     &:hover .rt-button-button {
+      display: block;
       opacity: 1;
-      display: block
     }
   }
 }

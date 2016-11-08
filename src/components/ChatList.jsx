@@ -49,7 +49,8 @@ class ChatList extends React.Component {
                             // leftIcon={c.participants.length < 2 ? 'fiber_manual_record' :
                             //     <div className="small-notification">
                             //         {c.participants.length}</div>}
-                            rightIcon={this.getNotificationIcon(c)} />
+                            rightIcon={c.unreadCount > 0 ? this.getNotificationIcon(c) :
+                                <IconButton icon="highlight_off" />} />
                     )}
                 </List>
             </div>

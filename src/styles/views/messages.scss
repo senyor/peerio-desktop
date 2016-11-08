@@ -39,9 +39,13 @@
     padding: 0 8px 0 24px;
 
     .title {
+      color: $text-dark-secondary;
+      font-size: 16px;
+      font-weight: $font-weight-bold;
       margin-right: auto;
-
-      @extend %title;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .search {
@@ -153,8 +157,8 @@
     font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
-    // width when there is a notification.
-    width: 132px;
+    // width without notification.
+    width: 168px;
   }
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,

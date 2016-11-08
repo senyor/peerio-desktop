@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
@@ -17,9 +18,11 @@ class Messages extends React.Component {
     componentWillUnmount() {
         this.loaderDisposer();
     }
+
     sendMessage(m) {
         chatStore.activeChat.sendMessage(m);
     }
+
     render() {
         return (
             <div className="flex-row">
@@ -40,16 +43,30 @@ class Messages extends React.Component {
     }
 }
 
+@observer
+class MessageList extends React.Component {
 
-const MessageList = observer(() => {
-    return (
-        <div className="messages-container">
-            {chatStore.activeChat.messages.map(m =>
-                <Message key={m.id || m.tempId} message={m} />
+    componentDidMount() {
+        this.scrollToBottom();
+    }
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+    scrollToBottom() {
+        const el = document.getElementsByClassName('messages-container')[0];
+        if (!el) return;
+        el.scrollTop = el.scrollHeight;
+    }
+    render() {
+        return (
+            <div className="messages-container">
+                {chatStore.activeChat.messages.map(m =>
+                    <Message key={m.id || m.tempId} message={m} />
             )}
-        </div>
-    );
-});
+            </div>
+        );
+    }
+}
 
 function NoChatSelected() {
     return (

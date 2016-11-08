@@ -2,7 +2,8 @@ const React = require('react');
 const { withRouter } = require('react-router');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Chip, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
+const { Button, Chip, IconButton, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
+const { t } = require('peerio-translator');
 const { contactStore, chatStore } = require('../icebear'); //eslint-disable-line
 const css = require('classnames');
 const Avatar = require('../components/Avatar');
@@ -66,27 +67,34 @@ class NewMessage extends React.Component {
             <div className="create-new-message">
                 <div className="flex-col"
                     style={{
-                        alignItems: 'center',
                         width: '600px',
                         marginTop: '168px' }}>
+                    <div className="chat-creation-header">
+                        <div className="title">{t('directMessages')}</div>
+                        <IconButton icon="close" />
+                    </div>
                     <div className="new-message-search">
-                        {this.selected.map(c =>
-                            <Chip key={c.username} className={css('username', { 'not-found': c.notFound })}
-                                  onDeleteClick={() => this.selected.remove(c)} deletable>
-                                { c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username }
-                            </Chip>
-                        )}
-                        <Input placeholder="enter username" value={this.query} onChange={this.handleTextChange}
-                                onKeyDown={this.handleKeyDown} />
+                        <div className="chip-wrapper">
+                            {this.selected.map(c =>
+                                <Chip key={c.username} className={css('username', { 'not-found': c.notFound })}
+                                      onDeleteClick={() => this.selected.remove(c)} deletable>
+                                    { c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username }
+                                </Chip>
+                            )}
+                            <Input placeholder={t('userSearch')} value={this.query} onChange={this.handleTextChange}
+                                    onKeyDown={this.handleKeyDown} />
+                        </div>
                         <Button className="confirm" label="Go" onClick={this.go} disabled={!this.canGO} />
                     </div>
                     <List selectable ripple >
                         <ListSubHeader caption="Your contacts" />
-                        { this.options.map(c =>
-                            <ListItem key={c.username} avatar={<Avatar contact={c} />}
+                        <div className="user-list">
+                            { this.options.map(c =>
+                                <ListItem key={c.username} avatar={<Avatar contact={c} />}
                                       caption={c.username} legend={`${c.firstName} ${c.lastName}`}
                                       onClick={() => this.selected.push(c)} />
-                        )}
+                            )}
+                        </div>
                     </List>
                 </div>
             </div>

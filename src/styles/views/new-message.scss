@@ -5,6 +5,18 @@
 
   @extend %flex-col;
 
+  .chat-creation-header {
+    margin-bottom: $margin-large;
+    padding: $padding-default;
+    flex-shrink: 0;
+
+    @extend %flex-row;
+
+    .title {
+      margin-right: auto;
+    }
+  }
+
   .new-message-search {
     align-items: center;
     border: $input-dark-border solid 1px;
@@ -17,14 +29,29 @@
     padding: 0 0 0 $padding-small;
     width: 100%;
 
+    .chip-wrapper {
+      flex: 1 1 auto;
+      flex-wrap: wrap;
+      margin-right: auto;
+      max-width: 544px;
+
+      @extend %flex-row;
+    }
+
+    .rt-input-input {
+      padding: 0;
+    }
+
     .rt-button-button {
       background-color: $button-affirmative;
       border-radius: 0 24px 24px 0;
+      color: $color-light-50;
       height: 48px;
       min-width: 48px;
 
       &:hover {
         background-color: $button-affirmative;
+        color: $color-light-100;
 
         .rt-rippleWrapper {
           border-radius: 0 24px 24px 0;
@@ -34,12 +61,25 @@
   }
 
   .rt-list-list {
-    overflow-y: auto;
+    overflow: hidden;
+
+    @extend %flex-col;
+
+    .user-list{
+      // Temporary fix. We'll want to add sticky headers to lists once multiple
+      // lists are shown.
+      overflow-y: auto;
+    }
+  }
+
+  .rt-list-subheader {
+    border-bottom: $divider-dark solid 1px;
   }
 
   .rt-list-listItem {
-    border-top: $divider-dark solid 1px;
-
+    &:not(:first-of-type) {
+      border-top: $divider-dark solid 1px;
+    }
     .rt-avatar-avatar {
       margin-right: 24px;
     }
@@ -47,6 +87,7 @@
 
   .username {
     flex-shrink: 0;
+    margin-bottom: $margin-small;
     max-width: 160px;
     min-width: 88px;
     transition: 500ms 500ms $transition-ease-out;

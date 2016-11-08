@@ -25,7 +25,8 @@ class ChatList extends React.Component {
     };
 
     getNotificationIcon = chat => {
-        return (<div className="notification">{chat.unreadCount}</div>);
+        const c = chat.unreadCount;
+        return c > 0 ? (<div className="notification">{c}</div>) : null;
     };
 /* <ListItem caption="Bill" className="online" leftIcon="fiber_manual_record"
    rightIcon={<div className="notification">12</div>} />*/

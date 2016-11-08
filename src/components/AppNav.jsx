@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { IconButton } = require('react-toolbox');
-const {User, contactStore} = require('../icebear');//eslint-disable-line
+const {User, contactStore, chatStore} = require('../icebear');//eslint-disable-line
 const Avatar = require('./Avatar');
 
 @observer
@@ -16,6 +16,7 @@ class AppNav extends React.Component {
                 <div className="app-menu">
                     <div className="menu-item active">
                         <IconButton icon="forum" />
+                        <div style={{}}>{chatStore.unreadMessages}</div>
                     </div>
                     <div className="menu-item" disabled >
                         <IconButton icon="folder" />

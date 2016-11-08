@@ -115,16 +115,18 @@ const T = require('../components/T');
                 </div>
                 <div className="flex-col welcome">
                     <div className="welcome-text">
-                        <div className="display-2">Welcome to Peerio Alpha (codename Icebear)</div>
+                        <h4>Welcome to Peerio Alpha (codename Icebear)</h4>
                         [changelog should magically appear here in the nearest future]<br /><br />
                         <div>
                             In this release you can:<br /><br />
                             * create an account<br />
                             * login<br />
                             * change interface language<br />
+                            * send messages <br />
                             * eat icecream
                         </div>
-                        For your convenience passphrase is always 'icebear'
+                        <br />
+                        <strong>For your convenience passphrase is always 'icebear'.</strong>
                     </div>
                     {randomGif()}
                 </div>

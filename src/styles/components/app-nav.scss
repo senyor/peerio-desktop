@@ -20,8 +20,10 @@
 
   .menu-item {
     align-items: center;
+    color: #fff;
     cursor: pointer;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 
     .rt-button-button {

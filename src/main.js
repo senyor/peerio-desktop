@@ -47,7 +47,7 @@ function onAppReady() {
 
     if (isDevEnv) {
         enableDevModeOnWindow(mainWindow);
-    }
+    } else enableDevModeOnWindow(mainWindow, true);
 }
 
 function saveWindowState(state) {
@@ -64,9 +64,11 @@ function getSavedWindowState() {
 }
 
 // dev mode
-function enableDevModeOnWindow(win) {
-    win.openDevTools();
-    installExtensions();
+function enableDevModeOnWindow(win, onlyMenu) {
+    if (!onlyMenu) {
+        win.openDevTools();
+        installExtensions();
+    }
     win.webContents.on('context-menu', (e, props) => {
         const { x, y } = props;
 

@@ -14,6 +14,10 @@ let mainWindow;
 
 app.on('ready', onAppReady);
 
+app.on('window-all-closed', () => {
+    app.quit();
+});
+
 function onAppReady() {
     const state = getSavedWindowState();
     mainWindow = new BrowserWindow(Object.assign(state, {

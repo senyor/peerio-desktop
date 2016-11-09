@@ -25,6 +25,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+
+    .look-at-me {
+      content: '';
+      border-radius: 4px;
+      background: $color-error;
+      display: block;
+      height: 8px;
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      width: 8px;
+    }
 
     .rt-button-button {
       height: 48px;

@@ -57,45 +57,45 @@ class Files extends Component {
         const sortedData = this.getSortedData();
         return (
             <div className="files">
-              <div className="table-wrapper">
-                <div className="header-filter">All files
-                  <IconMenu icon="filter_list">
-                    <MenuItem>Filter 1</MenuItem>
-                  </IconMenu>
-                </div>
-                <div className="shadow-2">
-                  <div className="table-action-bar">
-                    <div>0 selected</div>
-                    <div className="table-actions">
-                      <IconButton icon="cloud_upload" />
-                      <IconButton icon="file_download" />
-                      <IconButton icon="cloud_upload" />
-                      <IconButton icon="create_new_folder" />
-                      <IconButton icon="delete" />
+                <div className="table-wrapper">
+                    <div className="header-filter">All files
+                        <IconMenu icon="filter_list">
+                            <MenuItem>Filter 1</MenuItem>
+                        </IconMenu>
                     </div>
-                    <Search />
-                  </div>
-                  <Table multiSelectable onRowSelect={this.handleRowSelect}>
-                    <TableHead>
-                      <TableCell onClick={this.handleSortClick} numeric sorted={sorted}>Calories</TableCell>
-                      <TableCell numeric>Fat (g)</TableCell>
-                      <TableCell numeric>Sodium (mg)</TableCell>
-                      <TableCell numeric>Calcium (%)</TableCell>
-                      <TableCell numeric>Iron (%)</TableCell>
-                    </TableHead>
-                    {sortedData.map((item, idx) => (
-                      <TableRow key={idx} selected={this.state.selected.indexOf(item.name) !== -1}>
-                        <TableCell>{item.name}</TableCell>
-                        <TableCell numeric>{item.calories}</TableCell>
-                        <TableCell numeric>{item.fat}</TableCell>
-                        <TableCell numeric>{item.sodium}</TableCell>
-                        <TableCell numeric>{item.calcium}</TableCell>
-                        <TableCell numeric>{item.iron}</TableCell>
-                      </TableRow>
+                    <div className="shadow-2">
+                        <div className="table-action-bar">
+                            <div>0 selected</div>
+                            <div className="table-actions">
+                                <IconButton icon="cloud_upload" />
+                                <IconButton icon="file_download" />
+                                <IconButton icon="cloud_upload" />
+                                <IconButton icon="create_new_folder" />
+                                <IconButton icon="delete" />
+                            </div>
+                            <Search />
+                        </div>
+                        <Table multiSelectable onRowSelect={this.handleRowSelect}>
+                            <TableHead>
+                                <TableCell onClick={this.handleSortClick} numeric sorted={sorted}>Calories</TableCell>
+                                <TableCell numeric>Fat (g)</TableCell>
+                                <TableCell numeric>Sodium (mg)</TableCell>
+                                <TableCell numeric>Calcium (%)</TableCell>
+                                <TableCell numeric>Iron (%)</TableCell>
+                            </TableHead>
+                            {sortedData.map((item, idx) => (
+                                <TableRow key={idx} selected={this.state.selected.indexOf(item.name) !== -1}>
+                                    <TableCell>{item.name}</TableCell>
+                                    <TableCell numeric>{item.calories}</TableCell>
+                                    <TableCell numeric>{item.fat}</TableCell>
+                                    <TableCell numeric>{item.sodium}</TableCell>
+                                    <TableCell numeric>{item.calcium}</TableCell>
+                                    <TableCell numeric>{item.iron}</TableCell>
+                                </TableRow>
                     ))}
-                  </Table>
+                        </Table>
+                    </div>
                 </div>
-              </div>
             </div>
         );
     }

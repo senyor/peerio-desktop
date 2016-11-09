@@ -28,9 +28,9 @@
     position: relative;
 
     .look-at-me {
-      content: '';
-      border-radius: 4px;
       background: $color-error;
+      border-radius: 4px;
+      content: '';
       display: block;
       height: 8px;
       position: absolute;

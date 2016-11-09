@@ -12,17 +12,17 @@ class AppNav extends React.Component {
     render() {
         return (
             <div className="app-nav">
-              <Avatar contact={this.contact} />
-              <div className="app-menu">
-                <div className="menu-item active">
-                  <IconButton icon="forum" />
-                  <div className={chatStore.unreadMessages > 0 ? 'look-at-me': ''} />
-                </div>
-                <div className="menu-item" disabled >
-                  <IconButton icon="folder" />
-                </div>
+                <Avatar contact={this.contact} />
+                <div className="app-menu">
+                    <div className="menu-item active">
+                        <IconButton icon="forum" />
+                        <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
+                    </div>
+                    <div className="menu-item" disabled >
+                        <IconButton icon="folder" />
+                    </div>
 
-                <div className="menu-item settings" disabled >
+                    <div className="menu-item settings" disabled >
                         <IconButton icon="settings" />
                     </div>
                 </div>

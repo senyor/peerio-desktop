@@ -60,53 +60,53 @@ const sortByCaloriesDesc = (a, b) => {
     render() {
         return (
             <div className="files">
-                <div className="table-wrapper">
-                    <div className="header-filter">All files
-                        <IconMenu icon="filter_list">
-                            <MenuItem>Filter 1</MenuItem>
-                        </IconMenu>
-                    </div>
-                    <div className="shadow-2">
-                        <div className="table-action-bar">
-                            <div>0 selected</div>
-                            <div className="table-actions">
-                                <IconButton icon="cloud_upload"
-                        className={css({ active: this.active })} />
-                                <IconButton icon="file_download"
-                        className={css({ active: this.active })} />
-                                <IconButton icon="reply"
-                        className={css('reverse-icon', { active: this.active })} />
-                                <IconButton icon="create_new_folder"
-                        className={css({ active: this.active })} />
-                                <IconButton icon="delete"
-                        className={css({ active: this.active })} />
-                            </div>
-                            <Search />
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th><Checkbox /></th>
-                                    <th>Name</th>
-                                    <th>Owner</th>
-                                    <th>Modified</th>
-                                    <th>Size</th>
-                                    <th>Type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><Checkbox /></td>
-                                    <td>Name</td>
-                                    <td>Owner</td>
-                                    <td>Modified</td>
-                                    <td>Size</td>
-                                    <td>Type</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+              <div className="table-wrapper">
+                <div className="header-filter">All files
+                  <IconMenu icon="filter_list">
+                    <MenuItem>Filter 1</MenuItem>
+                  </IconMenu>
                 </div>
+                <div className="shadow-2">
+                  <div className="table-action-bar">
+                    <div>0 selected</div>
+                    <div className="table-actions">
+                      <IconButton icon="cloud_upload"
+                        className={css({ active: this.active })} />
+                      <IconButton icon="file_download"
+                        className={css({ active: this.active })} />
+                      <IconButton icon="reply"
+                        className={css('reverse-icon', { active: this.active })} />
+                      <IconButton icon="create_new_folder"
+                        className={css({ active: this.active })} />
+                      <IconButton icon="delete"
+                        className={css({ active: this.active })} />
+                    </div>
+                    <Search />
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th><Checkbox /></th>
+                        <th>Name</th>
+                        <th>Owner</th>
+                        <th>Modified</th>
+                        <th>Size</th>
+                        <th>Type</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><Checkbox /></td>
+                        <td>Name</td>
+                        <td>Owner</td>
+                        <td>Modified</td>
+                        <td>Size</td>
+                        <td>Type</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
         );
     }

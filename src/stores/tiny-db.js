@@ -80,4 +80,4 @@ function save(settings) {
     fs.writeFileSync(filePath, JSON.stringify(settings), fileOpts);
 }
 
-module.exports = { get, set, getValueAsync, setValueAsync };
+module.exports = { get, set, remove, getValueAsync, setValueAsync, removeAsync };

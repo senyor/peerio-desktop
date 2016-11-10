@@ -3,11 +3,12 @@
   border: 1px solid $input-dark-border;
   border-radius: 18px;
   display: flex;
+  flex-shrink: 0;
   height: 36px;
   width: 256px;
 
   .search-icon {
-    padding: 6px 0 6px 8px;
+    padding: 6px 0 6px $padding-small;
   }
   // .rt-input-input,
   // input {

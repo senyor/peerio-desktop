@@ -37,12 +37,13 @@
       .rt-button-button {
         margin: 0 $margin-small;
       }
+
       .active .material-icons {
         color: rgba($color-brand, .5);
         transition: 250ms;
       }
 
-      .active:hover .material-icons{
+      .active:hover .material-icons {
         color: $color-brand;
       }
 
@@ -58,21 +59,22 @@
 
   table {
     background: $color-light-100;
-    width: 100%;
     border-spacing: 0;
+    width: 100%;
 
-    thead th{
+    thead th {
       color: $text-dark-secondary;
       font-size: 12px;
       font-weight: $font-weight-semibold;
       text-align: left;
     }
+
     th,
     td {
       border-bottom: 1px solid $divider-dark;
       white-space: nowrap;
 
-      &:first-of-type{
+      &:first-of-type {
         padding: 0 24px;
         width: 18px;
       }

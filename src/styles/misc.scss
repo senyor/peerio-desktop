@@ -10,3 +10,7 @@
 .shadow-2 {
   box-shadow: $shadow-2;
 }
+
+.reverse-icon {
+  transform: rotateY(180deg);
+}

@@ -1,20 +1,32 @@
 /* eslint-disable global-require, import/newline-after-import */
-const { app, BrowserWindow, Menu, shell } = require('electron');
+const { app, BrowserWindow, Menu, shell, globalShortcut } = require('electron');
 const db = require('./stores/tiny-db');
+
 const isDevEnv = process.env.NODE_ENV !== 'production';
 
 if (require('electron-squirrel-startup')) app.quit();
 if (handleSquirrelEvent()) console.log('Squirrel update!');
 
+// restart electron when files changed in dev mode
 if (isDevEnv) {
     //eslint-disable-next-line
     require('electron-reload')(__dirname, { electron: require('electron-prebuilt') });
 }
+
 let mainWindow;
 
 app.on('ready', onAppReady);
 
+app.on('window-all-closed', () => {
+    globalShortcut.unregisterAll();
+    app.quit();
+});
+
 function onAppReady() {
+    globalShortcut.register('CommandOrControl+R', () => {
+        require('./helpers/app-control').relaunch();
+    });
+    console.log('Starting app.');
     const state = getSavedWindowState();
     mainWindow = new BrowserWindow(Object.assign(state, {
         show: false,
@@ -47,7 +59,7 @@ function onAppReady() {
 
     if (isDevEnv) {
         enableDevModeOnWindow(mainWindow);
-    }
+    } else enableDevModeOnWindow(mainWindow, true);
 }
 
 function saveWindowState(state) {
@@ -64,9 +76,11 @@ function getSavedWindowState() {
 }
 
 // dev mode
-function enableDevModeOnWindow(win) {
-    win.openDevTools();
-    installExtensions();
+function enableDevModeOnWindow(win, onlyMenu) {
+    if (!onlyMenu) {
+        win.openDevTools();
+        installExtensions();
+    }
     win.webContents.on('context-menu', (e, props) => {
         const { x, y } = props;
 
@@ -75,6 +89,13 @@ function enableDevModeOnWindow(win) {
                 label: 'Inspect element',
                 click() {
                     win.inspectElement(x, y);
+                }
+            },
+            {
+                label: 'Restart',
+                accelerator: 'CommandOrControl+R',
+                click() {
+                    require('./helpers/app-control').relaunch();
                 }
             }
         ]).popup(win);

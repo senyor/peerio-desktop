@@ -2,6 +2,7 @@
   align-items: center;
   background: rgba(0, 0, 0, .06);
   height: 100vh;
+  padding: 0 80px;
   width: 100vw;
 
   @extend %flex-col;
@@ -9,8 +10,7 @@
 
 .table-wrapper {
   box-sizing: border-box;
-  margin: 0 80px;
-  width: 1200px;
+  width: 100%;
 
   .header-filter {
     align-items: center;
@@ -37,10 +37,81 @@
       .rt-button-button {
         margin: 0 $margin-small;
       }
+      .active .material-icons {
+        color: rgba($color-brand, .5);
+        transition: 250ms;
+      }
+
+      .active:hover .material-icons{
+        color: $color-brand;
+      }
+
+      .rt-ripple-ripple {
+        background-color: $color-brand;
+      }
     }
 
     .search {
       margin-left: auto;
+    }
+  }
+
+  table {
+    background: $color-light-100;
+    width: 100%;
+    border-spacing: 0;
+
+    thead th{
+      color: $text-dark-secondary;
+      font-size: 12px;
+      font-weight: $font-weight-semibold;
+      text-align: left;
+    }
+    th,
+    td {
+      border-bottom: 1px solid $divider-dark;
+      white-space: nowrap;
+
+      &:first-of-type{
+        padding: 0 24px;
+        width: 18px;
+      }
+
+      &:last-of-type,
+      &:nth-of-type(2) {
+        padding-right: 24px;
+      }
+
+      &:not(:first-of-type):not(:last-of-type):not(:nth-of-type(2)) {
+        padding-right: 56px;
+      }
+    }
+
+    tbody tr {
+      transition: 250ms;
+
+      &:hover {
+        background: $color-dark-06;
+      }
+    }
+
+    label {
+      display: inline-block;
+      margin-bottom: 0;
+      max-width: 18px;
+      width: 18px;
+
+      .rt-checkbox-check {
+        border-color: $icon-dark-active;
+      }
+    }
+
+    th {
+      height: 56px;
+    }
+
+    td {
+      height: 48px;
     }
   }
 }

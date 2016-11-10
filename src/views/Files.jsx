@@ -1,8 +1,11 @@
 const React = require('react');
 const { withRouter } = require('react-router');
 const { Component } = require('react');
-const { IconButton, IconMenu, MenuItem, Table, TableHead, TableRow, TableCell } = require('react-toolbox');
+const { Checkbox, IconButton, IconMenu, MenuItem } = require('react-toolbox');
+const { observable, computed } = require('mobx');
+const { observer } = require('mobx-react');
 const Search = require('../components/Search');
+const css = require('classnames');
 
 
 const data = [
@@ -29,7 +32,10 @@ const sortByCaloriesDesc = (a, b) => {
 };
 
 
-class Files extends Component {
+@observer class Files extends Component {
+    // TODO make dynamic based on file(s) selected
+    @observable active = true;
+
     state = {
         selected: ['Donut'],
         sorted: 'asc'
@@ -51,51 +57,56 @@ class Files extends Component {
         this.setState({ sorted: nextSorting });
     };
 
-
     render() {
-        const { sorted } = this.state;
-        const sortedData = this.getSortedData();
         return (
             <div className="files">
-                <div className="table-wrapper">
-                    <div className="header-filter">All files
-                        <IconMenu icon="filter_list">
-                            <MenuItem>Filter 1</MenuItem>
-                        </IconMenu>
-                    </div>
-                    <div className="shadow-2">
-                        <div className="table-action-bar">
-                            <div>0 selected</div>
-                            <div className="table-actions">
-                                <IconButton icon="cloud_upload" />
-                                <IconButton icon="file_download" />
-                                <IconButton icon="cloud_upload" />
-                                <IconButton icon="create_new_folder" />
-                                <IconButton icon="delete" />
-                            </div>
-                            <Search />
-                        </div>
-                        <Table multiSelectable onRowSelect={this.handleRowSelect}>
-                            <TableHead>
-                                <TableCell onClick={this.handleSortClick} numeric sorted={sorted}>Calories</TableCell>
-                                <TableCell numeric>Fat (g)</TableCell>
-                                <TableCell numeric>Sodium (mg)</TableCell>
-                                <TableCell numeric>Calcium (%)</TableCell>
-                                <TableCell numeric>Iron (%)</TableCell>
-                            </TableHead>
-                            {sortedData.map((item, idx) => (
-                                <TableRow key={idx} selected={this.state.selected.indexOf(item.name) !== -1}>
-                                    <TableCell>{item.name}</TableCell>
-                                    <TableCell numeric>{item.calories}</TableCell>
-                                    <TableCell numeric>{item.fat}</TableCell>
-                                    <TableCell numeric>{item.sodium}</TableCell>
-                                    <TableCell numeric>{item.calcium}</TableCell>
-                                    <TableCell numeric>{item.iron}</TableCell>
-                                </TableRow>
-                    ))}
-                        </Table>
-                    </div>
+              <div className="table-wrapper">
+                <div className="header-filter">All files
+                  <IconMenu icon="filter_list">
+                    <MenuItem>Filter 1</MenuItem>
+                  </IconMenu>
                 </div>
+                <div className="shadow-2">
+                  <div className="table-action-bar">
+                    <div>0 selected</div>
+                    <div className="table-actions">
+                      <IconButton icon="cloud_upload"
+                        className={css({ active: this.active })} />
+                      <IconButton icon="file_download"
+                        className={css({ active: this.active })}/>
+                      <IconButton icon="reply"
+                        className={css('reverse-icon', { active: this.active })}/>
+                      <IconButton icon="create_new_folder"
+                        className={css({ active: this.active })}/>
+                      <IconButton icon="delete"
+                        className={css({ active: this.active })}/>
+                    </div>
+                    <Search />
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th><Checkbox /></th>
+                        <th>Name</th>
+                        <th>Owner</th>
+                        <th>Modified</th>
+                        <th>Size</th>
+                        <th>Type</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><Checkbox /></td>
+                        <td>Name</td>
+                        <td>Owner</td>
+                        <td>Modified</td>
+                        <td>Size</td>
+                        <td>Type</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
         );
     }

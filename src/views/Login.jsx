@@ -34,8 +34,8 @@ const T = require('../components/T');
         this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
         this.unsetLastUser = this.unsetLastUser.bind(this);
         User.getLastAuthenticated()
-            .then((username) => {
-                this.lastUser = username;
+            .then((user) => {
+                this.lastUser = user;
             });
     }
 
@@ -54,7 +54,7 @@ const T = require('../components/T');
         if (this.busy) return;
         this.busy = true;
         const user = new User();
-        user.username = this.username || this.lastUser;
+        user.username = this.username || this.lastUser.username;
         user.passphrase = this.passcodeOrPassphrase;
         user.login().then(() => {
             User.current = user;
@@ -73,6 +73,19 @@ const T = require('../components/T');
         }
     };
 
+    getWelcomeBlock = () => {
+        return (
+            <div className="welcome-back" onClick={this.unsetLastUser}>
+                <div>{t('login_welcomeBack')} <strong>{this.lastUser.firstName || this.lastUser.username}</strong></div>
+                <div className="subtitle">
+                    <T k="login_changeUser">
+                        {{ username: (this.lastUser.firstName || this.lastUser.username) }}
+                    </T>
+                </div>
+            </div>
+        );
+    };
+
     render() {
         return (
             <div className="flex-row app-root">
@@ -83,14 +96,9 @@ const T = require('../components/T');
                 <FullCoverSpinner show={this.busy} />
                 <div className="login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
-                    <div className={this.lastUser ? 'welcome-back' : 'hide'} onClick={this.unsetLastUser}>
-                        <div>{t('login_welcomeBack')} <strong>{this.lastUser}</strong></div>
-                        <div className="subtitle">
-                            <T k="login_changeUser">
-                                {{ username: this.lastUser }}
-                            </T>
-                        </div>
-                    </div>
+
+                    {this.lastUser ? this.getWelcomeBlock() : ''}
+
                     <div className="login-form">
                         <Input type="text" label={t('username')} value={this.username}
                                onChange={this.usernameUpdater}

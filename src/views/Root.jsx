@@ -17,7 +17,7 @@ class Root extends React.Component {
         this.devtools = null;
         if (process.env.NODE_ENV !== 'production') {
             const MobxTools = require('mobx-react-devtools').default; //eslint-disable-line
-            this.devtools = <MobxTools />;
+            this.devtools = null;// <MobxTools />;
             window.hideMobxTools = () => {
                 this.devtools = null;
                 this.forceUpdate();

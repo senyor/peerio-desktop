@@ -22,15 +22,19 @@ class AppNav extends React.Component {
     render() {
         return (
             <div className="app-nav">
-                <Avatar contact={this.contact} />
-                <div className="app-menu">
-                    {/* TODO:  add active class to active item */}
-                    <div className="menu-item active">
-                        <IconButton icon="forum" onClick={this.toMessages} />
-                        <div style={{}}>{chatStore.unreadMessages}</div>
-                    </div>
+              <Avatar contact={this.contact} />
+              <div className="app-menu">
+                {/* TODO:  add active class to active item */}
+                <div className="menu-item active">
+
+                  <IconButton icon="forum" onClick={this.toMessages} />
 
 
+                  <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
+
+                </div>
+
+                
                     <div className="menu-item" >
                         <IconButton icon="folder" onClick={this.toFiles} />
                     </div>

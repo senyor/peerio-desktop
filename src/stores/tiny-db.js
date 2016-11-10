@@ -3,11 +3,14 @@ const path = require('path');
 const fs = require('fs');
 
 const app = electron.app || electron.remote.app;
-const filePath = path.join(app.getPath('userData'), 'icebear_tinydb.json');
+const folder = app.getPath('userData');
+const filePath = path.join(folder, 'icebear_tinydb.json');
 const fileOpts = { encoding: 'utf8' };
 
-if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '{}', fileOpts);
-
+if (!fs.existsSync(filePath)) {
+    if (!fs.existsSync(folder)) fs.mkdirSync(folder, 777);
+    fs.writeFileSync(filePath, '{}', fileOpts);
+}
 /**
  * Get a key
  * @param {String} key
@@ -77,4 +80,4 @@ function save(settings) {
     fs.writeFileSync(filePath, JSON.stringify(settings), fileOpts);
 }
 
-module.exports = { get, set, getValueAsync, setValueAsync };
+module.exports = { get, set, remove, getValueAsync, setValueAsync, removeAsync };

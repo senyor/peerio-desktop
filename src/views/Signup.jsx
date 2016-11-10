@@ -125,27 +125,27 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
     render() {
         return (
             <div className={css('signup', 'rt-light-theme', { expand: this.expand })}>
-              <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
-              <div className="signup-form">
-                <div className="signup-title">{t('signup')}</div>
-                {this.step === 1 ?
-                  <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :
-                  <SignupPasscode
+                <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
+                <div className="signup-form">
+                    <div className="signup-title">{t('signup')}</div>
+                    {this.step === 1 ?
+                        <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :
+                            <SignupPasscode
                     store={this.passcodeStore}
                     profileStore={this.profileStore}
                     returnHandler={this.advance} />}
-              </div>
+                </div>
 
-              <div className="signup-nav">
+                <div className="signup-nav">
 
-                <IconButton icon="arrow_back"
+                    <IconButton icon="arrow_back"
                   onClick={this.retreat} />
 
-                <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
+                    <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
                   onClick={this.advance}
                   disabled={this.hasError}
                 />
-              </div>
+                </div>
                 <div className="progress">
                     <div className={`indicator ${this.step === 1 ? 'active' : ''}`} />
                     <div className={`indicator ${this.step === 2 ? 'active' : ''}`} />

@@ -66,7 +66,6 @@ class ProfileStore {
                 <Input type="text" label={t('email')}
                     value={s.email} error={s.emailError} onChange={this.emailUpdater} />
                 <div className="input-row">
-                    {/* TODO: Make fields optional. */}
                     <div>
                         <Input type="text" label={t('firstName')}
                             value={s.firstName} onChange={this.firstNameUpdater} />

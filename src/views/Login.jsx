@@ -89,10 +89,6 @@ const T = require('../components/T');
     render() {
         return (
             <div className="flex-row app-root">
-                {/* TODO: - After Alpha -
-                    remove FullCoverSpinner
-                   change login button to spinner while working
-                   disable inputs while spinner is active */}
                 <FullCoverSpinner show={this.busy} />
                 <div className="login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />

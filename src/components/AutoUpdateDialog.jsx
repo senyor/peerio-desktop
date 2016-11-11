@@ -17,7 +17,8 @@ const { Dialog } = require('react-toolbox');
 
     componentDidMount() {
         // just to give app some time to render and avoid load spike
-        setTimeout(updater.startUpdateMonitoring, 2000);
+        // also squirrel might crash on windows if start updates too early.
+        setTimeout(updater.startUpdateMonitoring, 10000);
     }
 
     actions = [

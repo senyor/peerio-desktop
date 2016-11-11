@@ -8,7 +8,7 @@ const filePath = path.join(folder, 'icebear_tinydb.json');
 const fileOpts = { encoding: 'utf8' };
 
 if (!fs.existsSync(filePath)) {
-    if (!fs.existsSync(folder)) fs.mkdirSync(folder, 777);
+    if (!fs.existsSync(folder)) fs.mkdirSync(folder);
     fs.writeFileSync(filePath, '{}', fileOpts);
 }
 /**

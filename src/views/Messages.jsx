@@ -2,7 +2,7 @@
 const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton } = require('react-toolbox');
+const { IconButton, ProgressBar } = require('react-toolbox');
 const Search = require('../components/Search');
 const ChatList = require('../components/ChatList');
 const MessageInput = require('../components/MessageInput');
@@ -60,9 +60,11 @@ class MessageList extends React.Component {
     render() {
         return (
             <div className="messages-container">
-                {chatStore.activeChat.messages.map(m =>
-                    <Message key={m.id || m.tempId} message={m} />
-            )}
+                {chatStore.activeChat.loadingMessages
+                    ? <ProgressBar type="circular" mode="indeterminate"
+                                   multicolor className="messages-progress-bar" />
+                    : chatStore.activeChat.messages.map(m => <Message key={m.id || m.tempId} message={m} />)
+                }
             </div>
         );
     }

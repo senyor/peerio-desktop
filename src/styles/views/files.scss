@@ -27,6 +27,7 @@
     border-radius: 2px 0 0 2px;
     height: 64px;
     padding: 0 $padding-default;
+    white-space: nowrap;
     width: 100%;
 
     @extend %flex-row;
@@ -105,6 +106,10 @@
 
       .rt-checkbox-check {
         border-color: $icon-dark-active;
+
+        &.rt-checkbox-checked {
+          border-color: transparent;
+        }
       }
     }
 

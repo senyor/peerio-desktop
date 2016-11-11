@@ -61,11 +61,12 @@
 
     @extend %flex-col;
 
-    .messages-progress-bar{
+    .messages-progress-bar {
       align-self: center;
-      margin-top: auto;
       margin-bottom: auto;
+      margin-top: auto;
     }
+
     .message-content-wrapper {
       flex-shrink: 0;
 

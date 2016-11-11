@@ -3,11 +3,13 @@ const AutoUpdateDialog = require('../components/AutoUpdateDialog');
 const languageStore = require('../stores/language-store');
 const { reaction } = require('mobx');
 const deepForceUpdate = require('react-deep-force-update');
+// const {setStringReplacement} = require('peerio-translator');
 
 class Root extends React.Component {
 
     constructor() {
         super();
+        // setStringReplacement('Peerio', 'Expandoo');
         languageStore.loadSavedLanguage();
         this.onLanguageChange = reaction(
             () => languageStore.language,

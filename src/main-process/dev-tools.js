@@ -1,17 +1,15 @@
 const { MenuItem } = require('electron');
 const isDevEnv = require('../helpers/is-dev-env');
 
-let mainWindow;
 // restart electron when files changed in dev mode
 if (isDevEnv) {
     //eslint-disable-next-line
     require('electron-reload')(__dirname, { electron: require('electron-prebuilt') });
 }
 
-function onAppReady(mainWin) {
+function onAppReady(mainWindow) {
     if (!isDevEnv) return;
     console.log('Initializing development tools.');
-    mainWindow = mainWin;
     installExtensions();
     mainWindow.openDevTools();
 }
@@ -37,7 +35,7 @@ function installExtensions(forceReinstall) {
     }
 }
 
-function extendContextMenu(menu) {
+function extendContextMenu(menu, mainWindow, rightClickPos) {
     // todo: uncomment when going to prod
     // if (!isDevEnv) return;
     console.log('Extending context menu with dev tools.');
@@ -49,9 +47,9 @@ function extendContextMenu(menu) {
         }
     }));
     menu.append(new MenuItem({
-        label: 'Dev Tools',
+        label: 'Inspect Element',
         click() {
-            mainWindow.toggleDevTools();
+            mainWindow.inspectElement(rightClickPos.x, rightClickPos.y);
         }
     }));
 }

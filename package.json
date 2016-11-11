@@ -6,6 +6,7 @@
   "main": "build/main.js",
   "scripts": {
     "start": "npm-run-all -l -n compile --parallel code:watch icebear:watch style:watch electron:run",
+    "start-latest": "git pull && npm install && npm update && npm start",
     "compile": "npm-run-all cleanup static:copy code:compile icebear:compile style:compile react-toolbox",
     "cleanup": "rm -rf build && mkdir -p build",
     "electron:run": "sleep 3 && electron .",

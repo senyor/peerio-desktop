@@ -20,27 +20,37 @@
 
   .new-message-search {
     align-items: center;
-    border: $input-dark-border solid 1px;
+    background-color: $button-affirmative;
     border-radius: 24px;
     border-right: 0;
     display: flex;
     flex-shrink: 0;
-    height: 48px;
     margin-bottom: 48px;
-    padding: 0 0 0 $padding-small;
+    overflow: hidden;
     width: 100%;
 
     .chip-wrapper {
+      align-items: center;
+      background-color: $background-root;
+      border: 1px solid $input-dark-border;
+      border-radius: 24px 0 0 24px;
+      border-right: 0;
       flex: 1 1 auto;
       flex-wrap: wrap;
       margin-right: auto;
       max-width: 544px;
+      min-height: 48px;
+      padding: 0 8px;
 
       @extend %flex-row;
     }
 
     .rt-input-input {
+      flex-grow: 1;
+      margin-bottom: 4px;
+      max-width: 100%;
       padding: 0;
+      width: inherit;
     }
 
     .rt-button-button {
@@ -89,7 +99,8 @@
 
   .username {
     flex-shrink: 0;
-    margin-bottom: $margin-small;
+    margin-bottom: 4px;
+    margin-top: 4px;
     max-width: 160px;
     min-width: 88px;
     transition: 500ms 500ms $transition-ease-out;

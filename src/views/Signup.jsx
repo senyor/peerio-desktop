@@ -1,6 +1,6 @@
 const React = require('react');
 const { withRouter } = require('react-router');
-const { Button, Dialog } = require('react-toolbox');
+const { Button, Dialog, IconButton } = require('react-toolbox');
 const { User, errors } = require('../icebear'); // eslint-disable-line
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
@@ -89,6 +89,10 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         { label: t('ok'), onClick: () => { this.navigateToProfile(); } }
     ];
 
+    navigateToLogin = () => {
+        this.props.router.push('/');
+    }
+
     navigateToPasscode = () => {
         if (!this.profileStore.hasErrors) {
             this.step = 2;
@@ -110,7 +114,14 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         }
     };
 
-    // todo retreat
+    retreat = () => {
+        if (this.step === 1) {
+            this.navigateToLogin();
+        } else {
+            this.navigateToProfile();
+        }
+    };
+
     render() {
         return (
             <div className={css('signup', 'rt-light-theme', { expand: this.expand })}>
@@ -120,19 +131,20 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
                     {this.step === 1 ?
                         <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :
                             <SignupPasscode
-                                store={this.passcodeStore}
-                                profileStore={this.profileStore}
-                                returnHandler={this.advance} />}
+                    store={this.passcodeStore}
+                    profileStore={this.profileStore}
+                    returnHandler={this.advance} />}
                 </div>
 
                 <div className="signup-nav">
-                    <Link to="/">
-                        <Button flat label={this.step === 1 ? t('button_exit') : t('button_back')} />
-                    </Link>
+
+                    <IconButton icon="arrow_back"
+                  onClick={this.retreat} />
+
                     <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
-                            onClick={this.advance}
-                            disabled={this.hasError}
-                    />
+                  onClick={this.advance}
+                  disabled={this.hasError}
+                />
                 </div>
                 <div className="progress">
                     <div className={`indicator ${this.step === 1 ? 'active' : ''}`} />

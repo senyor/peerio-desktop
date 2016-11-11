@@ -2,6 +2,7 @@ const React = require('react');
 const AutoUpdateDialog = require('../components/AutoUpdateDialog');
 const languageStore = require('../stores/language-store');
 const { reaction } = require('mobx');
+const deepForceUpdate = require('react-deep-force-update');
 
 class Root extends React.Component {
 
@@ -11,7 +12,7 @@ class Root extends React.Component {
         this.onLanguageChange = reaction(
             () => languageStore.language,
             () => {
-                this.forceUpdate();
+                deepForceUpdate(this);
             }
         );
         this.devtools = null;

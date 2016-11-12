@@ -1,10 +1,16 @@
 const { MenuItem } = require('electron');
 const isDevEnv = require('../helpers/is-dev-env');
+const path = require('path');
+
+const appRootPath = path.resolve(`${__dirname}/../`);
+const repoRootPath = path.resolve(`${__dirname}/../../`);
 
 // restart electron when files changed in dev mode
 if (isDevEnv) {
     //eslint-disable-next-line
-    require('electron-reload')(__dirname, { electron: require('electron-prebuilt') });
+    require('electron-reload')(appRootPath, {
+        electron: path.join(repoRootPath, 'node_modules', '.bin', 'electron')
+    });
 }
 
 function onAppReady(mainWindow) {

@@ -23,7 +23,7 @@ const css = require('classnames');
                             <MenuItem>Filter 1</MenuItem>
                         </IconMenu>
                     </div>
-                    <div className="shadow-2">
+                    <div className="shadow-2 flex-col" style={{maxHeight: 'calc(100vh - 84px)'}}>
                         <div className="table-action-bar">
                             <div>0 selected</div>
                             <div className="table-actions">
@@ -32,7 +32,10 @@ const css = require('classnames');
                                 <IconButton icon="file_download"
                                             className={css({ active: this.active })} />
                                 <IconButton icon="reply"
-                                            className={css('reverse-icon', { active: this.active && this.shareable })} />
+                                            className={css('reverse-icon', {
+                                                active: this.active && this.shareable,
+                                                disabled: !this.shareable
+                                            })} />
                                 <IconButton icon="create_new_folder"
                                             className={css({ active: this.active })} />
                                 <IconButton icon="delete"
@@ -41,6 +44,12 @@ const css = require('classnames');
                             </div>
                             <Search />
                         </div>
+                        <div style={{
+                            display: 'flex',
+                            flexShrink: '1',
+                            maxHeight: '100vh',
+                            overflow: 'auto'
+                        }}>
                         <table>
                             <thead>
                                 <tr>
@@ -122,7 +131,8 @@ const css = require('classnames');
                                         <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
                                         <IconButton icon="reply"
-                                                    className={css('reverse-icon', { active: this.active && this.shareable })} />
+                                                    className={css('reverse-icon', { active: this.active && this.shareable,
+                                                        disabled: !this.shareable})} />
                                         <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
                                         <IconButton icon="delete"
@@ -198,7 +208,8 @@ const css = require('classnames');
                                         <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
                                         <IconButton icon="reply"
-                                                    className={css('reverse-icon', { active: this.active && this.shareable })} />
+                                                    className={css('reverse-icon', { active: this.active && this.shareable,
+                                                        disabled: !this.shareable})} />
                                         <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
                                         <IconButton icon="delete"
@@ -274,7 +285,8 @@ const css = require('classnames');
                                         <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
                                         <IconButton icon="reply"
-                                                    className={css('reverse-icon', { active: this.active && this.shareable })} />
+                                                    className={css('reverse-icon', { active: this.active && this.shareable,
+                                                        disabled: !this.shareable})} />
                                         <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
                                         <IconButton icon="delete"
@@ -350,7 +362,8 @@ const css = require('classnames');
                                         <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
                                         <IconButton icon="reply"
-                                                    className={css('reverse-icon', { active: this.active && this.shareable })} />
+                                                    className={css('reverse-icon', { active: this.active && this.shareable,
+                                                        disabled: !this.shareable})} />
                                         <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
                                         <IconButton icon="delete"
@@ -359,6 +372,7 @@ const css = require('classnames');
                                 </tr>
                             </tbody>
                         </table>
+                            </div>
                         <div className="table-paging">
                             <div>Rows per page:</div>
                             {/* TODO make Dropdown work */}

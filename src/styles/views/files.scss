@@ -54,6 +54,14 @@
       color: $color-brand;
     }
 
+    .disabled {
+      pointer-events: none;
+
+      .material-icons {
+        color: $icon-dark-inactive;
+      }
+    }
+
     .rt-ripple-ripple {
       background-color: $color-brand;
     }
@@ -73,6 +81,7 @@
   .table-paging {
     align-items: center;
     background: $background-table;
+    border-top: 1px solid $divider-dark;
     color: $text-dark-secondary;
     height: 56px;
     justify-content: flex-end;
@@ -133,6 +142,10 @@
           opacity: 1;
           width: 100%;
         }
+      }
+
+      &:last-of-type td {
+        border: 0;  
       }
     }
 

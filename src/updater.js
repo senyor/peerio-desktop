@@ -3,8 +3,8 @@ const { autoUpdater } = require('electron').remote;
 const os = require('os');
 const config = require('./config');
 const { normalize } = require('./icebear').errors; // eslint-disable-line
+const isDevEnv = require('./helpers/is-dev-env');
 
-const isDevEnv = process.env.NODE_ENV !== 'production';
 const platform = `${os.platform()}_${os.arch()}`;  // usually returns darwin_64
 
 // todo: release notes not available on windows, so maybe create alternative way to retrieve them
@@ -64,7 +64,7 @@ class Updater {
             });
 
         autoUpdater.checkForUpdates();
-    }
+    };
 
     /**
      * Installs updated and downloaded app version.

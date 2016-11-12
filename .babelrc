@@ -1,18 +1,18 @@
 {
     "sourceRoot": "src",
-    "compact": "false",
+    "compact": false,
     "plugins": [
         "transform-decorators-legacy",
         "transform-class-properties",
         "transform-inline-environment-variables",
-        "transform-es2015-modules-commonjs",
+        ["transform-es2015-modules-commonjs"],
         ["transform-object-rest-spread", { "useBuiltIns": true }],
         "transform-react-jsx"
     ],
     "env": {
         "production": {
-            "sourceMaps":false,
-            "comments":false,
+            "sourceMaps": false,
+            "comments": false,
             "plugins": [
                 "transform-react-constant-elements",
                 "transform-react-inline-elements",
@@ -20,7 +20,7 @@
             ]
         },
         "development": {
-            "sourceMaps":true,
+            "sourceMaps": true,
             "plugins": [
                 "transform-react-display-name"
             ]

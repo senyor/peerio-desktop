@@ -1,11 +1,12 @@
 {
-  "name": "peerio-desktop",
+  "name": "icebear-desktop",
   "productName": "Icebear",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Peerio desktop client (codename Icebear)",
   "main": "build/main.js",
   "scripts": {
     "start": "npm-run-all -l -n compile --parallel code:watch icebear:watch style:watch electron:run",
+    "start-latest": "git pull && npm install && npm update && npm start",
     "compile": "npm-run-all cleanup static:copy code:compile icebear:compile style:compile react-toolbox",
     "cleanup": "rm -rf build && mkdir -p build",
     "electron:run": "sleep 3 && electron .",
@@ -116,6 +117,7 @@
     "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
     "react": "15.3.2",
     "react-addons-css-transition-group": "15.3.2",
+    "react-deep-force-update": "2.0.1",
     "react-dom": "15.3.2",
     "react-motion": "0.4.5",
     "react-router": "3.0.0",
@@ -158,6 +160,7 @@
   },
   "build": {
     "appId": "com.peerio.desktop",
+    "productName": "Icebear",
     "files": [
       "build/**",
       "package.json",
@@ -182,7 +185,7 @@
       "target": [
         "squirrel"
       ],
-      "title": "Peerio",
+      "title": "Icebear",
       "version": "1.0.0",
       "msi": true
     },

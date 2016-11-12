@@ -1,7 +1,7 @@
 {
-  "name": "peerio-desktop",
+  "name": "icebear-desktop",
   "productName": "Icebear",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Peerio desktop client (codename Icebear)",
   "main": "build/main.js",
   "scripts": {
@@ -160,6 +160,7 @@
   },
   "build": {
     "appId": "com.peerio.desktop",
+    "productName": "Icebear",
     "files": [
       "build/**",
       "package.json",
@@ -184,7 +185,7 @@
       "target": [
         "squirrel"
       ],
-      "title": "Peerio",
+      "title": "Icebear",
       "version": "1.0.0",
       "msi": true
     },

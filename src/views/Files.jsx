@@ -23,7 +23,7 @@ const css = require('classnames');
                             <MenuItem>Filter 1</MenuItem>
                         </IconMenu>
                     </div>
-                    <div className="shadow-2 flex-col" style={{maxHeight: 'calc(100vh - 84px)'}}>
+                    <div className="shadow-2 flex-col" style={{ maxHeight: 'calc(100vh - 84px)' }}>
                         <div className="table-action-bar">
                             <div>0 selected</div>
                             <div className="table-actions">
@@ -50,329 +50,329 @@ const css = require('classnames');
                             maxHeight: '100vh',
                             overflow: 'auto'
                         }}>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th><Checkbox checked={this.checked} /></th>
-                                    <th>Name</th>
-                                    <th>Owner</th>
-                                    <th>Modified</th>
-                                    <th>Size</th>
-                                    <th>Type</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Jeff Jefferson</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th><Checkbox checked={this.checked} /></th>
+                                        <th>Name</th>
+                                        <th>Owner</th>
+                                        <th>Modified</th>
+                                        <th>Size</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Jeff Jefferson</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Jeff Jefferson</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Jeff Jefferson</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>You</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>You</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Bob Roberts</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Bob Roberts</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active && this.shareable,
-                                                        disabled: !this.shareable})} />
-                                        <IconButton icon="create_new_folder"
+                                                        disabled: !this.shareable })} />
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Jeff Jefferson</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Jeff Jefferson</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Jeff Jefferson</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Jeff Jefferson</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>You</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>You</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Bob Roberts</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Bob Roberts</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active && this.shareable,
-                                                        disabled: !this.shareable})} />
-                                        <IconButton icon="create_new_folder"
+                                                        disabled: !this.shareable })} />
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Jeff Jefferson</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Jeff Jefferson</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Jeff Jefferson</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Jeff Jefferson</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>You</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>You</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Bob Roberts</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Bob Roberts</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active && this.shareable,
-                                                        disabled: !this.shareable})} />
-                                        <IconButton icon="create_new_folder"
+                                                        disabled: !this.shareable })} />
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Jeff Jefferson</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Jeff Jefferson</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Jeff Jefferson</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Jeff Jefferson</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>You</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>You</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active })} />
-                                        <IconButton icon="create_new_folder"
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
 
-                                <tr>
-                                    <td><Checkbox checked={!this.checked} /></td>
-                                    <td>A some what long file name</td>
-                                    <td>Bob Roberts</td>
-                                    <td>Oct 20 2016</td>
-                                    <td>400MB</td>
-                                    <td>MPEG</td>
-                                    <td className="item-actions">
-                                        <IconButton icon="file_download"
+                                    <tr>
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>A some what long file name</td>
+                                        <td>Bob Roberts</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="reply"
+                                            <IconButton icon="reply"
                                                     className={css('reverse-icon', { active: this.active && this.shareable,
-                                                        disabled: !this.shareable})} />
-                                        <IconButton icon="create_new_folder"
+                                                        disabled: !this.shareable })} />
+                                            <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
-                                        <IconButton icon="delete"
+                                            <IconButton icon="delete"
                                                     className={css({ active: this.active })} />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div className="table-paging">
                             <div>Rows per page:</div>
                             {/* TODO make Dropdown work */}

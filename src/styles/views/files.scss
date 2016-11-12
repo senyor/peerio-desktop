@@ -20,7 +20,7 @@
     @extend %title;
   }
 
-  .table-action-bar{
+  .table-action-bar {
     align-items: center;
     background: $background-table;
     border-bottom: 1px solid $divider-dark;
@@ -60,7 +60,7 @@
   }
 
   .item-actions {
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 75%,rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
     border-bottom: 0;
     height: 47px;
     opacity: 0;
@@ -81,7 +81,7 @@
     @extend %flex-row;
     @extend %hint-error-label;
 
-    .rt-button-button{
+    .rt-button-button {
       margin-left: 24px;
 
       + .rt-button-button {

@@ -20,7 +20,7 @@ class ChatList extends React.Component {
         this.props.router.push('/app/new-message');
     };
 
-    getProgressBar =loading => {
+    getProgressBar = loading => {
         return loading ? <ProgressBar type="linear" mode="indeterminate" /> : null;
     };
 
@@ -42,13 +42,9 @@ class ChatList extends React.Component {
                     </div>
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
-                            itemContent={this.getProgressBar(c.loadingMeta)}
                             onClick={() => this.activateChat(c.id)}
                             caption={c.chatName}
                             leftIcon="fiber_manual_record"
-                            // leftIcon={c.participants.length < 2 ? 'fiber_manual_record' :
-                            //     <div className="small-notification">
-                            //         {c.participants.length}</div>}
                             rightIcon={(!c.active && c.unreadCount > 0) ? this.getNotificationIcon(c) :
                                 <IconButton icon="highlight_off" />} />
                     )}

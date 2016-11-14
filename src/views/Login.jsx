@@ -127,12 +127,10 @@ const T = require('../components/T');
                             * login<br />
                             * change interface language<br />
                             * send messages <br />
-                            * eat icecream
                         </div>
                         <br />
                         <strong>For your convenience passphrase is always 'icebear'.</strong>
                     </div>
-                    {randomGif()}
                 </div>
                 <Dialog actions={this.actions} active={this.errorVisible}
                         onEscKeyDown={this.hideDialog} onOverlayClick={this.hideDialog}
@@ -143,11 +141,6 @@ const T = require('../components/T');
 }
 
 
-let cachedGif = null;
-function randomGif() {
-    return cachedGif || (cachedGif = (<img role="presentation" className="ice-gif"
-        src={`static/ice/${cryptoUtil.getRandomNumber(1, 25)}.gif`} />));
-}
 
 
 module.exports = withRouter(Login);

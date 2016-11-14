@@ -25,6 +25,7 @@
     background: $background-table;
     border-bottom: 1px solid $divider-dark;
     border-radius: 2px 0 0 2px;
+    flex-shrink: 0;
     height: 64px;
     padding: 0 $padding-default;
     white-space: nowrap;

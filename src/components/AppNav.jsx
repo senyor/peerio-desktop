@@ -1,22 +1,33 @@
 const React = require('react');
 const { withRouter } = require('react-router');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconButton } = require('react-toolbox');
 const {User, contactStore, chatStore} = require('../icebear');//eslint-disable-line
 const Avatar = require('./Avatar');
+const css = require('classnames');
 
 @observer
 class AppNav extends React.Component {
+
+    @observable inMessages = true;
+
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
     }
 
     toMessages = () => {
         this.props.router.push('/app');
+        this.inMessages = !this.inMessages;
     };
 
     toFiles = () => {
         this.props.router.push('/app/files');
+        this.inMessages = !this.inMessages;
+    };
+
+    unreadFiles = () => {
+        return true;
     };
 
     render() {
@@ -24,19 +35,14 @@ class AppNav extends React.Component {
             <div className="app-nav">
                 <Avatar contact={this.contact} />
                 <div className="app-menu">
-                    {/* TODO:  add active class to active item */}
-                    <div className="menu-item active">
-
+                    <div className={css('menu-item', {active: this  .inMessages})}>
                         <IconButton icon="forum" onClick={this.toMessages} />
-
-
                         <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
-
                     </div>
 
-
-                    <div className="menu-item" >
+                    <div className={css('menu-item', {active: !this.inMessages})} >
                         <IconButton icon="folder" onClick={this.toFiles} />
+                        <div className={this.unreadFiles ? 'look-at-me' : ''} />
                     </div>
 
                     <div className="menu-item settings" disabled >
@@ -44,7 +50,6 @@ class AppNav extends React.Component {
                     </div>
                 </div>
             </div>
-
         );
     }
 }

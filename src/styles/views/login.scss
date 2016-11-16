@@ -42,6 +42,15 @@
 
     @extend %flex-col;
 
+    .overflow {
+      overflow: hidden;
+      padding: 0 $padding-large;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
     strong {
       color: $text-dark-primary;
       font-weight: $font-weight-bold;

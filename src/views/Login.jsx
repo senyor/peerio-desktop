@@ -76,11 +76,15 @@ const T = require('../components/T');
     getWelcomeBlock = () => {
         return (
             <div className="welcome-back" onClick={this.unsetLastUser}>
-                <div>{t('login_welcomeBack')} <strong>{this.lastUser.firstName || this.lastUser.username}</strong></div>
+                <div className="overflow ">{t('login_welcomeBack')}
+                    <strong>{this.lastUser.firstName || this.lastUser.username}</strong>
+                </div>
                 <div className="subtitle">
-                    <T k="login_changeUser">
-                        {{ username: (this.lastUser.firstName || this.lastUser.username) }}
-                    </T>
+                    <div className="overflow">
+                        <T k="login_changeUser">
+                            {{ username: (this.lastUser.firstName || this.lastUser.username) }}
+                        </T>
+                    </div>
                 </div>
             </div>
         );

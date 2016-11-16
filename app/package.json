@@ -29,7 +29,6 @@
         "mobx-react-devtools": "4.2.9",
         "nacl-stream": "0.3.3",
         "normalize.css": "5.0.0",
-        "peerio-icebear": "github:peeriotechnologies/peerio-icebear",
         "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
         "react": "15.3.2",
         "react-addons-css-transition-group": "15.3.2",

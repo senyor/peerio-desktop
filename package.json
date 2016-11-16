@@ -13,7 +13,7 @@
         "electron:run": "sleep 3 && electron app",
         "static:copy": "cp -f src/index.html app/src/index.html && cp -R src/static app/src",
         "code:compile": "babel src -d app/src",
-        "icebear:compile": "babel app/node_modules/peerio-icebear/src -d app/src/icebear",
+        "icebear:compile": "babel node_modules/peerio-icebear/src -d app/src/icebear",
         "code:watch": "npm run code:compile -- -w",
         "icebear:watch": "npm run icebear:compile -- -w",
         "code:lint": "eslint . --fix --ext .js,.jsx",
@@ -50,6 +50,7 @@
     },
     "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
     "devDependencies": {
+        "peerio-icebear": "github:peeriotechnologies/peerio-icebear",
         "@kadira/storybook": "^2.21.0",
         "babel-cli": "6.18.0",
         "babel-eslint": "7.1.0",

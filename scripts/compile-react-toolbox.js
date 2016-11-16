@@ -6,8 +6,8 @@ const fs = require('fs');
 const cp = require('child_process');
 var writeFile = require('writefile');
 
-const src = './node_modules/react-toolbox/lib/';
-const dst = './build/react-toolbox/';
+const src = './app/node_modules/react-toolbox/lib/';
+const dst = './app/src/react-toolbox/';
 function getJSONFromCssModules(cssFileName, json) {
     writeFile(`${cssFileName.substring(0, cssFileName.length - 4)}.json`, JSON.stringify(json));
 }

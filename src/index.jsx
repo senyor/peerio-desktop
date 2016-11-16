@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 document.addEventListener('DOMContentLoaded', () => {
     require.extensions['.css'] = function (m, f) {
         m.exports = require(f.replace('.css', '.json'));
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const {Router, createMemoryHistory} = require('react-router');
     const routes = require('./routes');
     const tinyDb = require('./stores/tiny-db');
-    
+
     setTinyDbEngine({
         getValue: tinyDb.getValueAsync,
         setValue: tinyDb.setValueAsync,

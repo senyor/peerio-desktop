@@ -1,7 +1,7 @@
 node_modules
 dist
 .DS_Store
-build
+/app/src
 /.idea
 /autologin.json
 npm-debug.log.*

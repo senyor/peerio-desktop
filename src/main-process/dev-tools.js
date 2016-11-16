@@ -5,6 +5,8 @@ const path = require('path');
 const appRootPath = path.resolve(`${__dirname}/../`);
 const repoRootPath = path.resolve(`${__dirname}/../../`);
 
+console.error('reporoot', repoRootPath);
+
 // restart electron when files changed in dev mode
 if (isDevEnv) {
     //eslint-disable-next-line

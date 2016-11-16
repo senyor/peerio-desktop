@@ -4,24 +4,22 @@
 
 ```
 /
-- dist-assets: 
-- build: application files unbundled but compiled with babel
+- dist-assets: @TODO see below
+- app: 
+    - src: application files unbundled but compiled with babel
+    - node_modules: application modules
+    - package.json: application dependencies
+- src: react sources
 - dist: compiled, with node_modules (production deps) and the build folder
 ```
 
 
-
+## Whitelisting todo: 
 - replace string
 - replace urls
-- dist-assets
+- multiple dist-assets
 - eventually add css
 - modify variables
 
 
-
-- app/
-- build/
-  - app/
-  - package.json
-  - node_modules/
   

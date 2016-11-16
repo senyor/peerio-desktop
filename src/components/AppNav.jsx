@@ -35,12 +35,12 @@ class AppNav extends React.Component {
             <div className="app-nav">
                 <Avatar contact={this.contact} />
                 <div className="app-menu">
-                    <div className={css('menu-item', {active: this  .inMessages})}>
+                    <div className={css('menu-item', { active: this.inMessages })}>
                         <IconButton icon="forum" onClick={this.toMessages} />
                         <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
                     </div>
 
-                    <div className={css('menu-item', {active: !this.inMessages})} >
+                    <div className={css('menu-item', { active: !this.inMessages })} >
                         <IconButton icon="folder" onClick={this.toFiles} />
                         <div className={this.unreadFiles ? 'look-at-me' : ''} />
                     </div>

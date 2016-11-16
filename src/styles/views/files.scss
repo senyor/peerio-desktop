@@ -145,6 +145,10 @@
         }
       }
 
+      &.new-file {
+        background-color: $background-new-file;
+      }
+
       &:last-of-type td {
         border: 0;
       }

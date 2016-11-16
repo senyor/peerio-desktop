@@ -1,7 +1,7 @@
 const React = require('react');
 const { withRouter } = require('react-router');
 const { Component } = require('react');
-const { Checkbox, Dropdown, IconButton, IconMenu, MenuItem } = require('react-toolbox');
+const { Checkbox, IconButton, IconMenu, MenuItem } = require('react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const Search = require('../components/Search');
@@ -62,7 +62,26 @@ const css = require('classnames');
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr className="new-file">
+                                        <td><Checkbox checked={!this.checked} /></td>
+                                        <td>I am a new shareable file</td>
+                                        <td>Jeff Jefferson</td>
+                                        <td>Oct 20 2016</td>
+                                        <td>400MB</td>
+                                        <td>MPEG</td>
+                                        <td className="item-actions">
+                                            <IconButton icon="file_download"
+                                                    className={css({ active: this.active })} />
+                                            <IconButton icon="reply"
+                                                    className={css('reverse-icon', { active: this.active })} />
+                                            <IconButton icon="create_new_folder"
+                                                    className={css({ active: this.active })} />
+                                            <IconButton icon="delete"
+                                                    className={css({ active: this.active })} />
+                                        </td>
+                                    </tr>
+
+                                    <tr className="new-file">
                                         <td><Checkbox checked={!this.checked} /></td>
                                         <td>A some what long file name</td>
                                         <td>Jeff Jefferson</td>
@@ -81,28 +100,9 @@ const css = require('classnames');
                                         </td>
                                     </tr>
 
-                                    <tr>
+                                    <tr className="new-file">
                                         <td><Checkbox checked={!this.checked} /></td>
-                                        <td>A some what long file name</td>
-                                        <td>Jeff Jefferson</td>
-                                        <td>Oct 20 2016</td>
-                                        <td>400MB</td>
-                                        <td>MPEG</td>
-                                        <td className="item-actions">
-                                            <IconButton icon="file_download"
-                                                    className={css({ active: this.active })} />
-                                            <IconButton icon="reply"
-                                                    className={css('reverse-icon', { active: this.active })} />
-                                            <IconButton icon="create_new_folder"
-                                                    className={css({ active: this.active })} />
-                                            <IconButton icon="delete"
-                                                    className={css({ active: this.active })} />
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><Checkbox checked={!this.checked} /></td>
-                                        <td>A some what long file name</td>
+                                        <td>I can be shared as well</td>
                                         <td>You</td>
                                         <td>Oct 20 2016</td>
                                         <td>400MB</td>
@@ -122,7 +122,7 @@ const css = require('classnames');
 
                                     <tr>
                                         <td><Checkbox checked={!this.checked} /></td>
-                                        <td>A some what long file name</td>
+                                        <td>I am a new file that can't be shared</td>
                                         <td>Bob Roberts</td>
                                         <td>Oct 20 2016</td>
                                         <td>400MB</td>
@@ -131,7 +131,8 @@ const css = require('classnames');
                                             <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
                                             <IconButton icon="reply"
-                                                    className={css('reverse-icon', { active: this.active && this.shareable,
+                                                    className={css('reverse-icon', {
+                                                        active: this.active && this.shareable,
                                                         disabled: !this.shareable })} />
                                             <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
@@ -208,7 +209,8 @@ const css = require('classnames');
                                             <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
                                             <IconButton icon="reply"
-                                                    className={css('reverse-icon', { active: this.active && this.shareable,
+                                                    className={css('reverse-icon', {
+                                                        active: this.active && this.shareable,
                                                         disabled: !this.shareable })} />
                                             <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
@@ -285,7 +287,8 @@ const css = require('classnames');
                                             <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
                                             <IconButton icon="reply"
-                                                    className={css('reverse-icon', { active: this.active && this.shareable,
+                                                    className={css('reverse-icon', {
+                                                        active: this.active && this.shareable,
                                                         disabled: !this.shareable })} />
                                             <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />
@@ -362,7 +365,8 @@ const css = require('classnames');
                                             <IconButton icon="file_download"
                                                     className={css({ active: this.active })} />
                                             <IconButton icon="reply"
-                                                    className={css('reverse-icon', { active: this.active && this.shareable,
+                                                    className={css('reverse-icon', {
+                                                        active: this.active && this.shareable,
                                                         disabled: !this.shareable })} />
                                             <IconButton icon="create_new_folder"
                                                     className={css({ active: this.active })} />

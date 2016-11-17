@@ -1,14 +1,15 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const updater = require('../updater');
 const { t } = require('peerio-translator');
 const { Dialog } = require('react-toolbox');
+const updater = require('../updater');
 
 /**
  * Current implementation will show update request dialog only once after app is started
  */
-@observer class AutoUpdateDialog extends React.Component {
+@observer
+class AutoUpdateDialog extends React.Component {
     @observable dismissed = false;
 
     dismiss = () => {
@@ -20,18 +21,20 @@ const { Dialog } = require('react-toolbox');
         // also squirrel might crash on windows if start updates too early.
         setTimeout(updater.startUpdateMonitoring, 10000);
     }
-
-    actions = [
-        { label: t('cancel'), onClick: this.dismiss },
-        { label: t('updateDownload'), onClick: updater.quitAndInstall }
-    ];
-
+    isActive() {
+        return !this.dismissed && updater.state === updater.states.READY_TO_INSTALL;
+    }
     render() {
-        const active = !this.dismissed && updater.state === updater.states.READY_TO_INSTALL;
-        return (
-            <Dialog actions={this.actions} onEscKeyDown={this.dismiss} onOverlayClick={this.dismiss} active={active}
-                title={t('updateAvailable', { releaseName: updater.releaseName })}>
+        console.log('RENDER UPDATER');
+        // keep this here in case locale changes
+        const actions = [
+            { label: t('cancel'), onClick: this.dismiss },
+            { label: t('updateDownload'), onClick: updater.quitAndInstall }
+        ];
 
+        return (
+            <Dialog actions={this.actions} onEscKeyDown={this.dismiss} onOverlayClick={this.dismiss} active={this.isActive()}
+                title={t('updateAvailable', { releaseName: updater.releaseName })}>
                 <p>{t('updateAvailableText', { releaseMessage: updater.releaseName })}</p>
             </Dialog>
         );

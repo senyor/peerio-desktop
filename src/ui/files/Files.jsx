@@ -4,8 +4,10 @@ const { Component } = require('react');
 const { Checkbox, IconButton, IconMenu, MenuItem } = require('react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const Search = require('../components/Search');
+const Search = require('../shared_components/Search');
 const css = require('classnames');
+const {fileStore} = require('../../icebear');//eslint-disable-line
+const electron = require('electron').remote;
 
 @observer class Files extends Component {
     // TODO make dynamic based on file(s) selected
@@ -13,6 +15,13 @@ const css = require('classnames');
     @observable checked = false;
     @observable shareable = false;
     @observable count = 10;
+
+    upload() {
+        let file = electron.dialog.showOpenDialog(electron.getCurrentWindow(), { properties: ['openFile', 'showHiddenFiles'] });
+        if (!file || !file.length) return;
+        file = file[0];
+        fileStore.upload(file);
+    }
 
     render() {
         return (
@@ -28,7 +37,7 @@ const css = require('classnames');
                             <div>0 selected</div>
                             <div className="table-actions">
                                 <IconButton icon="cloud_upload"
-                                            className="active" />
+                                            className="active" onClick={this.upload} />
                                 <IconButton icon="file_download"
                                             className={css({ active: this.active })} />
                                 <IconButton icon="reply"

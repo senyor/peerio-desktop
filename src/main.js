@@ -22,9 +22,12 @@ app.on('ready', () => {
     const state = getSavedWindowState();
     mainWindow = new BrowserWindow(Object.assign(state, {
         show: false,
+        center: true,
         minWidth: 900,
-        minHeight: 728
+        minHeight: 728,
+        title: 'Peerio'
     }));
+
     mainWindow.loadURL(`file://${__dirname}/index.html`);
 
     mainWindow.once('ready-to-show', () => {

@@ -1,5 +1,5 @@
 const React = require('react');
-const AutoUpdateDialog = require('../components/AutoUpdateDialog');
+const AutoUpdateDialog = require('./AutoUpdateDialog');
 const languageStore = require('../stores/language-store');
 const { reaction } = require('mobx');
 const deepForceUpdate = require('react-deep-force-update');

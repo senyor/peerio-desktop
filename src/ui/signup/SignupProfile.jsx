@@ -3,10 +3,10 @@ const { Component } = require('react');
 const { observable, autorunAsync, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Input, Dropdown } = require('react-toolbox');
-const { config, User } = require('../icebear'); // eslint-disable-line
+const { config, User } = require('../../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
-const languageStore = require('../stores/language-store');
-const T = require('../components/T');
+const languageStore = require('../../stores/language-store');
+const T = require('../shared_components/T');
 
 class ProfileStore {
     @observable username = undefined;

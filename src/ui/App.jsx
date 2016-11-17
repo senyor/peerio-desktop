@@ -1,5 +1,5 @@
 const React = require('react');
-const AppNav = require('../components/AppNav');
+const AppNav = require('./AppNav');
 
 class App extends React.Component {
 

@@ -1,7 +1,7 @@
 const React = require('react');
-const Avatar = require('./Avatar');
+const Avatar = require('../../shared_components/Avatar');
 const { observer } = require('mobx-react');
-const { time } = require('../helpers/formatter');
+const { time } = require('../../../helpers/formatter');
 
 const Message = observer(({ message }) => {
     return (

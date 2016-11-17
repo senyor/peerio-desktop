@@ -3,14 +3,14 @@ const React = require('react');
 const { withRouter } = require('react-router');
 const { Component } = require('react');
 const { Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
-const { cryptoUtil, config, User } = require('../icebear'); // eslint-disable-line
+const { config, User } = require('../../icebear'); // eslint-disable-line
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const languageStore = require('../stores/language-store');
+const languageStore = require('../../stores/language-store');
 const { Link } = require('react-router');
-const FullCoverSpinner = require('../components/FullCoverSpinner');
-const T = require('../components/T');
+const FullCoverSpinner = require('../shared_components/FullCoverSpinner');
+const T = require('../shared_components/T');
 
 @observer class Login extends Component {
     @observable username = config.autologin ? config.autologin.username : '';

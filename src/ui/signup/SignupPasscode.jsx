@@ -3,9 +3,9 @@ const { Component } = require('react');
 const { observable, autorunAsync, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');
-const { config } = require('../icebear'); // eslint-disable-line
+const { config } = require('../../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
-const T = require('../components/T');
+const T = require('../shared_components/T');
 const zxcvbn = require('zxcvbn');
 
 class PasscodeStore {

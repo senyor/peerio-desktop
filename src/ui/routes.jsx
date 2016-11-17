@@ -1,12 +1,12 @@
 const React = require('react');
 const { Route, IndexRoute } = require('react-router');
-const App = require('./views/App');
-const Root = require('./views/Root');
-const Login = require('./views/Login');
-const Signup = require('./views/Signup');
-const Messages = require('./views/Messages');
-const NewMessage = require('./views/NewMessage');
-const Files = require('./views/Files');
+const App = require('./App');
+const Root = require('./Root');
+const Login = require('./login/Login');
+const Signup = require('./signup/Signup');
+const Messages = require('./messages/Messages');
+const NewMessage = require('./messages/NewMessage');
+const Files = require('./files/Files');
 
 module.exports = (
     <Route path="/" component={Root}>

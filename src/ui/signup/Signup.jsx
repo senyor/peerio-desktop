@@ -1,14 +1,13 @@
 const React = require('react');
 const { withRouter } = require('react-router');
 const { Button, Dialog, IconButton } = require('react-toolbox');
-const { User, errors } = require('../icebear'); // eslint-disable-line
+const { User, errors } = require('../../icebear'); // eslint-disable-line
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { Link } = require('react-router');
 const css = require('classnames');
-const languageStore = require('../stores/language-store');
-const FullCoverSpinner = require('../components/FullCoverSpinner');
+const languageStore = require('../../stores/language-store');
+const FullCoverSpinner = require('../shared_components/FullCoverSpinner');
 const { SignupProfile, ProfileStore } = require('./SignupProfile');
 const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
 

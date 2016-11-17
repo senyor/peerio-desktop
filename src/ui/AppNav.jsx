@@ -4,7 +4,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconButton } = require('react-toolbox');
 const {User, contactStore, chatStore} = require('../icebear');//eslint-disable-line
-const Avatar = require('./Avatar');
+const Avatar = require('./shared_components/Avatar');
 const css = require('classnames');
 
 @observer

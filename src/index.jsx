@@ -1,4 +1,10 @@
 /* eslint-disable */
+if (process.env.NODE_ENV !== 'production') {
+    // to allow require of development modules in dev environment
+    const path = require('path');
+    const PATH_APP_NODE_MODULES = path.resolve(path.join('app/node_modules'));
+    require('module').globalPaths.push(PATH_APP_NODE_MODULES);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     require.extensions['.css'] = function (m, f) {

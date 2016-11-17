@@ -3,12 +3,12 @@ const isDevEnv = require('../helpers/is-dev-env');
 const path = require('path');
 
 const appRootPath = path.resolve(`${__dirname}/../`);
-const repoRootPath = path.resolve(`${__dirname}/../../`);
-
-console.error('reporoot', repoRootPath);
+const repoRootPath = path.resolve(`${__dirname}/../../../`);
 
 // restart electron when files changed in dev mode
 if (isDevEnv) {
+    const PATH_APP_NODE_MODULES = path.join(repoRootPath, 'app', 'node_modules');
+    require('module').globalPaths.push(PATH_APP_NODE_MODULES);
     //eslint-disable-next-line
     require('electron-reload')(appRootPath, {
         electron: path.join(repoRootPath, 'node_modules', '.bin', 'electron')
@@ -24,14 +24,14 @@ function onAppReady(mainWindow) {
 
 function installExtensions(forceReinstall) {
     console.log('installing extensions.');
-    const devtron = require('devtron'); // eslint-disable-line import/no-extraneous-dependencies
+    const devtron = require('devtron');
 
     if (forceReinstall) {
         devtron.uninstall();
     }
     devtron.install();
 
-    const installer = require('electron-devtools-installer'); // eslint-disable-line import/no-extraneous-dependencies
+    const installer = require('electron-devtools-installer');
     const extensions = ['REACT_DEVELOPER_TOOLS', 'REACT_PERF'];
     for (const name of extensions) {
         console.log('installing %s', name);

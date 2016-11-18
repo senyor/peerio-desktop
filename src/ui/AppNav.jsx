@@ -1,11 +1,12 @@
 const React = require('react');
 const { withRouter } = require('react-router');
-const { observable } = require('mobx');
+const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconButton } = require('react-toolbox');
 const {User, contactStore, chatStore} = require('../icebear');//eslint-disable-line
 const Avatar = require('./shared_components/Avatar');
 const css = require('classnames');
+const app = require('electron').remote.app;
 
 @observer
 class AppNav extends React.Component {
@@ -14,6 +15,7 @@ class AppNav extends React.Component {
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
+        autorunAsync(() => app.setBadgeCount(chatStore.unreadMessages), 250);
     }
 
     toMessages = () => {

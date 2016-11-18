@@ -49,13 +49,18 @@ function extendContextMenu(menu, mainWindow, rightClickPos) {
     console.log('Extending context menu with dev tools.');
     menu.append(new MenuItem({ type: 'separator' }));
     menu.append(new MenuItem({
-        label: 'Reload page',
+        label: 'Dev tools',
+        enabled: false
+    }));
+    menu.append(new MenuItem({
+        label: '🔄 Reload page',
+        role: 'reload',
         click() {
             mainWindow.reload();
         }
     }));
     menu.append(new MenuItem({
-        label: 'Inspect Element',
+        label: '🛠 Inspect Element',
         click() {
             mainWindow.inspectElement(rightClickPos.x, rightClickPos.y);
         }

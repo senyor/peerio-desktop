@@ -1,26 +1,26 @@
 .snackbar-wrapper {
-    position: relative;
-    overflow: hidden;
+  overflow: hidden;
+  position: relative;
 }
+
 .snackbar {
-    align-items: center;
-    align-self: center;
-    background: black;
-    border-radius: 2px;
-    color: white;
-    flex-shrink: 1;
-    flex-grow: 0;
-    justify-content: space-between;
-    max-width: 560px;
-    min-height: 48px;
-    padding: 0 $padding-default;
+  align-items: center;
+  align-self: center;
+  background: black;
+  border-radius: 2px;
+  color: white;
+  flex-grow: 0;
+  flex-shrink: 1;
+  justify-content: space-between;
+  max-width: 560px;
+  min-height: 48px;
+  padding: 0 $padding-default;
 
-    @extend %flex-row;
+  @extend %flex-row;
 
-
-    .rt-button-button {
-        margin-left: 40px;
-        color: $button-primary;
-    }
+  .rt-button-button {
+    color: $button-primary;
+    margin-left: 40px;
+  }
 }
 

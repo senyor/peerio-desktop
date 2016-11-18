@@ -19,7 +19,7 @@ class PasscodeStore {
     }
 }
 
-@observer class SignupPasscode extends Component {
+@observer class Passcode extends Component {
     validatePasswordStrength() {
         if (this.props.store.passcode) {
             const banList = [
@@ -101,4 +101,4 @@ class PasscodeStore {
     }
 }
 
-module.exports = { SignupPasscode, PasscodeStore };
+module.exports = { Passcode, PasscodeStore };

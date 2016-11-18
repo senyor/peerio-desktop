@@ -17,7 +17,9 @@ const electron = require('electron').remote;
     @observable count = 10;
 
     upload() {
-        let file = electron.dialog.showOpenDialog(electron.getCurrentWindow(), { properties: ['openFile', 'showHiddenFiles'] });
+        let file = electron.dialog.showOpenDialog(
+            electron.getCurrentWindow(),
+            { properties: ['openFile', 'showHiddenFiles'] });
         if (!file || !file.length) return;
         file = file[0];
         fileStore.upload(file);

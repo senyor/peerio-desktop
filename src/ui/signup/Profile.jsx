@@ -22,7 +22,7 @@ class ProfileStore {
     }
 }
 
-@observer class SignupProfile extends Component {
+@observer class Profile extends Component {
     constructor() {
         super();
         this.usernameUpdater = (val) => { this.props.store.username = val; };
@@ -89,4 +89,4 @@ class ProfileStore {
     }
 }
 
-module.exports = { SignupProfile, ProfileStore };
+module.exports = { Profile, ProfileStore };

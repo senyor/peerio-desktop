@@ -5,6 +5,9 @@ const { t } = require('peerio-translator');
 const { Dialog } = require('react-toolbox');
 const updater = require('../updater');
 
+// todo: repeat request to update and restart?
+// todo: request again on new version after previous one was dismissed?
+
 /**
  * Current implementation will show update request dialog only once after app is started
  */
@@ -25,7 +28,6 @@ class AutoUpdateDialog extends React.Component {
         return !this.dismissed && updater.state === updater.states.READY_TO_INSTALL;
     }
     render() {
-        console.log('RENDER UPDATER');
         // keep this here in case locale changes
         const actions = [
             { label: t('cancel'), onClick: this.dismiss },
@@ -33,7 +35,7 @@ class AutoUpdateDialog extends React.Component {
         ];
 
         return (
-            <Dialog actions={this.actions} onEscKeyDown={this.dismiss} onOverlayClick={this.dismiss} active={this.isActive()}
+            <Dialog actions={actions} onEscKeyDown={this.dismiss} onOverlayClick={this.dismiss} active={this.isActive()}
                 title={t('updateAvailable', { releaseName: updater.releaseName })}>
                 <p>{t('updateAvailableText', { releaseMessage: updater.releaseName })}</p>
             </Dialog>

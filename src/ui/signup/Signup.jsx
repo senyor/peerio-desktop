@@ -8,10 +8,11 @@ const { t } = require('peerio-translator');
 const css = require('classnames');
 const languageStore = require('../../stores/language-store');
 const FullCoverSpinner = require('../shared_components/FullCoverSpinner');
-const { SignupProfile, ProfileStore } = require('./SignupProfile');
-const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
+const { Profile, ProfileStore } = require('./Profile');
+const { Passcode, PasscodeStore } = require('./Passcode');
 
-@observer class Signup extends React.Component {
+@observer
+class Signup extends React.Component {
     @observable busy = false;
     @observable expand = false; // starts expand animation
     @observable step = 1; // 1 -profile, 2- passcode
@@ -22,18 +23,15 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
     passcodeStore = new PasscodeStore();
 
     @computed get hasError() {
-        if (this.step === 1) {
-            return this.profileStore.hasErrors;
-        }
-        return this.passcodeStore.hasErrors;
+        return this.step === 1 ? this.profileStore.hasErrors : this.passcodeStore.hasErrors;
     }
 
     constructor() {
         super();
-        this.usernameUpdater = (val) => { this.username = val; };
-        this.emailUpdater = (val) => { this.email = val; };
-        this.firstNameUpdater = (val) => { this.firstName = val; };
-        this.lastNameUpdater = (val) => { this.lastName = val; };
+        this.usernameUpdater = val => { this.username = val; };
+        this.emailUpdater = val => { this.email = val; };
+        this.firstNameUpdater = val => { this.firstName = val; };
+        this.lastNameUpdater = val => { this.lastName = val; };
         this.createAccountWithPasscode = this.createAccountWithPasscode.bind(this);
     }
 
@@ -45,18 +43,12 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
         if (!this.passcodeStore.hasErrors) {
             return this.createAccount()
                 .then(() => User.current.setPasscode(this.passcodeStore.passcode))
-                .then(() => {
-                    this.props.router.push('/app');
-                })
-                .catch(err => {});
+                .then(() => { this.props.router.push('/app'); })
+                .catch(err => {
+                    console.error(err);
+                });
         }
         return Promise.resolve(false);
-    }
-
-    createAccountWithoutPasscode() {
-        this.createAccount()
-            .catch(err => {});
-        // TODO then: show passphrase
     }
 
     createAccount() {
@@ -90,7 +82,7 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
 
     navigateToLogin = () => {
         this.props.router.push('/');
-    }
+    };
 
     navigateToPasscode = () => {
         if (!this.profileStore.hasErrors) {
@@ -127,27 +119,21 @@ const { SignupPasscode, PasscodeStore } = require('./SignupPasscode');
                 <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
                 <div className="signup-form">
                     <div className="signup-title">{t('signup')}</div>
-                    {this.step === 1 ?
-                        <SignupProfile store={this.profileStore} returnHandler={this.advance} /> :
-                            <SignupPasscode
-                    store={this.passcodeStore}
-                    profileStore={this.profileStore}
-                    returnHandler={this.advance} />}
+                    {
+                        this.step === 1
+                            ? <Profile store={this.profileStore} returnHandler={this.advance} />
+                            : <Passcode store={this.passcodeStore} profileStore={this.profileStore}
+                                  returnHandler={this.advance} />
+                    }
                 </div>
-
                 <div className="signup-nav">
-
-                    <IconButton icon="arrow_back"
-                  onClick={this.retreat} />
-
-                    <Button flat label={this.step === 1 ? t('next') : t('button_finish')}
-                  onClick={this.advance}
-                  disabled={this.hasError}
-                />
+                    <IconButton icon="arrow_back" onClick={this.retreat} />
+                    <Button flat label={this.step === 1 ? t('next') : t('button_finish')} onClick={this.advance}
+                            disabled={this.hasError} />
                 </div>
                 <div className="progress">
-                    <div className={`indicator ${this.step === 1 ? 'active' : ''}`} />
-                    <div className={`indicator ${this.step === 2 ? 'active' : ''}`} />
+                    <div className={css('indicator', { active: this.step === 1 })} />
+                    <div className={css('indicator', { active: this.step === 2 })} />
                 </div>
                 <FullCoverSpinner show={this.busy} />
                 <Dialog actions={this.errorActions} active={this.errorVisible}

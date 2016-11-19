@@ -56,8 +56,8 @@
     }
 
     .disabled {
-      pointer-events: none;
-
+      // breaks file item logic, passes click even to the row
+      //pointer-events: none;
       .material-icons {
         color: $icon-dark-inactive;
       }

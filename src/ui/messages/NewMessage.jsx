@@ -88,7 +88,7 @@ class NewMessage extends React.Component {
                             <Input placeholder={t('userSearch')} value={this.query} onChange={this.handleTextChange}
                                     onKeyDown={this.handleKeyDown} />
                         </div>
-                        <Button className="confirm" label="Go" onClick={this.go} disabled={!this.canGO} />
+                        <Button className={css('confirm', { hide: !this.selected.length })} label="Go" onClick={this.go} disabled={!this.canGO} />
                     </div>
                     <List selectable ripple >
                         <ListSubHeader caption="Your contacts" />

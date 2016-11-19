@@ -1,4 +1,6 @@
-if (process.env.NODE_ENV !== 'production') {
+const isDevEnv = require('./helpers/is-dev-env');
+
+if (isDevEnv) {
     // to allow require of development modules in dev environment
     const path = require('path');
     const PATH_APP_NODE_MODULES = path.resolve(path.join('app/node_modules'));

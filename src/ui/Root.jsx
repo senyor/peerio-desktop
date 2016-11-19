@@ -3,6 +3,7 @@ const AutoUpdateDialog = require('./AutoUpdateDialog');
 const languageStore = require('../stores/language-store');
 const { reaction } = require('mobx');
 const deepForceUpdate = require('react-deep-force-update');
+const isDevEnv = require('../helpers/is-dev-env');
 // const {setStringReplacement} = require('peerio-translator');
 
 class Root extends React.Component {
@@ -18,7 +19,7 @@ class Root extends React.Component {
             }
         );
         this.devtools = null;
-        if (process.env.NODE_ENV !== 'production') {
+        if (isDevEnv) {
             const MobxTools = require('mobx-react-devtools').default; //eslint-disable-line
             this.devtools = null;// <MobxTools />;
             window.hideMobxTools = () => {

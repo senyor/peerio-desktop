@@ -57,7 +57,7 @@
     align-items: flex-start;
     flex: 1 1 auto;
     overflow: auto;
-    padding: 24px;
+    padding: 24px 24px 0;
 
     @extend %flex-col;
 
@@ -90,14 +90,15 @@
     }
 
     .message-content {
-      display: flex;
-      flex-direction: column;
       flex-grow: 0;
+
+      @extend %flex-col;
 
       .meta-data {
         align-items: center;
         color: $text-dark-secondary;
-        display: flex;
+
+        @extend %flex-row;
 
         .user {
           font-weight: $font-weight-bold;

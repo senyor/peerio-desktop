@@ -8,6 +8,7 @@ const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const Message = require('./components/Message');
 const {chatStore} = require('../../icebear');// eslint-disable-line
+const Snackbar = require('../shared_components/Snackbar');
 
 @observer
 class Messages extends React.Component {
@@ -65,6 +66,11 @@ class MessageList extends React.Component {
                                    multicolor className="messages-progress-bar" />
                     : chatStore.activeChat.messages.map(m => <Message key={m.id || m.tempId} message={m} />)
                 }
+
+                <Snackbar
+                    className="snackbar"
+                    content="Email sent btw!"
+                    label="great" action="" />
             </div>
         );
     }

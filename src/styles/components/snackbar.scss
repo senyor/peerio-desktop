@@ -1,6 +1,12 @@
 .snackbar-wrapper {
+  align-items: center;
+  flex-shrink: 0;
+  height: 48px;
+  justify-content: center;
   overflow: hidden;
   position: relative;
+
+  @extend %flex-row;
 }
 
 .snackbar {

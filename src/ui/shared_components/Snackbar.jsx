@@ -9,12 +9,14 @@ class Snackbar extends React.Component {
 
     render() {
         return (
-            <div className={css(this.props.className)}>
-                {this.props.content}
-                {/* TODO make optional */}
-                {this.props.label && this.props.action !== null ?
-                    <Button label={this.props.label} onClick={this.props.action} /> : null
-                }
+            <div className="snackbar-wrapper">
+                <div className={css(this.props.className)}>
+                    {this.props.content}
+                    {/* TODO make optional */}
+                    {this.props.label && this.props.action !== null ?
+                        <Button label={this.props.label} onClick={this.props.action} /> : null
+                    }
+                </div>
             </div>
         );
     }

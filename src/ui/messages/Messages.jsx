@@ -67,10 +67,10 @@ class MessageList extends React.Component {
                     : chatStore.activeChat.messages.map(m => <Message key={m.id || m.tempId} message={m} />)
                 }
 
-                {/*<Snackbar*/}
-                    {/*className="snackbar"*/}
-                    {/*content="Email sent btw!"*/}
-                    {/*label="great" action="" />*/}
+                {/* <Snackbar*/}
+                {/* className="snackbar"*/}
+                {/* content="Email sent btw!"*/}
+                {/* label="great" action="" />*/}
             </div>
         );
     }

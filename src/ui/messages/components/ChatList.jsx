@@ -44,6 +44,7 @@ class ChatList extends React.Component {
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
                             onClick={() => this.activateChat(c.id)}
                             caption={c.chatName}
+                            // TODO: make left icon user count when multiuser chat.
                             leftIcon="fiber_manual_record"
                             rightIcon={(!c.active && c.unreadCount > 0) ? this.getNotificationIcon(c) :
                                 <IconButton icon="highlight_off" />} />

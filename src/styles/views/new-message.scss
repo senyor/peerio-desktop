@@ -109,6 +109,14 @@
       transition: 250ms;
     }
 
+    .rt-chip-deleteIcon {
+      background: #fff;
+
+      .rt-chip-deleteX {
+        stroke: $color-brand;
+      }
+    }
+
     &.not-found {
       background: $text-dark-error;
       color: transparent;

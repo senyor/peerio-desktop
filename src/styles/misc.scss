@@ -3,18 +3,23 @@
   width: 300px;
 }
 
-.hide {
-  opacity: 0;
-}
-
-.banish {
-  display: none;
-}
-
 .shadow-2 {
   box-shadow: $shadow-2;
 }
 
 .reverse-icon {
   transform: rotateY(180deg);
+}
+
+
+// HIDE STUFF
+
+// doesn't affect layout.
+.hide {
+  opacity: 0;
+}
+
+// doesn't affect layout.
+.banish {
+  display: none;
 }

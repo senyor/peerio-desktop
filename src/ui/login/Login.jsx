@@ -103,7 +103,7 @@ const T = require('../shared_components/T');
                         <Input type="text" label={t('username')} value={this.username}
                                onChange={this.usernameUpdater}
                                onKeyPress={this.handleKeyPress}
-                               className={this.lastUser ? 'hide' : ''}
+                               className={this.lastUser ? 'banish' : ''}
                         />
                         <div className="password">
                             <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passcodeOrPassphrase')}

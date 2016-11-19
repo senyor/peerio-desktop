@@ -137,11 +137,18 @@
       position: relative;
 
       &:hover {
-        background: $color-dark-06;
+        background: rgba($color-brand, .12);
 
         .item-actions {
           opacity: 1;
-          width: 100%;
+        }
+
+        td {
+          transition: color 150ms;
+        }
+
+        .hide-text {
+          color: transparent;
         }
       }
 

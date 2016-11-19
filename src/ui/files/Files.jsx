@@ -14,8 +14,8 @@ const FileLine = require('./components/FileLine');
     @observable checked = false;
 
     upload() {
-        let file = electron.dialog.showOpenDialog(electron.getCurrentWindow(),
-                                                  { properties: ['openFile', 'showHiddenFiles'] });
+        const win = electron.getCurrentWindow();
+        let file = electron.dialog.showOpenDialog(win, { properties: ['openFile', 'showHiddenFiles'] });
 
         if (!file || !file.length) return;
         file = file[0];

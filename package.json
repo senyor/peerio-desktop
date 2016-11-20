@@ -129,7 +129,7 @@
   "build": {
     "appId": "com.peerio.desktop",
     "productName": "Icebear",
-     "files": [
+    "files": [
       "**",
       "!node_modules/material-design-icons${/*}",
       "node_modules/material-design-icons/iconfont/*",

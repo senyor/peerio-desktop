@@ -21,7 +21,7 @@ class FileLine extends React.Component {
                 <td>
                     {this.fileLoading ?
                         <FileLoading loading={'file_upload'} /> :
-                        <Checkbox checked={this.checked} onChange={v => { this.checked = v; }} />
+                            <Checkbox checked={this.checked} onChange={v => { this.checked = v; }} />
                     }</td>
                 <td>I am a new shareable file</td>
                 <td>Jeff Jefferson</td>

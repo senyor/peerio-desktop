@@ -3,8 +3,8 @@ const React = require('react');
 const { withRouter } = require('react-router');
 const { Component } = require('react');
 const { Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
-const { config, User } = require('../../icebear'); // eslint-disable-line
-const { observable } = require('mobx');
+const { config, socket, User } = require('../../icebear'); // eslint-disable-line
+const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
@@ -23,6 +23,11 @@ const T = require('../shared_components/T');
     hideDialog = () => {
         this.errorVisible = false;
     };
+
+    @computed get hasError () {
+        console.log('socket', socket.connected)
+        return !(this.username && this.passcodeOrPassphrase && socket.connected);
+    }
 
     actions = [{ label: t('ok'), onClick: this.hideDialog }];
 
@@ -115,7 +120,7 @@ const T = require('../shared_components/T');
                         <Dropdown value={languageStore.language}
                             source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
                     </div>
-                    <Button className="login-button" label={t('login')} flat onClick={this.login} />
+                    <Button className="login-button" label={t('login')} flat onClick={this.login} disabled={this.hasError} />
                     <div className="login-reg-button">
                         <a href={config.termsUrl}>{t('terms')}</a> | <Link to="/signup">{t('signup')}</Link>
                     </div>

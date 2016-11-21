@@ -170,21 +170,22 @@
       }
 
       .file-loading {
-          align-items: center;
-          background-color: $background-root;
-          border: 2px solid $color-affirmative;
-          border-radius: 20px;
-          cursor: pointer;
-          display: flex;
-          height: 40px;
-          justify-content: center;
-          margin-left: -12px;
-          width: 40px;
+        align-items: center;
+        background-color: $background-root;
+        border: 2px solid $color-affirmative;
+        border-radius: 20px;
+        cursor: pointer;
+        display: flex;
+        height: 40px;
+        justify-content: center;
+        margin-left: -12px;
+        width: 40px;
 
-          &:hover {
-            background-color: $background-cancel;
-          }
+        &:hover {
+          background-color: $background-cancel;
+        }
       }
+
       &:last-of-type td {
         border: 0;
       }

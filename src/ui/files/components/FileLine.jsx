@@ -14,7 +14,7 @@ class FileLine extends React.Component {
     render() {
         return (
             <tr /* className="new-file"*/>
-                {/* TODO make upload/download arrow  compoent to replace checkbox when files are loading.*/}
+                {/* TODO change Checkbox to FileLoading when uploading and downloading files*/}
                 <td><Checkbox checked={this.checked} onChange={v => { this.checked = v; }} /></td>
                 <td>I am a new shareable file</td>
                 <td>Jeff Jefferson</td>
@@ -23,7 +23,9 @@ class FileLine extends React.Component {
                 <td className="hide-text">MPEG</td>
                 <FileActions onRowClick={this.toggleChecked} downloadDisabled={false} shareDisabled={false}
                          newFolderDisabled deleteDisabled={false} />
-                <td className="loading"><ProgressBar type="linear" mode="indeterminate" /></td>
+                <td className="loading">
+                    <ProgressBar type="linear" mode="indeterminate" />
+                </td>
             </tr>
         );
     }

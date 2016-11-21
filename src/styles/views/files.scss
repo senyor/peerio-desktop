@@ -158,9 +158,10 @@
       }
 
       .loading {
-        align-items: flex-end;
         border-bottom: 0;
+        height: 4px;
         left: 0;
+        margin-top: 44px;
         padding: 0;
         position: absolute;
         right: 0;
@@ -170,6 +171,7 @@
       }
 
       .file-loading {
+        // TODO: add pulse to imply activity.
         align-items: center;
         background-color: $background-root;
         border: 2px solid $color-affirmative;
@@ -179,10 +181,15 @@
         height: 40px;
         justify-content: center;
         margin-left: -12px;
+        transition: 150ms;
         width: 40px;
 
         &:hover {
           background-color: $background-cancel;
+
+          .material-icons {
+              color: $icon-light-active;
+          }
         }
       }
 

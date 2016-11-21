@@ -3,11 +3,14 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const FileActions = require('./FileActions');
+const FileLoading = require('./FileLoading');
 const { Checkbox, ProgressBar } = require('react-toolbox');
 
 @observer
 class FileLine extends React.Component {
     @observable checked=false;
+    @observable fileLoading = true;
+
     toggleChecked=() => {
         this.checked = !this.checked;
     };
@@ -15,7 +18,11 @@ class FileLine extends React.Component {
         return (
             <tr /* className="new-file"*/>
                 {/* TODO change Checkbox to FileLoading when uploading and downloading files*/}
-                <td><Checkbox checked={this.checked} onChange={v => { this.checked = v; }} /></td>
+                <td>
+                    {this.fileLoading ?
+                        <FileLoading loading={'file_upload'} /> :
+                        <Checkbox checked={this.checked} onChange={v => { this.checked = v; }} />
+                    }</td>
                 <td>I am a new shareable file</td>
                 <td>Jeff Jefferson</td>
                 <td>Oct 20 2016</td>
@@ -24,7 +31,7 @@ class FileLine extends React.Component {
                 <FileActions onRowClick={this.toggleChecked} downloadDisabled={false} shareDisabled={false}
                          newFolderDisabled deleteDisabled={false} />
                 <td className="loading">
-                    <ProgressBar type="linear" mode="indeterminate" />
+                    {this.fileLoading ? <ProgressBar type="linear" mode="indeterminate" /> : null }
                 </td>
             </tr>
         );

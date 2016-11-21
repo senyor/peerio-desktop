@@ -54,6 +54,7 @@ function extendContextMenu(menu, mainWindow, rightClickPos) {
     }));
     menu.append(new MenuItem({
         label: '🔄 Reload page',
+        accelerator: 'CommandOrControl+R',
         role: 'reload',
         click() {
             mainWindow.reload();

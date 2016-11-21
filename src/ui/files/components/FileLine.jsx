@@ -23,11 +23,11 @@ class FileLine extends React.Component {
                         <FileLoading loading={'file_upload'} /> :
                             <Checkbox checked={this.checked} onChange={v => { this.checked = v; }} />
                     }</td>
-                <td>I am a new shareable file</td>
+                <td>{this.props.file.name}</td>
                 <td>Jeff Jefferson</td>
-                <td>Oct 20 2016</td>
-                <td className="hide-text">400MB</td>
-                <td className="hide-text">MPEG</td>
+                <td>{this.props.file.uploadedAt && this.props.file.uploadedAt.toLocaleString()}</td>
+                <td className="hide-text">{this.props.file.size}</td>
+                <td className="hide-text">{this.props.file.ext}</td>
                 <FileActions onRowClick={this.toggleChecked} downloadDisabled={false} shareDisabled={false}
                          newFolderDisabled deleteDisabled={false} />
                 <td className="loading">

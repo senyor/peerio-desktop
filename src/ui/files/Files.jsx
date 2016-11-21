@@ -9,9 +9,14 @@ const electron = require('electron').remote;
 const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
+const FileStream = require('../../helpers/file-stream');
 
 @observer class Files extends React.Component {
     @observable checked = false;
+
+    componentWillMount() {
+        fileStore.loadAllFiles();
+    }
 
     upload() {
         const win = electron.getCurrentWindow();
@@ -48,11 +53,7 @@ const FileLine = require('./components/FileLine');
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <FileLine />
-                                    <FileLine />
-                                    <FileLine />
-                                    <FileLine />
-
+                                    {fileStore.files.map(f => <FileLine key={f.fileId} file={f} />)}
                                 </tbody>
                             </table>
                         </div>

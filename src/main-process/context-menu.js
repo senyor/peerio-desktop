@@ -10,7 +10,6 @@ function buildContextMenu(mainWindow) {
 
     menu.append(new MenuItem({
         label: 'Restart',
-        accelerator: 'CommandOrControl+R',
         click() {
             appControl.relaunch();
         }

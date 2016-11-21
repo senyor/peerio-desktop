@@ -13,17 +13,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const React = require('react');
-    const { socket, config, setTinyDbEngine } = require('./icebear');
+    const { socket, config, setTinyDbEngine, FileStreamAbstract } = require('./icebear');
     const { render } = require('react-dom');
     const { Router, createMemoryHistory } = require('react-router');
     const routes = require('./ui/routes');
     const tinyDb = require('./stores/tiny-db');
+    const FileStream = require('./helpers/file-stream');
 
     setTinyDbEngine({
         getValue: tinyDb.getValueAsync,
         setValue: tinyDb.setValueAsync,
         removeValue: tinyDb.removeAsync
     });
+
+    FileStreamAbstract.FileStream = FileStream;
 
     config.socketServerUrl = 'wss://hocuspocus.peerio.com';
     socket.start();

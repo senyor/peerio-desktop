@@ -82,7 +82,7 @@ const T = require('../shared_components/T');
         return (
             <div className="welcome-back" onClick={this.unsetLastUser}>
                 <div className="overflow ">{t('login_welcomeBack')}
-                    <strong>{this.lastUser.firstName || this.lastUser.username}</strong>
+                    <strong> {this.lastUser.firstName || this.lastUser.username}</strong>
                 </div>
                 <div className="subtitle">
                     <div className="overflow">

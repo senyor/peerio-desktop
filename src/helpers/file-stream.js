@@ -1,6 +1,7 @@
 const { FileStreamAbstract, errors } = require('../icebear');
 const fs = require('fs');
 
+// todo prevent sequential read/write while in progress
 class FileStream extends FileStreamAbstract {
 
     constructor(filePath, mode, bufferSize) {
@@ -10,15 +11,23 @@ class FileStream extends FileStreamAbstract {
         if (this.buffer) this._buffer = Buffer.from(this.buffer.buffer);
     }
 
+    checkForError(err, rejectFn) {
+        if (err) {
+            rejectFn(errors.normalize(err));
+            return true;
+        }
+        return false;
+    }
+
     open() {
         return new Promise((resolve, reject) => {
             fs.open(this.filePath, this.mode[0], (err, fd) => {
-                if (err) {
-                    reject(errors.normalize(err));
-                    return;
-                }
+                if (this.checkForError(err, reject)) return;
                 this.fileDescriptor = fd;
-                resolve();
+                fs.fstat(fd, (sErr, stat) => {
+                    if (this.checkForError(sErr, reject)) return;
+                    resolve(stat.size);
+                });
             });
         });
     }
@@ -27,10 +36,7 @@ class FileStream extends FileStreamAbstract {
         if (this.fileDescriptor == null) return Promise.resolve();
         return new Promise((resolve, reject) => {
             fs.close(this.fileDescriptor, err => {
-                if (err) {
-                    reject(errors.normalize(err));
-                    return;
-                }
+                if (this.checkForError(err, reject)) return;
                 resolve();
             });
         });
@@ -44,7 +50,7 @@ class FileStream extends FileStreamAbstract {
         return new Promise((resolve, reject) => {
             fs.read(this.fileDescriptor, this._buffer, 0, this._buffer.byteLength, null,
                 (err, bytesRead) => {
-                    if (err) reject(errors.normalize(err));
+                    if (this.checkForError(err, reject)) return;
                     resolve(bytesRead);
                 });
         });
@@ -58,7 +64,7 @@ class FileStream extends FileStreamAbstract {
         return new Promise((resolve, reject) => {
             fs.write(this.fileDescriptor, Buffer.from(buffer.buffer), 0, buffer.length, null,
                 err => {
-                    if (err) reject(errors.normalize(err));
+                    if (this.checkForError(err, reject)) return;
                     resolve();
                 });
         });

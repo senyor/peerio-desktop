@@ -46,18 +46,20 @@
       margin: 0 $margin-small;
     }
 
-    .active .material-icons {
+    .material-icons {
       color: rgba($color-brand, .5);
       transition: 250ms;
     }
 
-    .active:hover .material-icons {
+    .rt-button-button:hover .material-icons {
       color: $color-brand;
     }
 
-    .disabled {
-      // breaks file item logic, passes click even to the row
-      //pointer-events: none;
+    .disabled,
+    .disabled:hover {
+      // breaks file item logic, passes click event to the row
+      pointer-events: none;
+
       .material-icons {
         color: $icon-dark-inactive;
       }

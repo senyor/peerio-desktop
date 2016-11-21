@@ -1,10 +1,12 @@
 .snackbar-wrapper {
   align-items: center;
+  bottom: 100%;
   flex-shrink: 0;
   height: 48px;
   justify-content: center;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  width: 100%;
 
   @extend %flex-row;
 }
@@ -21,8 +23,15 @@
   max-width: 560px;
   min-height: 48px;
   padding: 0 $padding-default;
+  position: absolute;
+  top: 100%;
+  transition: 250ms $transition-ease-in;
 
   @extend %flex-row;
+
+  &.show {
+    top: 0;
+  }
 
   .rt-button-button {
     color: $button-primary;

@@ -3,6 +3,7 @@ const { IconMenu, MenuItem, Input, IconButton } = require('react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
+const Snackbar = require('../../shared_components/Snackbar');
 
 @observer
 class MessageInput extends React.Component {
@@ -31,6 +32,10 @@ class MessageInput extends React.Component {
         if (!this.props.show) return null;
         return (
             <div className="message-input">
+                <Snackbar
+                    className="snackbar"
+                    content="Email sent btw!"
+                    label="great" action="" />
                 <IconMenu icon="add_circle_outline">
                     <MenuItem value="share" caption="Share from files" />
                     <MenuItem value="upload" caption="Upload to DM" />

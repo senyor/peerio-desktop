@@ -3,7 +3,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const FileActions = require('./FileActions');
-const { Checkbox } = require('react-toolbox');
+const { Checkbox, ProgressBar } = require('react-toolbox');
 
 @observer
 class FileLine extends React.Component {
@@ -14,14 +14,16 @@ class FileLine extends React.Component {
     render() {
         return (
             <tr /* className="new-file"*/>
+                {/* TODO make upload/download arrow  compoent to replace checkbox when files are loading.*/}
                 <td><Checkbox checked={this.checked} onChange={v => { this.checked = v; }} /></td>
                 <td>I am a new shareable file</td>
                 <td>Jeff Jefferson</td>
                 <td>Oct 20 2016</td>
-                <td>400MB</td>
-                <td>MPEG</td>
+                <td className="hide-text">400MB</td>
+                <td className="hide-text">MPEG</td>
                 <FileActions onRowClick={this.toggleChecked} downloadDisabled={false} shareDisabled={false}
                          newFolderDisabled deleteDisabled={false} />
+                <td className="loading"><ProgressBar type="linear" mode="indeterminate" /></td>
             </tr>
         );
     }

@@ -38,7 +38,6 @@
     }
   }
 
-
   .table-actions,
   .item-actions {
     margin-left: 56px;
@@ -160,10 +159,10 @@
 
       .loading {
         align-items: flex-end;
-        position: absolute;
         height: 4px;
         left: 0;
         padding: 0;
+        position: absolute;
         right: 0;
         width: 100%;
 

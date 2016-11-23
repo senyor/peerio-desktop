@@ -24,8 +24,8 @@ const T = require('../shared_components/T');
         this.errorVisible = false;
     };
 
-    @computed get hasError () {
-        console.log('socket', socket.connected)
+    @computed get hasError() {
+        console.log('socket', socket.connected);
         return !(this.username && this.passcodeOrPassphrase && socket.connected);
     }
 

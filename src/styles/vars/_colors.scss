@@ -21,18 +21,19 @@ $color-error: rgb(208, 2, 27);
 $color-affirmative: rgb(44, 207, 132);
 
 // BACKGROUNDS
+$background-active-message: $color-light-100;
 $background-brand: $color-brand;
 $background-cancel: $color-error;
-$background-message-list: rgba($color-brand, .12);
-$background-active-message: $color-light-100;
 $background-hover-message: $color-light-50;
-$background-root: $color-light-100;
-$background-table: $color-light-100;
-$background-overlay: rgba(0, 0, 0, .5);
-$background-light-dropdown: $color-light-12;
-$background-light-button-hover: $color-light-12;
-$background-welcome-back: $color-light-70;
+$background-message-list: rgba($color-brand, .12);
 $background-new-file: rgba($color-affirmative, .12);
+$background-light-button-hover: $color-light-12;
+$background-light-dropdown: $color-light-12;
+$background-overlay: rgba(0, 0, 0, .5);
+$background-root: $color-light-100;
+$background-snackbar: #232323;
+$background-table: $color-light-100;
+$background-welcome-back: $color-light-70;
 
 // TEXT
 $text-dark-primary: $color-dark-87;

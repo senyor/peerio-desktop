@@ -1,5 +1,4 @@
 // Should adhere to specs found at https://material.google.com/components/snackbars-toasts.html#snackbars-toasts-usage
-
 $snackbar-max-width: 568px;
 $snackbar-min-width: 288px;
 
@@ -20,9 +19,9 @@ $snackbar-min-width: 288px;
   background: $background-snackbar;
   border-radius: 2px;
   color: $text-light-primary;
+  height: 48px;
   justify-content: space-between;
   max-width: $snackbar-max-width;
-  height: 48px;
   min-width: $snackbar-min-width;
   padding: 0 $padding-default 0 24px;
   position: absolute;

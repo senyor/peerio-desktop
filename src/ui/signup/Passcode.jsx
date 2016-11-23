@@ -82,13 +82,6 @@ class PasscodeStore {
                        value={s.passcodeRepeat} onChange={this.passcodeRepeatUpdater}
                        onKeyPress={this.handleKeyPress} />
 
-                <T k="signup_masterPasswordText" className="help">
-                    {{ emphasis: text => <strong>{text}</strong> }}
-                </T>
-
-                <T k="signup_masterPasswordSettings" className="help">
-                    {{ emphasis: text => <strong>{text}</strong> }}
-                </T>
 
                 <T k="signup_TOSRequestText" className="terms">
                     {{

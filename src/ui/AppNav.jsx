@@ -8,6 +8,8 @@ const Avatar = require('./shared_components/Avatar');
 const css = require('classnames');
 const app = require('electron').remote.app;
 
+// const TooltipIcon = Tooltip(IconButton);
+
 @observer
 class AppNav extends React.Component {
 
@@ -38,17 +40,18 @@ class AppNav extends React.Component {
                 <Avatar contact={this.contact} />
                 <div className="app-menu">
                     <div className={css('menu-item', { active: this.inMessages })}>
-                        <IconButton icon="forum" onClick={this.toMessages} />
+                        <IconButton tooltip="Chats" tooltipDelay={1000} icon="forum" onClick={this.toMessages} />
+                        {/*TODO div is probably unecessary. move to wrapping div? */}
                         <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
                     </div>
 
                     <div className={css('menu-item', { active: !this.inMessages })} >
-                        <IconButton icon="folder" onClick={this.toFiles} />
+                        <IconButton tooltip="Files" tooltipDelay={1000} icon="folder" onClick={this.toFiles} />
                         <div className={this.unreadFiles ? 'look-at-me' : ''} />
                     </div>
 
                     <div className="menu-item settings" disabled >
-                        <IconButton icon="settings" />
+                        <IconButton tooltip="Settings" tooltipDelay={1000} icon="settings" />
                     </div>
                 </div>
             </div>

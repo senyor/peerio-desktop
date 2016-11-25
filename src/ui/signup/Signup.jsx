@@ -7,7 +7,7 @@ const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const languageStore = require('../../stores/language-store');
-const FullCoverSpinner = require('../shared_components/FullCoverSpinner');
+const FullCoverLoader = require('../shared_components/FullCoverLoader');
 const { Profile, ProfileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
 
@@ -135,7 +135,7 @@ class Signup extends React.Component {
                     <div className={css('indicator', { active: this.step === 1 })} />
                     <div className={css('indicator', { active: this.step === 2 })} />
                 </div>
-                <FullCoverSpinner show={this.busy} />
+                <FullCoverLoader show={this.busy} />
                 <Dialog actions={this.errorActions} active={this.errorVisible}
                         onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
                         title={t('error')}>{this.errorMessage}</Dialog>

@@ -9,7 +9,7 @@ const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
 const { Link } = require('react-router');
-const FullCoverSpinner = require('../shared_components/FullCoverSpinner');
+const FullCoverLoader = require('../shared_components/FullCoverLoader');
 const T = require('../shared_components/T');
 
 @observer class Login extends Component {
@@ -98,7 +98,7 @@ const T = require('../shared_components/T');
     render() {
         return (
             <div className="flex-row app-root">
-                <FullCoverSpinner show={this.busy} />
+                <FullCoverLoader show={this.busy} />
                 <div className="login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
 

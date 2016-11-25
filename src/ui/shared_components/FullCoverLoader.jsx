@@ -1,7 +1,7 @@
 const React = require('react');
 const { ProgressBar } = require('react-toolbox');
 
-function FullCoverSpinner(props) {
+function FullCoverLoader(props) {
     return props.show ? (
         <div className="progress-overlay" >
             {/* <ProgressBar className="self-center" type="circular" mode="indeterminate" multicolor /> */}
@@ -10,4 +10,4 @@ function FullCoverSpinner(props) {
     ) : null;
 }
 
-module.exports = FullCoverSpinner;
+module.exports = FullCoverLoader;

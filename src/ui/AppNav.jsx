@@ -41,7 +41,7 @@ class AppNav extends React.Component {
                 <div className="app-menu">
                     <div className={css('menu-item', { active: this.inMessages })}>
                         <IconButton tooltip="Chats" tooltipDelay={1000} icon="forum" onClick={this.toMessages} />
-                        {/*TODO div is probably unecessary. move to wrapping div? */}
+                        {/* TODO div is probably unecessary. move to wrapping div? */}
                         <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
                     </div>
 

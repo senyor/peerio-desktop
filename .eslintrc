@@ -32,6 +32,7 @@
         "document": false,
         "alert": false,
         "confirm": false,
-        "window": false
+        "window": false,
+        "WebSocket": false
     }
 }

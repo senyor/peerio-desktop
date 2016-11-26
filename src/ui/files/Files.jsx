@@ -47,7 +47,7 @@ const FileStream = require('../../helpers/file-stream');
                                         <th><Checkbox checked={this.checked} /></th>
                                         <th>Name</th>
                                         <th>Owner</th>
-                                        <th>Modified</th>
+                                        <th>Uploaded</th>
                                         <th>Size</th>
                                         <th>Type</th>
                                     </tr>

@@ -5,13 +5,16 @@ const css = require('classnames');
 const FileActions = require('./FileActions');
 const FileLoading = require('./FileLoading');
 const { Checkbox, ProgressBar } = require('react-toolbox');
+const { fileStore } = require('../../../icebear');
 
 @observer
 class FileLine extends React.Component {
     @observable checked=false;
-
-    toggleChecked=() => {
-        this.checked = !this.checked;
+    toggleChecked = val => {
+        this.checked = val;
+    };
+    deleteFile = () => {
+        fileStore.remove(this.props.file);
     };
     render() {
         return (
@@ -19,15 +22,15 @@ class FileLine extends React.Component {
                 <td>
                     {this.props.file.uploading
                         ? <FileLoading loading={'file_upload'} />
-                        : <Checkbox checked={this.checked} onChange={v => { this.checked = v; }} />
+                        : <Checkbox checked={this.checked} onChange={this.toggleChecked} />
                     }</td>
                 <td>{this.props.file.name}</td>
-                <td>Jeff Jefferson</td>
+                <td>{this.props.file.owner}</td>
                 <td>{this.props.file.uploadedAt && this.props.file.uploadedAt.toLocaleString()}</td>
-                <td className="hide-text">{this.props.file.size}</td>
+                <td className="hide-text">{this.props.file.sizeFormatted}</td>
                 <td className="hide-text">{this.props.file.ext}</td>
-                <FileActions onRowClick={this.toggleChecked} downloadDisabled={false} shareDisabled={false}
-                         newFolderDisabled deleteDisabled={false} />
+                <FileActions downloadDisabled={!this.props.file.readyForDownload} shareDisabled newFolderDisabled deleteDisabled={false}
+                                onDelete={this.deleteFile} />
                 <td className="loading">
                     {this.props.file.uploading
                         ? <ProgressBar type="linear" mode="determinate" value={this.props.file.progress}

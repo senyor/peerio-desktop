@@ -14,14 +14,19 @@ class FileLine extends React.Component {
         this.checked = val;
     };
     deleteFile = () => {
-        fileStore.remove(this.props.file);
+        if (confirm(`Remove file ${this.props.file.name}?`)) {
+            fileStore.remove(this.props.file);
+        }
+    };
+    cancelUpload = () => {
+        fileStore.cancelUpload(this.props.file);
     };
     render() {
         return (
             <tr /* className="new-file"*/>
                 <td>
                     {this.props.file.uploading
-                        ? <FileLoading loading={'file_upload'} />
+                        ? <FileLoading loading={'file_upload'} onCancel={this.cancelUpload} />
                         : <Checkbox checked={this.checked} onChange={this.toggleChecked} />
                     }</td>
                 <td>{this.props.file.name}</td>

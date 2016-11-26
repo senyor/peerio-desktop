@@ -186,8 +186,20 @@
         transition: 150ms;
         width: 40px;
 
+        span:last-child {
+          display: none;
+        }
+
         &:hover {
           background-color: $background-cancel;
+
+          span:last-child {
+            display: initial;
+          }
+
+          span:first-child {
+            display: none;
+          }
 
           .material-icons {
             color: $icon-light-active;

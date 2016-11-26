@@ -136,18 +136,20 @@
       }
     }
 
+
+
     tbody tr {
       position: relative;
+
+      &.selected {
+        background: rgba($color-brand, .12);
+      }
 
       &:hover {
         background: rgba($color-brand, .12);
 
         .item-actions {
           opacity: 1;
-        }
-
-        td {
-          transition: color 150ms;
         }
 
         .hide-text {
@@ -191,8 +193,6 @@
         }
 
         &:hover {
-          background-color: $background-cancel;
-
           span:last-child {
             display: initial;
           }
@@ -202,7 +202,7 @@
           }
 
           .material-icons {
-            color: $icon-light-active;
+            color: $color-error;
           }
         }
       }

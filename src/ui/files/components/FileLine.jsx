@@ -23,7 +23,7 @@ class FileLine extends React.Component {
     };
     render() {
         return (
-            <tr /* className="new-file"*/>
+            <tr /* className="new-file"*/ className={css({'selected': this.checked})}>
                 <td>
                     {this.props.file.uploading
                         ? <FileLoading loading={'file_upload'} onCancel={this.cancelUpload} />

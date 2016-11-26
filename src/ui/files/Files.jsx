@@ -1,5 +1,4 @@
 const React = require('react');
-const { withRouter } = require('react-router');
 const { Checkbox, IconButton } = require('react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
@@ -72,4 +71,4 @@ const FileStream = require('../../helpers/file-stream');
     }
 }
 
-module.exports = withRouter(Files);
+module.exports = Files;

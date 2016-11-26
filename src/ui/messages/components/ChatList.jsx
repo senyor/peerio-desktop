@@ -1,5 +1,4 @@
 const React = require('react');
-const { withRouter } = require('react-router');
 const { t } = require('peerio-translator');
 const { IconButton, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
 const { chatStore } = require('../../../icebear'); //eslint-disable-line
@@ -17,7 +16,7 @@ class ChatList extends React.Component {
     }
 
     newMessage = () => {
-        this.props.router.push('/app/new-message');
+        window.router.push('/app/new-message');
     };
 
     getProgressBar = loading => {
@@ -56,4 +55,4 @@ class ChatList extends React.Component {
 }
 
 
-module.exports = withRouter(ChatList);
+module.exports = ChatList;

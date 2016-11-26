@@ -1,5 +1,4 @@
 const React = require('react');
-const { withRouter } = require('react-router');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, IconButton, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
@@ -59,11 +58,11 @@ class NewMessage extends React.Component {
         });
 
         chatStore.startChat(this.selected);
-        this.props.router.push('/app');
+        window.router.push('/app');
     };
 
     handleClose = () => {
-        this.props.router.push('/app');
+        window.router.push('/app');
     };
 
     render() {
@@ -107,4 +106,4 @@ class NewMessage extends React.Component {
 }
 
 
-module.exports = withRouter(NewMessage);
+module.exports = NewMessage;

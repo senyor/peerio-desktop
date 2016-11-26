@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     config.socketServerUrl = 'wss://hocuspocus.peerio.com';
     socket.start();
 
-    const history = createMemoryHistory();
-    render(React.createElement(Router, { history, routes }), document.getElementById('root'));
+    window.router = createMemoryHistory();
+    render(React.createElement(Router, { history: window.router, routes }), document.getElementById('root'));
 });
 

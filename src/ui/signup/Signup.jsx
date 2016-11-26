@@ -1,5 +1,4 @@
 const React = require('react');
-const { withRouter } = require('react-router');
 const { Button, Dialog, IconButton } = require('react-toolbox');
 const { User, errors } = require('../../icebear'); // eslint-disable-line
 const { observable, computed } = require('mobx');
@@ -43,7 +42,7 @@ class Signup extends React.Component {
         if (!this.passcodeStore.hasErrors) {
             return this.createAccount()
                 .then(() => User.current.setPasscode(this.passcodeStore.passcode))
-                .then(() => { this.props.router.push('/app'); })
+                .then(() => { window.router.push('/app'); })
                 .catch(err => {
                     console.error(err);
                 });
@@ -66,7 +65,7 @@ class Signup extends React.Component {
             .then(() => {
                 User.current = u;
                 this.busy = false;
-                this.props.router.push('/app');
+                window.router.push('/app');
             })
             .catch(err => {
                 this.busy = false;
@@ -81,7 +80,7 @@ class Signup extends React.Component {
     ];
 
     navigateToLogin = () => {
-        this.props.router.push('/');
+        window.router.push('/');
     };
 
     navigateToPasscode = () => {
@@ -145,4 +144,4 @@ class Signup extends React.Component {
 }
 
 
-module.exports = withRouter(Signup);
+module.exports = Signup;

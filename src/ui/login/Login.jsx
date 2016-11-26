@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
-const { withRouter } = require('react-router');
 const { Component } = require('react');
 const { Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
 const { config, socket, User } = require('../../icebear'); // eslint-disable-line
@@ -63,7 +62,7 @@ const T = require('../shared_components/T');
         user.passphrase = this.passcodeOrPassphrase;
         user.login().then(() => {
             User.current = user;
-            this.props.router.push('/app');
+            window.router.push('/app');
         }).catch(err => {
             console.error(err);
             this.errorMsg = t('error_loginFailed');
@@ -150,4 +149,4 @@ const T = require('../shared_components/T');
 }
 
 
-module.exports = withRouter(Login);
+module.exports = Login;

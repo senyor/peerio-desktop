@@ -1,5 +1,4 @@
 const React = require('react');
-const { withRouter } = require('react-router');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconButton, Tooltip } = require('react-toolbox');
@@ -24,12 +23,12 @@ class AppNav extends React.Component {
     }
 
     toMessages = () => {
-        this.props.router.push('/app');
+        window.router.push('/app');
         this.inMessages = true;
     };
 
     toFiles = () => {
-        this.props.router.push('/app/files');
+        window.router.push('/app/files');
         this.inMessages = false;
     };
 
@@ -76,4 +75,4 @@ class AppNav extends React.Component {
     }
 }
 
-module.exports = withRouter(AppNav);
+module.exports = AppNav;

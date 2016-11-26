@@ -7,6 +7,7 @@ const Signup = require('./signup/Signup');
 const Messages = require('./messages/Messages');
 const NewMessage = require('./messages/NewMessage');
 const Files = require('./files/Files');
+const DevTools = require('./dev_tools/DevTools');
 
 module.exports = (
     <Route path="/" component={Root}>
@@ -17,5 +18,6 @@ module.exports = (
             <Route path="new-message" component={NewMessage} />
             <Route path="files" component={Files} />
         </Route>
+        <Route path="/dev-tools" component={DevTools} />
     </Route>
 );

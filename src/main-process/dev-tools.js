@@ -50,7 +50,9 @@ function extendContextMenu(menu, mainWindow, rightClickPos) {
     menu.append(new MenuItem({ type: 'separator' }));
     menu.append(new MenuItem({
         label: 'Dev tools',
-        enabled: false
+        click() {
+            require('../ui/dev_tools/DevTools').open();
+        }
     }));
     menu.append(new MenuItem({
         label: '🔄 Reload page',

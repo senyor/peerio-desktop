@@ -21,6 +21,7 @@ class FileLine extends React.Component {
     cancelUpload = () => {
         fileStore.cancelUpload(this.props.file);
     };
+
     render() {
         return (
             <tr /* className="new-file"*/ className={css({ selected: this.checked })}>
@@ -33,9 +34,10 @@ class FileLine extends React.Component {
                 <td>{this.props.file.owner}</td>
                 <td>{this.props.file.uploadedAt && this.props.file.uploadedAt.toLocaleString()}</td>
                 <td className="hide-text">{this.props.file.sizeFormatted}</td>
-                <td className="hide-text">{this.props.file.ext}</td>
+                <td className="hide-text uppercase">{this.props.file.ext}</td>
                 <FileActions downloadDisabled={!this.props.file.readyForDownload} shareDisabled newFolderDisabled deleteDisabled={false}
                                 onDelete={this.deleteFile} />
+
                 <td className="loading">
                     {this.props.file.uploading
                         ? <ProgressBar type="linear" mode="determinate" value={this.props.file.progress}

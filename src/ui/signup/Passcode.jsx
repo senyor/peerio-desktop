@@ -3,7 +3,7 @@ const { Component } = require('react');
 const { observable, autorunAsync, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');
-const { config } = require('../../icebear'); // eslint-disable-line
+const { config, socket } = require('../../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const T = require('../shared-components/T');
 const zxcvbn = require('zxcvbn');
@@ -15,7 +15,9 @@ class PasscodeStore {
     @observable passcodeRepeatError;
 
     @computed get hasErrors() {
-        return !!(!this.passcode || !this.passcodeRepeat || this.passcodeError || this.passcodeRepeatError);
+        return !!(!socket.connected || !this.passcode ||
+                    !this.passcodeRepeat || this.passcodeError ||
+                    this.passcodeRepeatError);
     }
 }
 

@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
+const { withRouter } = require('react-router');
 const { Component } = require('react');
 const { Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
 const { config, socket, User } = require('../../icebear'); // eslint-disable-line
@@ -24,7 +25,6 @@ const T = require('../shared-components/T');
     };
 
     @computed get hasError() {
-        console.log('socket', socket.connected);
         return !(this.username && this.passcodeOrPassphrase && socket.connected);
     }
 

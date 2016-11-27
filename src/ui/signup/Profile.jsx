@@ -2,53 +2,29 @@ const React = require('react');
 const { Component } = require('react');
 const { observable, autorunAsync, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Input, Dropdown } = require('react-toolbox');
-const { config, User } = require('../../icebear'); // eslint-disable-line
+const { Dropdown } = require('react-toolbox');
+const ValidatedInput = require('../shared-components/ValidatedInput');
+const { config, User, socket, validation } = require('../../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
 const T = require('../shared-components/T');
 
-class ProfileStore {
-    @observable username = undefined;
-    @observable email ='';
-    @observable firstName ='';
-    @observable lastName ='';
-    @observable usernameError = '';
-    @observable emailError = undefined;
+const { validators, validateField } = validation;
+
+
+const profileStore = observable({
+    @validateField(validators.username, 0) username: '',
+    @validateField(validators.email, 1) email: '',
+    @validateField(validators.firstName, 2) firstName: '',
+    @validateField(validators.lastName, 3) lastName: '',
 
     @computed get hasErrors() {
-        const emptyFields = !this.email || !this.username || !this.firstName || !this.lastName;
-        return !!(emptyFields || (this.usernameError) || this.emailError);
+        return !(this.usernameValid && this.emailValid &&
+            this.firstNameValid && this.lastNameValid && socket.connected);
     }
-}
+});
 
 @observer class Profile extends Component {
-    constructor() {
-        super();
-        this.usernameUpdater = (val) => { this.props.store.username = val; };
-        this.emailUpdater = (val) => { this.props.store.email = val; };
-        this.firstNameUpdater = (val) => { this.props.store.firstName = val; };
-        this.lastNameUpdater = (val) => { this.props.store.lastName = val; };
-        // reaction validates username over server api
-        autorunAsync(() => this.validate(), 100);
-    }
-
-    validate() {
-        if (this.props.store.username === undefined) return false;
-        if (this.props.store.email && !this.props.store.email.match(/.+@.+\..+/)) {
-            this.props.store.emailError = t('signup_emailError');
-        } else {
-            this.props.store.emailError = undefined;
-        }
-        this.props.store.username = this.props.store.username.toLowerCase();
-        if (this.props.store.username) {
-            return User.validateUsername(this.props.store.username)
-                .then(res => {
-                    this.props.store.usernameError = res ? undefined : t('usernameNotAvailable');
-                });
-        }
-        return Promise.resolve();
-    }
 
     handleKeyPress = (e) => {
         if (e.key === 'Enter') {
@@ -58,21 +34,22 @@ class ProfileStore {
 
     render() {
         const s = this.props.store;
+        console.log(s);
         return (
             <div className="flex-col profile">
                 <div className="signup-subtitle">{t('profile')}</div>
-                <Input type="text" label={t('username')} error={s.usernameError}
-                    value={s.username} onChange={this.usernameUpdater} />
-                <Input type="text" label={t('email')}
-                    value={s.email} error={s.emailError} onChange={this.emailUpdater} />
+                <ValidatedInput label={t('username')}
+                                name="username" store={s} />
+                <ValidatedInput label={t('email')}
+                                name="email" store={s} />
                 <div className="input-row">
                     <div>
-                        <Input type="text" label={t('firstName')}
-                            value={s.firstName} onChange={this.firstNameUpdater} />
+                        <ValidatedInput label={t('firstName')}
+                                        name="firstName" store={s} />
                     </div>
                     <div>
-                        <Input type="text" label={t('lastName')}
-                            value={s.lastName} onChange={this.lastNameUpdater} onKeyPress={this.handleKeyPress} />
+                        <ValidatedInput label={t('lastName')}
+                            name="lastName" store={s} />
                     </div>
                 </div>
                 <Dropdown value={languageStore.language}
@@ -89,4 +66,4 @@ class ProfileStore {
     }
 }
 
-module.exports = { Profile, ProfileStore };
+module.exports = { Profile, profileStore };

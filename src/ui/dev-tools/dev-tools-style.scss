@@ -1,0 +1,44 @@
+.dev-tools-root {
+  margin-top: 100px;
+
+  .rt-app_bar-appBar {
+    background-color: rgb(44, 149, 207);
+
+    .material-icons {
+      color: rgba(255, 255, 255, .7);
+    }
+    .good-bg {
+      background-color: #90fb90;
+    }
+    .bad-bg {
+      background-color: #fb9090;
+    }
+  }
+
+  .rt-button-button > .rt-button-icon {
+    color: #fff;
+  }
+
+  .menu {
+    top: 45px;
+    left: 25px;
+    .rt-menu-icon {
+      color: gray;
+    }
+  }
+  .separator {
+    margin: 0 10px 0 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    height: 30px;
+  }
+  .dashboard {
+    display: flex;
+    .rt-card-card {
+      margin: 20px;
+      background-color: #f1f5f7;
+      pre {
+        white-space: pre-wrap;
+      }
+    }
+  }
+}

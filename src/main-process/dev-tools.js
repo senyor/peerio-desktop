@@ -49,13 +49,13 @@ function extendContextMenu(menu, mainWindow, rightClickPos) {
     console.log('Extending context menu with dev tools.');
     menu.append(new MenuItem({ type: 'separator' }));
     menu.append(new MenuItem({
-        label: 'Dev tools',
+        label: '🔧 Dev tools',
         click() {
-            require('../ui/dev_tools/DevTools').open();
+            mainWindow.webContents.send('router', '/dev-tools');
         }
     }));
     menu.append(new MenuItem({
-        label: '🔄 Reload page',
+        label: '🔃 Reload page',
         accelerator: 'CommandOrControl+R',
         role: 'reload',
         click() {
@@ -63,7 +63,7 @@ function extendContextMenu(menu, mainWindow, rightClickPos) {
         }
     }));
     menu.append(new MenuItem({
-        label: '🛠 Inspect Element',
+        label: '☝️ Inspect Element',
         click() {
             mainWindow.inspectElement(rightClickPos.x, rightClickPos.y);
         }

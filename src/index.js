@@ -38,6 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ipc.on('router', (event, message) => {
         window.router.push(message);
     });
-    window.router.push('/dev-tools');
+  //  window.router.push('/dev-tools');
 });
 

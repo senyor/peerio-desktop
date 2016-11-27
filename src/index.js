@@ -1,4 +1,5 @@
 const isDevEnv = require('./helpers/is-dev-env');
+const ipc = require('electron').ipcRenderer;
 
 if (isDevEnv) {
     // to allow require of development modules in dev environment
@@ -33,5 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.router = createMemoryHistory();
     render(React.createElement(Router, { history: window.router, routes }), document.getElementById('root'));
+
+    ipc.on('router', (event, message) => {
+        window.router.push(message);
+    });
+    window.router.push('/dev-tools');
 });
 

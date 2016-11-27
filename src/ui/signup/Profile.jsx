@@ -6,7 +6,7 @@ const { Input, Dropdown } = require('react-toolbox');
 const { config, User } = require('../../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
-const T = require('../shared_components/T');
+const T = require('../shared-components/T');
 
 class ProfileStore {
     @observable username = undefined;

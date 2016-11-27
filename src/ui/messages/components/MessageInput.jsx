@@ -3,7 +3,7 @@ const { IconMenu, MenuItem, Input, IconButton } = require('react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const Snackbar = require('../../shared_components/Snackbar');
+const Snackbar = require('../../shared-components/Snackbar');
 
 @observer
 class MessageInput extends React.Component {

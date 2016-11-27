@@ -5,7 +5,7 @@ const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');
 const { config } = require('../../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
-const T = require('../shared_components/T');
+const T = require('../shared-components/T');
 const zxcvbn = require('zxcvbn');
 
 class PasscodeStore {

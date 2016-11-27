@@ -3,7 +3,7 @@ const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconButton, Tooltip } = require('react-toolbox');
 const {User, contactStore, chatStore} = require('../icebear');//eslint-disable-line
-const Avatar = require('./shared_components/Avatar');
+const Avatar = require('./shared-components/Avatar');
 const css = require('classnames');
 const app = require('electron').remote.app;
 

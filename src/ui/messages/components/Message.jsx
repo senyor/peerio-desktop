@@ -1,5 +1,5 @@
 const React = require('react');
-const Avatar = require('../../shared_components/Avatar');
+const Avatar = require('../../shared-components/Avatar');
 const { observer } = require('mobx-react');
 const { time } = require('../../../helpers/formatter');
 

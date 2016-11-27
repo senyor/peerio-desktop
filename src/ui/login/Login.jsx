@@ -8,8 +8,8 @@ const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
 const { Link } = require('react-router');
-const FullCoverLoader = require('../shared_components/FullCoverLoader');
-const T = require('../shared_components/T');
+const FullCoverLoader = require('../shared-components/FullCoverLoader');
+const T = require('../shared-components/T');
 
 @observer class Login extends Component {
     @observable username = config.autologin ? config.autologin.username : '';

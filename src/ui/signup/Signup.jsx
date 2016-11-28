@@ -18,11 +18,10 @@ class Signup extends React.Component {
     @observable errorVisible = false;
     @observable errorMessage = undefined;
 
-    profileStore = profileStore;
     passcodeStore = new PasscodeStore();
 
     @computed get hasError() {
-        return this.step === 1 ? this.profileStore.hasErrors : this.passcodeStore.hasErrors;
+        return this.step === 1 ? profileStore.hasErrors : this.passcodeStore.hasErrors;
     }
 
     constructor() {
@@ -54,10 +53,10 @@ class Signup extends React.Component {
         this.busy = true;
 
         const u = new User();
-        u.username = this.profileStore.username;
-        u.email = this.profileStore.email;
-        u.firstName = this.profileStore.firstName;
-        u.lastName = this.profileStore.lastName;
+        u.username = profileStore.username;
+        u.email = profileStore.email;
+        u.firstName = profileStore.firstName;
+        u.lastName = profileStore.lastName;
         u.locale = languageStore.language;
         u.passphrase = 'icebear';
 
@@ -84,7 +83,7 @@ class Signup extends React.Component {
     };
 
     navigateToPasscode = () => {
-        if (!this.profileStore.hasErrors) {
+        if (!profileStore.hasErrors) {
             this.step = 2;
             this.busy = false;
         }
@@ -120,8 +119,8 @@ class Signup extends React.Component {
                     <div className="signup-title">{t('signup')}</div>
                     {
                         this.step === 1
-                            ? <Profile store={this.profileStore} returnHandler={this.advance} />
-                            : <Passcode store={this.passcodeStore} profileStore={this.profileStore}
+                            ? <Profile store={profileStore} returnHandler={this.advance} />
+                            : <Passcode store={this.passcodeStore} profileStore={profileStore}
                                   returnHandler={this.advance} />
                     }
                 </div>

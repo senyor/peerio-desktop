@@ -34,7 +34,6 @@ const profileStore = observable({
 
     render() {
         const s = this.props.store;
-        console.log(s);
         return (
             <div className="flex-col profile">
                 <div className="signup-subtitle">{t('profile')}</div>

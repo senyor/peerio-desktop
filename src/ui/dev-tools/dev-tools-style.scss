@@ -85,6 +85,7 @@
 
       &.active {
         background-color: #53aee0;
+        color: white;
       }
     }
     .keg {
@@ -93,6 +94,10 @@
       border-radius: 5px;
       padding: 10px;
       font-family: monospace;
+      word-break: break-all;
+    }
+    .keg-view{
+      flex-shrink: 1;
     }
   }
 }

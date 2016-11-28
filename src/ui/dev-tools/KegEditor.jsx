@@ -66,8 +66,8 @@ class KegEditor extends React.Component {
             .then(resp => {
                 if (resp.payload instanceof ArrayBuffer) {
                     resp.payload = secret.decryptString(new Uint8Array(resp.payload), this.selectedDb.key);
-                    resp.payload = JSON.parse(resp.payload);
                 }
+                resp.payload = JSON.parse(resp.payload);
                 this.keg = resp;
             })
             .catch(err => {
@@ -108,7 +108,7 @@ class KegEditor extends React.Component {
                 }
                 {
                     this.selectedDb
-                        ? (<div className="list">
+                        ? (<div className="list keg-view">
                             <ChatInfo c={this.selectedDb} />
                             <div className="keg">
                                 {this.keg ? JSON.stringify(this.keg, null, 2) : '<- select keg to inspect it'}

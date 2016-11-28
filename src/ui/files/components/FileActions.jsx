@@ -11,7 +11,7 @@ function FileActions(props) {
 
     return (
         <td className="item-actions" onClick={props.onRowClick}>
-            {props.downloadDisabled
+            {/* props.downloadDisabled*/ false
                 ? <ProgressBar type="circular" mode="indeterminate" multicolor className="processing-file" />
                 : <TooltipIcon
                     tooltip="Download"

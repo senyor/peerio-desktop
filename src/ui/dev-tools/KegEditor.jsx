@@ -1,9 +1,8 @@
 const React = require('react');
-const { FontIcon, Card, CardTitle, CardText, Button, ProgressBar, Chip } = require('react-toolbox');
+const { ProgressBar, Chip } = require('react-toolbox');
 const { User, socket } = require('../../icebear');
 const secret = require('../../icebear/crypto/secret');
 const config = require('../../config');
-const FullCoverLoader = require('../shared-components/FullCoverLoader');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
@@ -150,7 +149,7 @@ function ChatInfo(props) {
             {
                 props.c.participants
                     ? props.c.participants.map(p => <Chip key={p.username}>{p.username}</Chip>)
-                    : <Chip>User.current.username</Chip>
+                    : <Chip>{User.current.username}</Chip>
             }
         </div>
     );

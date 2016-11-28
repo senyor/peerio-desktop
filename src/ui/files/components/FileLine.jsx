@@ -41,7 +41,7 @@ class FileLine extends React.Component {
                 <td className="loading">
                     {this.props.file.uploading
                         ? <ProgressBar type="linear" mode="determinate" value={this.props.file.progress}
-                                       buffer={this.props.file.progressBuffer} />
+                                       buffer={this.props.file.progressBuffer} max={this.props.file.progressMax} />
                         : null }
                 </td>
             </tr>

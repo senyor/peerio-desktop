@@ -26,3 +26,12 @@
 .banish {
   display: none;
 }
+
+
+// Don't select these items.
+
+img,
+.material-icons,
+.rt-avatar-avatar {
+  -webkit-user-select: none;
+}

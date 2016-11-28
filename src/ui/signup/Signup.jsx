@@ -6,7 +6,7 @@ const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const languageStore = require('../../stores/language-store');
-const FullCoverLoader = require('../shared_components/FullCoverLoader');
+const FullCoverLoader = require('../shared-components/FullCoverLoader');
 const { Profile, profileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
 

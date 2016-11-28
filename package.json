@@ -21,7 +21,7 @@
     "devstyle:watch": "npm run devstyle:compile -- -w",
     "style:compile": "node-sass src/styles/main.scss app/build/style.css",
     "style:watch": "npm run style:compile -- -w",
-    "style:lint": "stylefmt -R src/styles && stylelint src/styles/**/*.*",
+    "style:lint": "stylefmt -R src/styles && stylelint src/styles/**/*.* && stylefmt -R src/ui/dev-tools",
     "dist": "NODE_ENV=production npm-run-all compile dist:mac",
     "dist:mac": "build --mac --x64",
     "dist:win": "build --win --x64",

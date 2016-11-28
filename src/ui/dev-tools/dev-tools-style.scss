@@ -1,5 +1,18 @@
 .dev-tools-root {
-  margin-top: 100px;
+  padding-top: 90px;
+  height:100vh;
+
+  .spinner-backdrop {
+    align-items: center;
+    background-color: rgba(44, 149, 207, .3);
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 
   .rt-app_bar-appBar {
     background-color: rgb(44, 149, 207);
@@ -7,9 +20,11 @@
     .material-icons {
       color: rgba(255, 255, 255, .7);
     }
+
     .good-bg {
       background-color: #90fb90;
     }
+
     .bad-bg {
       background-color: #fb9090;
     }
@@ -20,25 +35,64 @@
   }
 
   .menu {
-    top: 45px;
     left: 25px;
+    top: 45px;
+
     .rt-menu-icon {
       color: gray;
     }
   }
+
   .separator {
-    margin: 0 10px 0 10px;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0 10px 0 10px;
     height: 30px;
   }
+
   .dashboard {
     display: flex;
+
     .rt-card-card {
-      margin: 20px;
       background-color: #f1f5f7;
+      margin: 20px;
+
       pre {
         white-space: pre-wrap;
       }
+    }
+  }
+  .keg-edit-container {
+    display: flex;
+    line-height: 1.7;
+    padding: 0 0px 10px;
+    height: 100%;
+
+    .list {
+      border-left: 1px solid #ccc;
+      margin-right: 10px;
+      padding: 0 10px;
+      overflow: scroll;
+      flex-shrink: 0;
+    }
+
+    .list-item {
+      cursor: pointer;
+      padding: 0 5px;
+
+      &:hover {
+        background-color: #ccc;
+      }
+
+      &.active {
+        background-color: #53aee0;
+      }
+    }
+    .keg {
+      white-space: pre-wrap;
+      background-color: #f1f5f7;
+      border-radius: 5px;
+      padding: 10px;
+      font-family: monospace;
     }
   }
 }

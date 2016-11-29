@@ -15,6 +15,8 @@ const { saveWindowState, getSavedWindowState } = require('./main-process/state-p
 
 let mainWindow;
 
+app.commandLine.appendSwitch('disable-renderer-backgrounding');
+
 app.on('ready', () => {
     console.log('Electron ready event - Starting app.');
     buildGlobalShortcuts();

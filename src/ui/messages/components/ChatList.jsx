@@ -1,9 +1,11 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { IconButton, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
+const { IconButton, List, ListItem, ListSubHeader, ProgressBar, Tooltip } = require('react-toolbox');
 const { chatStore } = require('../../../icebear'); //eslint-disable-line
 const { observer } = require('mobx-react');
 const css = require('classnames');
+
+const TooltipIcon = Tooltip(IconButton); //eslint-disable-line
 
 @observer
 class ChatList extends React.Component {
@@ -37,7 +39,11 @@ class ChatList extends React.Component {
                 <List selectable ripple>
                     <div key="list-header" className="list-header-wrapper">
                         <ListSubHeader caption={t('directMessages')} />
-                        <IconButton icon="add_circle_outline" onClick={this.newMessage} />
+                        <TooltipIcon
+                            tooltip="Add chat"
+                            tooltipDelay={500}
+                            tooltipPosition="right"
+                            icon="add_circle_outline" onClick={this.newMessage} />
                     </div>
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
@@ -46,7 +52,11 @@ class ChatList extends React.Component {
                             // TODO: make left icon user count when multiuser chat.
                             leftIcon="fiber_manual_record"
                             rightIcon={(!c.active && c.unreadCount > 0) ? this.getNotificationIcon(c) :
-                                <IconButton icon="highlight_off" />} />
+                                <TooltipIcon
+                                    tooltip="Remove"
+                                    tooltipDelay={500}
+                                    tooltipPosition="right"
+                                    icon="highlight_off" />} />
                     )}
                 </List>
             </div>

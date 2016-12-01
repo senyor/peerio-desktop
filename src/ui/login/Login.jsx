@@ -125,19 +125,16 @@ const T = require('../shared-components/T');
 
                 </div>
                 <div className="flex-col welcome">
-                    <div className="welcome-text">
-                        <h4>Welcome to Peerio Alpha (codename Icebear)</h4>
-                        [changelog should magically appear here in the nearest future]<br /><br />
-                        <div>
-                            In this release you can:<br /><br />
-                            * create an account<br />
-                            * login<br />
-                            * change interface language<br />
-                            * send messages <br />
-                        </div>
-                        <br />
-                        <strong>For your convenience passphrase is always 'icebear'.</strong>
-                    </div>
+                    <h4 className="welcome-title">Simple and secure.</h4>
+                    <p>
+                       Send messages, share files, and store documents online.
+                    </p>
+                    <p>
+                        Encrypt everything before it leaves your device.
+                    </p>
+                    <p>
+                       You decide who accesses your data.
+                    </p>
                 </div>
                 <Dialog actions={this.actions} active={this.errorVisible}
                         onEscKeyDown={this.hideDialog} onOverlayClick={this.hideDialog}

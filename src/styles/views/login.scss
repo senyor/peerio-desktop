@@ -1,6 +1,8 @@
 .login {
   align-items: center;
   background-color: $background-brand;
+  background-image: url('./static/img/peerio-pattern.png');
+  background-size: 280px;
   color: $text-light-secondary;
   flex: 0 0 auto;
   justify-content: flex-start;

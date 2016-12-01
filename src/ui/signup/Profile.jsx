@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = require('react');
-const { observable, autorunAsync, computed } = require('mobx');
+const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dropdown } = require('react-toolbox');
 const ValidatedInput = require('../shared-components/ValidatedInput');
@@ -8,8 +8,9 @@ const { config, User, socket, validation } = require('../../icebear'); // eslint
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
 const T = require('../shared-components/T');
-const { validators } = validation; // use common validation from core
 const OrderedFormStore = require('../../stores/ordered-form-store');
+
+const { validators } = validation; // use common validation from core
 
 class ProfileStore extends OrderedFormStore {
     @observable username = ''; // also has observables usernameValid, usernameDirty

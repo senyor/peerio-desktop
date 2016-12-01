@@ -121,7 +121,7 @@ class Signup extends React.Component {
                     {
                         this.step === 1
                             ? <Profile store={this.profileStore} returnHandler={this.advance} />
-                            : <Passcode store={this.passcodeStore} this.profileStore={this.profileStore}
+                            : <Passcode store={this.passcodeStore} profileStore={this.profileStore}
                                   returnHandler={this.advance} />
                     }
                 </div>

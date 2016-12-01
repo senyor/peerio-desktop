@@ -12,6 +12,7 @@ const ValidatedInput = require('../shared-components/ValidatedInput');
 const FullCoverLoader = require('../shared-components/FullCoverLoader');
 const T = require('../shared-components/T');
 const OrderedFormStore = require('../../stores/ordered-form-store');
+
 const { validators } = validation; // use common validation from core
 
 class LoginStore extends OrderedFormStore {
@@ -35,13 +36,13 @@ class LoginStore extends OrderedFormStore {
     actions = [{ label: t('ok'), onClick: this.hideDialog }];
 
     constructor() {
+        super();
         this.loginStore = new LoginStore();
         User.getLastAuthenticated()
             .then((lastUserObject) => {
                 this.loginStore.lastAuthenticatedUser = lastUserObject;
                 this.loginStore.username = lastUserObject.username;
             });
-        super();
     }
 
     togglePasswordVisibility = () => {

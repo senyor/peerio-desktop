@@ -18,9 +18,10 @@
  *
  */
 const React = require('react');
+const _ = require('lodash');
 const { extendObservable, observable, computed } = require('mobx');
 const { Component } = require('react');
-const { observer } = require('mobx-react');
+const { observer, autorunAsync } = require('mobx-react');
 const { Input } = require('react-toolbox');
 
 
@@ -36,13 +37,15 @@ const { Input } = require('react-toolbox');
     }
 
     constructor() {
+        super();
+
         // todo check if store exists and is the right type
         // check if value is an observable
-        
+
         // set property names
         this.fName = this.props.name;
-        this.fDirty = `${fName}Dirty`;
-        this.fValid = `${fName}Valid`;
+        this.fDirty = `${this.fName}Dirty`;
+        this.fValid = `${this.fName}Valid`;
         const validationProps = {};
 
         // adds additional observables to the store
@@ -50,15 +53,16 @@ const { Input } = require('react-toolbox');
         validationProps[this.fDirty] = false;
         extendObservable(this.props.store, validationProps);
         // add the field order
-        store.fieldOrders[fName] = this.props.position;
-        autorun(() => this.validate);
-        super();
+        this.props.store.fieldOrders[this.fName] = this.props.position;
+        autorunAsync(() => this.validate);
     }
 
     validate() {
         const value = this.props.store[this.props.name];
         const fieldValidators = Array.isArray(this.props.validator) ?
             this.props.validator : [this.props.validator];
+
+        let valid = Promise.resolve(true);
 
         fieldValidators.forEach(v => {
             valid = valid.then(r => {
@@ -67,11 +71,11 @@ const { Input } = require('react-toolbox');
         });
         valid = valid.then(v => {
             if (v === true) {
-                store[this.fValid] = true;
+                this.props.store[this.fValid] = true;
                 this.validationMessageText = '';
             } else {
                 // note computed message will only how up if field is dirty
-                store[this.fValid] = false;
+                this.props.store[this.fValid] = false;
                 this.validationMessageText = v;
             }
         });
@@ -81,9 +85,9 @@ const { Input } = require('react-toolbox');
         this.props.store[this.fDirty] = true;
         // mark all subsequent
         if (this.props.position !== undefined) {
-            _.each(store.fieldOrders, (otherPosition, otherField) => {
-                if (otherPosition < positionInForm) {
-                    store[`${otherField}Dirty`] = true;
+            _.each(this.props.store.fieldOrders, (otherPosition, otherField) => {
+                if (otherPosition < this.props.position) {
+                    this.props.store[`${otherField}Dirty`] = true;
                 }
             });
         }

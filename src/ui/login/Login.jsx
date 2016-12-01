@@ -1,74 +1,76 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
 const { Component } = require('react');
-const { Input, Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
-const { config, socket, User } = require('../../icebear'); // eslint-disable-line
+const { Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
+const { config, socket, User, validation } = require('../../icebear'); // eslint-disable-line
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
 const { Link } = require('react-router');
+const ValidatedInput = require('../shared-components/ValidatedInput');
 const FullCoverLoader = require('../shared-components/FullCoverLoader');
 const T = require('../shared-components/T');
+const OrderedFormStore = require('../../stores/ordered-form-store');
+const { validators } = validation; // use common validation from core
 
-@observer class Login extends Component {
+class LoginStore extends OrderedFormStore {
+    // also has observables usernameValid, usernameDirty created by ValidatedInput
     @observable username = config.autologin ? config.autologin.username : '';
     @observable passcodeOrPassphrase = config.autologin ? config.autologin.passphrase : '';
+
+    // non ValidatedInput-enhanced observables
     @observable busy = false;
     @observable errorVisible = false;
     @observable passwordVisible = false;
-    @observable lastUser = undefined;
+    @observable lastAuthenticatedUser = undefined;
 
-    hideDialog = () => {
-        this.errorVisible = false;
-    };
-
-    @computed get hasError() {
-        return !(this.username && this.passcodeOrPassphrase && socket.connected);
+    @computed get hasErrors() {
+        return (this.usernameValid && this.passcodeOrPassphraseValid && socket.connected);
     }
+}
+
+@observer class Login extends Component {
 
     actions = [{ label: t('ok'), onClick: this.hideDialog }];
 
     constructor() {
-        super();
-        this.usernameUpdater = val => { this.username = val; };
-        this.passphraseUpdater = val => { this.passcodeOrPassphrase = val; };
-        this.login = this.login.bind(this);
-        this.togglePasswordVisibility = this.togglePasswordVisibility.bind(this);
-        this.unsetLastUser = this.unsetLastUser.bind(this);
+        this.loginStore = new LoginStore();
         User.getLastAuthenticated()
-            .then((user) => {
-                this.lastUser = user;
+            .then((lastUserObject) => {
+                this.loginStore.lastAuthenticatedUser = lastUserObject;
+                this.loginStore.username = lastUserObject.username;
             });
+        super();
     }
 
-    togglePasswordVisibility() {
-        this.passwordVisible = !this.passwordVisible;
-    }
+    togglePasswordVisibility = () => {
+        this.loginStore.passwordVisible = !this.loginStore.passwordVisible;
+    };
 
-    unsetLastUser() {
+    unsetLastUser = () => {
         return User.removeLastAuthenticated()
             .then(() => {
-                this.lastUser = undefined;
+                this.loginStore.lastAuthenticatedUser = undefined;
             });
-    }
+    };
 
-    login() {
-        if (this.busy) return;
-        this.busy = true;
+    login = () => {
+        if (this.loginStore.busy) return;
+        this.loginStore.busy = true;
         const user = new User();
-        user.username = this.username || this.lastUser.username;
-        user.passphrase = this.passcodeOrPassphrase;
+        user.username = this.loginStore.username || this.loginStore.lastAuthenticatedUser.username;
+        user.passphrase = this.loginStore.passcodeOrPassphrase;
         user.login().then(() => {
             User.current = user;
             window.router.push('/app');
         }).catch(err => {
             console.error(err);
             this.errorMsg = t('error_loginFailed');
-            this.errorVisible = true;
-            this.busy = false;
+            this.loginStore.errorVisible = true;
+            this.loginStore.busy = false;
         });
-    }
+    };
 
     handleKeyPress =(e) => {
         if (e.key === 'Enter') {
@@ -76,16 +78,20 @@ const T = require('../shared-components/T');
         }
     };
 
+    hideDialog = () => {
+        this.loginStore.errorVisible = false;
+    };
+
     getWelcomeBlock = () => {
         return (
             <div className="welcome-back" onClick={this.unsetLastUser}>
                 <div className="overflow ">{t('login_welcomeBack')}
-                    <strong> {this.lastUser.firstName || this.lastUser.username}</strong>
+                    <strong> {this.loginStore.lastAuthenticatedUser.firstName || this.loginStore.lastAuthenticatedUser.username}</strong>
                 </div>
                 <div className="subtitle">
                     <div className="overflow">
                         <T k="login_changeUser">
-                            {{ username: (this.lastUser.firstName || this.lastUser.username) }}
+                            {{ username: (this.loginStore.lastAuthenticatedUser.firstName || this.loginStore.lastAuthenticatedUser.username) }}
                         </T>
                     </div>
                 </div>
@@ -96,29 +102,36 @@ const T = require('../shared-components/T');
     render() {
         return (
             <div className="flex-row app-root">
-                <FullCoverLoader show={this.busy} />
+                <FullCoverLoader show={this.loginStore.busy} />
                 <div className="login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
 
-                    {this.lastUser ? this.getWelcomeBlock() : ''}
+                    {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
 
                     <div className="login-form">
-                        <Input type="text" label={t('username')} value={this.username}
-                               onChange={this.usernameUpdater}
-                               onKeyPress={this.handleKeyPress}
-                               className={this.lastUser ? 'banish' : ''}
-                        />
+                        <ValidatedInput label={t('username')}
+                                        name="username"
+                                        position="0"
+                                        validator={validators.username}
+                                        onKeyPress={this.handleKeyPress}
+                                        className={this.loginStore.lastAuthenticatedUser ? 'banish' : ''} />
                         <div className="password">
-                            <Input type={this.passwordVisible ? 'text' : 'password'} label={t('passcodeOrPassphrase')}
-                                   value={this.passcodeOrPassphrase}
-                                   onChange={this.passphraseUpdater} onKeyPress={this.handleKeyPress} />
-                            <IconButton icon={this.passwordVisible ? 'visibility_off' : 'visibility'}
-                                onClick={this.togglePasswordVisibility} />
+                            <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
+                                            label={t('passcodeOrPassphrase')}
+                                            position="1"
+                                            validator={validators.stringExists}
+                                            name="passcodeOrPassphrase"
+                                            onKeyPress={this.handleKeyPress} />
+                            <IconButton icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
+                                        onClick={this.togglePasswordVisibility} />
                         </div>
                         <Dropdown value={languageStore.language}
-                            source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
+                                  source={languageStore.translationLangsDataSource}
+                                  onChange={languageStore.changeLanguage} />
                     </div>
-                    <Button className="login-button" label={t('login')} flat onClick={this.login} disabled={this.hasError} />
+                    <Button className="login-button" label={t('login')} flat
+                            onClick={this.login}
+                            disabled={this.loginStore.hasErrors} />
                     <div className="login-reg-button">
                         <a href={config.termsUrl}>{t('terms')}</a> | <Link to="/signup">{t('signup')}</Link>
                     </div>
@@ -136,8 +149,10 @@ const T = require('../shared-components/T');
                        You decide who accesses your data.
                     </p>
                 </div>
-                <Dialog actions={this.actions} active={this.errorVisible}
-                        onEscKeyDown={this.hideDialog} onOverlayClick={this.hideDialog}
+                <Dialog actions={this.actions}
+                        active={this.loginStore.errorVisible}
+                        onEscKeyDown={this.hideDialog}
+                        onOverlayClick={this.hideDialog}
                         title={t('error')}>{this.errorMsg}</Dialog>
             </div>
         );

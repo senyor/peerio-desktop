@@ -7,7 +7,7 @@ const { t } = require('peerio-translator');
 const css = require('classnames');
 const languageStore = require('../../stores/language-store');
 const FullCoverLoader = require('../shared-components/FullCoverLoader');
-const { Profile, profileStore } = require('./Profile');
+const { Profile, ProfileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
 
 @observer
@@ -19,9 +19,10 @@ class Signup extends React.Component {
     @observable errorMessage = undefined;
 
     passcodeStore = new PasscodeStore();
+    profileStore = new ProfileStore();
 
     @computed get hasError() {
-        return this.step === 1 ? profileStore.hasErrors : this.passcodeStore.hasErrors;
+        return this.step === 1 ? this.profileStore.hasErrors : this.passcodeStore.hasErrors;
     }
 
     constructor() {
@@ -53,10 +54,10 @@ class Signup extends React.Component {
         this.busy = true;
 
         const u = new User();
-        u.username = profileStore.username;
-        u.email = profileStore.email;
-        u.firstName = profileStore.firstName;
-        u.lastName = profileStore.lastName;
+        u.username = this.profileStore.username;
+        u.email = this.profileStore.email;
+        u.firstName = this.profileStore.firstName;
+        u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
         u.passphrase = 'icebear';
 
@@ -83,7 +84,7 @@ class Signup extends React.Component {
     };
 
     navigateToPasscode = () => {
-        if (!profileStore.hasErrors) {
+        if (!this.profileStore.hasErrors) {
             this.step = 2;
             this.busy = false;
         }
@@ -119,8 +120,8 @@ class Signup extends React.Component {
                     <div className="signup-title">{t('signup')}</div>
                     {
                         this.step === 1
-                            ? <Profile store={profileStore} returnHandler={this.advance} />
-                            : <Passcode store={this.passcodeStore} profileStore={profileStore}
+                            ? <Profile store={this.profileStore} returnHandler={this.advance} />
+                            : <Passcode store={this.passcodeStore} this.profileStore={this.profileStore}
                                   returnHandler={this.advance} />
                     }
                 </div>

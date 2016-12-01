@@ -24,25 +24,25 @@ function GlobalActions(props) {
                     tooltipDelay={delay}
                     tooltipPosition="top"
                     icon="file_download"
-                    className={css({ active: true })} />
+                    className={css({ active: true, disabled: true })} />
                 <TooltipIcon
                     tooltip="Share"
                     tooltipDelay={delay}
                     tooltipPosition="top"
                     icon="reply"
-                    className={css('reverse-icon', { active: true, disabled: true })} />
+                    className={css('reverse-icon', { disabled: true })} />
                 <TooltipIcon
                     tooltip="Add to folder"
                     tooltipDelay={delay}
                     tooltipPosition="top"
                     icon="create_new_folder"
-                    className={css({ active: true })} />
+                    className={css({ active: false, disabled: true })} />
                 <TooltipIcon
                     tooltip="Delete"
                     tooltipDelay={delay}
                     tooltipPosition="top"
                     icon="delete"
-                    className={css({ active: true })} />
+                    className={css({ active: false, disabled: true })} />
             </div>
             <Search />
         </div>

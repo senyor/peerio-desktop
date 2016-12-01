@@ -62,7 +62,7 @@ class FileStream extends FileStreamAbstract {
      */
     writeInternal(buffer) {
         return new Promise((resolve, reject) => {
-            fs.write(this.fileDescriptor, Buffer.from(buffer.buffer), 0, buffer.length, null,
+            fs.write(this.fileDescriptor, Buffer.from(buffer), 0, buffer.length, null,
                 err => {
                     if (this.checkForError(err, reject)) return;
                     resolve();

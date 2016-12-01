@@ -6,6 +6,7 @@ const FileActions = require('./FileActions');
 const FileLoading = require('./FileLoading');
 const { Checkbox, ProgressBar } = require('react-toolbox');
 const { fileStore } = require('../../../icebear');
+const electron = require('electron').remote;
 
 @observer
 class FileLine extends React.Component {
@@ -18,16 +19,32 @@ class FileLine extends React.Component {
             fileStore.remove(this.props.file);
         }
     };
-    cancelUpload = () => {
-        fileStore.cancelUpload(this.props.file);
+    cancelUploadOrDownload = () => {
+        if (this.props.file.uploading) fileStore.cancelUpload(this.props.file);
+        else fileStore.cancelDownload(this.props.file);
+    };
+    download = () => {
+        let path = this.props.file.name;
+        try {
+            const downloadsDir = electron.app.getPath('downloads');
+            path = `${downloadsDir}/${path}`;
+        } catch (err) {
+            console.log(err);
+        }
+
+        const win = electron.getCurrentWindow();
+        electron.dialog.showSaveDialog(win, { defaultPath: path }, file => {
+            if (file) this.props.file.download(file);
+        });
     };
 
     render() {
         return (
             <tr /* className="new-file"*/ className={css({ selected: this.checked })}>
                 <td>
-                    {this.props.file.uploading
-                        ? <FileLoading loading={'file_upload'} onCancel={this.cancelUpload} />
+                    {(this.props.file.downloading || this.props.file.uploading)
+                        ? <FileLoading loading={this.props.file.downloading ? 'file_download' : 'file_upload'}
+                                       onCancel={this.cancelUploadOrDownload} />
                         : <Checkbox checked={this.checked} onChange={this.toggleChecked} />
                     }</td>
                 <td>{this.props.file.name}</td>
@@ -35,11 +52,11 @@ class FileLine extends React.Component {
                 <td>{this.props.file.uploadedAt && this.props.file.uploadedAt.toLocaleString()}</td>
                 <td className="hide-text">{this.props.file.sizeFormatted}</td>
                 <td className="hide-text uppercase">{this.props.file.ext}</td>
-                <FileActions downloadDisabled={!this.props.file.readyForDownload} shareDisabled newFolderDisabled deleteDisabled={false}
-                                onDelete={this.deleteFile} />
+                <FileActions downloadDisabled={/*! this.props.file.readyForDownload*/(this.props.file.downloading || this.props.file.uploading)} shareDisabled newFolderDisabled deleteDisabled={false}
+                                onDelete={this.deleteFile} onDownload={this.download} />
 
                 <td className="loading">
-                    {this.props.file.uploading
+                    {(this.props.file.downloading || this.props.file.uploading)
                         ? <ProgressBar type="linear" mode="determinate" value={this.props.file.progress}
                                        buffer={this.props.file.progressBuffer} max={this.props.file.progressMax} />
                         : null }

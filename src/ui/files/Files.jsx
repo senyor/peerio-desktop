@@ -19,11 +19,11 @@ const FileStream = require('../../helpers/file-stream');
 
     upload() {
         const win = electron.getCurrentWindow();
-        let file = electron.dialog.showOpenDialog(win, { properties: ['openFile', 'showHiddenFiles'] });
-
-        if (!file || !file.length) return;
-        file = file[0];
-        fileStore.upload(file);
+        electron.dialog.showOpenDialog(win, { properties: ['openFile', 'showHiddenFiles'] },
+            paths => {
+                if (!paths || !paths.length) return;
+                fileStore.upload(paths[0]);
+            });
     }
 
     render() {

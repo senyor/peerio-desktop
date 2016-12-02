@@ -34,8 +34,13 @@ class FileLine extends React.Component {
         }
 
         const win = electron.getCurrentWindow();
-        electron.dialog.showSaveDialog(win, { defaultPath: path }, file => {
-            if (file) this.props.file.download(file);
+        electron.dialog.showSaveDialog(win, { defaultPath: path }, fileSavePath => {
+            if (fileSavePath) {
+                this.props.file.download(fileSavePath)
+                    .then(() => {
+                        electron.app.dock.downloadFinished(fileSavePath);
+                    });
+            }
         });
     };
     onShowActions = () => {

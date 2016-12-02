@@ -19,7 +19,12 @@ class AppNav extends React.Component {
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
-        autorunAsync(() => app.setBadgeCount(chatStore.unreadMessages), 250);
+        autorunAsync(() => {
+            app.setBadgeCount(chatStore.unreadMessages);
+            if (chatStore.unreadMessages > 0) {
+                app.dock.bounce();
+            }
+        }, 250);
     }
 
     toMessages = () => {

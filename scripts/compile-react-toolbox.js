@@ -4,10 +4,14 @@ const modules = require('postcss-modules');
 const path = require('path');
 const fs = require('fs');
 const cp = require('child_process');
-var writeFile = require('writefile');
+const writeFile = require('writefile');
 
-const src = './app/node_modules/react-toolbox/lib/';
+const src = './app/node_modules/react-toolbox/components/';
 const dst = './app/build/react-toolbox/';
+
+cp.execSync('cp -Rf ./app/node_modules/react-toolbox/components/ ./app/node_modules/react-toolbox/lib' );
+cp.execSync('babel ./app/node_modules/react-toolbox/components -d ./app/node_modules/react-toolbox/components/');
+
 function getJSONFromCssModules(cssFileName, json) {
     writeFile(`${cssFileName.substring(0, cssFileName.length - 4)}.json`, JSON.stringify(json));
 }

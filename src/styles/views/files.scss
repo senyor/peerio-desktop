@@ -74,7 +74,6 @@
     background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%);
     border-bottom: 0;
     height: 47px;
-    opacity: 0;
     padding-right: 24px !important;
     padding-top: 6px;
     position: absolute;
@@ -145,10 +144,6 @@
 
       &:hover {
         background: rgba($color-brand, .12);
-
-        .item-actions {
-          opacity: 1;
-        }
 
         .hide-text {
           color: transparent;

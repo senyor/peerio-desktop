@@ -11,6 +11,7 @@ const electron = require('electron').remote;
 @observer
 class FileLine extends React.Component {
     @observable checked=false;
+    @observable showActions=false;
     toggleChecked = val => {
         this.checked = val;
     };
@@ -37,10 +38,17 @@ class FileLine extends React.Component {
             if (file) this.props.file.download(file);
         });
     };
+    onShowActions = () => {
+        this.showActions = true;
+    };
+    onHideActions = () => {
+        this.showActions = false;
+    };
 
     render() {
         return (
-            <tr /* className="new-file"*/ className={css({ selected: this.checked })}>
+            <tr /* className="new-file"*/ className={css({ selected: this.checked })}
+                                          onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
                 <td>
                     {(this.props.file.downloading || this.props.file.uploading)
                         ? <FileLoading loading={this.props.file.downloading ? 'file_download' : 'file_upload'}
@@ -52,8 +60,13 @@ class FileLine extends React.Component {
                 <td>{this.props.file.uploadedAt && this.props.file.uploadedAt.toLocaleString()}</td>
                 <td className="hide-text">{this.props.file.sizeFormatted}</td>
                 <td className="hide-text uppercase">{this.props.file.ext}</td>
-                <FileActions downloadDisabled={/*! this.props.file.readyForDownload*/(this.props.file.downloading || this.props.file.uploading)} shareDisabled newFolderDisabled deleteDisabled={false}
+                {
+                    this.showActions
+                    ? <FileActions downloadDisabled={(this.props.file.downloading || this.props.file.uploading)}
+                             shareDisabled newFolderDisabled deleteDisabled={false}
                                 onDelete={this.deleteFile} onDownload={this.download} />
+                    : null
+                }
 
                 <td className="loading">
                     {(this.props.file.downloading || this.props.file.uploading)

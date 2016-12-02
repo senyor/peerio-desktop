@@ -27,15 +27,15 @@
         "buffer": "5.0.1",
         "immutability-helper": "2.0.0",
         "lodash": "4.17.2",
-        "mobx": "2.6.3",
-        "mobx-react": "4.0.2",
+        "mobx": "2.6.4",
+        "mobx-react": "4.0.3",
         "react": "15.4.1",
         "react-addons-css-transition-group": "15.4.1",
         "react-deep-force-update": "2.0.1",
         "react-toolbox": "https://github.com/react-toolbox/react-toolbox.git#css-next",
         "react-dom": "15.4.1",
         "react-router": "3.0.0",
-        "socket.io-client": "1.6.0",
+        "socket.io-client": "1.7.1",
         "electron-squirrel-startup": "1.0.0"
     }
 }

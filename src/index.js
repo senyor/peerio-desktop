@@ -6,6 +6,7 @@ if (isDevEnv) {
     const path = require('path');
     const PATH_APP_NODE_MODULES = path.resolve(path.join('app/node_modules'));
     require('module').globalPaths.push(PATH_APP_NODE_MODULES);
+    window.Perf = require('react-addons-perf');
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -5,8 +5,8 @@
  * with name=x and some validator (and any additional properties desired), this
  * component will take care of validating the input on change and blur.
  * It will also create the following observables in the store:
- * - xValid
- * - xDirty
+ * - ${x}Valid
+ * - ${x}Dirty
  *
  * .. for use outside of the ValidatedInput component (e.g. for computing
  * the validity of the form overall)
@@ -15,9 +15,9 @@
  */
 const React = require('react');
 const _ = require('lodash');
-const { extendObservable, observable, computed } = require('mobx');
+const { extendObservable, observable, computed,  autorun } = require('mobx');
 const { Component } = require('react');
-const { observer, autorunAsync } = require('mobx-react');
+const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');
 
 
@@ -32,8 +32,12 @@ const { Input } = require('react-toolbox');
         return '';
     }
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
+        autorun(() => {
+            this.validate()
+        });
 
         // todo check if store exists and is the right type
         // check if value is an observable
@@ -50,10 +54,11 @@ const { Input } = require('react-toolbox');
         extendObservable(this.props.store, validationProps);
         // add the field order
         this.props.store.fieldOrders[this.fName] = this.props.position;
-        autorunAsync(() => this.validate);
+
     }
 
     validate() {
+        console.log('validate')
         const value = this.props.store[this.props.name];
         const fieldValidators = Array.isArray(this.props.validator) ?
             this.props.validator : [this.props.validator];
@@ -108,8 +113,6 @@ const { Input } = require('react-toolbox');
         return (
             <Input type={this.props.type || 'text'}
                    value={this.props.store[this.props.name] || ''}
-                   validator={this.props.validator}
-                   fieldName={this.props.name}
                    label={this.props.label}
                    onChange={this.handleChange}
                    onKeyPress={this.props.onKeyPress}

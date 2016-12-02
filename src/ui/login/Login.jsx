@@ -3,7 +3,7 @@ const React = require('react');
 const { Component } = require('react');
 const { Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
 const { config, socket, User, validation } = require('../../icebear'); // eslint-disable-line
-const { observable, computed } = require('mobx');
+const { observable, computed, autorun } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
@@ -40,9 +40,19 @@ class LoginStore extends OrderedFormStore {
         this.loginStore = new LoginStore();
         User.getLastAuthenticated()
             .then((lastUserObject) => {
-                this.loginStore.lastAuthenticatedUser = lastUserObject;
-                this.loginStore.username = lastUserObject.username;
+                if (lastUserObject) {
+                    this.loginStore.lastAuthenticatedUser = lastUserObject;
+                    this.loginStore.username = lastUserObject.username;
+                }
             });
+
+        autorun(() => {
+            console.log('boop',this.loginStore.username)
+        })
+
+        setTimeout(() => {
+            this.loginStore.username = 'dajhsdj';
+        }, 1500)
     }
 
     togglePasswordVisibility = () => {
@@ -115,13 +125,15 @@ class LoginStore extends OrderedFormStore {
                         <ValidatedInput label={t('username')}
                                         name="username"
                                         position="0"
-                                        validator={validators.username}
+                                        store={this.loginStore}
+                                        validator={validators.usernameLogin}
                                         onKeyPress={this.handleKeyPress}
                                         className={this.loginStore.lastAuthenticatedUser ? 'banish' : ''} />
                         <div className="password">
                             <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
                                             label={t('passcodeOrPassphrase')}
                                             position="1"
+                                            store={this.loginStore}
                                             validator={validators.stringExists}
                                             name="passcodeOrPassphrase"
                                             onKeyPress={this.handleKeyPress} />

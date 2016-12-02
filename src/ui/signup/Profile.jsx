@@ -25,7 +25,6 @@ class ProfileStore extends OrderedFormStore {
 }
 
 @observer class Profile extends Component {
-
     handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             this.props.returnHandler();

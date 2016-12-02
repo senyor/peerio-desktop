@@ -11,11 +11,7 @@
  * .. for use outside of the ValidatedInput component (e.g. for computing
  * the validity of the form overall)
  *
- * Validators are expected to follow the format provided for them in the
- * icebear library.
- *
- *
- *
+ * Validators are expected to follow the format specified in peerio-icebear
  */
 const React = require('react');
 const _ = require('lodash');
@@ -64,9 +60,19 @@ const { Input } = require('react-toolbox');
 
         let valid = Promise.resolve(true);
 
+        // apply the validators sequentially
         fieldValidators.forEach(v => {
             valid = valid.then(r => {
-                return r === true ? v.action(value, this.props.name).then(rs => (rs === true ? rs : v.message)) : r;
+                if (r === true) {
+                    return v.action(value, this.props.validationArguments || {})
+                        .then(rs => {
+                            if (rs === true) {
+                                return rs;
+                            }
+                            return (rs.message ? rs.message : v.message);
+                        });
+                }
+                return r;
             });
         });
         valid = valid.then(v => {

@@ -8,7 +8,7 @@
         "type": "git",
         "url": "git+https://github.com/PeerioTechnologies/peerio-desktop.git"
     },
-    "author": "Anri Asaturov <anri82@gmail.com>",
+    "author": "Technologies Peerio Inc. <support@peerio.com>",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/PeerioTechnologies/peerio-desktop/issues"

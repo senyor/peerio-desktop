@@ -5,7 +5,7 @@ function FileLoading(props) {
     return (
         <div className="file-loading" onClick={props.onCancel}>
             <FontIcon value={props.loading} />
-            <FontIcon value="cancel" />
+            <FontIcon value="close" />
         </div>
     );
 }

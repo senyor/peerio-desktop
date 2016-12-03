@@ -186,6 +186,8 @@
         }
 
         &:hover {
+          border-color: $color-error;
+
           span:last-child {
             display: initial;
           }

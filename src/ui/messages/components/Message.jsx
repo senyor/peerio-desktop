@@ -2,6 +2,7 @@ const React = require('react');
 const Avatar = require('../../shared-components/Avatar');
 const { observer } = require('mobx-react');
 const { time } = require('../../../helpers/formatter');
+const { FontIcon } = require('react-toolbox');
 
 const Message = observer(({ message }) => {
     return (
@@ -12,7 +13,7 @@ const Message = observer(({ message }) => {
                     <div className="user">{message.sender.username}</div>
                     <div className="timestamp">{time.format(message.timestamp)}</div>
                 </div>
-                <p>{message.text}</p>
+                <p>{message.isAck ? <FontIcon value="thumb_up" className="color-brand" /> : message.text}</p>
             </div>
             {message.sending ? <div className="sending-overlay" /> : null}
         </div>

@@ -22,6 +22,9 @@ class Messages extends React.Component {
     sendMessage(m) {
         chatStore.activeChat.sendMessage(m);
     }
+    sendAck() {
+        chatStore.activeChat.sendAck();
+    }
 
     render() {
         return (
@@ -35,7 +38,8 @@ class Messages extends React.Component {
                             <IconButton icon="info_outline" />
                         </div>
                         {chatStore.activeChat ? <MessageList /> : <NoChatSelected />}
-                        <MessageInput show={!!chatStore.activeChat} onSend={this.sendMessage} />
+                        <MessageInput show={!!chatStore.activeChat} onSend={this.sendMessage}
+                                      onAck={this.sendAck} />
                     </div>
                 </div>
             </div>

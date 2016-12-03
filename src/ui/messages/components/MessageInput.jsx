@@ -42,7 +42,7 @@ class MessageInput extends React.Component {
                 </IconMenu>
                 <Input multiline value={this.text} placeholder={t('enterYourMessage')} onKeyPress={this.handleKeyPress}
                                 onChange={this.handleTextChange} ref={this.setTextareaRef} />
-                <IconButton icon={this.inputIsEmpty ? 'thumb_up' : ''}
+                <IconButton icon={this.inputIsEmpty ? 'thumb_up' : ''} onClick={this.props.onAck}
                     className={this.inputIsEmpty ? 'color-brand' : 'hide'} />
             </div>
         );

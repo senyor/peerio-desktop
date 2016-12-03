@@ -12,6 +12,7 @@ const buildContextMenu = require('./main-process/context-menu');
 const buildGlobalShortcuts = require('./main-process/global-shortcuts');
 const applyMiscHooks = require('./main-process/misc-hooks');
 const { saveWindowState, getSavedWindowState } = require('./main-process/state-persistance');
+const setMainMenu = require('./main-process/main-menu');
 
 let mainWindow;
 
@@ -20,6 +21,7 @@ app.commandLine.appendSwitch('disable-renderer-backgrounding');
 app.on('ready', () => {
     console.log('Electron ready event - Starting app.');
     buildGlobalShortcuts();
+    setMainMenu();
 
     const state = getSavedWindowState();
     mainWindow = new BrowserWindow(Object.assign(state, {

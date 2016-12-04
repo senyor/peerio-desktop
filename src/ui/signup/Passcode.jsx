@@ -16,6 +16,28 @@ class PasscodeStore extends OrderedFormStore {
     @observable passcode;
     @observable passcodeRepeat;
 
+
+    @computed get hasErrors() {
+        return !(this.initialized && socket.connected && this.passcodeValid && this.passcodeRepeatValid);
+    }
+}
+
+@observer class Passcode extends Component {
+    @computed get passwordBanList() {
+        return [
+            this.props.profileStore.username,
+            this.props.profileStore.firstName,
+            this.props.profileStore.lastName,
+            'peerio'
+        ];
+    }
+
+    handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            this.props.returnHandler();
+        }
+    };
+
     /**
      * Checks that the password is > 8 characters long and not abysmal as per zxcvbn
      *
@@ -24,8 +46,8 @@ class PasscodeStore extends OrderedFormStore {
      * @param {Array<String>} additionalArguments.banList
      * @returns {Promise.<boolean>}
      */
-    passwordStrengthValidator(value, additionalArguments) {
-        if (value.length > 0) {
+    passwordStrengthValidator = (value, additionalArguments) => {
+        if (value) {
             const zResult = zxcvbn(this.props.store.passcode, additionalArguments.banList || []);
             if (value.length < 8) {
                 return Promise.resolve({
@@ -51,56 +73,36 @@ class PasscodeStore extends OrderedFormStore {
      * @type {Array}
      */
     passwordValidator = [
-        { action: validators.valueComparison, message: t('signup_passcodeErrorRepeat') },
+        validators.valueEquality,
         { action: this.passwordStrengthValidator, message: t('signup_passcodeErrorWeak') }
     ];
 
-    @computed get hasErrors() {
-        return !(this.initialized && socket.connected && this.passcodeValid && this.passcodeRepeatValid);
-    }
-}
-
-@observer class Passcode extends Component {
-    @computed get passwordBanList() {
-        return [
-            this.props.profileStore.username,
-            this.props.profileStore.firstName,
-            this.props.profileStore.lastName,
-            'peerio'
-        ];
-    }
-
-    handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            this.props.returnHandler();
-        }
-    };
-
     render() {
-        const s = this.props.store;
         return (
             <div className="passcode">
                 <div className="signup-subtitle">{t('signup_desktop_passcodeTitle')}</div>
                 <ValidatedInput type="password"
+                                name="passcode"
                                 className="login-input"
                                 label={t('signup_passcode')}
-                                store={s}
-                                validator={s.passwordValidator}
+                                store={this.props.store}
+                                validator={this.passwordValidator}
                                 validationArguments={{
-                                    equalsValue: s.passcodeRepeat,
+                                    equalsValue: this.props.store.passcodeRepeat,
                                     equalsErrorMessage: t('signup_passcodeErrorRepeat'),
                                     banList: this.passwordBanList
                                 }}
                                 onKeyPress={this.handleKeyPress} />
                 <ValidatedInput type="password"
+                                name="passcodeRepeat"
                                 className="login-input"
                                 label={t('signup_passcodeRepeat')}
-                                validator={validators.valueComparison}
+                                validator={validators.valueEquality}
                                 validationArguments={{
-                                    equalsValue: s.passcode,
+                                    equalsValue: this.props.store.passcode,
                                     equalsErrorMessage: t('signup_passcodeErrorRepeat')
                                 }}
-                                store={s}
+                                store={this.props.store}
                                 onKeyPress={this.handleKeyPress} />
 
                 <T k="signup_TOSRequestText" className="terms">

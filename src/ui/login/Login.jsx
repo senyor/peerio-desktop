@@ -3,7 +3,7 @@ const React = require('react');
 const { Component } = require('react');
 const { Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
 const { config, socket, User, validation } = require('../../icebear'); // eslint-disable-line
-const { observable, computed, autorun } = require('mobx');
+const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
@@ -27,7 +27,11 @@ class LoginStore extends OrderedFormStore {
     @observable lastAuthenticatedUser = undefined;
 
     @computed get hasErrors() {
-        return (this.usernameValid && this.passcodeOrPassphraseValid && socket.connected);
+        return !(
+                this.initialized &&  // store has its input properties
+                this.usernameValid && this.passcodeOrPassphraseValid && // fields ok
+                socket.connected // server is available
+        );
     }
 }
 
@@ -38,6 +42,9 @@ class LoginStore extends OrderedFormStore {
     constructor() {
         super();
         this.loginStore = new LoginStore();
+    }
+
+    componentDidMount() {
         User.getLastAuthenticated()
             .then((lastUserObject) => {
                 if (lastUserObject) {
@@ -45,14 +52,6 @@ class LoginStore extends OrderedFormStore {
                     this.loginStore.username = lastUserObject.username;
                 }
             });
-
-        autorun(() => {
-            console.log('boop',this.loginStore.username)
-        })
-
-        setTimeout(() => {
-            this.loginStore.username = 'dajhsdj';
-        }, 1500)
     }
 
     togglePasswordVisibility = () => {
@@ -63,6 +62,7 @@ class LoginStore extends OrderedFormStore {
         return User.removeLastAuthenticated()
             .then(() => {
                 this.loginStore.lastAuthenticatedUser = undefined;
+                this.loginStore.username = undefined;
             });
     };
 
@@ -113,6 +113,7 @@ class LoginStore extends OrderedFormStore {
     };
 
     render() {
+        console.log('logins tore', this.loginStore);
         return (
             <div className="flex-row app-root">
                 <FullCoverLoader show={this.loginStore.busy} />

@@ -10,8 +10,7 @@ const FullCoverLoader = require('../shared-components/FullCoverLoader');
 const { Profile, ProfileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
 
-@observer
-class Signup extends React.Component {
+@observer class Signup extends React.Component {
     @observable busy = false;
     @observable expand = false; // starts expand animation
     @observable step = 1; // 1 -profile, 2- passcode
@@ -21,7 +20,7 @@ class Signup extends React.Component {
     passcodeStore = new PasscodeStore();
     profileStore = new ProfileStore();
 
-    @computed get hasError() {
+    @computed get hasErrors() {
         return this.step === 1 ? this.profileStore.hasErrors : this.passcodeStore.hasErrors;
     }
 
@@ -113,6 +112,7 @@ class Signup extends React.Component {
     };
 
     render() {
+        console.log('rerender signup');
         return (
             <div className={css('signup', 'rt-light-theme', { expand: this.expand })}>
                 <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
@@ -128,7 +128,7 @@ class Signup extends React.Component {
                 <div className="signup-nav">
                     <IconButton icon="arrow_back" onClick={this.retreat} />
                     <Button flat label={this.step === 1 ? t('next') : t('button_finish')} onClick={this.advance}
-                            disabled={this.hasError} />
+                            disabled={this.hasErrors} />
                 </div>
                 <div className="progress">
                     <div className={css('indicator', { active: this.step === 1 })} />

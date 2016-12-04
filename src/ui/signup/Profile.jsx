@@ -4,7 +4,7 @@ const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dropdown } = require('react-toolbox');
 const ValidatedInput = require('../shared-components/ValidatedInput');
-const { config, User, socket, validation } = require('../../icebear'); // eslint-disable-line
+const { config, socket, validation} = require('../../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const languageStore = require('../../stores/language-store');
 const T = require('../shared-components/T');
@@ -19,12 +19,13 @@ class ProfileStore extends OrderedFormStore {
     @observable lastName = ''; // etc
 
     @computed get hasErrors() {
-        return !(this.usernameValid && this.emailValid &&
+        return !(this.initialized && this.usernameValid && this.emailValid &&
             this.firstNameValid && this.lastNameValid && socket.connected);
     }
 }
 
 @observer class Profile extends Component {
+
     handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             this.props.returnHandler();
@@ -32,21 +33,21 @@ class ProfileStore extends OrderedFormStore {
     };
 
     render() {
-        const s = this.props.store;
         return (
             <div className="flex-col profile">
                 <div className="signup-subtitle">{t('profile')}</div>
                 <ValidatedInput label={t('username')}
+                                value={this.props.store.username}
                                 position="0"
                                 validator={validators.username}
                                 name="username"
-                                store={s} />
+                                store={this.props.store} />
 
                 <ValidatedInput label={t('email')}
                                 position="1"
                                 validator={validators.email}
                                 name="email"
-                                store={s} />
+                                store={this.props.store} />
 
                 <div className="input-row">
                     <div>
@@ -54,7 +55,7 @@ class ProfileStore extends OrderedFormStore {
                                         position="2"
                                         validator={validators.firstName}
                                         name="firstName"
-                                        store={s} />
+                                        store={this.props.store} />
                     </div>
                     <div>
                         <ValidatedInput label={t('lastName')}
@@ -62,7 +63,7 @@ class ProfileStore extends OrderedFormStore {
                                         validator={validators.lastName}
                                         name="lastName"
                                         onKeyPress={this.handleKeyPress}
-                                        store={s} />
+                                        store={this.props.store} />
                     </div>
                 </div>
                 <Dropdown value={languageStore.language}

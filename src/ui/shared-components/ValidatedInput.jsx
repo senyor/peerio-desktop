@@ -15,7 +15,7 @@
  */
 const React = require('react');
 const _ = require('lodash');
-const { extendObservable, observable, computed,  autorun } = require('mobx');
+const { extendObservable, observable, computed, autorunAsync } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');
@@ -35,10 +35,6 @@ const { Input } = require('react-toolbox');
     constructor(props) {
         super(props);
 
-        autorun(() => {
-            this.validate()
-        });
-
         // todo check if store exists and is the right type
         // check if value is an observable
 
@@ -54,42 +50,41 @@ const { Input } = require('react-toolbox');
         extendObservable(this.props.store, validationProps);
         // add the field order
         this.props.store.fieldOrders[this.fName] = this.props.position;
+        this.props.store.initialized = true;
 
+        autorunAsync(() => {
+            this.validate();
+        }, 200);
     }
 
     validate() {
-        console.log('validate')
         const value = this.props.store[this.props.name];
         const fieldValidators = Array.isArray(this.props.validator) ?
             this.props.validator : [this.props.validator];
 
-        let valid = Promise.resolve(true);
-
-        // apply the validators sequentially
-        fieldValidators.forEach(v => {
-            valid = valid.then(r => {
-                if (r === true) {
-                    return v.action(value, this.props.validationArguments || {})
-                        .then(rs => {
-                            if (rs === true) {
-                                return rs;
-                            }
-                            return (rs.message ? rs.message : v.message);
-                        });
-                }
-                return r;
-            });
-        });
-        valid = valid.then(v => {
-            if (v === true) {
-                this.props.store[this.fValid] = true;
-                this.validationMessageText = '';
-            } else {
-                // note computed message will only how up if field is dirty
-                this.props.store[this.fValid] = false;
-                this.validationMessageText = v;
+        Promise.reduce(fieldValidators, (r, validator) => {
+            if (r === true) {
+                return validator.action(value, this.props.validationArguments || {})
+                    .then(rs => {
+                        if (rs === true) {
+                            return rs;
+                        }
+                        return (rs.message ? rs.message : validator.message);
+                    });
             }
-        });
+            return r;
+        }, true)
+            .then(v => {
+                if (v === true) {
+                    this.props.store[this.fValid] = true;
+                    this.validationMessageText = '';
+                } else {
+                // note computed message will only how up if field is dirty
+
+                    this.props.store[this.fValid] = false;
+                    this.validationMessageText = v;
+                }
+            });
     }
 
     handleBlur = () => {

@@ -56,7 +56,7 @@ class PasscodeStore extends OrderedFormStore {
     ];
 
     @computed get hasErrors() {
-        return (socket.connected && this.passcodeValid && this.passcodeRepeatValid);
+        return !(this.initialized && socket.connected && this.passcodeValid && this.passcodeRepeatValid);
     }
 }
 

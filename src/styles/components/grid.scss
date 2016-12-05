@@ -5,3 +5,27 @@
 .flex-col {
   @extend %flex-col;
 }
+
+.flex-align-center {
+  @extend %flex-align-center;
+}
+
+.flex-justify-center {
+  @extend %flex-justify-center;
+}
+
+.flex-grow-1 {
+  @extend %flex-grow-1;
+}
+
+.flex-grow-0 {
+  @extend %flex-grow-0;
+}
+
+.flex-shrink-1 {
+  @extend %flex-shrink-1;
+}
+
+.flex-shrink-0 {
+  @extend %flex-shrink-0;
+}

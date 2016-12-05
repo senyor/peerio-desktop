@@ -2,6 +2,14 @@
   @extend %display-2;
 }
 
+.display-3 {
+  @extend  %display-3;
+}
+
+.heading {
+  @extend  %heading;
+}
+
 .title {
   @extend %title;
 }

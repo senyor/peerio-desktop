@@ -13,7 +13,7 @@ cp.execSync('cp -Rf ./app/node_modules/react-toolbox/components/ ./app/node_modu
 cp.execSync('babel ./app/node_modules/react-toolbox/components -d ./app/node_modules/react-toolbox/lib/');
 
 function getJSONFromCssModules(cssFileName, json) {
-    writeFile(`${cssFileName.substring(0, cssFileName.length - 4)}.json`, JSON.stringify(json));
+    writeFile(`../lib/${cssFileName.substring(0, cssFileName.length - 4)}.json`, JSON.stringify(json));
 }
 
 function generateScopedName(name, fileName, css) {

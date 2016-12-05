@@ -20,7 +20,7 @@ const { extendObservable, observable, computed, reaction, when } = require('mobx
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');
-
+const OrderedFormStore = require('../../stores/ordered-form-store');
 
 @observer class ValidatedInput extends Component {
 
@@ -36,8 +36,17 @@ const { Input } = require('react-toolbox');
     constructor(props) {
         super(props);
 
-        // todo check if store exists and is the right type
-        // check if value is an observable
+        if (!(this.props.store.constructor.prototype instanceof OrderedFormStore)) {
+            throw new Error('ValidatedInput expects a store property that inherits from OrderedFormStore');
+        }
+
+        if (!this.props.name) {
+            throw new Error('ValidatedInput expects a name property');
+        }
+
+        if (!isObservable(this.props.store, this.props.name)) {
+            throw new Error(`ValidatedInput expects ${this.props.name} to be an observable property in the store`);
+        }
 
         // set property names
         this.fName = this.props.name;
@@ -51,6 +60,7 @@ const { Input } = require('react-toolbox');
         extendObservable(this.props.store, validationProps);
         // add the field order
         this.props.store.fieldOrders[this.fName] = this.props.position;
+        // alert the store that the above are available -- use in computeds
         this.props.store.initialized = true;
 
         this.validate = () => {
@@ -87,8 +97,7 @@ const { Input } = require('react-toolbox');
                     this.validationMessageText = '';
                 } else {
                     console.log(`ValidatedInput.jsx: ${value}, ${this.props.name} is invalid`);
-                // note computed message will only how up if field is dirty
-
+                    // computed message will only how up if field is dirty
                     this.props.store[this.fValid] = false;
                     this.validationMessageText = v;
                 }
@@ -97,7 +106,7 @@ const { Input } = require('react-toolbox');
 
     handleBlur = () => {
         this.props.store[this.fDirty] = true;
-        // mark all subsequent
+        // mark all subsequent as dirty
         if (this.props.position !== undefined) {
             _.each(this.props.store.fieldOrders, (otherPosition, otherField) => {
                 if (otherPosition < this.props.position) {

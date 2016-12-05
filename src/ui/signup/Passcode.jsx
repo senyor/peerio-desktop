@@ -16,7 +16,6 @@ class PasscodeStore extends OrderedFormStore {
     @observable passcode;
     @observable passcodeRepeat;
 
-
     @computed get hasErrors() {
         return !(this.initialized && socket.connected && this.passcodeValid && this.passcodeRepeatValid);
     }

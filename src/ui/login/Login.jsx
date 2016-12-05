@@ -17,8 +17,8 @@ const { validators } = validation; // use common validation from core
 
 class LoginStore extends OrderedFormStore {
     // also has observables usernameValid, usernameDirty created by ValidatedInput
-    @observable username = config.autologin ? config.autologin.username : '';
-    @observable passcodeOrPassphrase = config.autologin ? config.autologin.passphrase : '';
+    @observable username = '';
+    @observable passcodeOrPassphrase = '';
 
     // non ValidatedInput-enhanced observables
     @observable busy = false;
@@ -50,6 +50,9 @@ class LoginStore extends OrderedFormStore {
                 if (lastUserObject) {
                     this.loginStore.lastAuthenticatedUser = lastUserObject;
                     this.loginStore.username = lastUserObject.username;
+                } else {
+                    this.loginStore.username = config.autologin ? config.autologin.username : '';
+                    this.loginStore.passcodeOrPassphrase = config.autologin ? config.autologin.passphrase : '';
                 }
             });
     }

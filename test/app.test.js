@@ -1,4 +1,3 @@
-require('./debuggable');
 const Application = require('spectron').Application;
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -26,6 +25,7 @@ describe('application launch', () => {
     });
 
     it('opens a window', function() {
+        require('./debuggable')();
         return this.app.client.waitUntilWindowLoaded()
       .getWindowCount().should.eventually.equal(1)
       .browserWindow.isMinimized().should.eventually.be.false

@@ -33,6 +33,8 @@
         "alert": false,
         "confirm": false,
         "window": false,
-        "WebSocket": false
+        "WebSocket": false,
+        "beforeEach": false,
+        "afterEach": false
     }
 }

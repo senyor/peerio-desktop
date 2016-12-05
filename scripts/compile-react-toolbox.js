@@ -10,7 +10,7 @@ const src = './app/node_modules/react-toolbox/components/';
 const dst = './app/build/react-toolbox/';
 
 cp.execSync('cp -Rf ./app/node_modules/react-toolbox/components/ ./app/node_modules/react-toolbox/lib' );
-cp.execSync('babel ./app/node_modules/react-toolbox/components -d ./app/node_modules/react-toolbox/components/');
+cp.execSync('babel ./app/node_modules/react-toolbox/components -d ./app/node_modules/react-toolbox/lib/');
 
 function getJSONFromCssModules(cssFileName, json) {
     writeFile(`${cssFileName.substring(0, cssFileName.length - 4)}.json`, JSON.stringify(json));

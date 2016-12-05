@@ -257,6 +257,7 @@
 
     li {
       height: 48px;
+      margin-bottom: $margin-small;
 
       @extend %flex-row;
       @extend %flex-align-center;

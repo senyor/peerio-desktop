@@ -8,6 +8,7 @@ const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const Message = require('./components/Message');
 const {chatStore} = require('../../icebear');// eslint-disable-line
+const sounds = require('../../helpers/sounds');
 
 @observer
 class Messages extends React.Component {
@@ -20,10 +21,16 @@ class Messages extends React.Component {
     }
 
     sendMessage(m) {
-        chatStore.activeChat.sendMessage(m);
+        sounds.sending.play();
+        chatStore.activeChat.sendMessage(m)
+                 .then(() => sounds.sent.play())
+                 .catch(() => sounds.destroy.play());
     }
     sendAck() {
-        chatStore.activeChat.sendAck();
+        sounds.sending.play();
+        chatStore.activeChat.sendAck()
+                 .then(() => sounds.sent.play())
+                 .catch(() => sounds.destroy.play());
     }
 
     render() {

@@ -6,6 +6,7 @@ const {User, contactStore, chatStore} = require('../icebear');//eslint-disable-l
 const Avatar = require('./shared-components/Avatar');
 const css = require('classnames');
 const app = require('electron').remote.app;
+const sounds = require('../helpers/sounds');
 
 const TooltipIcon = Tooltip(IconButton); //eslint-disable-line
 
@@ -25,6 +26,10 @@ class AppNav extends React.Component {
                 app.dock.bounce();
             }
         }, 250);
+
+        chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
+            sounds.received.play();
+        });
     }
 
     toMessages = () => {

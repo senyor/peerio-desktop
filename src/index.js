@@ -8,7 +8,6 @@ if (isDevEnv) {
     require('module').globalPaths.push(PATH_APP_NODE_MODULES);
     window.Perf = require('react-addons-perf');
 }
-
 document.addEventListener('DOMContentLoaded', () => {
     require.extensions['.css'] = function(m, f) {
         m.exports = require(f.replace('.css', '.json'));

@@ -62,7 +62,7 @@ class PasscodeStore extends OrderedFormStore {
             return Promise.resolve(true);
         }
         return Promise.resolve({
-            message: t('required')
+            message: t('error_fieldRequired')
         });
     }
 

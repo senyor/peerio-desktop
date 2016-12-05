@@ -5,9 +5,9 @@ function Filter() {
     return (
         <div className="header-filter">All files
             <IconMenu icon="filter_list">
-                <MenuItem>My files</MenuItem>
-                <MenuItem>Shared by me</MenuItem>
-                <MenuItem>Shared with me</MenuItem>
+                <MenuItem value="all-files" caption="All files" />
+                <MenuItem value="shared-by-me" caption="Shared by me" />
+                <MenuItem value="shared-with-me" caption="Shared with me" />
             </IconMenu>
         </div>
     );

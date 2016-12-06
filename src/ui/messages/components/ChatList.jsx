@@ -56,7 +56,7 @@ class ChatList extends React.Component {
                                     tooltip="Remove"
                                     tooltipDelay={500}
                                     tooltipPosition="right"
-                                    icon="highlight_off" />} />
+                                    icon="remove_circle_outline" />} />
                     )}
                 </List>
             </div>

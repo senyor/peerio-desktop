@@ -1,7 +1,7 @@
 const React = require('react');
 const { Button } = require('react-toolbox');
 const { observer } = require('mobx-react');
-const css = require('classNames');
+const css = require('classnames');
 
 
 @observer

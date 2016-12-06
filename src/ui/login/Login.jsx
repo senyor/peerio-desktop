@@ -22,7 +22,6 @@ class LoginStore extends OrderedFormStore {
 
     // non ValidatedInput-enhanced observables
     @observable busy = false;
-    @observable errorVisible = false;
     @observable passwordVisible = false;
     @observable lastAuthenticatedUser = undefined;
 
@@ -36,8 +35,6 @@ class LoginStore extends OrderedFormStore {
 }
 
 @observer class Login extends Component {
-
-    actions = [{ label: t('ok'), onClick: this.hideDialog }];
 
     constructor() {
         super();
@@ -81,9 +78,8 @@ class LoginStore extends OrderedFormStore {
             User.current = user;
             window.router.push('/app');
         }).catch(err => {
-            console.error(err);
-            this.errorMsg = t('error_loginFailed');
-            this.loginStore.errorVisible = true;
+            // show error inline
+            this.loginStore.passcodeOrPassphraseValidationMessageText = t('error_loginFailed');
             this.loginStore.busy = false;
         });
     };
@@ -94,9 +90,6 @@ class LoginStore extends OrderedFormStore {
         }
     };
 
-    hideDialog = () => {
-        this.loginStore.errorVisible = false;
-    };
 
     getWelcomeBlock = () => {
         return (
@@ -120,7 +113,6 @@ class LoginStore extends OrderedFormStore {
     };
 
     render() {
-        console.log('logins tore', this.loginStore);
         return (
             <div className="flex-row app-root">
                 <FullCoverLoader show={this.loginStore.busy} />
@@ -172,11 +164,6 @@ class LoginStore extends OrderedFormStore {
                        You decide who accesses your data.
                     </p>
                 </div>
-                <Dialog actions={this.actions}
-                        active={this.loginStore.errorVisible}
-                        onEscKeyDown={this.hideDialog}
-                        onOverlayClick={this.hideDialog}
-                        title={t('error')}>{this.errorMsg}</Dialog>
             </div>
         );
     }

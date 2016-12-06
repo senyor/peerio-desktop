@@ -53,7 +53,7 @@ class ChatList extends React.Component {
                             leftIcon="fiber_manual_record"
                             rightIcon={(!c.active && c.unreadCount > 0) ? this.getNotificationIcon(c) :
                                 <TooltipIcon
-                                    tooltip="Remove"
+                                    tooltip="Remove from list"
                                     tooltipDelay={500}
                                     tooltipPosition="right"
                                     icon="remove_circle_outline" />} />

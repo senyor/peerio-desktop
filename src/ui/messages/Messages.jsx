@@ -97,7 +97,7 @@ function NoChatSelected() {
                     <ul>
                         <li>Direct messages</li>
                         <li>Multi-party chat</li>
-                        {/*<li>Channels</li>*/}
+                        {/* <li>Channels</li>*/}
                         <li>Share files</li>
                     </ul>
                 </div>

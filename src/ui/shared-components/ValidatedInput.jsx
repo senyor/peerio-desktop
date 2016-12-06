@@ -15,7 +15,8 @@
  */
 const React = require('react');
 const _ = require('lodash');
-const { extendObservable, observable, computed, autorunAsync } = require('mobx');
+const { socket } = require('../../icebear'); // eslint-disable-line
+const { extendObservable, observable, computed, reaction, when } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');
@@ -52,13 +53,18 @@ const { Input } = require('react-toolbox');
         this.props.store.fieldOrders[this.fName] = this.props.position;
         this.props.store.initialized = true;
 
-        autorunAsync(() => {
-            this.validate();
-        }, 200);
+        this.validate = () => {
+            when(() => socket.connected, () => this.validateConnected());
+        };
     }
 
-    validate() {
+    componentWillMount() {
+        reaction(() => this.props.store[this.props.name], () => this.validate(), true);
+    }
+
+    validateConnected() {
         const value = this.props.store[this.props.name];
+        console.log(`ValidatedInput.jsx: ${value}, ${this.props.name}`);
         const fieldValidators = Array.isArray(this.props.validator) ?
             this.props.validator : [this.props.validator];
 
@@ -76,9 +82,11 @@ const { Input } = require('react-toolbox');
         }, true)
             .then(v => {
                 if (v === true) {
+                    console.log(`ValidatedInput.jsx: ${value}, ${this.props.name} is valid`);
                     this.props.store[this.fValid] = true;
                     this.validationMessageText = '';
                 } else {
+                    console.log(`ValidatedInput.jsx: ${value}, ${this.props.name} is invalid`);
                 // note computed message will only how up if field is dirty
 
                     this.props.store[this.fValid] = false;

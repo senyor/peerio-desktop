@@ -47,12 +47,14 @@ class LoginStore extends OrderedFormStore {
     componentDidMount() {
         User.getLastAuthenticated()
             .then((lastUserObject) => {
+                if (config.autologin) {
+                    this.loginStore.username = config.autologin ? config.autologin.username : '';
+                    this.loginStore.passcodeOrPassphrase = config.autologin ? config.autologin.passphrase : '';
+                    return;
+                }
                 if (lastUserObject) {
                     this.loginStore.lastAuthenticatedUser = lastUserObject;
                     this.loginStore.username = lastUserObject.username;
-                } else {
-                    this.loginStore.username = config.autologin ? config.autologin.username : '';
-                    this.loginStore.passcodeOrPassphrase = config.autologin ? config.autologin.passphrase : '';
                 }
             });
     }

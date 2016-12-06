@@ -95,7 +95,7 @@ class LoginStore extends OrderedFormStore {
         return (
             <div className="welcome-back-wrapper">
                 <div className="welcome-back" onClick={this.unsetLastUser}>
-                    <div className="overflow ">{t('login_welcomeBack')}<br />
+                    <div className="overflow ">{t('login_welcomeBack')}&nbsp;
                         <strong>
                             {this.loginStore.lastAuthenticatedUser.firstName || this.loginStore.lastAuthenticatedUser.username}
                         </strong>

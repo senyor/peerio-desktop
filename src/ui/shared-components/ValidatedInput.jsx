@@ -16,7 +16,7 @@
 const React = require('react');
 const _ = require('lodash');
 const { socket } = require('../../icebear'); // eslint-disable-line
-const { extendObservable, observable, computed, reaction, when } = require('mobx');
+const { extendObservable, observable, computed, reaction, when, isObservable } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');

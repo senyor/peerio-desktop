@@ -1,3 +1,4 @@
+// view wrapper
 .messages {
   display: flex;
   flex-direction: row;
@@ -23,6 +24,7 @@
   }
 }
 
+// message content, input, toolbar
 .message-view {
   // FIXME remove calc?
   width: calc(100vw - 304px);
@@ -154,6 +156,7 @@
   }
 }
 
+// message navigation
 .message-list {
   background-color: $background-message-list;
   height: 100vh;
@@ -218,30 +221,32 @@
       opacity: 1;
     }
   }
-}
 
-// contact status indicator
-.rt-list-left .rt-list-itemAction {
-  [data-react-toolbox='font-icon'] {
-    margin-right: $margin-small;
-    width: 16px;
+  // contact status indicator
+  .rt-list-left .rt-list-itemAction {
+    [data-react-toolbox='font-icon'] {
+      margin-right: $margin-small;
+      width: 16px;
+    }
+
+    .material-icons {
+      font-size: 16px;
+      margin-right: $margin-small;
+      width: 16px;
+    }
   }
 
-  .material-icons {
-    font-size: 16px;
-    margin-right: $margin-small;
-    width: 16px;
+  // status should be applied to list item parent.
+  .online .rt-list-left .material-icons {
+    color: $status-online;
+  }
+
+  .busy .rt-list-left .material-icons {
+    color: $status-busy;
   }
 }
-// status should be applied to list item parent.
-.online .rt-list-left .material-icons {
-  color: $status-online;
-}
 
-.busy .rt-list-left .material-icons {
-  color: $status-busy;
-}
-
+// empty state
 .empty-message {
   .display-3 {
     color: $text-dark-secondary;

@@ -44,7 +44,7 @@ class LoginStore extends OrderedFormStore {
     componentDidMount() {
         User.getLastAuthenticated()
             .then((lastUserObject) => {
-                if (config.autologin) {
+                if (!config.autologin) {
                     this.loginStore.username = config.autologin ? config.autologin.username : '';
                     this.loginStore.passcodeOrPassphrase = config.autologin ? config.autologin.passphrase : '';
                     return;
@@ -95,7 +95,7 @@ class LoginStore extends OrderedFormStore {
         return (
             <div className="welcome-back-wrapper">
                 <div className="welcome-back" onClick={this.unsetLastUser}>
-                    <div className="overflow ">{t('login_welcomeBack')+' '}
+                    <div className="overflow ">{t('login_welcomeBack')}<br/>
                         <strong>
                             {this.loginStore.lastAuthenticatedUser.firstName || this.loginStore.lastAuthenticatedUser.username}
                         </strong>

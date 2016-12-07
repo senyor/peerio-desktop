@@ -83,8 +83,8 @@ class MessageList extends React.Component {
 
 function NoChatSelected() {
     return (
-        <div className="flex-row empty-message" style={{ height: '100vh' }}>
-            <div className="flex-col" style={{ margin: '16px 24px' }}>
+        <div className="flex-row zero-message">
+            <div className="flex-col flex-grow-0" style={{ margin: '16px 24px' }}>
                 <img src="static/img/message-arrow-up.png" style={{ maxWidth: '200px' }} role="presentation" />
             </div>
             <div className="flex-col flex-grow-0 flex-shrink-0">
@@ -102,7 +102,7 @@ function NoChatSelected() {
                     </ul>
                 </div>
             </div>
-            <div className="flex-col flex-grow-0" />
+            <div className="flex-col flex-grow-1" />
         </div>
     );
 }

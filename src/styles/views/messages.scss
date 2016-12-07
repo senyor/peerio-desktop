@@ -246,8 +246,10 @@
   }
 }
 
-// empty state
-.empty-message {
+// zero state
+.zero-message {
+  height: 100vh;
+
   .display-3 {
     color: $text-dark-secondary;
     margin-bottom: 48px;

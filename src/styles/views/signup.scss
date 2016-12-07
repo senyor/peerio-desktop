@@ -2,7 +2,7 @@
   align-items: center;
   background-color: $background-brand;
   background-image: url('./static/img/peerio-pattern.png');
-  background-size: 280px;
+  background-size: $background-pattern-size;
   color: $text-light-secondary;
   height: 100vh;
   transition: width 350ms $transition-ease-out;

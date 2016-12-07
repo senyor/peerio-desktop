@@ -64,7 +64,7 @@ class PasscodeStore extends OrderedFormStore {
         return Promise.resolve({
             message: t('error_fieldRequired')
         });
-    }
+    };
 
     /**
      * Validator for the passcode field.
@@ -72,7 +72,6 @@ class PasscodeStore extends OrderedFormStore {
      * @type {Array}
      */
     passwordValidator = [
-        validators.valueEquality,
         { action: this.passwordStrengthValidator, message: t('signup_passcodeErrorWeak') }
     ];
 

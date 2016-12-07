@@ -24,11 +24,10 @@ const OrderedFormStore = require('../../stores/ordered-form-store');
 
 @observer class ValidatedInput extends Component {
 
-    @observable validationMessageText;
 
     @computed get validationMessage() {
-        if (this.props.store[this.fDirty] === true) {
-            return this.validationMessageText;
+        if (this.props.store[this.fDirty] === true && this.props.store[this.fMsgText]) {
+            return this.props.store[this.fMsgText];
         }
         return '';
     }
@@ -52,11 +51,13 @@ const OrderedFormStore = require('../../stores/ordered-form-store');
         this.fName = this.props.name;
         this.fDirty = `${this.fName}Dirty`;
         this.fValid = `${this.fName}Valid`;
+        this.fMsgText = `${this.fName}ValidationMessageText`;
         const validationProps = {};
 
         // adds additional observables to the store
         validationProps[this.fValid] = false;
         validationProps[this.fDirty] = false;
+        validationProps[this.fMsgText] = '';
         extendObservable(this.props.store, validationProps);
         // add the field order
         this.props.store.fieldOrders[this.fName] = this.props.position;
@@ -74,7 +75,6 @@ const OrderedFormStore = require('../../stores/ordered-form-store');
 
     validateConnected() {
         const value = this.props.store[this.props.name];
-        console.log(`ValidatedInput.jsx: ${value}, ${this.props.name}`);
         const fieldValidators = Array.isArray(this.props.validator) ?
             this.props.validator : [this.props.validator];
 
@@ -92,14 +92,12 @@ const OrderedFormStore = require('../../stores/ordered-form-store');
         }, true)
             .then(v => {
                 if (v === true) {
-                    console.log(`ValidatedInput.jsx: ${value}, ${this.props.name} is valid`);
                     this.props.store[this.fValid] = true;
-                    this.validationMessageText = '';
+                    this.props.store[this.fMsgText] = '';
                 } else {
-                    console.log(`ValidatedInput.jsx: ${value}, ${this.props.name} is invalid`);
                     // computed message will only how up if field is dirty
                     this.props.store[this.fValid] = false;
-                    this.validationMessageText = v;
+                    this.props.store[this.fMsgText] = v;
                 }
             });
     }

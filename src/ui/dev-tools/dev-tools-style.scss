@@ -1,6 +1,6 @@
 .dev-tools-root {
+  height: 100vh;
   padding-top: 90px;
-  height:100vh;
 
   .spinner-backdrop {
     align-items: center;
@@ -44,9 +44,9 @@
   }
 
   .separator {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    margin: 0 10px 0 10px;
+    border: 1px solid rgba(255, 255, 255, .2);
     height: 30px;
+    margin: 0 10px;
   }
 
   .dashboard {
@@ -61,18 +61,19 @@
       }
     }
   }
+
   .keg-edit-container {
     display: flex;
+    height: 100%;
     line-height: 1.7;
     padding: 0 0px 10px;
-    height: 100%;
 
     .list {
       border-left: 1px solid #ccc;
-      margin-right: 10px;
-      padding: 0 10px;
-      overflow: scroll;
       flex-shrink: 0;
+      margin-right: 10px;
+      overflow: scroll;
+      padding: 0 10px;
     }
 
     .list-item {
@@ -88,15 +89,17 @@
         color: white;
       }
     }
+
     .keg {
-      white-space: pre-wrap;
       background-color: #f1f5f7;
       border-radius: 5px;
-      padding: 10px;
       font-family: monospace;
+      padding: 10px;
+      white-space: pre-wrap;
       word-break: break-all;
     }
-    .keg-view{
+
+    .keg-view {
       flex-shrink: 1;
     }
   }

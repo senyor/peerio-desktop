@@ -4,6 +4,10 @@ const languageStore = require('../stores/language-store');
 const { reaction } = require('mobx');
 const deepForceUpdate = require('react-deep-force-update');
 const isDevEnv = require('../helpers/is-dev-env');
+const Interweave = require('interweave').default;
+const EmojiMatcher = require('interweave/matchers/Emoji').default;
+const UrlMatcher = require('interweave/matchers/Url').default;
+const EmailMatcher = require('interweave/matchers/Email').default;
 // const {setStringReplacement} = require('peerio-translator');
 
 class Root extends React.Component {
@@ -18,6 +22,7 @@ class Root extends React.Component {
                 deepForceUpdate(this);
             }
         );
+        // Dev tools ---------->
         this.devtools = null;
         if (isDevEnv) {
             const MobxTools = require('mobx-react-devtools').default; //eslint-disable-line
@@ -31,7 +36,15 @@ class Root extends React.Component {
                 this.forceUpdate();
             };
         }
+        // <--------- Dev tools
+        Interweave.addMatcher(
+            new EmojiMatcher('emoji', { convertShortName: true, convertUnicode: true })
+        );
+        Interweave.addMatcher(new UrlMatcher('url'));
+        Interweave.addMatcher(new EmailMatcher('email'));
+        Interweave.configure({ emojiPath: '../node_modules/emojione/assets/png/{{hexcode}}.png' });
     }
+
 
     componentWillUnmount() {
         this.onLanguageChange();

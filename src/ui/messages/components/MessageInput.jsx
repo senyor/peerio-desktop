@@ -4,12 +4,13 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const Snackbar = require('../../shared-components/Snackbar');
+const EmojiPicker = require('emojione-picker');
 
 @observer
 class MessageInput extends React.Component {
     @observable inputIsEmpty = true;
     @observable text = '';
-
+    @observable emojiPickerVisible = false;
     handleTextChange = newVal => {
         this.text = newVal;
         this.inputIsEmpty = !(this.text && this.text.trim().length > 0);
@@ -28,6 +29,29 @@ class MessageInput extends React.Component {
         this.messageInput = input;
     };
 
+    toggleEmojiPicker = () => {
+        this.emojiPickerVisible = !this.emojiPickerVisible;
+    };
+
+    hideEmojiPicker = () => {
+        this.emojiPickerVisible = false;
+    };
+
+    getPicker() {
+        if (!this.picker) {
+            this.picker = (<EmojiPicker search onChange={this.onEmojiPicked}
+                                        emojione={{ imageType: 'png', sprites: true }} />);
+        }
+        return this.picker;
+    }
+
+    onEmojiPicked = (emoji) => {
+        console.log(emoji);
+        const pos = this.messageInput.refs.wrappedInstance.refs.input.selectionStart;
+        const val = this.text;
+        this.text = val.slice(0, pos) + emoji.shortname + val.slice(pos);
+    };
+
     render() {
         if (!this.props.show) return null;
         return (
@@ -40,10 +64,17 @@ class MessageInput extends React.Component {
                     <MenuItem value="share" caption="Share from files" />
                     <MenuItem value="upload" caption="Upload to DM" />
                 </IconMenu>
-                <Input multiline value={this.text} placeholder={t('enterYourMessage')} onKeyPress={this.handleKeyPress}
-                                onChange={this.handleTextChange} ref={this.setTextareaRef} />
-                <IconButton icon={this.inputIsEmpty ? 'thumb_up' : ''} onClick={this.props.onAck}
-                    className={this.inputIsEmpty ? 'color-brand' : 'hide'} />
+                <Input multiline value={this.text} placeholder={t('enterYourMessage')}
+                       onKeyPress={this.handleKeyPress} onChange={this.handleTextChange}
+                       onFocus={this.hideEmojiPicker} ref={this.setTextareaRef} />
+                <IconButton icon="mood" onClick={this.toggleEmojiPicker} />
+
+                {this.inputIsEmpty
+                    ? <IconButton icon={this.inputIsEmpty ? 'thumb_up' : ''} onClick={this.props.onAck}
+                                    className="color-brand" />
+                    : null }
+
+                {this.emojiPickerVisible ? this.getPicker() : null }
             </div>
         );
     }

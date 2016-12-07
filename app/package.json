@@ -1,7 +1,7 @@
 {
   "name": "icebear-desktop",
   "productName": "Icebear",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Peerio desktop client (codename Icebear)",
   "main": "build/main.js",
   "repository": {
@@ -20,8 +20,10 @@
     "buffer": "5.0.1",
     "classnames": "2.2.5",
     "electron-squirrel-startup": "1.0.0",
+    "emojione-picker": "^1.1.0",
     "eventemitter3": "^2.0.2",
     "immutability-helper": "2.0.0",
+    "interweave": "^1.2.0",
     "lodash": "4.17.2",
     "material-design-icons": "3.0.1",
     "mobx": "2.6.4",

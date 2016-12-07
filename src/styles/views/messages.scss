@@ -121,6 +121,24 @@
       p + p {
         margin-top: $margin-small;
       }
+
+      .interweave__emoji {
+        display: inline-block;
+        margin: 0 2px;
+        vertical-align: middle;
+      }
+
+      .interweave__emoji img {
+        width: 1.5em;
+      }
+
+      .interweave__link {
+        color: $color-brand;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 
@@ -152,6 +170,18 @@
       line-height: 1.45;
       max-height: 96px;
       resize: none;
+    }
+
+    .emoji-dialog {
+      bottom: 75px;
+      height: 375px;
+      position: absolute;
+      right: 60px;
+      width: 340px;
+
+      .emojione {
+        zoom: .38;
+      }
     }
   }
 }
@@ -221,7 +251,6 @@
       opacity: 1;
     }
   }
-
   // contact status indicator
   .rt-list-left .rt-list-itemAction {
     [data-react-toolbox='font-icon'] {
@@ -235,7 +264,6 @@
       width: 16px;
     }
   }
-
   // status should be applied to list item parent.
   .online .rt-list-left .material-icons {
     color: $status-online;

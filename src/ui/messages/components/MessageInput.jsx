@@ -46,10 +46,11 @@ class MessageInput extends React.Component {
     }
 
     onEmojiPicked = (emoji) => {
-        console.log(emoji);
+        this.hideEmojiPicker();
         const pos = this.messageInput.refs.wrappedInstance.refs.input.selectionStart;
         const val = this.text;
         this.text = val.slice(0, pos) + emoji.shortname + val.slice(pos);
+        this.messageInput.refs.wrappedInstance.refs.input.focus();
     };
 
     render() {

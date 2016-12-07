@@ -1,5 +1,9 @@
 .login {
   align-items: center;
+  animation-duration: 50s;
+  animation-iteration-count: infinite;
+  animation-name: MOVE-BG;
+  animation-timing-function: linear;
   background-color: $background-brand;
   background-image: url('./static/img/peerio-pattern.png');
   background-size: 280px;
@@ -7,10 +11,7 @@
   flex: 0 0 auto;
   justify-content: flex-start;
   width: 375px;
-  animation-name: MOVE-BG;
-  animation-duration: 50s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+
   @extend %flex-col;
 
   .login-form {
@@ -74,26 +75,30 @@
 }
 
 @keyframes MOVE-BG {
-   0% {
-     background-position-x: 0px;
-     background-position-y: 0px;
-   }
-   25% {
-     background-position-x: -200px;
-     background-position-y: 200px;
-   }
-   50% {
-     background-position-x: 0px;
-     background-position-y: 400px;
-   }
-   75% {
-     background-position-x: 200px;
-     background-position-y: 200px;
-   }
-   100% {
-     background-position-x: 0px;
-     background-position-y: 0px;
-   }
+  0% {
+    background-position-x: 0;
+    background-position-y: 0;
+  }
+
+  25% {
+    background-position-x: -200px;
+    background-position-y: 200px;
+  }
+
+  50% {
+    background-position-x: 0;
+    background-position-y: 400px;
+  }
+
+  75% {
+    background-position-x: 200px;
+    background-position-y: 200px;
+  }
+
+  100% {
+    background-position-x: 0;
+    background-position-y: 0;
+  }
 }
 
 //----------------------------------------------------------------------------------------------------------------

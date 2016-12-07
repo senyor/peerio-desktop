@@ -22,7 +22,9 @@ class AutoUpdateDialog extends React.Component {
     componentDidMount() {
         // just to give app some time to render and avoid load spike
         // also squirrel might crash on windows if start updates too early.
-        setTimeout(updater.startUpdateMonitoring, 10000);
+        setTimeout(() => {
+            updater.startUpdateMonitoring();
+        }, 10000);
     }
     isActive() {
         return !this.dismissed && updater.state === updater.states.READY_TO_INSTALL;

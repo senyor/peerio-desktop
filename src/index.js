@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     FileStreamAbstract.FileStream = FileStream;
 
-    config.socketServerUrl = 'wss://hocuspocus.peerio.com';
     socket.start();
 
     window.router = createMemoryHistory();

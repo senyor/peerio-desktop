@@ -13,4 +13,8 @@ if (isDevEnv) {
     }
 }
 
+if (process.env.STAGING_SOCKET_SERVER) {
+    cfg.socketServerUrl = process.env.STAGING_SOCKET_SERVER;
+}
+
 module.exports = cfg;

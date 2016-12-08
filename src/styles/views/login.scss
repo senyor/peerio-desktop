@@ -75,7 +75,8 @@
 }
 
 @keyframes MOVE-BG {
-  0% {
+  0%,
+  100% {
     background-position-x: 0;
     background-position-y: 0;
   }
@@ -93,11 +94,6 @@
   75% {
     background-position-x: 200px;
     background-position-y: 200px;
-  }
-
-  100% {
-    background-position-x: 0;
-    background-position-y: 0;
   }
 }
 

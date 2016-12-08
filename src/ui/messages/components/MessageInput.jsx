@@ -53,11 +53,6 @@ class MessageInput extends React.Component {
         this.text = val.slice(0, pos) + emoji.shortname + val.slice(pos);
         this.messageInput.refs.wrappedInstance.refs.input.focus();
     };
-    //
-    //componentWillUnmount() {
-    //    console.log('unmount chat & promote app')
-    //    snackbarControl.promoteComponent('app');
-    //}
 
     render() {
         if (!this.props.show) return null;

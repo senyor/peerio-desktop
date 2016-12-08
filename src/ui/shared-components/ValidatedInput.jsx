@@ -23,7 +23,7 @@ const { Input } = require('react-toolbox');
 const OrderedFormStore = require('../../stores/ordered-form-store');
 
 @observer class ValidatedInput extends Component {
-    
+
     @computed get validationMessage() {
         if (this.props.store[this.fDirty] === true && this.props.store[this.fMsgText]) {
             return this.props.store[this.fMsgText];

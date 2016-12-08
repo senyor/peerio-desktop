@@ -6,15 +6,14 @@ const { t } = require('peerio-translator');
 const css = require('classnames');
 const snackbarControl = require('../../helpers/snackbar-control');
 
-@observer
-class Snackbar extends React.Component {
+@observer class Snackbar extends React.Component {
 
     @observable isForeground = false;
     @observable label = t('ok');
     @observable content;
-    
+    @observable action;
+
     @computed get isVisible() {
-        console.log(`${this.props.location} is visible? content=${this.content}, global vis=${snackbarControl.isVisible}, fg=${this.isForeground}`)
         return this.content && snackbarControl.isVisible && this.isForeground;
     }
 
@@ -29,8 +28,11 @@ class Snackbar extends React.Component {
         snackbarControl.unregisterComponent(this);
     }
 
-    action = () => {
-        return this.props.action || snackbarControl.next();
+    dismiss = () => {
+        if (this.action) {
+            this.action()
+        }
+        snackbarControl.next();
     };
 
     render() {
@@ -40,7 +42,7 @@ class Snackbar extends React.Component {
                     {this.content}
                     {/* TODO make optional */}
                     {this.action !== null ?
-                        <Button label={this.label} onClick={this.action} /> : null
+                        <Button label={this.label || t('ok')} onClick={this.dismiss} /> : null
                         }
                 </div>
             </div>

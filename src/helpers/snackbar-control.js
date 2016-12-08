@@ -1,23 +1,22 @@
-const { observable, computed } = require('mobx');
+const { observable, reaction } = require('mobx');
 const { t } = require('peerio-translator');
 const { serverWarnings } = require('../icebear');
 
+/**
+ * Snackbar control contains:
+ * - a queue of snackbar messages, including server warnings
+ * - a priority system for snackbar components
+ *
+ * Snackbars are expected to be objects with properties:
+ *  - content (String, translation key)
+ *  - data (Object, fed to content translation -- optional)
+ *  - label (String, translation key -- optional)
+ *  - action (Function -- optional)
+ *
+ */
 class SnackbarControl {
 
-    //@computed get isVisible() {
-    //    return serverWarnings.current;
-    //}
-    //
-    //@computed get content() {
-    //    return t(serverWarnings.current.message, serverWarnings.current.data);
-    //}
-    //
-    //@computed get label() {
-    //    return t(serverWarnings.current.actionKey);
-    //}
-
     mountedSnackbarComponents =[];
-
     messageQueue=[];
     position = 0;
 
@@ -25,6 +24,10 @@ class SnackbarControl {
 
     constructor() {
         this.next = this.next.bind(this);
+        // add server warnings to the general snackbar pool
+        reaction(() => serverWarnings.collection.length, (l) => {
+            this.addMessage(serverWarnings.collection[l - 1]);
+        });
     }
 
     /**
@@ -33,7 +36,6 @@ class SnackbarControl {
      * @param {Object} message
      */
     addMessage(message) {
-        // todo validate translations
         this.messageQueue.push(message);
         if (!this.isVisible) {
             this.show();
@@ -44,9 +46,12 @@ class SnackbarControl {
      * Send current content to all mounted components.
      */
     populateComponents() {
-        if (this.messageQueue[this.position]) {
+        const message = this.messageQueue[this.position];
+        if (message) {
             this.mountedSnackbarComponents.forEach((sComponent) => {
-                sComponent.content = this.messageQueue[this.position].content;
+                sComponent.content = t(message.content, message.data);
+                sComponent.action = message.action;
+                sComponent.label = t(message.label);
             });
         }
     }
@@ -76,11 +81,9 @@ class SnackbarControl {
      * @param {Component} snackbarComponent
      */
     registerComponent(snackbarComponent) {
-        console.log('-------- register a component w location', snackbarComponent.props.location);
         this.mountedSnackbarComponents.push(snackbarComponent);
         this.populateComponents();
         if (this.mountedSnackbarComponents.length === 1) {
-            console.log('only one component registered, so promote ', snackbarComponent.props.location)
             this.promoteComponent(snackbarComponent.props.location);
         }
     }
@@ -91,7 +94,6 @@ class SnackbarControl {
      * @param {String} location
      */
     promoteComponent(location) {
-        console.log('promote a component w location', location);
         this.mountedSnackbarComponents.forEach((sComponent) => {
             sComponent.isForeground = (sComponent.props.location === location);
         });
@@ -103,53 +105,32 @@ class SnackbarControl {
      * @param {Component} snackbarComponent
      */
     unregisterComponent(snackbarComponent) {
-        //console.log('UNregister a component w location', snackbarComponent.props);
         this.mountedSnackbarComponents.forEach((sComponent, i) => {
             if (sComponent === snackbarComponent) {
                 this.mountedSnackbarComponents.splice(i, 1);
-                //console.log('components are now', this.mountedSnackbarComponents)
             }
         });
+        // promote any remaining component
         const l = this.mountedSnackbarComponents.length;
         if (l > 0) {
-            console.log('promote top component', this.mountedSnackbarComponents[l - 1].props.location)
             this.promoteComponent(this.mountedSnackbarComponents[l - 1].props.location);
         }
-
-        // todo promote
     }
 }
 
 const s = new SnackbarControl();
 
-setTimeout(() => {
-    console.log('adding a snacky')
-    s.addMessage({
-        content: '1 - hsdaghfjgsdgfjhsd'
-    });
-    s.addMessage({
-        content: '2 - 75fsadfkls dfsdfae8 rafdsfe5fds8grfasd 5sd4a'
-    });
-    s.addMessage({
-        content: '3 - 14t5gsfv75fdffg'
-    });
-}, 3000);
+/**
+ * SAMPLE USAGE
+ */
 
-
-setTimeout(() => {
-    s.addMessage({
-        content: '4 - hxxxxxxxxxhsd'
-    });
-}, 9000);
+/*
+ setTimeout(() => {
+     s.addMessage({
+         content: 'hello I am a snackbar',
+         label: 'go away'
+     });
+ }, 3000);
+ */
 
 module.exports = s;
-
-
-//
-// text and visibility settings per snackbar
-// show hide per snackbar
-//
-//
-// message input -- component mount -> hide the ohter mountedSnackbarComponents
-// component unmount -> show others
-//

@@ -3,7 +3,7 @@ $snackbar-max-width: 568px;
 $snackbar-min-width: 288px;
 
 .snackbar-wrapper {
-  bottom: 100%;
+  bottom: 0;
   flex-shrink: 0;
   height: 48px;
   justify-content: center;

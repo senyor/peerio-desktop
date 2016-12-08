@@ -23,8 +23,7 @@ const { Input } = require('react-toolbox');
 const OrderedFormStore = require('../../stores/ordered-form-store');
 
 @observer class ValidatedInput extends Component {
-
-
+    
     @computed get validationMessage() {
         if (this.props.store[this.fDirty] === true && this.props.store[this.fMsgText]) {
             return this.props.store[this.fMsgText];
@@ -95,7 +94,7 @@ const OrderedFormStore = require('../../stores/ordered-form-store');
                     this.props.store[this.fValid] = true;
                     this.props.store[this.fMsgText] = '';
                 } else {
-                    // computed message will only how up if field is dirty
+                    // computed message will only show up if field is dirty
                     this.props.store[this.fValid] = false;
                     this.props.store[this.fMsgText] = v;
                 }

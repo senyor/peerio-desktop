@@ -5,6 +5,7 @@ const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const Snackbar = require('../../shared-components/Snackbar');
 const EmojiPicker = require('emojione-picker');
+const snackbarControl = require('../../../helpers/snackbar-control');
 
 @observer
 class MessageInput extends React.Component {
@@ -52,15 +53,17 @@ class MessageInput extends React.Component {
         this.text = val.slice(0, pos) + emoji.shortname + val.slice(pos);
         this.messageInput.refs.wrappedInstance.refs.input.focus();
     };
+    //
+    //componentWillUnmount() {
+    //    console.log('unmount chat & promote app')
+    //    snackbarControl.promoteComponent('app');
+    //}
 
     render() {
         if (!this.props.show) return null;
         return (
             <div className="message-input">
-                <Snackbar
-                    className="snackbar"
-                    content="Email sent btw!"
-                    label="great" action="" />
+                <Snackbar location="chat" priority="1" />
                 <IconMenu icon="add_circle_outline">
                     <MenuItem value="share" caption="Share from files" />
                     <MenuItem value="upload" caption="Upload to DM" />

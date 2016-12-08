@@ -9,6 +9,8 @@ const languageStore = require('../../stores/language-store');
 const FullCoverLoader = require('../shared-components/FullCoverLoader');
 const { Profile, ProfileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
+const Snackbar = require('../shared-components/Snackbar');
+
 
 @observer class Signup extends React.Component {
     @observable busy = false;
@@ -138,6 +140,7 @@ const { Passcode, PasscodeStore } = require('./Passcode');
                 <Dialog actions={this.errorActions} active={this.errorVisible}
                         onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
                         title={t('error')}>{this.errorMessage}</Dialog>
+                <Snackbar location="signup" />
             </div>
         );
     }

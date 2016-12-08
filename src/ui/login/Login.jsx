@@ -12,6 +12,7 @@ const ValidatedInput = require('../shared-components/ValidatedInput');
 const FullCoverLoader = require('../shared-components/FullCoverLoader');
 const T = require('../shared-components/T');
 const OrderedFormStore = require('../../stores/ordered-form-store');
+const Snackbar = require('../shared-components/Snackbar');
 
 const { validators } = validation; // use common validation from core
 
@@ -56,6 +57,7 @@ class LoginStore extends OrderedFormStore {
             });
     }
 
+
     togglePasswordVisibility = () => {
         this.loginStore.passwordVisible = !this.loginStore.passwordVisible;
     };
@@ -89,7 +91,6 @@ class LoginStore extends OrderedFormStore {
             this.login();
         }
     };
-
 
     getWelcomeBlock = () => {
         return (
@@ -164,6 +165,7 @@ class LoginStore extends OrderedFormStore {
                        You decide who accesses your data.
                     </p>
                 </div>
+                <Snackbar location="login" />
             </div>
         );
     }

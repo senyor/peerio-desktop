@@ -30,7 +30,7 @@ const snackbarControl = require('../../helpers/snackbar-control');
 
     dismiss = () => {
         if (this.action) {
-            this.action()
+            this.action();
         }
         snackbarControl.next();
     };

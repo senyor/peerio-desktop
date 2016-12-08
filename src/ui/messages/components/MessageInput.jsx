@@ -6,12 +6,16 @@ const { t } = require('peerio-translator');
 const Snackbar = require('../../shared-components/Snackbar');
 const EmojiPicker = require('emojione-picker');
 const snackbarControl = require('../../../helpers/snackbar-control');
+const emojione = require('emojione');
+
+emojione.ascii = true;
 
 @observer
 class MessageInput extends React.Component {
     @observable inputIsEmpty = true;
     @observable text = '';
     @observable emojiPickerVisible = false;
+
     handleTextChange = newVal => {
         this.text = newVal;
         this.inputIsEmpty = !(this.text && this.text.trim().length > 0);
@@ -20,7 +24,7 @@ class MessageInput extends React.Component {
 
     handleKeyPress = ev => {
         if (ev.key === 'Enter' && !ev.shiftKey && this.text.trim().length) {
-            this.props.onSend(this.text);
+            this.props.onSend(emojione.shortnameToUnicode(this.text));
             ev.preventDefault();
             this.handleTextChange('');
         }

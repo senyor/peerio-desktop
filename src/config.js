@@ -4,6 +4,7 @@ const isDevEnv = require('./helpers/is-dev-env');
 
 cfg.updateUrl = 'https://leviosa.peerio.com/update';
 cfg.currentVersion = app.getVersion();
+cfg.socketServerUrl = 'wss://hocuspocus.peerio.com'; // todo: branding should replace default url
 
 if (isDevEnv) {
     try {
@@ -13,8 +14,10 @@ if (isDevEnv) {
     }
 }
 
-if (process.env.STAGING_SOCKET_SERVER) {
-    cfg.socketServerUrl = process.env.STAGING_SOCKET_SERVER;
+// FOR DEV ENVIRONMENT ONLY
+// DEV MACHINE OVERRIDES SOCKET SERVER VALUE WITH THIS
+if (process.env.PEERIO_STAGING_SOCKET_SERVER) {
+    cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
 }
 
 module.exports = cfg;

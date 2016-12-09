@@ -14,6 +14,10 @@ $snackbar-min-width: 288px;
   @extend %flex-row;
 }
 
+.message-input .snackbar-wrapper {
+  bottom: 100%;
+}
+
 .snackbar {
   align-items: center;
   background: $background-snackbar;

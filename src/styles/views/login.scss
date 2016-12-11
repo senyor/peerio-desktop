@@ -35,6 +35,9 @@
 
   .welcome-back-wrapper {
     background-color: $background-brand;
+    position: absolute;
+    top: 240px;
+    z-index: 5;
   }
 
   .welcome-back {

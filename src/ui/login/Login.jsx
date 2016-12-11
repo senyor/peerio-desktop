@@ -128,8 +128,7 @@ class LoginStore extends OrderedFormStore {
                                         position="0"
                                         store={this.loginStore}
                                         validator={validators.usernameLogin}
-                                        onKeyPress={this.handleKeyPress}
-                                        className={this.loginStore.lastAuthenticatedUser ? 'banish' : ''} />
+                                        onKeyPress={this.handleKeyPress} />
                         <div className="password">
                             <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
                                             label={t('passcodeOrPassphrase')}

@@ -1,6 +1,11 @@
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
-
+const path = require('path');
+const isDevEnv = require('./helpers/is-dev-env');
+// For dev builds we want to use separate user data directory
+if (isDevEnv) {
+    app.setPath('userData', path.resolve(app.getPath('appData'), 'icebear_dev'));
+}
 // <UPDATES> -----------------------------------------------------------------------------------------------------
 // If the app was started as a part of update process we don't want to proceed with startup
 if (require('electron-squirrel-startup')) app.quit();

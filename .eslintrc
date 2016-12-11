@@ -35,6 +35,7 @@
         "window": false,
         "WebSocket": false,
         "beforeEach": false,
-        "afterEach": false
+        "afterEach": false,
+        "xit": false
     }
 }

@@ -9,12 +9,13 @@ const writeFile = require('writefile');
 const src = './app/node_modules/react-toolbox/components/';
 const dst = './app/build/react-toolbox/';
 
+console.log('copying components to lib');
 cp.execSync('cp -Rf ./app/node_modules/react-toolbox/components/ ./app/node_modules/react-toolbox/lib' );
+console.log('compiling js');
 cp.execSync('babel ./app/node_modules/react-toolbox/components -d ./app/node_modules/react-toolbox/lib/');
 
 function getJSONFromCssModules(cssFileName, json) {
     cssFileName = cssFileName.replace('/components/', '/lib/');
-    console.log(`${cssFileName.substring(0, cssFileName.length - 4)}.json`);
     writeFile(`${cssFileName.substring(0, cssFileName.length - 4)}.json`, JSON.stringify(json));
 }
 
@@ -25,6 +26,8 @@ function generateScopedName(name, fileName, css) {
     if (folder === 'lib') folder = ''; else folder = '-' + folder;
     return 'rt' + folder + file + '-' + name;
 }
+
+console.log('compiling css');
 
 function compile(file) {
     const css = fs.readFileSync(src + file);

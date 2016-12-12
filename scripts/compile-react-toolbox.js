@@ -12,7 +12,7 @@ const dst = './app/build/react-toolbox/';
 console.log('copying components to lib');
 cp.execSync('cp -Rf ./app/node_modules/react-toolbox/components/ ./app/node_modules/react-toolbox/lib' );
 console.log('compiling js');
-cp.execSync('babel ./app/node_modules/react-toolbox/components -d ./app/node_modules/react-toolbox/lib/');
+cp.execSync('babel -q ./app/node_modules/react-toolbox/components -d ./app/node_modules/react-toolbox/lib/');
 
 function getJSONFromCssModules(cssFileName, json) {
     cssFileName = cssFileName.replace('/components/', '/lib/');

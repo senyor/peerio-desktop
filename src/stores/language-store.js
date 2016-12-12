@@ -2,6 +2,9 @@ const { observable, action } = require('mobx');
 const { setLocale } = require('peerio-translator');
 const normalizeError = require('../icebear').errors.normalize; //eslint-disable-line
 const db = require('../stores/tiny-db');
+const fs = require('fs');
+const path = require('path');
+const electron = require('electron').remote || require('electron');
 
 class LanguageStore {
     @observable language = '';
@@ -50,11 +53,10 @@ class LanguageStore {
 
     @action changeLanguage(code) {
         try {
-            const path = `../static/locales/${code.replace('-', '_')}.json`;
-            // to avoid recompilation of already compiled json
-            // todo: maybe do this in json extension hook
-            delete require.cache[require.resolve(path)];
-            const translation = require(path);
+            const jsonPath = path.join(
+                electron.app.getAppPath(),
+                `/build/static/locales/${code.replace('-', '_')}.json`);
+            const translation = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
             setLocale(code, translation);
             this.language = code;
             db.set('language', code);

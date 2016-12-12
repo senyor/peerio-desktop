@@ -71,7 +71,7 @@ class LoginStore extends OrderedFormStore {
     };
 
     login = () => {
-        if (this.loginStore.busy) return;
+        if (this.loginStore.busy || this.loginStore.hasErrors) return;
         this.loginStore.busy = true;
         const user = new User();
         user.username = this.loginStore.username || this.loginStore.lastAuthenticatedUser.username;

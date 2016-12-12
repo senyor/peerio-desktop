@@ -40,7 +40,7 @@ const Snackbar = require('../shared-components/Snackbar');
     }
 
     createAccountWithPasscode() {
-        if (this.passcodeStore.hasErrors || this.busy ) return Promise.resolve(false);
+        if (this.passcodeStore.hasErrors || this.busy) return Promise.resolve(false);
         return this.createAccount()
             .then(() => User.current.setPasscode(this.passcodeStore.passcode))
             .then(() => { window.router.push('/app'); })

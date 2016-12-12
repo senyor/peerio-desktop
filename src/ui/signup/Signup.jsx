@@ -40,15 +40,13 @@ const Snackbar = require('../shared-components/Snackbar');
     }
 
     createAccountWithPasscode() {
-        if (!this.passcodeStore.hasErrors) {
-            return this.createAccount()
-                .then(() => User.current.setPasscode(this.passcodeStore.passcode))
-                .then(() => { window.router.push('/app'); })
-                .catch(err => {
-                    console.error(err);
-                });
-        }
-        return Promise.resolve(false);
+        if (this.passcodeStore.hasErrors || this.busy ) return Promise.resolve(false);
+        return this.createAccount()
+            .then(() => User.current.setPasscode(this.passcodeStore.passcode))
+            .then(() => { window.router.push('/app'); })
+            .catch(err => {
+                console.error(err);
+            });
     }
 
     createAccount() {
@@ -85,10 +83,9 @@ const Snackbar = require('../shared-components/Snackbar');
     };
 
     navigateToPasscode = () => {
-        if (!this.profileStore.hasErrors) {
-            this.step = 2;
-            this.busy = false;
-        }
+        if (this.profileStore.hasErrors || this.busy) return;
+        this.step = 2;
+        this.busy = false;
     };
 
     navigateToProfile = () => {

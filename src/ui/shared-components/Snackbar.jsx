@@ -37,7 +37,7 @@ const snackbarControl = require('../../helpers/snackbar-control');
 
     render() {
         return (
-            <div className="snackbar-wrapper">
+            <div className={css(`snackbar-wrapper ${this.isVisible ? '' : 'banish'}`)}>
                 <div className={css(`snackbar ${this.isVisible ? 'show' : ''}`)}>
                     {this.content}
                     {/* TODO make optional */}

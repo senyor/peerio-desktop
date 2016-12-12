@@ -17,10 +17,6 @@ $snackbar-min-width: 288px;
 .message-input .snackbar-wrapper {
   bottom: 100%;
 }
-// hide non-messages snackbars
-.messages + .snackbar-wrapper {
-  display: none;
-}
 
 .snackbar {
   align-items: center;

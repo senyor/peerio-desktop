@@ -10,26 +10,25 @@ describe('application launch', function() {
     });
 
 
-    afterEach(() => {
-      //  return closeApp(this);
+    afterEach(function() {
+        return closeApp(this);
     });
 
-    xit('opens a window', function() {
-        return this.app.client.waitUntilWindowLoaded()
-          .browserWindow.focus()
-          .getWindowCount().should.eventually.equal(isDev ? 4 : 1)
-          .browserWindow.isMinimized().should.eventually.be.false
-          .browserWindow.isDevToolsOpened().should.eventually.be.false
-          .browserWindow.isVisible().should.eventually.be.true
-          .browserWindow.isFocused().should.eventually.be.true
-          .browserWindow.getBounds().should.eventually.have.property('width').and.be.above(0)
-          .browserWindow.getBounds().should.eventually.have.property('height').and.be.above(0);
+    it('opens a window', function() {
+        return this.app.client
+            .browserWindow.focus()
+            .browserWindow.isMinimized().should.eventually.be.false
+            .browserWindow.isFocused().should.eventually.be.true
+            .browserWindow.getBounds().should.eventually.have.property('width').and.be.above(0)
+            .browserWindow.getBounds().should.eventually.have.property('height').and.be.above(0);
     });
 
     it('logins', function() {
-        this.app.client.waitUntilWindowLoaded()
-            .browserWindow.focus()
-            .waitUntilVilisble('.login-button')
-            .click('.login-button');
+        return this.app.client
+            .setValue('div.login-form > div.rt-input-input > input', 'anritest5')
+            .setValue('div.password > div > input', 'icebear')
+            .waitForEnabled('.login-button')
+            .click('.login-button')
+            .waitForVisible('.app-nav');
     });
 });

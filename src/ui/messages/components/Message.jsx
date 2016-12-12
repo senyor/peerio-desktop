@@ -14,11 +14,7 @@ const Message = observer(({ message }) => {
                     <div className="user">{message.sender.username}</div>
                     <div className="timestamp">{time.format(message.timestamp)}</div>
                 </div>
-                {
-                        message.isAck
-                            ? <p><FontIcon value="thumb_up" className="color-brand" /></p>
-                            : <Interweave tagName="p" content={message.text} noHtml />
-                    }
+                <Interweave tagName="p" content={message.text} noHtml />
             </div>
             {message.sending ? <div className="sending-overlay" /> : null}
         </div>

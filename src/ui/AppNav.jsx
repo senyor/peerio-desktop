@@ -43,7 +43,7 @@ class AppNav extends React.Component {
     };
 
     unreadFiles = () => {
-        return true;
+        return false;
     };
 
     render() {

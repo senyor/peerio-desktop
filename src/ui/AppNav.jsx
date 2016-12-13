@@ -69,7 +69,7 @@ class AppNav extends React.Component {
                             tooltipPosition="right"
                             icon="folder"
                             onClick={this.toFiles} />
-                        <div className={this.unreadFiles ? 'look-at-me' : ''} />
+                        <div className={this.unreadFiles ? '' : ''} />
                     </div>
 
                     <div className="menu-item settings" disabled >

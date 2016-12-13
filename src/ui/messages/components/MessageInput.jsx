@@ -60,6 +60,7 @@ class MessageInput extends React.Component {
 
     render() {
         if (!this.props.show) return null;
+        if (!this.picker) this.getPicker(); // experimental preload
         return (
             <div className="message-input">
                 <Snackbar location="chat" priority="1" />

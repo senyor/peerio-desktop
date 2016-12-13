@@ -1,7 +1,7 @@
 const React = require('react');
 const { Button } = require('react-toolbox');
 const { observer } = require('mobx-react');
-const { observable, computed } = require('mobx');
+const { observable, computed, reaction } = require('mobx');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const snackbarControl = require('../../helpers/snackbar-control');
@@ -12,9 +12,23 @@ const snackbarControl = require('../../helpers/snackbar-control');
     @observable label = t('ok');
     @observable content;
     @observable action;
+    @observable snackbarClass = '';
+    @observable wrapperClass = 'banish';
 
     @computed get isVisible() {
         return this.content && snackbarControl.isVisible && this.isForeground;
+    }
+
+    constructor() {
+        super();
+
+        reaction(() => this.isVisible, (visible) => {
+            if (visible) {
+                this.fadeIn();
+            } else {
+                this.fadeOut();
+            }
+        });
     }
 
     componentWillMount() {
@@ -28,6 +42,31 @@ const snackbarControl = require('../../helpers/snackbar-control');
         snackbarControl.unregisterComponent(this);
     }
 
+    /**
+     *  Animate fadeIn.
+     **/
+    fadeIn = () => {
+        setTimeout(() => {
+            this.wrapperClass = '';
+            setTimeout(() => {
+                this.snackbarClass = 'show';
+            }, 5);
+        }, 200); // must happen *after* fadeOut
+    };
+
+    /**
+     *  Animate fadeOut
+     **/
+    fadeOut = () => {
+        this.snackbarClass = '';
+        setTimeout(() => {
+            this.wrapperClass = 'banish';
+        }, 150);
+    };
+
+    /**
+     *  Run action, if it exists, and call up the next snackbar, if it exists.
+     **/
     dismiss = () => {
         if (this.action) {
             this.action();
@@ -37,8 +76,8 @@ const snackbarControl = require('../../helpers/snackbar-control');
 
     render() {
         return (
-            <div className={css(`snackbar-wrapper ${this.isVisible ? '' : 'banish'}`)}>
-                <div className={css(`snackbar ${this.isVisible ? 'show' : ''}`)}>
+            <div className={css(`snackbar-wrapper ${this.wrapperClass}`)}>
+                <div className={css(`snackbar ${this.snackbarClass}`)}>
                     {this.content}
                     {/* TODO make optional */}
                     {this.action !== null ?

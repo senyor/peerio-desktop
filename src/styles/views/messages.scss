@@ -126,10 +126,10 @@
         display: inline-block;
         margin: 0 2px;
         vertical-align: middle;
-      }
 
-      .interweave__emoji img {
-        width: 1.5em;
+        img {
+          width: 1.5em;
+        }
       }
 
       .interweave__link {
@@ -139,6 +139,10 @@
           text-decoration: underline;
         }
       }
+    }
+
+    .jumboji .interweave__emoji img {
+      width: 2.4em;
     }
   }
 

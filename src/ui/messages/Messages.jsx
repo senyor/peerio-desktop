@@ -40,8 +40,8 @@ class Messages extends React.Component {
                 <div className="message-view">
                     <div className="message-toolbar">
                         <div className="title">{ chatStore.activeChat && chatStore.activeChat.chatName}</div>
-                        <Search />
-                        <IconButton icon="info_outline" />
+                        {/*<Search />*/}
+                        {/*<IconButton icon="info_outline" />*/}
                     </div>
                     {chatStore.activeChat ? <MessageList /> : <NoChatSelected />}
                     <MessageInput show={!!chatStore.activeChat} onSend={this.sendMessage}

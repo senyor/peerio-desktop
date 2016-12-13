@@ -64,8 +64,8 @@ class MessageInput extends React.Component {
             <div className="message-input">
                 <Snackbar location="chat" priority="1" />
                 <IconMenu icon="add_circle_outline">
-                    <MenuItem value="share" caption="Share from files" />
-                    <MenuItem value="upload" caption="Upload to DM" />
+                    <MenuItem value="share" caption="Share from files" disabled />
+                    <MenuItem value="upload" caption="Upload to DM" disabled />
                 </IconMenu>
                 <Input multiline value={this.text} placeholder={t('enterYourMessage')}
                        onKeyPress={this.handleKeyPress} onChange={this.handleTextChange}

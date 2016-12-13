@@ -31,7 +31,7 @@ class Message extends React.Component {
                         <div className="user">{this.props.message.sender.username}</div>
                         <div className="timestamp">{time.format(this.props.message.timestamp)}</div>
                     </div>
-                    <Interweave tagName="p" className="test" content={this.props.message.text} noHtml
+                    <Interweave tagName="p" content={this.props.message.text} noHtml
                                 onAfterParse={this.afterParse} />
                 </div>
                 {this.props.message.sending ? <div className="sending-overlay" /> : null}

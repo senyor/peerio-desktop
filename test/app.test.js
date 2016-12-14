@@ -23,7 +23,8 @@ describe('application launch', function() {
             .browserWindow.getBounds().should.eventually.have.property('height').and.be.above(0);
     });
 
-    it('logins', function() {
+
+    it('login setup', function() {
         return this.app.client
             .setValue('div.login-form > div.rt-input-input > input', 'anritest5')
             .setValue('div.password > div > input', 'icebear')
@@ -31,4 +32,29 @@ describe('application launch', function() {
             .click('.login-button')
             .waitForVisible('.app-nav');
     });
+
+    it('login return', function() {
+        return this.app.client
+            .setValue('div.password > div > input', 'icebear')
+            .waitForEnabled('.login-button')
+            .click('.login-button')
+            .waitForVisible('.app-nav');
+    });
+
+
+
+    it('clear saved user', function() {
+        return this.app.client
+            .click('.welcome-back-wrapper')
+    });
+
+    it('logins', function() {
+        return this.app.client
+            .setValue('div.login-form > div.rt-input-input > input', 'anritest7')
+            .setValue('div.password > div > input', 'icebear')
+            .waitForEnabled('.login-button')
+            .click('.login-button')
+            .waitForVisible('.app-nav');
+    });
+
 });

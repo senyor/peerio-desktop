@@ -132,6 +132,14 @@
         }
       }
 
+      .interweave__emoji {
+        &.interweave__emoji--large {
+          img {
+            width: 2.4em;
+          }
+        }
+      }
+
       .interweave__link {
         color: $color-brand;
 
@@ -139,10 +147,6 @@
           text-decoration: underline;
         }
       }
-    }
-
-    .jumboji .interweave__emoji img {
-      width: 2.4em;
     }
   }
 
@@ -175,18 +179,16 @@
       max-height: 96px;
       resize: none;
     }
-
-    .emoji-dialog {
-      bottom: 75px;
-      height: 375px;
-      position: absolute;
-      right: 60px;
-      width: 340px;
-
-      .emojione {
-        zoom: .38;
-      }
-    }
+    //.emoji-dialog {
+    //  bottom: 75px;
+    //  height: 375px;
+    //  position: absolute;
+    //  right: 60px;
+    //  width: 340px;
+    //  .emojione {
+    //    zoom: .38;
+    //  }
+    //}
   }
 }
 

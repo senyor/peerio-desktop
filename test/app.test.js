@@ -42,10 +42,9 @@ describe('application launch', function() {
     });
 
 
-
     it('clear saved user', function() {
         return this.app.client
-            .click('.welcome-back-wrapper')
+            .click('.welcome-back-wrapper');
     });
 
     it('logins', function() {
@@ -56,5 +55,4 @@ describe('application launch', function() {
             .click('.login-button')
             .waitForVisible('.app-nav');
     });
-
 });

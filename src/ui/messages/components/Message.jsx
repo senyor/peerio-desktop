@@ -2,13 +2,13 @@ const React = require('react');
 const Avatar = require('../../shared-components/Avatar');
 const { observer } = require('mobx-react');
 const { time } = require('../../../helpers/formatter');
-const Interweave = require('interweave/lib').default;
-const EmojiMatcher = require('interweave/lib/matchers/Emoji').default;
-const UrlMatcher = require('interweave/lib/matchers/Url').default;
-const EmailMatcher = require('interweave/lib/matchers/Email').default;
+const Interweave = require('peerio-interweave/lib').default;
+const EmojiMatcher = require('peerio-interweave/lib/matchers/Emoji').default;
+const UrlMatcher = require('peerio-interweave/lib/matchers/Url').default;
+const EmailMatcher = require('peerio-interweave/lib/matchers/Email').default;
 
 const matchers = [
-    new EmojiMatcher('emoji', { convertShortName: true, convertUnicode: true, enlargeUpTo: 2 }),
+    new EmojiMatcher('emoji', { convertShortName: true, convertUnicode: true, enlargeUpTo: 10 }),
     new UrlMatcher('url'),
     new EmailMatcher('email')
 ];

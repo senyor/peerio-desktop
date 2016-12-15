@@ -17,17 +17,33 @@
     height: 100vh;
   }
 
-  .rt-avatar-avatar {
+  .avatar-wrapper {
     margin: 24px 0 0;
+    position: relative;
+
+    .rt-menu-active {
+      min-width: 250px !important;
+    }
+
+    .rt-menu-iconMenu {
+      position: absolute;
+      z-index: 1;
+
+      > .rt-button-button {
+        height: 40px;
+        width: 40px;
+      }
+    }
   }
 
   .menu-item {
     align-items: center;
-    color: #fff;
+    color: $icon-light-active;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: $margin-large;
     position: relative;
 
     .look-at-me {
@@ -71,10 +87,6 @@
       }
     }
 
-    &:not(.settings) {
-      margin-top: $margin-large;
-    }
-
     &.active,
     &:hover {
       .rt-button-icon {
@@ -83,10 +95,6 @@
       }
     }
 
-    &.settings {
-      margin-bottom: $margin-large;
-      margin-top: auto;
-    }
   }
   // turns off ripple for menu icon buttons
   .rt-ripple-ripple {

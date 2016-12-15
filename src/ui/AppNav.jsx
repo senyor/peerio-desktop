@@ -1,16 +1,18 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, Tooltip } = require('react-toolbox');
+const { IconButton, Tooltip, IconMenu, MenuItem, MenuDivider } = require('react-toolbox');
 const {User, contactStore, chatStore} = require('../icebear');//eslint-disable-line
 const Avatar = require('./shared-components/Avatar');
 const css = require('classnames');
 const app = require('electron').remote.app;
 const sounds = require('../helpers/sounds');
+const signout = require('../helpers/app-control');
 
 const TooltipIcon = Tooltip(IconButton); //eslint-disable-line
 
 const delay = 500;
+
 
 @observer
 class AppNav extends React.Component {
@@ -46,10 +48,21 @@ class AppNav extends React.Component {
         return false;
     };
 
+    toSignout = () => {
+        signout.relaunch();
+    }
     render() {
         return (
             <div className="app-nav">
-                <Avatar contact={this.contact} />
+                <div className="avatar-wrapper">
+                    <IconMenu icon=''>
+                        <MenuItem value="profile" icon="person" caption="Profile" disabled />
+                        <MenuItem value="Settings" icon="settings" caption="Settings" disabled />
+                        <MenuDivider />
+                        <MenuItem value="signout" icon="power_settings_new" caption="Sign out" onClick={this.toSignout}/>
+                    </IconMenu>
+                    <Avatar contact={this.contact} />
+                </div>
                 <div className="app-menu">
                     <div className={css('menu-item', { active: this.inMessages })}>
                         <TooltipIcon
@@ -70,14 +83,6 @@ class AppNav extends React.Component {
                             icon="folder"
                             onClick={this.toFiles} />
                         <div className={this.unreadFiles ? '' : ''} />
-                    </div>
-
-                    <div className="menu-item settings" disabled >
-                        <TooltipIcon
-                            tooltip="Settings"
-                            tooltipDelay={delay}
-                            tooltipPosition="right"
-                            icon="settings" />
                     </div>
                 </div>
             </div>

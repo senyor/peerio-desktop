@@ -1,5 +1,5 @@
-const { globalShortcut } = require('electron');
-const appControl = require('../helpers/app-control');
+// const { globalShortcut } = require('electron');
+// const appControl = require('../helpers/app-control');
 
 function buildGlobalShortcuts() {
     console.log('Registering global shortcuts.');

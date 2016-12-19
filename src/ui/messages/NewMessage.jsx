@@ -84,10 +84,11 @@ class NewMessage extends React.Component {
                                     { c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username }
                                 </Chip>
                             )}
-                            <Input placeholder={t('userSearch')} value={this.query} onChange={this.handleTextChange}
-                                    onKeyDown={this.handleKeyDown} />
+                            <Input placeholder={t('userSearch')} value={this.query}
+                                   onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
                         </div>
-                        <Button className={css('confirm', { hide: !this.selected.length })} label="Go" onClick={this.go} disabled={!this.canGO} />
+                        <Button className={css('confirm', { hide: !this.selected.length })} label="Go"
+                                onClick={this.go} disabled={!this.canGO} />
                     </div>
                     <List selectable ripple >
                         <ListSubHeader caption="Your contacts" />

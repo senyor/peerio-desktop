@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
 const { Component } = require('react');
-const { Dropdown, Button, Dialog, IconButton } = require('react-toolbox');
+const { Dropdown, Button, IconButton } = require('react-toolbox');
 const { config, socket, User, validation } = require('../../icebear'); // eslint-disable-line
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
@@ -79,7 +79,7 @@ class LoginStore extends OrderedFormStore {
         user.login().then(() => {
             User.current = user;
             window.router.push('/app');
-        }).catch(err => {
+        }).catch(() => {
             // show error inline
             this.loginStore.passcodeOrPassphraseValidationMessageText = t('error_loginFailed');
             this.loginStore.busy = false;
@@ -98,13 +98,15 @@ class LoginStore extends OrderedFormStore {
                 <div className="welcome-back" onClick={this.unsetLastUser}>
                     <div className="overflow ">{t('login_welcomeBack')}&nbsp;
                         <strong>
-                            {this.loginStore.lastAuthenticatedUser.firstName || this.loginStore.lastAuthenticatedUser.username}
+                            {this.loginStore.lastAuthenticatedUser.firstName
+                            || this.loginStore.lastAuthenticatedUser.username}
                         </strong>
                     </div>
                     <div className="subtitle">
                         <div className="overflow">
                             <T k="login_changeUser">
-                                {{ username: (this.loginStore.lastAuthenticatedUser.firstName || this.loginStore.lastAuthenticatedUser.username) }}
+                                {{ username: (this.loginStore.lastAuthenticatedUser.firstName
+                                                || this.loginStore.lastAuthenticatedUser.username) }}
                             </T>
                         </div>
                     </div>

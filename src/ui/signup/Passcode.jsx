@@ -2,7 +2,6 @@ const React = require('react');
 const { Component } = require('react');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Input } = require('react-toolbox');
 const { config, socket, validation } = require('../../icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const T = require('../shared-components/T');

@@ -1,9 +1,8 @@
 {
   "name": "icebear-desktop",
-  "version": "1.1.0",
   "description": "Peerio desktop client (codename Icebear)",
   "scripts": {
-    "postinstall": "install-app-deps && npm run update-emojis",
+    "postinstall": "install-app-deps",
     "start": "npm-run-all -l -n compile -p code:watch icebear:watch style:watch devstyle:watch electron:run",
     "start-latest": "git pull && npm install && npm update && npm start",
     "compile": "npm-run-all -l -n cleanup -p static:copy code:compile icebear:compile style:compile devstyle:compile react-toolbox",
@@ -30,7 +29,7 @@
     "dist:mac": "rm -rf dist/mac && build --mac --x64",
     "dist:win": "rm -rf dist/win && build --win --x64",
     "dist:linux": "build -l",
-    "update-emojis":"wget https://raw.githubusercontent.com/iamcal/emoji-data/master/sheets-indexed-256/sheet_emojione_32_indexed_256.png -O src/static/img/emojis.png",
+    "build-emoji": "./scripts/build_emoji.js",
     "validate": "npm-run-all -l -n -p code:lint style:lint",
     "install-win-build-tools": "./scripts/install-build-tools.sh",
     "get-locales": "./scripts/get-locales.sh",
@@ -84,6 +83,8 @@
     "electron-devtools-installer": "2.0.1",
     "electron-rebuild": "1.4.0",
     "electron-reload": "1.0.3",
+    "emoji-datasource": "2.4.4",
+    "emojione": "2.2.7",
     "eslint-config-peerio": "*",
     "ghooks": "1.3.2",
     "mobx-react-devtools": "4.2.10",

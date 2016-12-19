@@ -13,8 +13,24 @@ document.addEventListener('DOMContentLoaded', () => {
         m.exports = require(f.replace('.css', '.json'));
     };
 
+    // configuring emojione and preloading sprites
+    const emojione = require('emojione');
+    emojione.ascii = true;
+    emojione.imagePathPNG = '';
+    emojione.imagePathSVG = '';
+    emojione.imagePathSVGSprites = '';
+    emojione.sprites = true;
+
+    let preloadSprites = document.createElement('span');
+    preloadSprites.className = 'emojione emojione-1f602 hide';
+    document.body.appendChild(preloadSprites);
+    setTimeout(() => {
+        document.body.removeChild(preloadSprites);
+        preloadSprites = undefined;
+    }, 2000);
+
     const React = require('react');
-    const { socket, config, setTinyDbEngine, FileStreamAbstract } = require('./icebear');
+    const { socket, setTinyDbEngine, FileStreamAbstract } = require('./icebear');
     const { render } = require('react-dom');
     const { Router, createMemoryHistory } = require('react-router');
     const routes = require('./ui/routes');

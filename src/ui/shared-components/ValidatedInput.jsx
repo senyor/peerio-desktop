@@ -1,7 +1,7 @@
 /**
  * Component meant to live inside a form with a store.
  *
- * Given a store (OrderedFormStore) with observable x, aand configuring ValidatedInput
+ * Given a store (OrderedFormStore) with observable x, and configuring ValidatedInput
  * with name=x and some validator (and any additional properties desired), this
  * component will take care of validating the input on change and blur.
  * It will also create the following observables in the store:
@@ -16,7 +16,7 @@
 const React = require('react');
 const _ = require('lodash');
 const { socket } = require('../../icebear'); // eslint-disable-line
-const { extendObservable, observable, computed, reaction, when, isObservable } = require('mobx');
+const { extendObservable, computed, reaction, when, isObservable } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');

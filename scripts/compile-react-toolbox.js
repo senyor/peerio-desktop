@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /* eslint-disable */
 const postcss = require('postcss');
 const modules = require('postcss-modules');
@@ -67,10 +68,10 @@ function compile(file) {
 }
 [
     'commons.css',
-    'animations/slide-left.css',
-    'animations/slide-right.css',
-    'animations/zoom-in.css',
-    'animations/zoom-out.css',
+  //  'animations/slide-left.css',
+  //  'animations/slide-right.css',
+  //  'animations/zoom-in.css',
+  //  'animations/zoom-out.css',
     'app_bar/theme.css',
     'autocomplete/theme.css',
     'avatar/theme.css',

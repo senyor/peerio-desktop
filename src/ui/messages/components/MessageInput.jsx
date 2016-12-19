@@ -4,12 +4,9 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const Snackbar = require('../../shared-components/Snackbar');
-const EmojiPicker = require('emoji-mart').Picker;
-const emojiStore = require('emoji-mart').store;
-const emojione = require('emojione');
 const User = require('../../../icebear').User;
-
-emojione.ascii = true;
+const EmojiPicker = require('../../emoji/Picker');
+const emojione = require('emojione');
 
 // this makes it impossible to have 2 MessageInput rendered at the same time
 // for the sake of emoji picker performance.
@@ -30,26 +27,14 @@ class MessageInput extends React.Component {
         super();
         currentInstance = this;
         if (!cachedPicker) {
-            emojiStore.setNamespace(User.current.username);
-
             cachedPicker = (
-                <EmojiPicker set="emojione"
-                        onClick={onEmojiPicked}
-                        title="Pick your emoji…"
-                        emoji="point_up"
-                        style={{ position: 'absolute', bottom: '75px', right: '75px' }}
-                        color="#2C95CF"
-                        perLine={11}
-                        sheetSize={32}
-                        backgroundImageFn={() => './static/img/emojis.png'}
-                />
+                <EmojiPicker />
             );
         }
     }
 
     handleTextChange = newVal => {
         this.text = newVal;
-        this.inputIsEmpty = !(this.text && this.text.trim().length > 0);
         this.messageInput.refs.wrappedInstance.handleAutoresize();
     };
 
@@ -73,19 +58,17 @@ class MessageInput extends React.Component {
         this.emojiPickerVisible = false;
     };
 
-    // getPicker() {
-    //     if (!this.picker) {
-    //         this.picker = (<EmojiPicker search onChange={this.onEmojiPicked}
-    //                                     emojione={{ imageType: 'png', sprites: true }} />);
-    //     }
-    //     return this.picker;
-    // }
-
     onEmojiPicked = (emoji) => {
+       // let key = emoji.colons;
+       // let tone = toneRegex.exec(key);
+       // if(tone) {
+       //     tone = tone[1];
+       //     key = key.replace(toneRegex, '_tone'+tone+':');
+        // }
         this.hideEmojiPicker();
         const pos = this.messageInput.refs.wrappedInstance.refs.input.selectionStart;
         const val = this.text;
-        this.text = val.slice(0, pos) + emoji.colons + val.slice(pos);
+        this.text = val.slice(0, pos) + emoji.native + val.slice(pos);
         this.messageInput.refs.wrappedInstance.refs.input.focus();
     };
 

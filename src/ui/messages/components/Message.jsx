@@ -13,25 +13,10 @@ const matchers = [
     new EmailMatcher('email')
 ];
 
-const emojiPath = '../node_modules/emojione/assets/png/{{hexcode}}.png';
+const emojiPath = './static/emoji/png/{{hexcode}}.png';
 
 @observer
 class Message extends React.Component {
-    // isJumboji = false;
-
-    afterParse = (arr) => {
-        // if (this.isJumboji) return arr;
-        // if (arr.length > 10) return arr;
-        // for (let i = 0; i < arr.length; i++) {
-        //     if (!arr[i].type || arr[0].type.name !== 'Emoji') {
-        //         return arr;
-        //     }
-        // }
-        // this.isJumboji = true;
-        // setTimeout(this.forceUpdate.bind(this));
-        return arr;
-    };
-
     render() {
         return (
             <div className="message-content-wrapper">
@@ -42,8 +27,7 @@ class Message extends React.Component {
                         <div className="timestamp">{time.format(this.props.message.timestamp)}</div>
                     </div>
                     <Interweave tagName="p" content={this.props.message.text} noHtml
-                                onAfterParse={this.afterParse} matchers={matchers}
-                                emojiPath={emojiPath} />
+                                matchers={matchers} emojiPath={emojiPath} />
                 </div>
                 {this.props.message.sending ? <div className="sending-overlay" /> : null}
             </div>

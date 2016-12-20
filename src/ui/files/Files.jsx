@@ -25,7 +25,7 @@ const FileLine = require('./components/FileLine');
     }
 
     render() {
-        if (!fileStore.files.length) return noFiles();
+        if (!fileStore.files.length && !fileStore.loading) return noFiles();
         const tableContainerStyle = {
             display: 'flex',
             flexShrink: '1',

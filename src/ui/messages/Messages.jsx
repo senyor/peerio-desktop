@@ -1,4 +1,4 @@
-/* eslint-disable react/no-multi-comp */
+/* eslint-disable react/no-multi-comp, no-nested-ternary */
 const React = require('react');
 const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
@@ -43,7 +43,9 @@ class Messages extends React.Component {
                         {/* <Search />*/}
                         {/* <IconButton icon="info_outline" />*/}
                     </div>
-                    {chatStore.activeChat ? <MessageList /> : <NoChatSelected />}
+                    {chatStore.chats.length === 0 && !chatStore.loading
+                        ? <NoChatSelected />
+                        : (chatStore.activeChat ? <MessageList /> : null)}
                     <MessageInput show={!!chatStore.activeChat} onSend={this.sendMessage}
                                   onAck={this.sendAck} />
                 </div>

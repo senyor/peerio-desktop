@@ -12,7 +12,8 @@
 
   .emojis {
     bottom: 73px;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     padding-left: 3px;
     position: absolute;
     top: 36px;

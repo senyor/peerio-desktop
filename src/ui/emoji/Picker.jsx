@@ -59,7 +59,7 @@ class Picker extends React.Component {
 
     handleScroll = _.throttle(() => {
         const candidates = [];
-        let closest = null;
+        let closest;
         const parent = document.getElementsByClassName(`emojis`)[0];
         for (let i = 0; i < categories.length; i++) {
             const c = document.getElementsByClassName(`category-header ${categories[i].id}`)[0];
@@ -93,6 +93,7 @@ class Picker extends React.Component {
                                 {data[c.id].map(e =>
                                     <span onMouseEnter={() => { this.dontHide = true; store.hovered = e.shortname; }}
                                           onMouseLeave={this.resetHovered}
+                                          onClick={() => this.props.onPicked(e)}
                                           className={`emojione emojione-${e.unicode}`}
                                           key={e.unicode} />
                                 )}

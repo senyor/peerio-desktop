@@ -162,8 +162,10 @@
     padding: 0 $padding-small;
     position: relative;
 
-    .rt-input-input {
+    .rt-input-input,
+    .DraftEditor-root {
       padding: $padding-small 0;
+      width: 100%;
     }
 
     .color-brand > .material-icons {
@@ -174,7 +176,9 @@
       color: $color-affirmative;
     }
 
-    textarea {
+    textarea,
+    .DraftEditor-root,
+    .DraftEditor-editorContainer {
       line-height: 1.45;
       max-height: 96px;
       resize: none;

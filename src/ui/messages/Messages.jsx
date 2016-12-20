@@ -43,9 +43,9 @@ class Messages extends React.Component {
                         {/* <Search />*/}
                         {/* <IconButton icon="info_outline" />*/}
                     </div>
-                    {chatStore.chats.length === 0 && !chatStore.loading
+                    {(chatStore.chats.length === 0 && !chatStore.loading)
                         ? <NoChatSelected />
-                        : (chatStore.activeChat ? <MessageList /> : null)}
+                        : <MessageList />}
                     <MessageInput show={!!chatStore.activeChat} onSend={this.sendMessage}
                                   onAck={this.sendAck} />
                 </div>
@@ -69,6 +69,7 @@ class MessageList extends React.Component {
         setTimeout(() => { el.scrollTop = el.scrollHeight; });
     }
     render() {
+        if (!chatStore.activeChat) return null;
         return (
             <div className="messages-container">
                 {chatStore.activeChat.loadingMessages

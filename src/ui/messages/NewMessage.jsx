@@ -16,7 +16,7 @@ class NewMessage extends React.Component {
         return contactStore.contacts.filter(c => !c.loading && !c.notFound && !this.selected.includes(c));
     }
 
-    @computed get canGO() {
+    @computed get canOpenChat() {
         return !!this.selected.find(s => !s.loading && !s.notFound);
     }
 
@@ -51,7 +51,7 @@ class NewMessage extends React.Component {
     }
     creatingChat = false;
     go = () => {
-        if (this.creatingChat || !this.canGO) return;
+        if (this.creatingChat || !this.canOpenChat) return;
         this.creatingChat = true;
         this.selected.forEach(s => {
             if (s.notFound) this.selected.remove(s);
@@ -88,7 +88,7 @@ class NewMessage extends React.Component {
                                    onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
                         </div>
                         <Button className={css('confirm', { hide: !this.selected.length })} label="Go"
-                                onClick={this.go} disabled={!this.canGO} />
+                                onClick={this.go} disabled={!this.canOpenChat} />
                     </div>
                     <List selectable ripple >
                         <ListSubHeader caption="Your contacts" />

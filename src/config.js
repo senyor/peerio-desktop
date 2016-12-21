@@ -6,6 +6,8 @@ cfg.updateUrl = 'https://leviosa.peerio.com/update';
 cfg.currentVersion = app.getVersion();
 cfg.socketServerUrl = 'wss://hocuspocus.peerio.com'; // todo: branding should replace default url
 
+cfg.stringReplacements = [];
+
 if (isDevEnv) {
     try {
         cfg.autologin = require('../../autologin.json'); // eslint-disable-line

@@ -4,13 +4,19 @@ const languageStore = require('../stores/language-store');
 const { reaction } = require('mobx');
 const deepForceUpdate = require('react-deep-force-update');
 const isDevEnv = require('../helpers/is-dev-env');
-// const {setStringReplacement} = require('peerio-translator');
+const config = require('../config');
+const { setStringReplacement } = require('peerio-translator');
 
 class Root extends React.Component {
 
     constructor() {
         super();
-        // setStringReplacement('Peerio', 'Expandoo');
+
+        // replace config-specific strings
+        config.stringReplacements.forEach((replacementObject) => {
+            setStringReplacement(replacementObject.original, replacementObject.replacement);
+        });
+
         languageStore.loadSavedLanguage();
         this.onLanguageChange = reaction(
             () => languageStore.language,

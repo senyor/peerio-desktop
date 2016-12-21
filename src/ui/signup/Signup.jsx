@@ -114,7 +114,7 @@ const Snackbar = require('../shared-components/Snackbar');
         console.log('rerender signup');
         return (
             <div className={css('signup', 'rt-light-theme', { expand: this.expand })}>
-                <img role="presentation" className="logo" src="static/img/peerio-logo-white.png" />
+                <img role="presentation" className="logo" src="static/img/logo-white.png" />
                 <div className="signup-form">
                     <div className="signup-title">{t('signup')}</div>
                     {

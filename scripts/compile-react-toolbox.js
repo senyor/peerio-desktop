@@ -67,7 +67,7 @@ function compile(file) {
     });
 }
 [
-    'commons.css',
+   // 'commons.css',
   //  'animations/slide-left.css',
   //  'animations/slide-right.css',
   //  'animations/zoom-in.css',

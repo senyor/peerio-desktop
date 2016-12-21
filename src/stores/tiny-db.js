@@ -5,7 +5,7 @@ const config = require('../config');
 
 const app = electron.app || electron.remote.app;
 const folder = app.getPath('userData');
-const filePath = path.join(folder, `${config.appName}_tinydb.json`);
+const filePath = path.join(folder, `${config.appName.toLowerCase()}_tinydb.json`);
 const fileOpts = { encoding: 'utf8' };
 
 if (!fs.existsSync(filePath)) {

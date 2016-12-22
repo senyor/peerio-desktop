@@ -15,7 +15,7 @@
 }
 
 .rt-avatar-letter {
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0); // so we can see letters on white background 
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0); // so we can see letters on white background
   text-transform: capitalize;
 }
 
@@ -104,4 +104,9 @@
 // OVERLAY
 .rt-overlay-active > .rt-overlay-backdrop {
   opacity: .5;
+}
+
+// USER AGENT OVERWRITES
+ul {
+  margin: 0;
 }

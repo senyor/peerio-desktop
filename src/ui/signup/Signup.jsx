@@ -111,7 +111,6 @@ const Snackbar = require('../shared-components/Snackbar');
     };
 
     render() {
-        console.log('rerender signup');
         return (
             <div className={css('signup', 'rt-light-theme', { expand: this.expand })}>
                 <img role="presentation" className="logo" src="static/img/logo-white.png" />

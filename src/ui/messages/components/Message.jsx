@@ -2,10 +2,10 @@ const React = require('react');
 const Avatar = require('../../shared-components/Avatar');
 const { observer } = require('mobx-react');
 const { time } = require('../../../helpers/formatter');
-const Interweave = require('peerio-interweave/lib').default;
-const EmojiMatcher = require('peerio-interweave/lib/matchers/Emoji').default;
-const UrlMatcher = require('peerio-interweave/lib/matchers/Url').default;
-const EmailMatcher = require('peerio-interweave/lib/matchers/Email').default;
+const Interweave = require('interweave').default;
+const EmojiMatcher = require('interweave/matchers/Emoji').default;
+const UrlMatcher = require('interweave/matchers/Url').default;
+const EmailMatcher = require('interweave/matchers/Email').default;
 
 const matchers = [
     new EmojiMatcher('emoji', { convertShortName: true, convertUnicode: true, enlargeUpTo: 10 }),
@@ -26,7 +26,7 @@ class Message extends React.Component {
                         <div className="user">{this.props.message.sender.username}</div>
                         <div className="timestamp">{time.format(this.props.message.timestamp)}</div>
                     </div>
-                    <Interweave tagName="p" content={this.props.message.text} noHtml
+                    <Interweave tagName="p" content={this.props.message.text}
                                 matchers={matchers} emojiPath={emojiPath} />
                 </div>
                 {this.props.message.sending ? <div className="sending-overlay" /> : null}

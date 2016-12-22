@@ -114,12 +114,16 @@
 
       p {
         line-height: 1.5;
-        margin: $margin-small 0 0 $margin-default;
+        margin: 0 0 0 $margin-default;
         white-space: pre-wrap;
       }
 
       p + p {
         margin-top: $margin-small;
+      }
+
+      b, strong{
+        font-weight: 600;
       }
 
       .interweave__emoji {
@@ -129,6 +133,7 @@
 
         img {
           width: 1.5em;
+          -webkit-user-select: all;
         }
       }
 
@@ -140,13 +145,6 @@
         }
       }
 
-      .interweave__link {
-        color: $color-brand;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
     }
   }
 
@@ -162,13 +160,6 @@
     padding: 0 $padding-small;
     position: relative;
 
-    .rt-input-input,
-    .DraftEditor-root {
-      overflow-x: hidden;
-      overflow-y: auto;
-      padding: $padding-small 0;
-      width: 100%;
-    }
 
     .color-brand > .material-icons {
       color: $color-brand;
@@ -178,23 +169,23 @@
       color: $color-affirmative;
     }
 
-    textarea,
-    .DraftEditor-root,
-    .DraftEditor-editorContainer {
+    .ql-container{
+      padding: $padding-small 0;
+      width: 100%;
+      font-size: inherit;
+      font-family: inherit;
+    }
+
+    .ql-editor {
       line-height: 1.45;
       max-height: 96px;
-      resize: none;
+      padding: 0;
+
+      img{
+        width: 1.5em;
+        vertical-align: middle;
+      }
     }
-    //.emoji-dialog {
-    //  bottom: 75px;
-    //  height: 375px;
-    //  position: absolute;
-    //  right: 60px;
-    //  width: 340px;
-    //  .emojione {
-    //    zoom: .38;
-    //  }
-    //}
   }
 }
 

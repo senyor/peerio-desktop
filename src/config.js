@@ -1,12 +1,15 @@
 const cfg = require('./icebear').config; //eslint-disable-line
 const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('./helpers/is-dev-env');
+const { sanitizeChatMessage } = require('./helpers/sanitizer');
 
 cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';
 cfg.currentVersion = app.getVersion();
 cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
 cfg.supportUrl = 'https://peerio.zendesk.com';
+
+cfg.chatMessageSanitizer = sanitizeChatMessage;
 
 cfg.stringReplacements = [];
 

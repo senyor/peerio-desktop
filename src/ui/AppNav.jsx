@@ -55,12 +55,12 @@ class AppNav extends React.Component {
         return (
             <div className="app-nav">
                 <div className="avatar-wrapper">
-                    <IconMenu icon="">
+                    {/* <IconMenu icon="">
                         <MenuItem value="profile" icon="person" caption="Profile" disabled />
                         <MenuItem value="Settings" icon="settings" caption="Settings" disabled />
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption="Sign out" onClick={this.toSignout} />
-                    </IconMenu>
+                    </IconMenu> */}
                     <Avatar contact={this.contact} />
                 </div>
                 <div className="app-menu">

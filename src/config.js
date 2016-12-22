@@ -5,7 +5,8 @@ const isDevEnv = require('./helpers/is-dev-env');
 cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://leviosa.peerio.com/update';
 cfg.currentVersion = app.getVersion();
-cfg.socketServerUrl = 'wss://hocuspocus.peerio.com'; // todo: branding should replace default url
+cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
+cfg.supportUrl = 'https://peerio.zendesk.com';
 
 cfg.stringReplacements = [];
 

@@ -1,4 +1,5 @@
 const { app, Menu } = require('electron');
+const config = require('../config');
 
 const template = [
     {
@@ -40,7 +41,7 @@ const template = [
         submenu: [
             {
                 label: 'Support',  // don't use https: url due to weird redirect issues
-                click() { require('electron').shell.openExternal('http://support.peerio.com'); }
+                click() { require('electron').shell.openExternal(config.supportUrl); }
             }
         ]
     }

@@ -91,6 +91,7 @@
     "mocha": "3.2.0",
     "node-sass": "4.0.0",
     "nodemon": "1.11.0",
+    "normalize.css": "^4.2.0",
     "npm-run-all": "3.1.2",
     "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
     "peerio-icebear": "github:peeriotechnologies/peerio-icebear",

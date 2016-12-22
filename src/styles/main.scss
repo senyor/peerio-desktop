@@ -1,3 +1,4 @@
+@import '../node_modules/normalize.css/normalize.css';
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
 @import '../node_modules/draft-js/dist/Draft.css';
 @import '../node_modules/draft-js-emoji-plugin/lib/plugin.css';
@@ -21,7 +22,7 @@
 
 html {
   font-family: $font-stack;
-  //box-sizing: border-box;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
@@ -37,11 +38,11 @@ a {
   color: inherit;
 }
 
-//*,
-//*:before,
-//*:after {
-//  box-sizing: inherit;
-//}
+*,
+*:before,
+*:after {
+ box-sizing: inherit;
+}
 
 body,
 #root,

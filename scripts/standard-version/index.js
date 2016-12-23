@@ -63,7 +63,6 @@ function updateConfigs(args, newVersion) {
     configsToUpdate[path.resolve(process.cwd(), './app/package.json')] = false;
     Object.keys(configsToUpdate).forEach((configPath) => {
         try {
-            console.log('hiiii')
             const stat = fs.lstatSync(configPath);
             if (stat.isFile()) {
                 const config = require(configPath);

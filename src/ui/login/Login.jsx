@@ -119,7 +119,7 @@ class LoginStore extends OrderedFormStore {
         return (
             <div className="flex-row app-root">
                 <FullCoverLoader show={this.loginStore.busy} />
-                <div className="login rt-light-theme">
+                <div className="flex-row login rt-light-theme">
                     <img role="presentation" className="logo" src="static/img/logo-white.png" />
 
                     {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
@@ -154,7 +154,7 @@ class LoginStore extends OrderedFormStore {
                     </div>
 
                 </div>
-                <div className="flex-col welcome">
+                {/* <div className="flex-col welcome">
                     <h4 className="welcome-title">Simple and secure.</h4>
                     <p>
                        Send messages, share files, and store documents online.
@@ -165,7 +165,7 @@ class LoginStore extends OrderedFormStore {
                     <p>
                        You decide who accesses your data.
                     </p>
-                </div>
+                </div> */}
                 <Snackbar location="login" />
             </div>
         );

@@ -1,6 +1,7 @@
 {
   "name": "icebear-desktop",
   "description": "Peerio desktop client (codename Icebear)",
+  "version": "1.6.0",
   "scripts": {
     "postinstall": "install-app-deps",
     "start": "npm-run-all -l -n compile -p code:watch icebear:watch style:watch devstyle:watch electron:run",
@@ -29,6 +30,7 @@
     "dist:mac": "rm -rf dist/mac && build --mac --x64",
     "dist:win": "rm -rf dist/win && build --win --x64",
     "dist:linux": "build -l",
+    "release": "peerio-desktop-standard-version && git push --follow-tags origin master",
     "build-emoji": "./scripts/build_emoji.js",
     "validate": "npm-run-all -l -n -p code:lint style:lint",
     "install-win-build-tools": "./scripts/install-build-tools.sh",
@@ -105,7 +107,7 @@
     "precss": "1.4.0",
     "react-addons-perf": "15.4.1",
     "spectron": "3.4.0",
-    "standard-version": "^4.0.0",
+    "peerio-desktop-standard-version": "file:scripts/standard-version",
     "stylefmt": "5.0.2",
     "stylelint": "7.6.0",
     "stylelint-config-standard": "15.0.0",
@@ -167,7 +169,7 @@
         "squirrel"
       ],
       "title": "Icebear",
-      "version": "1.0.0",
+      "version": "1.6.0",
       "msi": true
     },
     "mac": {

@@ -4,6 +4,7 @@
   animation-iteration-count: infinite;
   animation-name: MOVE-BG;
   animation-timing-function: linear;
+  background-blend-mode: overlay;
   background-color: $background-brand;
   background-image: url('./static/img/bg-pattern.png');
   background-size: $background-pattern-size;

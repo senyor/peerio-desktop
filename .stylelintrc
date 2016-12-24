@@ -57,6 +57,7 @@
 		  "animation-timing-function",
 		  "background",
 		  "background-attachment",
+      "background-blend-mode",
 		  "-webkit-background-clip",
 		  "-moz-background-clip",
           "background-clip",

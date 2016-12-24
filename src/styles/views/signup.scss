@@ -6,7 +6,7 @@
   color: $text-light-secondary;
   height: 100vh;
   opacity: 0;
-  transition:  350ms opcaity $transition-default;
+  transition: 350ms opcaity $transition-default;
   width: 100vw;
 
   @extend %flex-col;

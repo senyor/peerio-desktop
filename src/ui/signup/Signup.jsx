@@ -14,7 +14,7 @@ const Snackbar = require('../shared-components/Snackbar');
 
 @observer class Signup extends React.Component {
     @observable busy = false;
-    @observable expand = false; // starts expand animation
+    @observable show = false; // starts show animation
     @observable step = 1; // 1 -profile, 2- passcode
     @observable errorVisible = false;
     @observable errorMessage = undefined;
@@ -36,7 +36,7 @@ const Snackbar = require('../shared-components/Snackbar');
     }
 
     componentDidMount() {
-        this.expand = true;
+        this.show = true;
     }
 
     createAccountWithPasscode() {
@@ -112,7 +112,7 @@ const Snackbar = require('../shared-components/Snackbar');
 
     render() {
         return (
-            <div className={css('signup', 'rt-light-theme', { expand: this.expand })}>
+            <div className={css('signup', 'rt-light-theme', { show: this.show })}>
                 <img role="presentation" className="logo" src="static/img/logo-white.png" />
                 <div className="signup-form">
                     <div className="signup-title">{t('signup')}</div>

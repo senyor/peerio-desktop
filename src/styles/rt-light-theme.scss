@@ -31,7 +31,7 @@
       background: $background-light-dropdown;
       box-shadow: none;
       color: $text-light-primary;
-      padding: 0 8px;
+      padding: 0 $padding-small;
 
       &:focus,
       &:hover {
@@ -49,9 +49,13 @@
 
   .rt-dropdown-values {
     background-color: #53aee0;
+    padding: 0;
 
     li {
       color: $text-light-hint;
+      padding: 0 $padding-small;
+      height: 48px;
+      line-height: 48px;
 
       &:hover {
         background-color: $background-light-dropdown;

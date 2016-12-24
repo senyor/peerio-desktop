@@ -20,6 +20,10 @@
 }
 
 // BUTTONS and ICONS!
+.rt-button-button {
+  padding-top: 0;
+}
+
 .rt-button-button > .rt-button-icon,
 .material-icons {
   color: $icon-dark-active;

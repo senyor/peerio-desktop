@@ -5,8 +5,9 @@
   background-size: $background-pattern-size;
   color: $text-light-secondary;
   height: 100vh;
-  transition: width 350ms $transition-ease-out;
-  width: 375px;
+  opacity: 0;
+  transition:  350ms opcaity $transition-default;
+  width: 100vw;
 
   @extend %flex-col;
 
@@ -28,8 +29,8 @@
     text-decoration: underline;
   }
 
-  &.expand {
-    width: 100vw;
+  &.show {
+    opacity: 1;
   }
 
   .signup-form {

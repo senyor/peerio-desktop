@@ -1,9 +1,8 @@
 .login {
-  align-items: center;
-  animation-duration: 50s;
-  animation-iteration-count: infinite;
-  animation-name: MOVE-BG;
-  animation-timing-function: linear;
+  // animation-duration: 50s;
+  // animation-iteration-count: infinite;
+  // animation-name: MOVE-BG;
+  // animation-timing-function: linear;
   background-blend-mode: overlay;
   background-color: $background-brand;
   background-image: url('./static/img/bg-pattern.png');
@@ -14,14 +13,16 @@
   width: 100vw;
 
   @extend %flex-col;
+  @extend %flex-align-center;
 
   .login-form {
     width: 275px;
   }
 
   .login-button {
-    align-self: center;
     margin: 48px 0;
+
+    @extend %flex-align-center;
   }
 
   .login-reg-button {
@@ -42,19 +43,24 @@
   }
 
   .welcome-back {
-    align-items: center;
     background: $background-welcome-back;
+    border-radius: 4px;
     color: $text-dark-secondary;
     cursor: pointer;
     flex-shrink: 0;
     font-size: 20px;
     height: 96px;
     justify-content: center;
+    min-width: 375px;
     // TODO: make transition vars
     transition: 150ms;
-    width: 375px;
 
     @extend %flex-col;
+    @extend %flex-align-center;
+
+    &:hover {
+      background: $background-welcome-back-active;
+    }
 
     .overflow {
       overflow: hidden;
@@ -123,13 +129,13 @@
 
 //----------------------------------------------------------------------------------------------------------------
 .welcome {
-  align-items: center;
   flex: 1 1 auto;
   height: 100vh;
   margin-top: 64px;
   padding: $padding-large;
 
   @extend %flex-col;
+  @extend %flex-align-center;
 
   p {
     font-size: 24px;

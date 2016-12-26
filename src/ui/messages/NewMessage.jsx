@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Chip, IconButton, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
+const { Button, Chip, FontIcon, IconButton, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
 const { t } = require('peerio-translator');
 const { contactStore, chatStore } = require('../../icebear'); //eslint-disable-line
 const css = require('classnames');
@@ -77,6 +77,7 @@ class NewMessage extends React.Component {
                         <IconButton icon="close" onClick={this.handleClose} />
                     </div>
                     <div className="new-message-search">
+                        <FontIcon value="search" />
                         <div className="chip-wrapper">
                             {this.selected.map(c =>
                                 <Chip key={c.username} className={css('username', { 'not-found': c.notFound })}

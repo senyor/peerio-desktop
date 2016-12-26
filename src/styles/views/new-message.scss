@@ -1,17 +1,17 @@
 .create-new-message {
-  align-items: center;
   height: 100vh;
   width: 100vw;
 
   @extend %flex-col;
+  @extend %flex-align-center;
 
   .chat-creation-header {
-    align-items: center;
-    flex-shrink: 0;
     margin-bottom: $margin-large;
     padding: $padding-default;
 
     @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-shrink-0;
 
     .title {
       margin-right: auto;
@@ -19,7 +19,6 @@
   }
 
   .new-message-search {
-    align-items: center;
     border: 1px solid $input-dark-border;
     border-radius: 24px;
     display: flex;
@@ -29,6 +28,8 @@
     padding: 0 $padding-small 0 $padding-default;
     width: 100%;
 
+    @extend %flex-align-center;
+
     .chip-wrapper {
       align-items: center;
       background-color: $background-root;
@@ -37,7 +38,7 @@
       margin-right: auto;
       max-width: 544px;
       min-height: 46px;
-      padding: 0 8px;
+      padding: 0 $padding-small 0 0;
 
       @extend %flex-row;
     }
@@ -98,25 +99,47 @@
     background: $background-root;
     border: 1px solid $color-brand;
     color: $color-brand;
-    flex-shrink: 0;
     margin-bottom: 4px;
     margin-top: 4px;
     max-width: 160px;
     min-width: 88px;
     transition: 500ms 500ms $transition-ease-out;
 
+    @extend %flex-shrink-0;
+
     span:last-of-type {
       opacity: 1;
       transition: 250ms;
+      display: inline-flex;
+
+      @extend %flex-align-center;
+      @extend %flex-justify-center
     }
 
     .rt-chip-delete {
       border: 2px solid $color-brand;
       border-radius: 24px;
+
+      &:hover {
+        background: $color-brand;
+        
+        .rt-chip-deleteIcon {
+          background: $color-brand;
+        }
+
+        .rt-chip-deleteX {
+          stroke: #fff;
+        }
+      }
     }
 
     .rt-chip-deleteIcon {
       background: #fff;
+      height: 20px;
+      width: 20px;
+
+      @extend %flex-shrink-0;
+
 
       .rt-chip-deleteX {
         stroke: $color-brand;

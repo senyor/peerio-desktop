@@ -4,7 +4,6 @@
   "version": "1.3.2",
   "scripts": {
     "precommit": "npm run validate",
-    "postcheckout": "",
     "postmerge": "npm update",
     "commitmsg": "validate-commit-msg",
     "postinstall": "install-app-deps",

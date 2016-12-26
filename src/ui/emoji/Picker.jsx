@@ -54,7 +54,7 @@ class Picker extends React.Component {
         this.dontHide = false;
         setTimeout(() => {
             if (!this.dontHide)store.hovered = null;
-        }, 1000);
+        }, 2000);
     };
 
     handleScroll = _.throttle(() => {

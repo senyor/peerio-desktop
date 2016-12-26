@@ -15,6 +15,7 @@
   },
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "dependencies": {
+    "autolinker": "^1.4.0",
     "blake2s-js": "1.2.0",
     "bluebird": "3.4.6",
     "buffer": "5.0.2",

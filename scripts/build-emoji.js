@@ -47,9 +47,12 @@ fs.writeFileSync(`${out}emoji.json`, JSON.stringify(raw));
 
 // copy sprites
 console.log('Optimising and copying sprites.');
-cp.execSync(`pngquant ${srcSprites} -o ${out}emojione.sprites.png`);
+// cp.execSync(`pngquant ${srcSprites} -o ${out}emojione.sprites.png`);
+cp.execSync(`cp ${srcSprites} ${out}emojione.sprites.png`);
 console.log('Copying sprite css.');
-cp.execSync(`cp ${srcCss} ${out}`);
+// cp.execSync(`cp ${srcCss} ${out}`);
+cp.execSync(`echo ".emoji-picker $(cat ${srcCss})" > ${out}emojione.sprites.css`);
+
 console.log('Copying images.');
 cp.execSync(`cp -R ${srcImages} ${out}`);
 

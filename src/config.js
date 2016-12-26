@@ -9,8 +9,6 @@ cfg.currentVersion = app.getVersion();
 cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
 cfg.supportUrl = 'https://peerio.zendesk.com';
 
-cfg.chatMessageSanitizer = sanitizeChatMessage;
-
 cfg.stringReplacements = [];
 
 if (isDevEnv) {

@@ -30,7 +30,12 @@
 .full-width{
   width:100%;
 }
-
+.bold{
+  font-weight: 600;
+}
+.monospace{
+  font-family: monospace;
+}
 // Don't select these items.
 
 img,
@@ -39,3 +44,4 @@ img,
   -webkit-user-select: none;
   -webkit-user-drag: none;
 }
+

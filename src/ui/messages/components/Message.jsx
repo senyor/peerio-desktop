@@ -2,18 +2,18 @@ const React = require('react');
 const Avatar = require('../../shared-components/Avatar');
 const { observer } = require('mobx-react');
 const { time } = require('../../../helpers/formatter');
-const Interweave = require('interweave').default;
-const EmojiMatcher = require('interweave/matchers/Emoji').default;
-const UrlMatcher = require('interweave/matchers/Url').default;
-const EmailMatcher = require('interweave/matchers/Email').default;
+const { sanitizeChatMessage } = require('../../../helpers/sanitizer');
+const emojione = require('emojione');
 
-const matchers = [
-    new EmojiMatcher('emoji', { convertShortName: true, convertUnicode: true, enlargeUpTo: 10 }),
-    new UrlMatcher('url'),
-    new EmailMatcher('email')
-];
 
-const emojiPath = './static/emoji/png/{{hexcode}}.png';
+function processMessage(msg){
+    if(msg.processedText != null) return msg.processedText;
+    let str = sanitizeChatMessage(msg.text);
+    str = emojione.unicodeToImage(str);
+    str = {__html: str};
+    msg.processedText = str;
+    return str;
+}
 
 @observer
 class Message extends React.Component {
@@ -26,8 +26,7 @@ class Message extends React.Component {
                         <div className="user">{this.props.message.sender.username}</div>
                         <div className="timestamp">{time.format(this.props.message.timestamp)}</div>
                     </div>
-                    <Interweave tagName="p" content={this.props.message.text}
-                                matchers={matchers} emojiPath={emojiPath} />
+                    <p dangerouslySetInnerHTML={processMessage(this.props.message)} />
                 </div>
                 {this.props.message.sending ? <div className="sending-overlay" /> : null}
             </div>

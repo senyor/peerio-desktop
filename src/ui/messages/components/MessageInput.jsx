@@ -87,7 +87,7 @@ class MessageInput extends React.Component {
         data = data.replace(/<\/p>/gim, '\n');
         data = data.replace(/<p>/gim, '');
 
-        const imgRegex = /<img src=".*\/([A-Za-z0-9\-]+)\.png"\/?>/gim;
+        const imgRegex = /<img src=".*?\/([A-Za-z0-9\-]+)\.png"\/?>/gim;
         let match;
         const replacements = [];
         while ((match = imgRegex.exec(data)) !== null) {

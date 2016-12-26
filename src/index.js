@@ -13,22 +13,28 @@ document.addEventListener('DOMContentLoaded', () => {
         m.exports = require(f.replace('.css', '.json'));
     };
 
+    // <emojione> ------------------------------------------------------------------------------------------------
     // configuring emojione and preloading sprites
     const emojione = require('emojione');
     emojione.ascii = true;
-    emojione.imagePathPNG = '';
+    emojione.imagePathPNG = './static/emoji/png/';
     emojione.imagePathSVG = '';
     emojione.imagePathSVGSprites = '';
-    emojione.sprites = true;
+    emojione.sprites = false;
 
+    let preloadSpritesContainer = document.createElement('span');
+    preloadSpritesContainer.className = 'emoji-picker hide';
+    preloadSpritesContainer.style.zIndex = '-10000';
     let preloadSprites = document.createElement('span');
     preloadSprites.className = 'emojione emojione-1f602 hide';
-    document.body.appendChild(preloadSprites);
+    preloadSpritesContainer.appendChild(preloadSprites);
+    document.body.appendChild(preloadSpritesContainer);
     setTimeout(() => {
-        document.body.removeChild(preloadSprites);
+        document.body.removeChild(preloadSpritesContainer);
+        preloadSpritesContainer = undefined;
         preloadSprites = undefined;
     }, 2000);
-
+    // </emojione> -----------------------------------------------------------------------------------------------
     const React = require('react');
     const { socket, setTinyDbEngine, FileStreamAbstract } = require('./icebear');
     const { render } = require('react-dom');

@@ -122,27 +122,8 @@
         margin-top: $margin-small;
       }
 
-      b, strong{
+      b, strong {
         font-weight: 600;
-      }
-
-      .interweave__emoji {
-        display: inline-block;
-        margin: 0 2px;
-        vertical-align: middle;
-
-        img {
-          width: 1.5em;
-          -webkit-user-select: all;
-        }
-      }
-
-      .interweave__emoji {
-        &.interweave__emoji--large {
-          img {
-            width: 2.4em;
-          }
-        }
       }
 
     }
@@ -160,7 +141,6 @@
     padding: 0 $padding-small;
     position: relative;
 
-
     .color-brand > .material-icons {
       color: $color-brand;
     }
@@ -169,7 +149,7 @@
       color: $color-affirmative;
     }
 
-    .ql-container{
+    .ql-container {
       padding: $padding-small 0;
       width: 100%;
       font-size: inherit;
@@ -181,11 +161,23 @@
       max-height: 96px;
       padding: 0;
 
-      img{
+      img {
         width: 1.5em;
         vertical-align: middle;
       }
     }
+  }
+
+  // both for text input and chat content
+  img.emojione {
+    height: 3ex;
+    width: auto;
+    min-height: 20px;
+    min-width: 20px;
+    display: inline-block;
+    margin: -.2ex .15em .2ex;
+    vertical-align: middle;
+    -webkit-user-select: initial;
   }
 }
 

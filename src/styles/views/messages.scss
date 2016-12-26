@@ -122,10 +122,10 @@
         margin-top: $margin-small;
       }
 
-      b, strong {
+      b,
+      strong {
         font-weight: 600;
       }
-
     }
   }
 
@@ -150,10 +150,10 @@
     }
 
     .ql-container {
+      font-family: inherit;
+      font-size: inherit;
       padding: $padding-small 0;
       width: 100%;
-      font-size: inherit;
-      font-family: inherit;
     }
 
     .ql-editor {
@@ -162,22 +162,21 @@
       padding: 0;
 
       img {
-        width: 1.5em;
         vertical-align: middle;
+        width: 1.5em;
       }
     }
   }
-
   // both for text input and chat content
   img.emojione {
+    display: inline-block;
     height: 3ex;
-    width: auto;
+    margin: -.2ex .15em .2ex;
     min-height: 20px;
     min-width: 20px;
-    display: inline-block;
-    margin: -.2ex .15em .2ex;
-    vertical-align: middle;
     -webkit-user-select: initial;
+    vertical-align: middle;
+    width: auto;
   }
 }
 

@@ -6,11 +6,11 @@ const { sanitizeChatMessage } = require('../../../helpers/sanitizer');
 const emojione = require('emojione');
 
 
-function processMessage(msg){
-    if(msg.processedText != null) return msg.processedText;
+function processMessage(msg) {
+    if (msg.processedText != null) return msg.processedText;
     let str = sanitizeChatMessage(msg.text);
     str = emojione.unicodeToImage(str);
-    str = {__html: str};
+    str = { __html: str };
     msg.processedText = str;
     return str;
 }

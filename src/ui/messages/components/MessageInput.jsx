@@ -1,4 +1,4 @@
-/* eslint-disable react/no-multi-comp */
+/* eslint-disable react/no-multi-comp, no-cond-assign */
 const React = require('react');
 const { IconMenu, MenuItem, IconButton } = require('react-toolbox');
 const { observable } = require('mobx');
@@ -16,7 +16,7 @@ const Inline = Quill.import('blots/inline');
 const Keyboard = Quill.import('modules/keyboard');
 
 const pngFolder = './static/emoji/png/';
-const codeUrlRegex = /([A-Za-z0-9\-]+)\.png/i;
+const codeUrlRegex = /([A-Za-z0-9-]+)\.png/i;
 
 class EmojiBlot extends Embed {
     static create(unicode) {
@@ -87,7 +87,7 @@ class MessageInput extends React.Component {
         data = data.replace(/<\/p>/gim, '\n');
         data = data.replace(/<p>/gim, '');
 
-        const imgRegex = /<img src=".*?\/([A-Za-z0-9\-]+)\.png"\/?>/gim;
+        const imgRegex = /<img src=".*?\/([A-Za-z0-9-]+)\.png"\/?>/gim;
         let match;
         const replacements = [];
         while ((match = imgRegex.exec(data)) !== null) {
@@ -144,7 +144,7 @@ class MessageInput extends React.Component {
             }
         });
     };
-    clearEditor = ()=>{
+    clearEditor = () => {
         this.quill.setText('');
         this.quill.history.clear();
     };

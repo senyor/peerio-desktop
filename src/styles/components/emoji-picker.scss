@@ -1,7 +1,9 @@
+$picker-border-radius: 5px;
+
 .emoji-picker {
   background: #fff;
   border: 1px solid #d9d9d9;
-  border-radius: 5px;
+  border-radius: $picker-border-radius;
   bottom: 90px;
   color: #222427;
   display: block;
@@ -34,7 +36,9 @@
 
   .info-pane {
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #fafafa;
+    border-bottom-left-radius: $picker-border-radius;
+    border-bottom-right-radius: $picker-border-radius;
     border-top: 1px solid #d9d9d9;
     bottom: 0;
     display: flex;
@@ -56,10 +60,12 @@
   }
 
   .categories {
-    background-color: #f0f0f0;
+    background-color: #fafafa;
     border-bottom: 1px solid #d9d9d9;
+    border-top-left-radius: $picker-border-radius;
+    border-top-right-radius: $picker-border-radius;
     display: flex;
-    height: 36px;
+    height: 37px;
     justify-content: space-around;
   }
 
@@ -84,6 +90,7 @@
   .category-header {
     border-top: 1px solid #d9d9d9;
     font-weight: 600;
+    margin-right: 3px;
     padding: 5px;
   }
 

@@ -69,6 +69,7 @@ function onEmojiPicked(emoji) {
 class MessageInput extends React.Component {
     @observable text = '';
     @observable emojiPickerVisible = false;
+    @observable suggests = null;
 
     constructor() {
         super();
@@ -123,7 +124,7 @@ class MessageInput extends React.Component {
 
     activateQuill = el => {
         if (!el) return;
-        this.quill = new Quill(el, {
+        const quill = this.quill = new Quill(el, {
             placeholder: 'Enter your message...',
             formats: ['bold', 'italic', 'emoji'],
             modules: {
@@ -143,7 +144,23 @@ class MessageInput extends React.Component {
                 }
             }
         });
+
+        // quill.on('text-change', (delta, oldDelta, source) => {
+        //     if (source === Quill.sources.USER) {
+        //         this.tryShowEmojiSuggestions();
+        //     }
+        // });
     };
+    //     ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", "k", "i", "s", "_", "w", "|", "c", "o", "u", "p", "l", "e", "m", "f", "a", "y", "b", "g", "t", "h", "r", "n", "d", "z", "v", "x", "j", "-", "\", "+", "q"]
+    // tryShowEmojiSuggestions = () =>{
+    //     const sel = this.quill.getSelection();
+    //     if(sel.length){
+    //         this.suggests = null;
+    //         return;
+    //     }
+    //     const text = this.quill.getText();
+    //
+    // };
     clearEditor = () => {
         this.quill.setText('');
         this.quill.history.clear();

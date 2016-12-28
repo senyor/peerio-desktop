@@ -367,6 +367,7 @@
   "address_removeConfirm": "Are you sure you want to remove this address?",
   "address_makePrimary": "Tap an address to make it your primary.",
   "address_confirmationSent": "Please check your email to confirm and link your email account. Users won't be able to find you through that email address until you do.",
+  "address_confirmationSent_mobile": "Confirm your email",
   "address_confirmed": "Your email has been linked! Other Peerio users will now be able to find you through your email.",
   "account_deleteTitle": "{#deleteAccount}",
   "account_deleteConfirm": "Are you sure you want to delete your account?",
@@ -465,7 +466,7 @@
   "login_loginButton": "{#login}",
   "login_passphraseOrPasscode": "{#passphrase} {#or} {#passcode}",
   "login_signUpButton": "{#signup}",
-  "login_changeUser": "Not <username></>? Click here to change.",
+  "login_changeUser": "Not {username}? Click here to change.",
   "login_welcomeBack": "Welcome back,",
   "login_changeUserButton": "Change User",
   "setup_contactInfoDescription": "Help your contacts find you on Peerio, receive notifications, and enable support services by adding your email address or phone number",
@@ -583,7 +584,7 @@
   "passcode_notDistinct": "please enter a unique PIN",
   "passcode_tooShort": "{number} more digits to go",
   "passcode_restriction": "PIN must be 6 digits",
-  "passcode_inputPlaceholder": "Enter a device PIN",
+  "passcode_inputPlaceholder": "Select a device PIN",
   "passcode_ok": "you're good to go",
   "settings_saveFailed": "Settings save failed.",
   "settings_optIn": "By enabling anonymous data collection, we will collect non-identifying and non-content information to share with researchers and improve Peerio. When you opt in, we will add 25MB to your account everyday as thanks for your contribution.",
@@ -715,5 +716,6 @@
   "successPINchange": "Your PIN has been changed",
   "directMessages": "Direct message",
   "userSearch": "Enter username",
-  "messageSearch": "Search conversations"
+  "messageSearch": "Search conversations",
+  "wait": "Working..."
 }

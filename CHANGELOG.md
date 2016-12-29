@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.4.0...v1.4.1) (2016-12-29)
+
+
+### Bug Fixes
+
+* **files:** zero state button ([4d26ce5](https://github.com/PeerioTechnologies/peerio-desktop/commit/4d26ce5))
+* **inputs:** convert username search & inputs to lowercase ([6e325d7](https://github.com/PeerioTechnologies/peerio-desktop/commit/6e325d7))
+* **passcode:** validation fixes ([1da2b3d](https://github.com/PeerioTechnologies/peerio-desktop/commit/1da2b3d))
+* **validation:** refactor field init to OrderedFormStore ([d8edf18](https://github.com/PeerioTechnologies/peerio-desktop/commit/d8edf18))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.3.2...v1.4.0) (2016-12-27)
 

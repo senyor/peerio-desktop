@@ -114,7 +114,7 @@ const OrderedFormStore = require('../../stores/ordered-form-store');
     };
 
     handleChange = (val) => {
-        this.props.store[this.fName] = val;
+        this.props.store[this.fName] = this.props.lowercase ? val.toLowerCase() : val;
         this.props.store[this.fDirty] = true;
     };
 

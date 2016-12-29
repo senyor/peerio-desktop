@@ -39,12 +39,14 @@ class ProfileStore extends OrderedFormStore {
                 <ValidatedInput label={t('username')}
                                 value={this.props.store.username}
                                 position="0"
+                                lowercase="true"
                                 validator={validators.username}
                                 name="username"
                                 store={this.props.store} />
 
                 <ValidatedInput label={t('email')}
                                 position="1"
+                                lowercase="true"
                                 validator={validators.email}
                                 name="email"
                                 store={this.props.store} />

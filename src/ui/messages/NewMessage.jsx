@@ -21,6 +21,7 @@ class NewMessage extends React.Component {
     }
 
     handleTextChange = newVal => {
+        newVal = newVal.toLowerCase();
         if (newVal.length > 1 && ', '.includes(newVal[newVal.length - 1])) {
             this.query = newVal.substr(0, newVal.length - 1).trim();
             this.tryAcceptUsername();

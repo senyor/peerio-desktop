@@ -128,6 +128,7 @@ class LoginStore extends OrderedFormStore {
                         <ValidatedInput label={t('username')}
                                         name="username"
                                         position="0"
+                                        lowercase="true"
                                         store={this.loginStore}
                                         validator={validators.usernameLogin}
                                         onKeyPress={this.handleKeyPress} />

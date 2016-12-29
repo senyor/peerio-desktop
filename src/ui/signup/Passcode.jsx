@@ -31,6 +31,15 @@ class PasscodeStore extends OrderedFormStore {
         ];
     }
 
+    componentDidMount() {
+        // force passcodeRepeat to validate on subsequent passcode changes
+        reaction(() => this.props.store.passcode, () => {
+            if (this.props.store.passcodeRepeat) {
+                this.props.store.validatePasscodeRepeat();
+            }
+        })
+    }
+
     handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             this.props.returnHandler();

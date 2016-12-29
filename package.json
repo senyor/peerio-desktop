@@ -90,7 +90,6 @@
     "electron-devtools-installer": "2.0.1",
     "electron-rebuild": "1.4.0",
     "electron-reload": "1.1.0",
-    "emojione": "2.2.7",
     "eslint-config-peerio": "*",
     "husky": "0.12.0",
     "mobx-react-devtools": "4.2.10",

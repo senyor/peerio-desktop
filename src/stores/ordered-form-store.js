@@ -44,7 +44,7 @@ class OrderedFormStore {
 
     /**
      * Adds a field and initializes functions and observables related to it.
-     * 
+     *
      * @param {String} fieldName
      * @param {ValidatedInput} validatedInputComponent
      * @param {Number} position

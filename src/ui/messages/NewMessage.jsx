@@ -21,13 +21,13 @@ class NewMessage extends React.Component {
     }
 
     handleTextChange = newVal => {
-        newVal = newVal.toLowerCase();
-        if (newVal.length > 1 && ', '.includes(newVal[newVal.length - 1])) {
-            this.query = newVal.substr(0, newVal.length - 1).trim();
+        const newValLower = newVal.toLowerCase();
+        if (newValLower.length > 1 && ', '.includes(newValLower[newValLower.length - 1])) {
+            this.query = newValLower.substr(0, newValLower.length - 1).trim();
             this.tryAcceptUsername();
             return;
         }
-        this.query = newVal.trim();
+        this.query = newValLower.trim();
     };
 
     // Don't use onKeyPress it won't catch backspace

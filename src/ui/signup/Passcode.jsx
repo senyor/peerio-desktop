@@ -37,7 +37,7 @@ class PasscodeStore extends OrderedFormStore {
             if (this.props.store.passcodeRepeat) {
                 this.props.store.validatePasscodeRepeat();
             }
-        })
+        });
     }
 
     handleKeyPress = (e) => {

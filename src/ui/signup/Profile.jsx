@@ -13,6 +13,8 @@ const OrderedFormStore = require('../../stores/ordered-form-store');
 const { validators } = validation; // use common validation from core
 
 class ProfileStore extends OrderedFormStore {
+    @observable fieldsExpected = 2;
+
     @observable username = ''; // also has observables usernameValid, usernameDirty
     @observable email = ''; // also has emailValid, emailDirty
     @observable firstName = ''; // etc

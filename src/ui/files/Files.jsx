@@ -43,9 +43,9 @@ const FileLine = require('./components/FileLine');
                             <div className="flex-col flex-align-start">
                                 <p className="heading"
                                    style={{
-                               marginBottom: '48px',
-                               lineHeight: '1.4'
-                           }}>
+                                       marginBottom: '48px',
+                                       lineHeight: '1.4'
+                                   }}>
                                     Drag and drop, upload,
                                     <br />
                                     share, and manage

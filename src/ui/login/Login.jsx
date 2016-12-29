@@ -17,6 +17,8 @@ const Snackbar = require('../shared-components/Snackbar');
 const { validators } = validation; // use common validation from core
 
 class LoginStore extends OrderedFormStore {
+    @observable fieldsExpected = 2;
+
     // also has observables usernameValid, usernameDirty created by ValidatedInput
     @observable username = '';
     @observable passcodeOrPassphrase = '';

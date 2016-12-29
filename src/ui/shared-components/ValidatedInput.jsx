@@ -16,7 +16,7 @@
 const React = require('react');
 const _ = require('lodash');
 const { socket } = require('../../icebear'); // eslint-disable-line
-const { extendObservable, computed, reaction, when, isObservable } = require('mobx');
+const { computed, reaction, when, isObservable } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('react-toolbox');
@@ -43,7 +43,7 @@ const OrderedFormStore = require('../../stores/ordered-form-store');
         }
 
         if (!isObservable(this.props.store, this.props.name)) {
-            throw new Error(`ValidatedInput expects ${this.props.name} to be an observable property in the store`);
+            throw new Error(`ValidatedInput expects ${this.props.name} to be an observable property in the (observable) store`);
         }
 
         // set property names
@@ -51,17 +51,8 @@ const OrderedFormStore = require('../../stores/ordered-form-store');
         this.fDirty = `${this.fName}Dirty`;
         this.fValid = `${this.fName}Valid`;
         this.fMsgText = `${this.fName}ValidationMessageText`;
-        const validationProps = {};
 
-        // adds additional observables to the store
-        validationProps[this.fValid] = false;
-        validationProps[this.fDirty] = false;
-        validationProps[this.fMsgText] = '';
-        extendObservable(this.props.store, validationProps);
-        // add the field order
-        this.props.store.fieldOrders[this.fName] = this.props.position;
-        // alert the store that the above are available -- use in computeds
-        this.props.store.initialized = true;
+        this.props.store.addField(this.props.name, this, this.props.position);
 
         this.validate = () => {
             when(() => socket.connected, () => this.validateConnected());

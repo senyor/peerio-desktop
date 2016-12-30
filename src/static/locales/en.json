@@ -535,6 +535,7 @@
   "file_locationLocal": "On this device (decrypted) and in the cloud (encrypted)",
   "file_locationCloud": "In the cloud (encrypted)",
   "file_uploadComplete": "Upload complete.",
+  "file_shortUploadComplete": "{fileName} finished uploading.",
   "file_uploadFailed": "Upload failed.",
   "file_uploadStorageExceeded": "Storage quota exceeded.",
   "file_namePrompt": "Enter filename:",
@@ -717,5 +718,7 @@
   "directMessages": "Direct message",
   "userSearch": "Enter username",
   "messageSearch": "Search conversations",
-  "wait": "Working..."
+  "wait": "Working...",
+  "confirm_deleteFile": "Are you sure you want to delete this file?",
+  "confirm_deleteFiles": "Are you sure you want to delete {count} files?"
 }

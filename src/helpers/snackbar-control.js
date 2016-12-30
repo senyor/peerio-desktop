@@ -1,6 +1,6 @@
 const { observable, reaction } = require('mobx');
 const { t } = require('peerio-translator');
-const { serverWarnings } = require('../icebear');
+const { systemWarnings } = require('../icebear');
 
 /**
  * Snackbar control contains:
@@ -25,8 +25,8 @@ class SnackbarControl {
     constructor() {
         this.next = this.next.bind(this);
         // add server warnings to the general snackbar pool
-        reaction(() => serverWarnings.collection.length, (l) => {
-            this.addMessage(serverWarnings.collection[l - 1]);
+        reaction(() => systemWarnings.collection.length, (l) => {
+            this.addMessage(systemWarnings.collection[l - 1]);
         });
     }
 

@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // <emojione> ------------------------------------------------------------------------------------------------
     // configuring emojione and preloading sprites
-    const emojione = require('emojione');
+    const emojione = require('./static/emoji/emojione.js');
     emojione.ascii = true;
     emojione.imagePathPNG = './static/emoji/png/';
     emojione.imagePathSVG = '';

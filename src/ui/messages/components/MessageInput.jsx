@@ -5,7 +5,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const Snackbar = require('../../shared-components/Snackbar');
 const EmojiPicker = require('../../emoji/Picker');
-const emojione = require('emojione');
+const emojione = require('../../../static/emoji/emojione.js');
 const Quill = require('quill/dist/quill.core');
 const { sanitizeChatMessage } = require('../../../helpers/sanitizer');
 

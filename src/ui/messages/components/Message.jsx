@@ -3,7 +3,7 @@ const Avatar = require('../../shared-components/Avatar');
 const { observer } = require('mobx-react');
 const { time } = require('../../../helpers/formatter');
 const { sanitizeChatMessage } = require('../../../helpers/sanitizer');
-const emojione = require('emojione');
+const emojione = require('../../../static/emoji/emojione.js');
 const Autolinker = require('autolinker');
 
 const autolinker = new Autolinker({

@@ -1,3 +1,4 @@
 dist/*
 build-assets/*
 app/*
+src/static/*

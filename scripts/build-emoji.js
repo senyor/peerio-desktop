@@ -6,6 +6,7 @@ const srcImages = './node_modules/emojione/assets/png';
 const srcSprites = './node_modules/emojione/assets/sprites/emojione.sprites.png';
 const srcCss = './node_modules/emojione/assets/sprites/emojione.sprites.css';
 const srcJson = './node_modules/emojione/emoji.json';
+const srcJs = './node_modules/emojione/lib/js/emojione.js';
 const out = './src/static/emoji/';
 
 // "has_img_emojione": false
@@ -49,6 +50,7 @@ fs.writeFileSync(`${out}emoji.json`, JSON.stringify(raw));
 console.log('Optimising and copying sprites.');
 // cp.execSync(`pngquant ${srcSprites} -o ${out}emojione.sprites.png`);
 cp.execSync(`cp ${srcSprites} ${out}emojione.sprites.png`);
+cp.execSync(`cp ${srcJs} ${out}emojione.js`);
 console.log('Copying sprite css.');
 // cp.execSync(`cp ${srcCss} ${out}`);
 cp.execSync(`echo ".emoji-picker $(cat ${srcCss})" > ${out}emojione.sprites.css`);

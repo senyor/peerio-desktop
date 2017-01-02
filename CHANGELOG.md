@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.3"></a>
+## [1.4.3](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.4.2...v1.4.3) (2017-01-02)
+
+
+### Bug Fixes
+
+* **files:** download blocked while uploading on another device ([663a515](https://github.com/PeerioTechnologies/peerio-desktop/commit/663a515))
+* **snackbar:** serverWarning -> systemWarning ([2f9cc05](https://github.com/PeerioTechnologies/peerio-desktop/commit/2f9cc05))
+
+
+
 <a name="1.4.2"></a>
 ## [1.4.2](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.4.1...v1.4.2) (2016-12-29)
 

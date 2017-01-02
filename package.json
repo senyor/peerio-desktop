@@ -1,7 +1,7 @@
 {
   "name": "icebear-desktop",
   "description": "Peerio desktop client (codename Icebear)",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -167,7 +167,7 @@
         "squirrel"
       ],
       "title": "Icebear",
-      "version": "1.4.2",
+      "version": "1.4.3",
       "msi": true
     },
     "mac": {

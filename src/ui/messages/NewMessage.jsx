@@ -3,9 +3,9 @@ const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List, ListItem, ListSubHeader, ProgressBar } = require('react-toolbox');
 const { t } = require('peerio-translator');
-const { contactStore, chatStore } = require('../../icebear'); //eslint-disable-line
+const { contactStore, chatStore } = require('~/icebear');
 const css = require('classnames');
-const Avatar = require('../shared-components/Avatar');
+const Avatar = require('~/ui/shared-components/Avatar');
 
 @observer
 class NewMessage extends React.Component {

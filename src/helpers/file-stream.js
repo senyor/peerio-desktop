@@ -1,4 +1,4 @@
-const { FileStreamAbstract, errors } = require('../icebear');
+const { FileStreamAbstract, errors } = require('~/icebear');
 const fs = require('fs');
 
 // todo prevent sequential read/write while in progress

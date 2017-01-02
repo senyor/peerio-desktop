@@ -1,9 +1,9 @@
 const { observable } = require('mobx');
 const { autoUpdater } = require('electron').remote;
 const os = require('os');
-const config = require('./config');
-const { normalize } = require('./icebear').errors; // eslint-disable-line
-const isDevEnv = require('./helpers/is-dev-env');
+const config = require('~/config');
+const { normalize } = require('~/icebear').errors;
+const isDevEnv = require('~/helpers/is-dev-env');
 
 const platform = `${os.platform()}_${os.arch()}`;  // usually returns darwin_64
 

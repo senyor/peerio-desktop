@@ -1,4 +1,4 @@
-const db = require('../stores/tiny-db');
+const db = require('~/stores/tiny-db');
 
 function saveWindowState(state) {
     db.set('windowState', state);

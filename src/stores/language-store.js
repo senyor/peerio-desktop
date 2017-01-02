@@ -1,7 +1,7 @@
 const { observable, action } = require('mobx');
 const { setLocale } = require('peerio-translator');
-const normalizeError = require('../icebear').errors.normalize; //eslint-disable-line
-const db = require('../stores/tiny-db');
+const normalizeError = require('~/icebear').errors.normalize;
+const db = require('~/stores/tiny-db');
 const fs = require('fs');
 const path = require('path');
 const electron = require('electron').remote || require('electron');

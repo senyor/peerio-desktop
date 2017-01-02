@@ -5,7 +5,7 @@ const css = require('classnames');
 const FileActions = require('./FileActions');
 const FileLoading = require('./FileLoading');
 const { Checkbox, ProgressBar } = require('react-toolbox');
-const { fileStore } = require('../../../icebear');
+const { fileStore } = require('~/icebear');
 const electron = require('electron').remote;
 
 @observer

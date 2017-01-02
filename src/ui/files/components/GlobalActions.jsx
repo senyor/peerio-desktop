@@ -1,6 +1,6 @@
 const React = require('react');
 const { IconButton, Tooltip } = require('react-toolbox');
-const Search = require('../../shared-components/Search');
+const Search = require('~/ui/shared-components/Search');
 const css = require('classnames');
 
 const TooltipIcon = Tooltip(IconButton); //eslint-disable-line

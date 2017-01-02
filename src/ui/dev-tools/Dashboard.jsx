@@ -1,7 +1,7 @@
 const React = require('react');
 const { Card, CardTitle, CardText } = require('react-toolbox');
-const { User } = require('../../icebear');
-const config = require('../../config');
+const { User } = require('~/icebear');
+const config = require('~/config');
 
 class DevToolsDashboard extends React.Component {
     render() {

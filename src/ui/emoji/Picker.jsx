@@ -3,7 +3,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const data = require('../../static/emoji/emoji.json');
+const data = require('~/static/emoji/emoji.json');
 const _ = require('lodash');
 
 data.recent = [];

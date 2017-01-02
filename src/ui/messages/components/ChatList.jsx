@@ -1,7 +1,7 @@
 const React = require('react');
 const { t } = require('peerio-translator');
 const { IconButton, List, ListItem, ListSubHeader, ProgressBar, Tooltip } = require('react-toolbox');
-const { chatStore } = require('../../../icebear'); //eslint-disable-line
+const { chatStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 

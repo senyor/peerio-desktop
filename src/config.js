@@ -1,7 +1,6 @@
-const cfg = require('./icebear').config; //eslint-disable-line
+const cfg = require('~/icebear').config;
 const app = require('electron').app || require('electron').remote.app;
-const isDevEnv = require('./helpers/is-dev-env');
-const { sanitizeChatMessage } = require('./helpers/sanitizer');
+const isDevEnv = require('~/helpers/is-dev-env');
 
 cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';

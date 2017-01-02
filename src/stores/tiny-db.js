@@ -1,7 +1,7 @@
 const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
-const config = require('../config');
+const config = require('~/config');
 
 const app = electron.app || electron.remote.app;
 const folder = app.getPath('userData');

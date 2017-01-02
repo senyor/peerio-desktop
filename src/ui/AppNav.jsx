@@ -1,13 +1,13 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, Tooltip, IconMenu, MenuItem, MenuDivider } = require('react-toolbox');
-const {User, contactStore, chatStore} = require('../icebear');//eslint-disable-line
-const Avatar = require('./shared-components/Avatar');
+const { IconButton, Tooltip } = require('react-toolbox');
+const { User, contactStore, chatStore } = require('~/icebear');
+const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
 const app = require('electron').remote.app;
-const sounds = require('../helpers/sounds');
-const signout = require('../helpers/app-control');
+const sounds = require('~/helpers/sounds');
+const signout = require('~/helpers/app-control');
 
 const TooltipIcon = Tooltip(IconButton); //eslint-disable-line
 
@@ -71,7 +71,7 @@ class AppNav extends React.Component {
                             tooltipPosition="right"
                             icon="forum"
                             onClick={this.toMessages} />
-                        {/* TODO div is probably unecessary. move to wrapping div? */}
+                        {/* TODO div is probably unnecessary. move to wrapping div? */}
                         <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
                     </div>
 

@@ -1,6 +1,6 @@
 const React = require('react');
 const { AppBar, Menu, MenuItem, MenuDivider, FontIcon, Chip } = require('react-toolbox');
-const { User, socket, util } = require('../../icebear');
+const { User, socket, util } = require('~/icebear');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 

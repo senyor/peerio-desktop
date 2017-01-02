@@ -3,7 +3,6 @@
  * a store is related to ValidatedInputs on the component.
  */
 const { extendObservable, observable, computed } = require('mobx');
-const ValidatedInput = require('../ui/shared-components/ValidatedInput');
 const _ = require('lodash');
 
 

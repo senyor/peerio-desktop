@@ -1,4 +1,4 @@
-const isDevEnv = require('./helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env');
 const ipc = require('electron').ipcRenderer;
 
 if (isDevEnv) {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // <emojione> ------------------------------------------------------------------------------------------------
     // configuring emojione and preloading sprites
-    const emojione = require('./static/emoji/emojione.js');
+    const emojione = require('~/static/emoji/emojione.js');
     emojione.ascii = true;
     emojione.imagePathPNG = './static/emoji/png/';
     emojione.imagePathSVG = '';
@@ -36,12 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2000);
     // </emojione> -----------------------------------------------------------------------------------------------
     const React = require('react');
-    const { socket, setTinyDbEngine, FileStreamAbstract } = require('./icebear');
+    const { socket, setTinyDbEngine, FileStreamAbstract } = require('~/icebear');
     const { render } = require('react-dom');
     const { Router, createMemoryHistory } = require('react-router');
-    const routes = require('./ui/routes');
-    const tinyDb = require('./stores/tiny-db');
-    const FileStream = require('./helpers/file-stream');
+    const routes = require('~/ui/routes');
+    const tinyDb = require('~/stores/tiny-db');
+    const FileStream = require('~/helpers/file-stream');
 
     setTinyDbEngine({
         getValue: tinyDb.getValueAsync,

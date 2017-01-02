@@ -3,7 +3,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Dialog } = require('react-toolbox');
-const updater = require('../updater');
+const updater = require('~/updater');
 
 // todo: repeat request to update and restart?
 // todo: request again on new version after previous one was dismissed?

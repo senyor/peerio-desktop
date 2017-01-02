@@ -1,6 +1,6 @@
 const { observable, reaction } = require('mobx');
 const { t } = require('peerio-translator');
-const { systemWarnings } = require('../icebear');
+const { systemWarnings } = require('~/icebear');
 
 /**
  * Snackbar control contains:

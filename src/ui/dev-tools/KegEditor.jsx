@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 const React = require('react');
 const { ProgressBar, Chip } = require('react-toolbox');
-const { User, socket } = require('../../icebear');
-const secret = require('../../icebear/crypto/secret');
+const { User, socket } = require('~/icebear');
+const secret = require('~/icebear/crypto/secret');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const ChatKegDb = require('../../icebear/models/kegs/chat-keg-db');
+const ChatKegDb = require('~/icebear/models/kegs/chat-keg-db');
 
 @observer
 class KegEditor extends React.Component {

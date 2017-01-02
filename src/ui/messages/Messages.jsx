@@ -7,8 +7,8 @@ const { ProgressBar } = require('react-toolbox');
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const Message = require('./components/Message');
-const {chatStore} = require('../../icebear');// eslint-disable-line
-const sounds = require('../../helpers/sounds');
+const { chatStore } = require('~/icebear');
+const sounds = require('~/helpers/sounds');
 
 @observer
 class Messages extends React.Component {

@@ -1,15 +1,15 @@
 const React = require('react');
 const { Button, Dialog, IconButton } = require('react-toolbox');
-const { User, errors } = require('../../icebear'); // eslint-disable-line
+const { User, errors } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const css = require('classnames');
-const languageStore = require('../../stores/language-store');
-const FullCoverLoader = require('../shared-components/FullCoverLoader');
+const languageStore = require('~/stores/language-store');
+const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const { Profile, ProfileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
-const Snackbar = require('../shared-components/Snackbar');
+const Snackbar = require('~/ui/shared-components/Snackbar');
 
 
 @observer class Signup extends React.Component {
@@ -26,20 +26,11 @@ const Snackbar = require('../shared-components/Snackbar');
         return this.step === 1 ? this.profileStore.hasErrors : this.passcodeStore.hasErrors;
     }
 
-    constructor() {
-        super();
-        this.usernameUpdater = val => { this.username = val; };
-        this.emailUpdater = val => { this.email = val; };
-        this.firstNameUpdater = val => { this.firstName = val; };
-        this.lastNameUpdater = val => { this.lastName = val; };
-        this.createAccountWithPasscode = this.createAccountWithPasscode.bind(this);
-    }
-
     componentDidMount() {
         this.show = true;
     }
 
-    createAccountWithPasscode() {
+    createAccountWithPasscode = () => {
         if (this.passcodeStore.hasErrors || this.busy) return Promise.resolve(false);
         return this.createAccount()
             .then(() => User.current.setPasscode(this.passcodeStore.passcode))
@@ -47,7 +38,7 @@ const Snackbar = require('../shared-components/Snackbar');
             .catch(err => {
                 console.error(err);
             });
-    }
+    };
 
     createAccount() {
         this.busy = true;

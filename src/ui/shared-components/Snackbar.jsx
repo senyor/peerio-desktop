@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { observable, computed, reaction } = require('mobx');
 const { t } = require('peerio-translator');
 const css = require('classnames');
-const snackbarControl = require('../../helpers/snackbar-control');
+const snackbarControl = require('~/helpers/snackbar-control');
 
 @observer class Snackbar extends React.Component {
 

@@ -1,5 +1,5 @@
 const { MenuItem } = require('electron');
-const isDevEnv = require('../helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env');
 const path = require('path');
 
 const appRootPath = path.resolve(`${__dirname}/../`);

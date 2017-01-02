@@ -3,12 +3,12 @@ const { Component } = require('react');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dropdown } = require('react-toolbox');
-const ValidatedInput = require('../shared-components/ValidatedInput');
-const { config, socket, validation} = require('../../icebear'); // eslint-disable-line
+const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
+const { config, socket, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
-const languageStore = require('../../stores/language-store');
-const T = require('../shared-components/T');
-const OrderedFormStore = require('../../stores/ordered-form-store');
+const languageStore = require('~/stores/language-store');
+const T = require('~/ui/shared-components/T');
+const OrderedFormStore = require('~/stores/ordered-form-store');
 
 const { validators } = validation; // use common validation from core
 

@@ -1,6 +1,6 @@
 const { Menu, MenuItem } = require('electron');
-const appControl = require('../helpers/app-control');
-const devtools = require('../main-process/dev-tools');
+const appControl = require('~/helpers/app-control');
+const devtools = require('~/main-process/dev-tools');
 
 const rightClickPos = { x: 0, y: 0 };
 

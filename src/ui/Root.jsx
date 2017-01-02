@@ -1,10 +1,10 @@
 const React = require('react');
-const AutoUpdateDialog = require('./AutoUpdateDialog');
-const languageStore = require('../stores/language-store');
+const AutoUpdateDialog = require('~/ui/AutoUpdateDialog');
+const languageStore = require('~/stores/language-store');
 const { reaction } = require('mobx');
 const deepForceUpdate = require('react-deep-force-update');
-const isDevEnv = require('../helpers/is-dev-env');
-const config = require('../config');
+const isDevEnv = require('~/helpers/is-dev-env');
+const config = require('~/config');
 const { setStringReplacement } = require('peerio-translator');
 
 class Root extends React.Component {

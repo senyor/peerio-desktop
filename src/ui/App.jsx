@@ -1,6 +1,6 @@
 const React = require('react');
-const AppNav = require('./AppNav');
-const Snackbar = require('./shared-components/Snackbar');
+const AppNav = require('~/ui/AppNav');
+const Snackbar = require('~/ui/shared-components/Snackbar');
 
 class App extends React.Component {
 

@@ -6,6 +6,8 @@ const deepForceUpdate = require('react-deep-force-update');
 const isDevEnv = require('~/helpers/is-dev-env');
 const config = require('~/config');
 const { setStringReplacement } = require('peerio-translator');
+const theme = require('~/react-toolbox/theme.js');
+const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
 
 class Root extends React.Component {
 
@@ -48,11 +50,13 @@ class Root extends React.Component {
 
     render() {
         return (
-            <div>
-                {this.props.children}
-                <AutoUpdateDialog />
-                {this.devtools}
-            </div>
+            <ThemeProvider theme={theme}>
+                <div>
+                    {this.props.children}
+                    <AutoUpdateDialog />
+                    {this.devtools}
+                </div>
+            </ThemeProvider>
         );
     }
 }

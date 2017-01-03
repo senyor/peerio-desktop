@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp, no-cond-assign */
 const React = require('react');
-const { IconMenu, MenuItem, IconButton } = require('react-toolbox');
+const { IconMenu, MenuItem, IconButton } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const Snackbar = require('~/ui/shared-components/Snackbar');
@@ -8,6 +8,7 @@ const EmojiPicker = require('~/ui/emoji/Picker');
 const emojione = require('~/static/emoji/emojione.js');
 const Quill = require('quill/dist/quill.core');
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');
+const FilePicker = require('~/ui/files/components/FilePicker');
 
 // todo: this file is messy as hell, maybe refactor it
 
@@ -70,6 +71,7 @@ class MessageInput extends React.Component {
     @observable text = '';
     @observable emojiPickerVisible = false;
     @observable suggests = null;
+    @observable filePickerActive = false;
 
     constructor() {
         super();
@@ -170,13 +172,21 @@ class MessageInput extends React.Component {
         return false;
     };
 
+    handleFilePickerClose = () => {
+        this.filePickerActive = false;
+    };
+
+    showFilePicker = () => {
+        this.filePickerActive = true;
+    };
+
     render() {
         if (!this.props.show) return null;
         return (
             <div className="message-input" onDrop={this.preventDrop}>
                 <Snackbar location="chat" priority="1" />
                 <IconMenu icon="add_circle_outline">
-                    <MenuItem value="share" caption="Share from files" disabled />
+                    <MenuItem value="share" caption="Share from files" onClick={this.showFilePicker} />
                     <MenuItem value="upload" caption="Upload to DM" disabled />
                 </IconMenu>
                 <div id="messageEditor" ref={this.activateQuill} className="full-width"
@@ -187,6 +197,7 @@ class MessageInput extends React.Component {
                     : null }
 
                 {this.emojiPickerVisible ? cachedPicker : null }
+                <FilePicker active={this.filePickerActive} onClose={this.handleFilePickerClose} />
             </div>
         );
     }

@@ -1,5 +1,5 @@
 const React = require('react');
-const { IconButton, Tooltip } = require('react-toolbox');
+const { IconButton, Tooltip } = require('~/react-toolbox');
 const Search = require('~/ui/shared-components/Search');
 const css = require('classnames');
 

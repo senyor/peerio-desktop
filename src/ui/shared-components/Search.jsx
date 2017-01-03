@@ -1,5 +1,5 @@
 const React = require('react');
-const { FontIcon, IconButton, Input } = require('react-toolbox');
+const { FontIcon, IconButton, Input } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 
 class Search extends React.Component {

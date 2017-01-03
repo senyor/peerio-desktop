@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button, Checkbox, IconButton } = require('react-toolbox');
+const { Button, Checkbox, IconButton } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { fileStore } = require('~/icebear');

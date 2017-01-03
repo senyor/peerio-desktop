@@ -1,5 +1,5 @@
 const React = require('react');
-const { IconMenu, MenuItem } = require('react-toolbox');
+const { IconMenu, MenuItem } = require('~/react-toolbox');
 
 function Filter() {
     return (

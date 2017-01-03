@@ -2,6 +2,7 @@
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
 @import '../node_modules/quill/dist/quill.core.css';
 @import './static/fonts/OpenSans/opensans.css';
+@import './static/emoji/emojione.sprites.css';
 @import './rt-base-theme'; // Imports variables. Always first, after lib imports.
 @import './rt-light-theme';
 @import './components/grid';
@@ -11,6 +12,7 @@
 @import './components/notifications';
 @import './components/snackbar';
 @import './components/emoji-picker';
+@import './components/file-picker';
 @import './views/login';
 @import './views/signup';
 @import './views/messages';

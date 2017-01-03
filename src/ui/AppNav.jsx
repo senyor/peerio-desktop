@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, Tooltip } = require('react-toolbox');
+const { IconButton, Tooltip } = require('~/react-toolbox');
 const { User, contactStore, chatStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');

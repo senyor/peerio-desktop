@@ -2,7 +2,7 @@
 const React = require('react');
 const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { ProgressBar } = require('react-toolbox');
+const { ProgressBar } = require('~/react-toolbox');
 // const Search = require('../shared-components/Search');
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');

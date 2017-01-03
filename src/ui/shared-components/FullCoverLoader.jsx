@@ -1,5 +1,5 @@
 const React = require('react');
-const { ProgressBar } = require('react-toolbox');
+const { ProgressBar } = require('~/react-toolbox');
 
 function FullCoverLoader(props) {
     return props.show ? (

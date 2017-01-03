@@ -10,7 +10,7 @@ if (isDevEnv) {
 }
 document.addEventListener('DOMContentLoaded', () => {
     require.extensions['.css'] = function(m, f) {
-        m.exports = require(f.replace('.css', '.json'));
+        m.exports = require('~/react-toolbox/theme.js');
     };
 
     // <emojione> ------------------------------------------------------------------------------------------------

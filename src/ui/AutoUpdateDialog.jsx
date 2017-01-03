@@ -2,7 +2,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { Dialog } = require('react-toolbox');
+const { Dialog } = require('~/react-toolbox');
 const updater = require('~/updater');
 
 // todo: repeat request to update and restart?

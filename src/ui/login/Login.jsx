@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
 const { Component } = require('react');
-const { Dropdown, Button, IconButton } = require('react-toolbox');
+const { Dropdown, Button, IconButton } = require('~/react-toolbox');
 const { config, socket, User, validation } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');

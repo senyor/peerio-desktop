@@ -1,5 +1,5 @@
 const React = require('react');
-const { Card, CardTitle, CardText } = require('react-toolbox');
+const { Card, CardTitle, CardText } = require('~/react-toolbox');
 const { User } = require('~/icebear');
 const config = require('~/config');
 

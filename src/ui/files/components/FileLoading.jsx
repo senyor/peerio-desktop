@@ -1,5 +1,5 @@
 const React = require('react');
-const { FontIcon } = require('react-toolbox');
+const { FontIcon } = require('~/react-toolbox');
 
 function FileLoading(props) {
     return (

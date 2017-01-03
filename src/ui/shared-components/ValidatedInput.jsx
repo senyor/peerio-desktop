@@ -19,7 +19,7 @@ const { socket } = require('~/icebear'); // eslint-disable-line
 const { computed, reaction, when, isObservable } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
-const { Input } = require('react-toolbox');
+const { Input } = require('~/react-toolbox');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 
 @observer class ValidatedInput extends Component {

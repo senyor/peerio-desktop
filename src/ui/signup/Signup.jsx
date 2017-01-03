@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button, Dialog, IconButton } = require('react-toolbox');
+const { Button, Dialog, IconButton } = require('~/react-toolbox');
 const { User, errors } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');

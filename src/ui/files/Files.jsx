@@ -103,12 +103,13 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
                             </table>
                         </div>
                         <div className="table-paging">
-                            {/* <div>Rows per page:</div>*/}
-                            {/* /!* TODO make Dropdown work *!/*/}
-                            {/* /!* <Dropdown />*!/*/}
-                            {/* <div>1-10 of 234</div>*/}
-                            {/* <IconButton icon="chevron_left" />*/}
-                            {/* <IconButton icon="chevron_right" />*/}
+                            {/* <div>Rows per page:</div> */}
+                            {/* TODO make Dropdown work */}
+                            {/* <Dropdown /> */}
+                            {/* <div>1-10 of 234</div> */}
+                            {/* <IconButton icon="chevron_left" /> */}
+                            {/* <IconButton icon="chevron_right" /> */}
+
                         </div>
                     </div>
                 </div>

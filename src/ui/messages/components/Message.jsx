@@ -5,6 +5,8 @@ const { time } = require('~/helpers/formatter');
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const emojione = require('~/static/emoji/emojione.js');
 const Autolinker = require('autolinker');
+const { fileStore } = require('~/icebear');
+const { FontIcon } = require('~/react-toolbox');
 
 const autolinker = new Autolinker({
     urls: {
@@ -47,9 +49,32 @@ class Message extends React.Component {
                         <div className="timestamp">{time.format(this.props.message.timestamp)}</div>
                     </div>
                     <p dangerouslySetInnerHTML={processMessage(this.props.message)} />
+                    {this.props.message.files ? <InlineFiles files={this.props.message.files} /> : null}
                 </div>
                 {this.props.message.sending ? <div className="sending-overlay" /> : null}
             </div>
+        );
+    }
+}
+
+@observer
+class InlineFiles extends React.Component {
+    goToFiles() {
+        window.router.push('/app/files');
+    }
+    render() {
+        // todo: temporary, clean broken kegs
+        if (!this.props.files.map) return null;
+
+        return (
+            <ul onClick={this.goToFiles} className="inline-files">
+                {
+                    this.props.files.map(f => {
+                        const file = fileStore.getById(f);
+                        return <li key={f}><FontIcon value="attach_file" /> {file ? file.name : f}</li>;
+                    })
+                }
+            </ul>
         );
     }
 }

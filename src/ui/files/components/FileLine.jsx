@@ -52,8 +52,9 @@ class FileLine extends React.Component {
 
     render() {
         return (
-            <tr /* className="new-file"*/ className={css({ selected: this.checked })}
-                                          onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
+            <tr className={css({ selected: this.checked,
+                'waiting-3rd-party': this.props.file.waitingForThirdParty })}
+                onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
                 <td>
                     {(this.props.file.downloading || this.props.file.uploading)
                         ? <FileLoading loading={this.props.file.downloading ? 'file_download' : 'file_upload'}
@@ -67,10 +68,7 @@ class FileLine extends React.Component {
                 <td className="hide-text uppercase">{this.props.file.ext}</td>
                 {
                     this.showActions
-                    ? <FileActions downloadDisabled={
-                        (!this.props.file.readyForDownload
-                            || this.props.file.downloading
-                            || this.props.file.uploading)}
+                    ? <FileActions downloadDisabled={!this.props.file.readyForDownload || this.props.file.downloading}
                              shareDisabled newFolderDisabled deleteDisabled={false}
                                 onDelete={this.deleteFile} onDownload={this.download} />
                     : null

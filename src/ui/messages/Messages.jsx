@@ -20,9 +20,9 @@ class Messages extends React.Component {
         this.loaderDisposer();
     }
 
-    sendMessage(m) {
+    sendMessage(m, files) {
         sounds.sending.play();
-        chatStore.activeChat.sendMessage(m)
+        chatStore.activeChat.sendMessage(m, files)
                  .then(() => sounds.sent.play())
                  .catch(() => sounds.destroy.play());
     }
@@ -32,6 +32,9 @@ class Messages extends React.Component {
                  .then(() => sounds.sent.play())
                  .catch(() => sounds.destroy.play());
     }
+    shareFiles = (files) => {
+        this.sendMessage('', files);
+    };
 
     render() {
         return (
@@ -47,7 +50,7 @@ class Messages extends React.Component {
                         ? <NoChatSelected />
                         : <MessageList />}
                     <MessageInput show={!!chatStore.activeChat} onSend={this.sendMessage}
-                                  onAck={this.sendAck} />
+                                  onAck={this.sendAck} onFileShare={this.shareFiles} />
                 </div>
             </div>
         );

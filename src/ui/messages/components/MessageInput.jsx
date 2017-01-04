@@ -180,6 +180,11 @@ class MessageInput extends React.Component {
         this.filePickerActive = true;
     };
 
+    shareFiles = selected => {
+        this.props.onFileShare(selected);
+        this.handleFilePickerClose();
+    };
+
     render() {
         if (!this.props.show) return null;
         return (
@@ -197,7 +202,8 @@ class MessageInput extends React.Component {
                     : null }
 
                 {this.emojiPickerVisible ? cachedPicker : null }
-                <FilePicker active={this.filePickerActive} onClose={this.handleFilePickerClose} />
+                <FilePicker active={this.filePickerActive} onClose={this.handleFilePickerClose}
+                            onShare={this.shareFiles} />
             </div>
         );
     }

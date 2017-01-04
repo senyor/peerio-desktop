@@ -133,6 +133,22 @@
     }
   }
 
+  .inline-files {
+    color: #929292;
+    font-weight: 600;
+    list-style-type: none;
+    padding-left: 17px;
+
+    li {
+      cursor: pointer;
+      line-height: 1.6em;
+
+      .material-icons {
+        font-size: inherit;
+      }
+    }
+  }
+
   .message-input {
     align-items: center;
     border-top: 1px solid $divider-dark;

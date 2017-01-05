@@ -6,7 +6,8 @@ const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const emojione = require('~/static/emoji/emojione.js');
 const Autolinker = require('autolinker');
 const { fileStore } = require('~/icebear');
-const { FontIcon } = require('~/react-toolbox');
+const { FontIcon, ProgressBar } = require('~/react-toolbox');
+const { downloadFile } = require('~/helpers/file');
 
 const autolinker = new Autolinker({
     urls: {
@@ -59,19 +60,32 @@ class Message extends React.Component {
 
 @observer
 class InlineFiles extends React.Component {
-    goToFiles() {
-        window.router.push('/app/files');
+    download(ev) {
+        const attr = ev.currentTarget.attributes['data-id'];
+        if (!attr) return;
+        const file = fileStore.getById(attr.value);
+        if (!file || file.downloading) return;
+        downloadFile(file);
+        console.log(ev.currentTarget.attributes['data-id'].value);
     }
     render() {
         // todo: temporary, clean broken kegs
         if (!this.props.files.map) return null;
 
         return (
-            <ul onClick={this.goToFiles} className="inline-files">
+            <ul className="inline-files">
                 {
                     this.props.files.map(f => {
                         const file = fileStore.getById(f);
-                        return <li key={f}><FontIcon value="attach_file" /> {file ? file.name : f}</li>;
+                        return (<li key={f} data-id={f} onClick={this.download}>
+                            <FontIcon value="file_download" /> {file ? file.name : f}
+                            <br />
+                            {file.downloading
+                                ? <ProgressBar type="linear" mode="determinate" value={file.progress}
+                                       buffer={file.progressBuffer} max={file.progressMax} />
+                                : null
+                            }
+                        </li>);
                     })
                 }
             </ul>

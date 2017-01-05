@@ -6,7 +6,7 @@ const FileActions = require('./FileActions');
 const FileLoading = require('./FileLoading');
 const { Checkbox, ProgressBar } = require('~/react-toolbox');
 const { fileStore } = require('~/icebear');
-const electron = require('electron').remote;
+const { downloadFile } = require('~/helpers/file');
 
 @observer
 class FileLine extends React.Component {
@@ -25,23 +25,7 @@ class FileLine extends React.Component {
         else fileStore.cancelDownload(this.props.file);
     };
     download = () => {
-        let path = this.props.file.name;
-        try {
-            const downloadsDir = electron.app.getPath('downloads');
-            path = `${downloadsDir}/${path}`;
-        } catch (err) {
-            console.log(err);
-        }
-
-        const win = electron.getCurrentWindow();
-        electron.dialog.showSaveDialog(win, { defaultPath: path }, fileSavePath => {
-            if (fileSavePath) {
-                this.props.file.download(fileSavePath)
-                    .then(() => {
-                        electron.app.dock.downloadFinished(fileSavePath);
-                    });
-            }
-        });
+        downloadFile(this.props.file);
     };
     onShowActions = () => {
         this.showActions = true;

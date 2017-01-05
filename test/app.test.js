@@ -58,18 +58,17 @@ describe('application launch', function() {
     it('signup', function() {
         return this.app.client
             .click('a:nth-of-type(2)')
-	    .waitForVisible('.signup')
-	    .setValue('div.signup-form > div.flex-col > div:nth-child(2) > input', 't'+Date.now())
-	    .setValue('div.signup-form > div.flex-col > div:nth-child(3) > input', 't'+Date.now()+'@mailinator.com')
-	    .setValue('div.signup-form > div.flex-col > div.input-row > div:nth-child(1) > div > input', 'fname')
-	    .setValue('div.signup-form > div.flex-col > div.input-row > div:nth-child(2) > div > input', 'lname')
-	    .waitForEnabled('div.signup-nav > button:nth-child(2)')
-	    .click('div.signup-nav > button:nth-child(2)')
-	    .setValue('.signup-form > div.passcode > div:nth-child(2) > input', 'hZEaiGeA6')
-	    .setValue('.signup-form > div.passcode > div:nth-child(3) > input', 'hZEaiGeA6')
-	    .waitForEnabled('.signup-nav > button:nth-child(2)')
-	    .click('.signup-nav > button:nth-child(2)')
-	    .waitForVisible('.app-nav');
-	    
+            .waitForVisible('.signup')
+            .setValue('div.signup-form > div.flex-col > div:nth-child(2) > input', `t${Date.now()}`)
+            .setValue('div.signup-form > div.flex-col > div:nth-child(3) > input', `t${Date.now()}@mailinator.com`)
+            .setValue('div.signup-form > div.flex-col > div.input-row > div:nth-child(1) > div > input', 'fname')
+            .setValue('div.signup-form > div.flex-col > div.input-row > div:nth-child(2) > div > input', 'lname')
+            .waitForEnabled('div.signup-nav > button:nth-child(2)')
+            .click('div.signup-nav > button:nth-child(2)')
+            .setValue('.signup-form > div.passcode > div:nth-child(2) > input', 'hZEaiGeA6')
+            .setValue('.signup-form > div.passcode > div:nth-child(3) > input', 'hZEaiGeA6')
+            .waitForEnabled('.signup-nav > button:nth-child(2)')
+            .click('.signup-nav > button:nth-child(2)')
+            .waitForVisible('.app-nav');
     });
 });

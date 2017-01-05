@@ -17,3 +17,7 @@
 .list-title {
   @extend %list-title;
 }
+
+.text-right {
+  text-align: right !important;
+}

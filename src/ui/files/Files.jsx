@@ -92,8 +92,8 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
                                         </th>
                                         <th>Name</th>
                                         <th>Owner</th>
-                                        <th>Uploaded</th>
-                                        <th>Size</th>
+                                        <th className="text-right">Uploaded</th>
+                                        <th className="text-right">Size</th>
                                         <th>Type</th>
                                     </tr>
                                 </thead>

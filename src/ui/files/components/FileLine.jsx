@@ -47,8 +47,8 @@ class FileLine extends React.Component {
                     }</td>
                 <td>{this.props.file.name}</td>
                 <td>{this.props.file.owner}</td>
-                <td>{this.props.file.uploadedAt && this.props.file.uploadedAt.toLocaleString()}</td>
-                <td className="hide-text">{this.props.file.sizeFormatted}</td>
+                <td className="text-right">{this.props.file.uploadedAt && this.props.file.uploadedAt.toLocaleString()}</td>
+                <td className="hide-text text-right">{this.props.file.sizeFormatted}</td>
                 <td className="hide-text uppercase">{this.props.file.ext}</td>
                 {
                     this.showActions

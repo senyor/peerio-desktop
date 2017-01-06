@@ -10,10 +10,9 @@ const { downloadFile } = require('~/helpers/file');
 
 @observer
 class FileLine extends React.Component {
-    @observable checked=false;
     @observable showActions=false;
     toggleChecked = val => {
-        this.checked = val;
+        this.props.file.selected = val;
     };
     deleteFile = () => {
         if (confirm(`Remove file ${this.props.file.name}?`)) {
@@ -35,6 +34,7 @@ class FileLine extends React.Component {
     };
 
     render() {
+        if (!this.props.file.show) return null;
         return (
             <tr className={css({ selected: this.checked,
                 'waiting-3rd-party': this.props.file.waitingForThirdParty })}
@@ -43,7 +43,7 @@ class FileLine extends React.Component {
                     {(this.props.file.downloading || this.props.file.uploading)
                         ? <FileLoading loading={this.props.file.downloading ? 'file_download' : 'file_upload'}
                                        onCancel={this.cancelUploadOrDownload} />
-                        : <Checkbox checked={this.checked} onChange={this.toggleChecked} />
+                        : <Checkbox checked={this.props.file.selected} onChange={this.toggleChecked} />
                     }</td>
                 <td>{this.props.file.name}</td>
                 <td>{this.props.file.owner}</td>
@@ -53,8 +53,8 @@ class FileLine extends React.Component {
                 {
                     this.showActions
                     ? <FileActions downloadDisabled={!this.props.file.readyForDownload || this.props.file.downloading}
-                             shareDisabled newFolderDisabled deleteDisabled={false}
-                                onDelete={this.deleteFile} onDownload={this.download} />
+                                   shareDisabled newFolderDisabled deleteDisabled={false}
+                                   onDelete={this.deleteFile} onDownload={this.download} />
                     : null
                 }
 

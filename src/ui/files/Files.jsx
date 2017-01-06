@@ -9,7 +9,7 @@ const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
 
 @observer class Files extends React.Component {
-    @observable checked = false;
+    @observable allSelected = false;
 
     constructor() {
         super();
@@ -19,6 +19,10 @@ const FileLine = require('./components/FileLine');
 
     componentWillMount() {
         fileStore.loadAllFiles();
+    }
+
+    componentWillUnmount() {
+        fileStore.clearSelection();
     }
 
     upload() {
@@ -64,6 +68,14 @@ const FileLine = require('./components/FileLine');
             </div>);
     }
 
+    toggleSelection = val => {
+        if (val) {
+            fileStore.selectAll();
+        } else {
+            fileStore.clearSelection();
+        }
+    };
+
     render() {
         if (!fileStore.files.length && !fileStore.loading) return this.noFiles();
         const tableContainerStyle = {
@@ -82,7 +94,7 @@ const FileLine = require('./components/FileLine');
                             <table>
                                 <thead>
                                     <tr>
-                                        <th><Checkbox checked={this.checked} /></th>
+                                        <th><Checkbox checked={fileStore.allSelected} onChange={this.toggleSelection} /></th>
                                         <th>Name</th>
                                         <th>Owner</th>
                                         <th>Uploaded</th>
@@ -96,12 +108,12 @@ const FileLine = require('./components/FileLine');
                             </table>
                         </div>
                         <div className="table-paging">
-                            <div>Rows per page:</div>
-                            {/* TODO make Dropdown work */}
-                            {/* <Dropdown />*/}
-                            <div>1-10 of 234</div>
-                            <IconButton icon="chevron_left" />
-                            <IconButton icon="chevron_right" />
+                            {/* <div>Rows per page:</div>*/}
+                            {/* /!* TODO make Dropdown work *!/*/}
+                            {/* /!* <Dropdown />*!/*/}
+                            {/* <div>1-10 of 234</div>*/}
+                            {/* <IconButton icon="chevron_left" />*/}
+                            {/* <IconButton icon="chevron_right" />*/}
                         </div>
                     </div>
                 </div>

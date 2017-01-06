@@ -28,13 +28,13 @@ function FileActions(props) {
                 icon="reply"
                 onClick={noop}
                 className={css('reverse-icon', { disabled: props.shareDisabled })} />
-            <TooltipIcon
-                tooltip="Add to folder"
-                tooltipDelay={delay}
-                tooltipPosition="top"
-                icon="create_new_folder"
-                onClick={noop}
-                className={css({ disabled: props.newFolderDisabled })} />
+            {/* <TooltipIcon*/}
+            {/* tooltip="Add to folder"*/}
+            {/* tooltipDelay={delay}*/}
+            {/* tooltipPosition="top"*/}
+            {/* icon="create_new_folder"*/}
+            {/* onClick={noop}*/}
+            {/* className={css({ disabled: props.newFolderDisabled })} />*/}
             <TooltipIcon
                 tooltip="Delete"
                 tooltipDelay={delay}

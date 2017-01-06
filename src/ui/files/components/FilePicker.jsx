@@ -6,9 +6,13 @@ const { Dialog, ProgressBar, List, ListItem } = require('~/react-toolbox');
 
 @observer
 class FilePicker extends React.Component {
-    handleClose = () => this.props.onClose();
+    handleClose = () => {
+        fileStore.clearSelection();
+        this.props.onClose();
+    };
     handleShare = () => {
         const selected = fileStore.getSelectedFiles();
+        fileStore.clearSelection();
         if (!selected.length) return;
         this.props.onShare(selected);
     };

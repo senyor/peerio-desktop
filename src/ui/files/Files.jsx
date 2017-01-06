@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button, Checkbox, IconButton } = require('~/react-toolbox');
+const { Checkbox } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { fileStore } = require('~/icebear');
@@ -7,6 +7,7 @@ const electron = require('electron').remote;
 const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
+const ZeroScreen = require('./components/ZeroScreen');
 
 @observer class Files extends React.Component {
     @observable allSelected = false;
@@ -14,7 +15,6 @@ const FileLine = require('./components/FileLine');
     constructor() {
         super();
         this.upload = this.upload.bind(this);
-        this.noFiles = this.noFiles.bind(this);
     }
 
     componentWillMount() {
@@ -34,40 +34,6 @@ const FileLine = require('./components/FileLine');
             });
     }
 
-    noFiles() {
-        return (
-            <div className="files">
-                <div className="flex-row zero-file">
-                    <div className="flex-col flex-grow-1" />
-                    <div className="flex-col flex-grow-0 flex-shrink-0">
-                        <div className="flex-row" style={{ marginTop: '64px' }}>
-                            <div className="display-3">Secure your files.</div>
-                        </div>
-                        <div className="flex-row flex-align-start" style={{ width: '100%' }}>
-                            <div className="flex-col flex-align-start">
-                                <p className="heading"
-                                   style={{
-                                       marginBottom: '48px',
-                                       lineHeight: '1.4'
-                                   }}>
-                                    Drag and drop, upload,
-                                    <br />
-                                    share, and manage
-                                    <br />
-                                    your files.
-                                </p>
-                                <Button onClick={this.upload} primary label="upload" />
-                            </div>
-                            <img src="static/img/file-upload.png"
-                                 style={{ maxWidth: '280px', minWidth: '40%' }} role="presentation" />
-                        </div>
-                        <p className="upgrade">Upgrade your account?</p>
-                    </div>
-                    <div className="flex-col flex-grow-1" />
-                </div>
-            </div>);
-    }
-
     toggleSelection = val => {
         if (val) {
             fileStore.selectAll();
@@ -76,8 +42,15 @@ const FileLine = require('./components/FileLine');
         }
     };
 
+    handleBulkDelete = () => {
+        const selected = fileStore.getSelectedFiles();
+        if (confirm(`Remove ${selected.length} file(s)?`)) {
+            selected.forEach(f => fileStore.remove(f));
+        }
+    };
+
     render() {
-        if (!fileStore.files.length && !fileStore.loading) return this.noFiles();
+        if (!fileStore.files.length && !fileStore.loading) return <ZeroScreen onUpload={this.upload} />;
         const tableContainerStyle = {
             display: 'flex',
             flexShrink: '1',
@@ -89,12 +62,15 @@ const FileLine = require('./components/FileLine');
                 <div className="table-wrapper">
                     <Filter />
                     <div className="shadow-2 flex-col" style={{ maxHeight: 'calc(100vh - 84px)' }}>
-                        <GlobalActions onUpload={this.upload} />
+                        <GlobalActions onUpload={this.upload} onDelete={this.handleBulkDelete} />
                         <div style={tableContainerStyle}>
                             <table>
                                 <thead>
                                     <tr>
-                                        <th><Checkbox checked={fileStore.allSelected} onChange={this.toggleSelection} /></th>
+                                        <th>
+                                            <Checkbox checked={fileStore.allSelected}
+                                                      onChange={this.toggleSelection} />
+                                        </th>
                                         <th>Name</th>
                                         <th>Owner</th>
                                         <th>Uploaded</th>

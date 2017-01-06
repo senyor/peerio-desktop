@@ -41,7 +41,9 @@ class GlobalActions extends React.Component {
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="reply"
-                        className={css('reverse-icon', { active: true, disabled: !fileStore.hasSelectedFiles })} />
+                        className={css('reverse-icon', { active: true, disabled: !fileStore.hasSelectedFiles })}
+                        onClick={this.props.onShare}
+                    />
                     {/* <TooltipIcon*/}
                     {/* tooltip="Add to folder"*/}
                     {/* tooltipDelay={delay}*/}
@@ -53,7 +55,9 @@ class GlobalActions extends React.Component {
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="delete"
-                        className={css({ active: true, disabled: !fileStore.hasSelectedFiles })} />
+                        className={css({ active: true, disabled: !fileStore.hasSelectedFiles })}
+                        onClick={this.props.onDelete}
+                    />
                 </div>
                 <Search onChange={this.handleSearch} />
             </div>

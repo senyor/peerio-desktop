@@ -77,6 +77,7 @@ class InlineFiles extends React.Component {
                 {
                     this.props.files.map(f => {
                         const file = fileStore.getById(f);
+                        if (!file) return <li>invalid file record</li>;
                         return (<li key={f} data-id={f} onClick={this.download}>
                             <FontIcon value="file_download" /> {file ? file.name : f}
                             <br />

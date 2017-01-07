@@ -1,20 +1,21 @@
 const React = require('react');
-const { Checkbox } = require('~/react-toolbox');
-const { observable } = require('mobx');
+const { Checkbox, Dialog } = require('~/react-toolbox');
+const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { fileStore } = require('~/icebear');
+const { fileStore, chatStore } = require('~/icebear');
 const electron = require('electron').remote;
 const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
 const ZeroScreen = require('./components/ZeroScreen');
+const UserPicker = require('~/ui/shared-components/UserPicker');
 
 @observer class Files extends React.Component {
     @observable allSelected = false;
-
+    @observable showUserPicker = false;
     constructor() {
         super();
-        this.upload = this.upload.bind(this);
+        this.handleUpload = this.handleUpload.bind(this);
     }
 
     componentWillMount() {
@@ -25,7 +26,7 @@ const ZeroScreen = require('./components/ZeroScreen');
         fileStore.clearSelection();
     }
 
-    upload() {
+    handleUpload() {
         const win = electron.getCurrentWindow();
         electron.dialog.showOpenDialog(win, { properties: ['openFile', 'showHiddenFiles'] },
             paths => {
@@ -49,8 +50,25 @@ const ZeroScreen = require('./components/ZeroScreen');
         }
     };
 
+    handleFileShareIntent = () => {
+        this.showUserPicker = true;
+    };
+
+    handleFileShareAccept = (users) => {
+        // todo replace this with new sharing api when server implements it
+        const chat = chatStore.startChat(users);
+        const files = fileStore.getSelectedFiles();
+        fileStore.clearSelection();
+        when(() => !chat.loadingMeta, () => chat.sendMessage('', files));
+        this.closeUserPicker();
+    };
+
+    closeUserPicker = () => {
+        this.showUserPicker = false;
+    };
+
     render() {
-        if (!fileStore.files.length && !fileStore.loading) return <ZeroScreen onUpload={this.upload} />;
+        if (!fileStore.files.length && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
         const tableContainerStyle = {
             display: 'flex',
             flexShrink: '1',
@@ -62,7 +80,8 @@ const ZeroScreen = require('./components/ZeroScreen');
                 <div className="table-wrapper">
                     <Filter />
                     <div className="shadow-2 flex-col" style={{ maxHeight: 'calc(100vh - 84px)' }}>
-                        <GlobalActions onUpload={this.upload} onDelete={this.handleBulkDelete} />
+                        <GlobalActions onUpload={this.handleUpload} onDelete={this.handleBulkDelete}
+                                       onShare={this.handleFileShareIntent} />
                         <div style={tableContainerStyle}>
                             <table>
                                 <thead>
@@ -93,6 +112,12 @@ const ZeroScreen = require('./components/ZeroScreen');
                         </div>
                     </div>
                 </div>
+
+                <Dialog active={this.showUserPicker} type="large" className="create-new-message">
+                    <UserPicker title={`Share ${fileStore.selectedFilesCount} file(s) with users`}
+                                onAccept={this.handleFileShareAccept}
+                                onClose={this.closeUserPicker} />
+                </Dialog>
             </div>
         );
     }

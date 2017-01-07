@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.4.4...v1.5.0) (2017-01-07)
+
+
+### Features
+
+* **files:** bulk delete ([5b9019c](https://github.com/PeerioTechnologies/peerio-desktop/commit/5b9019c))
+* **files:** download from chat ([0f4782d](https://github.com/PeerioTechnologies/peerio-desktop/commit/0f4782d))
+* **files:** file sharing ([cf84352](https://github.com/PeerioTechnologies/peerio-desktop/commit/cf84352))
+* **files:** search and selection ([6d271d0](https://github.com/PeerioTechnologies/peerio-desktop/commit/6d271d0))
+* **files:** share from files view ([e7f9f50](https://github.com/PeerioTechnologies/peerio-desktop/commit/e7f9f50))
+* **security:** passphrase display ([8b9304f](https://github.com/PeerioTechnologies/peerio-desktop/commit/8b9304f))
+
+
+
 <a name="1.4.4"></a>
 ## [1.4.4](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.4.3...v1.4.4) (2017-01-02)
 

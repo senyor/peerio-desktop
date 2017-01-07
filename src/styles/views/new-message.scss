@@ -38,7 +38,7 @@
       margin-right: auto;
       max-width: 544px;
       min-height: 46px;
-      padding: 0 $padding-small 0 0;
+      padding: 0 $padding-small;
 
       @extend %flex-row;
     }

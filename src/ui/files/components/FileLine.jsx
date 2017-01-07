@@ -37,6 +37,7 @@ class FileLine extends React.Component {
         if (!this.props.file.show) return null;
         return (
             <tr className={css({ selected: this.checked,
+                'selected-row': this.props.file.selected,
                 'waiting-3rd-party': this.props.file.waitingForThirdParty })}
                 onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
                 <td>

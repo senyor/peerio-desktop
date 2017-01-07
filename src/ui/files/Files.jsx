@@ -79,7 +79,7 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
             <div className="files">
                 <div className="table-wrapper">
                     <Filter />
-                    <div className="shadow-2 flex-col" style={{ maxHeight: 'calc(100vh - 84px)' }}>
+                    <div className="flex-col" style={{ maxHeight: 'calc(100vh - 84px)' }}>
                         <GlobalActions onUpload={this.handleUpload} onDelete={this.handleBulkDelete}
                                        onShare={this.handleFileShareIntent} />
                         <div style={tableContainerStyle}>
@@ -115,7 +115,8 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
                 </div>
 
                 <Dialog active={this.showUserPicker} type="large" className="create-new-message">
-                    <UserPicker title={`Share ${fileStore.selectedFilesCount} file(s) with users`}
+                    <UserPicker title={`Select recipients`} /*  ${fileStore.selectedFilesCount} file(s) with users */
+                                label="Share"
                                 onAccept={this.handleFileShareAccept}
                                 onClose={this.closeUserPicker} />
                 </Dialog>

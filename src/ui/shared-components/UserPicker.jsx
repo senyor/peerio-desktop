@@ -89,8 +89,10 @@ class UserPicker extends React.Component {
                         <Input placeholder={t('userSearch')} value={this.query}
                                    onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
                     </div>
-                    <Button className={css('confirm', { hide: !this.selected.length })} label="Go"
-                                onClick={this.accept} disabled={!this.isValid} />
+                    {/* TODO: make label dynamic */}
+                    <Button className={css('confirm', { hide: !this.selected.length })}
+                            label={this.props.button || 'go'}
+                            onClick={this.accept} disabled={!this.isValid} />
                 </div>
                 <List selectable ripple >
                     <ListSubHeader caption="Your contacts" />

@@ -153,6 +153,15 @@
         color: black;
       }
     }
+
+    .invalid-file {
+      color: #c89292;
+      cursor: auto;
+
+      &:hover {
+        color: #c89292;
+      }
+    }
   }
 
   .message-input {

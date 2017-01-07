@@ -117,7 +117,7 @@
     }
 
     .rt-chip-delete {
-      border: 2px solid $color-brand;
+      border: 2px solid rgba($color-brand, .35);
       border-radius: 24px;
 
       &:hover {
@@ -141,7 +141,7 @@
       @extend %flex-shrink-0;
 
       .rt-chip-deleteX {
-        stroke: $color-brand;
+        stroke: rgba($color-brand, .35);
         stroke-width: 4px;
       }
     }

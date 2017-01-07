@@ -1,7 +1,7 @@
 const React = require('react');
 const { Button } = require('~/react-toolbox');
 
-function ZeroScreen() {
+function ZeroScreen(props) {
     return (
         <div className="files">
             <div className="flex-row zero-file">
@@ -23,7 +23,7 @@ function ZeroScreen() {
                                 <br />
                                     your files.
                             </p>
-                            <Button onClick={this.props.onUpload} primary label="upload" />
+                            <Button onClick={props.onUpload} primary label="upload" />
                         </div>
                         <img src="static/img/file-upload.png"
                                  style={{ maxWidth: '280px', minWidth: '40%' }} role="presentation" />

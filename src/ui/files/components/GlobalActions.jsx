@@ -59,7 +59,7 @@ class GlobalActions extends React.Component {
                         onClick={this.props.onDelete}
                     />
                 </div>
-                <Search onChange={this.handleSearch} />
+                <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
             </div>
         );
     }

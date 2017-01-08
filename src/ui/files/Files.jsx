@@ -87,7 +87,7 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
                                 <thead>
                                     <tr>
                                         <th>
-                                            <Checkbox checked={fileStore.allSelected}
+                                            <Checkbox checked={fileStore.allVisibleSelected}
                                                       onChange={this.toggleSelection} />
                                         </th>
                                         <th>Name</th>

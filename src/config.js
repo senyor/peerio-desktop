@@ -6,7 +6,7 @@ cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';
 cfg.currentVersion = app.getVersion();
 cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
-cfg.supportUrl = 'https://peerio.zendesk.com';
+
 
 cfg.stringReplacements = [];
 

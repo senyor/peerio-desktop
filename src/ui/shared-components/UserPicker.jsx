@@ -69,41 +69,54 @@ class UserPicker extends React.Component {
 
     render() {
         return (
-            <div className="flex-col"
-                    style={{
-                        width: '600px',
-                        marginTop: '168px' }}>
-                <div className="chat-creation-header">
-                    <div className="title">{this.props.title}</div>
-                    <IconButton icon="close" onClick={this.handleClose} />
-                </div>
-                <div className="new-message-search">
-                    <FontIcon value="search" />
-                    <div className="chip-wrapper">
-                        {this.selected.map(c =>
-                            <Chip key={c.username} className={css('username', { 'not-found': c.notFound })}
-                                      onDeleteClick={() => this.selected.remove(c)} deletable>
-                                { c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username }
-                            </Chip>
-                            )}
-                        <Input placeholder={t('userSearch')} value={this.query}
-                                   onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
+            <div style={{ width: '100vw' }} className="flex-row flex-justify-center">
+                {/* <div className="flex-col" style={{ width: '25%', marginRight: '24px', marginTop: '168px' }}>
+                    <div className="user-picker-header chat-creation-header">
+                        <div className="title">Selected files (Someone should make me dynamic)</div>
                     </div>
-                    {/* TODO: make label dynamic */}
-                    <Button className={css('confirm', { hide: !this.selected.length })}
-                            label={this.props.button || 'go'}
-                            onClick={this.accept} disabled={!this.isValid} />
-                </div>
-                <List selectable ripple >
-                    <ListSubHeader caption="Your contacts" />
-                    <div className="user-list">
-                        { this.options.map(c =>
-                            <ListItem key={c.username} avatar={<Avatar contact={c} />}
-                                      caption={c.username} legend={`${c.firstName} ${c.lastName}`}
-                                      onClick={() => this.selected.push(c)} />
-                            )}
+                    <List className="selected-items">
+                        <ListItem caption="some-file.jpg" rightIcon="highlight_off" />
+                        <ListItem caption="my-vaction-video-no-one-wants-to-see.mpg" rightIcon="highlight_off" />
+                        <ListItem caption="mom-cookie-recipe.txt" rightIcon="highlight_off" />
+                        <ListItem caption="how-did-this-get-here.mp3" rightIcon="highlight_off" />
+                    </List>
+                </div> */}
+                <div className="flex-col"
+                        style={{
+                            width: '600px',
+                            marginTop: '168px' }}>
+                    <div className="chat-creation-header">
+                        <div className="title">{this.props.title}</div>
+                        <IconButton icon="close" onClick={this.handleClose} />
                     </div>
-                </List>
+                    <div className="new-message-search">
+                        <FontIcon value="search" />
+                        <div className="chip-wrapper">
+                            {this.selected.map(c =>
+                                <Chip key={c.username} className={css('username', { 'not-found': c.notFound })}
+                                          onDeleteClick={() => this.selected.remove(c)} deletable>
+                                    { c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username }
+                                </Chip>
+                                )}
+                            <Input placeholder={t('userSearch')} value={this.query}
+                                       onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
+                        </div>
+                        {/* TODO: make label dynamic */}
+                        <Button className={css('confirm', { hide: !this.selected.length })}
+                                label={this.props.button || 'go'}
+                                onClick={this.accept} disabled={!this.isValid} />
+                    </div>
+                    <List selectable ripple >
+                        <ListSubHeader caption="Your contacts" />
+                        <div className="user-list">
+                            { this.options.map(c =>
+                                <ListItem key={c.username} avatar={<Avatar contact={c} />}
+                                          caption={c.username} legend={`${c.firstName} ${c.lastName}`}
+                                          onClick={() => this.selected.push(c)} />
+                                )}
+                        </div>
+                    </List>
+                </div>
             </div>
         );
     }

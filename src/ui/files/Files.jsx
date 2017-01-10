@@ -115,7 +115,7 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
                 </div>
 
                 <Dialog active={this.showUserPicker} type="large" className="create-new-message">
-                    <UserPicker title={`Select recipients`} /*  ${fileStore.selectedFilesCount} file(s) with users */
+                    <UserPicker title={`Select recipients for ${fileStore.selectedFilesCount} file(s)`}
                                 button="Share"
                                 onAccept={this.handleFileShareAccept}
                                 onClose={this.closeUserPicker} />

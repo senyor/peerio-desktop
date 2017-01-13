@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, Tooltip, IconMenu, MenuItem, MenuDivider, Dialog } = require('~/react-toolbox');
+const { IconButton, Tooltip, IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
 const { User, contactStore, chatStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
@@ -18,12 +18,7 @@ const delay = 500;
 class AppNav extends React.Component {
 
     @observable inMessages = true;
-    @observable passphraseVisible = false;
 
-    hidePassphrase = () => { this.passphraseVisible = false; };
-    passphraseDialogActions = [
-        { label: 'Ok', onClick: this.hidePassphrase }
-    ];
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
         autorunAsync(() => {
@@ -61,10 +56,6 @@ class AppNav extends React.Component {
         appControl.relaunch();
     };
 
-    showPassphrase= () => {
-        this.passphraseVisible = true;
-    };
-
     render() {
         return (
             <div className="app-nav">
@@ -72,8 +63,7 @@ class AppNav extends React.Component {
                     <IconMenu icon="">
                         <MenuItem value="settings" icon="settings" caption="Settings"
                                 onClick={this.toSettings} />
-                        <MenuItem value="passphrase" icon="lock" caption="Show passphrase"
-                                  onClick={this.showPassphrase} />
+
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption="Sign out"
                                   onClick={this.signout} />
@@ -102,10 +92,6 @@ class AppNav extends React.Component {
                         <div className={this.unreadFiles ? '' : ''} />
                     </div>
                 </div>
-                <Dialog active={this.passphraseVisible} actions={this.passphraseDialogActions}
-                        onOverlayClick={this.hidePassphrase} onEscKeyDown={this.hidePassphrase}>
-                    <div className="passphrase-display">{User.current.passphrase}</div>
-                </Dialog>
             </div>
         );
     }

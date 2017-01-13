@@ -1,7 +1,7 @@
 const React = require('react');
-const { observable, autorunAsync } = require('mobx');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog, IconButton, Tooltip, Switch } = require('~/react-toolbox');
+const { Switch } = require('~/react-toolbox');
 
 @observer class Preferences extends React.Component {
 

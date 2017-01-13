@@ -1,9 +1,21 @@
 const React = require('react');
-const { observable, autorunAsync } = require('mobx');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, IconButton, Tooltip, Dialogs } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/react-toolbox');
+const { User } = require('~/icebear');
 
 @observer class SecuritySettings extends React.Component {
+
+    @observable passphraseVisible = false;
+
+    hidePassphrase = () => { this.passphraseVisible = false; };
+    passphraseDialogActions = [
+        { label: 'Ok', onClick: this.hidePassphrase }
+    ];
+
+    showPassphrase= () => {
+        this.passphraseVisible = true;
+    };
 
     render() {
         return (
@@ -24,7 +36,10 @@ const { Button, IconButton, Tooltip, Dialogs } = require('~/react-toolbox');
                     <p style={{ marginBottom: '40px' }}>Generate a
                     single use QR code to log in to other devices.</p>
 
-                    <div className="title">Master password</div>
+                    <div className="title">Master password
+                        <Button label="view"
+                                onClick={this.showPassphrase} flat primary />
+                    </div>
                     <p>Your Master Password is required when logging
                     to a new device and after a clean install.</p>
                 </section>
@@ -35,6 +50,11 @@ const { Button, IconButton, Tooltip, Dialogs } = require('~/react-toolbox');
                     <p>Audit access to your account.<br />
                     3 devices have accessed your account in the last 30 days.</p>
                 </section>
+
+                <Dialog active={this.passphraseVisible} actions={this.passphraseDialogActions}
+                        onOverlayClick={this.hidePassphrase} onEscKeyDown={this.hidePassphrase}>
+                    <div className="passphrase-display">{User.current.passphrase}</div>
+                </Dialog>
             </div>
         );
     }

@@ -9,6 +9,11 @@
 @import './vars/transitions';
 @import './vars/_typography';
 
+// so that I don't have to write millions of font rules to overwrite RTs millions of font rules.
+* {
+  font-family: $font-stack;
+}
+
 // AVATAR
 .rt-avatar-avatar {
   flex-shrink: 0;

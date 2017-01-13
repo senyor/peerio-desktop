@@ -70,7 +70,7 @@ class AppNav extends React.Component {
             <div className="app-nav">
                 <div className="avatar-wrapper">
                     <IconMenu icon="">
-                        <MenuItem value="settings" icon="lock" caption="Settings"
+                        <MenuItem value="settings" icon="settings" caption="Settings"
                                 onClick={this.toSettings} />
                         <MenuItem value="passphrase" icon="lock" caption="Show passphrase"
                                   onClick={this.showPassphrase} />

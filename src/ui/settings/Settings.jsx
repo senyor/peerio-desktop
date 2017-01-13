@@ -7,7 +7,8 @@ const css = require('classnames');
 const app = require('electron').remote.app;
 const sounds = require('~/helpers/sounds');
 const appControl = require('~/helpers/app-control');
-
+const SecuritySettings = require('./components/SecuritySettings');
+const Preferences = require('./components/Preferences');
 
 @observer class Settings extends React.Component {
     @observable index = 0;
@@ -18,24 +19,24 @@ const appControl = require('~/helpers/app-control');
     render() {
         return (
             <div className="flex-row flex-justify-center settings">
-                <Tabs index={this.index}
-                      onChange={this.handleTabChange}
-                      style={{ width: '1024px' }}
-                      className="tabs">
-                    {/* <Tab label="Profile"> Profile content</Tab> */}
-                    <Tab label="Security">
-                        <div>
-                            <div className="title" style={{ margin: '32px 0 40px' }}>Device Password
-                                <Button label="update" flat primary />
-                            </div>
-
-                            <div className="title">Two factor authentication (2FA)
-                                <Button label="activate" flat primary />
-                            </div>
-                        </div>
-                    </Tab>
-                    <Tab label="Preferences"> Preferences content</Tab>
-                </Tabs>
+                <div>
+                    <div className="headline">
+                        {/* <IconButton value="back" /> */}
+                        Settings
+                    </div>
+                    <Tabs index={this.index}
+                          onChange={this.handleTabChange}
+                          style={{ width: '1024px' }}
+                          className="tabs">
+                        {/* <Tab label="Profile"> Profile content</Tab> */}
+                        <Tab label="Security">
+                            <SecuritySettings />
+                        </Tab>
+                        <Tab label="Preferences">
+                            <Preferences />
+                        </Tab>
+                    </Tabs>
+                </div>
             </div>
         );
     }

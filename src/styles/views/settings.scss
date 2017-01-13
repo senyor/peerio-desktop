@@ -3,10 +3,23 @@
   width: 100%;
 
   .tabs {
+    margin-top: 24px;
     width: 1024px;
+
+    .rt-tabs-tab {
+      padding: 0;
+    }
   }
 
-  .section-divider {
-    border-bottom: 1px solid $divider-dark;
+  section {
+    padding: 32px 0 48px;
+
+    .section-divider {
+      border-bottom: 1px solid $divider-dark;
+    }
+
+    .rt-button-button {
+      margin-left: $margin-small;
+    }
   }
 }

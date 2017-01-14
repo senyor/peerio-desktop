@@ -44,8 +44,12 @@ class AppNav extends React.Component {
         this.inMessages = false;
     };
 
-    toSettings = () => {
-        window.router.push('/app/settings');
+    toSecurity = () => {
+        window.router.push('/app/settings/security');
+    }
+
+    toPrefs = () => {
+        window.router.push('/app/settings/preferences');
     }
 
     unreadFiles = () => {
@@ -61,8 +65,16 @@ class AppNav extends React.Component {
             <div className="app-nav">
                 <div className="avatar-wrapper">
                     <IconMenu icon="">
-                        <MenuItem value="settings" icon="settings" caption="Settings"
-                                onClick={this.toSettings} />
+                        <MenuItem value="security"
+                                  icon="security"
+                                  caption="Security"
+                                  onClick={this.toSecurity}
+                                  style={{ width: '250px' }} />
+                        <MenuItem value="preferences"
+                                  icon="settings"
+                                  caption="Preferences"
+                                  onClick={this.toPrefs}
+                                  style={{ width: '250px' }} />
 
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption="Sign out"

@@ -8,6 +8,8 @@ const Messages = require('./messages/Messages');
 const NewMessage = require('./messages/NewMessage');
 const Files = require('./files/Files');
 const Settings = require('./settings/Settings');
+const Security = require('./settings/components/SecuritySettings');
+const Preferences = require('./settings/components/Preferences');
 const DevTools = require('./dev-tools/DevTools');
 const DTDashboard = require('./dev-tools/Dashboard');
 const KegEditor = require('./dev-tools/KegEditor');
@@ -20,7 +22,10 @@ module.exports = (
             <IndexRoute component={Messages} />
             <Route path="new-message" component={NewMessage} />
             <Route path="files" component={Files} />
-            <Route path="settings" component={Settings} />
+            <Route path="settings" component={Settings}>
+                <Route path="security" component={Security} />
+                <Route path="preferences" component={Preferences} />
+            </Route>
         </Route>
         <Route path="/dev-tools" component={DevTools} >
             <IndexRoute component={DTDashboard} />

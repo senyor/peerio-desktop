@@ -16,6 +16,14 @@ cfg.TinyDb = {
     removeValue: tinyDb.removeAsync
 };
 
+cfg.upload = {
+    chunkSize: 1024 * 512,
+    maxReadQueue: 2, // max amount of chunks to pre-buffer for upload
+    maxSendQueue: 2, // max amount of chunks to pre-encrypt for sending
+    maxParallelUploadingChunks: 2 // max amount of uploaded chunks waiting for server response
+};
+
+
 tinyDb.init(cfg.appName);
 
 cfg.FileStream = FileStream;

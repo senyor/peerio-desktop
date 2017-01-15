@@ -22,7 +22,7 @@ function requestDownloadPath(fileName) {
     });
 }
 
-
+// todo: do this in a mobx reaction
 function downloadFile(file) {
     let finalPath;
     return requestDownloadPath(file.name)

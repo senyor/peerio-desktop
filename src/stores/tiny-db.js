@@ -1,17 +1,21 @@
 const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
-const config = require('~/config');
 
-const app = electron.app || electron.remote.app;
-const folder = app.getPath('userData');
-const filePath = path.join(folder, `${config.appName.toLowerCase()}_tinydb.json`);
-const fileOpts = { encoding: 'utf8' };
+let filePath, fileOpts;
 
-if (!fs.existsSync(filePath)) {
-    if (!fs.existsSync(folder)) fs.mkdirSync(folder);
-    fs.writeFileSync(filePath, '{}', fileOpts);
+function init(appName) {
+    const app = electron.app || electron.remote.app;
+    const folder = app.getPath('userData');
+    filePath = path.join(folder, `${appName.toLowerCase()}_tinydb.json`);
+    fileOpts = { encoding: 'utf8' };
+
+    if (!fs.existsSync(filePath)) {
+        if (!fs.existsSync(folder)) fs.mkdirSync(folder);
+        fs.writeFileSync(filePath, '{}', fileOpts);
+    }
 }
+
 /**
  * Get a key
  * @param {String} key
@@ -81,4 +85,4 @@ function save(settings) {
     fs.writeFileSync(filePath, JSON.stringify(settings), fileOpts);
 }
 
-module.exports = { get, set, remove, getValueAsync, setValueAsync, removeAsync };
+module.exports = { get, set, remove, getValueAsync, setValueAsync, removeAsync, init };

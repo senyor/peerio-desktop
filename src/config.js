@@ -1,8 +1,8 @@
 const cfg = require('~/icebear').config;
 const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env');
-const tinyDb = require('~/stores/tiny-db');
 const FileStream = require('~/helpers/file-stream');
+const tinyDb = require('~/stores/tiny-db');
 
 cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';
@@ -10,10 +10,13 @@ cfg.currentVersion = app.getVersion();
 cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
 
 cfg.TinyDb = {
+    appName: cfg.appName,
     getValue: tinyDb.getValueAsync,
     setValue: tinyDb.setValueAsync,
     removeValue: tinyDb.removeAsync
 };
+
+tinyDb.init(cfg.appName);
 
 cfg.FileStream = FileStream;
 

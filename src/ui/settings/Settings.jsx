@@ -1,16 +1,16 @@
 const React = require('react');
-const { observable, autorunAsync } = require('mobx');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Tab, Tabs } = require('~/react-toolbox');
-const { User } = require('~/icebear');
-const css = require('classnames');
-const app = require('electron').remote.app;
-const sounds = require('~/helpers/sounds');
-const appControl = require('~/helpers/app-control');
 
 @observer class Settings extends React.Component {
-    @observable index = 0
+    @observable index = 0;
 
+    componentWillMount() {
+        if (this.index === 0) {
+            window.router.push('/app/settings/profile');
+        }
+    }
     handleTabChange = (index) => {
         this.index = index;
         this.index === 1 ?
@@ -32,6 +32,9 @@ const appControl = require('~/helpers/app-control');
                           style={{ width: '1024px' }}
                           className="tabs">
                         {/* <Tab label="Profile"> Profile content</Tab> */}
+                        <Tab label="Profile">
+                            {this.props.children}
+                        </Tab>
                         <Tab label="Security">
                             {this.props.children}
                         </Tab>

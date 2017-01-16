@@ -9,6 +9,16 @@
     .rt-tabs-tab {
       padding: 0;
     }
+
+    .rt-tabs-pointer {
+      height: 4px;
+      margin-top: -5px;
+    }
+
+    .rt-tabs-label,
+    .rt-tabs-label.rt-tabs-active {
+      color: $text-dark-secondary;
+    }
   }
 
   section {

@@ -65,16 +65,21 @@ class AppNav extends React.Component {
             <div className="app-nav">
                 <div className="avatar-wrapper">
                     <IconMenu icon="">
+                        <MenuItem value="profile"
+                                  icon="person"
+                                  caption="Profile"
+                                  onClick={this.toProfile}
+                                  style={{ minWidth: '250px' }} />
                         <MenuItem value="security"
                                   icon="security"
                                   caption="Security"
                                   onClick={this.toSecurity}
-                                  style={{ width: '250px' }} />
+                                  style={{ minWidth: '250px' }} />
                         <MenuItem value="preferences"
                                   icon="settings"
                                   caption="Preferences"
                                   onClick={this.toPrefs}
-                                  style={{ width: '250px' }} />
+                                  style={{ minWidth: '250px' }} />
 
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption="Sign out"

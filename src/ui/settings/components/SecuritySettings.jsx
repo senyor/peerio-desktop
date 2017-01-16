@@ -21,13 +21,15 @@ const { User } = require('~/icebear');
         return (
             <div>
                 <section className="section-divider">
-                    <div className="title" style={{ marginBottom: '40px' }}>Device Password
+                    <div className="title" >Device Password
                         <Button label="update" flat primary />
                     </div>
+                    <p>Your device password is used to log in to this device only.</p>
 
                     <div className="title">Two factor authentication (2FA)
                         <Button label="activate" flat primary />
                     </div>
+                    <p style={{ marginBottom: '40px' }}>An additional layer of account protection.</p>
                 </section>
                 <section className="section-divider">
                     <div className="title">QR Login

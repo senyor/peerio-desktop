@@ -28,6 +28,7 @@
 // BUTTONS and ICONS!
 .rt-button-button {
   padding-top: 0;
+  font-weight: $font-weight-semibold;
 }
 
 .rt-button-button > .rt-button-icon,
@@ -60,14 +61,42 @@
 }
 
 .rt-input-input {
-  // TODO border-radius variables
-  border-radius: 2px;
+  height: 48px;
+  margin-top: 40px;
+  padding: 0;
   width: 100%;
+
+  input {
+    // TODO border-radius variables
+    border: 1px solid $border-dark;
+    border-radius: 2px;
+    height: 48px;
+    margin-top: 0;
+    padding-top: 18px;
+    transition: 150ms;
+  }
+}
+
+
+.rt-input-input {
 
   .rt-input-label {
     font-size: 14px;
     padding-left: $padding-small;
     top: 17px;
+  }
+}
+
+.input-row {
+  display: flex;
+
+  .rt-input-input:first-of-type,
+  div:first-of-type {
+    margin-right: 1px;
+  }
+
+  .helper-text {
+    @extend %hint-error-label;
   }
 }
 

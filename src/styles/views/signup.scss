@@ -59,19 +59,6 @@
     width: 330px;
   }
 
-  .input-row {
-    display: flex;
-
-    .rt-input-input:first-of-type,
-    div:first-of-type {
-      margin-right: 1px;
-    }
-
-    .helper-text {
-      @extend %hint-error-label;
-    }
-  }
-
   .progress {
     align-items: center;
     display: flex;

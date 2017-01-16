@@ -18,10 +18,15 @@
   @extend %list-title;
 }
 
+.dark-label {
+  color: $text-dark-hint;
+
+  @extend %hint-error-label;
+}
+
 .text-right {
   text-align: right !important;
 }
-
 
 .bold{
   font-weight: 600;

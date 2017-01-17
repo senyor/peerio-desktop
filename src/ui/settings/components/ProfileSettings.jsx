@@ -6,6 +6,8 @@ const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 
 @observer class Profile extends React.Component {
+    @observable inital = User.current.firstName.slice(0,1);
+
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
     }
@@ -50,8 +52,7 @@ const { t } = require('peerio-translator');
                             {User.current.username}
                         </div>
                     </div>
-                    {/* TODO: dynmaic inital */}
-                    <div className="avatar-card-initial">B</div>
+                    <div className="avatar-card-initial">{this.inital}</div>
                     <div className="card-footer">
                         {/*
                           TODO: hide delete button when there is no avatar img

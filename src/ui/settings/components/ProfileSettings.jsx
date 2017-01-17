@@ -4,9 +4,11 @@ const { observer } = require('mobx-react');
 const { Button, IconButton, Input } = require('~/react-toolbox');
 const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
+const css = require('classnames');
 
 @observer class Profile extends React.Component {
     @observable inital = User.current.firstName.slice(0, 1);
+    @observable avatarImage = false;
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
@@ -57,7 +59,8 @@ const { t } = require('peerio-translator');
                         {/*
                           TODO: hide delete button when there is no avatar img
                         */}
-                        <IconButton icon="delete" />
+                        <IconButton icon="delete"
+                                    className={css({ banish: !this.avatarImage })} />
                         <IconButton icon="add_a_photo" />
                     </div>
                 </div>
@@ -65,5 +68,4 @@ const { t } = require('peerio-translator');
         );
     }
 }
-
 module.exports = Profile;

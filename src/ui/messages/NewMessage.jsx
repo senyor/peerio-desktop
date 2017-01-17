@@ -18,7 +18,7 @@ class NewMessage extends React.Component {
     render() {
         return (
             <div className="create-new-message">
-                <UserPicker title="directMessages" onAccept={this.handleAccept} onClose={this.handleClose} />
+                <UserPicker title={t('directMessages')} onAccept={this.handleAccept} onClose={this.handleClose} />
             </div>
         );
     }

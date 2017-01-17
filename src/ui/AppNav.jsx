@@ -18,6 +18,7 @@ const delay = 500;
 class AppNav extends React.Component {
 
     @observable inMessages = true;
+    @observable inFiles = false;
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
@@ -37,19 +38,31 @@ class AppNav extends React.Component {
     toMessages = () => {
         window.router.push('/app');
         this.inMessages = true;
+        this.inFiles = false;
     };
 
     toFiles = () => {
         window.router.push('/app/files');
         this.inMessages = false;
+        this.inFiles = true;
     };
+
+    toProfile = () => {
+        window.router.push('/app/settings/profile');
+        this.inMessages = false;
+        this.inFiles = false;
+    }
 
     toSecurity = () => {
         window.router.push('/app/settings/security');
+        this.inMessages = false;
+        this.inFiles = false;
     }
 
     toPrefs = () => {
         window.router.push('/app/settings/preferences');
+        this.inMessages = false;
+        this.inFiles = false;
     }
 
     unreadFiles = () => {
@@ -99,7 +112,7 @@ class AppNav extends React.Component {
                         <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
                     </div>
 
-                    <div className={css('menu-item', { active: !this.inMessages })} >
+                    <div className={css('menu-item', { active: this.inFiles })} >
                         <TooltipIcon
                             tooltip="Files"
                             tooltipDelay={delay}

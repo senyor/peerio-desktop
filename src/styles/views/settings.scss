@@ -50,7 +50,7 @@
   }
 
   .avatar-card {
-    background-color: $color-brand; //TODO: make this dynamic
+    background-size: 100%;
     border-radius: 8px;
     height: 224px;
     margin-left: 64px;
@@ -92,9 +92,7 @@
       height: 48px;
       justify-content: flex-end;
       margin-top: $margin-default;
-      opacity: 0;
       padding-right: $padding-small;
-      transition: $transition-default 150ms;
 
       @extend %flex-row;
       @extend %flex-align-center;
@@ -107,10 +105,6 @@
       .rt-button-button:hover .material-icons {
         color: $icon-light-active;
       }
-    }
-
-    &:hover .card-footer {
-      opacity: 1;
     }
   }
 }

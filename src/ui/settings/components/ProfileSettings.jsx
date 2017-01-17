@@ -7,12 +7,20 @@ const { t } = require('peerio-translator');
 const css = require('classnames');
 
 @observer class Profile extends React.Component {
+    // @observable avatarImage = 'url(http://placekitten.com/512/512)';
     @observable inital = User.current.firstName.slice(0, 1);
-    @observable avatarImage = false;
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
     }
+
+    // handleDeleteAvatar = () => {
+    //     this.avatarImage = '';
+    // }
+    //
+    // handleAddAvatar = () => {
+    //   this.avatarImage = 'url(http://placekitten.com/512/512)';
+    // }
 
     render() {
         return (
@@ -45,7 +53,10 @@ const css = require('classnames');
                             style={{ marginTop: '40px' }} primary raised />
                 </div>
                 <div className="avatar-card"
-                    style={{ backgroundColor: this.contact.color }}>
+                    style={{
+                        backgroundColor: this.contact.color
+                        // backgroundImage: this.avatarImage
+                    }}>
                     <div className="avatar-card-user">
                         <div className="avatar-card-display-name">
                             {User.current.firstName} {User.current.lastName}
@@ -54,14 +65,16 @@ const css = require('classnames');
                             {User.current.username}
                         </div>
                     </div>
-                    <div className="avatar-card-initial">{this.inital}</div>
+                    <div className="avatar-card-initial">
+                        {/* {this.avatarImage ? '' : this.inital} */}
+                        {this.inital}
+                    </div>
                     <div className="card-footer">
-                        {/*
-                          TODO: hide delete button when there is no avatar img
-                        */}
-                        <IconButton icon="delete"
-                                    className={css({ banish: !this.avatarImage })} />
-                        <IconButton icon="add_a_photo" />
+                        {/* <IconButton icon="delete"
+                                    className={css({ banish: !this.avatarImage })}
+                                    onClick={this.handleDeleteAvatar} />
+                        <IconButton icon="add_a_photo"
+                                    onClick={this.handleAddAvatar} /> */}
                     </div>
                 </div>
             </section>

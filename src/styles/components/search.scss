@@ -8,6 +8,18 @@
   height: 36px;
   width: 256px;
 
+  .rt-input-input {
+    height: 36px;
+    margin: 0;
+  }
+
+  input {
+    border-width: 0;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 0 0 $padding-small;
+  }
+
   .search-icon {
     padding: 6px 0 6px $padding-small;
   }

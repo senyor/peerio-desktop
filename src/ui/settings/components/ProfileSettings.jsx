@@ -3,6 +3,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, IconButton, Input } = require('~/react-toolbox');
 const { User, contactStore } = require('~/icebear');
+const { t } = require('peerio-translator');
 
 @observer class Profile extends React.Component {
     componentWillMount() {
@@ -15,14 +16,14 @@ const { User, contactStore } = require('~/icebear');
                 <div>
                     <div className="input-row">
                         <Input type="text"
-                               label="First name"
+                               label={t('firstName')}
                                value={User.current.firstName} />
                         <Input type="text"
-                               label="Last name"
+                               label={t('lastName')}
                                value={User.current.lastName} />
                     </div>
                     <div className="input-row">
-                        <Input type="email" label="Email" value={User.current.addresses} />
+                        <Input type="email" label={t('email')} value={User.current.addresses} />
                     </div>
                     <div className="input-row">
                         {/*
@@ -34,9 +35,9 @@ const { User, contactStore } = require('~/icebear');
                             nothing else...input.
                         */}
                         {/* TODO: INPUT MASK FOR THE PRETTIEST PHONE NUMBERS */}
-                        <Input type="tel" label="Phone" />
+                        <Input type="tel" label={t('phone')} />
                     </div>
-                    <Button label="update"
+                    <Button label={t('button_update')}
                             style={{ marginTop: '40px' }} primary raised />
                 </div>
                 <div className="avatar-card"

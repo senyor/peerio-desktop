@@ -2,6 +2,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Tab, Tabs } = require('~/react-toolbox');
+const { t } = require('peerio-translator');
 
 @observer class Settings extends React.Component {
     @observable index = 0;
@@ -32,13 +33,13 @@ const { Tab, Tabs } = require('~/react-toolbox');
                           style={{ width: '1024px' }}
                           className="tabs">
                         {/* <Tab label="Profile"> Profile content</Tab> */}
-                        <Tab label="Profile">
+                        <Tab label={t('profile')}>
                             {this.props.children}
                         </Tab>
-                        <Tab label="Security">
+                        <Tab label={t('security')}>
                             {this.props.children}
                         </Tab>
-                        <Tab label="Preferences">
+                        <Tab label={t('preferences')}>
                             {this.props.children}
                         </Tab>
                     </Tabs>

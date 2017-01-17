@@ -21,7 +21,7 @@ const { t } = require('peerio-translator');
     render() {
         return (
             <div className="flex-row flex-justify-center settings">
-                <div>
+                <div className="tab-wrapper">
                     <div className="headline">
                         {/* <IconButton value="back" /> */}
                         Settings

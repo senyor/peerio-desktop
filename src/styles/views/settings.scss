@@ -3,9 +3,16 @@
   padding-top: 32px;
   width: 100%;
 
+  .tab-wrapper {
+    margin: 0 64px;
+
+    @extend %flex-grow-1;
+    @extend %flex-col;
+  }
+
   .tabs {
     margin-top: 24px;
-    width: 1024px;
+    width: 100%;
 
     .rt-tabs-tab {
       padding: 0;

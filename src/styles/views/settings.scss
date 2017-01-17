@@ -1,4 +1,5 @@
 .settings {
+  overflow: auto;
   padding-top: 32px;
   width: 100%;
 
@@ -24,12 +25,85 @@
   section {
     padding: 32px 0 48px;
 
+    &:last-of-type {
+      padding-bottom: 0;
+    }
+
     .section-divider {
       border-bottom: 1px solid $divider-dark;
     }
 
     .rt-button-button {
       margin-left: $margin-small;
+    }
+  }
+
+  .input-row:first-of-type .rt-input-input {
+    margin-top: 0;
+  }
+
+  .avatar-card {
+    background-color: $color-brand; //TODO: make this dynamic
+    border-radius: 8px;
+    height: 224px;
+    margin-left: 64px;
+    width: 224px;
+
+    @extend %flex-col;
+
+    &-user {
+      align-items: flex-start;
+      height: 64px;
+
+      @extend %flex-col;
+      @extend %flex-shrink-0;
+    }
+
+    &-display-name {
+      color: $text-light-primary;
+      font-weight: $font-weight-bold;
+      margin: $margin-default 0 0 $margin-default;
+    }
+
+    &-username {
+      color: $text-light-secondary;
+      font-size: 12px;
+      margin: 0 0 0 $margin-default;
+    }
+
+    &-initial {
+      color: $text-light-primary;
+      font-size: 112px;
+
+      @extend %flex-row;
+      @extend %flex-align-center;
+      @extend %flex-justify-center;
+      @extend %flex-grow-1;
+    }
+
+    .card-footer {
+      height: 48px;
+      justify-content: flex-end;
+      margin-top: $margin-default;
+      opacity: 0;
+      padding-right: $padding-small;
+      transition: $transition-default 150ms;
+
+      @extend %flex-row;
+      @extend %flex-align-center;
+      @extend %flex-shrink-0;
+
+      .material-icons {
+        color: $icon-light-inactive;
+      }
+
+      .rt-button-button:hover .material-icons {
+        color: $icon-light-active;
+      }
+    }
+
+    &:hover .card-footer {
+      opacity: 1;
     }
   }
 }

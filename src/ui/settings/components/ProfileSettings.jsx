@@ -1,26 +1,28 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Input } = require('~/react-toolbox');
-const { User } = require('~/icebear');
+const { Button, IconButton, Input } = require('~/react-toolbox');
+const { User, contactStore } = require('~/icebear');
 
 @observer class Profile extends React.Component {
+    componentWillMount() {
+        this.contact = contactStore.getContact(User.current.username);
+    }
 
     render() {
         return (
             <section className="flex-row">
                 <div>
                     <div className="input-row">
-                        <span className="dark-label">Username</span> <br />
-                        {User.current.username}
+                        <Input type="text"
+                               label="First name"
+                               value={User.current.firstName} />
+                        <Input type="text"
+                               label="Last name"
+                               value={User.current.lastName} />
                     </div>
-
                     <div className="input-row">
-                        <Input type="text" label="First name" value={User.current.firstName} />
-                        <Input type="text" label="Last name" value={User.current.lastName} />
-                    </div>
-                    <div className="input-row">
-                        <Input type="email" label="Email" value={User.current.mail} />
+                        <Input type="email" label="Email" value={User.current.addresses} />
                     </div>
                     <div className="input-row">
                         {/*
@@ -34,10 +36,28 @@ const { User } = require('~/icebear');
                         {/* TODO: INPUT MASK FOR THE PRETTIEST PHONE NUMBERS */}
                         <Input type="tel" label="Phone" />
                     </div>
-                    <Button label="update" primary raised />
+                    <Button label="update"
+                            style={{ marginTop: '40px' }} primary raised />
                 </div>
-                <div>
-                    avatar and avatar uploading stuff goes here
+                <div className="avatar-card"
+                    style={{ backgroundColor: this.contact.color }}>
+                    <div className="avatar-card-user">
+                        <div className="avatar-card-display-name">
+                            {User.current.firstName} {User.current.lastName}
+                        </div>
+                        <div className="avatar-card-username">
+                            {User.current.username}
+                        </div>
+                    </div>
+                    {/* TODO: dynmaic inital */}
+                    <div className="avatar-card-initial">B</div>
+                    <div className="card-footer">
+                        {/*
+                          TODO: hide delete button when there is no avatar img
+                        */}
+                        <IconButton icon="delete" />
+                        <IconButton icon="add_a_photo" />
+                    </div>
                 </div>
             </section>
         );

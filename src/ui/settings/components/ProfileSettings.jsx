@@ -6,7 +6,7 @@ const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 
 @observer class Profile extends React.Component {
-    @observable inital = User.current.firstName.slice(0,1);
+    @observable inital = User.current.firstName.slice(0, 1);
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);

@@ -59,7 +59,7 @@ class FileStream extends FileStreamAbstract {
             fs.write(this.fileDescriptor, Buffer.from(buffer), 0, buffer.length, null,
                 err => {
                     if (this.checkForError(err, reject)) return;
-                    resolve();
+                    resolve(buffer);
                 });
         });
     }

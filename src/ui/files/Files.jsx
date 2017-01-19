@@ -118,7 +118,8 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
                     <UserPicker title={`Select recipients for ${fileStore.selectedFilesCount} file(s)`}
                                 button="Share"
                                 onAccept={this.handleFileShareAccept}
-                                onClose={this.closeUserPicker} />
+                                onClose={this.closeUserPicker}
+                                files />
                 </Dialog>
             </div>
         );

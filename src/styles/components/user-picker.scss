@@ -1,9 +1,16 @@
 .user-picker {
+  height: 100%;
+  width: 100%;
+
+  @extend %flex-row;
+
   .selected-items {
     background-color: $color-dark-06;
-    margin: 168px 64px 0;
-    padding: 0 $padding-small;
     width: 256px;
+
+    ul {
+      overflow-y: auto;
+    }
   }
 
   .rt-list-itemContentRoot {

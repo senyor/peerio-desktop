@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
         ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { contactStore } = require('~/icebear');
+const { fileStore, contactStore } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 
@@ -13,6 +13,10 @@ class UserPicker extends React.Component {
     @observable selected = [];
     @observable query = '';
     accepted = false;
+
+    @computed get selectedFiles() {
+        return fileStore.getSelectedFiles();
+    }
 
     @computed get options() {
         return contactStore.contacts.filter(c => !c.loading && !c.notFound && !this.selected.includes(c));
@@ -70,28 +74,16 @@ class UserPicker extends React.Component {
     render() {
         return (
             <div className="user-picker">
-                <div className={css('flex-col selected-items', { banish: !this.props.files })} >
-                    <div className="user-picker-header chat-creation-header">
-                        <div className="title">Selected files</div>
-                    </div>
+                <div className={css('flex-col selected-items', { banish: !this.props.sharing })} >
                     <List >
                         {/* TODO: dynamic file icon based on file type */}
-                        <ListItem
+                        <ListSubHeader caption={t('selectedFiles')} />
+                        {/* FIXME:  Should load selected files not entire file library. */}
+                        {this.selectedFiles.map(f => <ListItem
                             leftIcon="insert_drive_file"
-                            caption="some-file.jpg"
-                            rightIcon="remove_circle_outline" />
-                        <ListItem
-                            leftIcon="insert_drive_file"
-                            caption="my-vaction-video-no-one-wants-to-see.mpg"
-                            rightIcon="remove_circle_outline" />
-                        <ListItem
-                            leftIcon="insert_drive_file"
-                            caption="mom-cookie-recipe.txt"
-                            rightIcon="remove_circle_outline" />
-                        <ListItem
-                            leftIcon="insert_drive_file"
-                            caption="how-did-this-get-here.mp3"
-                            rightIcon="remove_circle_outline" />
+                            caption={f.name}
+                            rightIcon="remove_circle_outline" />)}
+
                     </List>
                 </div>
                 <div className="flex-row flex-justify-center"

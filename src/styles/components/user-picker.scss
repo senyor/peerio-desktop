@@ -5,16 +5,20 @@
   @extend %flex-row;
 
   .selected-items {
-    background: $color-dark-03;
-    border-right: 1px solid $divider-dark;
+    background-color: $background-message-list;
     width: 256px;
+
+    @extend %flex-grow-0;
+    @extend %flex-shrink-0;
 
     ul {
       overflow-y: auto;
     }
   }
+
+  .rt-list-subheader,
   .rt-list-listItem {
-    border-width: 0 !important;
+    border-width: 0 !important; // I did this :( - Paul
 
     .rt-list-right .material-icons {
       cursor: pointer;

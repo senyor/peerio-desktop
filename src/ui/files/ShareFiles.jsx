@@ -5,7 +5,9 @@ const { observer } = require('mobx-react');
 const { fileStore, chatStore } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 
-@observer class ShareFiles extends React.Component {
+@observer
+class ShareFiles extends React.Component {
+
     handleFileShareAccept = (users) => {
         // todo replace this with new sharing api when server implements it
         const chat = chatStore.startChat(users);
@@ -22,11 +24,11 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
     render() {
         return (
             <div className="create-new-message">
-                <UserPicker title={`Select recipients for ${fileStore.selectedFilesCount} file(s)`}
+                <UserPicker title={`Select recipients for ${fileStore.selectedCount} file(s)`}
                             button="Share"
                             onAccept={this.handleFileShareAccept}
                             onClose={this.closeUserPicker}
-                            files />
+                            sharing />
             </div>
         );
     }

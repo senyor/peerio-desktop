@@ -22,7 +22,7 @@ const ZeroScreen = require('./components/ZeroScreen');
     }
 
     componentWillUnmount() {
-        fileStore.clearSelection();
+        // fileStore.clearSelection();
     }
 
     handleUpload() {
@@ -95,7 +95,6 @@ const ZeroScreen = require('./components/ZeroScreen');
                             {/* <div>1-10 of 234</div> */}
                             {/* <IconButton icon="chevron_left" /> */}
                             {/* <IconButton icon="chevron_right" /> */}
-
                         </div>
                     </div>
                 </div>

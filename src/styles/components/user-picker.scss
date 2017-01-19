@@ -5,11 +5,26 @@
   @extend %flex-row;
 
   .selected-items {
-    background-color: $color-dark-06;
+    background: $color-dark-03;
+    border-right: 1px solid $divider-dark;
     width: 256px;
 
     ul {
       overflow-y: auto;
+    }
+  }
+  .rt-list-listItem {
+    border-width: 0 !important;
+
+    .rt-list-right .material-icons {
+      cursor: pointer;
+      display: none;
+    }
+
+    &:hover {
+      .rt-list-right .material-icons {
+        display: block;
+      }
     }
   }
 

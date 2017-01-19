@@ -1,5 +1,5 @@
 const React = require('react');
-const { Checkbox, Dialog } = require('~/react-toolbox');
+const { Checkbox } = require('~/react-toolbox');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { fileStore, chatStore } = require('~/icebear');
@@ -8,7 +8,6 @@ const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
 const ZeroScreen = require('./components/ZeroScreen');
-const UserPicker = require('~/ui/shared-components/UserPicker');
 
 @observer class Files extends React.Component {
     @observable allSelected = false;
@@ -51,20 +50,7 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
     };
 
     handleFileShareIntent = () => {
-        this.showUserPicker = true;
-    };
-
-    handleFileShareAccept = (users) => {
-        // todo replace this with new sharing api when server implements it
-        const chat = chatStore.startChat(users);
-        const files = fileStore.getSelectedFiles();
-        fileStore.clearSelection();
-        when(() => !chat.loadingMeta, () => chat.sendMessage('', files));
-        this.closeUserPicker();
-    };
-
-    closeUserPicker = () => {
-        this.showUserPicker = false;
+        window.router.push('/app/sharefiles');
     };
 
     render() {
@@ -113,14 +99,6 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
                         </div>
                     </div>
                 </div>
-
-                <Dialog active={this.showUserPicker} type="large" className="create-new-message">
-                    <UserPicker title={`Select recipients for ${fileStore.selectedFilesCount} file(s)`}
-                                button="Share"
-                                onAccept={this.handleFileShareAccept}
-                                onClose={this.closeUserPicker}
-                                files />
-                </Dialog>
             </div>
         );
     }

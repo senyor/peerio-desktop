@@ -75,10 +75,23 @@ class UserPicker extends React.Component {
                         <div className="title">Selected files</div>
                     </div>
                     <List >
-                        <ListItem caption="some-file.jpg" rightIcon="highlight_off" />
-                        <ListItem caption="my-vaction-video-no-one-wants-to-see.mpg" rightIcon="highlight_off" />
-                        <ListItem caption="mom-cookie-recipe.txt" rightIcon="highlight_off" />
-                        <ListItem caption="how-did-this-get-here.mp3" rightIcon="highlight_off" />
+                        {/* TODO: dynamic file icon based on file type */}
+                        <ListItem
+                            leftIcon="insert_drive_file"
+                            caption="some-file.jpg"
+                            rightIcon="remove_circle_outline" />
+                        <ListItem
+                            leftIcon="insert_drive_file"
+                            caption="my-vaction-video-no-one-wants-to-see.mpg"
+                            rightIcon="remove_circle_outline" />
+                        <ListItem
+                            leftIcon="insert_drive_file"
+                            caption="mom-cookie-recipe.txt"
+                            rightIcon="remove_circle_outline" />
+                        <ListItem
+                            leftIcon="insert_drive_file"
+                            caption="how-did-this-get-here.mp3"
+                            rightIcon="remove_circle_outline" />
                     </List>
                 </div>
                 <div className="flex-row flex-justify-center"

@@ -1,0 +1,18 @@
+.user-picker {
+  .selected-items {
+    background-color: $color-dark-06;
+    margin: 168px 64px 0;
+    padding: 0 $padding-small;
+    width: 256px;
+  }
+
+  .rt-list-itemContentRoot {
+    overflow: hidden;
+  }
+
+  .rt-list-itemText {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

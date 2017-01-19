@@ -69,18 +69,18 @@ class UserPicker extends React.Component {
 
     render() {
         return (
-            <div style={{ width: '100vw' }} className="flex-row flex-justify-center">
-                {/* <div className="flex-col" style={{ width: '25%', marginRight: '24px', marginTop: '168px' }}>
+            <div className="flex-row flex-justify-center user-picker">
+                <div className={css('flex-col selected-items', { banish: this.props.files })} >
                     <div className="user-picker-header chat-creation-header">
                         <div className="title">Selected files (Someone should make me dynamic)</div>
                     </div>
-                    <List className="selected-items">
+                    <List >
                         <ListItem caption="some-file.jpg" rightIcon="highlight_off" />
                         <ListItem caption="my-vaction-video-no-one-wants-to-see.mpg" rightIcon="highlight_off" />
                         <ListItem caption="mom-cookie-recipe.txt" rightIcon="highlight_off" />
                         <ListItem caption="how-did-this-get-here.mp3" rightIcon="highlight_off" />
                     </List>
-                </div> */}
+                </div>
                 <div className="flex-col"
                         style={{
                             width: '600px',

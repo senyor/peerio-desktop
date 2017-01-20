@@ -13,21 +13,15 @@ cfg.TinyDb = {
     appName: cfg.appName,
     getValue: tinyDb.getValueAsync,
     setValue: tinyDb.setValueAsync,
-    removeValue: tinyDb.removeAsync
+    removeValue: tinyDb.removeAsync,
+    getAllKeys: tinyDb.getAllKeysAsync
 };
 
-cfg.upload = {
-    chunkSize: 1024 * 512,
-    maxEncryptQueue: 2, // max amount of chunks to pre-buffer for upload
-    maxUploadQueue: 2, // max amount of chunks to pre-encrypt for sending
-    maxResponseQueue: 2 // max amount of uploaded chunks waiting for server response
-};
 
-cfg.download = {
-    chunkSize: 1024 * 1100, // amount of bytes to download at once for further processing
-    maxParseQueue: 5,  // max amount of chunks to pre-buffer (download)
-    maxDecryptQueue: 5  // max amount of chunks to extract and queue for decrypt
-};
+cfg.download.maxDownloadChunkSize = 1024 * 1024 * 3;
+cfg.download.maxDecryptBufferSize = 1024 * 1024 * 3;
+cfg.upload.encryptBufferSize = 1024 * 1024 * 3;
+cfg.upload.uploadBufferSize = 1024 * 1024 * 3;
 
 tinyDb.init(cfg.appName);
 

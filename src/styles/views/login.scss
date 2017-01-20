@@ -20,9 +20,15 @@
   }
 
   .login-button {
+    background: #2c95cf;
+    border-radius: 2px;
     margin: 48px 0;
 
     @extend %flex-align-center;
+
+    &[disabled] {
+      color: rgba(255, 255, 255, .38);
+    }
   }
 
   .login-reg-button {

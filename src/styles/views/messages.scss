@@ -64,7 +64,8 @@
       margin-right: 12px;
     }
   }
-  .message-corrupt {
+
+  .corrupt-message {
     background: $color-dark-06;
     border-bottom: 2px solid $color-error;
     border-radius: 2px 2px 0 0;
@@ -76,6 +77,7 @@
     @extend %flex-row;
     @extend %flex-align-center;
   }
+
   .messages-container {
     align-items: flex-start;
     flex: 1 1 auto;

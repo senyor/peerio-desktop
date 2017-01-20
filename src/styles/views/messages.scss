@@ -13,9 +13,19 @@
     }
 
     .rt-button-button {
+      display: flex;
       height: 48px;
       margin-right: 6px;
       width: 48px;
+
+      .new-message {
+        align-self: center;
+        background-image: url('./static/img/icon_add_chat.png');
+        background-size: contain;
+        height: 20px;
+        padding: 2px;
+        width: 20px;
+      }
     }
 
     .rt-ripple-rippleWrapper {

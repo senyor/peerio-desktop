@@ -43,7 +43,8 @@ class ChatList extends React.Component {
                             tooltip="Add chat"
                             tooltipDelay={500}
                             tooltipPosition="right"
-                            icon="add_circle_outline" onClick={this.newMessage} />
+                            icon={<div className="new-message" />}
+                            onClick={this.newMessage} />
                     </div>
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}

@@ -64,7 +64,18 @@
       margin-right: 12px;
     }
   }
+  .message-corrupt {
+    background: $color-dark-06;
+    border-bottom: 2px solid $color-error;
+    border-radius: 2px 2px 0 0;
+    height: 48px;
+    margin-top: 32px;
+    padding: $padding-small;
+    width: 100%;
 
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
   .messages-container {
     align-items: flex-start;
     flex: 1 1 auto;
@@ -144,33 +155,33 @@
   }
 
   .inline-files {
-    color: #929292;
-    font-weight: 600;
-    list-style-type: none;
-    padding-left: 17px;
+    color: rgba($color-brand, .7);
+    font-weight: $font-weight-bold;
+    padding-left: $padding-default;
 
-    li {
+    .file {
       cursor: pointer;
-      line-height: 1.6em;
+      height: 48px;
+
+      @extend %flex-col;
+      @extend %flex-justify-center;
 
       .material-icons {
-        color: inherit;
-        font-size: 1.4em;
-        vertical-align: middle;
+        margin-right: $margin-small;
       }
 
       &:hover {
-        color: black;
+        color: $color-brand;
+
+        .material-icons {
+          color: $color-brand;
+        }
       }
     }
 
     .invalid-file {
-      color: #c89292;
+      color: $color-error;
       cursor: auto;
-
-      &:hover {
-        color: #c89292;
-      }
     }
   }
 

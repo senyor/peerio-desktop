@@ -73,23 +73,25 @@ class InlineFiles extends React.Component {
         if (!this.props.files.map) return null;
 
         return (
-            <ul className="inline-files">
+            <div className="inline-files">
                 {
                     this.props.files.map(f => {
                         const file = fileStore.getById(f);
-                        if (!file) return <li className="invalid-file" key={f}>invalid file record</li>;
-                        return (<li key={f} data-id={f} onClick={this.download}>
-                            <FontIcon value="file_download" /> {file ? file.name : f}
-                            <br />
+                        if (!file) return <div className="invalid-file" key={f}>invalid file record</div>;
+                        return (<div className="file" key={f} data-id={f} onClick={this.download}>
+                            <div className="flex-row flex-align-center">
+                                <FontIcon value="file_download" /> {file ? file.name : f}
+                            </div>
+
                             {file.downloading
                                 ? <ProgressBar type="linear" mode="determinate" value={file.progress}
                                        buffer={file.progressBuffer} max={file.progressMax} />
                                 : null
                             }
-                        </li>);
+                        </div>);
                     })
                 }
-            </ul>
+            </div>
         );
     }
 }

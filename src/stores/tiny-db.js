@@ -17,7 +17,7 @@ function init(appName) {
 }
 
 /**
- * Get a key
+ * Get a value by key
  * @param {String} key
  * @returns {String}
  */
@@ -25,20 +25,15 @@ function get(key) {
     const settings = load();
     return settings[key];
 }
-/**
- * Get a promise of a key.
- * @param {String} key
- * @returns {Promise<String>}
- */
+
 function getValueAsync(key) {
     return Promise.resolve(get(key));
 }
 
 /**
- * Set a value for a key.
+ * Set a value for key.
  * @param {String} key
  * @param {Object} value -- JSON serializable object
- * @returns {*}
  */
 function set(key, value) {
     const settings = load();
@@ -47,12 +42,6 @@ function set(key, value) {
     return value;
 }
 
-/**
- * Async set a value for a key.
- * @param {String} key
- * @param {Object} value -- JSON serializable object
- * @returns {Promise<*>}
- */
 function setValueAsync(key, value) {
     return Promise.resolve(set(key, value));
 }
@@ -77,6 +66,14 @@ function removeAsync(key) {
     return Promise.resolve(remove(key));
 }
 
+function getAllKeys() {
+    return Object.keys(load());
+}
+
+function getAllKeysAsync() {
+    return Promise.resolve(getAllKeys());
+}
+
 function load() {
     return JSON.parse(fs.readFileSync(filePath, fileOpts));
 }
@@ -85,4 +82,5 @@ function save(settings) {
     fs.writeFileSync(filePath, JSON.stringify(settings), fileOpts);
 }
 
-module.exports = { get, set, remove, getValueAsync, setValueAsync, removeAsync, init };
+
+module.exports = { get, set, remove, getValueAsync, setValueAsync, removeAsync, getAllKeysAsync, init };

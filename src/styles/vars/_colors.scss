@@ -1,8 +1,10 @@
+
 // LOW LEVEL COLOR
 // for use with dark backgrounds
 $color-light-100: rgba(255, 255, 255, 1);
 $color-light-70: rgba(255, 255, 255, .7);
 $color-light-50: rgba(255, 255, 255, .5);
+$color-light-38: rgba(255, 255, 255, .38);
 $color-light-12: rgba(255, 255, 255, .12);
 
 // LOW LEVEL COLOR
@@ -16,6 +18,7 @@ $color-dark-03: rgba(0, 0, 0, .03);
 
 // Primary brand color
 $color-brand: rgb(44, 149, 207);
+$color-accent: rgb(246, 166, 35);
 
 // Status (warning/error/etc)
 $color-error: rgb(208, 2, 27);
@@ -26,7 +29,7 @@ $background-active-message: $color-light-100;
 $background-brand: $color-brand;
 $background-cancel: $color-error;
 $background-hover-message: $color-light-50;
-$background-message-list: rgba($color-brand, .12);
+$background-message-list: rgba($color-brand, .12); // TODO: make this more generic
 $background-new-file: rgba($color-affirmative, .12);
 $background-light-button-hover: $color-light-12;
 $background-light-dropdown: $color-light-12;

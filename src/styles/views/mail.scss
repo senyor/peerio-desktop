@@ -1,0 +1,158 @@
+.mail {
+  color: $text-dark-secondary;
+  position: relative;
+  width: 100%;
+
+  @extend %flex-row;
+
+  .rt-button-floating {
+    background-color: $color-accent !important;
+    bottom: 32px;
+    left: 198px;
+    position: absolute;
+
+    .material-icons {
+      color: $text-light-primary;
+    }
+  }
+  // MAIL ITEM LIST
+  &-list {
+    background-color: $background-message-list;
+    border-right: 1px solid $divider-dark;
+    height: 100%;
+    width: 224px;
+
+    @extend %flex-grow-0;
+    @extend %flex-shrink-0;
+    @extend %flex-col;
+  }
+
+  &-sorting {
+    height: 48px;
+    margin-top: $margin-small;
+    padding-left: $padding-small;
+
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+
+  &-item {
+    background-color: $color-light-50;
+    border-bottom: 1px solid $divider-dark;
+    cursor: pointer;
+    height: 80px;
+    padding: $padding-small 0 0 $padding-small;
+
+    @extend %hint-error-label;
+
+    &.active {
+      background-color: $color-brand;
+    }
+
+    &:hover:not(.active) {
+      background-color: $color-light-100;
+    }
+  }
+  // MAIL COMPOSE and VIEW
+  .compose-view {
+    height: 100%;
+    width: auto;
+
+    @extend %flex-grow-1;
+    @extend %flex-shrink-1;
+    @extend %flex-col;
+
+    .compose-meta {
+      padding-top: $padding-small;
+
+      &.sent {
+        background-color: $color-dark-03;
+        border-bottom: 1px solid $divider-dark;
+        height: 112px;
+        padding: $padding-default 56px;
+
+        .subject {
+          font-size: 16px;
+          font-weight: $font-weight-bold;
+        }
+
+        .to,
+        .date {
+          font-size: 12px;
+          padding: $padding-small 0;
+        }
+      }
+    }
+
+    .meta-input {
+      border-bottom: 1px solid $divider-dark;
+      height: 48px;
+      padding-left: $padding-default;
+      padding-right: $padding-small;
+
+      @extend %flex-row;
+      @extend %flex-align-center;
+    }
+  }
+
+  &-actions {
+    border-bottom: 1px solid $divider-dark;
+    height: 48px;
+
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-shrink-0;
+  }
+
+  &-format {
+    border-left: 1px solid $divider-dark;
+    border-right: 1px solid $divider-dark;
+    height: 48px;
+
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-grow-1;
+
+    .material-icons {
+      color: $icon-dark-inactive;
+
+      .active {
+        color: $color-brand;
+      }
+    }
+  }
+
+  &-content {
+    color: $text-dark-primary;
+    overflow-y: auto;
+    padding: 32px 56px 0;
+  }
+
+  &-side-bar {
+    border-left: 1px solid $divider-dark;
+    height: 100%;
+    padding: $padding-large $padding-default $padding-default;
+    width: 270px;
+
+    @extend %flex-grow-0;
+    @extend %flex-shrink-0;
+    @extend %flex-col;
+
+    .passphrase {
+      color: $color-brand;
+      cursor: pointer;
+      font-weight: $font-weight-bold;
+
+      .material-icons {
+        color: $color-brand;
+      }
+    }
+
+    .sent-info {
+      .read-recipt,
+      .expire-info {
+        margin: 24px 0;
+      }
+    }
+  }
+}

@@ -8,6 +8,7 @@ const Messages = require('./messages/Messages');
 const NewMessage = require('./messages/NewMessage');
 const Files = require('./files/Files');
 const ShareFiles = require('./files/ShareFiles');
+const Mail = require('./mail/Mail');
 const Settings = require('./settings/Settings');
 const Profile = require('./settings/components/ProfileSettings');
 const Security = require('./settings/components/SecuritySettings');
@@ -25,6 +26,7 @@ module.exports = (
             <Route path="new-message" component={NewMessage} />
             <Route path="files" component={Files} />
             <Route path="sharefiles" component={ShareFiles} />
+            <Route path="mail" component={Mail} />
             <Route path="settings" component={Settings}>
                 <Route path="profile" component={Profile} />
                 <Route path="security" component={Security} />

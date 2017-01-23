@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button } = require('react-toolbox');
+const { Button } = require('~/react-toolbox');
 const MailFormatActions = require('./MailFormatActions');
 const { t } = require('peerio-translator');
 

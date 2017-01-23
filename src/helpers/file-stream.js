@@ -12,6 +12,7 @@ class FileStream extends FileStreamAbstract {
     }
 
     open() {
+        this.nextReadPos = null;
         return new Promise((resolve, reject) => {
             fs.open(this.filePath, this.mode[0], (err, fd) => {
                 if (this.checkForError(err, reject)) return;
@@ -26,7 +27,8 @@ class FileStream extends FileStreamAbstract {
     }
 
     close() {
-        if (this.fileDescriptor == null) return Promise.resolve();
+        if (this.fileDescriptor == null || this.closed) return Promise.resolve();
+        this.closed = true;
         return new Promise((resolve, reject) => {
             fs.close(this.fileDescriptor, err => {
                 if (this.checkForError(err, reject)) return;
@@ -38,7 +40,7 @@ class FileStream extends FileStreamAbstract {
     readInternal(size) {
         return new Promise((resolve, reject) => {
             const buffer = new Uint8Array(size);
-            fs.read(this.fileDescriptor, Buffer.from(buffer.buffer), 0, size, null,
+            fs.read(this.fileDescriptor, Buffer.from(buffer.buffer), 0, size, this.nextReadPos,
                 (err, bytesRead) => {
                     if (this.checkForError(err, reject)) return;
                     if (bytesRead < buffer.length) {
@@ -47,6 +49,7 @@ class FileStream extends FileStreamAbstract {
                         resolve(buffer);
                     }
                 });
+            this.nextReadPos = null;
         });
     }
 
@@ -62,6 +65,14 @@ class FileStream extends FileStreamAbstract {
                     resolve(buffer);
                 });
         });
+    }
+
+    seekInternal(pos) {
+        this.nextReadPos = pos;
+    }
+
+    static getStat(path) {
+        return Promise.resolve(fs.statSync(path));
     }
 }
 

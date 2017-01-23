@@ -9,6 +9,7 @@
       "no-missing-end-of-source-newline": null,
       "shorthand-property-no-redundant-values": true,
       "unit-case": "lower",
+      "declaration-empty-line-before": null,
 
       "declaration-block-properties-order":  [
 		  "align-content",

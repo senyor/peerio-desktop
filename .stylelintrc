@@ -2,7 +2,21 @@
   "extends": "stylelint-config-standard",
 
   "rules": {
-      "at-rule-empty-line-before": null,
+      "at-rule-empty-line-before": [
+          "always",
+          {
+              "except": [
+                  "blockless-after-same-name-blockless",
+                  "first-nested"
+              ],
+              "ignore": [
+                  "after-comment"
+              ]
+          }
+      ],
+      "at-rule-name-case": "lower",
+      "at-rule-name-space-after": "always-single-line",
+      "at-rule-semicolon-newline-after": "always",
       "color-hex-case": "lower",
       "indentation": 2,
       "number-leading-zero":"never",
@@ -327,19 +341,19 @@
 		  "padding-left",
 		  "padding-right",
 		  "padding-top",
-          "page-break-after",
-          "page-break-before",
-          "page-break-inside",
-          "pointer-events",
-          "position",
-          "quotes",
-          "resize",
-          "right",
-          "speak",
-          "src",
-          "stroke",
-          "-moz-tab-size",
-          "-o-tab-size",
+      "page-break-after",
+      "page-break-before",
+      "page-break-inside",
+      "pointer-events",
+      "position",
+      "quotes",
+      "resize",
+      "right",
+      "speak",
+      "src",
+      "stroke",
+      "-moz-tab-size",
+      "-o-tab-size",
 		  "tab-size",
 		  "table-layout",
 		  "text-align",

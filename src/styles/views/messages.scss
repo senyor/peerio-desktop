@@ -36,12 +36,11 @@
 
 // message content, input, toolbar
 .message-view {
-  // FIXME remove calc?
-  width: calc(100vw - 304px);
-
   @extend %flex-col;
   @extend %flex-grow-1;
   @extend %flex-shrink-1;
+  // FIXME remove calc?
+  width: calc(100vw - 304px);
 
   .message-toolbar {
     align-items: center;
@@ -66,6 +65,8 @@
   }
 
   .corrupt-message {
+    @extend %flex-row;
+    @extend %flex-align-center;
     background: $color-dark-06;
     border-bottom: 2px solid $color-error;
     border-radius: 2px 2px 0 0;
@@ -73,18 +74,14 @@
     margin-top: 32px;
     padding: $padding-small;
     width: 100%;
-
-    @extend %flex-row;
-    @extend %flex-align-center;
   }
 
   .messages-container {
+    @extend %flex-col;
     align-items: flex-start;
     flex: 1 1 auto;
     overflow: auto;
     padding: 24px;
-
-    @extend %flex-col;
 
     .messages-progress-bar {
       align-self: center;
@@ -93,9 +90,8 @@
     }
 
     .message-content-wrapper {
-      flex-shrink: 0;
-
       @extend %flex-row;
+      flex-shrink: 0;
 
       + .message-content-wrapper {
         margin-top: $margin-large;
@@ -115,15 +111,13 @@
     }
 
     .message-content {
+      @extend %flex-col;
       flex-grow: 0;
 
-      @extend %flex-col;
-
       .meta-data {
+        @extend %flex-row;
         align-items: center;
         color: $text-dark-secondary;
-
-        @extend %flex-row;
 
         .user {
           font-weight: $font-weight-bold;
@@ -162,11 +156,10 @@
     padding-left: $padding-default;
 
     .file {
-      cursor: pointer;
-      height: 48px;
-
       @extend %flex-col;
       @extend %flex-justify-center;
+      cursor: pointer;
+      height: 48px;
 
       .material-icons {
         margin-right: $margin-small;
@@ -240,12 +233,11 @@
 
 // message navigation
 .message-list {
+  @extend %flex-shrink-0;
   background-color: $background-message-list;
   height: 100vh;
   overflow-y: scroll;
   width: $message-list-width;
-
-  @extend %flex-shrink-0;
 
   .mutli-user-chat {
     border-radius: 2px;
@@ -337,17 +329,15 @@
   }
 
   ul {
+    @extend %headline;
     list-style: none;
     margin-left: 48px;
 
-    @extend %headline;
-
     li {
-      height: 48px;
-      margin-bottom: $margin-small;
-
       @extend %flex-row;
       @extend %flex-align-center;
+      height: 48px;
+      margin-bottom: $margin-small;
     }
   }
 }

@@ -9,10 +9,6 @@ if (isDevEnv) {
     window.Perf = require('react-addons-perf');
 }
 document.addEventListener('DOMContentLoaded', () => {
-    require.extensions['.css'] = function(m, f) {
-        m.exports = require('~/react-toolbox/theme.js');
-    };
-
     // <emojione> ------------------------------------------------------------------------------------------------
     // configuring emojione and preloading sprites
     const emojione = require('~/static/emoji/emojione.js');
@@ -36,20 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2000);
     // </emojione> -----------------------------------------------------------------------------------------------
     const React = require('react');
-    const { socket, setTinyDbEngine, FileStreamAbstract } = require('~/icebear');
+    const { socket } = require('~/icebear');
     const { render } = require('react-dom');
     const { Router, createMemoryHistory } = require('react-router');
     const routes = require('~/ui/routes');
-    const tinyDb = require('~/stores/tiny-db');
-    const FileStream = require('~/helpers/file-stream');
-
-    setTinyDbEngine({
-        getValue: tinyDb.getValueAsync,
-        setValue: tinyDb.setValueAsync,
-        removeValue: tinyDb.removeAsync
-    });
-
-    FileStreamAbstract.FileStream = FileStream;
 
     socket.start();
 

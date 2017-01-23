@@ -1,5 +1,5 @@
 const React = require('react');
-const { IconButton } = require('react-toolbox');
+const { IconButton } = require('~/react-toolbox');
 const css = require('classnames');
 
 

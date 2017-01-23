@@ -1,4 +1,20 @@
 .signup {
+  @extend %flex-col;
+
+  @media (max-height: $minimum-screen-height) {
+    img {
+      margin: $margin-default 0 24px;
+    }
+
+    .rt-input-input {
+      margin-top: 32px;
+    }
+
+    .help,
+    .terms {
+      margin-top: 32px;
+    }
+  }
   align-items: center;
   background-blend-mode: overlay;
   background-color: $background-brand;
@@ -9,8 +25,6 @@
   opacity: 0;
   transition: 350ms opcaity $transition-default;
   width: 100vw;
-
-  @extend %flex-col;
 
   .help,
   .terms {
@@ -46,9 +60,8 @@
   }
 
   .signup-subtitle {
-    margin-top: $margin-tiny;
-
     @extend %headline;
+    margin-top: $margin-tiny;
   }
 
   .signup-nav {
@@ -76,20 +89,6 @@
       &.active {
         background-color: $color-light-100;
       }
-    }
-  }
-  @media (max-height: $minimum-screen-height) {
-    img {
-      margin: $margin-default 0 24px;
-    }
-
-    .rt-input-input {
-      margin-top: 32px;
-    }
-
-    .help,
-    .terms {
-      margin-top: 32px;
     }
   }
 }

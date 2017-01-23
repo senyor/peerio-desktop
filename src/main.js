@@ -29,34 +29,36 @@ app.on('ready', () => {
     buildGlobalShortcuts();
     setMainMenu();
 
-    const state = getSavedWindowState();
-    mainWindow = new BrowserWindow(Object.assign(state, {
-        show: false,
-        center: true,
-        minWidth: 900,
-        minHeight: 728,
-        title: config.appName
-    }));
+    getSavedWindowState()
+        .then(state => {
+            mainWindow = new BrowserWindow(Object.assign(state, {
+                show: false,
+                center: true,
+                minWidth: 900,
+                minHeight: 728,
+                title: config.appName
+            }));
 
-    mainWindow.loadURL(`file://${__dirname}/index.html`);
+            mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-    mainWindow.once('ready-to-show', () => {
-        mainWindow.show();
-        mainWindow.focus();
-    });
+            mainWindow.once('ready-to-show', () => {
+                mainWindow.show();
+                mainWindow.focus();
+            });
 
-    mainWindow.on('close', () => {
-        const bounds = mainWindow.getBounds();
-        saveWindowState(bounds);
-    });
+            mainWindow.on('close', () => {
+                const bounds = mainWindow.getBounds();
+                saveWindowState(bounds);
+            });
 
-    mainWindow.on('closed', () => {
-        mainWindow = null;
-    });
+            mainWindow.on('closed', () => {
+                mainWindow = null;
+            });
 
-    applyMiscHooks(mainWindow);
-    buildContextMenu(mainWindow);
-    devtools.onAppReady(mainWindow);
+            applyMiscHooks(mainWindow);
+            buildContextMenu(mainWindow);
+            devtools.onAppReady(mainWindow);
+        });
 });
 
 app.on('window-all-closed', () => {

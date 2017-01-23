@@ -2,7 +2,7 @@ const React = require('react');
 const { Button, IconMenu, MenuItem } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { fileStore, chatStore } = require('~/icebear'); // mailStore?
+const { fileStore, chatStore, mailStore } = require('~/icebear'); // mailStore?
 const MailItem = require('./components/MailItem');
 const MailCompose = require('./components/MailCompose');
 const MailSent = require('./components/MailSent');
@@ -10,9 +10,27 @@ const MailSidebar = require('./components/MailSidebar');
 
 @observer
 class Mail extends React.Component {
-    @observable sent = false;
+    @observable sent = true;
+
+
+    componentWillMount() {
+        mailStore.loadAllGhosts();
+    }
+
+    handleCompose = e => {
+        this.currentGhost = mailStore.createGhost();
+        this.sent = false;
+    }
+
+    handleSend = data => {
+        console.log('send', data);
+        this.currentGhost.send(data);
+    }
 
     render() {
+        // if (mailStore.ghosts.length === 0 && !mailStore.loading) return (
+        //    <div>nothing here, zero screen</div>
+        // );
         return (
             <div className="mail">
                 <div className="mail-list">
@@ -27,25 +45,20 @@ class Mail extends React.Component {
                             <MenuItem caption="Unread" />
                         </IconMenu>
                     </div>
-                    <MailItem title="A spookymail for you"
-                              date="May 2, 1942"
-                              recipient="my@email.com"
-                              firstLine="this is creepy or something"
-                              active />
+                    {mailStore.ghosts.map((m) => {
+                        return (<MailItem title={m.subject}
+                                  date={m.timestamp}
+                                  recipient={m.recipients}
+                                  firstLine={m.preview}
+                                  active />);
+                    })}
 
-                    <MailItem title="A spookymail for you"
-                              date="May 2, 1942"
-                              recipient="my@email.com"
-                              firstLine="this is creepy or something" />
-                    <MailItem title="A spookymail for you"
-                              date="May 2, 1942"
-                              recipient="my@email.com"
-                              firstLine="this is creepy or something" />
+
                 </div>
-                { !this.sent ? <MailCompose /> : <MailSent /> }
+                { !this.sent ? <MailCompose ghost={this.currentGhost} onSend={this.handleSend} /> : <MailSent /> }
                 <MailSidebar />
 
-                <Button icon="add" floating accent />
+                <Button icon="add" floating accent onClick={this.handleCompose} />
             </div>
         );
     }

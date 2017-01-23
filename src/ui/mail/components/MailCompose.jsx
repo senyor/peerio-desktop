@@ -1,9 +1,31 @@
 const React = require('react');
-const { Button } = require('react-toolbox');
 const MailFormatActions = require('./MailFormatActions');
+const ComposeInput = require('../../shared-components/ComposeInput');
+const { Button, Chip, FontIcon, IconButton, Input, List,
+    ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 
-class MailCompose extends React.Component {
+class MailCompose extends ComposeInput {
+    constructor() {
+        super();
+        this.returnToSend = true;
+    }
+
+    handleRecipientChange = value => {
+        // todo validate! and populate multiple
+        this.props.ghost.recipients[0] = value;
+    }
+
+    handleSubjectChange = value => {
+        this.props.ghost.subject = value;
+    }
+
+    handleSend = () => {
+        // todo validate
+
+        // handled by ComposeInput
+
+    }
 
     render() {
         return (
@@ -19,36 +41,18 @@ class MailCompose extends React.Component {
                               TODO: Grab the input from new messages.
                               The behaviour should be the same.
                             */}
-                            <div className="flex-grow-1">andemail@adomain.com</div>
-                            <Button label={t('send')} primary />
+                            <div className="flex-grow-1">
+                                <Input placeholder={t('mail_enterEmail')} onChange={this.handleRecipientChange} />
+                            </div>
+                            <Button label={t('send')} primary onClick={this.handleSubmit} />
                         </div>
-                        <div className="meta-input"> Some suject info.</div>
+                        <div className="meta-input">
+                            <Input placeholder={t('mail_enterSubject')} onChange={this.handleSubjectChange} />
+                        </div>
                     </div>
                 </div>
                 <MailFormatActions />
-                <div className="mail-content">
-                    <p>Hey  Alice,</p>
-                    <p>Business cards represent not only your business,
-                       but it also tells people your professionalism in
-                       the industry. In the business world today, the
-                       usage of business cards is far beyond just informing
-                       people who you are, it serves as one of the most
-                       cost-effective marketing and advertising tool for promoting
-                       your business. When you distribute business cards,
-                       you certainly want to leave a lasting impression and to be
-                       remembered by your business contacts. By having a good
-                       business card design, it definitely helps you to
-                       distinguish your level of professionalism from the rest of
-                       the competitors. Of course, a fantastic business card
-                       design does not promise you instant success, but it’ll
-                       definitely help you to speed up the process. Thereby,
-                       choosing the right business card design is important and
-                       requires careful considerations so that it will not look
-                       cheap and may tarnish your reputation in this highly
-                       competitive business world today. Here are some pointers to
-                       help you create an effective business card design:
-                    </p>
-                </div>
+                <div className="mail-content" ref={this.activateQuill} onFocus={this.hideEmojiPicker} />
             </div>
         );
     }

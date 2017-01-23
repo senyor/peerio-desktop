@@ -19,13 +19,23 @@
   }
 
   .login-button {
-    @extend %flex-align-center;
-    background: $color-brand;
-    border-radius: 2px;
+    border-radius: 18px;
     margin: 48px 0;
+    transition: 150ms $transition-default;
+
+    @extend %flex-align-center;
+
+    &:not([disabled]),
+    &:hover:not([disabled]) {
+      background-color: $color-light-100 !important; // so important
+      color: $color-brand !important; // :( - Paul
+    }
 
     &[disabled] {
-      color: rgba(255, 255, 255, .38);
+      border: 1px solid $color-light-38;
+      background-color: $color-brand;
+      color: $color-light-38;
+
     }
   }
 

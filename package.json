@@ -1,7 +1,7 @@
 {
   "name": "icebear-desktop",
   "description": "Peerio desktop client (codename Icebear)",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -88,6 +88,7 @@
     "diff2html-cli": "2.0.5",
     "electron": "1.4.15",
     "electron-builder": "11.5.1",
+    "electron-builder-squirrel-windows": "11.5.0",
     "electron-devtools-installer": "2.0.1",
     "electron-rebuild": "1.5.7",
     "electron-reload": "1.1.0",
@@ -183,7 +184,7 @@
         "squirrel"
       ],
       "title": "Icebear",
-      "version": "1.5.2",
+      "version": "1.6.0",
       "msi": true
     },
     "mac": {

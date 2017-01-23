@@ -1,8 +1,9 @@
 .mail {
-  @extend %flex-row;
   color: $text-dark-secondary;
   position: relative;
   width: 100%;
+
+  @extend %flex-row;
 
   .rt-button-floating {
     background-color: $color-accent !important;
@@ -16,30 +17,33 @@
   }
   // MAIL ITEM LIST
   &-list {
-    @extend %flex-grow-0;
-    @extend %flex-shrink-0;
-    @extend %flex-col;
     background-color: $background-message-list;
     border-right: 1px solid $divider-dark;
     height: 100%;
     width: 224px;
+
+    @extend %flex-grow-0;
+    @extend %flex-shrink-0;
+    @extend %flex-col;
   }
 
   &-sorting {
-    @extend %flex-row;
-    @extend %flex-align-center;
     height: 48px;
     margin-top: $margin-small;
     padding-left: $padding-small;
+
+    @extend %flex-row;
+    @extend %flex-align-center;
   }
 
   &-item {
-    @extend %hint-error-label;
     background-color: $color-light-50;
     border-bottom: 1px solid $divider-dark;
     cursor: pointer;
     height: 80px;
     padding: $padding-small 0 0 $padding-small;
+
+    @extend %hint-error-label;
 
     &.active {
       background-color: $color-brand;
@@ -51,11 +55,12 @@
   }
   // MAIL COMPOSE and VIEW
   .compose-view {
+    height: 100%;
+    width: auto;
+
     @extend %flex-grow-1;
     @extend %flex-shrink-1;
     @extend %flex-col;
-    height: 100%;
-    width: auto;
 
     .compose-meta {
       padding-top: $padding-small;
@@ -80,30 +85,33 @@
     }
 
     .meta-input {
-      @extend %flex-row;
-      @extend %flex-align-center;
       border-bottom: 1px solid $divider-dark;
       height: 48px;
       padding-left: $padding-default;
       padding-right: $padding-small;
+
+      @extend %flex-row;
+      @extend %flex-align-center;
     }
   }
 
   &-actions {
+    border-bottom: 1px solid $divider-dark;
+    height: 48px;
+
     @extend %flex-row;
     @extend %flex-align-center;
     @extend %flex-shrink-0;
-    border-bottom: 1px solid $divider-dark;
-    height: 48px;
   }
 
   &-format {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    @extend %flex-grow-1;
     border-left: 1px solid $divider-dark;
     border-right: 1px solid $divider-dark;
     height: 48px;
+
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-grow-1;
 
     .material-icons {
       color: $icon-dark-inactive;
@@ -121,13 +129,14 @@
   }
 
   &-side-bar {
-    @extend %flex-grow-0;
-    @extend %flex-shrink-0;
-    @extend %flex-col;
     border-left: 1px solid $divider-dark;
     height: 100%;
     padding: $padding-large $padding-default $padding-default;
     width: 270px;
+
+    @extend %flex-grow-0;
+    @extend %flex-shrink-0;
+    @extend %flex-col;
 
     .passphrase {
       color: $color-brand;

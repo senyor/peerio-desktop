@@ -1,13 +1,15 @@
 .user-picker {
-  @extend %flex-row;
   height: 100%;
   width: 100%;
 
+  @extend %flex-row;
+
   .selected-items {
-    @extend %flex-grow-0;
-    @extend %flex-shrink-0;
     background-color: $background-message-list;
     width: 256px;
+
+    @extend %flex-grow-0;
+    @extend %flex-shrink-0;
 
     ul {
       overflow-y: auto;

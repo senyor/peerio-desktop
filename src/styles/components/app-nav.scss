@@ -1,6 +1,4 @@
 .app-nav {
-  @extend %flex-col;
-  @extend %flex-shrink-0;
   align-items: center;
   background-color: $background-brand;
   background-image: url('./static/img/bg-pattern.png');
@@ -8,6 +6,9 @@
   background-size: 220px;
   height: 100vh;
   width: $app-nav-width;
+
+  @extend %flex-col;
+  @extend %flex-shrink-0;
 
   .app-menu {
     align-items: center;

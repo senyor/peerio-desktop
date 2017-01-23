@@ -1,6 +1,4 @@
 .login {
-  @extend %flex-col;
-  @extend %flex-align-center;
   // animation-duration: 30s;
   // animation-iteration-count: infinite;
   // animation-name: MOVE-BG;
@@ -14,15 +12,19 @@
   justify-content: flex-start;
   width: 100vw;
 
+  @extend %flex-col;
+  @extend %flex-align-center;
+
   .login-form {
     width: 275px;
   }
 
   .login-button {
-    @extend %flex-align-center;
     background: $color-brand;
     border-radius: 2px;
     margin: 48px 0;
+
+    @extend %flex-align-center;
 
     &[disabled] {
       color: rgba(255, 255, 255, .38);
@@ -47,8 +49,6 @@
   }
 
   .welcome-back {
-    @extend %flex-col;
-    @extend %flex-align-center;
     background: $background-welcome-back;
     border-radius: 4px;
     color: $text-dark-secondary;
@@ -60,6 +60,9 @@
     min-width: 375px;
     // TODO: make transition vars
     transition: 150ms;
+
+    @extend %flex-col;
+    @extend %flex-align-center;
 
     &:hover {
       background: $background-welcome-back-active;
@@ -80,8 +83,9 @@
     }
 
     .subtitle {
-      @extend %hint-error-label;
       margin-top: $margin-small;
+
+      @extend %hint-error-label;
     }
   }
 }
@@ -101,12 +105,13 @@
 
 //----------------------------------------------------------------------------------------------------------------
 .welcome {
-  @extend %flex-col;
-  @extend %flex-align-center;
   flex: 1 1 auto;
   height: 100vh;
   margin-top: 64px;
   padding: $padding-large;
+
+  @extend %flex-col;
+  @extend %flex-align-center;
 
   p {
     font-size: 24px;
@@ -118,8 +123,9 @@
 }
 
 .welcome-title {
-  @extend %display-3;
   color: $color-brand;
   font-weight: $font-weight-bold;
   text-align: center;
+
+  @extend %display-3;
 }

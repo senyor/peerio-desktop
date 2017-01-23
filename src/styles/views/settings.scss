@@ -4,9 +4,10 @@
   width: 100%;
 
   .tab-wrapper {
+    margin: 0 80px;
+
     @extend %flex-grow-1;
     @extend %flex-col;
-    margin: 0 80px;
   }
 
   .tabs {
@@ -49,18 +50,20 @@
   }
 
   .avatar-card {
-    @extend %flex-col;
     background-size: 100%;
     border-radius: 8px;
     height: 224px;
     margin-left: 64px;
     width: 224px;
 
+    @extend %flex-col;
+
     &-user {
-      @extend %flex-col;
-      @extend %flex-shrink-0;
       align-items: flex-start;
       height: 64px;
+
+      @extend %flex-col;
+      @extend %flex-shrink-0;
     }
 
     &-display-name {
@@ -76,22 +79,24 @@
     }
 
     &-initial {
+      color: $text-light-primary;
+      font-size: 112px;
+
       @extend %flex-row;
       @extend %flex-align-center;
       @extend %flex-justify-center;
       @extend %flex-grow-1;
-      color: $text-light-primary;
-      font-size: 112px;
     }
 
     .card-footer {
-      @extend %flex-row;
-      @extend %flex-align-center;
-      @extend %flex-shrink-0;
       height: 48px;
       justify-content: flex-end;
       margin-top: $margin-default;
       padding-right: $padding-small;
+
+      @extend %flex-row;
+      @extend %flex-align-center;
+      @extend %flex-shrink-0;
 
       .material-icons {
         color: $icon-light-inactive;

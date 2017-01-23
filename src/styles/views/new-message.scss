@@ -1,15 +1,17 @@
 .create-new-message {
-  @extend %flex-col;
-  @extend %flex-align-center;
   height: 100vh;
   width: 100vw;
 
+  @extend %flex-col;
+  @extend %flex-align-center;
+
   .chat-creation-header {
+    margin-bottom: $margin-large;
+    padding: $padding-default;
+
     @extend %flex-row;
     @extend %flex-align-center;
     @extend %flex-shrink-0;
-    margin-bottom: $margin-large;
-    padding: $padding-default;
 
     .title {
       margin-right: auto;
@@ -17,7 +19,6 @@
   }
 
   .new-message-search {
-    @extend %flex-align-center;
     border: 1px solid $input-dark-border;
     border-radius: 24px;
     display: flex;
@@ -27,8 +28,9 @@
     padding: 0 $padding-small 0 $padding-default;
     width: 100%;
 
+    @extend %flex-align-center;
+
     .chip-wrapper {
-      @extend %flex-row;
       align-items: center;
       background-color: $background-root;
       flex: 1 1 auto;
@@ -37,6 +39,8 @@
       max-width: 544px;
       min-height: 46px;
       padding: 0 $padding-small;
+
+      @extend %flex-row;
     }
 
     .rt-input-input {
@@ -70,8 +74,9 @@
   }
 
   .rt-list-list {
-    @extend %flex-col;
     overflow: hidden;
+
+    @extend %flex-col;
 
     .user-list {
       cursor: pointer;
@@ -96,7 +101,6 @@
   }
 
   .username {
-    @extend %flex-shrink-0;
     background: $background-root;
     border: 1px solid $color-brand;
     color: $color-brand;
@@ -106,12 +110,15 @@
     min-width: 88px;
     transition: 500ms 500ms $transition-ease-out;
 
+    @extend %flex-shrink-0;
+
     span:last-of-type {
-      @extend %flex-align-center;
-      @extend %flex-justify-center;
       display: inline-flex;
       opacity: 1;
       transition: 250ms;
+
+      @extend %flex-align-center;
+      @extend %flex-justify-center;
     }
 
     .rt-chip-delete {
@@ -132,10 +139,11 @@
     }
 
     .rt-chip-deleteIcon {
-      @extend %flex-shrink-0;
       background: #fff;
       height: 20px;
       width: 20px;
+
+      @extend %flex-shrink-0;
 
       .rt-chip-deleteX {
         stroke: rgba($color-brand, .35);

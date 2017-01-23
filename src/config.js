@@ -2,30 +2,20 @@ const cfg = require('~/icebear').config;
 const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env');
 const FileStream = require('~/helpers/file-stream');
-const tinyDb = require('~/stores/tiny-db');
+const KeyValueStorage = require('~/stores/key-value-storage');
 
 cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';
 cfg.currentVersion = app.getVersion();
 cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
 
-cfg.TinyDb = {
-    appName: cfg.appName,
-    getValue: tinyDb.getValueAsync,
-    setValue: tinyDb.setValueAsync,
-    removeValue: tinyDb.removeAsync,
-    getAllKeys: tinyDb.getAllKeysAsync
-};
-
+cfg.StorageEngine = KeyValueStorage;
+cfg.FileStream = FileStream;
 
 cfg.download.maxDownloadChunkSize = 1024 * 1024 * 3;
 cfg.download.maxDecryptBufferSize = 1024 * 1024 * 3;
 cfg.upload.encryptBufferSize = 1024 * 1024 * 3;
 cfg.upload.uploadBufferSize = 1024 * 1024 * 3;
-
-tinyDb.init(cfg.appName);
-
-cfg.FileStream = FileStream;
 
 cfg.stringReplacements = []; // white label only
 

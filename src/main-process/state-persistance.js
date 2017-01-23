@@ -1,7 +1,7 @@
-const db = require('~/stores/tiny-db');
+const { TinyDb } = require('~/icebear');
 
 function saveWindowState(state) {
-    db.set('windowState', state);
+    TinyDb.system.setValue('windowState', state);
 }
 
 function getSavedWindowState() {
@@ -9,8 +9,8 @@ function getSavedWindowState() {
         width: 1024,
         height: 728
     };
-    const savedState = db.get('windowState');
-    return Object.assign(defaultState, savedState || {});
+    return TinyDb.system.getValue('windowState')
+                .then(savedState => Object.assign(defaultState, savedState || {}));
 }
 
 module.exports = { saveWindowState, getSavedWindowState };

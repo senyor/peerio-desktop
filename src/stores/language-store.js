@@ -1,7 +1,7 @@
 const { observable, action } = require('mobx');
 const { setLocale } = require('peerio-translator');
 const normalizeError = require('~/icebear').errors.normalize;
-const db = require('~/stores/tiny-db');
+const db = require('~/icebear').TinyDb;
 const fs = require('fs');
 const path = require('path');
 const electron = require('electron').remote || require('electron');
@@ -59,7 +59,7 @@ class LanguageStore {
             const translation = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
             setLocale(code, translation);
             this.language = code;
-            db.set('language', code);
+            db.system.setValue('language', code);
             console.log(`Language changed to ${code}`);
         } catch (err) {
             console.error(`Failed switch language to: ${code} ${normalizeError(err)}`);
@@ -67,8 +67,8 @@ class LanguageStore {
     }
 
     @action loadSavedLanguage() {
-        const lang = db.get('language');
-        this.changeLanguage(lang || 'en');
+        db.system.getValue('language')
+            .then(lang => this.changeLanguage(lang || 'en'));
     }
 }
 

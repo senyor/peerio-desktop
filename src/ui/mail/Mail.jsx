@@ -2,7 +2,7 @@ const React = require('react');
 const { Button, IconMenu, MenuItem } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { fileStore, chatStore, mailStore } = require('~/icebear'); // mailStore?
+const { fileStore, chatStore, mailStore } = require('~/icebear');
 const MailItem = require('./components/MailItem');
 const MailCompose = require('./components/MailCompose');
 const MailSent = require('./components/MailSent');
@@ -12,22 +12,36 @@ const MailSidebar = require('./components/MailSidebar');
 class Mail extends React.Component {
     @observable sent = true;
 
-
     componentWillMount() {
         mailStore.loadAllGhosts();
     }
 
     handleCompose = e => {
-        this.currentGhost = mailStore.createGhost();
+        const newGhost = mailStore.createGhost();
+        mailStore.selectedId = newGhost.ghostId;
         this.sent = false;
-    }
+    };
 
     handleSend = data => {
-        console.log('send', data);
-        this.currentGhost.send(data);
+        mailStore.selectedGhost.send(data)
+    };
+
+    renderMiddle() {
+        if (mailStore.selectedGhost.sent) {
+            return (
+                    <MailSent ghost={mailStore.selectedGhost} />
+
+            );
+        }
+        return (
+
+                <MailCompose ghost={mailStore.selectedGhost} onSend={this.handleSend} />
+
+        );
     }
 
     render() {
+        console.log('mailstore', mailStore.ghosts)
         // if (mailStore.ghosts.length === 0 && !mailStore.loading) return (
         //    <div>nothing here, zero screen</div>
         // );
@@ -46,18 +60,18 @@ class Mail extends React.Component {
                         </IconMenu>
                     </div>
                     {mailStore.ghosts.map((m) => {
-                        return (<MailItem title={m.subject}
-                                  date={m.timestamp}
-                                  recipient={m.recipients}
-                                  firstLine={m.preview}
-                                  active />);
+                        return (<MailItem key={m.ghostId}
+                                          ghostId={m.ghostId}
+                                          subject={m.subject}
+                                          date={m.timestamp}
+                                          recipient={m.recipients}
+                                          firstLine={m.preview}
+                                          active={false} />
+                        );
                     })}
-
-
                 </div>
-                { !this.sent ? <MailCompose ghost={this.currentGhost} onSend={this.handleSend} /> : <MailSent /> }
-                <MailSidebar />
-
+                {mailStore.selectedId && !mailStore.loading ? this.renderMiddle() : null }
+                {mailStore.selectedId && !mailStore.loading ? <MailSidebar ghost={mailStore.selectedGhost} /> : null}
                 <Button icon="add" floating accent onClick={this.handleCompose} />
             </div>
         );

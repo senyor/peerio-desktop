@@ -14,18 +14,12 @@ class MailCompose extends ComposeInput {
     handleRecipientChange = value => {
         // todo validate! and populate multiple
         this.props.ghost.recipients[0] = value;
-    }
+    };
 
     handleSubjectChange = value => {
         this.props.ghost.subject = value;
-    }
+    };
 
-    handleSend = () => {
-        // todo validate
-
-        // handled by ComposeInput
-
-    }
 
     render() {
         return (

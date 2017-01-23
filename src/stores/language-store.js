@@ -51,6 +51,13 @@ class LanguageStore {
         return this._dictionaryLangsCache;
     }
 
+    get localDictionary() {
+        const txtPath = path.join(
+            electron.app.getAppPath(),
+            `/build/static/locales/dict/${this.language}.txt`);
+        return fs.readFileSync(txtPath, 'utf8');
+    }
+
     @action changeLanguage(code) {
         try {
             const jsonPath = path.join(

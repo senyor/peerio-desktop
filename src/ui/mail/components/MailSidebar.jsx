@@ -3,24 +3,32 @@ const { Button, IconButton } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
+const languageStore = require('~/stores/language-store');
+const {PhraseDictionary} = require('~/icebear');
 
 @observer
 class MailSidebar extends React.Component {
-    @observable sent = true;
     @observable expired = true;
+    @observable passphrase = '';
+
+    componentWillUpdate() {
+        this.dict = this.dict || new PhraseDictionary(languageStore.localDictionary);
+        this.passphrase = this.props.ghost.passphrase ? this.props.ghost.passphrase : this.dict.getPassphrase(5);
+        this.props.ghost.passphrase = this.passphrase;
+    }
 
     render() {
         return (
             <div className="mail-side-bar">
                 {/* <GhostInfo /> */}
                 {/* <MailInfo /> */}
-                <p>This passphrase unlocks your message. Only share with intended
+                <p> This passphrase unlocks your message. Only share with intended
                 recipients.</p>
 
                 <div>
                     <div className="dark-label">Passphrase</div>
                     <div className="passphrase">
-                        noodle fist blames ken shriek
+                        {this.passphrase }
                         <IconButton icon="content_copy" />
                     </div>
                 </div>
@@ -33,7 +41,7 @@ class MailSidebar extends React.Component {
                         </div>
                         <div className="expire-info flex-col">
                             <div className="dark-label">Expires</div>
-                            <div>September 6, 2016 at 7:40AM</div>
+                            <div>{this.props.ghost.expiryDate}</div>
                             <Button label={this.expired ? 'destroy?' : 'resend'}
                                     style={{ marginLeft: 'auto', marginTop: '8px' }}
                                     primary />

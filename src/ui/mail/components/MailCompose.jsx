@@ -22,9 +22,9 @@ class MailCompose extends ComposeInput {
 
     render() {
         return (
-            <div>
+            <div className="flex-row flex-grow-1">
                 <div className="compose-view">
-                    <div className="compose-meta flex-row">
+                    <div className="compose-meta flex-row flex-shrink-0">
                         <div className="dark-label flex-col">
                             <div className="meta-input">To</div>
                             <div className="meta-input">Subject</div>

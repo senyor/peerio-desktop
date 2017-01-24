@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.5.2...v1.6.0) (2017-01-23)
+
+
+### Bug Fixes
+
+* **i18n:** key entered as string ([bb2f8fd](https://github.com/PeerioTechnologies/peerio-desktop/commit/bb2f8fd))
+* **i18n:** translate validation errors ([b51be57](https://github.com/PeerioTechnologies/peerio-desktop/commit/b51be57))
+
+
+### Features
+
+* **files:** resume download ([221a004](https://github.com/PeerioTechnologies/peerio-desktop/commit/221a004))
+* **storage:** TinyDb encryption ([c7c814a](https://github.com/PeerioTechnologies/peerio-desktop/commit/c7c814a))
+* **tinydb:** getAllKeys support ([59db4e3](https://github.com/PeerioTechnologies/peerio-desktop/commit/59db4e3))
+
+
+
 <a name="1.5.2"></a>
 ## [1.5.2](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.5.1...v1.5.2) (2017-01-11)
 

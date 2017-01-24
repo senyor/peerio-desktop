@@ -41,6 +41,13 @@
     height: 80px;
     padding: $padding-small 0 0 $padding-small;
 
+    .item-subject {
+      margin-right: auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     &.active {
       background-color: $color-brand;
     }

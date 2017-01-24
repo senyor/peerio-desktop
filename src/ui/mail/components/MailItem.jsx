@@ -13,7 +13,7 @@ class MailItem extends React.Component {
         return (
             <div className={css('mail-item', { active: mailStore.selectedId === this.props.ghostId })} onClick={this.handleSelect}>
                 <div className="flex-row" style={{ paddingRight: '8px' }}>
-                    <strong style={{ marginRight: 'auto' }}>{this.props.subject}</strong>
+                    <strong className="item-subject">{this.props.subject}</strong>
                     {this.props.date.toLocaleString()}
                 </div>
                 <div>{this.props.recipient}</div>

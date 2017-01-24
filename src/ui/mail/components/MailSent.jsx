@@ -7,7 +7,7 @@ class MailSent extends React.Component {
     render() {
         console.log('sent ghpst', this.props.ghost);
         return (
-            <div>
+            <div className="flex-row flex-grow-1">
                 <div className="compose-view">
                     <div className="compose-meta sent">
                         <div className="subject">{this.props.ghost.subject}</div>

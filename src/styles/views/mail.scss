@@ -49,7 +49,9 @@
     }
 
     &.active {
-      background-color: $color-brand;
+      background-color: $background-active-message;
+      border-left: 6px solid $color-brand;
+      padding-left: 2px;
     }
 
     &:hover:not(.active) {

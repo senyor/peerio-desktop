@@ -2,6 +2,7 @@ const { observable, action } = require('mobx');
 const { setLocale } = require('peerio-translator');
 const normalizeError = require('~/icebear').errors.normalize;
 const db = require('~/icebear').TinyDb;
+const {PhraseDictionaryCollection} = require('~/icebear');
 const fs = require('fs');
 const path = require('path');
 const electron = require('electron').remote || require('electron');
@@ -51,11 +52,13 @@ class LanguageStore {
         return this._dictionaryLangsCache;
     }
 
-    get localDictionary() {
+    buildDictionary() {
         const txtPath = path.join(
             electron.app.getAppPath(),
             `/build/static/locales/dict/${this.language}.txt`);
-        return fs.readFileSync(txtPath, 'utf8');
+        const dict = fs.readFileSync(txtPath, 'utf8');
+        PhraseDictionaryCollection.addDictionary(this.language, dict);
+        PhraseDictionaryCollection.selectDictionary(this.language);
     }
 
     @action changeLanguage(code) {
@@ -67,6 +70,7 @@ class LanguageStore {
             setLocale(code, translation);
             this.language = code;
             db.system.setValue('language', code);
+            this.buildDictionary();
             console.log(`Language changed to ${code}`);
         } catch (err) {
             console.error(`Failed switch language to: ${code} ${normalizeError(err)}`);

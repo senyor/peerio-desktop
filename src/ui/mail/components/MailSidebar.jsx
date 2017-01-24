@@ -5,17 +5,19 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 const languageStore = require('~/stores/language-store');
 const {PhraseDictionary} = require('~/icebear');
+const { t } = require('peerio-translator');
+
 
 @observer
 class MailSidebar extends React.Component {
-    @observable expired = true;
-    @observable passphrase = '';
-
-    componentWillUpdate() {
-        this.dict = this.dict || new PhraseDictionary(languageStore.localDictionary);
-        this.passphrase = this.props.ghost.passphrase ? this.props.ghost.passphrase : this.dict.getPassphrase(5);
-        this.props.ghost.passphrase = this.passphrase;
-    }
+    //@observable expired = true;
+    //@observable passphrase = '';
+    //
+    //componentWillUpdate() {
+    //    this.dict = this.dict || new PhraseDictionary(languageStore.localDictionary);
+    //    this.passphrase = this.props.ghost.passphrase ? this.props.ghost.passphrase : this.dict.getPassphrase(5);
+    //    this.props.ghost.passphrase = this.passphrase;
+    //}
 
     render() {
         return (
@@ -28,11 +30,11 @@ class MailSidebar extends React.Component {
                 <div>
                     <div className="dark-label">Passphrase</div>
                     <div className="passphrase">
-                        {this.passphrase }
+                        {this.props.ghost.passphrase }
                         <IconButton icon="content_copy" />
                     </div>
                 </div>
-                { !this.sent ?
+                { !this.props.ghost.sent ?
                     <p>Your message will expire 3 days after it’s sent.</p>
                     : <div className="sent-info">
                         <div className="read-recipt">
@@ -42,9 +44,9 @@ class MailSidebar extends React.Component {
                         <div className="expire-info flex-col">
                             <div className="dark-label">Expires</div>
                             <div>{this.props.ghost.expiryDate}</div>
-                            <Button label={this.expired ? 'destroy?' : 'resend'}
+                            {this.props.ghost.sent ? <Button label={t('revoke')}
                                     style={{ marginLeft: 'auto', marginTop: '8px' }}
-                                    primary />
+                                    primary /> : '' }
                         </div>
                     </div>
                   }

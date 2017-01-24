@@ -6,7 +6,6 @@ const { fileStore, chatStore, mailStore } = require('~/icebear');
 const MailItem = require('./components/MailItem');
 const MailCompose = require('./components/MailCompose');
 const MailSent = require('./components/MailSent');
-const MailSidebar = require('./components/MailSidebar');
 
 @observer
 class Mail extends React.Component {
@@ -71,7 +70,6 @@ class Mail extends React.Component {
                     })}
                 </div>
                 {mailStore.selectedId && !mailStore.loading ? this.renderMiddle() : null }
-                {mailStore.selectedId && !mailStore.loading ? <MailSidebar ghost={mailStore.selectedGhost} /> : null}
                 <Button icon="add" floating accent onClick={this.handleCompose} />
             </div>
         );

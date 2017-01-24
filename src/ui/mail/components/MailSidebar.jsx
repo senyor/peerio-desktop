@@ -4,20 +4,20 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const languageStore = require('~/stores/language-store');
-const {PhraseDictionary} = require('~/icebear');
+const { PhraseDictionary } = require('~/icebear');
 const { t } = require('peerio-translator');
 
 
 @observer
 class MailSidebar extends React.Component {
-    //@observable expired = true;
-    //@observable passphrase = '';
+    // @observable expired = true;
+    // @observable passphrase = '';
     //
-    //componentWillUpdate() {
+    // componentWillUpdate() {
     //    this.dict = this.dict || new PhraseDictionary(languageStore.localDictionary);
     //    this.passphrase = this.props.ghost.passphrase ? this.props.ghost.passphrase : this.dict.getPassphrase(5);
     //    this.props.ghost.passphrase = this.passphrase;
-    //}
+    // }
 
     render() {
         return (

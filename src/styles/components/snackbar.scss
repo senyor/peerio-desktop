@@ -3,6 +3,7 @@ $snackbar-max-width: 568px;
 $snackbar-min-width: 288px;
 
 .snackbar-wrapper {
+  @extend %flex-row;
   bottom: 0;
   flex-shrink: 0;
   height: 48px;
@@ -10,8 +11,6 @@ $snackbar-min-width: 288px;
   overflow: hidden;
   position: absolute;
   width: 100%;
-
-  @extend %flex-row;
 }
 
 .message-input .snackbar-wrapper {
@@ -19,6 +18,7 @@ $snackbar-min-width: 288px;
 }
 
 .snackbar {
+  @extend %flex-row;
   align-items: center;
   background: $background-snackbar;
   border-radius: 2px;
@@ -31,8 +31,6 @@ $snackbar-min-width: 288px;
   position: absolute;
   top: 100%;
   transition: 250ms $transition-ease-in;
-
-  @extend %flex-row;
 
   &.show {
     top: 0;

@@ -22,25 +22,25 @@ class Mail extends React.Component {
     };
 
     handleSend = data => {
-        mailStore.selectedGhost.send(data)
+        mailStore.selectedGhost.send(data);
     };
 
     renderMiddle() {
         if (mailStore.selectedGhost.sent) {
             return (
-                    <MailSent ghost={mailStore.selectedGhost} />
+                <MailSent ghost={mailStore.selectedGhost} />
 
             );
         }
         return (
 
-                <MailCompose ghost={mailStore.selectedGhost} onSend={this.handleSend} />
+            <MailCompose ghost={mailStore.selectedGhost} onSend={this.handleSend} />
 
         );
     }
 
     render() {
-        console.log('mailstore', mailStore.ghosts)
+        console.log('mailstore', mailStore.ghosts);
         // if (mailStore.ghosts.length === 0 && !mailStore.loading) return (
         //    <div>nothing here, zero screen</div>
         // );

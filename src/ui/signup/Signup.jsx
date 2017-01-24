@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button, Dialog, IconButton } = require('~/react-toolbox');
-const { User, errors } = require('~/icebear');
+const { User, errors, PhraseDictionaryCollection } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -49,7 +49,7 @@ const Snackbar = require('~/ui/shared-components/Snackbar');
         u.firstName = this.profileStore.firstName;
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
-        u.passphrase = 'icebear';
+        u.passphrase = 'icebear'; // PhraseDictionaryCollection.current.getPassphrase(5); TODO re-enable before beta
 
         return u.createAccountAndLogin()
             .then(() => {

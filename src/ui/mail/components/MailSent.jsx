@@ -5,7 +5,7 @@ const MailSidebar = require('./MailSidebar');
 class MailSent extends React.Component {
 
     render() {
-        console.log('sent ghpst', this.props.ghost)
+        console.log('sent ghpst', this.props.ghost);
         return (
             <div>
                 <div className="compose-view">
@@ -18,7 +18,7 @@ class MailSent extends React.Component {
                         {this.props.ghost.body}
                     </div>
                 </div>
-                <MailSidebar ghost={this.props.ghost}/>
+                <MailSidebar ghost={this.props.ghost} />
             </div>
         );
     }

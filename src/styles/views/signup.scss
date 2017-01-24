@@ -1,16 +1,6 @@
 .signup {
-  align-items: center;
-  background-blend-mode: overlay;
-  background-color: $background-brand;
-  background-image: url('./static/img/bg-pattern.png');
-  background-size: $background-pattern-size;
-  color: $text-light-secondary;
-  height: 100vh;
-  opacity: 0;
-  transition: 350ms opcaity $transition-default;
-  width: 100vw;
-
   @extend %flex-col;
+
   @media (max-height: $minimum-screen-height) {
     img {
       margin: $margin-default 0 24px;
@@ -25,6 +15,16 @@
       margin-top: 32px;
     }
   }
+  align-items: center;
+  background-blend-mode: overlay;
+  background-color: $background-brand;
+  background-image: url('./static/img/bg-pattern.png');
+  background-size: $background-pattern-size;
+  color: $text-light-secondary;
+  height: 100vh;
+  opacity: 0;
+  transition: 350ms opcaity $transition-default;
+  width: 100vw;
 
   .help,
   .terms {
@@ -60,9 +60,8 @@
   }
 
   .signup-subtitle {
-    margin-top: $margin-tiny;
-
     @extend %headline;
+    margin-top: $margin-tiny;
   }
 
   .signup-nav {

@@ -1,7 +1,7 @@
 const React = require('react');
 const MailFormatActions = require('./MailFormatActions');
 const ComposeInput = require('../../shared-components/ComposeInput');
-const { Button, Input, } = require('~/react-toolbox');
+const { Button, Input } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const MailSidebar = require('./MailSidebar');
 

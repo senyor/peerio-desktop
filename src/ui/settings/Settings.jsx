@@ -4,20 +4,19 @@ const { observer } = require('mobx-react');
 const { Tab, Tabs } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 
+const url = ['/app/settings/profile', '/app/settings/security', '/app/settings/preferences'];
+
 @observer class Settings extends React.Component {
     @observable index = 0;
 
-    componentWillMount() {
-        if (this.index === 0) {
-            window.router.push('/app/settings/profile');
-        }
-    }
     handleTabChange = (index) => {
         this.index = index;
-        this.index === 1 ?
-            window.router.push('/app/settings/preferences') :
-            window.router.push('/app/settings/security');
+        window.router.push(url[index]);
     };
+
+    componentWillMount() {
+        console.log(this.index);
+    }
     render() {
         return (
             <div className="flex-row flex-justify-center settings">

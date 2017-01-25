@@ -10,15 +10,6 @@ const { t } = require('peerio-translator');
 
 @observer
 class MailSidebar extends React.Component {
-    // @observable expired = true;
-    // @observable passphrase = '';
-    //
-    // componentWillUpdate() {
-    //    this.dict = this.dict || new PhraseDictionary(languageStore.localDictionary);
-    //    this.passphrase = this.props.ghost.passphrase ? this.props.ghost.passphrase : this.dict.getPassphrase(5);
-    //    this.props.ghost.passphrase = this.passphrase;
-    // }
-
     render() {
         return (
             <div className="mail-side-bar">
@@ -39,11 +30,11 @@ class MailSidebar extends React.Component {
                     : <div className="sent-info">
                         <div className="read-recipt">
                             <div className="dark-label">Viewed</div>
-                            <div>September 3, 2016 at 10:10AM</div>
+                            <div>{this.props.ghost.url}</div>
                         </div>
                         <div className="expire-info flex-col">
                             <div className="dark-label">Expires</div>
-                            <div>{this.props.ghost.expiryDate}</div>
+                            <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
                             {this.props.ghost.sent ? <Button label={t('revoke')}
                                     style={{ marginLeft: 'auto', marginTop: '8px' }}
                                     primary /> : '' }

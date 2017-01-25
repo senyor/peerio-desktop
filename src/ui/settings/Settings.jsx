@@ -7,16 +7,35 @@ const { t } = require('peerio-translator');
 const url = ['/app/settings/profile', '/app/settings/security', '/app/settings/preferences'];
 
 @observer class Settings extends React.Component {
-    @observable index = 0;
+    @observable index;
 
     handleTabChange = (index) => {
         this.index = index;
         window.router.push(url[index]);
     };
 
-    componentWillMount() {
-        console.log(this.index);
+    handleRouteChange = () => {
+        const currentLocation = window.router.getCurrentLocation();
+
+        switch (currentLocation.pathname) {
+            case '/app/settings/security':
+                this.index = 1;
+                break;
+            case '/app/settings/preferences':
+                this.index = 2;
+                break;
+            default:
+                this.index = 0;
+        }
     }
+    componentWillMount() {
+        this.handleRouteChange();
+    }
+
+    componentWillUpdate() {
+        this.handleRouteChange();
+    }
+
     render() {
         return (
             <div className="flex-row flex-justify-center settings">

@@ -22,7 +22,6 @@ const ZeroScreen = require('./components/ZeroScreen');
     }
 
     componentWillUnmount() {
-        // fileStore.clearSelection();
     }
 
     handleUpload() {

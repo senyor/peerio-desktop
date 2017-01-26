@@ -12,7 +12,6 @@ class FilePicker extends React.Component {
     };
     handleShare = () => {
         const selected = fileStore.getSelectedFiles();
-        fileStore.clearSelection();
         if (!selected.length) return;
         this.props.onShare(selected);
     };

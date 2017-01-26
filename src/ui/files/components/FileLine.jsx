@@ -34,35 +34,36 @@ class FileLine extends React.Component {
     };
 
     render() {
-        if (!this.props.file.show) return null;
+        const file = this.props.file;
+        if (!file.show) return null;
         return (
             <tr className={css({ selected: this.checked,
-                'selected-row': this.props.file.selected,
-                'waiting-3rd-party': this.props.file.waitingForThirdParty })}
+                'selected-row': file.selected,
+                'waiting-3rd-party': file.waitingForThirdParty })}
                 onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
                 <td>
-                    {(this.props.file.downloading || this.props.file.uploading)
-                        ? <FileLoading loading={this.props.file.downloading ? 'file_download' : 'file_upload'}
+                    {(file.downloading || file.uploading)
+                        ? <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
                                        onCancel={this.cancelUploadOrDownload} />
-                        : <Checkbox checked={this.props.file.selected} onChange={this.toggleChecked} />
+                        : <Checkbox disabled={!file.readyForDownload} checked={file.selected} onChange={this.toggleChecked} />
                     }</td>
-                <td>{this.props.file.name}</td>
-                <td>{this.props.file.owner}</td>
-                <td className="text-right">{this.props.file.uploadedAt && this.props.file.uploadedAt.toLocaleString()}</td>
-                <td className="hide-text text-right">{this.props.file.sizeFormatted}</td>
-                <td className="hide-text uppercase">{this.props.file.ext}</td>
+                <td>{file.name}</td>
+                <td>{file.owner}</td>
+                <td className="text-right">{file.uploadedAt && file.uploadedAt.toLocaleString()}</td>
+                <td className="hide-text text-right">{file.sizeFormatted}</td>
+                <td className="hide-text uppercase">{file.ext}</td>
                 {
                     this.showActions
-                    ? <FileActions downloadDisabled={!this.props.file.readyForDownload || this.props.file.downloading}
+                    ? <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
                                    shareDisabled newFolderDisabled deleteDisabled={false}
                                    onDelete={this.deleteFile} onDownload={this.download} />
                     : null
                 }
 
                 <td className="loading">
-                    {(this.props.file.downloading || this.props.file.uploading)
-                        ? <ProgressBar type="linear" mode="determinate" value={this.props.file.progress}
-                                       buffer={this.props.file.progressBuffer} max={this.props.file.progressMax} />
+                    {(file.downloading || file.uploading)
+                        ? <ProgressBar type="linear" mode="determinate" value={file.progress}
+                                       buffer={file.progressBuffer} max={file.progressMax} />
                         : null }
                 </td>
             </tr>

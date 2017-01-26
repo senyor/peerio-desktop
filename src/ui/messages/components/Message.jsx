@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 const React = require('react');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { observer } = require('mobx-react');
@@ -5,9 +6,11 @@ const { time } = require('~/helpers/formatter');
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const emojione = require('~/static/emoji/emojione.js');
 const Autolinker = require('autolinker');
-const { fileStore } = require('~/icebear');
-const { FontIcon, ProgressBar } = require('~/react-toolbox');
-const { downloadFile } = require('~/helpers/file');
+const InlineFiles = require('./InlineFiles');
+const css = require('classnames');
+const { t } = require('peerio-translator');
+const config = require('~/config');
+const { Button, FontIcon } = require('~/react-toolbox');
 
 const autolinker = new Autolinker({
     urls: {
@@ -41,55 +44,27 @@ function processMessage(msg) {
 @observer
 class Message extends React.Component {
     render() {
+        const m = this.props.message;
         return (
-            <div className="message-content-wrapper">
-                <Avatar contact={this.props.message.sender} />
-                <div className="message-content">
-                    <div className="meta-data">
-                        <div className="user">{this.props.message.sender.username}</div>
-                        <div className="timestamp">{time.format(this.props.message.timestamp)}</div>
+            <div>
+                <div className={css('message-content-wrapper', { 'invalid-sign': !m.isSignValid })}>
+                    {m.isSignValid ? null : <FontIcon value="warning" className="warning-icon" />}
+                    <Avatar contact={m.sender} />
+                    <div className="message-content">
+                        <div className="meta-data">
+                            <div className="user">{m.sender.username}</div>
+                            <div className="timestamp">{time.format(m.timestamp)}</div>
+                        </div>
+                        <p dangerouslySetInnerHTML={processMessage(m)} />
+                        {m.files ? <InlineFiles files={m.files} /> : null}
                     </div>
-                    <p dangerouslySetInnerHTML={processMessage(this.props.message)} />
-                    {this.props.message.files ? <InlineFiles files={this.props.message.files} /> : null}
+                    {m.sending ? <div className="sending-overlay" /> : null}
                 </div>
-                {this.props.message.sending ? <div className="sending-overlay" /> : null}
-            </div>
-        );
-    }
-}
-
-@observer
-class InlineFiles extends React.Component {
-    download(ev) {
-        const attr = ev.currentTarget.attributes['data-id'];
-        if (!attr) return;
-        const file = fileStore.getById(attr.value);
-        if (!file || file.downloading) return;
-        downloadFile(file);
-        console.log(ev.currentTarget.attributes['data-id'].value);
-    }
-    render() {
-        // todo: temporary, clean broken kegs
-        if (!this.props.files.map) return null;
-
-        return (
-            <div className="inline-files">
-                {
-                    this.props.files.map(f => {
-                        const file = fileStore.getById(f);
-                        if (!file) return <div className="invalid-file" key={f}>invalid file record</div>;
-                        return (<div className="file" key={f} data-id={f} onClick={this.download}>
-                            <div className="flex-row flex-align-center">
-                                <FontIcon value="file_download" /> {file ? file.name : f}
-                            </div>
-
-                            {file.downloading
-                                ? <ProgressBar type="linear" mode="determinate" value={file.progress}
-                                       buffer={file.progressBuffer} max={file.progressMax} />
-                                : null
-                            }
-                        </div>);
-                    })
+                {m.isSignValid ? null :
+                    <div className="invalid-sign-warning">
+                        {t('invalidSignWarning')}
+                        <Button href={config.supportUrl} label={t('readMore')} flat primary />
+                    </div>
                 }
             </div>
         );

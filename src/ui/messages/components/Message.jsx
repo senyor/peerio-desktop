@@ -49,27 +49,27 @@ class Message extends React.Component {
         return (
             <div>
                 <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}>
-                    <div>
+                    <div className="flex-row">
                         <Avatar contact={m.sender} />
-                        {m.isSignValid ? <FontIcon value="warning" className="warning-icon" /> : null }
-                    </div>
-                    <div className="message-content">
-                        <div className="meta-data">
-                            <div className="user">{m.sender.username}</div>
-                            <div className="timestamp">{time.format(m.timestamp)}</div>
+                        <div className="message-content">
+                            <div className="meta-data">
+                                <div className="user">{m.sender.username}</div>
+                                <div className="timestamp">{time.format(m.timestamp)}</div>
+                            </div>
+                            <p dangerouslySetInnerHTML={processMessage(m)} />
+                            {m.files ? <InlineFiles files={m.files} /> : null}
                         </div>
-                        <p dangerouslySetInnerHTML={processMessage(m)} />
-                        {m.files ? <InlineFiles files={m.files} /> : null}
+                        {m.isSignValid ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null }
                     </div>
+                    {invalidSign ?
+                        <div className="invalid-sign-warning">
+                            {t('invalidSignWarning')}
+                            <Button href={config.supportUrl} label={t('readMore')} flat primary />
+                        </div>
+                        : null
+                    }
                     {m.sending ? <div className="sending-overlay" /> : null}
                 </div>
-                {invalidSign
-                    ? <div className="invalid-sign-warning">
-                        {t('invalidSignWarning')}
-                        <Button href={config.supportUrl} label={t('readMore')} flat primary />
-                    </div>
-                    : null
-                }
             </div>
         );
     }

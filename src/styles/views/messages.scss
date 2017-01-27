@@ -1,3 +1,5 @@
+$sign-warn-radius: 18px;
+
 // view wrapper
 .messages {
   display: flex;
@@ -78,7 +80,6 @@
 
   .messages-container {
     @extend %flex-col;
-    $sign-warn-radius: 17px;
     align-items: flex-start;
     flex: 1 1 auto;
     overflow: auto;
@@ -93,32 +94,30 @@
     .invalid-sign-warning {
       align-items: center;
       background-color: rgba(0, 0, 0, .06);
-      border-bottom-left-radius: 17px;
-      border-bottom-right-radius: 17px;
+      border-top: 1px solid $border-dark;
       color: rgba(0, 0, 0, .38);
       display: flex;
       font-size: 12px;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      padding: 10px 9px 10px 24px;
+      height: 52px;
+      margin-top: 24px;
+      padding: 0 16px;
     }
 
     .message-content-wrapper {
-      @extend %flex-row;
-      flex-shrink: 0;
+      @extend %flex-col;
+      @extend %flex-shrink-0;
 
       &.invalid-sign {
-        background-color: $color-dark-06;
-        border-top-left-radius: $sign-warn-radius;
-        border-top-right-radius: $sign-warn-radius;
-        padding: 2px 10px 5px 0;
-        position: relative;
-        width: 100%;
+        background-color: rgba($color-error, .06);
+        border-radius: $radius-sign-warning;
+        margin-left: -8px;
+        overflow: hidden;
 
         .warning-icon {
           color: $color-error;
           margin-left: auto;
-          padding: 12px 12px 0 0;
+          padding: 4px 4px 0 0;
+          width: 24px;
         }
       }
 

@@ -125,6 +125,11 @@
     "writefile": "0.2.8"
   },
   "reactToolbox": {
+    "include":[
+      "AUTOCOMPLETE", "AVATAR", "BUTTON", "CARD", "CHECKBOX", "CHIP", "DATE_PICKER", "DIALOG", "DRAWER",
+      "DROPDOWN", "INPUT", "LAYOUT", "LINK", "LIST", "MENU", "NAVIGATION", "OVERLAY", "PROGRESS_BAR", "RADIO",
+      "RIPPLE", "SLIDER", "SNACKBAR", "SWITCH", "TABLE", "TABS", "TIME_PICKER", "TOOLTIP"
+    ],
     "customProperties": {
       "color-primary": "rgb(44, 149, 207)",
       "color-primary-dark": "var(--palette-indigo-700)",

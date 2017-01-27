@@ -1,7 +1,7 @@
 {
   "name": "icebear-desktop",
   "description": "Peerio desktop client (codename Icebear)",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -32,13 +32,14 @@
     "dist": "NODE_ENV=production npm-run-all -l -n compile -p dist:mac dist:win",
     "dist:mac": "rm -rf dist/mac && build --mac --x64",
     "dist:win": "rm -rf dist/win && build --win --x64",
-    "dist-and-publish:mac": "rm -rf dist/mac && build --mac --x64 -p always",
-    "dist-and-publish:win": "rm -rf dist/win && build --win --x64 -p always",
+    "dist-and-publish": "NODE_ENV=production npm-run-all -l -n compile dist-and-publish:mac dist-and-publish:win",
+    "dist-and-publish:mac": "rm -rf dist/mac && build --mac --x64 --publish always",
+    "dist-and-publish:win": "rm -rf dist/win && build --win --x64 --publish always",
     "dist:linux": "rm -rf dist/linux && build -l",
-    "_release": "npm-run-all -l -n -s release:version release:push",
+    "release": "npm-run-all -l -n -s release:version release:push",
     "release:version": "peerio-desktop-standard-version",
     "release:push": "git push --follow-tags origin master",
-    "release": "npm-run-all -l -n -s release:version release:push dist",
+    "publish": "npm-run-all -l -n -s release dist-and-publish",
     "build-emoji": "./scripts/build-emoji.js",
     "validate": "npm-run-all -l -n -p code:lint style:lint",
     "install-win-build-tools": "./scripts/install-build-tools.sh",
@@ -190,7 +191,7 @@
         "squirrel"
       ],
       "title": "Icebear",
-      "version": "1.7.2",
+      "version": "1.7.3",
       "msi": true
     },
     "mac": {

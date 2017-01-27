@@ -192,3 +192,21 @@
 ul {
   margin: 0;
 }
+
+.rt-progress_bar-value{
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-name: pulse-progress-bar;
+  animation-timing-function: ease-in-out;
+}
+@keyframes pulse-progress-bar {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .4;
+  }
+  100%{
+    opacity: 1;
+  }
+}

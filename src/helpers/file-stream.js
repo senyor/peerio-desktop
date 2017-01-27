@@ -43,13 +43,13 @@ class FileStream extends FileStreamAbstract {
             fs.read(this.fileDescriptor, Buffer.from(buffer.buffer), 0, size, this.nextReadPos,
                 (err, bytesRead) => {
                     if (this.checkForError(err, reject)) return;
+                    if (this.nextReadPos != null) this.nextReadPos += bytesRead;
                     if (bytesRead < buffer.length) {
                         resolve(buffer.subarray(0, bytesRead));
                     } else {
                         resolve(buffer);
                     }
                 });
-            this.nextReadPos = null;
         });
     }
 
@@ -69,6 +69,7 @@ class FileStream extends FileStreamAbstract {
 
     seekInternal(pos) {
         this.nextReadPos = pos;
+        this.pos = pos;
     }
 
     static getStat(path) {

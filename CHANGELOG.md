@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.6.0...v1.7.0) (2017-01-27)
+
+
+### Bug Fixes
+
+* Fixes tabs behaviour in Settings. ([053bbf2](https://github.com/PeerioTechnologies/peerio-desktop/commit/053bbf2))
+* **ghost:** ghost url config ([16fd0ce](https://github.com/PeerioTechnologies/peerio-desktop/commit/16fd0ce))
+* **ghost:** use passphrase dict properly ([ca64686](https://github.com/PeerioTechnologies/peerio-desktop/commit/ca64686))
+* **passphrases:** placeholder for signup ([6143768](https://github.com/PeerioTechnologies/peerio-desktop/commit/6143768))
+
+
+### Features
+
+* **files:** disable sharing of incomplete files ([c6daffc](https://github.com/PeerioTechnologies/peerio-desktop/commit/c6daffc))
+* **sign:** display signature issues ([0b82877](https://github.com/PeerioTechnologies/peerio-desktop/commit/0b82877))
+* **sign:** display signature issues ([b9cf2dd](https://github.com/PeerioTechnologies/peerio-desktop/commit/b9cf2dd))
+
+
+
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.5.2...v1.6.0) (2017-01-23)
 

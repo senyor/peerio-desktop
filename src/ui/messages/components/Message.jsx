@@ -49,8 +49,10 @@ class Message extends React.Component {
         return (
             <div>
                 <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}>
-                    {invalidSign ? <FontIcon value="warning" className="warning-icon" /> : null}
-                    <Avatar contact={m.sender} />
+                    <div>
+                        <Avatar contact={m.sender} />
+                        {m.isSignValid ? <FontIcon value="warning" className="warning-icon" /> : null }
+                    </div>
                     <div className="message-content">
                         <div className="meta-data">
                             <div className="user">{m.sender.username}</div>

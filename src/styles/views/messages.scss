@@ -108,7 +108,7 @@
       flex-shrink: 0;
 
       &.invalid-sign {
-        background-color: rgba(208, 2, 27, .1);
+        background-color: $color-dark-06;
         border-top-left-radius: $sign-warn-radius;
         border-top-right-radius: $sign-warn-radius;
         padding: 2px 10px 5px 0;
@@ -116,10 +116,9 @@
         width: 100%;
 
         .warning-icon {
-          color: rgba(208, 2, 27, .54);
-          position: absolute;
-          right: 5px;
-          top: 5px;
+          color: $color-error;
+          margin-left: auto;
+          padding: 12px 12px 0 0;
         }
       }
 

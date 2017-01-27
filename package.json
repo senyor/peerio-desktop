@@ -36,7 +36,7 @@
     "release": "npm-run-all -l -n -s release:version release:push",
     "release:version": "peerio-desktop-standard-version",
     "release:push": "git push --follow-tags origin master",
-    "build-emoji": "./scripts/build_emoji.js",
+    "build-emoji": "./scripts/build-emoji.js",
     "validate": "npm-run-all -l -n -p code:lint style:lint",
     "install-win-build-tools": "./scripts/install-build-tools.sh",
     "get-locales": "./scripts/get-locales.sh",

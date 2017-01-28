@@ -9,7 +9,7 @@ const app = require('electron').remote.app;
 const sounds = require('~/helpers/sounds');
 const appControl = require('~/helpers/app-control');
 
-const TooltipIcon = Tooltip(IconButton); //eslint-disable-line
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 const delay = 500;
 

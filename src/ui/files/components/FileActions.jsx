@@ -4,7 +4,7 @@ const css = require('classnames');
 
 const noop = (e) => { e.stopPropagation(); };
 
-const TooltipIcon = Tooltip(IconButton); //eslint-disable-line
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 function FileActions(props) {
     const delay = 500;

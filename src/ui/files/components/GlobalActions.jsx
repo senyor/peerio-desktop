@@ -5,7 +5,7 @@ const css = require('classnames');
 const { fileStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 
-const TooltipIcon = Tooltip(IconButton); //eslint-disable-line
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 const delay = 500;
 
 @observer

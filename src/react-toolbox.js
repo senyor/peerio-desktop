@@ -48,6 +48,6 @@ module.exports.Switch = require('react-toolbox/lib/switch/Switch').default;
 module.exports.Table = require('react-toolbox/lib/table/Table').default;
 module.exports.Tab = require('react-toolbox/lib/tabs/Tab').default;
 module.exports.Tabs = require('react-toolbox/lib/tabs/Tabs').default;
-module.exports.Tooltip = require('react-toolbox/lib/tooltip/Tooltip').default({ theme });
+module.exports.Tooltip = require('react-toolbox/lib/tooltip/Tooltip').default;
 module.exports.TimePicker = require('react-toolbox/lib/time_picker/TimePicker').default;
 

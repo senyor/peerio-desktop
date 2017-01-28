@@ -5,7 +5,7 @@ const { chatStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 
-const TooltipIcon = Tooltip(IconButton); //eslint-disable-line
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 @observer
 class ChatList extends React.Component {

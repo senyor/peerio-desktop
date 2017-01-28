@@ -13,8 +13,9 @@ $padding-default: #{$spacing-default * 2}; // 16px
 $padding-large: #{$spacing-default * 2.5}; // 20px
 
 // COMPONENT MEASUREMENTS
+// TODO: consider moving component specific vars into their component style sheets
 $app-nav-width: 80px;
-$message-list-width: 224px;
+$message-list-width: 224px; // TODO more generic name
 
 // MEDIA QUERIES
 $minimum-screen-height: 768px;

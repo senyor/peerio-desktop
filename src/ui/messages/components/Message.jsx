@@ -49,7 +49,7 @@ class Message extends React.Component {
         return (
             <div>
                 <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}>
-                    <div className="flex-row">
+                    <div className="flex-row" style={{ padding: '8px 0 0 8px' }}>
                         <Avatar contact={m.sender} />
                         <div className="message-content">
                             <div className="meta-data">
@@ -59,11 +59,11 @@ class Message extends React.Component {
                             <p dangerouslySetInnerHTML={processMessage(m)} />
                             {m.files ? <InlineFiles files={m.files} /> : null}
                         </div>
-                        {m.isSignValid ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null }
+                        {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null }
                     </div>
                     {invalidSign ?
                         <div className="invalid-sign-warning">
-                            {t('invalidSignWarning')}
+                            <div style={{ marginRight: 'auto' }}>{t('invalidSignWarning')}</div>
                             <Button href={config.supportUrl} label={t('readMore')} flat primary />
                         </div>
                         : null

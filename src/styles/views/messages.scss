@@ -92,7 +92,8 @@ $radius-sign-warning: 18px;
     }
 
     .invalid-sign-warning {
-      align-items: center;
+      @extend %flex-align-center;
+      @extend %flex-justify-between;
       background-color: rgba(0, 0, 0, .06);
       border-top: 1px solid $border-dark;
       color: rgba(0, 0, 0, .38);
@@ -106,17 +107,19 @@ $radius-sign-warning: 18px;
     .message-content-wrapper {
       @extend %flex-col;
       @extend %flex-shrink-0;
+      margin-bottom: 20px;
 
       &.invalid-sign {
         background-color: rgba($color-error, .06);
         border-radius: $radius-sign-warning;
         margin-left: -8px;
+        min-width: 320px;
         overflow: hidden;
 
         .warning-icon {
+          @extend %flex-shrink-0;
           color: $color-error;
-          margin-left: auto;
-          padding: 4px 4px 0 0;
+          margin: 4px 12px 0 auto;
           width: 24px;
         }
       }

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
 const { Component } = require('react');
-const { Dropdown, Button, IconButton } = require('~/react-toolbox');
+const { Dropdown, Button, IconButton, Tooltip } = require('~/react-toolbox');
 const { config, socket, User, validation } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
@@ -16,6 +16,8 @@ const Snackbar = require('~/ui/shared-components/Snackbar');
 const css = require('classnames');
 
 const { validators } = validation; // use common validation from core
+
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 class LoginStore extends OrderedFormStore {
     @observable fieldsExpected = 2;
@@ -146,8 +148,11 @@ class LoginStore extends OrderedFormStore {
                                             validator={validators.stringExists}
                                             name="passcodeOrPassphrase"
                                             onKeyPress={this.handleKeyPress} />
-                            <IconButton icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
-                                        onClick={this.togglePasswordVisibility} />
+                            <TooltipIcon icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
+                                         tooltip={this.loginStore.passwordVisible ? 'hide password' : 'show password'}
+                                         tooltipPosition="right"
+                                         tooltipDelay="500"
+                                         onClick={this.togglePasswordVisibility} />
                         </div>
                         {/* <Dropdown value={languageStore.language}
                                   source={languageStore.translationLangsDataSource}

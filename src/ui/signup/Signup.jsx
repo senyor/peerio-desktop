@@ -115,14 +115,14 @@ const Snackbar = require('~/ui/shared-components/Snackbar');
                     }
                 </div>
                 <div className="signup-nav">
-                    <IconButton icon="arrow_back" onClick={this.retreat} />
+                    <Button flat label={this.step === 1 ? t('cancel') : t('back')} onClick={this.retreat} />
                     <Button flat label={this.step === 1 ? t('next') : t('button_finish')} onClick={this.advance}
                             disabled={this.hasErrors} />
                 </div>
-                <div className="progress">
+                {/* <div className="progress">
                     <div className={css('indicator', { active: this.step === 1 })} />
                     <div className={css('indicator', { active: this.step === 2 })} />
-                </div>
+                </div> */}
                 <FullCoverLoader show={this.busy} />
                 <Dialog actions={this.errorActions} active={this.errorVisible}
                         onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}

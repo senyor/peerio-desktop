@@ -127,6 +127,7 @@ class LoginStore extends OrderedFormStore {
                     {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
 
                     <div className="login-form">
+                        <div className="headline">{t('login')}</div>
                         <ValidatedInput label={t('username')}
                                         name="username"
                                         position="0"
@@ -152,8 +153,12 @@ class LoginStore extends OrderedFormStore {
                     <Button className="login-button" label={t('login')} flat
                             onClick={this.login}
                             disabled={this.loginStore.hasErrors} />
+
+                    <Link to="/signup">{t('signup')}</Link>
+
+                    {/* TODO: open in dialog */}
                     <div className="login-reg-button">
-                        <a href={config.termsUrl}>{t('terms')}</a> | <Link to="/signup">{t('signup')}</Link>
+                        <a href={config.termsUrl}>{t('terms')}</a>
                     </div>
 
                 </div>

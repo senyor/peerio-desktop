@@ -29,12 +29,6 @@
       background-color: $color-light-100 !important; // so important
       color: $color-brand !important; // :( - Paul
     }
-
-    &[disabled] {
-      background-color: $color-brand;
-      border: 1px solid $color-light-38;
-      color: $color-light-38;
-    }
   }
 
   .login-reg-button {

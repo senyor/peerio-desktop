@@ -63,7 +63,7 @@ class FileLine extends React.Component {
                 <td className="loading">
                     {(file.downloading || file.uploading)
                         ? <ProgressBar type="linear" mode="determinate" value={file.progress}
-                                       buffer={file.progressBuffer} max={file.progressMax} />
+                                        max={file.progressMax} />
                         : null }
                 </td>
             </tr>

@@ -45,10 +45,11 @@ function processMessage(msg) {
 class Message extends React.Component {
     render() {
         const m = this.props.message;
+        const invalidSign = m.isSignValid === false;
         return (
             <div>
-                <div className={css('message-content-wrapper', { 'invalid-sign': !m.isSignValid })}>
-                    {m.isSignValid ? null : <FontIcon value="warning" className="warning-icon" />}
+                <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}>
+                    {invalidSign ? <FontIcon value="warning" className="warning-icon" /> : null}
                     <Avatar contact={m.sender} />
                     <div className="message-content">
                         <div className="meta-data">
@@ -60,11 +61,12 @@ class Message extends React.Component {
                     </div>
                     {m.sending ? <div className="sending-overlay" /> : null}
                 </div>
-                {m.isSignValid ? null :
-                    <div className="invalid-sign-warning">
+                {invalidSign
+                    ? <div className="invalid-sign-warning">
                         {t('invalidSignWarning')}
                         <Button href={config.supportUrl} label={t('readMore')} flat primary />
                     </div>
+                    : null
                 }
             </div>
         );

@@ -30,7 +30,7 @@ class InlineFiles extends React.Component {
 
                             {file.downloading
                                 ? <ProgressBar type="linear" mode="determinate" value={file.progress}
-                                       buffer={file.progressBuffer} max={file.progressMax} />
+                                               max={file.progressMax} />
                                 : null
                             }
                         </div>);

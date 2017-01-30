@@ -183,7 +183,6 @@ class ComposeInput extends React.Component {
     };
 
     showFilePicker = () => {
-        console.log('showing file picker')
         fileStore.clearSelection();
         this.filePickerActive = true;
     };

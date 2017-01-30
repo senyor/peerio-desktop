@@ -26,7 +26,7 @@ class Mail extends React.Component {
     };
 
     handleAttach = files => {
-        mailStore.selectedGhost.attachFiles(files)
+        mailStore.selectedGhost.attachFiles(files);
     };
 
     renderMiddle() {

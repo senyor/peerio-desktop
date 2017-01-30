@@ -18,6 +18,10 @@
     width: 275px;
   }
 
+  .headline + .rt-input-input {
+    margin-top: $margin-default;
+  }
+
   .login-button {
     @extend %flex-align-center;
     border-radius: 18px;
@@ -57,9 +61,9 @@
     cursor: pointer;
     flex-shrink: 0;
     font-size: 20px;
-    height: 96px;
     justify-content: center;
     min-width: 375px;
+    padding: 24px;
     // TODO: make transition vars
     transition: 150ms;
 

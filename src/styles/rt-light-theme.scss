@@ -5,8 +5,8 @@
 
     input {
       background-color: $input-light-inactive;
-      box-shadow: $shadow-2;
       border-width: 0;
+      box-shadow: $shadow-2;
 
       &:hover {
         background: $color-light-100;
@@ -46,9 +46,9 @@
 
     li {
       color: $text-light-hint;
-      padding: 0 $padding-small;
       height: 48px;
       line-height: 48px;
+      padding: 0 $padding-small;
 
       &:hover {
         background-color: $background-light-dropdown;

@@ -13,6 +13,7 @@ const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const T = require('~/ui/shared-components/T');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const Snackbar = require('~/ui/shared-components/Snackbar');
+const css = require('classnames');
 
 const { validators } = validation; // use common validation from core
 
@@ -125,16 +126,18 @@ class LoginStore extends OrderedFormStore {
                     <img role="presentation" className="logo" src="static/img/logo-white.png" />
 
                     {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
-
                     <div className="login-form">
-                        <div className="headline">{t('login')}</div>
+                        <div className={css('headline', { hide: this.loginStore.lastAuthenticatedUser })}>
+                            {t('login')}
+                        </div>
                         <ValidatedInput label={t('username')}
                                         name="username"
                                         position="0"
                                         lowercase="true"
                                         store={this.loginStore}
                                         validator={validators.usernameLogin}
-                                        onKeyPress={this.handleKeyPress} />
+                                        onKeyPress={this.handleKeyPress}
+                                       className={css({ hide: this.loginStore.lastAuthenticatedUser })} />
                         <div className="password">
                             <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
                                             label={t('passcodeOrPassphrase')}
@@ -146,34 +149,16 @@ class LoginStore extends OrderedFormStore {
                             <IconButton icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
                                         onClick={this.togglePasswordVisibility} />
                         </div>
-                        <Dropdown value={languageStore.language}
+                        {/* <Dropdown value={languageStore.language}
                                   source={languageStore.translationLangsDataSource}
-                                  onChange={languageStore.changeLanguage} />
+                                  onChange={languageStore.changeLanguage} /> */}
                     </div>
                     <Button className="login-button" label={t('login')} flat
                             onClick={this.login}
                             disabled={this.loginStore.hasErrors} />
 
-                    <Link to="/signup">{t('signup')}</Link>
-
-                    {/* TODO: open in dialog */}
-                    <div className="login-reg-button">
-                        <a href={config.termsUrl}>{t('terms')}</a>
-                    </div>
-
+                    <div>New user? &nbsp; <Link to="/signup">{t('signup')}</Link></div>
                 </div>
-                {/* <div className="flex-col welcome">
-                    <h4 className="welcome-title">Simple and secure.</h4>
-                    <p>
-                       Send messages, share files, and store documents online.
-                    </p>
-                    <p>
-                        Encrypt everything before it leaves your device.
-                    </p>
-                    <p>
-                       You decide who accesses your data.
-                    </p>
-                </div> */}
                 <Snackbar location="login" />
             </div>
         );

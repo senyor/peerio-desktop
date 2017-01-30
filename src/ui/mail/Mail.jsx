@@ -25,17 +25,22 @@ class Mail extends React.Component {
         mailStore.selectedGhost.send(data);
     };
 
+    handleAttach = files => {
+        mailStore.selectedGhost.attachFiles(files)
+    };
+
     renderMiddle() {
         if (mailStore.selectedGhost.sent) {
             return (
                 <MailSent ghost={mailStore.selectedGhost} />
-
             );
         }
         return (
-
-            <MailCompose ghost={mailStore.selectedGhost} onSend={this.handleSend} />
-
+            <MailCompose
+                ghost={mailStore.selectedGhost}
+                onSend={this.handleSend}
+                onFileShare={this.handleAttach}
+            />
         );
     }
 

@@ -45,10 +45,13 @@ class MailCompose extends ComposeInput {
                             </div>
                         </div>
                     </div>
-                    <MailFormatActions />
+                    <MailFormatActions
+                        fileCounter={this.props.ghost.fileCounter}
+                        onFileAttach={this.showFilePicker} />
                     <div className="mail-content" ref={this.activateQuill} onFocus={this.hideEmojiPicker} />
                 </div>
                 <MailSidebar ghost={this.props.ghost} />
+                {this.renderFilePicker()}
             </div>
         );
     }

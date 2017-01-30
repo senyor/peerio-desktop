@@ -23,8 +23,10 @@ class MessageInput extends ComposeInput {
                     <MenuItem value="share" caption="Share from files" onClick={this.showFilePicker} />
                     <MenuItem value="upload" caption="Upload to DM" disabled />
                 </IconMenu>
-                <div id="messageEditor" ref={this.activateQuill} className="full-width"
-                    onFocus={this.hideEmojiPicker} />
+                <div id="messageEditor" 
+                     ref={this.activateQuill}
+                     className="full-width"
+                     onFocus={this.hideEmojiPicker} />
                 <IconButton icon="mood" onClick={this.toggleEmojiPicker} />
                 {this.text === ''
                     ? <IconButton icon="thumb_up" onClick={this.props.onAck} className="color-brand" />

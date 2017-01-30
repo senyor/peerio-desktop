@@ -1,5 +1,6 @@
 const React = require('react');
 const MailSidebar = require('./MailSidebar');
+const InlineFiles = require('../../messages/components/InlineFiles');
 
 
 class MailSent extends React.Component {
@@ -13,6 +14,9 @@ class MailSent extends React.Component {
                         <div className="subject">{this.props.ghost.subject}</div>
                         <div className="date">{this.props.ghost.date.toLocaleString()}</div>
                         <div className="to">{this.props.ghost.recipients.join(',')}</div>
+                    </div>
+                    <div>
+                        {this.props.ghost.files ? <InlineFiles files={this.props.ghost.files} /> : null}
                     </div>
                     <div className="mail-content">
                         {this.props.ghost.body}

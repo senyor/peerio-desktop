@@ -16,7 +16,6 @@ class InlineFiles extends React.Component {
     }
     render() {
         if (!this.props.files.map) return null;
-
         return (
             <div className="inline-files">
                 {

@@ -206,7 +206,7 @@
         max-width: 18px;
         width: 18px;
 
-        .rt-checkbox-check {
+        &:not(.rt-checkbox-disabled) .rt-checkbox-check {
           border-color: $icon-dark-active;
 
           &.rt-checkbox-checked {

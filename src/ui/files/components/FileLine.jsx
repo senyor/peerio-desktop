@@ -55,7 +55,7 @@ class FileLine extends React.Component {
                 {
                     this.showActions
                     ? <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
-                                   shareDisabled newFolderDisabled deleteDisabled={false}
+                                   shareDisabled={!file.readyForDownload} newFolderDisabled deleteDisabled={false}
                                    onDelete={this.deleteFile} onDownload={this.download} />
                     : null
                 }

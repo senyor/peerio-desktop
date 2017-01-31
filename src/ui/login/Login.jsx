@@ -151,7 +151,7 @@ class LoginStore extends OrderedFormStore {
                             <TooltipIcon icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
                                          tooltip={this.loginStore.passwordVisible ? 'hide password' : 'show password'}
                                          tooltipPosition="right"
-                                         tooltipDelay="500"
+                                         tooltipDelay={500}
                                          onClick={this.togglePasswordVisibility} />
                         </div>
                         {/* <Dropdown value={languageStore.language}

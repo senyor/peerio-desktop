@@ -45,7 +45,7 @@ function processMessage(msg) {
 class Message extends React.Component {
     render() {
         const m = this.props.message;
-        const invalidSign = m.isSignValid === false;
+        const invalidSign = m.signatureError === true;
         return (
             <div>
                 <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}>

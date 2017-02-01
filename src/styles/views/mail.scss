@@ -114,6 +114,19 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
         }
       }
     }
+
+    .inline-files {
+      @extend %flex-align-center;
+      @extend %flex-row;
+      @extend %flex-shrink-0;
+      height: 48px;
+      overflow: hidden;
+      overflow-x: auto;
+
+      .shared-file {
+        margin-right: $margin-small;
+      }
+    }
   }
 
   &-actions {
@@ -161,8 +174,14 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
   }
 
   &-content {
+    border-bottom: 1px solid $divider-dark;
     color: $text-dark-primary;
     overflow-y: auto;
+
+    &.sent-content {
+      @extend %flex-col;
+      @extend %flex-grow-1;
+    }
 
     &.sent-content,
     .ql-editor {

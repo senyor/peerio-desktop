@@ -18,7 +18,7 @@ class MailSent extends React.Component {
                     <div className="mail-content sent-content">
                         {this.props.ghost.body}
                     </div>
-                    {this.props.ghost.files ? <InlineFiles files={this.props.ghost.files} /> : null}
+                    {this.props.ghost.files !== 0 ? <InlineFiles files={this.props.ghost.files} /> : null}
 
                 </div>
                 <MailSidebar ghost={this.props.ghost} />

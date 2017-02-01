@@ -1,7 +1,7 @@
 .inline-files {
   color: $text-dark-secondary;
   font-weight: $font-weight-bold;
-  padding-left: $padding-default;
+  padding-left: $padding-small;
 
   .shared-file {
     @extend %flex-col;

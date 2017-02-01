@@ -30,7 +30,7 @@ function downloadFile(file) {
                finalPath = path;
                return file.download(path);
            })
-           .then(() => electron.app.dock.downloadFinished(finalPath));
+           .then(() => electron.app.dock && electron.app.dock.downloadFinished(finalPath));
 }
 
 module.exports = { downloadFile };

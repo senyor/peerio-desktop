@@ -108,6 +108,7 @@ $radius-sign-warning: 18px;
       @extend %flex-col;
       @extend %flex-shrink-0;
       margin-bottom: 20px;
+      position: relative;
 
       &.invalid-sign {
         background-color: rgba($color-error, .06);
@@ -124,20 +125,15 @@ $radius-sign-warning: 18px;
         }
       }
 
-      + .message-content-wrapper {
-        margin-top: $margin-large;
-        position: relative;
-
-        .sending-overlay {
-          background-color: rgba(255, 255, 255, .7);
-          bottom: 0;
-          height: 100%;
-          left: 0;
-          position: absolute;
-          right: 0;
-          top: 0;
-          width: 100%;
-        }
+      .sending-overlay {
+        background-color: rgba(255, 255, 255, .7);
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
       }
     }
 

@@ -1,6 +1,7 @@
 const React = require('react');
 const MailFormatActions = require('./MailFormatActions');
 const ComposeInput = require('../../shared-components/ComposeInput');
+const InlineFiles = require('../../messages/components/InlineFiles');
 const { Button, Input } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const MailSidebar = require('./MailSidebar');
@@ -49,6 +50,7 @@ class MailCompose extends ComposeInput {
                         fileCounter={this.props.ghost.fileCounter}
                         onFileAttach={this.showFilePicker} />
                     <div className="mail-content" ref={this.activateQuill} onFocus={this.hideEmojiPicker} />
+                    <InlineFiles files={this.props.ghost.files} />
                 </div>
                 <MailSidebar ghost={this.props.ghost} />
                 {this.renderFilePicker()}

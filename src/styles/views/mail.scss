@@ -1,6 +1,6 @@
 $width-mail-sidebar: 270px;
 $width-mail-list: 224px; // TODO: create a list variable because it's used everywhere.
-$mail-compose-width: 80px + $width-mail-sidebar + $width-mail-sidebar;
+$width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
 
 .mail {
   @extend %flex-row;
@@ -89,7 +89,7 @@ $mail-compose-width: 80px + $width-mail-sidebar + $width-mail-sidebar;
 
         .to,
         .date {
-          font-size: 12px;
+          @extend %hint-error-label;
           padding: $padding-small 0;
         }
       }
@@ -122,6 +122,25 @@ $mail-compose-width: 80px + $width-mail-sidebar + $width-mail-sidebar;
     @extend %flex-shrink-0;
     border-bottom: 1px solid $divider-dark;
     height: 48px;
+
+    .counter {
+      position: relative;
+
+      .count {
+        background: $color-brand;
+        border: 2px white solid;
+        border-radius: 20px;
+        color: $text-light-primary;
+        font-size: 12px;
+        height: 24px;
+        line-height: 20px;
+        position: absolute;
+        right: 6px;
+        text-align: center;
+        top: -4px;
+        width: 24px;
+      }
+    }
   }
 
   &-format {
@@ -144,7 +163,11 @@ $mail-compose-width: 80px + $width-mail-sidebar + $width-mail-sidebar;
   &-content {
     color: $text-dark-primary;
     overflow-y: auto;
-    padding: 32px 56px 0;
+
+    &.sent-content,
+    .ql-editor {
+      padding: 32px 56px 0;
+    }
   }
 
   &-sidebar {

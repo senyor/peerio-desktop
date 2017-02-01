@@ -6,7 +6,7 @@ const InlineFiles = require('../../messages/components/InlineFiles');
 class MailSent extends React.Component {
 
     render() {
-        console.log('sent ghpst', this.props.ghost);
+        console.log('sent ghost', this.props.ghost);
         return (
             <div className="flex-row flex-grow-1">
                 <div className="compose-view">
@@ -15,12 +15,11 @@ class MailSent extends React.Component {
                         <div className="date">{this.props.ghost.date.toLocaleString()}</div>
                         <div className="to">{this.props.ghost.recipients.join(',')}</div>
                     </div>
-                    <div>
-                        {this.props.ghost.files ? <InlineFiles files={this.props.ghost.files} /> : null}
-                    </div>
-                    <div className="mail-content">
+                    <div className="mail-content sent-content">
                         {this.props.ghost.body}
                     </div>
+                    {this.props.ghost.files ? <InlineFiles files={this.props.ghost.files} /> : null}
+
                 </div>
                 <MailSidebar ghost={this.props.ghost} />
             </div>

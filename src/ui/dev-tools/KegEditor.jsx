@@ -37,7 +37,7 @@ class KegEditor extends React.Component {
 
     @action loadKegIds(dbId) {
         if (dbId === 'SELF') {
-            this.selectedDb = User.current.kegdb;
+            this.selectedDb = User.current.kegDb;
         } else {
             this.selectedDb = new ChatKegDb(dbId);
             this.selectedDb.loadMeta().then(() => this.forceUpdate());

@@ -3,6 +3,7 @@ const { fileStore } = require('~/icebear');
 const { autorun } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dialog, ProgressBar, List, ListItem } = require('~/react-toolbox');
+const Search = require('~/ui/shared-components/Search');
 
 @observer
 class FilePicker extends React.Component {
@@ -36,6 +37,14 @@ class FilePicker extends React.Component {
         this.mounted = false;
     }
 
+    handleSearch = val => {
+        if (val === '') {
+            fileStore.clearFilter();
+            return;
+        }
+        fileStore.filterByName(val);
+    };
+
     render() {
         return (
             <Dialog title="Share Files"
@@ -43,6 +52,8 @@ class FilePicker extends React.Component {
                     active={this.props.active}
                     onEscKeyDown={this.handleClose}
                     onOverlayClick={this.handleClose}>
+                {fileStore.loading ? null
+                    : <Search onChange={this.handleSearch} query={fileStore.currentFilter} />}
                 {fileStore.loading ? this.renderLoader() : this.renderList()}
             </Dialog>
         );
@@ -59,7 +70,7 @@ class FilePicker extends React.Component {
             <List selectable ripple className="file-picker">
                 {
                     fileStore.files.map(f =>
-                            f.readyForDownload
+                            f.readyForDownload && f.show
                             ? <ListItem key={f.fileId} caption={f.name}
                                         leftIcon={f.selected ? 'check_box' : 'check_box_outline_blank'}
                                         onClick={() => { f.selected = !f.selected; }} />

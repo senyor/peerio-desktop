@@ -57,7 +57,7 @@ class Message extends React.Component {
                                 <div className="timestamp">{time.format(m.timestamp)}</div>
                             </div>
                             <p dangerouslySetInnerHTML={processMessage(m)} />
-                            {m.files ? <InlineFiles files={m.files} /> : null}
+                            {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
                         </div>
                         {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null }
                     </div>

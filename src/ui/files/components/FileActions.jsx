@@ -2,8 +2,6 @@ const React = require('react');
 const { IconButton, ProgressBar, Tooltip } = require('~/react-toolbox');
 const css = require('classnames');
 
-const noop = (e) => { e.stopPropagation(); };
-
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 function FileActions(props) {

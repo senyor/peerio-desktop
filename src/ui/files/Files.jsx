@@ -1,8 +1,7 @@
 const React = require('react');
 const { Checkbox } = require('~/react-toolbox');
-const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { fileStore, chatStore } = require('~/icebear');
+const { fileStore } = require('~/icebear');
 const electron = require('electron').remote;
 const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
@@ -10,8 +9,6 @@ const FileLine = require('./components/FileLine');
 const ZeroScreen = require('./components/ZeroScreen');
 
 @observer class Files extends React.Component {
-    @observable allSelected = false;
-    @observable showUserPicker = false;
     constructor() {
         super();
         this.handleUpload = this.handleUpload.bind(this);
@@ -19,9 +16,6 @@ const ZeroScreen = require('./components/ZeroScreen');
 
     componentWillMount() {
         fileStore.loadAllFiles();
-    }
-
-    componentWillUnmount() {
     }
 
     handleUpload() {

@@ -1,6 +1,5 @@
 const React = require('react');
-const { Checkbox } = require('~/react-toolbox');
-const { observable, when } = require('mobx');
+const { when } = require('mobx');
 const { observer } = require('mobx-react');
 const { fileStore, chatStore } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
@@ -9,11 +8,13 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
 class ShareFiles extends React.Component {
 
     handleFileShareAccept = (users) => {
-        // todo replace this with new sharing api when server implements it
-        const chat = chatStore.startChat(users);
         const files = fileStore.getSelectedFiles();
         fileStore.clearSelection();
-        when(() => !chat.loadingMeta, () => chat.sendMessage('', files));
+        users.forEach(username => {
+            files.forEach(file => {
+                file.share(username);
+            });
+        });
         this.closeUserPicker();
     };
 

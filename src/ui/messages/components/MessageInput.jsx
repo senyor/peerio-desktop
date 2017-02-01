@@ -1,7 +1,6 @@
 /* eslint-disable react/no-multi-comp, no-cond-assign */
 const React = require('react');
 const { IconMenu, MenuItem, IconButton } = require('~/react-toolbox');
-const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const ComposeInput = require('../../shared-components/ComposeInput');
 const Snackbar = require('~/ui/shared-components/Snackbar');

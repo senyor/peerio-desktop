@@ -26,6 +26,12 @@ class FileLine extends React.Component {
     download = () => {
         downloadFile(this.props.file);
     };
+
+    share = () => {
+        fileStore.clearSelection();
+        this.props.file.selected = true;
+        window.router.push('/app/sharefiles');
+    };
     onShowActions = () => {
         this.showActions = true;
     };
@@ -45,7 +51,8 @@ class FileLine extends React.Component {
                     {(file.downloading || file.uploading)
                         ? <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
                                        onCancel={this.cancelUploadOrDownload} />
-                        : <Checkbox disabled={!file.readyForDownload} checked={file.selected} onChange={this.toggleChecked} />
+                        : <Checkbox disabled={!file.readyForDownload} checked={file.selected}
+                                    onChange={this.toggleChecked} />
                     }</td>
                 <td>{file.name}</td>
                 <td>{file.owner}</td>
@@ -56,7 +63,7 @@ class FileLine extends React.Component {
                     this.showActions
                     ? <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
                                    shareDisabled={!file.readyForDownload} newFolderDisabled deleteDisabled={false}
-                                   onDelete={this.deleteFile} onDownload={this.download} />
+                                   onDelete={this.deleteFile} onDownload={this.download} onShare={this.share} />
                     : null
                 }
 

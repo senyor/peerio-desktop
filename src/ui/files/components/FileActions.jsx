@@ -26,7 +26,7 @@ function FileActions(props) {
                 tooltipDelay={delay}
                 tooltipPosition="top"
                 icon="reply"
-                onClick={noop}
+                onClick={props.onShare}
                 className={css('reverse-icon', { disabled: props.shareDisabled })} />
             {/* <TooltipIcon*/}
             {/* tooltip="Add to folder"*/}

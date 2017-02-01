@@ -1,3 +1,7 @@
+$width-mail-sidebar: 270px;
+$width-mail-list: 224px; // TODO: create a list variable because it's used everywhere.
+$mail-compose-width: 80px + $width-mail-sidebar + $width-mail-sidebar;
+
 .mail {
   @extend %flex-row;
   color: $text-dark-secondary;
@@ -22,7 +26,7 @@
     background-color: $background-message-list;
     border-right: 1px solid $divider-dark;
     height: 100%;
-    width: 224px;
+    width: $width-mail-list;
   }
 
   &-sorting {
@@ -64,7 +68,7 @@
     @extend %flex-shrink-1;
     @extend %flex-col;
     height: 100%;
-    width: auto;
+    width: calc(100vw - 574px);
 
     .compose-meta {
       padding-top: $padding-small;
@@ -78,6 +82,9 @@
         .subject {
           font-size: 16px;
           font-weight: $font-weight-bold;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .to,
@@ -140,20 +147,19 @@
     padding: 32px 56px 0;
   }
 
-  &-side-bar {
+  &-sidebar {
     @extend %flex-grow-0;
     @extend %flex-shrink-0;
     @extend %flex-col;
     border-left: 1px solid $divider-dark;
     height: 100%;
     padding: $padding-large $padding-default $padding-default;
-    width: 270px;
+    width: $width-width-mail-sidebar;
 
     .passphrase {
       color: $color-brand;
       cursor: pointer;
       font-weight: $font-weight-bold;
-      white-space: nowrap;
 
       .material-icons {
         color: $color-brand;

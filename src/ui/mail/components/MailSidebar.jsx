@@ -12,7 +12,7 @@ const { t } = require('peerio-translator');
 class MailSidebar extends React.Component {
     render() {
         return (
-            <div className="mail-side-bar">
+            <div className="mail-sidebar">
                 {/* <GhostInfo /> */}
                 {/* <MailInfo /> */}
                 <p> This passphrase unlocks your message. Only share with intended
@@ -30,6 +30,7 @@ class MailSidebar extends React.Component {
                     : <div className="sent-info">
                         <div className="read-recipt">
                             <div className="dark-label">Viewed</div>
+                            {/* TODO: restyle or move to link icon. */}
                             <div>{this.props.ghost.url}</div>
                         </div>
                         <div className="expire-info flex-col">

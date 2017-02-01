@@ -177,36 +177,6 @@ $radius-sign-warning: 18px;
     }
   }
 
-  .inline-files {
-    color: rgba($color-brand, .7);
-    font-weight: $font-weight-bold;
-    padding-left: $padding-default;
-
-    .file {
-      @extend %flex-col;
-      @extend %flex-justify-center;
-      cursor: pointer;
-      height: 48px;
-
-      .material-icons {
-        margin-right: $margin-small;
-      }
-
-      &:hover {
-        color: $color-brand;
-
-        .material-icons {
-          color: $color-brand;
-        }
-      }
-    }
-
-    .invalid-file {
-      color: $color-error;
-      cursor: auto;
-    }
-  }
-
   .message-input {
     align-items: center;
     border-top: 1px solid $divider-dark;

@@ -22,9 +22,10 @@ class InlineFiles extends React.Component {
                     this.props.files.map(f => {
                         const file = fileStore.getById(f);
                         if (!file) return <div className="invalid-file" key={f}>invalid file record</div>;
-                        return (<div className="file" key={f} data-id={f} onClick={this.download}>
+                        return (<div className="shared-file" key={f} data-id={f} onClick={this.download}>
                             <div className="flex-row flex-align-center">
-                                <FontIcon value="file_download" /> {file ? file.name : f}
+                                <div className="file-name"> {file ? file.name : f}</div>
+                                <FontIcon value="file_download" />
                             </div>
 
                             {file.downloading

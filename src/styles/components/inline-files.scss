@@ -1,0 +1,51 @@
+.inline-files {
+  color: $text-dark-secondary;
+  font-weight: $font-weight-bold;
+  padding-left: $padding-default;
+
+  .shared-file {
+    @extend %flex-col;
+    @extend %flex-justify-center;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 48px;
+    max-width: 300px;
+    min-width: 200px;
+    padding-left: 8px;
+
+    .material-icons {
+      padding: 0 12px;
+    }
+
+    &:hover {
+      background: $color-dark-03;
+      border-left: 4px solid $color-brand;
+      color: $color-brand;
+      padding-left: 4px;
+
+      .material-icons {
+        color: $color-brand;
+      }
+    }
+
+    .file-name {
+      margin-right: auto;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:hover {
+      color: $color-brand;
+
+      .material-icons {
+        color: $color-brand;
+      }
+    }
+  }
+
+  .invalid-file {
+    color: $color-error;
+    cursor: auto;
+  }
+}

@@ -11,9 +11,6 @@
   transform: rotateY(180deg);
 }
 
-.uppercase {
-  text-transform: uppercase;
-}
 
 // HIDE STUFF
 
@@ -27,8 +24,8 @@
   display: none;
 }
 
-.full-width{
-  width:100%;
+.full-width {
+  width: 100%;
 }
 
 // Don't select these items.
@@ -37,10 +34,4 @@ img,
 .rt-avatar-avatar {
   -webkit-user-select: none;
   -webkit-user-drag: none;
-}
-
-.passphrase-display{
-  text-align: center;
-  font-weight: 500;
-  font-size: 2em;
 }

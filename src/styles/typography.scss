@@ -28,13 +28,22 @@
   text-align: right !important;
 }
 
-.bold{
-  font-weight: 600;
+.bold {
+  font-weight: $font-weight-bold;
 }
-.monospace{
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.monospace {
   font-family: monospace;
 }
 
 .text-center {
   text-align: center;
+}
+
+.passphrase {
+  font-weight: $font-weight-bold;
 }

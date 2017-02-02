@@ -47,6 +47,10 @@
   }
 }
 
+.rt-ripple-ripple {
+  background-color: $color-brand;
+}
+
 .rt-button-rippleWrapper {
   border-radius: 2px;
 }
@@ -153,6 +157,69 @@
 .rt-overlay-active > .rt-overlay-backdrop {
   opacity: .5;
 }
+// CHIPS
+.chip-label {
+  @extend %flex-shrink-0;
+  background: $background-root;
+  border: 1px solid $color-brand;
+  color: $color-brand;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  max-width: 160px;
+  min-width: 88px;
+  transition: 500ms 500ms $transition-ease-out;
+
+  span:last-of-type {
+    @extend %flex-align-center;
+    @extend %flex-justify-center;
+    display: inline-flex;
+    opacity: 1;
+    transition: 250ms;
+  }
+
+  .rt-chip-delete {
+    border: 2px solid rgba($color-brand, .35);
+    border-radius: 24px;
+
+    &:hover {
+      background: $color-brand;
+
+      .rt-chip-deleteIcon {
+        background: $color-brand;
+      }
+
+      .rt-chip-deleteX {
+        stroke: #fff;
+      }
+    }
+  }
+
+  .rt-chip-deleteIcon {
+    @extend %flex-shrink-0;
+    background: #fff;
+    height: 20px;
+    width: 20px;
+
+    .rt-chip-deleteX {
+      stroke: rgba($color-brand, .35);
+      stroke-width: 4px;
+    }
+  }
+
+  &.not-found {
+    background: $text-dark-error;
+    color: transparent;
+    margin: 0;
+    min-width: 0;
+    opacity: 0;
+    padding: 0;
+    width: 0;
+
+    span:last-of-type {
+      opacity: 0;
+    }
+  }
+}
 
 // SWITCH
 .rt-switch-field {
@@ -165,10 +232,11 @@
     padding: 0;
   }
 
-  .rt-switch-off, .rt-switch-on {
+  .rt-switch-off,
+  .rt-switch-on {
     background: $color-dark-12;
     height: 6px;
-    margin-top: 8px;
+    margin-top: $margin-small;
     order: 2;
     width: 48px;
   }
@@ -180,7 +248,7 @@
   }
 
   .rt-switch-off .rt-switch-thumb {
-    background: #9B9B9B;
+    background: #9b9b9b;
   }
 
   .rt-switch-on .rt-switch-thumb {
@@ -193,20 +261,23 @@ ul {
   margin: 0;
 }
 
-.rt-progress_bar-value{
+.rt-progress_bar-value {
   animation-duration: 1.5s;
   animation-iteration-count: infinite;
   animation-name: pulse-progress-bar;
   animation-timing-function: ease-in-out;
 }
+
 @keyframes pulse-progress-bar {
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: .4;
   }
-  100%{
+
+  100% {
     opacity: 1;
   }
 }

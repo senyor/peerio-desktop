@@ -1,10 +1,11 @@
 const React = require('react');
 const MailFormatActions = require('./MailFormatActions');
 const ComposeInput = require('../../shared-components/ComposeInput');
-const InlineFiles = require('../../messages/components/InlineFiles');
-const { Button, Input } = require('~/react-toolbox');
+const { Button, Input, Chip, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const MailSidebar = require('./MailSidebar');
+const { fileStore } = require('~/icebear');
+const css = require('classnames');
 
 class MailCompose extends ComposeInput {
     constructor() {
@@ -49,8 +50,20 @@ class MailCompose extends ComposeInput {
                     <MailFormatActions
                         fileCounter={this.props.ghost.fileCounter}
                         onFileAttach={this.showFilePicker} />
-                    <div className="mail-content" ref={this.activateQuill} onFocus={this.hideEmojiPicker} />
-                    <InlineFiles files={this.props.ghost.files} />
+                    <div className="mail-content" >
+                        <div className="chip-wrapper">
+                            {this.props.ghost.files.map(f => {
+                                const file = fileStore.getById(f);
+                                return (<Chip key={file.name}
+                                              className={css('chip-label', { 'not-found': file.notFound })}
+                                              onDeleteClick={() => this.props.ghost.files.remove(f)} deletable>
+                                    { file.loading ? <ProgressBar type="linear" mode="indeterminate" /> : file.name }
+                                </Chip>);
+                            })}
+                        </div>
+                        <div ref={this.activateQuill} onFocus={this.hideEmojiPicker} />
+                    </div>
+
                 </div>
                 <MailSidebar ghost={this.props.ghost} />
                 {this.renderFilePicker()}

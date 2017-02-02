@@ -163,6 +163,16 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
     border-left: 1px solid $divider-dark;
     border-right: 1px solid $divider-dark;
     height: 48px;
+    padding: 0 10px;
+
+    .rt-button-button {
+      margin-right: $margin-small;
+    }
+
+    .rt-button-neutral:not([disabled]).rt-button-flat:hover,
+    .rt-button-neutral:not([disabled]).rt-button-toggle:hover {
+      background-color: rgba($color-brand, .38);
+    }
 
     .material-icons {
       color: $icon-dark-inactive;
@@ -174,9 +184,12 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
   }
 
   &-content {
-    border-bottom: 1px solid $divider-dark;
     color: $text-dark-primary;
     overflow-y: auto;
+
+    .chip-wrapper {
+      margin: $margin-tiny 0 0 $margin-default;
+    }
 
     &.sent-content {
       @extend %flex-col;

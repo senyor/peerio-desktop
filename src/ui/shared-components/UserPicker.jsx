@@ -102,7 +102,7 @@ class UserPicker extends React.Component {
                             <FontIcon value="search" />
                             <div className="chip-wrapper">
                                 {this.selected.map(c =>
-                                    <Chip key={c.username} className={css('username', { 'not-found': c.notFound })}
+                                    <Chip key={c.username} className={css('chip-label', { 'not-found': c.notFound })}
                                               onDeleteClick={() => this.selected.remove(c)} deletable>
                                         { c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username }
                                     </Chip>

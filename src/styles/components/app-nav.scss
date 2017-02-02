@@ -61,16 +61,18 @@
     position: relative;
 
     .look-at-me {
+      @extend %hint-error-label;
       background: $color-error;
       border: 2px solid $color-brand;
-      border-radius: 8px;
-      content: '';
+      border-radius: 12px;
       display: block;
-      height: 16px;
+      height: 24px;
+      line-height: 20px;
       position: absolute;
-      right: 4px;
-      top: 8px;
-      width: 16px;
+      right: 2px;
+      text-align: center;
+      top: 2px;
+      width: 24px;
     }
 
     .rt-button-button {

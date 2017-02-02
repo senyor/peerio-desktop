@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconButton, Tooltip, IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
-const { User, contactStore, chatStore } = require('~/icebear');
+const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
 const app = require('electron').remote.app;
@@ -135,8 +135,10 @@ class AppNav extends React.Component {
                             tooltipPosition="right"
                             icon="forum"
                             onClick={this.toMessages} />
-                        {/* TODO div is probably unnecessary. move to wrapping div? */}
-                        <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
+
+                        <div className={chatStore.unreadMessages === 0 ? 'look-at-me' : 'banish'}>
+                            {chatStore.unreadMessages}
+                        </div>
                     </div>
 
                     <div className={css('menu-item', { active: this.inFiles })} >

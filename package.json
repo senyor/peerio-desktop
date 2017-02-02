@@ -5,7 +5,7 @@
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
-    "postupdate": "./scripts/remove-old-tags.sh",
+    "postreceive": "./scripts/remove-old-tags.sh",
     "commitmsg": "validate-commit-msg",
     "postinstall": "install-app-deps",
     "start": "npm-run-all -l -n compile -p code:watch icebear:watch style:watch devstyle:watch electron:run",

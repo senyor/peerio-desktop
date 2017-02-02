@@ -4,7 +4,8 @@
   "version": "1.7.11",
   "scripts": {
     "precommit": "npm run validate",
-    "postmerge": "npm update && ./scripts/remove-old-tags.sh",
+    "postmerge": "npm update",
+    "postupdate": "./scripts/remove-old-tags.sh",
     "commitmsg": "validate-commit-msg",
     "postinstall": "install-app-deps",
     "start": "npm-run-all -l -n compile -p code:watch icebear:watch style:watch devstyle:watch electron:run",

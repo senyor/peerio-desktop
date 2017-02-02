@@ -11,23 +11,27 @@ class MailItem extends React.Component {
 
     render() {
         return (
-            <div className={css('mail-item', { active: mailStore.selectedId === this.props.ghostId })} onClick={this.handleSelect}>
-                <div className="flex-row" style={{ paddingRight: '8px' }}>
-                    <strong className="item-subject">{this.props.subject}</strong>
-                    {this.props.date.toLocaleString()}
-                </div>
-                <div>{this.props.recipient}</div>
-                <div className="flex-row flex-align-center">
-                    <div style={{ marginRight: 'auto' }}>
-                        {this.props.firstLine}
+            <div className={css('mail-item', { active: mailStore.selectedId === this.props.ghostId })}
+                 onClick={this.handleSelect}>
+                <div className="flex-col flex-grow-1">
+                    <div className="flex-row">
+                        <div style={{ marginRight: 'auto' }}>{this.props.recipient}</div>
+
+                        {this.props.date}
                     </div>
-                    <IconMenu icon="more_vert">
-                        <MenuItem icon="markunread_mailbox" caption="Mark unread" />
-                        <MenuItem icon="thumb_down" caption="Mark junk" />
-                        <MenuItem icon="block" caption="Block sender" />
-                        <MenuItem icon="delete" caption="Delete" />
-                    </IconMenu>
+                    <strong className="item-subject">{this.props.subject}</strong>
+                    <div className="flex-row flex-align-center">
+                        <div style={{ marginRight: 'auto' }}>
+                            {this.props.firstLine}
+                        </div>
+                    </div>
                 </div>
+                {/* <IconMenu icon="more_vert" className="flex-shrink-0">
+                    <MenuItem icon="markunread_mailbox" caption="Mark unread" />
+                    <MenuItem icon="thumb_down" caption="Mark junk" />
+                    <MenuItem icon="block" caption="Block sender" />
+                    <MenuItem icon="delete" caption="Delete" />
+                </IconMenu> */}
             </div>
         );
     }

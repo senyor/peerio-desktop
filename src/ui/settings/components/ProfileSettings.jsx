@@ -12,6 +12,7 @@ const css = require('classnames');
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
+        this.email = contactStore.getContact(User.current.addresses[0]);
     }
 
     // handleDeleteAvatar = () => {
@@ -35,7 +36,11 @@ const css = require('classnames');
                                value={User.current.lastName} />
                     </div>
                     <div className="input-row">
-                        <Input type="email" label={t('email')} value={User.current.addresses} />
+                        <Input type="email" label={t('email')} value={this.email} />
+                        {this.email.confirmed ? null :
+                            <Button label={t('confirm')}
+                                    style={{ marginTop: '46px' }}
+                                    flat primary /> }
                     </div>
                     <div className="input-row">
                         {/*

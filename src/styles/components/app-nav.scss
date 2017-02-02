@@ -24,6 +24,21 @@
       min-width: 250px !important;
     }
 
+    .avatar-notify::before {
+      background: $color-error;
+      border-radius: 10px;
+      content: "";
+      height: 10px;
+      position: absolute;
+      right: 0;
+      width: 10px;
+      z-index: 1;
+    }
+
+    li.avatar-notify::before {
+      right: 200px;
+    }
+
     .rt-menu-iconMenu {
       position: absolute;
       z-index: 1;

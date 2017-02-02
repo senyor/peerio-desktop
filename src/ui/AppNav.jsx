@@ -22,6 +22,8 @@ class AppNav extends React.Component {
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
+        this.email = contactStore.getContact(User.current.addresses[0]);
+
         autorunAsync(() => {
             app.setBadgeCount(chatStore.unreadMessages);
             if (chatStore.unreadMessages > 0) {
@@ -89,12 +91,14 @@ class AppNav extends React.Component {
         return (
             <div className="app-nav">
                 <div className="avatar-wrapper">
+                    <div className={css({ 'avatar-notify': !this.email.confirmed })} />
                     <IconMenu icon="">
                         <MenuItem value="profile"
                                   icon="person"
                                   caption="Profile"
                                   onClick={this.toProfile}
-                                  style={{ minWidth: '250px' }} />
+                                  style={{ minWidth: '250px' }}
+                                  className={css({ 'avatar-notify': !this.email.confirmed })} />
                         <MenuItem value="security"
                                   icon="security"
                                   caption="Security"

@@ -14,6 +14,10 @@
   @extend %flex-align-start;
 }
 
+.flex-justify-between {
+  @extend %flex-justify-between;
+}
+
 .flex-justify-center {
   @extend %flex-justify-center;
 }

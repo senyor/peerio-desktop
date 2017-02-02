@@ -19,7 +19,7 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
     }
   }
   // MAIL ITEM LIST
-  &-list {
+  &-list-wrapper {
     @extend %flex-grow-0;
     @extend %flex-shrink-0;
     @extend %flex-col;
@@ -29,9 +29,16 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
     width: $width-mail-list;
   }
 
+  &-list {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
   &-sorting {
     @extend %flex-row;
     @extend %flex-align-center;
+    @extend %flex-shrink-0;
+    border-bottom: 1px solid $divider-dark;
     height: 48px;
     margin-top: $margin-small;
     padding-left: $padding-small;
@@ -73,11 +80,23 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
     .compose-meta {
       padding-top: $padding-small;
 
+      .attached-files {
+        @extend %flex-shrink-0;
+        font-weight: $font-weight-semibold;
+        margin-left: auto;
+
+        // so that the menu icon appears on the right side of the label.
+        .rt-menu-menuItem .rt-menu-icon {
+          order: 2;
+          text-align: right;
+        }
+      }
+
       &.sent {
         background-color: $color-dark-03;
         border-bottom: 1px solid $divider-dark;
         height: 112px;
-        padding: $padding-default 56px;
+        padding: $padding-small $padding-default $padding-default 56px;
 
         .subject {
           font-size: 16px;

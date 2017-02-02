@@ -51,7 +51,7 @@ class Mail extends React.Component {
         // );
         return (
             <div className="mail">
-                <div className="mail-list">
+                <div className="mail-list-wrapper">
                     <div className="mail-sorting">
                         <div>
                             Sort by <strong>Unread</strong>
@@ -63,16 +63,18 @@ class Mail extends React.Component {
                             <MenuItem caption="Unread" />
                         </IconMenu>
                     </div>
-                    {mailStore.ghosts.map((m) => {
-                        return (<MailItem key={m.ghostId}
-                                          ghostId={m.ghostId}
-                                          subject={m.subject}
-                                          date={m.timestamp}
-                                          recipient={m.recipients}
-                                          firstLine={m.preview}
-                                          active={false} />
-                        );
-                    })}
+                    <div className="mail-list">
+                        {mailStore.ghosts.map((m) => {
+                            return (<MailItem key={m.ghostId}
+                                              ghostId={m.ghostId}
+                                              subject={m.subject}
+                                              date={m.timestamp}
+                                              recipient={m.recipients}
+                                              firstLine={m.preview}
+                                              active={false} />
+                            );
+                        })}
+                    </div>
                 </div>
                 {mailStore.selectedId && !mailStore.loading ? this.renderMiddle() : null }
                 <Button icon="add" floating accent onClick={this.handleCompose} />

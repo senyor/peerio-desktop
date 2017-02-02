@@ -12,7 +12,7 @@ const { t } = require('peerio-translator');
                 <section className="section-divider">
                     <div className="title">{t('notifications')}</div>
                     <p>
-                        {t('descirption_notification')}
+                        {t('description_notification')}
                         {/* Email you when... */}
                     </p>
                     <Switch checked="true" label={t('never')} />
@@ -24,7 +24,7 @@ const { t } = require('peerio-translator');
                 <section>
                     <div className="title">{t('privacy')}</div>
                     <p>
-                        {t('descirption_privacy')}
+                        {t('description_privacy')}
                         {/* Other users can find you... */}
                     </p>
                     <Switch checked="true" label={t('never')} />

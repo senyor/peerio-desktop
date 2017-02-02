@@ -232,9 +232,7 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
     width: $width-mail-sidebar;
 
     .passphrase {
-      color: $color-brand;
       cursor: pointer;
-      font-weight: $font-weight-bold;
 
       .material-icons {
         color: $color-brand;

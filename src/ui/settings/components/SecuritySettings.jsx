@@ -78,7 +78,7 @@ const { t } = require('peerio-translator');
 
                 <Dialog active={this.passphraseVisible} actions={this.passphraseDialogActions}
                         onOverlayClick={this.hidePassphrase} onEscKeyDown={this.hidePassphrase}>
-                    <div className="passphrase-display">{User.current.passphrase}</div>
+                    <div className="passphrase headline text-center">{User.current.passphrase}</div>
                 </Dialog>
             </div>
         );

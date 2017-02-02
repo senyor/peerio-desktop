@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconButton, Tooltip, IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
-const { User, contactStore, chatStore, fileStore } = require('~/icebear');
+const { User, contactStore, chatStore, fileStore, mailStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
 const app = require('electron').remote.app;
@@ -124,8 +124,10 @@ class AppNav extends React.Component {
                             tooltipPosition="right"
                             icon="mail"
                             onClick={this.toMail} />
-                        {/* TODO div is probably unnecessary. move to wrapping div? */}
-                        <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : ''} />
+                        {/* TODO mailStore? */}
+                        <div className={mailStore.unreadMail > 0 ? 'look-at-me' : 'banish'}>
+                            {mailStore.unreadMail}
+                        </div>
                     </div>
 
                     <div className={css('menu-item', { active: this.inMessages })}>
@@ -136,7 +138,7 @@ class AppNav extends React.Component {
                             icon="forum"
                             onClick={this.toMessages} />
 
-                        <div className={chatStore.unreadMessages === 0 ? 'look-at-me' : 'banish'}>
+                        <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : 'banish'}>
                             {chatStore.unreadMessages}
                         </div>
                     </div>
@@ -148,7 +150,9 @@ class AppNav extends React.Component {
                             tooltipPosition="right"
                             icon="folder"
                             onClick={this.toFiles} />
-                        <div className={this.unreadFiles ? '' : ''} />
+                        <div className={fileStore.unreadFile > 0 ? 'look-at-me' : 'banish'}>
+                            {fileStore.unreadFile}
+                        </div>
                     </div>
                 </div>
             </div>

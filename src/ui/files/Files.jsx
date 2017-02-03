@@ -16,6 +16,11 @@ const ZeroScreen = require('./components/ZeroScreen');
 
     componentWillMount() {
         fileStore.loadAllFiles();
+        fileStore.active = true;
+    }
+
+    componentWillUnmount() {
+        fileStore.active = false;
     }
 
     handleUpload() {

@@ -22,15 +22,16 @@ class AppNav extends React.Component {
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
-        this.email = contactStore.getContact(User.current.addresses[0]);
-
-        autorunAsync(() => {
-            app.setBadgeCount(chatStore.unreadMessages);
-            if (chatStore.unreadMessages > 0) {
-                app.dock.bounce();
-            }
-        }, 250);
-
+        this.email = User.current.addresses[0].address; // todo: find primary email
+        if (app.setBadgeCount && app.dock) {
+            autorunAsync(() => {
+                const unreadItems = chatStore.unreadMessages + fileStore.unreadFiles;
+                app.setBadgeCount(unreadItems);
+                if (chatStore.unreadMessages > 0) {
+                    app.dock.bounce();
+                }
+            }, 250);
+        }
         chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
             sounds.received.play();
         });
@@ -41,7 +42,7 @@ class AppNav extends React.Component {
         this.inMail = true;
         this.inMessages = false;
         this.inFiles = false;
-    }
+    };
 
     // todo: terrible idea(inMessages), do this based on router hooks
     toMessages = () => {
@@ -63,24 +64,20 @@ class AppNav extends React.Component {
         this.inMail = false;
         this.inMessages = false;
         this.inFiles = false;
-    }
+    };
 
     toSecurity = () => {
         window.router.push('/app/settings/security');
         this.inMail = false;
         this.inMessages = false;
         this.inFiles = false;
-    }
+    };
 
     toPrefs = () => {
         window.router.push('/app/settings/preferences');
         this.inMail = false;
         this.inMessages = false;
         this.inFiles = false;
-    }
-
-    unreadFiles = () => {
-        return false;
     };
 
     signout = () => {
@@ -150,8 +147,8 @@ class AppNav extends React.Component {
                             tooltipPosition="right"
                             icon="folder"
                             onClick={this.toFiles} />
-                        <div className={fileStore.unreadFile > 0 ? 'look-at-me' : 'banish'}>
-                            {fileStore.unreadFile}
+                        <div className={fileStore.unreadFiles > 0 ? 'look-at-me' : 'banish'}>
+                            {fileStore.unreadFiles}
                         </div>
                     </div>
                 </div>

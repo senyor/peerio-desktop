@@ -23,6 +23,7 @@ class AppNav extends React.Component {
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
         this.email = User.current.primaryAddress; // todo: this might not be email for old users
+        this.primaryAddressConfirmed = User.current.primaryAddressConfirmed;
         if (app.setBadgeCount && app.dock) {
             autorunAsync(() => {
                 const unreadItems = chatStore.unreadMessages + fileStore.unreadFiles;
@@ -88,14 +89,14 @@ class AppNav extends React.Component {
         return (
             <div className="app-nav">
                 <div className="avatar-wrapper">
-                    <div className={css({ 'avatar-notify': !this.email.confirmed })} />
+                    <div className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
                     <IconMenu icon="">
                         <MenuItem value="profile"
                                   icon="person"
                                   caption="Profile"
                                   onClick={this.toProfile}
                                   style={{ minWidth: '250px' }}
-                                  className={css({ 'avatar-notify': !this.email.confirmed })} />
+                                  className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
                         <MenuItem value="security"
                                   icon="security"
                                   caption="Security"

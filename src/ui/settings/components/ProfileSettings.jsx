@@ -36,7 +36,7 @@ const css = require('classnames');
                     </div>
                     <div className="input-row">
                         <Input type="email" label={t('email')} value={User.current.primaryAddress} />
-                        {this.email.confirmed ? null :
+                        {User.current.primaryAddressConfirmed ? null :
                             <Button label={t('confirm')}
                                     style={{ marginTop: '46px' }}
                                     flat primary /> }

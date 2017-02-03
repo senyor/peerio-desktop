@@ -22,7 +22,7 @@ class AppNav extends React.Component {
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
-        this.email = User.current.addresses[0].address; // todo: find primary email
+        this.email = User.current.primaryAddress; // todo: this might not be email for old users
         if (app.setBadgeCount && app.dock) {
             autorunAsync(() => {
                 const unreadItems = chatStore.unreadMessages + fileStore.unreadFiles;

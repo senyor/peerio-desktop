@@ -8,11 +8,10 @@ const css = require('classnames');
 
 @observer class Profile extends React.Component {
     // @observable avatarImage = 'url(http://placekitten.com/512/512)';
-    @observable inital = User.current.firstName.slice(0, 1);
+    @observable initial = User.current.firstName.slice(0, 1);
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
-        this.email = contactStore.getContact(User.current.addresses[0]);
     }
 
     // handleDeleteAvatar = () => {
@@ -36,7 +35,7 @@ const css = require('classnames');
                                value={User.current.lastName} />
                     </div>
                     <div className="input-row">
-                        <Input type="email" label={t('email')} value={this.email} />
+                        <Input type="email" label={t('email')} value={User.current.primaryAddress} />
                         {this.email.confirmed ? null :
                             <Button label={t('confirm')}
                                     style={{ marginTop: '46px' }}
@@ -71,8 +70,8 @@ const css = require('classnames');
                         </div>
                     </div>
                     <div className="avatar-card-initial">
-                        {/* {this.avatarImage ? '' : this.inital} */}
-                        {this.inital}
+                        {/* {this.avatarImage ? '' : this.initial} */}
+                        {this.initial}
                     </div>
                     <div className="card-footer">
                         {/* <IconButton icon="delete"

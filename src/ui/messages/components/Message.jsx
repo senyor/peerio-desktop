@@ -47,29 +47,27 @@ class Message extends React.Component {
         const m = this.props.message;
         const invalidSign = m.signatureError === true;
         return (
-            <div>
-                <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}>
-                    <div className="flex-row" style={{ padding: '8px 0 0 8px' }}>
-                        <Avatar contact={m.sender} />
-                        <div className="message-content">
-                            <div className="meta-data">
-                                <div className="user">{m.sender.username}</div>
-                                <div className="timestamp">{time.format(m.timestamp)}</div>
-                            </div>
-                            <p dangerouslySetInnerHTML={processMessage(m)} />
-                            {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
+            <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}>
+                <div className="flex-row" style={{ padding: '8px 0 0 8px' }}>
+                    <Avatar contact={m.sender} />
+                    <div className="message-content">
+                        <div className="meta-data">
+                            <div className="user">{m.sender.username}</div>
+                            <div className="timestamp">{time.format(m.timestamp)}</div>
                         </div>
-                        {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null }
+                        <p dangerouslySetInnerHTML={processMessage(m)} />
+                        {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
                     </div>
-                    {invalidSign ?
-                        <div className="invalid-sign-warning">
-                            <div style={{ marginRight: 'auto' }}>{t('invalidSignWarning')}</div>
-                            <Button href={config.supportUrl} label={t('readMore')} flat primary />
-                        </div>
-                        : null
-                    }
-                    {m.sending ? <div className="sending-overlay" /> : null}
+                    {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null }
                 </div>
+                {invalidSign ?
+                    <div className="invalid-sign-warning">
+                        <div style={{ marginRight: 'auto' }}>{t('invalidSignWarning')}</div>
+                        <Button href={config.supportUrl} label={t('readMore')} flat primary />
+                    </div>
+                    : null
+                }
+                {m.sending ? <div className="sending-overlay" /> : null}
             </div>
         );
     }

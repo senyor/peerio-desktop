@@ -82,7 +82,8 @@ $radius-sign-warning: 18px;
     @extend %flex-col;
     align-items: flex-start;
     flex: 1 1 auto;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 24px;
 
     .messages-progress-bar {
@@ -109,6 +110,49 @@ $radius-sign-warning: 18px;
       @extend %flex-shrink-0;
       margin-bottom: 20px;
       position: relative;
+
+      &.messages-start {
+        margin-top: auto;
+        width: 100%;
+
+        .avatars {
+          @extend %flex-row;
+          margin-bottom: $margin-default;
+          margin-top: 64px;
+
+          .rt-avatar-avatar {
+            height: 64px;
+            width: 64px;
+
+            .rt-avatar-letter {
+              line-height: 64px;
+            }
+
+            &:not(:last-of-type) {
+              margin-right: $margin-default;
+            }
+          }
+        }
+
+        .title {
+          margin-bottom: $margin-default;
+        }
+      }
+
+      .date-marker {
+        @extend %flex-row;
+        @extend %flex-align-center;
+        @extend %flex-justify-center;
+        background: $divider-dark;
+        height: 1px;
+        margin: 16px 0;
+
+        .date {
+          background: white;
+          font-weight: $font-weight-bold;
+          padding: 0 $padding-default;
+        }
+      }
 
       &.invalid-sign {
         background-color: rgba($color-error, .06);

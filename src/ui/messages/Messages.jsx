@@ -4,6 +4,7 @@ const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { ProgressBar } = require('~/react-toolbox');
 // const Search = require('../shared-components/Search');
+const Avatar = require('~/ui/shared-components/Avatar');
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const Message = require('./components/Message');
@@ -75,6 +76,18 @@ class MessageList extends React.Component {
         if (!chatStore.activeChat) return null;
         return (
             <div className="messages-container">
+                {/* MESSAGE 0 STATE GOES HERE  */}
+                <div className="message-content-wrapper messages-start">
+                    <div className="avatars">
+                        {console.log('participants: ', chatStore.activeChat.participants)}
+                        {chatStore.activeChat.participants.map(m =>
+                            <Avatar contact={m} />)}
+                    </div>
+                    <div className="title">This is the begining of your chat history with <strong>{chatStore.activeChat.chatName}</strong>.</div>
+                    <div className="date-marker">
+                        <div className="date">Today</div>
+                    </div>
+                </div>
                 {chatStore.activeChat.loadingMessages
                     ? <ProgressBar type="circular" mode="indeterminate"
                                    multicolor className="messages-progress-bar" />

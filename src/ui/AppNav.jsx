@@ -13,77 +13,89 @@ const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 const delay = 500;
 
+const ROUTES = {
+    chat: '/app',
+    mail: '/app/mail',
+    files: 'app/files',
+    profile: '/app/settings/profile',
+    security: '/app/settings/security',
+    prefs: '/app/settings/preferences'
+};
 
+// todo: move this somewhere more appropriate
+let dockNotifsStarted = false;
+function startDockNotifications() {
+    if (dockNotifsStarted || (!app.setBadgeCount && !app.dock && !app.dock.bounce)) return;
+    dockNotifsStarted = true;
+    autorunAsync(() => {
+        const unreadItems = chatStore.unreadMessages + fileStore.unreadFiles;
+        if (app.setBadgeCount) app.setBadgeCount(unreadItems);
+        if (app.dock && app.dock.bounce && chatStore.unreadMessages > 0) {
+            app.dock.bounce();
+        }
+    }, 250);
+}
+
+// todo: move this somewhere more appropriate
+let soundNotificationsStarted = false;
+function startSoundNotifications() {
+    if (soundNotificationsStarted) return;
+    soundNotificationsStarted = true;
+    chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
+        sounds.received.play();
+    });
+}
+
+// todo: it will be useful to extract route tracking system to use it it other components
 @observer
 class AppNav extends React.Component {
 
-    @observable inMessages = true;
-    @observable inFiles = false;
+    @observable currentRoute = window.router.getCurrentLocation().pathname;
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
-        this.email = User.current.primaryAddress; // todo: this might not be email for old users
         this.primaryAddressConfirmed = User.current.primaryAddressConfirmed;
-        if (app.setBadgeCount && app.dock) {
-            autorunAsync(() => {
-                const unreadItems = chatStore.unreadMessages + fileStore.unreadFiles;
-                app.setBadgeCount(unreadItems);
-                if (chatStore.unreadMessages > 0) {
-                    app.dock.bounce();
-                }
-            }, 250);
-        }
-        chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
-            sounds.received.play();
-        });
+        // since this component shows new items notifications, we also make it show dock icon notifications
+        startDockNotifications();
+        startSoundNotifications();
+        this.disposeRouterListener = window.router.listen(this.handleRouteChange);
     }
 
-    toMail = () => {
-        window.router.push('/app/mail');
-        this.inMail = true;
-        this.inMessages = false;
-        this.inFiles = false;
+    componentWillUnmount() {
+        if (this.disposeRouterListener) this.disposeRouterListener();
+    }
+
+    handleRouteChange = route => {
+        this.currentRoute = route.pathname;
     };
 
-    // todo: terrible idea(inMessages), do this based on router hooks
-    toMessages = () => {
-        window.router.push('/app');
-        this.inMail = false;
-        this.inMessages = true;
-        this.inFiles = false;
-    };
+    toMail() {
+        window.router.push(ROUTES.mail);
+    }
 
-    toFiles = () => {
-        window.router.push('/app/files');
-        this.inMail = false;
-        this.inMessages = false;
-        this.inFiles = true;
-    };
+    toMessages() {
+        window.router.push(ROUTES.chat);
+    }
 
-    toProfile = () => {
-        window.router.push('/app/settings/profile');
-        this.inMail = false;
-        this.inMessages = false;
-        this.inFiles = false;
-    };
+    toFiles() {
+        window.router.push(ROUTES.files);
+    }
 
-    toSecurity = () => {
-        window.router.push('/app/settings/security');
-        this.inMail = false;
-        this.inMessages = false;
-        this.inFiles = false;
-    };
+    toProfile() {
+        window.router.push(ROUTES.profile);
+    }
 
-    toPrefs = () => {
-        window.router.push('/app/settings/preferences');
-        this.inMail = false;
-        this.inMessages = false;
-        this.inFiles = false;
-    };
+    toSecurity() {
+        window.router.push(ROUTES.security);
+    }
 
-    signout = () => {
+    toPrefs() {
+        window.router.push(ROUTES.prefs);
+    }
+
+    signout() {
         appControl.relaunch();
-    };
+    }
 
     render() {
         return (
@@ -115,7 +127,7 @@ class AppNav extends React.Component {
                     <Avatar contact={this.contact} />
                 </div>
                 <div className="app-menu">
-                    <div className={css('menu-item', { active: this.inMail })}>
+                    <div className={css('menu-item', { active: this.currentRoute === ROUTES.mail })}>
                         <TooltipIcon
                             tooltip="Mail"
                             tooltipDelay={delay}
@@ -128,7 +140,7 @@ class AppNav extends React.Component {
                         </div>
                     </div>
 
-                    <div className={css('menu-item', { active: this.inMessages })}>
+                    <div className={css('menu-item', { active: this.currentRoute === ROUTES.chat })}>
                         <TooltipIcon
                             tooltip="Chats"
                             tooltipDelay={delay}
@@ -141,7 +153,7 @@ class AppNav extends React.Component {
                         </div>
                     </div>
 
-                    <div className={css('menu-item', { active: this.inFiles })} >
+                    <div className={css('menu-item', { active: this.currentRoute === ROUTES.files })} >
                         <TooltipIcon
                             tooltip="Files"
                             tooltipDelay={delay}

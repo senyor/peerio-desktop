@@ -1,17 +1,14 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, Tooltip, IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
+const { IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
 const { User, contactStore, chatStore, fileStore, mailStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
 const app = require('electron').remote.app;
 const sounds = require('~/helpers/sounds');
 const appControl = require('~/helpers/app-control');
-
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
-
-const delay = 500;
+const AppNavButton = require('./AppNavButton');
 
 const ROUTES = {
     chat: '/app',
@@ -46,6 +43,9 @@ function startSoundNotifications() {
     });
 }
 
+// todo: Paul, move this to stylesheets
+const menuItemStyle = { minWidth: '250px' };
+
 // todo: it will be useful to extract route tracking system to use it it other components
 @observer
 class AppNav extends React.Component {
@@ -73,7 +73,7 @@ class AppNav extends React.Component {
         window.router.push(ROUTES.mail);
     }
 
-    toMessages() {
+    toChat() {
         window.router.push(ROUTES.chat);
     }
 
@@ -103,23 +103,13 @@ class AppNav extends React.Component {
                 <div className="avatar-wrapper">
                     <div className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
                     <IconMenu icon="">
-                        <MenuItem value="profile"
-                                  icon="person"
-                                  caption="Profile"
-                                  onClick={this.toProfile}
-                                  style={{ minWidth: '250px' }}
+                        <MenuItem value="profile" icon="person" caption="Profile"
+                                  onClick={this.toProfile} style={menuItemStyle}
                                   className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
-                        <MenuItem value="security"
-                                  icon="security"
-                                  caption="Security"
-                                  onClick={this.toSecurity}
-                                  style={{ minWidth: '250px' }} />
-                        <MenuItem value="preferences"
-                                  icon="settings"
-                                  caption="Preferences"
-                                  onClick={this.toPrefs}
-                                  style={{ minWidth: '250px' }} />
-
+                        <MenuItem value="security" icon="security" caption="Security"
+                                  onClick={this.toSecurity} style={menuItemStyle} />
+                        <MenuItem value="preferences" icon="settings" caption="Preferences"
+                                  onClick={this.toPrefs} style={menuItemStyle} />
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption="Sign out"
                                   onClick={this.signout} />
@@ -127,43 +117,17 @@ class AppNav extends React.Component {
                     <Avatar contact={this.contact} />
                 </div>
                 <div className="app-menu">
-                    <div className={css('menu-item', { active: this.currentRoute === ROUTES.mail })}>
-                        <TooltipIcon
-                            tooltip="Mail"
-                            tooltipDelay={delay}
-                            tooltipPosition="right"
-                            icon="mail"
-                            onClick={this.toMail} />
-                        {/* TODO mailStore? */}
-                        <div className={mailStore.unreadMail > 0 ? 'look-at-me' : 'banish'}>
-                            {mailStore.unreadMail}
-                        </div>
-                    </div>
+                    <AppNavButton tooltip="Mail" icon="mail" active={this.currentRoute === ROUTES.mail}
+                                  showBadge={mailStore.unreadMail > 0} badge={mailStore.unreadMail}
+                                  onClick={this.toMail} />
 
-                    <div className={css('menu-item', { active: this.currentRoute === ROUTES.chat })}>
-                        <TooltipIcon
-                            tooltip="Chats"
-                            tooltipDelay={delay}
-                            tooltipPosition="right"
-                            icon="forum"
-                            onClick={this.toMessages} />
+                    <AppNavButton tooltip="Chats" icon="forum" active={this.currentRoute === ROUTES.chat}
+                                  showBadge={mailStore.unreadMessages > 0} badge={mailStore.unreadMessages}
+                                  onClick={this.toChat} />
 
-                        <div className={chatStore.unreadMessages > 0 ? 'look-at-me' : 'banish'}>
-                            {chatStore.unreadMessages}
-                        </div>
-                    </div>
-
-                    <div className={css('menu-item', { active: this.currentRoute === ROUTES.files })} >
-                        <TooltipIcon
-                            tooltip="Files"
-                            tooltipDelay={delay}
-                            tooltipPosition="right"
-                            icon="folder"
-                            onClick={this.toFiles} />
-                        <div className={fileStore.unreadFiles > 0 ? 'look-at-me' : 'banish'}>
-                            {fileStore.unreadFiles}
-                        </div>
-                    </div>
+                    <AppNavButton tooltip="Files" icon="folder" active={this.currentRoute === ROUTES.files}
+                                  showBadge={mailStore.unreadFiles > 0} badge={mailStore.unreadFiles}
+                                  onClick={this.toFiles} />
                 </div>
             </div>
         );

@@ -35,3 +35,7 @@ img,
   -webkit-user-select: none;
   -webkit-user-drag: none;
 }
+
+.blur {
+  filter: blur(5px);
+}

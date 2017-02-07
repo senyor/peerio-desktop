@@ -4,41 +4,70 @@ const { observer } = require('mobx-react');
 const { Button, Dialog } = require('~/react-toolbox');
 const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
+const css = require('classnames');
+const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
 
 @observer
 class SecuritySettings extends React.Component {
 
-    @observable passphraseVisible = false;
+    @observable passphraseDialogOpen = false;
+    @observable unlocked = false;
 
-    hidePassphrase = () => { this.passphraseVisible = false; };
+    unlock = () => {
+        this.unlocked = true;
+    };
+
+    hidePassphraseDialog = () => {
+        this.passphraseDialogOpen = false;
+        this.unlocked = false;
+    };
+
+    showPassphraseDialog = () => {
+        this.passphraseDialogOpen = true;
+    };
+
     passphraseDialogActions = [
-        { label: 'Ok', onClick: this.hidePassphrase }
+        { label: 'Ok', onClick: this.hidePassphraseDialog }
     ];
 
-    showPassphrase= () => {
-        this.passphraseVisible = true;
-    };
+    renderShowPassphraseSection() {
+        if (!User.current.passcodeIsSet) return null;
+        return (
+            <span>
+                <div className="title">
+                    {t('passphrase')}
+                    <Button label={t('button_view')} onClick={this.showPassphraseDialog} flat primary />
+                </div>
+                <p>
+                    {t('description_MasterPassword')}
+                </p>
+                <Dialog active={this.passphraseDialogOpen} actions={this.passphraseDialogActions}
+                            onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}>
+                    { this.unlocked ? null : <PasscodeLock onUnlocked={this.unlock} />}
+                    <div className={css('passphrase headline text-center', { blur: !this.unlocked })}>
+                        {User.current.passphrase}
+                    </div>
+                </Dialog>
+            </span>
+        );
+    }
 
     render() {
         return (
             <div>
                 <section className="section-divider">
                     <div className="title" >
-                        {t('peerioPINForThisDevicedesktop')}
+                        {t('peerioPINForThisDeviceDesktop')}
                         <Button label={t('button_update')} flat primary />
                     </div>
                     <p style={{ marginBottom: '40px' }}>
-                        {t('desciption_DevicePassword')}
-                        {/*
-                          Your device password is only used to log in to this device.
-                        */}
+                        {t('description_DevicePassword')}
                     </p>
                     <div className="title">{t('2fa')}
                         <Button label={t('button_activate')} flat primary />
                     </div>
                     <p>
-                        {t('desciption_2fa')}
-                        {/* An additional layer of account protection. */}
+                        {t('description_2fa')}
                     </p>
                 </section>
                 <section className="section-divider">
@@ -46,41 +75,18 @@ class SecuritySettings extends React.Component {
                         <Button label={t('button_generate')} flat primary />
                     </div>
                     <p style={{ marginBottom: '40px' }}>
-                        {t('desciption_QRLogin')}
-                        {/*
-                          Generate a single use QR code to log in to other devices.
-                        */}
+                        {t('description_QRLogin')}
                     </p>
-
-                    <div className="title">{t('passphrase')}
-                        <Button label={t('button_view')}
-                                onClick={this.showPassphrase} flat primary />
-                    </div>
-                    <p>
-                        {t('desciption_MasterPassword')}
-                        {/*
-                          Your Master Password is required when logging
-                          to a new device and after a clean install.
-                        */}
-                    </p>
+                    {this.renderShowPassphraseSection()}
                 </section>
                 <section>
                     <div className="title"> {t('accessLogs')}
                         <Button label={t('button_view')} flat primary />
                     </div>
                     <p>
-                        {t('desciption_accessLogs')}
-                        {/*
-                          Audit access to your account.<br />
-                          3 devices have accessed your account in the last 30 days.
-                        */}
+                        {t('description_accessLogs')}
                     </p>
                 </section>
-
-                <Dialog active={this.passphraseVisible} actions={this.passphraseDialogActions}
-                        onOverlayClick={this.hidePassphrase} onEscKeyDown={this.hidePassphrase}>
-                    <div className="passphrase headline text-center">{User.current.passphrase}</div>
-                </Dialog>
             </div>
         );
     }

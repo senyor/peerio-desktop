@@ -3,6 +3,11 @@
   padding-top: 32px;
   width: 100%;
 
+  .logo {
+    margin: 0 0 32px;
+    width: 300px;
+  }
+
   .tab-wrapper {
     @extend %flex-grow-1;
     @extend %flex-col;
@@ -35,7 +40,7 @@
       padding-bottom: 0;
     }
 
-    .section-divider {
+    &.section-divider {
       border-bottom: 1px solid $divider-dark;
     }
 

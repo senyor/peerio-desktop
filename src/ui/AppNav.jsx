@@ -16,7 +16,8 @@ const ROUTES = {
     files: 'app/files',
     profile: '/app/settings/profile',
     security: '/app/settings/security',
-    prefs: '/app/settings/preferences'
+    prefs: '/app/settings/preferences',
+    about: '/app/settings/about'
 };
 
 // todo: move this somewhere more appropriate
@@ -93,6 +94,10 @@ class AppNav extends React.Component {
         window.router.push(ROUTES.prefs);
     }
 
+    toAbout() {
+        window.router.push(ROUTES.about);
+    }
+
     signout() {
         appControl.relaunch();
     }
@@ -110,6 +115,8 @@ class AppNav extends React.Component {
                                   onClick={this.toSecurity} style={menuItemStyle} />
                         <MenuItem value="preferences" icon="settings" caption="Preferences"
                                   onClick={this.toPrefs} style={menuItemStyle} />
+                        <MenuItem value="about" icon="info" caption="About"
+                                  onClick={this.toAbout} style={menuItemStyle} />
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption="Sign out"
                                   onClick={this.signout} />

@@ -7,7 +7,8 @@ const { t } = require('peerio-translator');
 const ROUTES = [
     '/app/settings/profile',
     '/app/settings/security',
-    '/app/settings/preferences'
+    '/app/settings/preferences',
+    '/app/settings/about'
 ];
 
 const ROUTES_MAP = ROUTES.reduce((map, route, ind) => { map[route] = ind; return map; }, {});
@@ -46,6 +47,7 @@ class Settings extends React.Component {
                         <Tab label={t('profile')} />
                         <Tab label={t('security')} />
                         <Tab label={t('preferences')} />
+                        <Tab label={t('about')} />
                     </Tabs>
                     {this.props.children}
                 </div>

@@ -13,6 +13,7 @@ const Settings = require('./settings/Settings');
 const Profile = require('./settings/components/ProfileSettings');
 const Security = require('./settings/components/SecuritySettings');
 const Preferences = require('./settings/components/Preferences');
+const About = require('./settings/components/About');
 const DevTools = require('./dev-tools/DevTools');
 const DTDashboard = require('./dev-tools/Dashboard');
 const KegEditor = require('./dev-tools/KegEditor');
@@ -31,6 +32,7 @@ module.exports = (
                 <Route path="profile" component={Profile} />
                 <Route path="security" component={Security} />
                 <Route path="preferences" component={Preferences} />
+                <Route path="about" component={About} />
             </Route>
         </Route>
         <Route path="/dev-tools" component={DevTools} >

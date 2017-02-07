@@ -6,7 +6,8 @@ const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 
-@observer class Profile extends React.Component {
+@observer
+class Profile extends React.Component {
     // @observable avatarImage = 'url(http://placekitten.com/512/512)';
     @observable initial = User.current.firstName.slice(0, 1);
 

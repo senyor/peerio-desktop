@@ -5,7 +5,8 @@ const { Button, Dialog } = require('~/react-toolbox');
 const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
 
-@observer class SecuritySettings extends React.Component {
+@observer
+class SecuritySettings extends React.Component {
 
     @observable passphraseVisible = false;
 

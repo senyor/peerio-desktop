@@ -4,7 +4,8 @@ const { observer } = require('mobx-react');
 const { Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 
-@observer class Preferences extends React.Component {
+@observer
+class Preferences extends React.Component {
 
     render() {
         return (

@@ -10,6 +10,8 @@ if (isDevEnv) {
     window.Perf = require('react-addons-perf');
     // debug aid global vars
     window.ice = require('~/icebear');
+    // shortcut to use with promises
+    window.clog = console.log.bind(console);
 }
 document.addEventListener('DOMContentLoaded', () => {
     // <emojione> ------------------------------------------------------------------------------------------------

@@ -39,3 +39,17 @@ img,
 .blur {
   filter: blur(5px);
 }
+
+.clickable-avatar {
+  cursor: pointer;
+  transition: box-shadow 150ms ease-in-out;
+  &:hover{
+     box-shadow: 0px 0px 5px 0px #999;
+  }
+}
+.clickable-username{
+  cursor: pointer;
+  &:hover{
+    opacity: .7;
+  }
+}

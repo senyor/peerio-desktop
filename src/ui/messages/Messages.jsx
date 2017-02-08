@@ -44,8 +44,6 @@ class Messages extends React.Component {
                 <div className="message-view">
                     <div className="message-toolbar">
                         <div className="title">{ chatStore.activeChat && chatStore.activeChat.chatName}</div>
-                        {/* <Search />*/}
-                        {/* <IconButton icon="info_outline" />*/}
                     </div>
                     {(chatStore.chats.length === 0 && !chatStore.loading)
                         ? <NoChatSelected />
@@ -70,20 +68,22 @@ class MessageList extends React.Component {
     scrollToBottom() {
         const el = document.getElementsByClassName('messages-container')[0];
         if (!el) return;
-        setTimeout(() => { el.scrollTop = el.scrollHeight; });
+        setTimeout(() => { el.scrollTop = el.scrollHeight; }, 100);
     }
     render() {
         if (!chatStore.activeChat) return null;
         return (
             <div className="messages-container">
-                {/* MESSAGE 0 STATE GOES HERE  */}
                 <div className="message-content-wrapper messages-start">
                     <div className="avatars">
                         {console.log('participants: ', chatStore.activeChat.participants)}
                         {chatStore.activeChat.participants.map(m =>
                             <Avatar contact={m} />)}
                     </div>
-                    <div className="title">This is the begining of your chat history with <strong>{chatStore.activeChat.chatName}</strong>.</div>
+                    <div className="title">
+                        This is the beginning of your chat history with
+                        &nbsp;<strong>{chatStore.activeChat.chatName}</strong>.
+                    </div>
                     <div className="date-marker">
                         <div className="date">Today</div>
                     </div>

@@ -7,6 +7,7 @@ const FileLoading = require('./FileLoading');
 const { Checkbox, ProgressBar } = require('~/react-toolbox');
 const { fileStore } = require('~/icebear');
 const { downloadFile } = require('~/helpers/file');
+const uiStore = require('~/stores/ui-store');
 
 @observer
 class FileLine extends React.Component {
@@ -38,6 +39,9 @@ class FileLine extends React.Component {
     onHideActions = () => {
         this.showActions = false;
     };
+    openContactDialog = () => {
+        uiStore.contactDialogUsername = this.props.file.owner;
+    };
 
     render() {
         const file = this.props.file;
@@ -55,7 +59,7 @@ class FileLine extends React.Component {
                                     onChange={this.toggleChecked} />
                     }</td>
                 <td>{file.name}</td>
-                <td>{file.owner}</td>
+                <td className="clickable-username" onClick={this.openContactDialog}>{file.owner}</td>
                 <td className="text-right">{file.uploadedAt && file.uploadedAt.toLocaleString()}</td>
                 <td className="hide-text text-right">{file.sizeFormatted}</td>
                 <td className="hide-text uppercase">{file.ext}</td>

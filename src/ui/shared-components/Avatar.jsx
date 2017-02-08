@@ -1,11 +1,20 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const RTAvatar = require('~/react-toolbox').Avatar;
+const uiStore = require('~/stores/ui-store');
 
-function Avatar(props) {
-    return (
-        <RTAvatar style={{ backgroundColor: props.contact.color }} title={props.contact.username} />
-    );
+// todo: cache avatar component for every contact?
+@observer
+class Avatar extends React.Component {
+    openContactDialog = () => {
+        uiStore.contactDialogUsername = this.props.contact.username;
+    };
+    render() {
+        return (
+            <RTAvatar style={{ backgroundColor: this.props.contact.color }} title={this.props.contact.username}
+                      onClick={this.openContactDialog} className="clickable-avatar" />
+        );
+    }
 }
 
-module.exports = observer(Avatar);
+module.exports = Avatar;

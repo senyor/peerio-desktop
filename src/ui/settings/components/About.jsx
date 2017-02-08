@@ -1,8 +1,9 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Switch } = require('~/react-toolbox');
+const { Button } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
+const version = require('electron').remote.app.getVersion();
 
 @observer
 class About extends React.Component {
@@ -13,8 +14,7 @@ class About extends React.Component {
                 <section className="section-divider">
                     <img role="presentation" className="logo" src="static/img/logo-blue.png" />
                     <p>
-                        {t('description_notification')}
-                        {/* Email you when... */}
+                        {t('currentVersion')} : <strong>{version}</strong>
                     </p>
 
                 </section>
@@ -25,6 +25,10 @@ class About extends React.Component {
                         {t('description_support')}
                         {/* Other users can find you... */}
                     </p>
+                    <div className="flex-row">
+                        <Button label={t('button_faq')} flat primary />
+                        <Button label={t('button_support')} flat primary />
+                    </div>
                 </section>
                 <section>
                     &copy; 2017 Peerio Technologies , Inc. All rights reserved.

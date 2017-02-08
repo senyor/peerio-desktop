@@ -277,7 +277,7 @@ $radius-sign-warning: 18px;
   @extend %flex-shrink-0;
   background-color: $background-message-list;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: $message-list-width;
 
   .mutli-user-chat {

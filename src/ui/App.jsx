@@ -33,7 +33,8 @@ class App extends React.Component {
                 <Snackbar location="app" />
                 <Dialog active={!this.contactDialogHiding && !!uiStore.contactDialogUsername}
                         actions={this.contactDialogActions} onOverlayClick={this.hideContactDialog}
-                        onEscKeyDown={this.hideContactDialog}>
+                        onEscKeyDown={this.hideContactDialog}
+                        title={t('profile')}>
                     {
                         uiStore.contactDialogUsername
                         ? <ContactProfile username={uiStore.contactDialogUsername} />

@@ -1,0 +1,28 @@
+.clickable-avatar {
+  cursor: pointer;
+  transition: box-shadow 150ms ease-in-out;
+
+  &:hover {
+    box-shadow: $shadow-8;
+  }
+}
+
+.clickable-username {
+  cursor: pointer;
+
+  &:hover {
+    opacity: .7;
+  }
+}
+
+.contact-profile {
+  .row {
+    padding-bottom: $padding-default;
+
+    &:not(:first-of-type) {
+      border-top: 1px solid $divider-dark;
+      padding-bottom: 0;
+      padding-top: $padding-default;
+    }
+  }
+}

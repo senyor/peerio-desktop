@@ -12,12 +12,16 @@ class ContactProfile extends React.Component {
         if (c.loading) return null; // todo: spinner
         const f = c.fingerprint.split('-');
         return (
-            <div>
-                <h1>{t('profile')}</h1>
-                <RTAvatar style={{ backgroundColor: c.color }} title={c.username} />
-                {c.firstName} {c.lastName} <br /><br />
-                {f[0]} {f[1]} {f[2]} <br />
-                {f[3]} {f[4]} {f[5]}
+            <div className="contact-profile">
+                <div className="row flex-row flex-align-center">
+                    <RTAvatar style={{ backgroundColor: c.color }} title={c.username} />
+                    <div style={{ marginLeft: '8px' }}>{c.firstName} {c.lastName}</div>
+                </div>
+                <div className="row">
+                    <div className="list-title" style={{ marginBottom: '8px' }}> {t('fingerprint')}</div>
+                    <div className="monospace">{f[0]} {f[1]} {f[2]}</div>
+                    <div className="monospace">{f[3]} {f[4]} {f[5]}</div>
+                </div>
             </div>
         );
     }

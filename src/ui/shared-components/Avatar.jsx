@@ -11,7 +11,7 @@ class Avatar extends React.Component {
     };
     render() {
         return (
-            <RTAvatar style={{ backgroundColor: this.props.contact.color }} title={this.props.contact.username}
+            <RTAvatar style={{ backgroundColor: this.props.contact.color }} title={this.props.contact.firstName}
                       onClick={this.openContactDialog} className="clickable-avatar" />
         );
     }

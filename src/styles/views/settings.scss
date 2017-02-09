@@ -26,7 +26,8 @@
     .rt-tabs-label,
     .rt-tabs-label.rt-tabs-active {
       color: $text-dark-secondary;
-      margin: 0 $margin-small;
+      padding-left: $padding-large;
+      padding-right: $padding-large;
     }
   }
 

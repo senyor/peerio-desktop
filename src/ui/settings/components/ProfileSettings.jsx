@@ -24,6 +24,9 @@ class Profile extends React.Component {
     // }
 
     render() {
+        // if (u.loading) return null; // todo: spinner
+        const f = this.contact.fingerprint.split('-');
+
         return (
             <section className="flex-row">
                 <div>
@@ -53,6 +56,12 @@ class Profile extends React.Component {
                         */}
                         {/* TODO: INPUT MASK FOR THE PRETTIEST PHONE NUMBERS */}
                         <Input type="tel" label={t('phone')} />
+                    </div>
+
+                    <div className="row" style={{ marginTop: '40px' }} >
+                        <div className="list-title" style={{ marginBottom: '8px' }}> {t('fingerprint')}</div>
+                        <div className="monospace">{f[0]} {f[1]} {f[2]}</div>
+                        <div className="monospace">{f[3]} {f[4]} {f[5]}</div>
                     </div>
                     <Button label={t('button_update')}
                             style={{ marginTop: '40px' }} primary raised />

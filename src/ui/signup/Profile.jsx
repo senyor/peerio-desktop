@@ -4,10 +4,9 @@ const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dropdown } = require('~/react-toolbox');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
-const { config, socket, validation } = require('~/icebear');
+const { socket, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const languageStore = require('~/stores/language-store');
-const T = require('~/ui/shared-components/T');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 
 const { validators } = validation; // use common validation from core
@@ -72,13 +71,6 @@ class ProfileStore extends OrderedFormStore {
                 </div>
                 <Dropdown value={languageStore.language}
                     source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
-
-                <T k="signup_TOSRequestText" className="terms">
-                    {{
-                        emphasis: text => <strong>{text}</strong>,
-                        tosLink: text => <a href={config.termsUrl}>{text}</a>
-                    }}
-                </T>
             </div>
         );
     }

@@ -26,6 +26,18 @@
 }
 
 // BUTTONS and ICONS!
+// makes buttons look like links. This might be a bad idea.
+.button-link {
+  font-weight: $font-weight-regular;
+  padding: 0;
+  text-decoration: underline;
+  text-transform: inherit;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+}
+
 .rt-button-button {
   @extend %flex-shrink-0;
   font-weight: $font-weight-semibold;

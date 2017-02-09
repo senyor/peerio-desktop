@@ -33,7 +33,7 @@ class SecuritySettings extends React.Component {
     renderShowPassphraseSection() {
         if (!User.current.passcodeIsSet) return null;
         return (
-            <span>
+            <div>
                 <div className="title">
                     {t('passphrase')}
                     <Button label={t('button_view')} onClick={this.showPassphraseDialog} flat primary />
@@ -51,7 +51,7 @@ class SecuritySettings extends React.Component {
                        : <PasscodeLock onUnlocked={this.unlock} />}
 
                 </Dialog>
-            </span>
+            </div>
         );
     }
 

@@ -11,9 +11,7 @@
   transform: rotateY(180deg);
 }
 
-
 // HIDE STUFF
-
 // doesn't affect layout.
 .hide {
   opacity: 0;
@@ -38,4 +36,15 @@ img,
 
 .blur {
   filter: blur(5px);
+}
+
+// TERMS
+.terms {
+  .rt-dialog-dialog {
+    overflow: hidden;
+  }
+
+  .rt-dialog-body {
+    overflow: auto;
+  }
 }

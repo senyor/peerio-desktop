@@ -4,7 +4,6 @@ const { observable, computed, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { config, socket, validation } = require('~/icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
 const zxcvbn = require('zxcvbn');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const OrderedFormStore = require('~/stores/ordered-form-store');
@@ -111,13 +110,6 @@ class PasscodeStore extends OrderedFormStore {
                                 }}
                                 store={this.props.store}
                                 onKeyPress={this.handleKeyPress} />
-
-                <T k="signup_TOSRequestText" className="terms">
-                    {{
-                        emphasis: text => <strong>{text}</strong>,
-                        tosLink: text => <a href={config.termsUrl}>{text}</a>
-                    }}
-                </T>
             </div>
         );
     }

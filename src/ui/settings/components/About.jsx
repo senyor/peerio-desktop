@@ -1,12 +1,26 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
+const Terms = require('~/ui/shared-components/Terms');
 
 @observer
 class About extends React.Component {
+    @observable termsDialogOpen = false;
+
+    hideTermsDialog = () => {
+        this.termsDialogOpen = false;
+    };
+
+    showTermsDialog = () => {
+        this.termsDialogOpen = true;
+    };
+
+    termsDialogActions = [
+        { label: 'Ok', onClick: this.hideTermsDialog }
+    ];
 
     render() {
         return (
@@ -33,8 +47,16 @@ class About extends React.Component {
                 <section>
                     &copy; 2017 Peerio Technologies , Inc. All rights reserved.
                     <br /><br />
-                    Peerio <a href="www.google.com">Terms of Service</a>
+                    Peerio <Button onClick={this.showTermsDialog} label={t('terms')} />
                 </section>
+
+                <Dialog active={this.termsDialogOpen}
+                        actions={this.termsDialogActions}
+                        onOverlayClick={this.hideTermsDialog}
+                        onEscKeyDown={this.hideTermsDialog}
+                        className="terms">
+                    <Terms />
+                </Dialog>
             </div>
         );
     }

@@ -1,15 +1,17 @@
 const React = require('react');
 const { Button, Dialog, IconButton } = require('~/react-toolbox');
-const { User, errors, PhraseDictionaryCollection } = require('~/icebear');
+const { config, User, errors, PhraseDictionaryCollection } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const languageStore = require('~/stores/language-store');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
+const Terms = require('~/ui/shared-components/Terms');
 const { Profile, ProfileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
 const Snackbar = require('~/ui/shared-components/Snackbar');
+const T = require('~/ui/shared-components/T');
 
 
 @observer class Signup extends React.Component {
@@ -18,6 +20,7 @@ const Snackbar = require('~/ui/shared-components/Snackbar');
     @observable step = 1; // 1 -profile, 2- passcode
     @observable errorVisible = false;
     @observable errorMessage = undefined;
+    @observable termsDialogOpen = false;
 
     passcodeStore = new PasscodeStore();
     profileStore = new ProfileStore();
@@ -101,6 +104,18 @@ const Snackbar = require('~/ui/shared-components/Snackbar');
         }
     };
 
+    hideTermsDialog = () => {
+        this.termsDialogOpen = false;
+    };
+
+    showTermsDialog = () => {
+        this.termsDialogOpen = true;
+    };
+
+    termsDialogActions = [
+        { label: 'Ok', onClick: this.hideTermsDialog }
+    ];
+
     render() {
         return (
             <div className={css('signup', 'rt-light-theme', { show: this.show })}>
@@ -113,6 +128,15 @@ const Snackbar = require('~/ui/shared-components/Snackbar');
                             : <Passcode store={this.passcodeStore} profileStore={this.profileStore}
                                   returnHandler={this.advance} />
                     }
+
+                    <T k="signup_TOSRequestText" className="terms">
+                        {{
+                            emphasis: text => <strong>{text}</strong>,
+                            tosLink: text => <Button onClick={this.showTermsDialog}
+                                                     label={text}
+                                                     className="button-link" />
+                        }}
+                    </T>
                 </div>
                 <div className="signup-nav">
                     <Button flat label={this.step === 1 ? t('cancel') : t('back')} onClick={this.retreat} />
@@ -128,6 +152,15 @@ const Snackbar = require('~/ui/shared-components/Snackbar');
                         onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
                         title={t('error')}>{this.errorMessage}</Dialog>
                 <Snackbar location="signup" />
+
+                <Dialog active={this.termsDialogOpen}
+                        actions={this.termsDialogActions}
+                        onOverlayClick={this.hideTermsDialog}
+                        onEscKeyDown={this.hideTermsDialog}
+                        className="terms">
+                    <Terms />
+                </Dialog>
+
             </div>
         );
     }

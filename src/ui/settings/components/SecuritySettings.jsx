@@ -42,9 +42,11 @@ class SecuritySettings extends React.Component {
                     {t('description_MasterPassword')}
                 </p>
                 <Dialog active={this.passphraseDialogOpen} actions={this.passphraseDialogActions}
-                            onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}>
+                            onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}
+                            title={t('devicePasswordRequired')}>
                     { this.unlocked ? null : <PasscodeLock onUnlocked={this.unlock} />}
-                    <div className={css('passphrase headline text-center', { blur: !this.unlocked })}>
+                    <div className={css('passphrase headline', { blur: !this.unlocked })}
+                         style={{ margin: '8px 0' }}>
                         {User.current.passphrase}
                     </div>
                 </Dialog>

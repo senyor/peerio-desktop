@@ -36,7 +36,7 @@ class PasscodeLock extends React.Component {
             <div className="passcode-lock">
                 <Input type="password"
                     value={this.passcode}
-                       label={t('unlockWithPasscode')}
+                       label={t('devicePassword')}
                        onChange={this.handleChange}
                        error={this.error} />
             </div>

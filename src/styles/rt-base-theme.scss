@@ -27,9 +27,12 @@
 
 // BUTTONS and ICONS!
 .rt-button-button {
-  padding-top: 0;
+  @extend %flex-shrink-0;
   font-weight: $font-weight-semibold;
+  padding-top: 0;
 }
+
+
 
 .rt-button-button > .rt-button-icon,
 .material-icons {

@@ -81,6 +81,7 @@
   }
 
   .rt-input-errored input {
+    border: 0;
     border-bottom: 4px solid $border-error;
     padding-top: $padding-large;
   }

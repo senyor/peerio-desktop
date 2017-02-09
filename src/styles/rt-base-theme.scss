@@ -152,7 +152,7 @@
 }
 
 .rt-input-errored > .rt-input-inputElement {
-  border: none;
+  border: 1px solid $color-error;
   margin-top: 2px;
 }
 

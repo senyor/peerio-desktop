@@ -14,7 +14,7 @@ const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 class UserPicker extends React.Component {
     @observable selected = [];
     @observable query = '';
-    @observable notGood = true;
+    @observable noGood = false;
     accepted = false;
 
     @computed get selectedFiles() {
@@ -127,8 +127,8 @@ class UserPicker extends React.Component {
                                               caption={c.username}
                                               legend={`${c.firstName} ${c.lastName}`}
                                               onClick={() => this.selected.push(c)}
-                                              className={css({ warning: this.notGood })}
-                                              rightIcon={this.notGood ?
+                                              className={css({ warning: this.noGood })}
+                                              rightIcon={this.noGood ?
                                                   <TooltipIcon tooltip="Somethings wrong!"
                                                                tooltipDelay={200}
                                                                tooltipPosition="right"

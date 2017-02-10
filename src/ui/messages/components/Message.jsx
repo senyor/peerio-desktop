@@ -67,6 +67,10 @@ class Message extends React.Component {
                     </div>
                     : null
                 }
+                {m.receipts ?
+                    <div key={`${m.id || m.tempId}receipts`} className="receipt-marker">
+                        {m.receipts.map(u => <Avatar key={u} username={u} size="tiny" />)}
+                    </div> : null}
                 {m.sending ? <div className="sending-overlay" /> : null}
             </div>
         );

@@ -110,6 +110,7 @@ $radius-sign-warning: 18px;
       @extend %flex-shrink-0;
       margin-bottom: 20px;
       position: relative;
+      width: 100%;
 
       &.messages-start {
         margin-top: auto;
@@ -217,6 +218,21 @@ $radius-sign-warning: 18px;
 
       a {
         color: $color-brand;
+      }
+    }
+
+    .receipt-marker {
+      align-items: center;
+      background-color: #f3f3f3;
+      bottom: -10px;
+      display: flex;
+      height: 1px;
+      justify-content: flex-end;
+      position: absolute;
+      width: 100%;
+
+      > .rt-avatar-avatar {
+        margin-left: 8px;
       }
     }
   }

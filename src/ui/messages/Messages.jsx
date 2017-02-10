@@ -76,9 +76,8 @@ class MessageList extends React.Component {
             <div className="messages-container">
                 <div className="message-content-wrapper messages-start">
                     <div className="avatars">
-                        {console.log('participants: ', chatStore.activeChat.participants)}
-                        {chatStore.activeChat.participants.map(m =>
-                            <Avatar contact={m} />)}
+                        {chatStore.activeChat.participants.map(c =>
+                            <Avatar contact={c} />)}
                     </div>
                     <div className="title">
                         This is the beginning of your chat history with

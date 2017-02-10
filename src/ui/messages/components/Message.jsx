@@ -47,7 +47,8 @@ class Message extends React.Component {
         const m = this.props.message;
         const invalidSign = m.signatureError === true;
         return (
-            <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}>
+            <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}
+                 style={m.receipts ? { marginBottom: 0 } : null}>
                 <div className="flex-row" style={{ padding: '8px 0 0 8px' }}>
                     <Avatar contact={m.sender} />
                     <div className="message-content">
@@ -69,7 +70,9 @@ class Message extends React.Component {
                 }
                 {m.receipts ?
                     <div key={`${m.id || m.tempId}receipts`} className="receipt-marker">
-                        {m.receipts.map(u => <Avatar key={u} username={u} size="tiny" />)}
+                        <div className="avatar-wrapper">
+                            {m.receipts.map(u => <Avatar key={u} username={u} size="tiny" />)}
+                        </div>
                     </div> : null}
                 {m.sending ? <div className="sending-overlay" /> : null}
             </div>

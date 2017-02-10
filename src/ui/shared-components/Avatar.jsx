@@ -14,7 +14,7 @@ class Avatar extends React.Component {
         const style = { backgroundColor: contact.color };
         if (this.props.size) {
             switch (this.props.size) {
-                case 'tiny': style.zoom = '0.4'; break;
+                case 'tiny': style.zoom = '0.5'; break;
                 default: break;
             }
         }

@@ -1,13 +1,10 @@
-/* eslint-disable react/no-multi-comp, no-nested-ternary */
 const React = require('react');
 const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { ProgressBar } = require('~/react-toolbox');
-// const Search = require('../shared-components/Search');
-const Avatar = require('~/ui/shared-components/Avatar');
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
-const Message = require('./components/Message');
+const MessageList = require('./components/MessageList');
+const NoChatSelected = require('./components/NoChatSelected');
 const { chatStore } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 
@@ -56,71 +53,5 @@ class Messages extends React.Component {
     }
 }
 
-@observer
-class MessageList extends React.Component {
-
-    componentDidMount() {
-        this.scrollToBottom();
-    }
-    componentDidUpdate() {
-        this.scrollToBottom();
-    }
-    scrollToBottom() {
-        const el = document.getElementsByClassName('messages-container')[0];
-        if (!el) return;
-        setTimeout(() => { el.scrollTop = el.scrollHeight; }, 100);
-    }
-    render() {
-        if (!chatStore.activeChat) return null;
-        return (
-            <div className="messages-container">
-                <div className="message-content-wrapper messages-start">
-                    <div className="avatars">
-                        {chatStore.activeChat.participants.map(c =>
-                            <Avatar contact={c} />)}
-                    </div>
-                    <div className="title">
-                        This is the beginning of your chat history with
-                        &nbsp;<strong>{chatStore.activeChat.chatName}</strong>.
-                    </div>
-                    <div className="date-marker">
-                        <div className="date">Today</div>
-                    </div>
-                </div>
-                {chatStore.activeChat.loadingMessages
-                    ? <ProgressBar type="circular" mode="indeterminate"
-                                   multicolor className="messages-progress-bar" />
-                    : chatStore.activeChat.messages.map(m => <Message key={m.id || m.tempId} message={m} />)
-                }
-            </div>
-        );
-    }
-}
-
-function NoChatSelected() {
-    return (
-        <div className="flex-row zero-message">
-            <div className="flex-col flex-grow-0" style={{ margin: '16px 24px' }}>
-                <img src="static/img/message-arrow-up.png" style={{ maxWidth: '200px' }} role="presentation" />
-            </div>
-            <div className="flex-col flex-grow-0 flex-shrink-0">
-                <div className="flex-row flex-justify-center">
-                    <div className="display-3">Have a conversation.</div>
-                </div>
-                <div className="flex-row flex-align-center flex-justify-center" style={{ width: '100%' }}>
-                    <img src="static/img/group-chat.png"
-                         style={{ maxWidth: '280px', minWidth: '40%' }} role="presentation" />
-                    <ul>
-                        <li>Direct messages</li>
-                        <li>Multi-party chat</li>
-                        {/* <li>Channels</li>*/}
-                        <li>Share files</li>
-                    </ul>
-                </div>
-            </div>
-            <div className="flex-col flex-grow-1" />
-        </div>
-    );
-}
 
 module.exports = Messages;

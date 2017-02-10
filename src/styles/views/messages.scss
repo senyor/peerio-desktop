@@ -108,7 +108,8 @@ $radius-sign-warning: 18px;
     .message-content-wrapper {
       @extend %flex-col;
       @extend %flex-shrink-0;
-      margin-bottom: 20px;
+      margin-bottom: $margin-large;
+      padding: $padding-small 0 0 $padding-small;
       position: relative;
       width: 100%;
 

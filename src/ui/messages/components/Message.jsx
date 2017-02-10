@@ -49,7 +49,7 @@ class Message extends React.Component {
         return (
             <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}
                  style={m.receipts ? { marginBottom: 0 } : null}>
-                <div className="flex-row" style={{ padding: '8px 0 0 8px' }}>
+                <div className="flex-row">
                     <Avatar contact={m.sender} />
                     <div className="message-content">
                         <div className="meta-data">

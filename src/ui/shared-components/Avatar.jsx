@@ -7,7 +7,7 @@ const { contactStore } = require('~/icebear');
 @observer
 class Avatar extends React.Component {
     openContactDialog = () => {
-        uiStore.contactDialogUsername = this.props.contact.username;
+        uiStore.contactDialogUsername = this.props.contact ? this.props.contact.username : this.props.username;
     };
     render() {
         const contact = this.props.contact || contactStore.getContact(this.props.username);

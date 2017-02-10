@@ -6,18 +6,39 @@ const css = require('classnames');
 const languageStore = require('~/stores/language-store');
 const { PhraseDictionary } = require('~/icebear');
 const { t } = require('peerio-translator');
-
+const { Dialog } = require('~/react-toolbox');
 
 @observer
 class MailSidebar extends React.Component {
+
+    @observable revokeModalActive = false;
+
+    revokeDialogActions = [
+        { label: t('cancel'), onClick: this.handleRevokeDialogToggle },
+        { label: t('ghost_revokeAction'), onClick: this.props.ghost.revoke }
+    ];
+
+    handleRevokeDialogToggle = () => {
+        this.revokeModalActive = !this.revokeModalActive;
+    };
+
+    renderRevokeDialog () {
+        return (
+            <Dialog actions={this.revokeDialogActions}
+                    active={this.revokeModalActive}
+                    onEscKeyDown={this.handleRevokeDialogToggle}
+                    onOverlayClick={this.handleRevokeDialogToggle}
+                    title={t('ghost_revokeTitle')}>
+                <p>{t('ghost_revokeText')}</p>
+            </Dialog>
+        )
+    };
+
     render() {
+        console.log(this.renderRevokeDialog())
         return (
             <div className="mail-sidebar">
-                {/* <GhostInfo /> */}
-                {/* <MailInfo /> */}
-                <p> This passphrase unlocks your message. Only share with intended
-                recipients.</p>
-
+                <p>{t('ghost_passphrase')}</p>
                 <div>
                     <div className="dark-label">Passphrase</div>
                     <div className="passphrase">
@@ -26,22 +47,24 @@ class MailSidebar extends React.Component {
                     </div>
                 </div>
                 { !this.props.ghost.sent ?
-                    <p>Your message will expire 3 days after it’s sent.</p>
+                    <p>{t('ghost_expiryNotice')}</p>
                     : <div className="sent-info">
                         <div className="read-recipt">
-                            <div className="dark-label">Viewed</div>
-                            {/* TODO: restyle or move to link icon. */}
+                            <div className="dark-label">{t('ghost_url')}</div>
                             <div>{this.props.ghost.url}</div>
                         </div>
                         <div className="expire-info flex-col">
-                            <div className="dark-label">Expires</div>
+                            <div className="dark-label">{t('ghost_expires')}</div>
                             <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
-                            {this.props.ghost.sent ? <Button label={t('revoke')}
+                            { !this.props.ghost.expired ?
+                            <Button label={t('revoke')}
+                                    onClick={this.handleRevokeDialogToggle}
                                     style={{ marginLeft: 'auto', marginTop: '8px' }}
-                                    primary /> : '' }
+                                    primary /> : t('ghost_expired') }
                         </div>
                     </div>
-                  }
+                }
+                { this.props.ghost.sent && !this.props.ghost.expired ? this.renderRevokeDialog() : '' }
             </div>
         );
     }

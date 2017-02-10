@@ -1,9 +1,10 @@
 .clickable-avatar {
   cursor: pointer;
-  transition: box-shadow 150ms ease-in-out;
+  transition: 150ms ease-in-out;
 
   &:hover {
-    box-shadow: $shadow-8;
+    box-shadow: $shadow-5;
+    transform: translateY(-4px);
   }
 }
 

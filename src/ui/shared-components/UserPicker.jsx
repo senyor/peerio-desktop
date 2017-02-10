@@ -2,16 +2,19 @@ const React = require('react');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
-        ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
+        ListItem, ListSubHeader, Tooltip, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
+
 @observer
 class UserPicker extends React.Component {
     @observable selected = [];
     @observable query = '';
+    @observable notGood = true;
     accepted = false;
 
     @computed get selectedFiles() {
@@ -119,9 +122,18 @@ class UserPicker extends React.Component {
                             <ListSubHeader caption="Your contacts" />
                             <div className="user-list">
                                 { this.options.map(c =>
-                                    <ListItem key={c.username} avatar={<Avatar contact={c} />}
-                                              caption={c.username} legend={`${c.firstName} ${c.lastName}`}
-                                              onClick={() => this.selected.push(c)} />
+                                    <ListItem key={c.username}
+                                              avatar={<Avatar contact={c} />}
+                                              caption={c.username}
+                                              legend={`${c.firstName} ${c.lastName}`}
+                                              onClick={() => this.selected.push(c)}
+                                              className={css({ warning: this.notGood })}
+                                              rightIcon={this.notGood ?
+                                                  <TooltipIcon tooltip="Somethings wrong!"
+                                                               tooltipDelay={200}
+                                                               tooltipPosition="right"
+                                                               icon="error_outline" />
+                                                  : null} />
                                     )}
                             </div>
                         </List>

@@ -14,18 +14,35 @@
     }
   }
 
+  .rt-list-list {
+    padding-bottom: 0;
+  }
+
   .rt-list-subheader,
   .rt-list-listItem {
+    border-radius: 4px;
     border-width: 0 !important; // I did this :( - Paul
+    overflow: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
 
-    .rt-list-right .material-icons {
-      cursor: pointer;
-      display: none;
+    &:not(.warning) {
+      .rt-list-right .material-icons {
+        cursor: pointer;
+        display: none;
+      }
+
+      &:hover {
+        .rt-list-right .material-icons {
+          display: block;
+        }
+      }
     }
 
-    &:hover {
+    &.warning {
+      background-color: rgba($color-error, .25);
+
       .rt-list-right .material-icons {
-        display: block;
+        color: $color-error;
       }
     }
   }

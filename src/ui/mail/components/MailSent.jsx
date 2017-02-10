@@ -4,11 +4,9 @@ const MailSidebar = require('./MailSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
 const { fileStore } = require('~/icebear');
 
-
 class MailSent extends React.Component {
 
     render() {
-        console.log('sent ghost', this.props.ghost);
         return (
             <div className="flex-row flex-grow-1">
                 <div className="compose-view">

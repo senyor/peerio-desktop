@@ -22,7 +22,7 @@ class MailSidebar extends React.Component {
         this.revokeModalActive = !this.revokeModalActive;
     };
 
-    renderRevokeDialog () {
+    renderRevokeDialog() {
         return (
             <Dialog actions={this.revokeDialogActions}
                     active={this.revokeModalActive}
@@ -31,11 +31,10 @@ class MailSidebar extends React.Component {
                     title={t('ghost_revokeTitle')}>
                 <p>{t('ghost_revokeText')}</p>
             </Dialog>
-        )
-    };
+        );
+    }
 
     render() {
-        console.log(this.renderRevokeDialog())
         return (
             <div className="mail-sidebar">
                 <p>{t('ghost_passphrase')}</p>
@@ -57,7 +56,7 @@ class MailSidebar extends React.Component {
                             <div className="dark-label">{t('ghost_expires')}</div>
                             <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
                             { !this.props.ghost.expired ?
-                            <Button label={t('revoke')}
+                                <Button label={t('revoke')}
                                     onClick={this.handleRevokeDialogToggle}
                                     style={{ marginLeft: 'auto', marginTop: '8px' }}
                                     primary /> : t('ghost_expired') }

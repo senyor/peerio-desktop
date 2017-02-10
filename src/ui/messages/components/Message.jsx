@@ -46,16 +46,21 @@ class Message extends React.Component {
     render() {
         const m = this.props.message;
         const invalidSign = m.signatureError === true;
+
         return (
-            <div className={css('message-content-wrapper', { 'invalid-sign': invalidSign })}
-                 style={m.receipts ? { marginBottom: 0 } : null}>
+            <div className={
+                css('message-content-wrapper', {
+                    'invalid-sign': invalidSign, light: this.props.light || m.receipts })}>
                 <div className="flex-row">
-                    <Avatar contact={m.sender} />
+                    { this.props.light ? null : <Avatar contact={m.sender} /> }
+                    { this.props.light ? <div className="timestamp">{time.format(m.timestamp)}</div> : null }
                     <div className="message-content">
-                        <div className="meta-data">
-                            <div className="user">{m.sender.username}</div>
-                            <div className="timestamp">{time.format(m.timestamp)}</div>
-                        </div>
+                        { this.props.light ? null :
+                            <div className="meta-data">
+                                <div className="user">{m.sender.username}</div>
+                                <div className="timestamp">{time.format(m.timestamp)}</div>
+                            </div>
+                        }
                         <p dangerouslySetInnerHTML={processMessage(m)} />
                         {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
                     </div>

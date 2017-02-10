@@ -33,7 +33,16 @@ class MessageList extends React.Component {
                     </div>
                 </div>);
             }
-            ret.push(<Message key={m.id || m.tempId} message={m} />);
+            let light = false;
+            if (i > 0) {
+                const prev = msgs[i - 1];
+                if (prev.sender.username === m.sender.username
+                    && prev.timestamp.getDate() === m.timestamp.getDate()
+                    && prev.timestamp.getMonth() === m.timestamp.getMonth()) {
+                    light = true;
+                }
+            }
+            ret.push(<Message key={m.id || m.tempId} message={m} light={light} />);
         }
         return ret;
     }

@@ -108,10 +108,30 @@ $radius-sign-warning: 18px;
     .message-content-wrapper {
       @extend %flex-col;
       @extend %flex-shrink-0;
-      margin-bottom: $margin-large;
-      padding: $padding-small 0 0 $padding-small;
+      margin-top: $margin-large;
+      padding: $padding-small / 2 0 $padding-small / 2 $padding-small;
       position: relative;
       width: 100%;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+
+      &.light {
+        margin-top: 0;
+
+        .timestamp {
+          color: #bdbdbd;
+          visibility: hidden;
+          width: 40px;
+        }
+
+        &:hover {
+          .timestamp {
+            visibility: visible;
+          }
+        }
+      }
 
       &.messages-start {
         margin-top: auto;

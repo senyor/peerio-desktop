@@ -108,7 +108,7 @@
     "npm-run-all": "4.0.1",
     "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
     "peerio-desktop-standard-version": "file:scripts/standard-version",
-    "peerio-icebear": "github:peeriotechnologies/peerio-icebear",
+    "peerio-icebear": "git@github.com:PeerioTechnologies/peerio-icebear.git",
     "postcss": "5.2.11",
     "postcss-cssnext": "2.9.0",
     "postcss-each": "0.9.3",

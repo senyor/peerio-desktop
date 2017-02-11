@@ -46,6 +46,7 @@ class SecuritySettings extends React.Component {
                             title={this.unlocked ? t('passphrase') : t('devicePasswordRequired')}>
                     { this.unlocked ?
                         <div style={{ marginTop: '40px', height: '48px' }}>
+                            <p>{t('whatIsMasterPassword')}</p>
                             <div className="passphrase headline">{User.current.passphrase}</div>
                         </div>
                        : <PasscodeLock onUnlocked={this.unlock} />}

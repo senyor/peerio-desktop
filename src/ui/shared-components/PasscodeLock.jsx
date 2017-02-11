@@ -34,6 +34,7 @@ class PasscodeLock extends React.Component {
     render() {
         return (
             <div className="passcode-lock">
+                <p>{t('passcodeLockWhy')}</p>
                 <Input type="password"
                     value={this.passcode}
                        label={t('devicePassword')}

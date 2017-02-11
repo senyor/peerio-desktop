@@ -27,12 +27,10 @@ class MessageList extends React.Component {
             const m = msgs[i];
             if (m.firstOfTheDay) {
                 const ts = m.timestamp.toLocaleDateString();
-                ret.push(<div key={ts + m.id} className="message-content-wrapper">
-                    <div className="marker-wrapper">
-                        <div className="marker" />
-                        <div className="content">{ts === new Date().toLocaleDateString() ? t('today') : ts}</div>
-                        <div className="marker" />
-                    </div>
+                ret.push(<div key={ts + m.id} className="marker-wrapper">
+                    <div className="marker" />
+                    <div className="content">{ts === new Date().toLocaleDateString() ? t('today') : ts}</div>
+                    <div className="marker" />
                 </div>);
             }
             let light = false;
@@ -52,7 +50,7 @@ class MessageList extends React.Component {
         if (!chatStore.activeChat) return null;
         return (
             <div className="messages-container">
-                <div className="message-content-wrapper messages-start">
+                <div className="messages-start">
                     <div className="avatars">
                         {chatStore.activeChat.participants.map(c =>
                             <Avatar contact={c} />)}

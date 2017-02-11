@@ -44,6 +44,30 @@ $radius-sign-warning: 18px;
   // FIXME remove calc?
   width: calc(100vw - 304px);
 
+  .marker-wrapper {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-justify-center;
+    margin: $margin-small 0;
+    width: 100%;
+
+    .marker {
+      @extend %flex-grow-1;
+      background: $divider-dark;
+      height: 1px;
+      margin: $margin-default 0;
+    }
+
+    .content {
+      font-weight: $font-weight-bold;
+      padding: 0 $padding-small;
+
+      .rt-avatar-avatar {
+        margin: 0 $margin-tiny;
+      }
+    }
+  }
+
   .message-toolbar {
     align-items: center;
     border-bottom: 1px solid $divider-dark;
@@ -80,7 +104,7 @@ $radius-sign-warning: 18px;
 
   .messages-container {
     @extend %flex-col;
-    align-items: flex-start;
+    @extend %flex-align-start;
     flex: 1 1 auto;
     overflow-x: hidden;
     overflow-y: auto;
@@ -106,89 +130,68 @@ $radius-sign-warning: 18px;
       padding: 0 $padding-small 0 $padding-default;
     }
 
+    .messages-start {
+      margin-bottom: $margin-small;
+      margin-top: auto;
+      width: 100%;
+
+      .avatars {
+        @extend %flex-row;
+        margin-bottom: $margin-default;
+        margin-top: 64px;
+
+        .rt-avatar-avatar {
+          height: 64px;
+          width: 64px;
+
+          .rt-avatar-letter {
+            line-height: 64px;
+          }
+
+          &:not(:last-of-type) {
+            margin-right: $margin-default;
+          }
+        }
+      }
+
+      .title {
+        margin-bottom: $margin-default;
+      }
+    }
+
     .message-content-wrapper {
       @extend %flex-col;
       @extend %flex-shrink-0;
       margin-top: $margin-large;
-      padding: $padding-small / 2 0 $padding-small / 2 $padding-small;
+      padding: $padding-tiny 0 $padding-tiny $padding-tiny;
       position: relative;
       width: 100%;
 
       &:hover {
-        background-color: #f0f0f0;
+        background-color: $color-dark-03;
+        border-radius: 2px;
+      }
+
+      .marker-wrapper {
+        margin-left: -$margin-tiny;
       }
 
       &.light {
         margin-top: 0;
 
         .timestamp {
+          @extend %flex-shrink-0;
           @extend %hint-error-label;
           color: rgba($text-dark-hint, 0);
-          min-width: 40px;
+          overflow: hidden;
+          padding-top: 2px; // To align the timestamp with the first row of text.
+          white-space: nowrap;
+          width: 40px;
         }
 
         &:hover {
           .timestamp {
             color: $text-dark-hint;
-          }
-        }
-      }
-
-      &.messages-start {
-        margin-top: auto;
-        width: 100%;
-
-        .avatars {
-          @extend %flex-row;
-          margin-bottom: $margin-default;
-          margin-top: 64px;
-
-          .rt-avatar-avatar {
-            height: 64px;
-            width: 64px;
-
-            .rt-avatar-letter {
-              line-height: 64px;
-            }
-
-            &:not(:last-of-type) {
-              margin-right: $margin-default;
-            }
-          }
-        }
-
-        .title {
-          margin-bottom: $margin-default;
-        }
-      }
-
-      .marker-wrapper {
-        @extend %flex-row;
-        @extend %flex-align-center;
-        @extend %flex-justify-center;
-
-        .marker {
-          @extend %flex-grow-1;
-          background: $divider-dark;
-          height: 1px;
-          margin: $margin-default 0;
-        }
-
-        .content {
-          font-weight: $font-weight-bold;
-          padding: 0 $padding-default;
-        }
-      }
-
-      .receipt-marker {
-        @extend %flex-justify-end;
-
-        .avatar-wrapper {
-          background-color: $background-root;
-          padding: 0 $padding-tiny;
-
-          .rt-avatar-avatar {
-            margin: 0 $margin-tiny;
           }
         }
       }

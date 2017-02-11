@@ -122,14 +122,14 @@ $radius-sign-warning: 18px;
         margin-top: 0;
 
         .timestamp {
-          color: #bdbdbd;
-          visibility: hidden;
+          @extend %hint-error-label;
+          color: rgba($text-dark-hint, 0);
           width: 40px;
         }
 
         &:hover {
           .timestamp {
-            visibility: visible;
+            color: $text-dark-hint;
           }
         }
       }
@@ -162,17 +162,19 @@ $radius-sign-warning: 18px;
         }
       }
 
-      .date-marker,
-      .receipt-marker {
+      .marker-wrapper {
         @extend %flex-row;
         @extend %flex-align-center;
         @extend %flex-justify-center;
-        background: $divider-dark;
-        height: 1px;
-        margin: $margin-default 0;
 
-        .date {
-          background: white;
+        .marker {
+          @extend %flex-grow-1;
+          background: $divider-dark;
+          height: 1px;
+          margin: $margin-default 0;
+        }
+
+        .content {
           font-weight: $font-weight-bold;
           padding: 0 $padding-default;
         }
@@ -227,13 +229,13 @@ $radius-sign-warning: 18px;
         align-items: center;
         color: $text-dark-secondary;
 
+        .timestamp {
+          @extend %hint-error-label;
+        }
+
         .user {
           font-weight: $font-weight-bold;
           margin: 0 $padding-small 0 $padding-default;
-        }
-
-        .timestamp {
-          @extend %hint-error-label;
         }
       }
 

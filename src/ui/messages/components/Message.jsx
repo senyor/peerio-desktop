@@ -74,8 +74,9 @@ class Message extends React.Component {
                     : null
                 }
                 {m.receipts ?
-                    <div key={`${m.id || m.tempId}receipts`} className="receipt-marker">
-                        <div className="avatar-wrapper">
+                    <div key={`${m.id || m.tempId}receipts`} className="marker-wrapper">
+                        <div className="marker" />
+                        <div className="content">
                             {m.receipts.map(u => <Avatar key={u} username={u} size="tiny" />)}
                         </div>
                     </div> : null}

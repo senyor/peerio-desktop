@@ -124,7 +124,7 @@ $radius-sign-warning: 18px;
         .timestamp {
           @extend %hint-error-label;
           color: rgba($text-dark-hint, 0);
-          width: 40px;
+          min-width: 40px;
         }
 
         &:hover {

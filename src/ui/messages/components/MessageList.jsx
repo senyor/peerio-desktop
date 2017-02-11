@@ -28,8 +28,10 @@ class MessageList extends React.Component {
             if (m.firstOfTheDay) {
                 const ts = m.timestamp.toLocaleDateString();
                 ret.push(<div key={ts + m.id} className="message-content-wrapper">
-                    <div className="date-marker">
-                        <div className="date">{ts === new Date().toLocaleDateString() ? t('today') : ts}</div>
+                    <div className="marker-wrapper">
+                        <div className="marker" />
+                        <div className="content">{ts === new Date().toLocaleDateString() ? t('today') : ts}</div>
+                        <div className="marker" />
                     </div>
                 </div>);
             }

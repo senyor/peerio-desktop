@@ -2,9 +2,6 @@ const React = require('react');
 const { Button, IconButton } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const css = require('classnames');
-const languageStore = require('~/stores/language-store');
-const { PhraseDictionary } = require('~/icebear');
 const { t } = require('peerio-translator');
 const { Dialog } = require('~/react-toolbox');
 

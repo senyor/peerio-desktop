@@ -53,7 +53,7 @@ class ChatList extends React.Component {
                             // TODO: make left icon user count when multiuser chat.
                             leftIcon="fiber_manual_record"
                             rightIcon={(!c.active && c.unreadCount > 0) ? this.getNotificationIcon(c) :
-                                <TooltipIcon
+                            <TooltipIcon
                                     tooltip="Remove from list"
                                     tooltipDelay={500}
                                     tooltipPosition="right"

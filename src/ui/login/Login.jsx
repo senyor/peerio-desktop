@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
 const { Component } = require('react');
-const { Dropdown, Button, IconButton, Tooltip } = require('~/react-toolbox');
+const { Button, IconButton, Tooltip } = require('~/react-toolbox');
 const { config, socket, User, validation } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const languageStore = require('~/stores/language-store');
 const { Link } = require('react-router');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
@@ -125,7 +124,7 @@ class LoginStore extends OrderedFormStore {
             <div className="flex-row app-root">
                 <FullCoverLoader show={this.loginStore.busy} />
                 <div className="flex-row login rt-light-theme">
-                    <img role="presentation" className="logo" src="static/img/logo-white.png" />
+                    <img alt="" className="logo" src="static/img/logo-white.png" />
 
                     {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
                     <div className="login-form">

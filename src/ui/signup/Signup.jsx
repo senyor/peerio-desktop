@@ -1,6 +1,6 @@
 const React = require('react');
-const { Button, Dialog, IconButton } = require('~/react-toolbox');
-const { config, User, errors, PhraseDictionaryCollection } = require('~/icebear');
+const { Button, Dialog } = require('~/react-toolbox');
+const { User, errors, PhraseDictionaryCollection } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -119,7 +119,7 @@ const T = require('~/ui/shared-components/T');
     render() {
         return (
             <div className={css('signup', 'rt-light-theme', { show: this.show })}>
-                <img role="presentation" className="logo" src="static/img/logo-white.png" />
+                <img alt="" className="logo" src="static/img/logo-white.png" />
                 <div className="signup-form">
                     <div className="signup-title">{t('signup')}</div>
                     {

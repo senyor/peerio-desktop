@@ -4,7 +4,6 @@ const { observer } = require('mobx-react');
 const { Button, Dialog } = require('~/react-toolbox');
 const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
-const css = require('classnames');
 const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
 
 @observer

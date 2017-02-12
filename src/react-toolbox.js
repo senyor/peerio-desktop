@@ -1,4 +1,3 @@
-const theme = require('~/react-toolbox/theme.js');
 module.exports.AppBar = require('react-toolbox/lib/app_bar/AppBar').default;
 module.exports.Autocomplete = require('react-toolbox/lib/autocomplete/Autocomplete').default;
 module.exports.Avatar = require('react-toolbox/lib/avatar/Avatar').default;

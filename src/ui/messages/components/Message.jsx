@@ -56,10 +56,10 @@ class Message extends React.Component {
                     { this.props.light ? <div className="timestamp">{time.format(m.timestamp)}</div> : null }
                     <div className="message-content">
                         { this.props.light ? null :
-                            <div className="meta-data">
-                                <div className="user">{m.sender.username}</div>
-                                <div className="timestamp">{time.format(m.timestamp)}</div>
-                            </div>
+                        <div className="meta-data">
+                            <div className="user">{m.sender.username}</div>
+                            <div className="timestamp">{time.format(m.timestamp)}</div>
+                        </div>
                         }
                         <p dangerouslySetInnerHTML={processMessage(m)} />
                         {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}

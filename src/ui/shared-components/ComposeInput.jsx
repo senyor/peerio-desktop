@@ -146,12 +146,14 @@ class ComposeInput extends React.Component {
                 metaKey: false,
                 ctrlKey: false,
                 altKey: false,
+                // eslint-disable-next-line
                 handler: (range, context) => {
                     this.handleSubmit();
                 }
             };
         }
-        const quill = this.quill = new Quill(el, opts);
+        // const quill =
+        this.quill = new Quill(el, opts);
 
         // quill.on('text-change', (delta, oldDelta, source) => {
         //     if (source === Quill.sources.USER) {
@@ -159,7 +161,9 @@ class ComposeInput extends React.Component {
         //     }
         // });
     };
-    //     ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", "k", "i", "s", "_", "w", "|", "c", "o", "u", "p", "l", "e", "m", "f", "a", "y", "b", "g", "t", "h", "r", "n", "d", "z", "v", "x", "j", "-", "\", "+", "q"]
+    //     ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", "k", "i", "s", "_", "w", "|", "c", "o", "u",
+    // "p", "l", "e", "m", "f", "a", "y", "b", "g", "t", "h", "r", "n", "d", "z", "v", "x", "j", "-", "\", "+",
+    // "q"]
     // tryShowEmojiSuggestions = () =>{
     //     const sel = this.quill.getSelection();
     //     if(sel.length){

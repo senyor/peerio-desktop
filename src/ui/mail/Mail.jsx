@@ -2,7 +2,7 @@ const React = require('react');
 const { Button, IconMenu, MenuItem } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { fileStore, chatStore, mailStore } = require('~/icebear');
+const { mailStore } = require('~/icebear');
 const MailItem = require('./components/MailItem');
 const MailCompose = require('./components/MailCompose');
 const MailSent = require('./components/MailSent');
@@ -15,7 +15,7 @@ class Mail extends React.Component {
         mailStore.loadAllGhosts();
     }
 
-    handleCompose = e => {
+    handleCompose = () => {
         const newGhost = mailStore.createGhost();
         mailStore.selectedId = newGhost.ghostId;
         this.sent = false;

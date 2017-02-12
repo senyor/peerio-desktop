@@ -1,10 +1,9 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, IconButton, Input } = require('~/react-toolbox');
+const { Button, Input } = require('~/react-toolbox');
 const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
-const css = require('classnames');
 
 @observer
 class Profile extends React.Component {
@@ -41,7 +40,7 @@ class Profile extends React.Component {
                     <div className="input-row">
                         <Input type="email" label={t('email')} value={User.current.primaryAddress} />
                         {User.current.primaryAddressConfirmed ? null :
-                            <Button label={t('confirm')}
+                        <Button label={t('confirm')}
                                     style={{ marginTop: '46px' }}
                                     flat primary /> }
                     </div>

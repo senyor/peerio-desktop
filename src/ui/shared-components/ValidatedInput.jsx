@@ -44,7 +44,9 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
         }
 
         if (!isObservable(this.props.store, this.props.name)) {
-            throw new Error(`ValidatedInput expects ${this.props.name} to be an observable property in the (observable) store`);
+            throw new Error(
+                `ValidatedInput expects ${this.props.name} to be an observable property in the (observable) store`
+            );
         }
 
         // set property names

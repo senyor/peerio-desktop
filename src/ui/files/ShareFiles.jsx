@@ -1,7 +1,6 @@
 const React = require('react');
-const { when } = require('mobx');
 const { observer } = require('mobx-react');
-const { fileStore, chatStore } = require('~/icebear');
+const { fileStore } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 
 @observer

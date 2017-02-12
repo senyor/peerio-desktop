@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const React = require('react');
 
 class Terms extends React.Component {

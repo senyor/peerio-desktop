@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Input, ProgressBar } = require('~/react-toolbox');
+const { Input } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
 const _ = require('lodash');
@@ -21,7 +21,7 @@ class PasscodeLock extends React.Component {
         this.error = null;
     };
 
-    handleError =() => {
+    handleError = () => {
         this.error = t('invalidPasscode');
     };
 

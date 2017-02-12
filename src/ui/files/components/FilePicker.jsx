@@ -69,13 +69,13 @@ class FilePicker extends React.Component {
         return (
             <List selectable ripple className="file-picker">
                 {
-                    fileStore.files.map(f =>
-                            f.readyForDownload && f.show
+                    fileStore.files.map(f => {
+                        return f.readyForDownload && f.show
                             ? <ListItem key={f.fileId} caption={f.name}
                                         leftIcon={f.selected ? 'check_box' : 'check_box_outline_blank'}
                                         onClick={() => { f.selected = !f.selected; }} />
-                            : <ListItem key={f.fileId} className="banish" />
-                    )
+                            : <ListItem key={f.fileId} className="banish" />;
+                    })
                 }
             </List>
         );

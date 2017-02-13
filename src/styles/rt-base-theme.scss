@@ -41,7 +41,9 @@
 .rt-button-button {
   @extend %flex-shrink-0;
   font-weight: $font-weight-semibold;
+  overflow: hidden;
   padding-top: 0;
+  transform: translate3d(0, 0, 0);
 }
 
 

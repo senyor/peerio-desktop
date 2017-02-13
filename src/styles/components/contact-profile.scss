@@ -17,13 +17,21 @@
 }
 
 .contact-profile {
-  .row {
-    padding-bottom: $padding-default;
+  .contact-error {
+    background-color: $color-error;
+    border-radius: 2px;
+    color: $text-light-primary;
+    font-weight: $font-weight-semibold;
+    padding: $padding-small;
+  }
 
-    &:not(:first-of-type) {
-      border-top: 1px solid $divider-dark;
-      padding-bottom: 0;
-      padding-top: $padding-default;
+  .row {
+    border-bottom: 1px solid $divider-dark;
+    margin-bottom: $margin-default;
+    padding: $padding-default 0;
+
+    &:last-of-type {
+      border-bottom-width: 0;
     }
   }
 }

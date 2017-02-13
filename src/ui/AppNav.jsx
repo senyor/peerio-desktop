@@ -105,7 +105,7 @@ class AppNav extends React.Component {
     render() {
         return (
             <div className="app-nav">
-                <div className="avatar-wrapper">
+                <div className="avatar-menu-wrapper">
                     <div className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
                     <IconMenu icon="">
                         <MenuItem value="profile" icon="person" caption="Profile"

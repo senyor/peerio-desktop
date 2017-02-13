@@ -2,13 +2,11 @@ const React = require('react');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
-        ListItem, ListSubHeader, Tooltip, ProgressBar } = require('~/react-toolbox');
+        ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
-
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 @observer
 class UserPicker extends React.Component {
@@ -127,13 +125,7 @@ class UserPicker extends React.Component {
                                               caption={c.username}
                                               legend={`${c.firstName} ${c.lastName}`}
                                               onClick={() => this.selected.push(c)}
-                                              className={css({ warning: this.noGood })}
-                                              rightIcon={this.noGood ?
-                                                  <TooltipIcon tooltip="Somethings wrong!"
-                                                               tooltipDelay={200}
-                                                               tooltipPosition="right"
-                                                               icon="error_outline" />
-                                                  : null} />
+                                              className={css({ warning: this.noGood })} />
                                     )}
                             </div>
                         </List>

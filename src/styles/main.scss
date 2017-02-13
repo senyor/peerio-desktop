@@ -27,10 +27,10 @@
 @import './typography';
 
 html {
-  font-family: $font-stack;
   box-sizing: border-box;
-  overflow: hidden;
+  font-family: $font-stack;
   font-size: 10px;
+  overflow: hidden;
 }
 
 button,
@@ -46,9 +46,9 @@ a {
 }
 
 *,
-*:before,
-*:after {
- box-sizing: inherit;
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body,
@@ -64,4 +64,18 @@ body,
 
 section {
   outline: 0;
+}
+
+.avatar-wrapper {
+  position: relative;
+
+  .material-icons {
+    background-color: $background-root;
+    border-radius: 12px;
+    color: $color-error;
+    height: 24px;
+    position: absolute;
+    right: -8px;
+    width: 24px;
+  }
 }

@@ -1,6 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const RTAvatar = require('~/react-toolbox').Avatar;
+const { FontIcon } = require('~/react-toolbox');
 const uiStore = require('~/stores/ui-store');
 const { contactStore } = require('~/icebear');
 // todo: cache avatar component for every contact?
@@ -19,8 +20,13 @@ class Avatar extends React.Component {
             }
         }
         return (
-            <RTAvatar style={style} title={contact.firstName}
-                      onClick={this.openContactDialog} className="clickable-avatar" />
+            <div className="avatar-wrapper">
+                <RTAvatar style={style} title={contact.firstName}
+                          onClick={this.openContactDialog} className="clickable-avatar" />
+                {contact.tofuError ?
+                    <FontIcon value="error" />
+                    : null}
+            </div>
         );
     }
 }

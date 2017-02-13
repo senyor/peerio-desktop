@@ -140,16 +140,16 @@ $radius-sign-warning: 18px;
         margin-bottom: $margin-default;
         margin-top: 64px;
 
+        .avatar-wrapper:not(:last-of-type) {
+          margin-right: $margin-small;
+        }
+
         .rt-avatar-avatar {
           height: 64px;
           width: 64px;
 
           .rt-avatar-letter {
             line-height: 64px;
-          }
-
-          &:not(:last-of-type) {
-            margin-right: $margin-default;
           }
         }
       }

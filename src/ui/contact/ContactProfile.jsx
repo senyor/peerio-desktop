@@ -13,6 +13,8 @@ class ContactProfile extends React.Component {
         const f = c.fingerprint.split('-');
         return (
             <div className="contact-profile">
+                { c.tofuError ? <div className="contact-error">Some error message information</div>
+                    : null}
                 <div className="row flex-row flex-align-center">
                     <RTAvatar style={{ backgroundColor: c.color }} title={c.username} />
                     <div style={{ marginLeft: '8px' }}>{c.firstName} {c.lastName}</div>

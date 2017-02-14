@@ -12,14 +12,19 @@ class MessageList extends React.Component {
     componentDidMount() {
         this.scrollToBottom();
     }
+
     componentDidUpdate() {
         this.scrollToBottom();
     }
+
     scrollToBottom() {
         const el = document.getElementsByClassName('messages-container')[0];
         if (!el) return;
-        setTimeout(() => { el.scrollTop = el.scrollHeight; }, 100);
+        setTimeout(() => {
+            el.scrollTop = el.scrollHeight;
+        }, 100);
     }
+
     renderMessages() {
         const ret = [];
         const msgs = chatStore.activeChat.messages;
@@ -46,6 +51,7 @@ class MessageList extends React.Component {
         }
         return ret;
     }
+
     render() {
         if (!chatStore.activeChat) return null;
         return (
@@ -53,7 +59,7 @@ class MessageList extends React.Component {
                 <div className="messages-start">
                     <div className="avatars">
                         {chatStore.activeChat.participants.map(c =>
-                            <Avatar contact={c} />)}
+                            <Avatar key={c.username} contact={c} />)}
                     </div>
                     <div className="title">
                         This is the beginning of your chat history with

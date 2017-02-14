@@ -62,6 +62,14 @@ $radius-sign-warning: 18px;
       font-weight: $font-weight-bold;
       padding: 0 $padding-small;
 
+      .material-icons {
+        color: $color-error;
+        font-size: 8px;
+        height: 8px;
+        left: 16px;
+        width: 8px;
+      }
+
       .rt-avatar-avatar {
         margin: 0 $margin-tiny;
       }

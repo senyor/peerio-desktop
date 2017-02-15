@@ -44,9 +44,11 @@ class SecuritySettings extends React.Component {
                             onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}
                             title={this.unlocked ? t('passphrase') : t('devicePasswordRequired')}>
                     { this.unlocked ?
-                        <div style={{ marginTop: '40px', height: '48px' }}>
+                        <div>
                             <p>{t('whatIsMasterPassword')}</p>
-                            <div className="passphrase headline">{User.current.passphrase}</div>
+                            <div style={{ marginTop: '40px', height: '48px' }}>
+                                <div className="passphrase headline">{User.current.passphrase}</div>
+                            </div>
                         </div>
                        : <PasscodeLock onUnlocked={this.unlock} />}
 

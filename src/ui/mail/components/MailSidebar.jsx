@@ -11,11 +11,12 @@ class MailSidebar extends React.Component {
     @observable revokeDialogActive = false;
 
     revokeDialogActions = [
-        { label: t('cancel'), onClick: () => { this.hideRevokeDialog() } },
-        { label: t('ghost_revokeAction'), onClick: () => {
-            return this.props.ghost.revoke()
-                .then(() => this.hideRevokeDialog())
-        } }
+        { label: t('cancel'), onClick: () => { this.hideRevokeDialog(); } },
+        { label: t('ghost_revokeAction'),
+            onClick: () => {
+                return this.props.ghost.revoke()
+                .then(() => this.hideRevokeDialog());
+            } }
     ];
 
     showRevokeDialog = () => {

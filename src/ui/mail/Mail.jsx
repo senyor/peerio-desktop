@@ -45,7 +45,6 @@ class Mail extends React.Component {
     }
 
     render() {
-        console.log('mailstore', mailStore.ghosts);
         // if (mailStore.ghosts.length === 0 && !mailStore.loading) return (
         //    <div>nothing here, zero screen</div>
         // );

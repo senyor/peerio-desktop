@@ -20,7 +20,7 @@ const T = require('~/ui/shared-components/T');
     @observable step = 1; // 1 -profile, 2- passcode
     @observable errorVisible = false;
     @observable errorMessage = undefined;
-    @observable termsDialogOpen = false;
+    @observable termsDialogOpen = false; 
 
     passcodeStore = new PasscodeStore();
     profileStore = new ProfileStore();

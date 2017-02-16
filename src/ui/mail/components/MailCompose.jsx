@@ -1,26 +1,55 @@
 const React = require('react');
+const { observable, computed } = require('mobx');
+const { observer } = require('mobx-react');
 const MailFormatActions = require('./MailFormatActions');
 const ComposeInput = require('../../shared-components/ComposeInput');
 const EmailPicker = require('./EmailPicker');
-const { Button, Input, Chip, ProgressBar } = require('~/react-toolbox');
+const { Dialog, Button, Input, Chip, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const MailSidebar = require('./MailSidebar');
 const { fileStore } = require('~/icebear');
 const css = require('classnames');
 
-class MailCompose extends ComposeInput {
+@observer class MailCompose extends ComposeInput {
+    @observable dialogActive = false;
+
+    @computed get valid() {
+        return this.props.ghost.recipients.length > 0;
+    }
+
+    dialogActions = [
+        { label: t('cancel'), onClick: () => { this.hideDialog(); } },
+        { label: t('send'),
+            onClick: () => {
+                this.handleSubmit();
+                this.hideDialog();
+            }
+        }
+    ];
+
     constructor() {
         super();
+        this.permitEmptyBody = true;
         this.returnToSend = false;
     }
 
-    handleRecipientChange = value => {
-        // todo validate! and populate multiple
-        this.props.ghost.recipients[0] = value;
+    hideDialog = () => {
+        this.dialogActive = false;
     };
 
     handleSubjectChange = value => {
         this.props.ghost.subject = value;
+    };
+
+    validateAndSubmit = () => {
+        if (this.valid) {
+            if (this.props.ghost.subject.length === 0 &&
+                this.getCleanContents() === '') {
+                this.dialogActive = true;
+            } else {
+                this.handleSubmit();
+            }
+        }
     };
 
     render() {
@@ -35,7 +64,11 @@ class MailCompose extends ComposeInput {
                         <div className="flex-grow-1">
                             <div className="meta-input">
                                 <EmailPicker ghost={this.props.ghost} />
-                                <Button label={t('send')} primary onClick={this.handleSubmit} />
+                                <Button label={t('send')}
+                                        primary
+                                        disabled={!this.valid}
+                                        onClick={this.validateAndSubmit}
+                                />
                             </div>
                             <div className="meta-input">
                                 <Input placeholder={t('mail_enterSubject')} onChange={this.handleSubjectChange} />
@@ -62,6 +95,14 @@ class MailCompose extends ComposeInput {
                 </div>
                 <MailSidebar ghost={this.props.ghost} />
                 {this.renderFilePicker()}
+
+                <Dialog actions={this.dialogActions}
+                        active={this.dialogActive}
+                        onEscKeyDown={this.hideDialog}
+                        onOverlayClick={this.hideDialog}
+                        title={t('ghost_emptyTitle')}>
+                    <p>{t('ghost_emptyText')}</p>
+                </Dialog>
             </div>
         );
     }

@@ -73,21 +73,24 @@ class ComposeInput extends React.Component {
     @observable suggests = null;
     @observable filePickerActive = false;
 
+
     constructor() {
         super();
         this.cachedPicker = cachedPicker;
         currentInputInstance = this;
         this.returnToSend = false;
+        this.permitEmptyBody = false;
         if (!this.cachedPicker) {
             this.cachedPicker = (
                 <EmojiPicker onPicked={onEmojiPicked} />
             );
         }
     }
-    handleSubmit = () => {
+
+    getCleanContents = () => {
         let data = document.getElementsByClassName('ql-editor')[0].innerHTML;
         data = data.trim();
-        if (data === '') return;
+        if (data === '') return '';
         data = data.replace(/<br\/?>/gim, '\n');
         data = data.replace(/<\/p>/gim, '\n');
         data = data.replace(/<p>/gim, '');
@@ -107,7 +110,12 @@ class ComposeInput extends React.Component {
         data = sanitizeChatMessage(data);
 
         data = data.trim();
-        if (data === '') return;
+        return data;
+    };
+
+    handleSubmit = () => {
+        const data = this.getCleanContents();
+        if (data === '' && !this.permitEmptyBody) return;
         this.props.onSend(data);
         this.clearEditor();
     };

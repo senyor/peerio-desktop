@@ -129,11 +129,11 @@ class AppNav extends React.Component {
                                   onClick={this.toMail} />
 
                     <AppNavButton tooltip="Chats" icon="forum" active={this.currentRoute === ROUTES.chat}
-                                  showBadge={mailStore.unreadMessages > 0} badge={mailStore.unreadMessages}
+                                  showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
                                   onClick={this.toChat} />
 
                     <AppNavButton tooltip="Files" icon="folder" active={this.currentRoute === ROUTES.files}
-                                  showBadge={mailStore.unreadFiles > 0} badge={mailStore.unreadFiles}
+                                  showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
                                   onClick={this.toFiles} />
                 </div>
             </div>

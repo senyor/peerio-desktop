@@ -51,7 +51,9 @@ const emailFormatFn = validation.validators.emailFormat.action;
                 <Input placeholder={t('mail_enterEmail')}
                        value={this.query}
                        onChange={this.handleTextChange}
-                       onKeyDown={this.handleKeyDown} />
+                       onKeyDown={this.handleKeyDown}
+                       onBlur={this.validate}
+                />
             </div>
         );
     }

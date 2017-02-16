@@ -57,7 +57,7 @@ const css = require('classnames');
             <div className="flex-row flex-grow-1">
                 <div className="compose-view">
                     <div className="compose-meta flex-row flex-shrink-0">
-                        <div className="dark-label flex-col">
+                        <div className="dark-label flex-col flex-justify-between">
                             <div className="meta-input">{t('to')}</div>
                             <div className="meta-input">{t('ghost_subject')}</div>
                         </div>

@@ -81,6 +81,10 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
     .compose-meta {
       padding-top: $padding-small;
 
+      .dark-label {
+        line-height: 48px;
+      }
+
       .attached-files {
         @extend %flex-shrink-0;
         font-weight: $font-weight-semibold;
@@ -117,16 +121,25 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
 
     .meta-input {
       @extend %flex-row;
-      @extend %flex-align-center;
+      @extend %flex-align-start;
       @extend %flex-shrink-0;
-      border-bottom: 1px solid $divider-dark;
-      height: 48px;
+      min-height: 48px;
       padding-left: $padding-default;
       padding-right: $padding-small;
+
+      &:last-of-type {
+        border-bottom: 1px solid $divider-dark;
+        border-top: 1px solid $divider-dark;
+      }
+
+      .rt-button-button {
+        margin: 6px 0;
+      }
 
       .rt-input-input {
         margin: 0;
         padding: 0;
+        width: auto;
 
         input {
           border-width: 0;
@@ -153,8 +166,17 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
     @extend %flex-row;
     @extend %flex-align-center;
     @extend %flex-shrink-0;
-    border-bottom: 1px solid $divider-dark;
+    background-color: $color-dark-03;
     height: 48px;
+
+    .rt-button-neutral:not([disabled]).rt-button-flat:hover,
+    .rt-button-neutral:not([disabled]).rt-button-toggle:hover {
+      background-color: rgba($color-brand, .38);
+
+      .material-icons {
+        color: $text-light-primary;
+      }
+    }
 
     .counter {
       position: relative;
@@ -187,11 +209,6 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
 
     .rt-button-button {
       margin-right: $margin-small;
-    }
-
-    .rt-button-neutral:not([disabled]).rt-button-flat:hover,
-    .rt-button-neutral:not([disabled]).rt-button-toggle:hover {
-      background-color: rgba($color-brand, .38);
     }
 
     .material-icons {

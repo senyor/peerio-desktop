@@ -1,6 +1,7 @@
 const React = require('react');
 const MailFormatActions = require('./MailFormatActions');
 const ComposeInput = require('../../shared-components/ComposeInput');
+const EmailPicker = require('./EmailPicker');
 const { Button, Input, Chip, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const MailSidebar = require('./MailSidebar');
@@ -10,7 +11,7 @@ const css = require('classnames');
 class MailCompose extends ComposeInput {
     constructor() {
         super();
-        this.returnToSend = true;
+        this.returnToSend = false;
     }
 
     handleRecipientChange = value => {
@@ -28,18 +29,12 @@ class MailCompose extends ComposeInput {
                 <div className="compose-view">
                     <div className="compose-meta flex-row flex-shrink-0">
                         <div className="dark-label flex-col">
-                            <div className="meta-input">To</div>
-                            <div className="meta-input">Subject</div>
+                            <div className="meta-input">{t('to')}</div>
+                            <div className="meta-input">{t('ghost_subject')}</div>
                         </div>
                         <div className="flex-grow-1">
                             <div className="meta-input">
-                                {/*
-                                  TODO: Grab the input from new messages.
-                                  The behaviour should be the same.
-                                */}
-                                <div className="flex-grow-1">
-                                    <Input placeholder={t('mail_enterEmail')} onChange={this.handleRecipientChange} />
-                                </div>
+                                <EmailPicker ghost={this.props.ghost} />
                                 <Button label={t('send')} primary onClick={this.handleSubmit} />
                             </div>
                             <div className="meta-input">

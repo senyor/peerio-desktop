@@ -1,0 +1,8 @@
+.chip-wrapper {
+  @extend %flex-row;
+  @extend %flex-align-center;
+  background-color: $background-root;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  margin-right: auto;
+}

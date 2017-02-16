@@ -28,12 +28,6 @@
     width: 100%;
 
     .chip-wrapper {
-      @extend %flex-row;
-      align-items: center;
-      background-color: $background-root;
-      flex: 1 1 auto;
-      flex-wrap: wrap;
-      margin-right: auto;
       max-width: 544px;
       min-height: 46px;
       padding: 0 $padding-small;

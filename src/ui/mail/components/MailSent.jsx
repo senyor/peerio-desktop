@@ -1,6 +1,6 @@
 const React = require('react');
 const { IconMenu, MenuDivider, MenuItem } = require('~/react-toolbox');
-const MailSidebar = require('./MailSidebar');
+const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
 const { fileStore } = require('~/icebear');
 
@@ -40,7 +40,7 @@ class MailSent extends React.Component {
                     {this.props.ghost.files !== 0 ? <InlineFiles files={this.props.ghost.files} /> : null}
 
                 </div>
-                <MailSidebar ghost={this.props.ghost} />
+                <MailSentSidebar ghost={this.props.ghost} />
             </div>
         );
     }

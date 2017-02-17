@@ -6,7 +6,7 @@ const ComposeInput = require('../../shared-components/ComposeInput');
 const EmailPicker = require('./EmailPicker');
 const { Dialog, Button, Input, Chip, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const MailSidebar = require('./MailSidebar');
+const MailPassphrase = require('./MailPassphrase');
 const { fileStore } = require('~/icebear');
 const css = require('classnames');
 
@@ -93,7 +93,9 @@ const css = require('classnames');
                     </div>
 
                 </div>
-                <MailSidebar ghost={this.props.ghost} />
+                <div className="mail-sidebar">
+                    <MailPassphrase ghost={this.props.ghost} />
+                </div>
                 {this.renderFilePicker()}
 
                 <Dialog actions={this.dialogActions}

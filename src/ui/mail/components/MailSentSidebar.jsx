@@ -1,14 +1,16 @@
 const React = require('react');
-const { Button, IconButton } = require('~/react-toolbox');
+const { Button } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Dialog } = require('~/react-toolbox');
+const MailPassphrase = require('./MailPassphrase');
 
 @observer
-class MailSidebar extends React.Component {
+class MailSentSidebar extends React.Component {
 
     @observable revokeDialogActive = false;
+    @observable ghostActive = false;
 
     revokeDialogActions = [
         { label: t('cancel'), onClick: () => { this.hideRevokeDialog(); } },
@@ -39,43 +41,39 @@ class MailSidebar extends React.Component {
         );
     }
 
-    copyPassphrase = () => {
-
-        // TODO
-    };
+    componentDidUpdate() {
+        console.log('received props');
+        this.ghostActive = !this.props.ghost.expired && !this.props.ghost.revoked;
+    }
 
     render() {
         return (
             <div className="mail-sidebar">
-                <div>
-                    <div className="dark-label">{t('ghost_passphrase')}</div>
-                    <div className="passphrase">
-                        { this.props.ghost.passphrase }
-                        <IconButton icon="content_copy" onClick={this.copyPassphrase} />
+
+                <MailPassphrase ghost={this.props.ghost} />
+                <div className="sent-info">
+                    <div className="read-recipt">
+                        <div className="dark-label">{t('ghost_url')}</div>
+                        <div><a href={this.props.ghost.url}>{ this.props.ghost.url }</a></div>
                     </div>
-                </div>
-                { !this.props.ghost.sent ?
-                    <p>{t('ghost_expiryNotice')}</p>
-                    : <div className="sent-info">
-                        <div className="read-recipt">
-                            <div className="dark-label">{t('ghost_url')}</div>
-                            <div><a href={this.props.ghost.url}>{ this.props.ghost.url }</a></div>
-                        </div>
-                        <div className="expire-info flex-col">
-                            <div className="dark-label">{t('ghost_expires')}</div>
-                            <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
-                            { !this.props.ghost.expired && !this.props.ghost.revoked ?
+                    <div className="expire-info flex-col">
+                        {(this.ghostActive) ?
+                            (<div>
+                                <div className="dark-label">{t('ghost_expires')}</div>
+                                <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
                                 <Button label={t('revoke')}
                                     onClick={this.showRevokeDialog}
                                     style={{ marginLeft: 'auto', marginTop: '8px' }}
-                                    primary /> : t('ghost_expired') }
-                        </div>
+                                    primary />
+                            </div>)
+                           : <div className="dark-label">{this.props.ghost.revoked ? t('ghost_revoked') : t('ghost_expired')}</div>
+                    }
                     </div>
-                }
-                { this.props.ghost.sent && !this.props.ghost.expired ? this.renderRevokeDialog() : '' }
+                </div>
+                { this.ghostActive ? this.renderRevokeDialog() : '' }
             </div>
         );
     }
 }
 
-module.exports = MailSidebar;
+module.exports = MailSentSidebar;

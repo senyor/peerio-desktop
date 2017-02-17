@@ -2,11 +2,11 @@ const React = require('react');
 const { Checkbox } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const { fileStore } = require('~/icebear');
-const electron = require('electron').remote;
 const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
 const ZeroScreen = require('./components/ZeroScreen');
+const { pickSystemFiles } = require('~/helpers/file');
 
 @observer class Files extends React.Component {
     constructor() {
@@ -24,12 +24,10 @@ const ZeroScreen = require('./components/ZeroScreen');
     }
 
     handleUpload() {
-        const win = electron.getCurrentWindow();
-        electron.dialog.showOpenDialog(win, { properties: ['openFile', 'showHiddenFiles'] },
-            paths => {
-                if (!paths || !paths.length) return;
-                fileStore.upload(paths[0]);
-            });
+        pickSystemFiles().then(paths => {
+            if (!paths || !paths.length) return;
+            fileStore.upload(paths[0]);
+        });
     }
 
     toggleSelection = val => {

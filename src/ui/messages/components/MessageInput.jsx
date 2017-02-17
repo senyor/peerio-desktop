@@ -4,6 +4,8 @@ const { IconMenu, MenuItem, IconButton } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const ComposeInput = require('../../shared-components/ComposeInput');
 const Snackbar = require('~/ui/shared-components/Snackbar');
+const { chatStore } = require('~/icebear');
+const { pickSystemFiles } = require('~/helpers/file');
 
 @observer
 class MessageInput extends ComposeInput {
@@ -13,6 +15,13 @@ class MessageInput extends ComposeInput {
         this.returnToSend = true;
     }
 
+    handleUpload = () => {
+        pickSystemFiles().then(paths => {
+            if (!paths || !paths.length) return;
+            chatStore.activeChat.uploadAndShare(paths[0]);
+        });
+    };
+
     render() {
         if (!this.props.show) return null;
         return (
@@ -20,7 +29,7 @@ class MessageInput extends ComposeInput {
                 <Snackbar location="chat" priority="1" />
                 <IconMenu icon="add_circle_outline">
                     <MenuItem value="share" caption="Share from files" onClick={this.showFilePicker} />
-                    <MenuItem value="upload" caption="Upload to DM" disabled />
+                    <MenuItem value="upload" caption="Upload and share" onClick={this.handleUpload} />
                 </IconMenu>
                 <div id="messageEditor"
                      ref={this.activateQuill}

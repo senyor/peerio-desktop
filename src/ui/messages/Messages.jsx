@@ -7,6 +7,7 @@ const MessageList = require('./components/MessageList');
 const NoChatSelected = require('./components/NoChatSelected');
 const { chatStore } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
+const UploadInChatProgress = require('./components/UploadInChatProgress');
 
 @observer
 class Messages extends React.Component {
@@ -45,6 +46,9 @@ class Messages extends React.Component {
                     {(chatStore.chats.length === 0 && !chatStore.loading)
                         ? <NoChatSelected />
                         : <MessageList />}
+                    {chatStore.activeChat && chatStore.activeChat.uploadQueue.length
+                        ? <UploadInChatProgress queue={chatStore.activeChat.uploadQueue} />
+                        : null}
                     <MessageInput show={!!chatStore.activeChat} onSend={this.sendMessage}
                                   onAck={this.sendAck} onFileShare={this.shareFiles} />
                 </div>

@@ -33,4 +33,11 @@ function downloadFile(file) {
            .then(() => electron.app.dock && electron.app.dock.downloadFinished(finalPath));
 }
 
-module.exports = { downloadFile };
+function pickSystemFiles() {
+    return new Promise(resolve => {
+        const win = electron.getCurrentWindow();
+        electron.dialog.showOpenDialog(win, { properties: ['openFile', 'showHiddenFiles'] }, resolve);
+    });
+}
+
+module.exports = { downloadFile, pickSystemFiles };

@@ -41,6 +41,7 @@ $radius-sign-warning: 18px;
   @extend %flex-col;
   @extend %flex-grow-1;
   @extend %flex-shrink-1;
+  position: relative;
   // FIXME remove calc?
   width: calc(100vw - 304px);
 
@@ -320,6 +321,22 @@ $radius-sign-warning: 18px;
     -webkit-user-select: initial;
     vertical-align: middle;
     width: auto;
+  }
+
+  .chat-upload-progress {
+    background-color: rgba(44, 149, 207, .8);
+    color: white;
+    font-weight: 500;
+    height: 35px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 64px;
+
+    .progress-title {
+      margin-left: 5px;
+      margin-top: 4px;
+    }
   }
 }
 

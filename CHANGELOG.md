@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.8.0"></a>
+# [1.8.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.7.11...v1.8.0) (2017-02-17)
+
+
+### Bug Fixes
+
+* **avatar:** avatar takes username parameter too ([991b756](https://github.com/PeerioTechnologies/peerio-desktop/commit/991b756))
+* **avatar:** avatars in user picker ([9b03679](https://github.com/PeerioTechnologies/peerio-desktop/commit/9b03679))
+* **chat:** key on avatars ([581850b](https://github.com/PeerioTechnologies/peerio-desktop/commit/581850b))
+* **config:** default implementations should not be loaded by default ([927f0b9](https://github.com/PeerioTechnologies/peerio-desktop/commit/927f0b9))
+* **css:** typo ([f1616c3](https://github.com/PeerioTechnologies/peerio-desktop/commit/f1616c3))
+* **electron:** app.dock doesn't exist on windows ([c5dfecd](https://github.com/PeerioTechnologies/peerio-desktop/commit/c5dfecd))
+* **files:** small fixes on file sharing ([c52add2](https://github.com/PeerioTechnologies/peerio-desktop/commit/c52add2))
+* **ghost:** email picker blur ([e71ed09](https://github.com/PeerioTechnologies/peerio-desktop/commit/e71ed09))
+* **ghost:** sidebar & status & copy passphrase ([9f038f2](https://github.com/PeerioTechnologies/peerio-desktop/commit/9f038f2))
+* **ghost:** ui fixes ([af0dfe5](https://github.com/PeerioTechnologies/peerio-desktop/commit/af0dfe5))
+* **mail:** chips wrap and flow more predictably. ([cdd71dc](https://github.com/PeerioTechnologies/peerio-desktop/commit/cdd71dc))
+* **mail:** extracts basic chip wrapper styling ([71f7308](https://github.com/PeerioTechnologies/peerio-desktop/commit/71f7308))
+* **notification:** unread notifications ([9b31863](https://github.com/PeerioTechnologies/peerio-desktop/commit/9b31863))
+* **profile:** primary address display ([753e6bd](https://github.com/PeerioTechnologies/peerio-desktop/commit/753e6bd))
+* **signup:** makes navigation visible at minimum screen size. ([323d1df](https://github.com/PeerioTechnologies/peerio-desktop/commit/323d1df))
+* **style-ui:** prevents ripple from overflowing buttons ([1d37b53](https://github.com/PeerioTechnologies/peerio-desktop/commit/1d37b53))
+* **style-ui:** removes left padding from warning footer ([70ab284](https://github.com/PeerioTechnologies/peerio-desktop/commit/70ab284))
+* **style-ui:** updates date marker markup ([d03437f](https://github.com/PeerioTechnologies/peerio-desktop/commit/d03437f))
+* **styles:** scroll was always visible in chat list ([180d48a](https://github.com/PeerioTechnologies/peerio-desktop/commit/180d48a))
+* typo ([2e13662](https://github.com/PeerioTechnologies/peerio-desktop/commit/2e13662))
+
+
+### Features
+
+* **chat:** date separators ([e983f81](https://github.com/PeerioTechnologies/peerio-desktop/commit/e983f81))
+* **chat:** message grouping ([7c9bddc](https://github.com/PeerioTechnologies/peerio-desktop/commit/7c9bddc))
+* **contacts:** contact profile dialog ([4b003db](https://github.com/PeerioTechnologies/peerio-desktop/commit/4b003db))
+* **files:** drag drop to upload ([9db14e0](https://github.com/PeerioTechnologies/peerio-desktop/commit/9db14e0))
+* **files:** search in file picker ([13c59b7](https://github.com/PeerioTechnologies/peerio-desktop/commit/13c59b7))
+* **files:** unread counter ([d4523e4](https://github.com/PeerioTechnologies/peerio-desktop/commit/d4523e4))
+* **ghost:** chip picker + validation for emails ([115179b](https://github.com/PeerioTechnologies/peerio-desktop/commit/115179b))
+* **ghost:** validation ([0fc64c3](https://github.com/PeerioTechnologies/peerio-desktop/commit/0fc64c3))
+* **receipts:** receipts ([82b185f](https://github.com/PeerioTechnologies/peerio-desktop/commit/82b185f))
+* **security:** passckde lock component ([e1f6c99](https://github.com/PeerioTechnologies/peerio-desktop/commit/e1f6c99))
+* **settings:** explanations on passphrase view ([480021b](https://github.com/PeerioTechnologies/peerio-desktop/commit/480021b))
+* **settings:** passcode protected passphrase view ([9398e5e](https://github.com/PeerioTechnologies/peerio-desktop/commit/9398e5e))
+
+
+
 <a name="1.7.11"></a>
 ## [1.7.11](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.7.10...v1.7.11) (2017-01-28)
 

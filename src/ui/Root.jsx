@@ -8,6 +8,7 @@ const config = require('~/config');
 const { setStringReplacement } = require('peerio-translator');
 const theme = require('~/react-toolbox/theme.js');
 const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
+const DropTarget = require('./shared-components/DropTarget');
 
 class Root extends React.Component {
 
@@ -55,6 +56,7 @@ class Root extends React.Component {
                     {this.props.children}
                     <AutoUpdateDialog />
                     {this.devtools}
+                    <DropTarget />
                 </div>
             </ThemeProvider>
         );

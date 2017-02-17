@@ -13,9 +13,11 @@ class UploadInChatProgress extends React.Component {
         const queued = this.props.queue.length - 1;
         return (
             <div className="chat-upload-progress">
-                <div className="progress-title">
-                    Uploading {file.name}&nbsp;
-                    {queued ? ` | ${queued} files in queue.` : null}
+                <div className="progress-content">
+                    <FontIcon value="cloud_upload" />
+                    <div className="progress-title">Uploading {file.name}
+                        {queued ? ` | ${queued} files in queue.` : null}
+                    </div>
                 </div>
                 <ProgressBar type="linear" mode="determinate" value={file.progress}
                                                max={file.progressMax} />

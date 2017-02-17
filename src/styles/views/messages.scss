@@ -324,18 +324,31 @@ $radius-sign-warning: 18px;
   }
 
   .chat-upload-progress {
-    background-color: rgba(44, 149, 207, .8);
-    color: white;
-    font-weight: 500;
-    height: 35px;
+    @extend %flex-col;
+    background-color: rgba($color-brand, .7);
+    box-shadow: $shadow-5;
+    color: $text-light-primary;
+    font-weight: $font-weight-semibold;
+    height: 48px;
     left: 0;
+    margin: 0 $margin-large;
     position: absolute;
     right: 0;
-    top: 64px;
+    top: 68px;
+
+    .progress-content {
+      @extend %flex-row;
+      @extend %flex-align-center;
+      padding: 0 $padding-small;
+
+      .material-icons {
+        color: $text-light-primary;
+      }
+    }
 
     .progress-title {
-      margin-left: 5px;
-      margin-top: 4px;
+      line-height: 44px;
+      margin-left: $margin-small;
     }
   }
 }

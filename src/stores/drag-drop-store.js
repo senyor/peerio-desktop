@@ -1,46 +1,57 @@
 const { observable } = require('mobx');
-const { User, fileStore } = require('~/icebear');
+const { User } = require('~/icebear');
 
 class DragDropStore {
     @observable hovering;
     @observable hoveringFileCount = 0;
-    counter = 0;
+    _counter = 0;
+    _subscribers = [];
 
-    onEnter = (ev) => {
+    _onEnter = (ev) => {
         ev.preventDefault();
         if (!User.current) return;
-        this.counter++;
-        if (this.counter === 1) {
+        this._counter++;
+        if (this._counter === 1) {
             this.hovering = true;
             this.hoveringFileCount = ev.dataTransfer.files.length;
         }
-        console.log(this.counter);
     };
 
-    onLeave = (ev) => {
+    _onLeave = (ev) => {
         ev.preventDefault();
         if (!User.current) return;
-        if (this.counter > 0) this.counter--;
-        if (this.counter === 0) this.hovering = false;
-        console.log(this.counter);
+        if (this._counter > 0) this._counter--;
+        if (this._counter === 0) this.hovering = false;
     };
 
-    onDrop = (ev) => {
+    _onDrop = (ev) => {
         ev.preventDefault();
         if (!User.current) return;
-        this.counter = 0;
+        this._counter = 0;
         this.hovering = false;
         this.hoveringFileCount = 0;
+        const files = [];
         for (let i = 0; i < ev.dataTransfer.files.length; i++) {
-            fileStore.upload(ev.dataTransfer.files[i].path);
+            files.push(ev.dataTransfer.files[i].path);
+        }
+        if (files.length && this._subscribers.length) {
+            this._subscribers.forEach(handler => { handler(files); });
         }
     };
+
+    /**
+     * Subscribe handler to files dropped event
+     * @param {Function<Array<string>>} handler
+     */
+    onFilesDropped(handler) {
+        if (!this._subscribers.includes(handler)) this._subscribers.push(handler);
+    }
 }
 
 const store = new DragDropStore();
-window.addEventListener('drop', store.onDrop, false);
-window.addEventListener('dragenter', store.onEnter, false);
-window.addEventListener('dragleave', store.onLeave, false);
+window.addEventListener('drop', store._onDrop, false);
+window.addEventListener('dragenter', store._onEnter, false);
+window.addEventListener('dragleave', store._onLeave, false);
 window.addEventListener('dragover', (ev) => { ev.preventDefault(); }, false);
 
 module.exports = store;

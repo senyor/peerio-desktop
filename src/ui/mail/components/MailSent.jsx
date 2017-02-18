@@ -1,10 +1,16 @@
 const React = require('react');
-const { IconMenu, MenuDivider, MenuItem } = require('~/react-toolbox');
+const { IconButton, IconMenu, MenuDivider, MenuItem, Tooltip } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
 const { fileStore } = require('~/icebear');
 
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
+
 class MailSent extends React.Component {
+
+    handleDelete = () => {
+        console.log('DELETING MAIL!');
+    }
 
     render() {
         return (
@@ -14,6 +20,13 @@ class MailSent extends React.Component {
                         <div className="flex-row flex-align-center flex-justify-between"
                              style={{ height: '36px' }}>
                             <div className="subject">{this.props.ghost.subject}</div>
+                            <TooltipIcon
+                                tooltip="Delete mail"
+                                tooltipDelay="250"
+                                tooltipPosition="bottom"
+                                icon="delete"
+                                onClick={this.handleDelete} />
+
                             {this.props.ghost.files.length ?
                                 <div className="attached-files">
                                     {this.props.ghost.files.length}

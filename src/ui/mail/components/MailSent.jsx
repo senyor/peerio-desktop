@@ -1,16 +1,34 @@
 const React = require('react');
-const { IconButton, IconMenu, MenuDivider, MenuItem, Tooltip } = require('~/react-toolbox');
+const { observable } = require('mobx');
+const { observer } = require('mobx-react');
+const { Dialog, IconButton, IconMenu, MenuDivider, MenuItem, Switch, Tooltip } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
 const { fileStore } = require('~/icebear');
 
+
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
+@observer
 class MailSent extends React.Component {
 
+    @observable dialogActive = false;
+
+    handleClose = () => {
+        this.dialogActive = false;
+    };
+
+    actions = [
+        { label: 'Cancel', onClick: this.handleClose },
+        { label: 'Confirm', onClick: this.handleClose, primary: true }
+    ];
+
     handleDelete = () => {
-        console.log('DELETING MAIL!');
+        this.dialogActive = true;
+        // todo  mailRevoked ? delete and trigger snackbar 'Mail Deleted' or something.
+        //           : dialog (cance or confirm delete without revoking, and trigger snackbar.)
     }
+
 
     render() {
         return (
@@ -22,7 +40,7 @@ class MailSent extends React.Component {
                             <div className="subject">{this.props.ghost.subject}</div>
                             <TooltipIcon
                                 tooltip="Delete mail"
-                                tooltipDelay="250"
+                                tooltipDelay={250}
                                 tooltipPosition="bottom"
                                 icon="delete"
                                 onClick={this.handleDelete} />
@@ -54,6 +72,15 @@ class MailSent extends React.Component {
 
                 </div>
                 <MailSentSidebar ghost={this.props.ghost} />
+                <Dialog title="Revoke Mail"
+                        actions={this.actions}
+                        active={this.dialogActive}
+                        onEscKeyDown={this.handleClose}
+                        onOverlayClick={this.handleClose}>
+                    This message has not been revoked. The recipient(s) can continue
+                    to access the message until it expires.
+
+                </Dialog>
             </div>
         );
     }

@@ -194,6 +194,7 @@ $radius-sign-warning: 18px;
           color: rgba($text-dark-hint, 0);
           overflow: hidden;
           padding-top: 2px; // To align the timestamp with the first row of text.
+          text-align: right;
           white-space: nowrap;
           width: 40px;
         }

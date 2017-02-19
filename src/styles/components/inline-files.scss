@@ -11,7 +11,7 @@
     height: 48px;
     max-width: 300px;
     min-width: 200px;
-    padding-left: 8px;
+    padding-left: $padding-small;
 
     .material-icons {
       padding: 0 12px;
@@ -21,7 +21,7 @@
       background: $color-dark-03;
       border-left: 4px solid $color-brand;
       color: $color-brand;
-      padding-left: 4px;
+      padding-left: $padding-tiny;
 
       .material-icons {
         color: $color-brand;
@@ -47,5 +47,6 @@
   .invalid-file {
     color: $color-error;
     cursor: auto;
+    margin-left: $margin-small;
   }
 }

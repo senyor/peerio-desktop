@@ -52,6 +52,16 @@ const css = require('classnames');
         }
     };
 
+    showFilePicker = () => {
+        // may have last been open elsewhere
+        fileStore.clearSelection();
+        this.props.ghost.files.forEach((fileId) => {
+            fileStore.getById(fileId).selected = true;
+        });
+        this.filePickerActive = true;
+    };
+
+
     render() {
         return (
             <div className="flex-row flex-grow-1">

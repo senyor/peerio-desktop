@@ -10,7 +10,7 @@ const MailPassphrase = require('./MailPassphrase');
 class MailSentSidebar extends React.Component {
 
     @observable revokeDialogActive = false;
-    @observable ghostActive = false;
+    @observable ghostActive = true;
 
     revokeDialogActions = [
         { label: t('cancel'), onClick: () => { this.hideRevokeDialog(); } },
@@ -42,14 +42,12 @@ class MailSentSidebar extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log('received props');
         this.ghostActive = !this.props.ghost.expired && !this.props.ghost.revoked;
     }
 
     render() {
         return (
             <div className="mail-sidebar">
-
                 <MailPassphrase ghost={this.props.ghost} />
                 <div className="sent-info">
                     <div className="read-recipt">

@@ -2,6 +2,7 @@
 const React = require('react');
 const { IconMenu, MenuItem, IconButton } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
+const { fileStore } = require('~/icebear');
 const ComposeInput = require('../../shared-components/ComposeInput');
 const Snackbar = require('~/ui/shared-components/Snackbar');
 const { chatStore } = require('~/icebear');
@@ -20,6 +21,11 @@ class MessageInput extends ComposeInput {
             if (!paths || !paths.length) return;
             chatStore.activeChat.uploadAndShare(paths[0]);
         });
+    };
+
+    showFilePicker = () => {
+        fileStore.clearSelection();
+        this.filePickerActive = true;
     };
 
     render() {

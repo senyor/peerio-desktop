@@ -194,11 +194,6 @@ class ComposeInput extends React.Component {
         this.filePickerActive = false;
     };
 
-    showFilePicker = () => {
-        fileStore.clearSelection();
-        this.filePickerActive = true;
-    };
-
     shareFiles = selected => {
         this.props.onFileShare(selected);
         this.handleFilePickerClose();

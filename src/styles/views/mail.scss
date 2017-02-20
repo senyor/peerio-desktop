@@ -248,6 +248,17 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
     padding: $padding-large $padding-default $padding-default;
     width: $width-mail-sidebar;
 
+    .mail-link {
+      @extend %flex-row;
+      @extend %flex-align-center;
+      white-space: nowrap;
+
+      a {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
     .passphrase {
       cursor: pointer;
 

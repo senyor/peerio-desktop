@@ -1,10 +1,12 @@
 const React = require('react');
-const { Button } = require('~/react-toolbox');
+const { Button, IconButton, Tooltip } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Dialog } = require('~/react-toolbox');
 const MailPassphrase = require('./MailPassphrase');
+
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 @observer
 class MailSentSidebar extends React.Component {
@@ -45,6 +47,10 @@ class MailSentSidebar extends React.Component {
         this.ghostActive = !this.props.ghost.expired && !this.props.ghost.revoked;
     }
 
+    copyLink = () => {
+        console.log('link copied :D');
+    }
+
     render() {
         return (
             <div className="mail-sidebar">
@@ -52,7 +58,15 @@ class MailSentSidebar extends React.Component {
                 <div className="sent-info">
                     <div className="read-recipt">
                         <div className="dark-label">{t('ghost_url')}</div>
-                        <div><a href={this.props.ghost.url}>{ this.props.ghost.url }</a></div>
+                        <div className="mail-link">
+                            <a href={this.props.ghost.url}>{ this.props.ghost.url }</a>
+                            <TooltipIcon
+                                tooltip="copy"
+                                tooltipDelay={500}
+                                tooltipPosition="bottom"
+                                icon="content_copy"
+                                onClick={this.copyLink} />
+                        </div>
                     </div>
                     <div className="expire-info flex-col">
                         {(this.ghostActive) ?

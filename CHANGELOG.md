@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.9.0"></a>
+# [1.9.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.8.0...v1.9.0) (2017-02-20)
+
+
+### Bug Fixes
+
+* **ghost:** file attachment state ([cc0eaff](https://github.com/PeerioTechnologies/peerio-desktop/commit/cc0eaff))
+
+
+### Features
+
+* **files:** drop to chat ([2dc9848](https://github.com/PeerioTechnologies/peerio-desktop/commit/2dc9848))
+* **files:** upload file to chat ([fc96631](https://github.com/PeerioTechnologies/peerio-desktop/commit/fc96631))
+
+
+
 <a name="1.8.0"></a>
 # [1.8.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.7.11...v1.8.0) (2017-02-17)
 

@@ -50,43 +50,43 @@ img,
 }
 
 .global-drop-target {
-position: fixed;
-  top: 0;
-  right: 0;
+  @extend %flex-col;
+  @extend %flex-align-center;
+  @extend %flex-justify-center;
+  background-color: $background-overlay;
   bottom: 0;
+  color: $text-light-primary;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  align-items: center;
-  justify-content: center;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: 3em;
-  text-transform: uppercase;
-  font-weight: 600;
+  position: fixed;
+  right: 0;
+  top: 0;
+
   .drop-content {
-  animation: pulse-scale;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  text-align: center;
+    @extend %flex-row;
+    @extend %flex-align-center;
+    animation: pulse-scale;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
   }
-  .material-icons{
-    color: white;
-    font-size: 3em;
+
+  .material-icons {
+    @extend %display-4;
+    color: $text-light-primary;
+    margin-right: $margin-default;
   }
 }
 
 @keyframes pulse-scale {
   0% {
-    transform:scale(1);
+    transform: scale(1);
   }
 
   50% {
-    transform:scale(1.02);
+    transform: scale(1.02);
   }
 
   100% {
-    transform:scale(1);
+    transform: scale(1);
   }
 }

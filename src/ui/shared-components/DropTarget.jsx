@@ -40,9 +40,9 @@ class DropTarget extends React.Component {
     };
 
     uploadActions = [
-        { label: 'Just upload', onClick: this.justUpload },
-        { label: 'Upload and share', onClick: this.uploadAndShare },
-        { label: 'Cancel', onClick: this.cancelUpload }
+        { label: 'Cancel', onClick: this.cancelUpload },
+        { label: 'Upload', onClick: this.justUploadShare }
+
     ];
 
     render() {
@@ -53,8 +53,8 @@ class DropTarget extends React.Component {
                   active
                   onEscKeyDown={this.cancelUpload}
                   onOverlayClick={this.cancelUpload}
-                  title="My awesome dialog">
-                    <p>Do u want to share file(s) with current chat or just upload?</p>
+                  title="Upload and share">
+                    <p>This file will be shared with the current chat</p>
                 </Dialog>
             );
         }
@@ -64,7 +64,7 @@ class DropTarget extends React.Component {
             <div className="global-drop-target">
                 <div className="drop-content">
                     <FontIcon value="cloud_upload" />
-                    <div>
+                    <div className="display-2">
                         Drop {dragStore.hoveringFileCount} files to upload
                     </div>
                 </div>

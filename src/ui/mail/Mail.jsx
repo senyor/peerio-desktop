@@ -46,9 +46,6 @@ class Mail extends React.Component {
     }
 
     render() {
-        // if (mailStore.ghosts.length === 0 && !mailStore.loading) return (
-        //    <div>nothing here, zero screen</div>
-        // );
         return (
             <div className="mail">
                 <div className="mail-list-wrapper">
@@ -76,8 +73,9 @@ class Mail extends React.Component {
                         })}
                     </div>
                 </div>
-                {/* {mailStore.selectedId && !mailStore.loading ? this.renderMiddle() : null } */}
-                <ZeroMail />
+                {mailStore.ghosts.length === 0 && !mailStore.loading ? <ZeroMail /> : null }
+                {mailStore.selectedId && !mailStore.loading ? this.renderMiddle() : null }
+
                 <Button icon="add" floating accent onClick={this.handleCompose} />
             </div>
         );

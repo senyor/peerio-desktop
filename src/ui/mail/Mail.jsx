@@ -6,6 +6,7 @@ const { mailStore } = require('~/icebear');
 const MailItem = require('./components/MailItem');
 const MailCompose = require('./components/MailCompose');
 const MailSent = require('./components/MailSent');
+const ZeroMail = require('./components/ZeroMail');
 
 @observer
 class Mail extends React.Component {
@@ -75,7 +76,8 @@ class Mail extends React.Component {
                         })}
                     </div>
                 </div>
-                {mailStore.selectedId && !mailStore.loading ? this.renderMiddle() : null }
+                {/* {mailStore.selectedId && !mailStore.loading ? this.renderMiddle() : null } */}
+                <ZeroMail />
                 <Button icon="add" floating accent onClick={this.handleCompose} />
             </div>
         );

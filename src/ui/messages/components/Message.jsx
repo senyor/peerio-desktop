@@ -65,6 +65,10 @@ class Message extends React.Component {
                         {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
                     </div>
                     {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null }
+                    {m.receipts ?
+                        <div key={`${m.id || m.tempId}receipts`} className="receipt-wrapper">
+                            {m.receipts.map(u => <Avatar key={u} username={u} size="tiny" />)}
+                        </div> : null}
                 </div>
                 {invalidSign ?
                     <div className="invalid-sign-warning">
@@ -73,13 +77,7 @@ class Message extends React.Component {
                     </div>
                     : null
                 }
-                {m.receipts ?
-                    <div key={`${m.id || m.tempId}receipts`} className="marker-wrapper">
-                        <div className="marker" />
-                        <div className="content">
-                            {m.receipts.map(u => <Avatar key={u} username={u} size="tiny" />)}
-                        </div>
-                    </div> : null}
+
                 {m.sending ? <div className="sending-overlay" /> : null}
             </div>
         );

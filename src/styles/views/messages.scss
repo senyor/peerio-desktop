@@ -45,6 +45,13 @@ $radius-sign-warning: 18px;
   // FIXME remove calc?
   width: calc(100vw - 304px);
 
+  .receipt-wrapper {
+    @extend %flex-col;
+    @extend %flex-justify-end;
+    margin-left: auto;
+    margin-right: $margin-small;
+  }
+
   .marker-wrapper {
     @extend %flex-row;
     @extend %flex-align-center;

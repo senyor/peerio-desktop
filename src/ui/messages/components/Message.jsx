@@ -50,7 +50,7 @@ class Message extends React.Component {
         return (
             <div className={
                 css('message-content-wrapper', {
-                    'invalid-sign': invalidSign, light: this.props.light || m.receipts })}>
+                    'invalid-sign': invalidSign, light: this.props.light })}>
                 <div className="flex-row">
                     { this.props.light ? null : <Avatar contact={m.sender} /> }
                     { this.props.light ? <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div> : null }

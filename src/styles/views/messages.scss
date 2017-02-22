@@ -218,9 +218,10 @@ $radius-sign-warning: 18px;
       &.invalid-sign {
         background-color: rgba($color-error, .06);
         border-radius: $radius-sign-warning;
-        margin-left: -8px;
+        margin-left: 28px;
         min-width: 320px;
         overflow: hidden;
+        padding: $padding-tiny $padding-tiny 0 $padding-tiny;
 
         .warning-icon {
           @extend %flex-shrink-0;

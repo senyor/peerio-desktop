@@ -41,7 +41,7 @@ class DropTarget extends React.Component {
 
     uploadActions = [
         { label: 'Cancel', onClick: this.cancelUpload },
-        { label: 'Upload', onClick: this.justUploadShare }
+        { label: 'Upload', onClick: this.uploadAndShare }
 
     ];
 

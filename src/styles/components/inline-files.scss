@@ -6,22 +6,21 @@
   .shared-file {
     @extend %flex-col;
     @extend %flex-justify-center;
+    background: $color-dark-03;
+    border-left: 4px solid $color-brand;
     border-radius: 2px;
     cursor: pointer;
     height: 48px;
     max-width: 300px;
     min-width: 200px;
-    padding-left: $padding-small;
+    padding-left: $padding-tiny;
 
     .material-icons {
       padding: 0 12px;
     }
 
     &:hover {
-      background: $color-dark-03;
-      border-left: 4px solid $color-brand;
       color: $color-brand;
-      padding-left: $padding-tiny;
 
       .material-icons {
         color: $color-brand;

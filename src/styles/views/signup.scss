@@ -3,7 +3,7 @@
 
   @media (max-height: $minimum-screen-height) {
     img {
-      margin: $margin-default 0 24px;
+      margin: $margin-small 0 $margin-default;
     }
 
     .rt-input-input {

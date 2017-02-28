@@ -19,7 +19,7 @@ class MessageInput extends ComposeInput {
     handleUpload = () => {
         pickSystemFiles().then(paths => {
             if (!paths || !paths.length) return;
-            chatStore.activeChat.uploadAndShare(paths[0]);
+            chatStore.activeChat.uploadAndShareFile(paths[0]);
         });
     };
 

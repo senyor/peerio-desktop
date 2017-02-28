@@ -19,9 +19,9 @@ class Messages extends React.Component {
         this.loaderDisposer();
     }
 
-    sendMessage(m, files) {
+    sendMessage(m) {
         sounds.sending.play();
-        chatStore.activeChat.sendMessage(m, files)
+        chatStore.activeChat.sendMessage(m)
                  .then(() => sounds.sent.play())
                  .catch(() => sounds.destroy.play());
     }
@@ -32,7 +32,10 @@ class Messages extends React.Component {
                  .catch(() => sounds.destroy.play());
     }
     shareFiles = (files) => {
-        this.sendMessage('', files);
+        sounds.sending.play();
+        chatStore.activeChat.shareFiles(files)
+                 .then(() => sounds.sent.play())
+                 .catch(() => sounds.destroy.play());
     };
 
     render() {

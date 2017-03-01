@@ -13,6 +13,7 @@ if (isDevEnv) {
     // shortcut to use with promises
     window.clog = console.log.bind(console);
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     // <emojione> ------------------------------------------------------------------------------------------------
     // configuring emojione and preloading sprites

@@ -29,7 +29,8 @@
         "jsx-a11y/img-has-alt": 1,
         "no-alert":0,
         "no-mixed-operators":0,
-        "no-multi-assign":0
+        "no-multi-assign":0,
+        "no-void": 0
     },
     "globals":{
         "document": false,

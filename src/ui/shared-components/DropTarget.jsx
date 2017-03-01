@@ -35,7 +35,7 @@ class DropTarget extends React.Component {
     };
 
     uploadAndShare = () => {
-        this._files.forEach(f => { chatStore.activeChat.uploadAndShare(f); });
+        this._files.forEach(f => void chatStore.activeChat.uploadAndShareFile(f));
         this.dialogActive = false;
     };
 

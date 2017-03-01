@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog } = require('~/react-toolbox');
+const { Button, Dialog, Input } = require('~/react-toolbox');
 const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
@@ -11,6 +11,9 @@ class SecuritySettings extends React.Component {
 
     @observable passphraseDialogOpen = false;
     @observable unlocked = false;
+    @observable setupTwoFactorDialogOpen = false;
+    @observable twoFactorActive = false;
+    @observable backupCodesDialogOpen = false;
 
     unlock = () => {
         this.unlocked = true;
@@ -27,6 +30,39 @@ class SecuritySettings extends React.Component {
 
     passphraseDialogActions = [
         { label: 'Ok', onClick: this.hidePassphraseDialog }
+    ];
+
+    hideTwoFactorDialog = () => {
+        this.setupTwoFactorDialogOpen = false;
+        this.deactivateTwoFactor();
+    };
+
+    showTwoFactorDialog = () => {
+        this.setupTwoFactorDialogOpen = true;
+    };
+
+    deactivateTwoFactor = () => {
+        // TODO trigger confirm dialog.
+        this.twoFactorActive = !this.twoFactorActive;
+    }
+
+    twoFactorDialogActions = [
+        { label: 'cancel', onClick: this.hideTwoFactorDialog },
+        { label: 'confirm', onClick: this.hideTwoFactorDialog }
+    ];
+
+
+    hideBackupCodesDialog = () => {
+        this.backupCodesDialogOpen = false;
+    };
+
+    showBackupCodesDialog = () => {
+        this.backupCodesDialogOpen = true;
+    };
+
+    backupCodesDialogActions = [
+        { label: 'cancel', onClick: this.hideBackupCodesDialog },
+        { label: 'download', onClick: this.hideBackupCodesDialog }
     ];
 
     renderShowPassphraseSection() {
@@ -69,7 +105,15 @@ class SecuritySettings extends React.Component {
                         {t('description_DevicePassword')}
                     </p>
                     <div className="title">{t('2fa')}
-                        <Button label={t('button_activate')} flat primary />
+                        <Button label={this.twoFactorActive ?
+                                t('button_backup_codes') : t('button_activate')}
+                                onClick={this.twoFactorActive ?
+                                  this.showBackupCodesDialog : this.showTwoFactorDialog}
+                                flat primary />
+                        { this.twoFactorActive ?
+                            <Button label={t('button_deactivate')}
+                                      onClick={this.deactivateTwoFactor}
+                                      flat primary /> : null }
                     </div>
                     <p>
                         {t('description_2fa')}
@@ -92,6 +136,41 @@ class SecuritySettings extends React.Component {
                         {t('description_accessLogs')}
                     </p>
                 </section>
+                {/* Technically speaking: do we want 2 dialogs or 1 dialog with steps? */}
+                <Dialog active={this.setupTwoFactorDialogOpen} actions={this.twoFactorDialogActions}
+                        onOverlayClick={this.hideTwoFactorDialog} onEscKeyDown={this.hideTwoFactorDialog}
+                        title={t('2fa')}>
+                    <div>
+                        <p>{t('setupTwoFactor')}</p>
+                        {/* To set up 2FA enter the secret key into your authenticator app */}
+                        <div>{t('secretKey')}</div>
+                        <div>
+                            <div>I am Jack's secret key</div>
+                            <Button label={t('button_copy_key')} />
+                        </div>
+                        <Input label={t('authenticatorCode')} />
+                    </div>
+                </Dialog>
+
+                <Dialog active={this.backupCodesDialogOpen} actions={this.backupCodesDialogActions}
+                        onOverlayClick={this.hideBackupCodesDialog} onEscKeyDown={this.hideBackupCodesDialog}
+                        title={t('backupCodes')}>
+                    <div>
+                        <p>{t('whatAreBackupCodes')}</p>
+                        <div className="flex-col">
+                            {/* repeat this */}
+                            <div className="backup-row">
+                                <strong>123456</strong><strong>123456</strong>
+                            </div>
+                            <div className="backup-row">
+                                <strong>123456</strong><strong>123456</strong>
+                            </div>
+                            <div className="backup-row">
+                                <strong>123456</strong><strong>123456</strong>
+                            </div>
+                        </div>
+                    </div>
+                </Dialog>
             </div>
         );
     }

@@ -106,3 +106,10 @@
     }
   }
 }
+
+.backup-row {
+  @extend %flex-row;
+  @extend %flex-justify-around;
+  height: 48px;
+  line-height: 48px;
+}

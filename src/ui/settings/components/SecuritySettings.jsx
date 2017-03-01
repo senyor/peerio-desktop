@@ -144,7 +144,7 @@ class SecuritySettings extends React.Component {
                         <p>{t('setupTwoFactor')}</p>
                         {/* To set up 2FA enter the secret key into your authenticator app */}
                         <div>{t('secretKey')}</div>
-                        <div>
+                        <div className="flex-row flex-align-center flex-justify-between">
                             <div>I am Jack's secret key</div>
                             <Button label={t('button_copy_key')} />
                         </div>

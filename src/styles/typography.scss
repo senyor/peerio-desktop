@@ -24,6 +24,11 @@
   @extend %hint-error-label;
 }
 
+.text-light-helper {
+  @extend %hint-error-label;
+  color: $text-light-secondary;
+}
+
 .text-right {
   text-align: right !important;
 }

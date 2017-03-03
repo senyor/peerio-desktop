@@ -114,17 +114,20 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
 
     render() {
         return (
-            <Input type={this.props.type || 'text'}
-                   value={this.props.store[this.props.name] || ''}
-                   label={this.props.label}
-                   onChange={this.handleChange}
-                   onKeyPress={this.props.onKeyPress}
-                   onBlur={this.handleBlur}
-                   error={this.validationMessage}
-                   className={this.props.className}
-            />
+            <div>
+                <Input type={this.props.type || 'text'}
+                       value={this.props.store[this.props.name] || ''}
+                       label={this.props.label}
+                       onChange={this.handleChange}
+                       onKeyPress={this.props.onKeyPress}
+                       onBlur={this.handleBlur}
+                       error={this.validationMessage}
+                       className={this.props.className}
+                       maxLength={this.props.maxLength}
+                />
+                <div className="text-light-helper">{this.props.hint}</div>
+            </div>
         );
     }
 }
 module.exports = ValidatedInput;
-

@@ -26,6 +26,16 @@
   transition: 350ms opcaity $transition-default;
   width: 100vw;
 
+  .text-light-helper {
+    line-height: 20px;
+    margin-top: 2px;
+    position: absolute;
+  }
+
+  .rt-input-errored + .text-light-helper {
+    display: none;
+  }
+
   .help,
   .terms {
     display: block;

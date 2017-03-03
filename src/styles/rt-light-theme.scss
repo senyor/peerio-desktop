@@ -83,7 +83,7 @@
   .rt-input-errored input {
     border: 0;
     border-bottom: 4px solid $border-error;
-    padding-top: $padding-large;
+    padding-top: 22px;
   }
 
   .rt-input-error {
@@ -91,6 +91,16 @@
     display: block;
     margin-top: 2px;
     white-space: nowrap;
+
+    + .rt-input-counter {
+      margin-top: 0;
+    }
+  }
+
+  .rt-input-counter {
+    color: $text-light-primary;
+    line-height: 20px;
+    margin-top: 2px;
   }
 
   strong {

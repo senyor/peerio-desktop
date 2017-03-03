@@ -12,6 +12,7 @@
 // so that I don't have to write millions of font rules to overwrite RTs millions of font rules.
 * {
   font-family: $font-stack;
+  -webkit-font-smoothing: antialiased;
 }
 
 // AVATAR

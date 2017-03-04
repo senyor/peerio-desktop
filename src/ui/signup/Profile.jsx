@@ -45,7 +45,8 @@ class ProfileStore extends OrderedFormStore {
                                 maxLength={16}
                                 name="username"
                                 store={this.props.store}
-                                hint="a-Z, 0-9, and _ only." />
+                                hint="hint_username" />
+                {/* a-Z, 0-9, and _ only. */}
 
                 <ValidatedInput label={t('email')}
                                 position="1"
@@ -53,8 +54,8 @@ class ProfileStore extends OrderedFormStore {
                                 validator={validators.email}
                                 name="email"
                                 store={this.props.store}
-                                hint="ex. info@peerio.com" />
-
+                                hint="hint_email" />
+                {/* "ex. info@peerio.com" */}
                 <div className="input-row">
                     <div>
                         <ValidatedInput label={t('firstName')}

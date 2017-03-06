@@ -1,7 +1,7 @@
 {
   "name": "icebear-desktop",
   "description": "Peerio desktop client (codename Icebear)",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -163,13 +163,14 @@
     ],
     "asar": true,
     "compression": "normal",
+    "squirrelWindows": {
+      "msi": true
+    },
     "win": {
       "target": [
         "squirrel"
       ],
-      "title": "Icebear",
-      "version": "1.10.2",
-      "msi": true
+      "version": "1.10.3"
     },
     "mac": {
       "category": "public.app-category.productivity",
@@ -179,6 +180,7 @@
       ]
     },
     "dmg": {
+      "title": "${productName} ${arch} ${version}",
       "window": {
         "x": 200,
         "y": 160,

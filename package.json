@@ -1,7 +1,7 @@
 {
   "name": "icebear-desktop",
   "description": "Peerio desktop client (codename Icebear)",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -26,33 +26,12 @@
     "style:lint": "stylefmt -r src/styles/**/*.scss && stylelint src/styles/**/*.scss && stylefmt -r src/ui/dev-tools/**/*.scss",
     "test": "npm run compile && mocha",
     "test:watch": "npm run test -- -w",
-    "test:run": "mocha",
     "test:debug": "npm run compile && ./scripts/debug-tests.js",
-    "test:prod": "NODE_ENV=production npm-run-all -l -n compile dist:mac test:prod:run",
-    "test:prod:run": "NODE_ENV=production mocha",
-    "dist": "NODE_ENV=production npm-run-all -l -n compile -p dist:mac dist:win",
-    "dist:mac": "NODE_ENV=production rm -rf dist/mac && build --mac --x64",
-    "dist:win": "NODE_ENV=production rm -rf dist/win && build --win --x64",
-    "dist:linux": "NODE_ENV=production rm -rf dist/linux && build -l",
-    "dist-and-publish": "NODE_ENV=production npm-run-all -n compile dist-and-publish:mac dist-and-publish:win",
-    "dist-and-publish:mac": "NODE_ENV=production rm -rf dist/mac && build --mac --x64 --publish always",
-    "dist-and-publish:win": "NODE_ENV=production rm -rf dist/win && build --win --x64 --publish always",
-    "release": "npm-run-all -n release:version release:push",
-    "release:version": "peerio-desktop-standard-version",
-    "release:push": "git push --follow-tags origin master",
-    "publish": "npm-run-all -n release dist-and-publish",
+    "test:prod": "NODE_ENV=production build --mac -x64 --publish never && mocha",
     "build-emoji": "./scripts/build-emoji.js",
     "validate": "npm-run-all -l -n -p code:lint style:lint",
-    "install-win-build-tools": "./scripts/install-build-tools.sh",
     "get-locales": "./scripts/get-locales.sh",
-    "react-toolbox": "react-toolbox-themr",
-    "install_sqlite3_osx": "export LDFLAGS=\"-L`brew --prefix`/opt/sqlcipher/lib\" && export CPPFLAGS=\"-I`brew --prefix`/opt/sqlcipher/include\" && npm install sqlite3 -S --build-from-source --sqlite_libname=sqlcipher --sqlite=`brew --prefix`",
-    "fix_sqlite3_osx": "npm run fix_sqlite3_osx:1 && npm run fix_sqlite3_osx:2",
-    "fix_sqlite3_osx:1": "pushd node_modules/sqlite3 && node-gyp configure --module_name=node_sqlite3 --sqlite_libname=sqlcipher --sqlite=`brew --prefix` --module_path=../lib/binding/electron-v1.4-darwin-x64 && popd",
-    "fix_sqlite3_osx:2": "pushd node_modules/sqlite3 && node-gyp rebuild --target=1.4.3 --arch=x64 --target_platform=darwin --sqlite_libname=sqlcipher --sqlite=`brew --prefix` --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-darwin-x64 && popd",
-    "fix_sqlite3_windows": "npm run fix_sqlite3_windows:1 && npm run fix_sqlite3_windows:2",
-    "fix_sqlite3_windows:1": "pushd node_modules\\sqlite3 && node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd",
-    "fix_sqlite3_windows:2": "pushd node_modules\\sqlite3 && node-gyp rebuild --target=1.4.3 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/atom-shell --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64 && popd"
+    "react-toolbox": "react-toolbox-themr"
   },
   "repository": {
     "type": "git",
@@ -162,6 +141,7 @@
   "build": {
     "appId": "com.peerio.desktop",
     "productName": "Icebear",
+    "artifactName": "${productName}-${arch}-${version}.${ext}",
     "directories": {
       "buildResources": "dist-assets"
     },
@@ -188,7 +168,7 @@
         "squirrel"
       ],
       "title": "Icebear",
-      "version": "1.9.0",
+      "version": "1.10.0",
       "msi": true
     },
     "mac": {

@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.10.0"></a>
+# [1.10.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.9.0...v1.10.0) (2017-03-06)
+
+
+### Bug Fixes
+
+* **chats:** drop to chats dialog button ([f71dfc1](https://github.com/PeerioTechnologies/peerio-desktop/commit/f71dfc1))
+* **message:** messages with receipts now have visible timestamps ([daf6471](https://github.com/PeerioTechnologies/peerio-desktop/commit/daf6471))
+* **security:** autolinker protocol whitelist ([2e88edc](https://github.com/PeerioTechnologies/peerio-desktop/commit/2e88edc))
+* **security:** prevent popups and filter protocols ([4c86856](https://github.com/PeerioTechnologies/peerio-desktop/commit/4c86856))
+* **signup:** makes buttons in signup fully visible at minimum screen size on Windows machines. ([32bc410](https://github.com/PeerioTechnologies/peerio-desktop/commit/32bc410))
+
+
+### Features
+
+* **chat:** cancel upload in chat ability ([926fdb8](https://github.com/PeerioTechnologies/peerio-desktop/commit/926fdb8))
+* **security:** certificate pinning ([0821e6b](https://github.com/PeerioTechnologies/peerio-desktop/commit/0821e6b))
+
+
+
 <a name="1.9.0"></a>
 # [1.9.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.8.0...v1.9.0) (2017-02-20)
 

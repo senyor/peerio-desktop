@@ -45,6 +45,7 @@ function processMessage(msg) {
 class Message extends React.Component {
     render() {
         const m = this.props.message;
+        console.log('Rendering message ', m.tempId || m.id);
         const invalidSign = m.signatureError === true;
 
         return (
@@ -66,7 +67,7 @@ class Message extends React.Component {
                     </div>
                     {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null }
                     {m.receipts ?
-                        <div key={`${m.id || m.tempId}receipts`} className="receipt-wrapper">
+                        <div key={`${m.tempId || m.id}receipts`} className="receipt-wrapper">
                             {m.receipts.map(u => <Avatar key={u} username={u} size="tiny" />)}
                         </div> : null}
                 </div>

@@ -47,7 +47,7 @@ class MessageList extends React.Component {
                     light = true;
                 }
             }
-            ret.push(<Message key={m.id || m.tempId} message={m} light={light} />);
+            ret.push(<Message key={m.tempId || m.id} message={m} light={light} />);
         }
         return ret;
     }
@@ -66,7 +66,7 @@ class MessageList extends React.Component {
                         &nbsp;<strong>{chatStore.activeChat.chatName}</strong>.
                     </div>
                 </div>
-                {chatStore.activeChat.loadingMessages
+                {chatStore.activeChat.loadingPage
                     ? <ProgressBar type="circular" mode="indeterminate"
                                    multicolor className="messages-progress-bar" />
                     : this.renderMessages()

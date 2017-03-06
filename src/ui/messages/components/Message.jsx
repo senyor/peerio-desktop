@@ -11,12 +11,16 @@ const css = require('classnames');
 const { t } = require('peerio-translator');
 const config = require('~/config');
 const { Button, FontIcon } = require('~/react-toolbox');
+const { isUrlAllowed } = require('~/helpers/url');
 
 const autolinker = new Autolinker({
     urls: {
         schemeMatches: true,
         wwwMatches: true,
         tldMatches: true
+    },
+    replaceFn(match) {
+        return isUrlAllowed(match.getAnchorHref());
     },
     email: true,
     phone: true,

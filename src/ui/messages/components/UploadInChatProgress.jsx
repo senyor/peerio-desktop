@@ -2,11 +2,15 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { ProgressBar, FontIcon } = require('~/react-toolbox');
-
+const { ProgressBar, FontIcon, IconButton } = require('~/react-toolbox');
 
 @observer
 class UploadInChatProgress extends React.Component {
+    cancelUpload = () => {
+        if (confirm('Cancel upload?')) {
+            this.props.queue[0].cancelUpload();
+        }
+    };
     render() {
         if (!this.props.queue || !this.props.queue.length) return null;
         const file = this.props.queue[0];
@@ -18,6 +22,7 @@ class UploadInChatProgress extends React.Component {
                     <div className="progress-title">Uploading {file.name}
                         {queued ? ` | ${queued} files in queue.` : null}
                     </div>
+                    <IconButton icon="cancel" onClick={this.cancelUpload} />
                 </div>
                 <ProgressBar type="linear" mode="determinate" value={file.progress}
                                                max={file.progressMax} />

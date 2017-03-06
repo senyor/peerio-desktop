@@ -2,6 +2,66 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.10.8"></a>
+## [1.10.8](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.10.7...v1.10.8) (2017-03-06)
+
+
+
+<a name="1.10.7"></a>
+## [1.10.7](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.10.6...v1.10.7) (2017-03-06)
+
+
+
+<a name="1.10.6"></a>
+## [1.10.6](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.10.5...v1.10.6) (2017-03-06)
+
+
+
+<a name="1.10.5"></a>
+## [1.10.5](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.10.4...v1.10.5) (2017-03-06)
+
+
+
+<a name="1.10.4"></a>
+## [1.10.4](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.10.3...v1.10.4) (2017-03-06)
+
+
+
+<a name="1.10.3"></a>
+## [1.10.3](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.10.2...v1.10.3) (2017-03-06)
+
+
+
+<a name="1.10.2"></a>
+## [1.10.2](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.10.1...v1.10.2) (2017-03-06)
+
+
+
+<a name="1.10.1"></a>
+## [1.10.1](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.10.0...v1.10.1) (2017-03-06)
+
+
+
+<a name="1.10.0"></a>
+# [1.10.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.9.0...v1.10.0) (2017-03-06)
+
+
+### Bug Fixes
+
+* **chats:** drop to chats dialog button ([f71dfc1](https://github.com/PeerioTechnologies/peerio-desktop/commit/f71dfc1))
+* **message:** messages with receipts now have visible timestamps ([daf6471](https://github.com/PeerioTechnologies/peerio-desktop/commit/daf6471))
+* **security:** autolinker protocol whitelist ([2e88edc](https://github.com/PeerioTechnologies/peerio-desktop/commit/2e88edc))
+* **security:** prevent popups and filter protocols ([4c86856](https://github.com/PeerioTechnologies/peerio-desktop/commit/4c86856))
+* **signup:** makes buttons in signup fully visible at minimum screen size on Windows machines. ([32bc410](https://github.com/PeerioTechnologies/peerio-desktop/commit/32bc410))
+
+
+### Features
+
+* **chat:** cancel upload in chat ability ([926fdb8](https://github.com/PeerioTechnologies/peerio-desktop/commit/926fdb8))
+* **security:** certificate pinning ([0821e6b](https://github.com/PeerioTechnologies/peerio-desktop/commit/0821e6b))
+
+
+
 <a name="1.9.0"></a>
 # [1.9.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.8.0...v1.9.0) (2017-02-20)
 

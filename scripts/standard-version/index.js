@@ -70,8 +70,8 @@ function updateConfigs(args, newVersion) {
                 checkpoint(args, `bumping version in ${filename} from %s to %s`, [config.version, newVersion]);
                 config.version = newVersion;
                 try {
-                    checkpoint(args, `bumping win version in ${filename} from %s to %s`, [config.version, newVersion]);
-                    config.build.win.version = newVersion;
+                    //checkpoint(args, `bumping win version in ${filename} from %s to %s`, [config.version, newVersion]);
+                    //config.build.win.version = newVersion;
                 } catch (err) {
                     console.log(`No windows version to bump in ${configPath}`);
                 }

@@ -63,7 +63,7 @@ class MailSent extends React.Component {
                                 </div> : null
                             }
                         </div>
-                        <div className="date">{this.props.ghost.date.toLocaleString()}</div>
+                        <div className="date">{this.props.ghost.date.format('LLL')}</div>
                         <div className="to">{this.props.ghost.recipients.join(',')}</div>
                     </div>
                     <div className="mail-content sent-content">

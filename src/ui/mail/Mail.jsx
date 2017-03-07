@@ -65,7 +65,7 @@ class Mail extends React.Component {
                             return (<MailItem key={m.ghostId}
                                               ghostId={m.ghostId}
                                               subject={m.subject}
-                                              date={m.date.toLocaleString()}
+                                              date={m.date.fromNow(true)}
                                               recipient={m.recipients}
                                               firstLine={m.preview}
                                               active={false} />

@@ -5,6 +5,7 @@ const db = require('~/icebear').TinyDb;
 const { PhraseDictionaryCollection } = require('~/icebear');
 const fs = require('fs');
 const path = require('path');
+const moment = require('moment');
 const electron = require('electron').remote || require('electron');
 
 class LanguageStore {
@@ -69,8 +70,12 @@ class LanguageStore {
             const translation = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
             setLocale(code, translation);
             this.language = code;
+            // save to local storage
             db.system.setValue('language', code);
+            // load correct passphrase dictionary
             this.buildDictionary();
+            // set locale for dates
+            moment.locale(code);
             console.log(`Language changed to ${code}`);
         } catch (err) {
             console.error(`Failed switch language to: ${code} ${normalizeError(err)}`);

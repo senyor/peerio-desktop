@@ -63,13 +63,13 @@ const T = require('~/ui/shared-components/T');
             .catch(err => {
                 this.busy = false;
                 this.errorVisible = true;
-                this.errorMessage = errors.normalize(err).message || t('signup_serverError'); // TODO handle error types
+                this.errorMessage = errors.normalize(err).message || t('error_ignupServerError'); // TODO handle error types
                 throw err;
             });
     }
 
     errorActions = [
-        { label: t('ok'), onClick: () => { this.navigateToProfile(); } }
+        { label: t('button_ok'), onClick: () => { this.navigateToProfile(); } }
     ];
 
     navigateToLogin = () => {
@@ -121,7 +121,7 @@ const T = require('~/ui/shared-components/T');
             <div className={css('signup', 'rt-light-theme', { show: this.show })}>
                 <img alt="" className="logo" src="static/img/logo-white.png" />
                 <div className="signup-form">
-                    <div className="signup-title">{t('signup')}</div>
+                    
                     {
                         this.step === 1
                             ? <Profile store={this.profileStore} returnHandler={this.advance} />
@@ -129,7 +129,7 @@ const T = require('~/ui/shared-components/T');
                                   returnHandler={this.advance} />
                     }
 
-                    <T k="signup_TOSRequestText" className="terms">
+                    <T k="title_TOSRequestText" className="terms">
                         {{
                             emphasis: text => <strong>{text}</strong>,
                             tosLink: text => <Button onClick={this.showTermsDialog}
@@ -139,8 +139,8 @@ const T = require('~/ui/shared-components/T');
                     </T>
                 </div>
                 <div className="signup-nav">
-                    <Button flat label={this.step === 1 ? t('cancel') : t('back')} onClick={this.retreat} />
-                    <Button flat label={this.step === 1 ? t('next') : t('button_finish')} onClick={this.advance}
+                    <Button flat label={this.step === 1 ? t('button_cancel') : t('button_back')} onClick={this.retreat} />
+                    <Button flat label={this.step === 1 ? t('button_next') : t('button_finish')} onClick={this.advance}
                             disabled={this.hasErrors} />
                 </div>
                 {/* <div className="progress">
@@ -150,7 +150,7 @@ const T = require('~/ui/shared-components/T');
                 <FullCoverLoader show={this.busy} />
                 <Dialog actions={this.errorActions} active={this.errorVisible}
                         onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
-                        title={t('error')}>{this.errorMessage}</Dialog>
+                        title={t('title_error')}>{this.errorMessage}</Dialog>
                 <Snackbar location="signup" />
 
                 <Dialog active={this.termsDialogOpen}

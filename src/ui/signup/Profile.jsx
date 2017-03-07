@@ -36,8 +36,9 @@ class ProfileStore extends OrderedFormStore {
     render() {
         return (
             <div className="flex-col profile">
-                <div className="signup-subtitle">{t('profile')}</div>
-                <ValidatedInput label={t('username')}
+			<div className="signup-title">{t('title_signupStep1')}</div>
+                <div className="signup-subtitle">{t('title_settingsProfile')}</div>
+                <ValidatedInput label={t('title_username')}
                                 value={this.props.store.username}
                                 position="0"
                                 lowercase="true"
@@ -45,27 +46,27 @@ class ProfileStore extends OrderedFormStore {
                                 maxLength={16}
                                 name="username"
                                 store={this.props.store}
-                                hint="hint_username" />
+                                hint={t('title_hintUsername')}/>
                 {/* a-Z, 0-9, and _ only. */}
 
-                <ValidatedInput label={t('email')}
+                <ValidatedInput label={t('title_email')}
                                 position="1"
                                 lowercase="true"
                                 validator={validators.email}
                                 name="email"
                                 store={this.props.store}
-                                hint="hint_email" />
+                                hint={t('title_hintEmail')}/>
                 {/* "ex. info@peerio.com" */}
                 <div className="input-row">
                     <div>
-                        <ValidatedInput label={t('firstName')}
+                        <ValidatedInput label={t('title_firstName')}
                                         position="2"
                                         validator={validators.firstName}
                                         name="firstName"
                                         store={this.props.store} />
                     </div>
                     <div>
-                        <ValidatedInput label={t('lastName')}
+                        <ValidatedInput label={t('title_lastName')}
                                         position="3"
                                         validator={validators.lastName}
                                         name="lastName"

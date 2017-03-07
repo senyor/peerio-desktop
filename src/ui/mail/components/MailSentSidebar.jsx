@@ -4,6 +4,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Dialog } = require('~/react-toolbox');
+const { systemWarnings } = require('~/icebear');
 const MailPassphrase = require('./MailPassphrase');
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
@@ -16,12 +17,18 @@ class MailSentSidebar extends React.Component {
 
     revokeDialogActions = [
         { label: t('cancel'), onClick: () => { this.hideRevokeDialog(); } },
-        { label: t('ghost_revokeAction'),
-            onClick: () => {
-                return this.props.ghost.revoke()
-                .then(() => this.hideRevokeDialog());
-            } }
+        { label: t('ghost_revokeAction'), onClick: () => { this.revokeGhost(); } }
     ];
+
+    revokeGhost = () => {
+        return this.props.ghost.revoke()
+            .then(() => {
+                this.hideRevokeDialog();
+                systemWarnings.add({
+                    content: 'ghost_snackbarRevoked'
+                });
+            });
+    }
 
     showRevokeDialog = () => {
         this.revokeDialogActive = true;

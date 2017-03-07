@@ -1,10 +1,11 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
+const { t } = require('peerio-translator');
 const { Dialog, IconButton, IconMenu, MenuDivider, MenuItem, Tooltip } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
-const { fileStore } = require('~/icebear');
+const { fileStore, systemWarnings, mailStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 
 
@@ -13,23 +14,35 @@ const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 @observer
 class MailSent extends React.Component {
 
-    @observable dialogActive = false;
+    @observable deleteDialogActive = false;
 
     handleClose = () => {
-        this.dialogActive = false;
+        this.deleteDialogActive = false;
     };
 
-    actions = [
-        { label: 'Cancel', onClick: this.handleClose },
-        { label: 'Confirm', onClick: this.handleClose, primary: true }
+    deleteActions = [
+        { label: 'Cancel', onClick: () => { this.handleClose(); } },
+        { label: 'Confirm', onClick: () => { this.deleteGhost(); }, primary: true }
     ];
 
-    handleDelete = () => {
-        this.dialogActive = true;
-        // todo  mailRevoked ? delete and trigger snackbar 'Mail Deleted' or something.
-        //           : dialog (cance or confirm delete without revoking, and trigger snackbar.)
+    deleteGhost = () => {
+        mailStore.remove(this.props.ghost)
+            .then(() => {
+                this.handleClose();
+                systemWarnings.add({
+                    content: 'ghost_snackbarDeleted'
+                });
+            });
     };
 
+    handleDelete = () => {
+        // requires confirmation only if the ghost is active
+        if (!this.props.ghost.expired && !this.props.ghost.revoked) {
+            this.deleteDialogActive = true;
+        } else {
+            this.deleteGhost();
+        }
+    };
 
     render() {
         return (
@@ -56,7 +69,8 @@ class MailSent extends React.Component {
                                         {this.props.ghost.files.map(f => {
                                             const file = fileStore.getById(f);
                                             return (
-                                                <MenuItem caption={file.name}
+                                                <MenuItem key={f}
+                                                          caption={file.name}
                                                           icon="file_download" />);
                                         })}
                                     </IconMenu>
@@ -73,14 +87,12 @@ class MailSent extends React.Component {
 
                 </div>
                 <MailSentSidebar ghost={this.props.ghost} />
-                <Dialog title="Revoke Mail"
-                        actions={this.actions}
-                        active={this.dialogActive}
+                <Dialog title={t('ghost_deleteTitle')}
+                        actions={this.deleteActions}
+                        active={this.deleteDialogActive}
                         onEscKeyDown={this.handleClose}
                         onOverlayClick={this.handleClose}>
-                    This message has not been revoked. The recipient(s) can continue
-                    to access the message until it expires.
-
+                    {t('ghost_deleteText')}
                 </Dialog>
             </div>
         );

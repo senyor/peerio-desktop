@@ -18,7 +18,6 @@ class Mail extends React.Component {
 
     handleCompose = () => {
         const newGhost = mailStore.createGhost();
-        mailStore.selectedId = newGhost.ghostId;
         this.sent = false;
     };
 
@@ -30,7 +29,8 @@ class Mail extends React.Component {
         mailStore.selectedGhost.attachFiles(files);
     };
 
-    renderMiddle() {
+    renderRight() {
+        console.log('selected', mailStore.selectedId);
         if (mailStore.selectedGhost.sent) {
             return (
                 <MailSent ghost={mailStore.selectedGhost} />
@@ -74,7 +74,7 @@ class Mail extends React.Component {
                     </div>
                 </div>
                 {mailStore.ghosts.length === 0 && !mailStore.loading ? <ZeroMail /> : null }
-                {mailStore.selectedId && !mailStore.loading ? this.renderMiddle() : null }
+                {mailStore.selectedId && !mailStore.loading ? this.renderRight() : null }
 
                 <Button icon="add" floating accent onClick={this.handleCompose} />
             </div>

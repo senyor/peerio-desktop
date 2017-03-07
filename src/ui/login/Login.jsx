@@ -108,7 +108,7 @@ class LoginStore extends OrderedFormStore {
                     </div>
                     <div className="subtitle">
                         <div className="overflow">
-                            <T k="lbutton_changeUserDesktop">
+                            <T k="button_changeUserDesktop">
                                 {{ username: (this.loginStore.lastAuthenticatedUser.firstName
                                                 || this.loginStore.lastAuthenticatedUser.username) }}
                             </T>

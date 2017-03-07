@@ -100,7 +100,7 @@ class LoginStore extends OrderedFormStore {
         return (
             <div className="welcome-back-wrapper">
                 <div className="welcome-back" onClick={this.unsetLastUser}>
-                    <div className="overflow ">{t('login_welcomeBack')}&nbsp;
+                    <div className="overflow ">{t('title_welcomeBack')}&nbsp;
                         <strong>
                             {this.loginStore.lastAuthenticatedUser.firstName
                             || this.loginStore.lastAuthenticatedUser.username}
@@ -108,7 +108,7 @@ class LoginStore extends OrderedFormStore {
                     </div>
                     <div className="subtitle">
                         <div className="overflow">
-                            <T k="login_changeUser">
+                            <T k="lbutton_changeUserDesktop">
                                 {{ username: (this.loginStore.lastAuthenticatedUser.firstName
                                                 || this.loginStore.lastAuthenticatedUser.username) }}
                             </T>
@@ -129,9 +129,9 @@ class LoginStore extends OrderedFormStore {
                     {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
                     <div className="login-form">
                         <div className={css('headline', { hide: this.loginStore.lastAuthenticatedUser })}>
-                            {t('login')}
+                            {t('title_login')}
                         </div>
-                        <ValidatedInput label={t('username')}
+                        <ValidatedInput label={t('title_username')}
                                         name="username"
                                         position="0"
                                         lowercase="true"
@@ -141,7 +141,7 @@ class LoginStore extends OrderedFormStore {
                                        className={css({ hide: this.loginStore.lastAuthenticatedUser })} />
                         <div className="password">
                             <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
-                                            label={t('passcodeOrPassphrase')}
+                                            label={t('title_password')}
                                             position="1"
                                             store={this.loginStore}
                                             validator={validators.stringExists}
@@ -157,11 +157,11 @@ class LoginStore extends OrderedFormStore {
                                   source={languageStore.translationLangsDataSource}
                                   onChange={languageStore.changeLanguage} /> */}
                     </div>
-                    <Button className="login-button" label={t('login')} flat
+                    <Button className="login-button" label={t('button_login')} flat
                             onClick={this.login}
                             disabled={this.loginStore.hasErrors} />
 
-                    <div>New user? &nbsp; <Link to="/signup">{t('signup')}</Link></div>
+                    <div>{t('title_newUser')} &nbsp; <Link to="/signup">{t('button_signup')}</Link></div>
                 </div>
                 <Snackbar location="login" />
             </div>

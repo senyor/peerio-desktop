@@ -62,7 +62,7 @@ class MessageList extends React.Component {
                             <Avatar key={c.username} contact={c} />)}
                     </div>
                     <div className="title">
-                        This is the beginning of your chat history with
+                        {t('title_chatBeginning')}
                         &nbsp;<strong>{chatStore.activeChat.chatName}</strong>.
                     </div>
                 </div>

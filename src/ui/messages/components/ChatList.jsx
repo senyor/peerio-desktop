@@ -40,7 +40,7 @@ class ChatList extends React.Component {
                     <div key="list-header" className="list-header-wrapper">
                         <ListSubHeader caption={t('title_chats')} />
                         <TooltipIcon
-                            tooltip="Add chat"
+                            tooltip={t('title_chatAdd')}
                             tooltipDelay={500}
                             tooltipPosition="right"
                             icon={<div className="new-message" />}
@@ -54,7 +54,7 @@ class ChatList extends React.Component {
                             leftIcon="fiber_manual_record"
                             rightIcon={(!c.active && c.unreadCount > 0) ? this.getNotificationIcon(c) :
                             <TooltipIcon
-                                    tooltip="Remove from list"
+                                    tooltip={t('title_chatRemove')}
                                     tooltipDelay={500}
                                     tooltipPosition="right"
                                     icon="remove_circle_outline" />} />

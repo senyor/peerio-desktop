@@ -36,7 +36,7 @@ class ProfileStore extends OrderedFormStore {
     render() {
         return (
             <div className="flex-col profile">
-			<div className="signup-title">{t('title_signupStep1')}</div>
+                <div className="signup-title">{t('title_signupStep1')}</div>
                 <div className="signup-subtitle">{t('title_settingsProfile')}</div>
                 <ValidatedInput label={t('title_username')}
                                 value={this.props.store.username}
@@ -46,7 +46,7 @@ class ProfileStore extends OrderedFormStore {
                                 maxLength={16}
                                 name="username"
                                 store={this.props.store}
-                                hint={t('title_hintUsername')}/>
+                                hint={t('title_hintUsername')} />
                 {/* a-Z, 0-9, and _ only. */}
 
                 <ValidatedInput label={t('title_email')}
@@ -55,7 +55,7 @@ class ProfileStore extends OrderedFormStore {
                                 validator={validators.email}
                                 name="email"
                                 store={this.props.store}
-                                hint={t('title_hintEmail')}/>
+                                hint={t('title_hintEmail')} />
                 {/* "ex. info@peerio.com" */}
                 <div className="input-row">
                     <div>

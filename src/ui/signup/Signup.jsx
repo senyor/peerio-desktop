@@ -121,7 +121,7 @@ const T = require('~/ui/shared-components/T');
             <div className={css('signup', 'rt-light-theme', { show: this.show })}>
                 <img alt="" className="logo" src="static/img/logo-white.png" />
                 <div className="signup-form">
-                    
+
                     {
                         this.step === 1
                             ? <Profile store={this.profileStore} returnHandler={this.advance} />

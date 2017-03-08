@@ -49,7 +49,7 @@ function processMessage(msg) {
 class Message extends React.Component {
     render() {
         const m = this.props.message;
-        console.log('Rendering message ', m.tempId || m.id);
+       // console.log('Rendering message ', m.tempId || m.id);
         const invalidSign = m.signatureError === true;
 
         return (

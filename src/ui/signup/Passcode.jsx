@@ -86,7 +86,7 @@ class PasscodeStore extends OrderedFormStore {
     render() {
         return (
             <div className="passcode">
-			<div className="signup-title">{t('title_signupStep2')}</div>
+                <div className="signup-title">{t('title_signupStep2')}</div>
                 <div className="signup-subtitle">{t('title_selectPassword')}</div>
                 <ValidatedInput type="password"
                                 name="passcode"

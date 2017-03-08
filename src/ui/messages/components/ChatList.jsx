@@ -38,7 +38,7 @@ class ChatList extends React.Component {
                 {this.getProgressBar(chatStore.loading)}
                 <List selectable ripple>
                     <div key="list-header" className="list-header-wrapper">
-                        <ListSubHeader caption={t('directMessages')} />
+                        <ListSubHeader caption={t('title_chats')} />
                         <TooltipIcon
                             tooltip="Add chat"
                             tooltipDelay={500}

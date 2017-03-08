@@ -22,7 +22,7 @@ class App extends React.Component {
     };
 
     contactDialogActions = [
-        { label: t('cancel'), onClick: this.hideContactDialog }
+        { label: t('button_close'), onClick: this.hideContactDialog }
     ];
 
     render() {
@@ -34,7 +34,7 @@ class App extends React.Component {
                 <Dialog active={!this.contactDialogHiding && !!uiStore.contactDialogUsername}
                         actions={this.contactDialogActions} onOverlayClick={this.hideContactDialog}
                         onEscKeyDown={this.hideContactDialog}
-                        title={t('profile')}>
+                        title={t('title_settingsProfile')}>
                     {
                         uiStore.contactDialogUsername
                         ? <ContactProfile username={uiStore.contactDialogUsername} />

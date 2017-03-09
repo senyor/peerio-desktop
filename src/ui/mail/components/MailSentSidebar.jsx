@@ -61,7 +61,7 @@ class MailSentSidebar extends React.Component {
                         <div className="mail-link">
                             <a href={this.props.ghost.url}>{ this.props.ghost.url }</a>
                             <TooltipIcon
-                                tooltip="copy"
+                                tooltip={t('copy')}
                                 tooltipDelay={500}
                                 tooltipPosition="bottom"
                                 icon="content_copy"

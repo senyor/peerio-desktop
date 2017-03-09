@@ -5,6 +5,7 @@ const { Dialog, IconButton, IconMenu, MenuDivider, MenuItem, Switch, Tooltip } =
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
 const { fileStore } = require('~/icebear');
+const { t } = require('peerio-translator');
 
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
@@ -39,7 +40,7 @@ class MailSent extends React.Component {
                              style={{ height: '36px' }}>
                             <div className="subject">{this.props.ghost.subject}</div>
                             <TooltipIcon
-                                tooltip="Delete mail"
+                                tooltip={t('delete_mail')}
                                 tooltipDelay={250}
                                 tooltipPosition="bottom"
                                 icon="delete"

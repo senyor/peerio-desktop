@@ -66,7 +66,7 @@ class SecuritySettings extends React.Component {
     ];
 
     renderShowPassphraseSection() {
-        if (!User.current.passcodeIsSet) return null;
+        // if (!User.current.passcodeIsSet) return null;
         return (
             <div>
                 <div className="title">

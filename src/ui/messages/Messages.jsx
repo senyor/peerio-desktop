@@ -52,8 +52,8 @@ class Messages extends React.Component {
                     {chatStore.activeChat && chatStore.activeChat.uploadQueue.length
                         ? <UploadInChatProgress queue={chatStore.activeChat.uploadQueue} />
                         : null}
-                    <MessageInput show={!!chatStore.activeChat} onSend={this.sendMessage}
-                                  onAck={this.sendAck} onFileShare={this.shareFiles} />
+                    <MessageInput show={!!chatStore.activeChat && chatStore.activeChat.metaLoaded}
+                                  onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
                 </div>
             </div>
         );

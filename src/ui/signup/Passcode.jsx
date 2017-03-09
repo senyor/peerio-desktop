@@ -24,11 +24,11 @@ class PasscodeStore extends OrderedFormStore {
     }
 
     @observable passwordHints = observable.map({
-        'length': false,
-        'case': false,
-        'number': false,
-        'specialChars': false,
-        'dictionary': false
+        length: false,
+        case: false,
+        number: false,
+        specialChars: false,
+        dictionary: false
     });
 
     constructor() {
@@ -44,11 +44,11 @@ class PasscodeStore extends OrderedFormStore {
             let dictProblem = this.passcode.length > 0;
             if (this.lastZScore) {
                 dictProblem = !this.lastZScore.sequence.find((admonishment) => {
-                    return ['repeat','dictionary'].indexOf(admonishment.pattern) > -1;
+                    return ['repeat', 'dictionary'].indexOf(admonishment.pattern) > -1;
                 });
             }
             this.passwordHints.set('dictionary', dictProblem);
-        })
+        });
     }
 }
 
@@ -137,13 +137,13 @@ class PasscodeStore extends OrderedFormStore {
                                 }}
                                 onKeyPress={this.handleKeyPress} />
                 <ul className="passcode-hints">
-                {this.props.store.passwordHints.entries().map(([key, hint]) => {
+                    {this.props.store.passwordHints.entries().map(([key, hint]) => {
                         return (
                             <li key={key} className={hint ? 'passed' : ''}>
                                 <FontIcon value={hint ? 'lens' : 'panorama_fish_eye'} />
                                 {t(`signup_passcodeHint_${key}`)}
                             </li>
-                        )
+                        );
                     }
                 )}
                 </ul>

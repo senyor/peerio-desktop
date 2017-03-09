@@ -92,12 +92,12 @@ class PasscodeStore extends OrderedFormStore {
             this.props.store.lastZScore = zResult; // cache the last result to the store for hints
             if (value.length < MIN_PASSWORD_LENGTH) {
                 return Promise.resolve({
-                    message: t('signup_passcodeErrorShort')
+                    message: t('error_passwordShort')
                 });
             }
             if (zResult.guesses_log10 < 8) {
                 return Promise.resolve({
-                    message: t('signup_passcodeErrorWeak')
+                    message: t('error_passwordWeak')
                 });
             }
             return Promise.resolve(true);
@@ -113,26 +113,26 @@ class PasscodeStore extends OrderedFormStore {
      * @type {Array}
      */
     passwordValidator = [
-        { action: this.passwordStrengthValidator, message: t('signup_passcodeErrorWeak') }
+        { action: this.passwordStrengthValidator, message: t('error_passwordWeak') }
     ];
 
     render() {
         return (
             <div className="passcode">
-                <div className="signup-subtitle">{t('signup_desktop_passcodeTitle')}</div>
+                <div className="signup-subtitle">{t('title_signupStep2')}</div>
                 <p>{t('signup_desktop_passcodeIntro1')}</p>
                 <p>{t('signup_desktop_passcodeIntro2')}</p>
                 <p>{t('signup_desktop_passcodeIntro3')}</p>
                 <ValidatedInput type="password"
                                 name="passcode"
                                 className="login-input"
-                                label={t('signup_passcode')}
+                                label={t('title_password')}
                                 store={this.props.store}
                                 validator={this.passwordValidator}
                                 validationArguments={{
                                     hintStore: this.props.store.passwordHints,
                                     equalsValue: this.props.store.passcodeRepeat,
-                                    equalsErrorMessage: t('signup_passcodeErrorRepeat'),
+                                    equalsErrorMessage: t('error_passwordRepeat'),
                                     banList: this.passwordBanList
                                 }}
                                 onKeyPress={this.handleKeyPress} />
@@ -150,11 +150,11 @@ class PasscodeStore extends OrderedFormStore {
                 <ValidatedInput type="password"
                                 name="passcodeRepeat"
                                 className="login-input"
-                                label={t('signup_passcodeRepeat')}
+                                label={t('title_passwordConfirm')}
                                 validator={validators.valueEquality}
                                 validationArguments={{
                                     equalsValue: this.props.store.passcode,
-                                    equalsErrorMessage: t('signup_passcodeErrorRepeat')
+                                    equalsErrorMessage: t('error_passwordRepeat')
                                 }}
                                 store={this.props.store}
                                 onKeyPress={this.handleKeyPress} />

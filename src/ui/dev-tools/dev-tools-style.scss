@@ -51,6 +51,9 @@
 
   .dashboard {
     display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
+    overflow: scroll;
 
     .rt-card-card {
       background-color: #f1f5f7;

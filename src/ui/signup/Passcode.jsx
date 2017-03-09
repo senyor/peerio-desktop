@@ -1,7 +1,8 @@
 const React = require('react');
 const { Component } = require('react');
-const { observable, computed, reaction } = require('mobx');
+const { observable, computed, reaction, autorun } = require('mobx');
 const { observer } = require('mobx-react');
+const { FontIcon } = require('~/react-toolbox');
 const { config, socket, validation } = require('~/icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const zxcvbn = require('zxcvbn');
@@ -10,17 +11,49 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
 
 const { validators } = validation; // use common validation from core
 
+const MIN_PASSWORD_LENGTH = 8;
+
 class PasscodeStore extends OrderedFormStore {
+    lastZScore = null;
     @observable fieldsExpected = 2;
-    @observable passcode;
-    @observable passcodeRepeat;
+    @observable passcode = '';
+    @observable passcodeRepeat = '';
 
     @computed get hasErrors() {
         return !(this.initialized && socket.connected && this.passcodeValid && this.passcodeRepeatValid);
     }
+
+    @observable passwordHints = observable.map({
+        'length': false,
+        'case': false,
+        'number': false,
+        'specialChars': false,
+        'dictionary': false
+    });
+
+    constructor() {
+        super();
+        // hints are divorced from whether the user can actually register
+        autorun(() => {
+            // iterate through the user's FAILINGS, set hint to true if passed
+            this.passwordHints.set('length', this.passcode.length > MIN_PASSWORD_LENGTH);
+            this.passwordHints.set('case', this.passcode.length > 0 &&
+                !(this.passcode.match(/^[a-z\d\W]+$/) || this.passcode.match(/^[A-Z\d\W]+$/)));
+            this.passwordHints.set('number', this.passcode.match(/\d/));
+            this.passwordHints.set('specialChars', this.passcode.match(/\W/));
+            let dictProblem = this.passcode.length > 0;
+            if (this.lastZScore) {
+                dictProblem = !this.lastZScore.sequence.find((admonishment) => {
+                    return ['repeat','dictionary'].indexOf(admonishment.pattern) > -1;
+                });
+            }
+            this.passwordHints.set('dictionary', dictProblem);
+        })
+    }
 }
 
 @observer class Passcode extends Component {
+
     @computed get passwordBanList() {
         return [
             this.props.profileStore.username,
@@ -56,15 +89,15 @@ class PasscodeStore extends OrderedFormStore {
     passwordStrengthValidator = (value, additionalArguments) => {
         if (value) {
             const zResult = zxcvbn(this.props.store.passcode, additionalArguments.banList || []);
-            if (value.length < 8) {
+            this.props.store.lastZScore = zResult; // cache the last result to the store for hints
+            if (value.length < MIN_PASSWORD_LENGTH) {
                 return Promise.resolve({
-                    message: `${t('error_passwordWeak')} ${t('error_passwordShort')}`
+                    message: t('signup_passcodeErrorShort')
                 });
             }
             if (zResult.guesses_log10 < 8) {
-                const suggestion = zResult.feedback.suggestions || t('error_passwordSuggestionGeneric');
                 return Promise.resolve({
-                    message: `${t('error_passwordWeak')} ${suggestion}`
+                    message: t('signup_passcodeErrorWeak')
                 });
             }
             return Promise.resolve(true);
@@ -80,34 +113,48 @@ class PasscodeStore extends OrderedFormStore {
      * @type {Array}
      */
     passwordValidator = [
-        { action: this.passwordStrengthValidator, message: t('error_passwordWeak') }
+        { action: this.passwordStrengthValidator, message: t('signup_passcodeErrorWeak') }
     ];
 
     render() {
         return (
             <div className="passcode">
-                <div className="signup-title">{t('title_signupStep2')}</div>
-                <div className="signup-subtitle">{t('title_selectPassword')}</div>
+                <div className="signup-subtitle">{t('signup_desktop_passcodeTitle')}</div>
+                <p>{t('signup_desktop_passcodeIntro1')}</p>
+                <p>{t('signup_desktop_passcodeIntro2')}</p>
+                <p>{t('signup_desktop_passcodeIntro3')}</p>
                 <ValidatedInput type="password"
                                 name="passcode"
                                 className="login-input"
-                                label={t('title_password')}
+                                label={t('signup_passcode')}
                                 store={this.props.store}
                                 validator={this.passwordValidator}
                                 validationArguments={{
+                                    hintStore: this.props.store.passwordHints,
                                     equalsValue: this.props.store.passcodeRepeat,
-                                    equalsErrorMessage: t('error_passwordRepeat'),
+                                    equalsErrorMessage: t('signup_passcodeErrorRepeat'),
                                     banList: this.passwordBanList
                                 }}
                                 onKeyPress={this.handleKeyPress} />
+                <ul className="passcode-hints">
+                {this.props.store.passwordHints.entries().map(([key, hint]) => {
+                        return (
+                            <li key={key} className={hint ? 'passed' : ''}>
+                                <FontIcon value={hint ? 'lens' : 'panorama_fish_eye'} />
+                                {t(`signup_passcodeHint_${key}`)}
+                            </li>
+                        )
+                    }
+                )}
+                </ul>
                 <ValidatedInput type="password"
                                 name="passcodeRepeat"
                                 className="login-input"
-                                label={t('title_passwordConfirm')}
+                                label={t('signup_passcodeRepeat')}
                                 validator={validators.valueEquality}
                                 validationArguments={{
                                     equalsValue: this.props.store.passcode,
-                                    equalsErrorMessage: t('error_passwordRepeat')
+                                    equalsErrorMessage: t('signup_passcodeErrorRepeat')
                                 }}
                                 store={this.props.store}
                                 onKeyPress={this.handleKeyPress} />

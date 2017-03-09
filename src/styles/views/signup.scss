@@ -103,4 +103,30 @@
       }
     }
   }
+
+  .rt-input-error {
+    white-space: normal;
+  }
+
+  ul.passcode-hints {
+    padding-left: 0;
+    margin-top: 40px;
+
+    li {
+      list-style: none;
+      line-height: 28px;
+
+      .material-icons {
+        float: left;
+        line-height: 26px;
+        font-size: 14px;
+        color: #d0021b;
+        margin-right: 15px;
+      }
+
+      &.passed .material-icons {
+        color: $color-affirmative;
+      }
+    }
+  }
 }

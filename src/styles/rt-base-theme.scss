@@ -14,7 +14,10 @@
   font-family: $font-stack;
   -webkit-font-smoothing: antialiased;
 }
-
+// but that ^ overrides icon font, so:
+.material-icons * {
+  font-family: 'Material Icons';
+}
 // AVATAR
 .rt-avatar-avatar {
   flex-shrink: 0;

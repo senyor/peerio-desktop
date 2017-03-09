@@ -4,6 +4,7 @@ const Search = require('~/ui/shared-components/Search');
 const css = require('classnames');
 const { fileStore } = require('~/icebear');
 const { observer } = require('mobx-react');
+const { t } = require('peerio-translator');
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 const delay = 500;
@@ -24,7 +25,7 @@ class GlobalActions extends React.Component {
                 <div>{fileStore.selectedCount} selected</div>
                 <div className="table-actions">
                     <TooltipIcon
-                        tooltip="Upload"
+                        tooltip={t('upload')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="cloud_upload"
@@ -37,7 +38,7 @@ class GlobalActions extends React.Component {
                     {/* icon="file_download"*/}
                     {/* className={css({ active: true, disabled: true })} />*/}
                     <TooltipIcon
-                        tooltip="Share"
+                        tooltip={t('share')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="reply"
@@ -51,7 +52,7 @@ class GlobalActions extends React.Component {
                     {/* icon="create_new_folder"*/}
                     {/* className={css({ active: false, disabled: true })} />*/}
                     <TooltipIcon
-                        tooltip="Delete"
+                        tooltip={t('delete')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="delete"

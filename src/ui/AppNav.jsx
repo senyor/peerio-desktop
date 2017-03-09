@@ -9,6 +9,7 @@ const app = require('electron').remote.app;
 const sounds = require('~/helpers/sounds');
 const appControl = require('~/helpers/app-control');
 const AppNavButton = require('./AppNavButton');
+const { t } = require('peerio-translator');
 
 const ROUTES = {
     chat: '/app',
@@ -124,15 +125,15 @@ class AppNav extends React.Component {
                     <Avatar contact={this.contact} />
                 </div>
                 <div className="app-menu">
-                    <AppNavButton tooltip="Mail" icon="mail" active={this.currentRoute === ROUTES.mail}
+                    <AppNavButton tooltip={t('mail')} icon="mail" active={this.currentRoute === ROUTES.mail}
                                   showBadge={mailStore.unreadMail > 0} badge={mailStore.unreadMail}
                                   onClick={this.toMail} />
 
-                    <AppNavButton tooltip="Chats" icon="forum" active={this.currentRoute === ROUTES.chat}
+                    <AppNavButton tooltip={t('chat')} icon="forum" active={this.currentRoute === ROUTES.chat}
                                   showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
                                   onClick={this.toChat} />
 
-                    <AppNavButton tooltip="Files" icon="folder" active={this.currentRoute === ROUTES.files}
+                    <AppNavButton tooltip={t('files')} icon="folder" active={this.currentRoute === ROUTES.files}
                                   showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
                                   onClick={this.toFiles} />
                 </div>

@@ -1,6 +1,7 @@
 const React = require('react');
 const { IconButton, ProgressBar, Tooltip } = require('~/react-toolbox');
 const css = require('classnames');
+const { t } = require('peerio-translator');
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
@@ -12,7 +13,7 @@ function FileActions(props) {
             { props.downloadDisabled
                 ? <ProgressBar type="circular" mode="indeterminate" multicolor className="processing-file" />
                 : <TooltipIcon
-                    tooltip="Download"
+                    tooltip={t('download')}
                     tooltipDelay={delay}
                     tooltipPosition="top"
                     icon="file_download"
@@ -20,7 +21,7 @@ function FileActions(props) {
                     className={css({ disabled: props.downloadDisabled })} />
             }
             <TooltipIcon
-                tooltip="Share"
+                tooltip={t('share')}
                 tooltipDelay={delay}
                 tooltipPosition="top"
                 icon="reply"
@@ -34,7 +35,7 @@ function FileActions(props) {
             {/* onClick={noop}*/}
             {/* className={css({ disabled: props.newFolderDisabled })} />*/}
             <TooltipIcon
-                tooltip="Delete"
+                tooltip={t('delete')}
                 tooltipDelay={delay}
                 tooltipPosition="top"
                 icon="delete"

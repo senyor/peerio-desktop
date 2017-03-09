@@ -63,7 +63,7 @@ const T = require('~/ui/shared-components/T');
             .catch(err => {
                 this.busy = false;
                 this.errorVisible = true;
-                this.errorMessage = errors.normalize(err).message || t('error_ignupServerError'); // TODO handle error types
+                this.errorMessage = errors.normalize(err).message || t('error_signupServerError'); // TODO handle error types
                 throw err;
             });
     }

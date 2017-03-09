@@ -7,6 +7,7 @@ const ComposeInput = require('../../shared-components/ComposeInput');
 const Snackbar = require('~/ui/shared-components/Snackbar');
 const { chatStore } = require('~/icebear');
 const { pickSystemFiles } = require('~/helpers/file');
+const { t } = require('peerio-translator');
 
 @observer
 class MessageInput extends ComposeInput {
@@ -34,8 +35,8 @@ class MessageInput extends ComposeInput {
             <div className="message-input" onDrop={this.preventDrop}>
                 <Snackbar location="chat" priority="1" />
                 <IconMenu icon="add_circle_outline">
-                    <MenuItem value="share" caption="Share from files" onClick={this.showFilePicker} />
-                    <MenuItem value="upload" caption="Upload and share" onClick={this.handleUpload} />
+                    <MenuItem value="share" caption={t('button_shareFromFiles')} onClick={this.showFilePicker} />
+                    <MenuItem value="upload" caption={t('button_uploadAndShare')} onClick={this.handleUpload} />
                 </IconMenu>
                 <div id="messageEditor"
                      ref={this.activateQuill}

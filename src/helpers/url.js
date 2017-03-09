@@ -1,4 +1,4 @@
-const allowedProtocols = ['HTTP://', 'HTTPS://', 'MAILTO://'];
+const allowedProtocols = ['HTTP://', 'HTTPS://', 'MAILTO:'];
 function isUrlAllowed(url) {
     if (typeof url !== 'string') return false;
     const URL = url.toUpperCase(url).trim();

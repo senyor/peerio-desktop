@@ -13,14 +13,14 @@ class ContactProfile extends React.Component {
         const f = c.fingerprint.split('-');
         return (
             <div className="contact-profile">
-                { c.tofuError ? <div className="contact-error">Some error message information</div>
+                { c.tofuError ? <div className="contact-error">{t('error_contactFingerprintChangedDetail')}</div>
                     : null}
                 <div className="row flex-row flex-align-center">
                     <RTAvatar style={{ backgroundColor: c.color }} title={c.username} />
                     <div style={{ marginLeft: '8px' }}>{c.firstName} {c.lastName}</div>
                 </div>
                 <div className="row">
-                    <div className="list-title" style={{ marginBottom: '8px' }}> {t('fingerprint')}</div>
+                    <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>
                     <div className="monospace">{f[0]} {f[1]} {f[2]}</div>
                     <div className="monospace">{f[3]} {f[4]} {f[5]}</div>
                 </div>

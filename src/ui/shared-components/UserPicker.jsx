@@ -108,7 +108,7 @@ class UserPicker extends React.Component {
                                         { c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username }
                                     </Chip>
                                     )}
-                                <Input placeholder={t('userSearch')} value={this.query}
+                                <Input placeholder={t('title_userSearch')} value={this.query}
                                            onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
                             </div>
                             {/* TODO: make label dynamic */}

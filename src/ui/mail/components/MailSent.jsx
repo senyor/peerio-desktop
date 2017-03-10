@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Dialog, IconButton, IconMenu, MenuDivider, MenuItem, Switch, Tooltip } = require('~/react-toolbox');
+const { Dialog, IconButton, IconMenu, MenuDivider, MenuItem, Tooltip } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
 const { fileStore } = require('~/icebear');
@@ -28,7 +28,7 @@ class MailSent extends React.Component {
         this.dialogActive = true;
         // todo  mailRevoked ? delete and trigger snackbar 'Mail Deleted' or something.
         //           : dialog (cance or confirm delete without revoking, and trigger snackbar.)
-    }
+    };
 
 
     render() {

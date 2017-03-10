@@ -63,7 +63,9 @@ class Message extends React.Component {
                     'invalid-sign': invalidSign, light: this.props.light })}>
                 <div className="flex-row">
                     { this.props.light ? null : <Avatar contact={m.sender} /> }
-                    { this.props.light ? <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div> : null }
+                    { this.props.light ?
+                        <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div> : null
+                    }
                     <div className="message-content">
                         { this.props.light ? null :
                         <div className="meta-data">

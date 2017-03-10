@@ -63,7 +63,7 @@ const T = require('~/ui/shared-components/T');
             .catch(err => {
                 this.busy = false;
                 this.errorVisible = true;
-                this.errorMessage = errors.normalize(err).message || t('error_signupServerError'); // TODO handle error types
+                this.errorMessage = errors.normalize(err).message || t('error_signupServerError');
                 throw err;
             });
     }
@@ -139,9 +139,10 @@ const T = require('~/ui/shared-components/T');
                     </T>
                 </div>
                 <div className="signup-nav">
-                    <Button flat label={this.step === 1 ? t('button_cancel') : t('button_back')} onClick={this.retreat} />
-                    <Button flat label={this.step === 1 ? t('button_next') : t('button_finish')} onClick={this.advance}
-                            disabled={this.hasErrors} />
+                    <Button flat label={this.step === 1 ? t('button_cancel') : t('button_back')}
+                            onClick={this.retreat} />
+                    <Button flat label={this.step === 1 ? t('button_next') : t('button_finish')}
+                            onClick={this.advance} disabled={this.hasErrors} />
                 </div>
                 {/* <div className="progress">
                     <div className={css('indicator', { active: this.step === 1 })} />

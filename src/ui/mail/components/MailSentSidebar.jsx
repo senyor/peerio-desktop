@@ -49,7 +49,7 @@ class MailSentSidebar extends React.Component {
 
     copyLink = () => {
         console.log('link copied :D');
-    }
+    };
 
     render() {
         return (
@@ -69,16 +69,20 @@ class MailSentSidebar extends React.Component {
                         </div>
                     </div>
                     <div className="expire-info flex-col">
-                        {(this.ghostActive) ?
-                            (<div>
-                                <div className="dark-label">{t('ghost_expires')}</div>
-                                <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
-                                <Button label={t('revoke')}
+                        {(this.ghostActive)
+                            ?
+                                <div>
+                                    <div className="dark-label">{t('ghost_expires')}</div>
+                                    <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
+                                    <Button label={t('revoke')}
                                     onClick={this.showRevokeDialog}
                                     style={{ marginLeft: 'auto', marginTop: '8px' }}
                                     primary />
-                            </div>)
-                           : <div className="dark-label">{this.props.ghost.revoked ? t('ghost_revoked') : t('ghost_expired')}</div>
+                                </div>
+                           :
+                                <div className="dark-label">
+                                    {this.props.ghost.revoked ? t('ghost_revoked') : t('ghost_expired')}
+                                </div>
                     }
                     </div>
                 </div>

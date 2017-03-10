@@ -7,7 +7,6 @@ const emojione = require('~/static/emoji/emojione.js');
 const Quill = require('quill/dist/quill.core');
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const FilePicker = require('~/ui/files/components/FilePicker');
-const { fileStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 
 // todo: this file is messy as hell, maybe refactor it

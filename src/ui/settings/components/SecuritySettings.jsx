@@ -44,7 +44,7 @@ class SecuritySettings extends React.Component {
     deactivateTwoFactor = () => {
         // TODO trigger confirm dialog.
         this.twoFactorActive = !this.twoFactorActive;
-    }
+    };
 
     twoFactorDialogActions = [
         { label: 'cancel', onClick: this.hideTwoFactorDialog },

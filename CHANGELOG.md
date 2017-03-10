@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.11.0"></a>
+# [1.11.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.9.0...v1.11.0) (2017-03-10)
+
+
+### Bug Fixes
+
+* **chat:** retain scroll on page up ([2c23a40](https://github.com/PeerioTechnologies/peerio-desktop/commit/2c23a40))
+* **chats:** drop to chats dialog button ([f71dfc1](https://github.com/PeerioTechnologies/peerio-desktop/commit/f71dfc1))
+* **l18n:** typo ([d9210b4](https://github.com/PeerioTechnologies/peerio-desktop/commit/d9210b4))
+* **l18n:** typo ([d437cf5](https://github.com/PeerioTechnologies/peerio-desktop/commit/d437cf5))
+* **message:** messages with receipts now have visible timestamps ([daf6471](https://github.com/PeerioTechnologies/peerio-desktop/commit/daf6471))
+* changes english tooltip text to keys. ([3ca4d91](https://github.com/PeerioTechnologies/peerio-desktop/commit/3ca4d91))
+* **security:** autolinker protocol whitelist ([2e88edc](https://github.com/PeerioTechnologies/peerio-desktop/commit/2e88edc))
+* **security:** correct mailto ([56669ea](https://github.com/PeerioTechnologies/peerio-desktop/commit/56669ea))
+* **security:** prevent popups and filter protocols ([4c86856](https://github.com/PeerioTechnologies/peerio-desktop/commit/4c86856))
+* **signup:** localization strings ([ceb4622](https://github.com/PeerioTechnologies/peerio-desktop/commit/ceb4622))
+* **signup:** makes buttons in signup fully visible at minimum screen size on Windows machines. ([32bc410](https://github.com/PeerioTechnologies/peerio-desktop/commit/32bc410))
+* **ui:** fix new react-toolbox styles ([a835c21](https://github.com/PeerioTechnologies/peerio-desktop/commit/a835c21))
+
+
+### Features
+
+* **chat:** cancel upload in chat ability ([926fdb8](https://github.com/PeerioTechnologies/peerio-desktop/commit/926fdb8))
+* **devtool:** server change tool ([a41d195](https://github.com/PeerioTechnologies/peerio-desktop/commit/a41d195))
+* **security:** certificate pinning ([0821e6b](https://github.com/PeerioTechnologies/peerio-desktop/commit/0821e6b))
+* **signup:** partial meter, lacking emojis ([3125894](https://github.com/PeerioTechnologies/peerio-desktop/commit/3125894))
+
+
+
 <a name="1.10.8"></a>
 ## [1.10.8](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.10.7...v1.10.8) (2017-03-06)
 

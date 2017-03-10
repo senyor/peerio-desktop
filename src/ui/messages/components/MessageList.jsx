@@ -19,12 +19,19 @@ class MessageList extends React.Component {
         // reaction to fix scroll position when scrolling up
         this._reaction = reaction(() => chatStore.activeChat && chatStore.activeChat.loadingTopPage, (loading) => {
             if (loading) {
-                this.lastTopElement = this.containerRef.childNodes[1];
-                this.lastTopElementOffset = this.lastTopElement.offsetTop;
+                this.lastTopElement = null;
+                for (let i = 0; i < this.containerRef.childNodes.length; i++) {
+                    const el = this.containerRef.childNodes[i];
+                    if (el.classList[0] !== 'message-content-wrapper') continue;
+                    this.lastTopElement = el;
+                    break;
+                }
+                this.lastTopElementOffset = this.lastTopElement ? this.lastTopElement.offsetTop : 0;
                 return;
             }
             if (this.lastTopElement) {
                 setTimeout(() => {
+                    if (!this.lastTopElement) return;
                     // todo: animate
                     this.containerRef.scrollTop = this.lastTopElement.offsetTop - this.lastTopElementOffset - 28;
                     this.lastTopElement = null;
@@ -86,19 +93,26 @@ class MessageList extends React.Component {
         this.containerRef = r;
     };
 
-
+    /**
+     * IMPORTANT:
+     * Scroll position retention logic counts on
+     * 1. Message items to have className "message-content-wrapper"as their FIRST class mentioned
+     * 2. No OTHER type of items to have the same class name at the first position
+     */
     renderMessages() {
         const ret = [];
         if (chatStore.activeChat.canGoUp) {
-            ret.push(<div key="top-progress-bar" className="message-content-wrapper"
+            ret.push(<div key="top-progress-bar" className="marker-wrapper"
                       style={{ visibility: chatStore.activeChat.loadingTopPage ? 'visible' : 'hidden' }}>
                 <ProgressBar type="circular" mode="indeterminate" multicolor
                                   className="messages-inline-progress-bar" />
             </div>);
         }
         const msgs = chatStore.activeChat.messages;
-        for (let i = 0; i < msgs.length; i++) {
-            const m = msgs[i];
+        const limboMsgs = chatStore.activeChat.limboMessages;
+        const totalLength = msgs.length + limboMsgs.length;
+        for (let i = 0; i < totalLength; i++) {
+            const m = i < msgs.length ? msgs[i] : limboMsgs[i - msgs.length];
             if (m.firstOfTheDay) {
                 const ts = m.timestamp.toLocaleDateString();
                 ret.push(<div key={ts + m.id} className="marker-wrapper">
@@ -109,15 +123,14 @@ class MessageList extends React.Component {
             }
             let light = false;
             if (i > 0) {
-                const prev = msgs[i - 1];
-                if (prev.sender.username === m.sender.username
-                    && prev.timestamp.getDate() === m.timestamp.getDate()
-                    && prev.timestamp.getMonth() === m.timestamp.getMonth()) {
+                const prev = (i - 1) < msgs.length ? msgs[i - 1] : limboMsgs[i - msgs.length - 1];
+                if (prev.sender.username === m.sender.username && prev.dayFingerprint === m.dayFingerprint) {
                     light = true;
                 }
             }
             ret.push(<Message key={m.tempId || m.id} message={m} light={light} />);
         }
+
 
         if (chatStore.activeChat.canGoDown) {
             ret.push(<div key="bot-progress-bar" className="message-content-wrapper"

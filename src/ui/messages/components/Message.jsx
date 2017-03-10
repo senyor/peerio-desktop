@@ -45,11 +45,16 @@ function processMessage(msg) {
     return str;
 }
 
+/**
+ * IMPORTANT:
+ * MessageList.jsx scroll retention logic relies on root element of this component to have
+ * class name 'message-content-wrapper' at the first position in class list
+ */
 @observer
 class Message extends React.Component {
     render() {
         const m = this.props.message;
-       // console.log('Rendering message ', m.tempId || m.id);
+        console.log('Rendering message ', m.tempId || m.id);
         const invalidSign = m.signatureError === true;
 
         return (

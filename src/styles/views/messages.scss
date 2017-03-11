@@ -53,6 +53,14 @@ $radius-sign-warning: 18px;
     margin-right: $margin-small;
   }
 
+  .progress-wrapper {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-justify-center;
+    min-height: 50px;
+    width: 100%;
+  }
+
   .marker-wrapper {
     @extend %flex-row;
     @extend %flex-align-center;

@@ -49,9 +49,7 @@ class MessageList extends React.Component {
         // reaction to paging down to cancel top scroll fix
         this._resetReaction = reaction(
             () => chatStore.activeChat && chatStore.activeChat.loadingBottomPage,
-            () => {
-                this.lastTopElement = null;
-            }
+            () => { this.lastTopElement = null; }
         );
     }
 
@@ -102,7 +100,7 @@ class MessageList extends React.Component {
     renderMessages() {
         const ret = [];
         if (chatStore.activeChat.canGoUp) {
-            ret.push(<div key="top-progress-bar" className="marker-wrapper"
+            ret.push(<div key="top-progress-bar" className="progress-wrapper"
                       style={{ visibility: chatStore.activeChat.loadingTopPage ? 'visible' : 'hidden' }}>
                 <ProgressBar type="circular" mode="indeterminate" multicolor
                                   className="messages-inline-progress-bar" />
@@ -121,19 +119,11 @@ class MessageList extends React.Component {
                     <div className="marker" />
                 </div>);
             }
-            let light = false;
-            if (i > 0) {
-                const prev = (i - 1) < msgs.length ? msgs[i - 1] : limboMsgs[i - msgs.length - 1];
-                if (prev.sender.username === m.sender.username && prev.dayFingerprint === m.dayFingerprint) {
-                    light = true;
-                }
-            }
-            ret.push(<Message key={m.tempId || m.id} message={m} light={light} />);
+            ret.push(<Message key={m.tempId || m.id} message={m} light={m.groupWithPrevious} />);
         }
 
-
         if (chatStore.activeChat.canGoDown) {
-            ret.push(<div key="bot-progress-bar" className="message-content-wrapper"
+            ret.push(<div key="bot-progress-bar" className="progress-wrapper"
                 style={{ visibility: chatStore.activeChat.loadingBottomPage ? 'visible' : 'hidden' }}>
                 <ProgressBar type="circular" mode="indeterminate" multicolor
                                   className="messages-inline-progress-bar" />

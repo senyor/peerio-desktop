@@ -19,7 +19,7 @@ class Updater {
     @observable state = this.states.IDLE;
     @observable error;
 
-    _updateUrl = `${config.updateUrl}/${platform}/${config.currentVersion}`;
+    _updateUrl = `${config.updateUrl}/${platform}/${config.appVersion}`;
 
     /**
      * Set the release name.

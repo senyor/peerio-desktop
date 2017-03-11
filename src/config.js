@@ -6,7 +6,8 @@ const StorageEngine = require('~/icebear/models/stores/node-json-storage');
 
 cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';
-cfg.currentVersion = app.getVersion();
+cfg.appVersion = app.getVersion();
+cfg.platform = 'electron';
 cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
 cfg.ghostFrontendUrl = 'https://alakazam.peerio.com/';
 

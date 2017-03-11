@@ -180,7 +180,7 @@
       ]
     },
     "dmg": {
-      "title": "${productName} ${arch} ${version}",
+      "title": "${productName} ${version}",
       "window": {
         "x": 200,
         "y": 160,

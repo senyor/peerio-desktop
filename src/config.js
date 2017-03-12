@@ -1,3 +1,4 @@
+const os = require('os');
 const cfg = require('~/icebear').config;
 const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env');
@@ -8,7 +9,7 @@ cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';
 cfg.appVersion = app.getVersion();
 cfg.platform = 'electron';
-cfg.socketServerUrl = 'wss://icebear.peerio.com';
+cfg.arch = os.arch();
 cfg.ghostFrontendUrl = 'https://mail.peerio.com/';
 // cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
 // cfg.ghostFrontendUrl = 'https://alakazam.peerio.com/';

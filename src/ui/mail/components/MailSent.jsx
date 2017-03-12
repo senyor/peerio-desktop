@@ -6,8 +6,6 @@ const { Dialog, IconButton, IconMenu, MenuDivider, MenuItem, Tooltip } = require
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
 const { fileStore, systemWarnings, mailStore } = require('~/icebear');
-const { t } = require('peerio-translator');
-
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 

@@ -1,7 +1,8 @@
 const React = require('react');
-const { TooltipIcon } = require('~/react-toolbox');
+const { Tooltip, IconButton } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 @observer class MailPassphrase extends React.Component {
 

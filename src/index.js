@@ -1,5 +1,9 @@
 const isDevEnv = require('~/helpers/is-dev-env');
 const ipc = require('electron').ipcRenderer;
+const config = require('~/config');
+
+// set platform
+config.platform = navigator.platform; //eslint-disable-line
 
 if (isDevEnv) {
     // to allow require of development modules in dev environment

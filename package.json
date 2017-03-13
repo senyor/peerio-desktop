@@ -170,7 +170,7 @@
     },
     "win": {
       "target": [
-        "squirrel"
+        "nsis"
       ]
     },
     "mac": {

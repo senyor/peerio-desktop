@@ -1,23 +1,19 @@
-const { observable } = require('mobx');
-const { autoUpdater } = require('electron').remote;
+const {app, BrowserWindow, Menu, protocol, ipcMain} = require('electron');
+const { autoUpdater } = require('electron-updater');
 const os = require('os');
-const config = require('~/config');
-const { normalize } = require('~/icebear').errors;
 const isDevEnv = require('~/helpers/is-dev-env');
+const log = require('electron-log');
 
 const platform = `${os.platform()}_${os.arch()}`;  // usually returns darwin_64
 
-// todo: release notes not available on windows, so maybe create alternative way to retrieve them
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
 
-/**
- * Handles the electron autoUpdater API
- */
-class Updater {
-    // it's a singleton so not static, more convenient export
-    states = { IDLE: 0, MONITORING: 1, DOWNLOADING: 2, READY_TO_INSTALL: 3, ERROR: 4 };
+function sendStatusToWindow(text) {
+  log.info(text);
+  win.webContents.send('updater', text);
+}
 
-    @observable state = this.states.IDLE;
-    @observable error;
 
     _updateUrl = `${config.updateUrl}/${platform}/${config.appVersion}`;
 
@@ -77,6 +73,5 @@ class Updater {
         autoUpdater.quitAndInstall();
     }
 
-}
 
-module.exports = new Updater();
+module.exports = {};

@@ -13,4 +13,4 @@ git push --follow-tags origin master
 # echo "[••••••••••  ] building 32-bit bundles"
 # build --windows --linux --ia32 --publish always
 echo "[••••••••••••] building 64-bit bundles"
-build --mac --windows --linux --x64 --publish always
+build --mac --windows --linux --x64 --ia32 --publish always

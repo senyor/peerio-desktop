@@ -8,8 +8,10 @@ cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';
 cfg.appVersion = app.getVersion();
 cfg.platform = 'electron';
-cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
-cfg.ghostFrontendUrl = 'https://alakazam.peerio.com/';
+cfg.socketServerUrl = 'wss://icebear.peerio.com';
+cfg.ghostFrontendUrl = 'https://mail.peerio.com/';
+// cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
+// cfg.ghostFrontendUrl = 'https://alakazam.peerio.com/';
 
 cfg.FileStream = FileStream;
 cfg.StorageEngine = StorageEngine;
@@ -32,7 +34,7 @@ if (isDevEnv) {
 
 // FOR DEV ENVIRONMENT ONLY
 // DEV MACHINE OVERRIDES SOCKET SERVER VALUE WITH THIS
-if (process.env.PEERIO_STAGING_SOCKET_SERVER) {
+if (isDevEnv && process.env.PEERIO_STAGING_SOCKET_SERVER) {
     cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
 }
 

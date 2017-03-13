@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.11.4"></a>
+## [1.11.4](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.11.1...v1.11.4) (2017-03-13)
+
+
+### Bug Fixes
+
+* **chat:** corrects message receipt alignment. ([1f0b8da](https://github.com/PeerioTechnologies/peerio-desktop/commit/1f0b8da))
+* **config:** dont pass platform from navigator ([17189fc](https://github.com/PeerioTechnologies/peerio-desktop/commit/17189fc))
+* **config:** pass platform into config ([d5c8b1a](https://github.com/PeerioTechnologies/peerio-desktop/commit/d5c8b1a))
+* **ghost:** copy button tooltip ([c13658b](https://github.com/PeerioTechnologies/peerio-desktop/commit/c13658b))
+* **ghost:** dates with moment ([3b59c83](https://github.com/PeerioTechnologies/peerio-desktop/commit/3b59c83))
+* **ghost:** tooltip will never die ([f5b2e3b](https://github.com/PeerioTechnologies/peerio-desktop/commit/f5b2e3b))
+* **i18n:** set moment locale ([e63b1bf](https://github.com/PeerioTechnologies/peerio-desktop/commit/e63b1bf))
+
+
+
+<a name="1.11.3"></a>
+## [1.11.3](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.11.1...v1.11.3) (2017-03-13)
+
+
+### Bug Fixes
+
+* **chat:** corrects message receipt alignment. ([1f0b8da](https://github.com/PeerioTechnologies/peerio-desktop/commit/1f0b8da))
+* **config:** dont pass platform from navigator ([17189fc](https://github.com/PeerioTechnologies/peerio-desktop/commit/17189fc))
+* **config:** pass platform into config ([d5c8b1a](https://github.com/PeerioTechnologies/peerio-desktop/commit/d5c8b1a))
+* **ghost:** copy button tooltip ([c13658b](https://github.com/PeerioTechnologies/peerio-desktop/commit/c13658b))
+* **ghost:** dates with moment ([3b59c83](https://github.com/PeerioTechnologies/peerio-desktop/commit/3b59c83))
+* **ghost:** tooltip will never die ([f5b2e3b](https://github.com/PeerioTechnologies/peerio-desktop/commit/f5b2e3b))
+* **i18n:** set moment locale ([e63b1bf](https://github.com/PeerioTechnologies/peerio-desktop/commit/e63b1bf))
+
+
+
+<a name="1.11.2"></a>
+## [1.11.2](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.11.1...v1.11.2) (2017-03-13)
+
+
+### Bug Fixes
+
+* **chat:** corrects message receipt alignment. ([1f0b8da](https://github.com/PeerioTechnologies/peerio-desktop/commit/1f0b8da))
+* **config:** dont pass platform from navigator ([17189fc](https://github.com/PeerioTechnologies/peerio-desktop/commit/17189fc))
+* **config:** pass platform into config ([d5c8b1a](https://github.com/PeerioTechnologies/peerio-desktop/commit/d5c8b1a))
+* **ghost:** copy button tooltip ([c13658b](https://github.com/PeerioTechnologies/peerio-desktop/commit/c13658b))
+* **ghost:** dates with moment ([3b59c83](https://github.com/PeerioTechnologies/peerio-desktop/commit/3b59c83))
+* **ghost:** tooltip will never die ([f5b2e3b](https://github.com/PeerioTechnologies/peerio-desktop/commit/f5b2e3b))
+* **i18n:** set moment locale ([e63b1bf](https://github.com/PeerioTechnologies/peerio-desktop/commit/e63b1bf))
+
+
+
 <a name="1.11.1"></a>
 ## [1.11.1](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.11.0...v1.11.1) (2017-03-10)
 

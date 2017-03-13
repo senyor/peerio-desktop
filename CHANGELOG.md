@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.11.7"></a>
+## [1.11.7](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.11.6...v1.11.7) (2017-03-13)
+
+
+### Bug Fixes
+
+* **config:** dev machine env var should be used only in dev env ([1a76503](https://github.com/PeerioTechnologies/peerio-desktop/commit/1a76503))
+
+
+
 <a name="1.11.6"></a>
 ## [1.11.6](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.11.5...v1.11.6) (2017-03-13)
 

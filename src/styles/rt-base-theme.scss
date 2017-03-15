@@ -175,16 +175,27 @@
   opacity: .5;
 }
 // CHIPS
+.chip-wrapper {
+  > .rt-chip-chip.chip-label + .rt-input-input {
+    margin-left: $margin-tiny;
+  }
+}
+
 .chip-label {
   @extend %flex-shrink-0;
   background: $background-root;
   border: 1px solid $color-brand;
   color: $color-brand;
   margin-bottom: $margin-tiny;
+  margin-right: 0;
   margin-top: $margin-tiny;
   max-width: 176px;
   min-width: 88px;
   transition: 500ms 500ms $transition-ease-out;
+
+  + .chip-label {
+    margin-left: $margin-tiny;
+  }
 
   span:last-of-type {
     @extend %flex-align-center;

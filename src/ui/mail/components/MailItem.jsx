@@ -15,11 +15,11 @@ class MailItem extends React.Component {
                  onClick={this.handleSelect}>
                 <div className="flex-col flex-grow-1 flex-justify-between">
                     <div className="flex-row">
-                        <div style={{ marginRight: 'auto' }}>{this.props.recipient}</div>
 
+                        <strong className="item-subject">{this.props.subject}</strong>
                         {this.props.date}
                     </div>
-                    <strong className="item-subject">{this.props.subject}</strong>
+                    <div>{this.props.recipient}</div>
                     <div className="flex-row flex-align-center">
                         <div style={{ marginRight: 'auto' }}>
                             {this.props.firstLine}

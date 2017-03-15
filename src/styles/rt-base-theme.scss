@@ -50,8 +50,6 @@
   transform: translate3d(0, 0, 0);
 }
 
-
-
 .rt-button-button > .rt-button-icon,
 .material-icons {
   color: $icon-dark-active;
@@ -111,9 +109,7 @@
   }
 }
 
-
 .rt-input-input {
-
   .rt-input-label {
     font-size: 14px;
     padding-left: $padding-small;
@@ -184,9 +180,9 @@
   background: $background-root;
   border: 1px solid $color-brand;
   color: $color-brand;
-  margin-bottom: 4px;
-  margin-top: 4px;
-  max-width: 160px;
+  margin-bottom: $margin-tiny;
+  margin-top: $margin-tiny;
+  max-width: 176px;
   min-width: 88px;
   transition: 500ms 500ms $transition-ease-out;
 

@@ -13,7 +13,7 @@ class MailItem extends React.Component {
         return (
             <div className={css('mail-item', { active: mailStore.selectedId === this.props.ghostId })}
                  onClick={this.handleSelect}>
-                <div className="flex-col flex-grow-1">
+                <div className="flex-col flex-grow-1 flex-justify-between">
                     <div className="flex-row">
                         <div style={{ marginRight: 'auto' }}>{this.props.recipient}</div>
 

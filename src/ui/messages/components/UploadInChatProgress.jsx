@@ -19,8 +19,8 @@ class UploadInChatProgress extends React.Component {
             <div className="chat-upload-progress">
                 <div className="progress-content">
                     <FontIcon value="cloud_upload" />
-                    <div className="progress-title">Uploading {file.name}
-                        {queued ? ` | ${queued} files in queue.` : null}
+                    <div className="progress-title">
+                        {queued ? t('title_queuedFiles', {name: file.name} , {remaining: queued}) : t('title_uploading',{name: file.name})}
                     </div>
                     <IconButton icon="cancel" onClick={this.cancelUpload} />
                 </div>

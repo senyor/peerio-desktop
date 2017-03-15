@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
 
-echo "[••          ] setting flags"
+echo "[•••            ] setting flags"
 set -e
 export NODE_ENV=production
-echo "[••••        ] cleaning up"
+echo "[••••••         ] cleaning up"
 rm -rf dist
-echo "[••••••      ] compiling sources"
+echo "[•••••••••      ] compiling sources"
 npm run compile
-echo "[••••••••    ] creating github release"
+echo "[••••••••••••   ] creating github release"
 ./node_modules/.bin/standard-version
 git push --follow-tags origin master
-# echo "[••••••••••  ] building 32-bit bundles"
-# build --windows --linux --ia32 --publish always
-echo "[••••••••••••] building 64-bit bundles"
-build --mac --windows --linux --x64 --ia32 --publish always
+echo "[•••••••••••••••] building bundles"
+build --mac --windows --linux --ia32 --x64 --publish always

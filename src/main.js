@@ -9,7 +9,6 @@ if (isDevEnv) {
 }
 // <UPDATES> -----------------------------------------------------------------------------------------------------
 // If the app was started as a part of update process we don't want to proceed with startup
-if (require('electron-squirrel-startup')) app.quit();
 if (require('~/main-process/handle-windows-update')) app.quit();
 // </UPDATES> ----------------------------------------------------------------------------------------------------
 
@@ -19,6 +18,7 @@ const buildGlobalShortcuts = require('~/main-process/global-shortcuts');
 const applyMiscHooks = require('~/main-process/misc-hooks');
 const { saveWindowState, getSavedWindowState } = require('~/main-process/state-persistance');
 const setMainMenu = require('~/main-process/main-menu');
+const updater = require('./main-process/updater');
 
 let mainWindow;
 
@@ -58,6 +58,7 @@ app.on('ready', () => {
             applyMiscHooks(mainWindow);
             buildContextMenu(mainWindow);
             devtools.onAppReady(mainWindow);
+            updater.start(mainWindow);
         });
 });
 

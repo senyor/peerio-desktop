@@ -9,6 +9,7 @@ const { setStringReplacement } = require('peerio-translator');
 const theme = require('~/react-toolbox/theme.js');
 const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
 const DropTarget = require('./shared-components/DropTarget');
+const { ipcRenderer } = require('electron');
 
 class Root extends React.Component {
 
@@ -19,7 +20,7 @@ class Root extends React.Component {
         config.stringReplacements.forEach((replacementObject) => {
             setStringReplacement(replacementObject.original, replacementObject.replacement);
         });
-
+        // UI language handling
         languageStore.loadSavedLanguage();
         this.onLanguageChange = reaction(
             () => languageStore.language,
@@ -27,6 +28,8 @@ class Root extends React.Component {
                 deepForceUpdate(this);
             }
         );
+        // updater
+        ipcRenderer.on('updater', console.log.bind(console));
         // Dev tools ---------->
         this.devtools = null;
         if (isDevEnv) {
@@ -54,7 +57,7 @@ class Root extends React.Component {
             <ThemeProvider theme={theme}>
                 <div>
                     {this.props.children}
-                    <AutoUpdateDialog />
+                    {/* <AutoUpdateDialog />*/}
                     {this.devtools}
                     <DropTarget />
                 </div>

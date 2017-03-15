@@ -35,8 +35,8 @@ class MessageInput extends ComposeInput {
             <div className="message-input" onDrop={this.preventDrop}>
                 <Snackbar location="chat" priority="1" />
                 <IconMenu icon="add_circle_outline">
-                    <MenuItem value="share" caption={t('button_shareFromFiles')} onClick={this.showFilePicker} />
-                    <MenuItem value="upload" caption={t('button_uploadAndShare')} onClick={this.handleUpload} />
+                    <MenuItem value="share" caption={t('title_shareFromFiles')} onClick={this.showFilePicker} />
+                    <MenuItem value="upload" caption={t('title_uploadAndShare')} onClick={this.handleUpload} />
                 </IconMenu>
                 <div id="messageEditor"
                      ref={this.activateQuill}

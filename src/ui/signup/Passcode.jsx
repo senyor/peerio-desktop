@@ -8,6 +8,7 @@ const { t } = require('peerio-translator');
 const zxcvbn = require('zxcvbn');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const OrderedFormStore = require('~/stores/ordered-form-store');
+const T = require('~/ui/shared-components/T');
 
 const { validators } = validation; // use common validation from core
 
@@ -119,10 +120,25 @@ class PasscodeStore extends OrderedFormStore {
     render() {
         return (
             <div className="passcode">
-                <div className="signup-subtitle">{t('title_signupStep2')}</div>
-                <p>{t('signup_desktop_passcodeIntro1')}</p>
-                <p>{t('signup_desktop_passcodeIntro2')}</p>
-                <p>{t('signup_desktop_passcodeIntro3')}</p>
+                <div className="signup-title">{t('title_signupStep2')}</div>
+                <div className="signup-subtitle">{t('title_createPassword')}</div>
+                <p><T k="title_passwordIntro" className="signup-title">
+                    {{
+                        emphasis: text => <strong>{text}</strong>
+                    }}
+                </T></p>
+
+                <p><T k="title_MPIntro1" className="signup-title">
+                    {{
+                        emphasis: text => <strong>{text}</strong>
+                    }}
+                </T></p>
+                <p><T k="title_MPIntro2" className="signup-title">
+                    {{
+                        emphasis: text => <strong>{text}</strong>
+                    }}
+                </T></p>
+
                 <ValidatedInput type="password"
                                 name="passcode"
                                 className="login-input"
@@ -141,7 +157,7 @@ class PasscodeStore extends OrderedFormStore {
                         return (
                             <li key={key} className={hint ? 'passed' : ''}>
                                 <FontIcon value={hint ? 'lens' : 'panorama_fish_eye'} />
-                                {t(`signup_passcodeHint_${key}`)}
+                                {t(`title_passwordHint_${key}`)}
                             </li>
                         );
                     }

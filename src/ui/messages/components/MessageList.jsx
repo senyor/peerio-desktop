@@ -115,7 +115,7 @@ class MessageList extends React.Component {
                 const ts = m.timestamp.toLocaleDateString();
                 ret.push(<div key={ts + m.id} className="marker-wrapper">
                     <div className="marker" />
-                    <div className="content">{ts === new Date().toLocaleDateString() ? t('today') : ts}</div>
+                    <div className="content">{ts === new Date().toLocaleDateString() ? t('title_today') : ts}</div>
                     <div className="marker" />
                 </div>);
             }

@@ -4,6 +4,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon, Dialog } = require('~/react-toolbox');
 const { fileStore, chatStore } = require('~/icebear');
+const { t } = require('peerio-translator');
 
 @observer
 class DropTarget extends React.Component {
@@ -40,8 +41,8 @@ class DropTarget extends React.Component {
     };
 
     uploadActions = [
-        { label: 'Cancel', onClick: this.cancelUpload },
-        { label: 'Upload', onClick: this.uploadAndShare }
+        { label: t('button_cancel'), onClick: this.cancelUpload },
+        { label: t('button_upload'), onClick: this.uploadAndShare }
 
     ];
 
@@ -53,8 +54,8 @@ class DropTarget extends React.Component {
                   active
                   onEscKeyDown={this.cancelUpload}
                   onOverlayClick={this.cancelUpload}
-                  title="Upload and share">
-                    <p>This file will be shared with the current chat</p>
+                  title={t('title_uploadAndShare')}>
+                    <p>{t('title_fileWillBeShared')}</p>
                 </Dialog>
             );
         }
@@ -65,7 +66,7 @@ class DropTarget extends React.Component {
                 <div className="drop-content">
                     <FontIcon value="cloud_upload" />
                     <div className="display-2">
-                        Drop {dragStore.hoveringFileCount} files to upload
+                        {t('title_dropToUpload', { count: dragStore.hoveringFileCount })}
                     </div>
                 </div>
             </div>

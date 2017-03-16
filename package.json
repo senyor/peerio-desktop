@@ -68,9 +68,10 @@
     "devtron": "1.4.0",
     "diff2html-cli": "2.0.5",
     "electron": "1.6.2",
-    "electron-builder": "15.4.3",
-    "electron-builder-squirrel-windows": "15.3.0",
+    "electron-builder": "15.5.1",
+    "electron-builder-squirrel-windows": "15.5.1",
     "electron-devtools-installer": "2.1.0",
+    "electron-publisher-s3": "15.5.1",
     "electron-rebuild": "1.5.7",
     "electron-reload": "1.1.0",
     "emojione": "2.2.7",
@@ -165,6 +166,14 @@
     ],
     "asar": true,
     "compression": "normal",
+    "publish": [
+      {
+        "s3": {
+          "bucket": "https://s3.amazonaws.com/peerio-client-icebear/"
+        }
+      },
+      "github"
+    ],
     "squirrelWindows": {
       "msi": true
     },

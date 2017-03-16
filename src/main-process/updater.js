@@ -18,7 +18,7 @@ function start(mainWindow) {
     if (!isDevEnv) {
         autoUpdater.checkForUpdates();
     } else {
-        console.log('Updater did not start because dev build was detected.');
+        sendStatusToWindow('Updater did not start because dev build was detected.');
     }
 }
 

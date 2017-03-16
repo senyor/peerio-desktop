@@ -25,7 +25,7 @@ class AutoUpdateDialog extends React.Component {
         // keep this here in case locale changes
         const actions = [
             { label: t('cancel'), onClick: this.dismiss },
-            { label: t('updateDownload'), onClick: updater.quitAndInstall }
+            { label: t('updateDownload'), onClick: this.dismiss }
         ];
 
         return (

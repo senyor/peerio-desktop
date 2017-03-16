@@ -1,7 +1,7 @@
 {
   "name": "icebear-desktop",
   "description": "Peerio desktop client (codename Icebear)",
-  "version": "1.11.9",
+  "version": "1.11.10",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -168,9 +168,8 @@
     "compression": "normal",
     "publish": [
       {
-        "s3": {
-          "bucket": "https://s3.amazonaws.com/peerio-client-icebear/"
-        }
+        "provider": "s3",
+        "bucket": "https://s3.amazonaws.com/peerio-client-icebear/"
       },
       "github"
     ],

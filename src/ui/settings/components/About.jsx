@@ -18,11 +18,11 @@ class About extends React.Component {
         this.termsDialogOpen = true;
     };
 
-    termsDialogActions = [
-        { label: 'Ok', onClick: this.hideTermsDialog }
-    ];
 
     render() {
+        const termsDialogActions = [
+            { label: t('button_ok'), onClick: this.hideTermsDialog }
+        ];
         return (
             <div>
                 <section className="section-divider">
@@ -51,7 +51,7 @@ class About extends React.Component {
                 </section>
 
                 <Dialog active={this.termsDialogOpen}
-                        actions={this.termsDialogActions}
+                        actions={termsDialogActions}
                         onOverlayClick={this.hideTermsDialog}
                         onEscKeyDown={this.hideTermsDialog}
                         className="terms">

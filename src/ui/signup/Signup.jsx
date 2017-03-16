@@ -68,9 +68,6 @@ const T = require('~/ui/shared-components/T');
             });
     }
 
-    errorActions = [
-        { label: t('button_ok'), onClick: () => { this.navigateToProfile(); } }
-    ];
 
     navigateToLogin = () => {
         window.router.push('/');
@@ -112,11 +109,15 @@ const T = require('~/ui/shared-components/T');
         this.termsDialogOpen = true;
     };
 
-    termsDialogActions = [
-        { label: 'Ok', onClick: this.hideTermsDialog }
-    ];
 
     render() {
+        const termsDialogActions = [
+            { label: 'button_ok', onClick: this.hideTermsDialog }
+        ];
+        const errorActions = [
+            { label: t('button_ok'), onClick: this.navigateToProfile }
+        ];
+
         return (
             <div className={css('signup', 'rt-light-theme', { show: this.show })}>
                 <img alt="" className="logo" src="static/img/logo-white.png" />
@@ -149,13 +150,13 @@ const T = require('~/ui/shared-components/T');
                     <div className={css('indicator', { active: this.step === 2 })} />
                 </div> */}
                 <FullCoverLoader show={this.busy} />
-                <Dialog actions={this.errorActions} active={this.errorVisible}
+                <Dialog actions={errorActions} active={this.errorVisible}
                         onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
                         title={t('title_error')}>{this.errorMessage}</Dialog>
                 <Snackbar location="signup" />
 
                 <Dialog active={this.termsDialogOpen}
-                        actions={this.termsDialogActions}
+                        actions={termsDialogActions}
                         onOverlayClick={this.hideTermsDialog}
                         onEscKeyDown={this.hideTermsDialog}
                         className="terms">

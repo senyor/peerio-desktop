@@ -21,18 +21,19 @@ class App extends React.Component {
         }, 500);
     };
 
-    contactDialogActions = [
-        { label: t('button_close'), onClick: this.hideContactDialog }
-    ];
 
     render() {
+        const contactDialogActions = [
+            { label: t('button_close'), onClick: this.hideContactDialog }
+        ];
+
         return (
             <div className="flex-row app-root">
                 <AppNav />
                 {this.props.children}
                 <Snackbar location="app" />
                 <Dialog active={!this.contactDialogHiding && !!uiStore.contactDialogUsername}
-                        actions={this.contactDialogActions} onOverlayClick={this.hideContactDialog}
+                        actions={contactDialogActions} onOverlayClick={this.hideContactDialog}
                         onEscKeyDown={this.hideContactDialog}
                         title={t('title_settingsProfile')}>
                     {

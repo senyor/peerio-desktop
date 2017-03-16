@@ -4,6 +4,7 @@ const { autorun } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dialog, ProgressBar, List, ListItem } = require('~/react-toolbox');
 const Search = require('~/ui/shared-components/Search');
+const { t } = require('peerio-translator');
 
 @observer
 class FilePicker extends React.Component {
@@ -16,10 +17,6 @@ class FilePicker extends React.Component {
         if (!selected.length) return;
         this.props.onShare(selected);
     };
-    actions = [
-        { label: 'Cancel', onClick: this.handleClose },
-        { label: 'Share', onClick: this.handleShare, primary: true, disabled: true }
-    ];
 
     constructor() {
         super();
@@ -46,6 +43,11 @@ class FilePicker extends React.Component {
     };
 
     render() {
+        const actions = [
+        { label: t('button_cancel'), onClick: this.handleClose },
+        { label: t('button_share'), onClick: this.handleShare, primary: true, disabled: true }
+        ];
+
         return (
             <Dialog title="Share Files"
                     actions={this.actions}

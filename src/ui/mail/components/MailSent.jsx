@@ -17,7 +17,7 @@ class MailSent extends React.Component {
     handleClose = () => {
         this.deleteDialogActive = false;
     };
-
+    // todo update with locacle change
     deleteActions = [
         { label: 'Cancel', onClick: () => { this.handleClose(); } },
         { label: 'Confirm', onClick: () => { this.deleteGhost(); }, primary: true }

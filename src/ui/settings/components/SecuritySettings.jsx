@@ -28,9 +28,6 @@ class SecuritySettings extends React.Component {
         this.passphraseDialogOpen = true;
     };
 
-    passphraseDialogActions = [
-        { label: 'Ok', onClick: this.hidePassphraseDialog }
-    ];
 
     hideTwoFactorDialog = () => {
         this.setupTwoFactorDialogOpen = false;
@@ -46,12 +43,6 @@ class SecuritySettings extends React.Component {
         this.twoFactorActive = !this.twoFactorActive;
     };
 
-    twoFactorDialogActions = [
-        { label: 'cancel', onClick: this.hideTwoFactorDialog },
-        { label: 'confirm', onClick: this.hideTwoFactorDialog }
-    ];
-
-
     hideBackupCodesDialog = () => {
         this.backupCodesDialogOpen = false;
     };
@@ -60,12 +51,12 @@ class SecuritySettings extends React.Component {
         this.backupCodesDialogOpen = true;
     };
 
-    backupCodesDialogActions = [
-        { label: 'cancel', onClick: this.hideBackupCodesDialog },
-        { label: 'download', onClick: this.hideBackupCodesDialog }
-    ];
 
     renderShowPassphraseSection() {
+        const passphraseDialogActions = [
+         { label: t('button_ok'), onClick: this.hidePassphraseDialog }
+        ];
+
         // if (!User.current.passcodeIsSet) return null;
         return (
             <div>
@@ -76,7 +67,7 @@ class SecuritySettings extends React.Component {
                 <p>
                     {t('description_MasterPassword')}
                 </p>
-                <Dialog active={this.passphraseDialogOpen} actions={this.passphraseDialogActions}
+                <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}
                             onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}
                             title={this.unlocked ? t('passphrase') : t('devicePasswordRequired')}>
                     { this.unlocked ?
@@ -94,6 +85,15 @@ class SecuritySettings extends React.Component {
     }
 
     render() {
+        const backupCodesDialogActions = [
+            { label: t('button_cancel'), onClick: this.hideBackupCodesDialog },
+            { label: t('button_download'), onClick: this.hideBackupCodesDialog }
+        ];
+        const twoFactorDialogActions = [
+            { label: t('button_cancel'), onClick: this.hideTwoFactorDialog },
+            { label: t('button_confirm'), onClick: this.hideTwoFactorDialog }
+        ];
+
         return (
             <div>
                 <section className="section-divider">
@@ -137,7 +137,7 @@ class SecuritySettings extends React.Component {
                     </p>
                 </section>
                 {/* Technically speaking: do we want 2 dialogs or 1 dialog with steps? */}
-                <Dialog active={this.setupTwoFactorDialogOpen} actions={this.twoFactorDialogActions}
+                <Dialog active={this.setupTwoFactorDialogOpen} actions={twoFactorDialogActions}
                         onOverlayClick={this.hideTwoFactorDialog} onEscKeyDown={this.hideTwoFactorDialog}
                         title={t('2fa')}>
                     <div>
@@ -152,7 +152,7 @@ class SecuritySettings extends React.Component {
                     </div>
                 </Dialog>
 
-                <Dialog active={this.backupCodesDialogOpen} actions={this.backupCodesDialogActions}
+                <Dialog active={this.backupCodesDialogOpen} actions={backupCodesDialogActions}
                         onOverlayClick={this.hideBackupCodesDialog} onEscKeyDown={this.hideBackupCodesDialog}
                         title={t('backupCodes')}>
                     <div>

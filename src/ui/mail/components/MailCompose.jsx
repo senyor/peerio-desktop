@@ -16,7 +16,7 @@ const css = require('classnames');
     @computed get valid() {
         return this.props.ghost.recipients.length > 0;
     }
-
+    // todo: update on locale change
     dialogActions = [
         { label: t('cancel'), onClick: () => { this.hideDialog(); } },
         { label: t('send'),

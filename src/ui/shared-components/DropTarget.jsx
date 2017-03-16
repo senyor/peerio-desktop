@@ -40,17 +40,17 @@ class DropTarget extends React.Component {
         this.dialogActive = false;
     };
 
-    uploadActions = [
-        { label: t('button_cancel'), onClick: this.cancelUpload },
-        { label: t('button_upload'), onClick: this.uploadAndShare }
-
-    ];
 
     render() {
         if (this.dialogActive) {
+            const uploadActions = [
+                { label: t('button_cancel'), onClick: this.cancelUpload },
+                { label: t('button_upload'), onClick: this.uploadAndShare }
+            ];
+
             return (
                 <Dialog
-                  actions={this.uploadActions}
+                  actions={uploadActions}
                   active
                   onEscKeyDown={this.cancelUpload}
                   onOverlayClick={this.cancelUpload}

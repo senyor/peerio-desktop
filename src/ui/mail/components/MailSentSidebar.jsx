@@ -14,9 +14,9 @@ class MailSentSidebar extends React.Component {
 
     @observable revokeDialogActive = false;
     @observable ghostActive = true;
-
+    // todo update on locale change
     revokeDialogActions = [
-        { label: t('cancel'), onClick: () => { this.hideRevokeDialog(); } },
+        { label: t('button_cancel'), onClick: () => { this.hideRevokeDialog(); } },
         { label: t('ghost_revokeAction'), onClick: () => { this.revokeGhost(); } }
     ];
 

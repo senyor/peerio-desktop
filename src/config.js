@@ -2,7 +2,7 @@ const cfg = require('~/icebear').config;
 const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env');
 const FileStream = require('~/icebear/models/files/node-file-stream');
-const StorageEngine = require('~/icebear/models/stores/node-json-storage');
+const StorageEngine = require('~/icebear/models/storage/node-json-storage');
 
 cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';

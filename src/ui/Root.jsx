@@ -1,5 +1,5 @@
 const React = require('react');
-const AutoUpdateDialog = require('~/ui/AutoUpdateDialog');
+// const AutoUpdateDialog = require('~/ui/AutoUpdateDialog');
 const languageStore = require('~/stores/language-store');
 const { reaction } = require('mobx');
 const deepForceUpdate = require('react-deep-force-update');
@@ -10,6 +10,7 @@ const theme = require('~/react-toolbox/theme.js');
 const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
+
 
 class Root extends React.Component {
 

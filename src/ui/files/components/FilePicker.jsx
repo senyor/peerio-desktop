@@ -1,6 +1,5 @@
 const React = require('react');
 const { fileStore } = require('~/icebear');
-const { autorun } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dialog, ProgressBar, List, ListItem } = require('~/react-toolbox');
 const Search = require('~/ui/shared-components/Search');
@@ -23,13 +22,6 @@ class FilePicker extends React.Component {
     constructor() {
         super();
         fileStore.loadAllFiles();
-    }
-
-    componentDidMount() {
-        this.mounted = true;
-    }
-    componentWillUnmount() {
-        this.mounted = false;
     }
 
     handleSearch = val => {

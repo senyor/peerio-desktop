@@ -8,10 +8,12 @@ const { t } = require('peerio-translator');
 
 @observer
 class FilePicker extends React.Component {
+
     handleClose = () => {
         fileStore.clearSelection();
         this.props.onClose();
     };
+
     handleShare = () => {
         const selected = fileStore.getSelectedFiles();
         if (!selected.length) return;
@@ -21,10 +23,6 @@ class FilePicker extends React.Component {
     constructor() {
         super();
         fileStore.loadAllFiles();
-        autorun(() => {
-            this.actions[1].disabled = !fileStore.hasSelectedFiles;
-            if (this.mounted) this.forceUpdate();
-        });
     }
 
     componentDidMount() {
@@ -44,13 +42,16 @@ class FilePicker extends React.Component {
 
     render() {
         const actions = [
-        { label: t('button_cancel'), onClick: this.handleClose },
-        { label: t('button_share'), onClick: this.handleShare, primary: true, disabled: true }
+            { label: t('button_cancel'), onClick: this.handleClose },
+            { label: t('button_share'),
+                onClick: this.handleShare,
+                primary: true,
+                disabled: !fileStore.hasSelectedFiles }
         ];
 
         return (
             <Dialog title="Share Files"
-                    actions={this.actions}
+                    actions={actions}
                     active={this.props.active}
                     onEscKeyDown={this.handleClose}
                     onOverlayClick={this.handleClose}>

@@ -1,6 +1,5 @@
 const isDevEnv = require('~/helpers/is-dev-env');
-const ipc = require('electron').ipcRenderer;
-const config = require('~/config');
+const { ipcRenderer, remote } = require('electron');
 
 if (isDevEnv) {
     // to allow require of development modules in dev environment
@@ -14,6 +13,8 @@ if (isDevEnv) {
     // shortcut to use with promises
     window.clog = console.log.bind(console);
 }
+
+document.title = remote.app.getName();
 
 document.addEventListener('DOMContentLoaded', () => {
     // <emojione> ------------------------------------------------------------------------------------------------
@@ -49,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.router = createMemoryHistory();
     render(React.createElement(Router, { history: window.router, routes }), document.getElementById('root'));
 
-    ipc.on('router', (event, message) => {
+    ipcRenderer.on('router', (event, message) => {
         window.router.push(message);
     });
   //  window.router.push('/dev-tools');

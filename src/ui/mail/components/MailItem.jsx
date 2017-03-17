@@ -11,7 +11,7 @@ class MailItem extends React.Component {
 
     render() {
         return (
-            <div className={css('mail-item', { active: mailStore.selectedId === this.props.ghostId })}
+            <div className={css('mail-item', { active: mailStore.selectedId === this.props.ghostId, draft: !this.props.sent })}
                  onClick={this.handleSelect}>
                 <div className="flex-col flex-grow-1 flex-justify-between">
                     <div className="flex-row">

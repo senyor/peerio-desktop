@@ -16,14 +16,16 @@
 const React = require('react');
 const _ = require('lodash');
 const { socket } = require('~/icebear'); // eslint-disable-line
-const { computed, reaction, when, isObservable } = require('mobx');
+const { computed, reaction, when, isObservable, observable } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const OrderedFormStore = require('~/stores/ordered-form-store');
+const css = require('classnames');
 
 @observer class ValidatedInput extends Component {
+    @observable isFocused = false;
 
     @computed get validationMessage() {
         if (this.props.store[this.fDirty] === true && this.props.store[this.fMsgText]) {
@@ -95,6 +97,10 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
             });
     }
 
+    handleFocus = () => {
+        this.isFocused = !this.isFocused;
+    }
+
     handleBlur = () => {
         this.props.store[this.fDirty] = true;
         // mark all subsequent as dirty
@@ -105,6 +111,8 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
                 }
             });
         }
+
+        this.handleFocus();
     };
 
     handleChange = (val) => {
@@ -114,13 +122,14 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
 
     render() {
         return (
-            <div>
+            <div className={css({ focused: this.isFocused })}>
                 <Input type={this.props.type || 'text'}
                        value={this.props.store[this.props.name] || ''}
                        label={this.props.label}
                        onChange={this.handleChange}
                        onKeyPress={this.props.onKeyPress}
                        onBlur={this.handleBlur}
+                       onFocus={this.handleFocus}
                        error={this.validationMessage}
                        className={this.props.className}
                        maxLength={this.props.maxLength}

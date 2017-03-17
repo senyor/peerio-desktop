@@ -108,8 +108,8 @@
     white-space: normal;
   }
 
-  .focused + .hint-wrapper .passcode-hints {
-    display: block;
+  .focused + .passcode-hints {
+    opacity: 1;
   }
 
   .hint-wrapper {
@@ -125,9 +125,11 @@
     left: 100%;
     margin-left: 96px;
     min-width: 100%;
+    opacity: 0;
     padding-left: 0;
     position: absolute;
     top: 0;
+    transition: 150ms $transition-default;
 
     .heading {
       color: $text-light-primary;

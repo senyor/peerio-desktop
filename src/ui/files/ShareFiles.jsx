@@ -2,6 +2,7 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { fileStore } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
+const { t } = require('peerio-translator');
 
 @observer
 class ShareFiles extends React.Component {
@@ -24,8 +25,8 @@ class ShareFiles extends React.Component {
     render() {
         return (
             <div className="create-new-message">
-                <UserPicker title={`Select recipients for ${fileStore.selectedCount} file(s)`}
-                            button="Share"
+                <UserPicker title={t('title_selectFileRecipients', {count: fileStore.selectedCount})}
+                            button={t('button_share')}
                             onAccept={this.handleFileShareAccept}
                             onClose={this.closeUserPicker}
                             sharing />

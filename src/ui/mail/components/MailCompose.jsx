@@ -81,7 +81,7 @@ const css = require('classnames');
                                 />
                             </div>
                             <div className="meta-input">
-                                <Input placeholder={t('mail_enterSubject')} onChange={this.handleSubjectChange} />
+                                <Input placeholder={t('mail_enterSubject')} value={this.props.ghost.subject} onChange={this.handleSubjectChange} />
                             </div>
                         </div>
                     </div>

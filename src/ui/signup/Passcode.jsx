@@ -127,7 +127,6 @@ class PasscodeStore extends OrderedFormStore {
                         emphasis: text => <strong>{text}</strong>
                     }}
                 </T></p>
-
                 <p><T k="title_MPIntro1" className="signup-title">
                     {{
                         emphasis: text => <strong>{text}</strong>
@@ -138,31 +137,33 @@ class PasscodeStore extends OrderedFormStore {
                         emphasis: text => <strong>{text}</strong>
                     }}
                 </T></p>
-
-                <ValidatedInput type="password"
-                                name="passcode"
-                                className="login-input"
-                                label={t('title_password')}
-                                store={this.props.store}
-                                validator={this.passwordValidator}
-                                validationArguments={{
-                                    hintStore: this.props.store.passwordHints,
-                                    equalsValue: this.props.store.passcodeRepeat,
-                                    equalsErrorMessage: t('error_passwordRepeat'),
-                                    banList: this.passwordBanList
-                                }}
-                                onKeyPress={this.handleKeyPress} />
-                <ul className="passcode-hints">
-                    {this.props.store.passwordHints.entries().map(([key, hint]) => {
-                        return (
-                            <li key={key} className={hint ? 'passed' : ''}>
-                                <FontIcon value={hint ? 'lens' : 'panorama_fish_eye'} />
-                                {t(`title_passwordHint_${key}`)}
-                            </li>
-                        );
-                    }
-                )}
-                </ul>
+                <div className="hint-wrapper">
+                    <ValidatedInput type="password"
+                                    name="passcode"
+                                    className="login-input"
+                                    label={t('title_password')}
+                                    store={this.props.store}
+                                    validator={this.passwordValidator}
+                                    validationArguments={{
+                                        hintStore: this.props.store.passwordHints,
+                                        equalsValue: this.props.store.passcodeRepeat,
+                                        equalsErrorMessage: t('error_passwordRepeat'),
+                                        banList: this.passwordBanList
+                                    }}
+                                    onKeyPress={this.handleKeyPress} />
+                    <ul className="passcode-hints">
+                        <li className="heading">{t('title_passwordHints')}</li>
+                        {this.props.store.passwordHints.entries().map(([key, hint]) => {
+                            return (
+                                <li key={key} className={hint ? 'passed' : ''}>
+                                    <FontIcon value={hint ? 'lens' : 'panorama_fish_eye'} />
+                                    {t(`title_passwordHint_${key}`)}
+                                </li>
+                            );
+                        }
+                    )}
+                    </ul>
+                </div>
                 <ValidatedInput type="password"
                                 name="passcodeRepeat"
                                 className="login-input"

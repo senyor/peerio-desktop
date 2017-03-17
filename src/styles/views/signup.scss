@@ -108,9 +108,45 @@
     white-space: normal;
   }
 
-  ul.passcode-hints {
-    margin-top: 40px;
+  .focused + .hint-wrapper .passcode-hints {
+    display: block;
+  }
+
+  .hint-wrapper {
+    position: relative;
+    // targets input wrapper div
+    div {
+      width: 100%;
+    }
+  }
+
+  .passcode-hints {
+    display: block;
+    left: 100%;
+    margin-left: 96px;
+    min-width: 100%;
     padding-left: 0;
+    position: absolute;
+    top: 0;
+
+    .heading {
+      color: $text-light-primary;
+      display: block;
+      font-weight: $font-weight-semibold;
+      height: 48px;
+      line-height: 48px;
+
+      &::before {
+        background: $color-light-100;
+        content: '';
+        display: block;
+        height: 2px;
+        left: -80px;
+        position: absolute;
+        top: 24px;
+        width: 64px;
+      }
+    }
 
     li {
       line-height: 28px;

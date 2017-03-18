@@ -66,7 +66,9 @@ class MessageList extends React.Component {
 
     scrollToBottom = () => {
         if (!this.containerRef) return;
-        this.containerRef.scrollTop = this.containerRef.scrollHeight - this.containerRef.clientHeight - 20;
+        setTimeout(() => {
+            this.containerRef.scrollTop = this.containerRef.scrollHeight - this.containerRef.clientHeight - 20;
+        }, 0);
     };
 
     handleScroll = _.debounce(() => {

@@ -1,8 +1,9 @@
 const React = require('react');
 const { Button, IconMenu, MenuItem } = require('~/react-toolbox');
-const { observable } = require('mobx');
+const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { mailStore } = require('~/icebear');
+const { t } = require('peerio-translator');
 const MailItem = require('./components/MailItem');
 const MailCompose = require('./components/MailCompose');
 const MailSent = require('./components/MailSent');
@@ -16,21 +17,32 @@ class Mail extends React.Component {
         mailStore.loadAllGhosts();
     }
 
-    handleCompose = () => {
+    constructor() {
+        super();
+        this.handleCompose = this.handleCompose.bind(this);
+        this.handleSend = this.handleSend.bind(this);
+        this.handleAttach = this.handleAttach.bind(this);
+        this.handleSort = this.handleSort.bind(this);
+    }
+
+    @action handleCompose() {
         const newGhost = mailStore.createGhost();
         this.sent = false;
-    };
+    }
 
-    handleSend = data => {
+    @action handleSend(data) {
         mailStore.selectedGhost.send(data);
-    };
+    }
 
-    handleAttach = files => {
+    @action handleAttach(files) {
         mailStore.selectedGhost.attachFiles(files);
-    };
+    }
+
+    @action handleSort(value) {
+        mailStore.sort(value);
+    }
 
     renderRight() {
-        console.log('selected', mailStore.selectedId);
         if (mailStore.selectedGhost.sent) {
             return (
                 <MailSent ghost={mailStore.selectedGhost} />
@@ -51,22 +63,23 @@ class Mail extends React.Component {
                 <div className="mail-list-wrapper">
                     <div className="mail-sorting">
                         <div>
-                            Sort by <strong>Unread</strong>
+                            {t('title_sort')} <strong>{mailStore.selectedSort}</strong>
                         </div>
-                        <IconMenu icon="arrow_drop_down">
-                            <MenuItem caption="Attachments" />
-                            <MenuItem caption="Date" />
-                            <MenuItem caption="Recipient" />
-                            <MenuItem caption="Unread" />
+                        <IconMenu onSelect={this.handleSort} icon="arrow_drop_down">
+                            <MenuItem value="date" caption={t('option_date')} />
+                            <MenuItem value="attachment" onSelect={this.sort} caption={t('option_attachments')} />
+                            <MenuItem value="recipient" onSelect={this.sort} caption={t('option_recipients')} />
                         </IconMenu>
                     </div>
                     <div className="mail-list">
                         {mailStore.ghosts.map((m) => {
                             return (<MailItem key={m.ghostId}
+                                              sent={m.sent}
                                               ghostId={m.ghostId}
                                               subject={m.subject}
                                               date={m.date.fromNow(true)}
                                               recipient={m.recipients}
+                                              attachments={m.files.length > 0}
                                               firstLine={m.preview}
                                               active={false} />
                             );

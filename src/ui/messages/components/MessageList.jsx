@@ -30,12 +30,12 @@ class MessageList extends React.Component {
                 return;
             }
             if (this.lastTopElement) {
-                setTimeout(() => {
-                    if (!this.lastTopElement) return;
+                // setTimeout(() => {
+                if (!this.lastTopElement) return;
                     // todo: animate
-                    this.containerRef.scrollTop = this.lastTopElement.offsetTop - this.lastTopElementOffset - 28;
-                    this.lastTopElement = null;
-                }, 200);
+                this.containerRef.scrollTop = this.lastTopElement.offsetTop - this.lastTopElementOffset - 28;
+                this.lastTopElement = null;
+                // }, 0);
             }
         });
         // reaction to jump to recent from history mode
@@ -71,7 +71,7 @@ class MessageList extends React.Component {
         }, 0);
     };
 
-    handleScroll = _.debounce(() => {
+    handleScroll = _.throttle(() => {
         // we can't handle scroll if content height is too small
         if (this.containerRef.scrollHeight <= this.containerRef.clientHeight) return;
 
@@ -87,7 +87,7 @@ class MessageList extends React.Component {
         if (distanceToTop < this.loadTriggerDistance) {
             chatStore.activeChat.loadPreviousPage();
         }
-    }, 250);
+    }, 150, { leading: true, trailing: true });
 
     setContainerRef = (r) => {
         this.containerRef = r;

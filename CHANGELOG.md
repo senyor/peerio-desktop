@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.12.0"></a>
+# [1.12.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.11.12...v1.12.0) (2017-03-20)
+
+
+### Bug Fixes
+
+* **chat:** scroll to bottom should be executed after repaint ([30ed05d](https://github.com/PeerioTechnologies/peerio-desktop/commit/30ed05d))
+* **config:** pass arch ([5c4067c](https://github.com/PeerioTechnologies/peerio-desktop/commit/5c4067c))
+* **copy:** dynamically assigned title ([5bf10c6](https://github.com/PeerioTechnologies/peerio-desktop/commit/5bf10c6))
+* **dialogs:** locale aware dialog actions ([2770ba7](https://github.com/PeerioTechnologies/peerio-desktop/commit/2770ba7))
+* **ghost:** pass draft status to list item ([b9ff67b](https://github.com/PeerioTechnologies/peerio-desktop/commit/b9ff67b))
+* **ghost:** render correct subject ([5e2f70b](https://github.com/PeerioTechnologies/peerio-desktop/commit/5e2f70b))
+* **picker:** file picker actions fix ([9faa02b](https://github.com/PeerioTechnologies/peerio-desktop/commit/9faa02b))
+
+
+### Features
+
+* **ghosts:** sort + missing i18n ([922a018](https://github.com/PeerioTechnologies/peerio-desktop/commit/922a018))
+
+
+### Performance Improvements
+
+* **chat:** minor performance improvement ([1268240](https://github.com/PeerioTechnologies/peerio-desktop/commit/1268240))
+
+
+
 <a name="1.11.12"></a>
 ## [1.11.12](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.11.11...v1.11.12) (2017-03-16)
 

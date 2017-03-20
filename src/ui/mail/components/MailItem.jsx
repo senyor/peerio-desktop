@@ -14,7 +14,7 @@ class MailItem extends React.Component {
             <div className={css('mail-item', {
                 active: mailStore.selectedId === this.props.ghostId,
                 draft: !this.props.sent,
-                alive: !this.props.ghost.expired && !this.props.ghost.revoked,
+                alive: this.props.alive,
                 attachments: this.props.attachments
             })}
                  onClick={this.handleSelect}>

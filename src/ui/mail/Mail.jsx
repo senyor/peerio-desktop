@@ -81,6 +81,7 @@ class Mail extends React.Component {
                                               recipient={m.recipients}
                                               attachments={m.files.length > 0}
                                               firstLine={m.preview}
+                                              alive={!m.expired && !m.revoked}
                                               active={false} />
                             );
                         })}

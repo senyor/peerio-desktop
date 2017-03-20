@@ -11,7 +11,7 @@ cfg.appVersion = app.getVersion();
 cfg.platform = 'electron';
 cfg.arch = os.arch();
 cfg.ghostFrontendUrl = 'https://mail.peerio.com/';
-// cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
+cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
 // cfg.ghostFrontendUrl = 'https://alakazam.peerio.com/';
 
 cfg.FileStream = FileStream;

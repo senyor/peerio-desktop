@@ -78,14 +78,16 @@ const css = require('classnames');
         const fieldValidators = Array.isArray(this.props.validator) ?
             this.props.validator : [this.props.validator];
 
+        // reset message and valid state
+        this.props.store[this.fValid] = false;
+        this.props.store[this.fMsgText] = '';
+
         Promise.reduce(fieldValidators, (r, validator) => {
             if (r === true) {
                 return validator.action(value, this.props.validationArguments || {})
                     .then(rs => {
-                        if (rs === true) {
-                            return rs;
-                        }
-                        return (rs && rs.message ? rs.message : validator.message);
+                        if (rs === undefined || rs === true) return rs;
+                        return (rs.message ? rs.message : validator.message);
                     });
             }
             return r;

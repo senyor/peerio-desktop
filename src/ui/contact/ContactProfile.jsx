@@ -16,7 +16,8 @@ class ContactProfile extends React.Component {
                 { c.tofuError ? <div className="contact-error">{t('error_contactFingerprintChangedDetail')}</div>
                     : null}
                 <div className="row flex-row flex-align-center">
-                    <RTAvatar style={{ backgroundColor: c.color }} title={c.username} />
+                    {/* TODO: use our Avatar component instead, and strip it of mouse events */}
+                    <RTAvatar style={{ backgroundColor: c.color }} >{c.letter}</RTAvatar>
                     <div style={{ marginLeft: '8px' }}>{c.firstName} {c.lastName}</div>
                 </div>
                 <div className="row">

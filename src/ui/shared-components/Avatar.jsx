@@ -21,8 +21,10 @@ class Avatar extends React.Component {
         }
         return (
             <div className="avatar-wrapper">
-                <RTAvatar style={style} title={contact.firstName}
-                          onClick={this.openContactDialog} className="clickable-avatar" />
+                <RTAvatar style={style}
+                          onClick={this.openContactDialog} className="clickable-avatar">
+                    <div>{contact.letter}</div>
+                </RTAvatar>
                 {contact.tofuError ?
                     <FontIcon value="error" />
                     : null}

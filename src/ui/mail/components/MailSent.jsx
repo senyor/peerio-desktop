@@ -17,11 +17,6 @@ class MailSent extends React.Component {
     handleClose = () => {
         this.deleteDialogActive = false;
     };
-    // todo update with locacle change
-    deleteActions = [
-        { label: 'Cancel', onClick: () => { this.handleClose(); } },
-        { label: 'Confirm', onClick: () => { this.deleteGhost(); }, primary: true }
-    ];
 
     deleteGhost = () => {
         mailStore.remove(this.props.ghost)
@@ -43,6 +38,11 @@ class MailSent extends React.Component {
     };
 
     render() {
+        const deleteActions = [
+            { label: t('button_cancel'), onClick: () => { this.handleClose(); } },
+            { label: t('button_ghostDeleteAction'), onClick: () => { this.deleteGhost(); }, primary: true }
+        ];
+
         return (
             <div className="flex-row flex-grow-1">
                 <div className="compose-view">
@@ -85,12 +85,12 @@ class MailSent extends React.Component {
 
                 </div>
                 <MailSentSidebar ghost={this.props.ghost} />
-                <Dialog title={t('ghost_deleteTitle')}
-                        actions={this.deleteActions}
+                <Dialog title={t('title_ghostDelete')}
+                        actions={deleteActions}
                         active={this.deleteDialogActive}
                         onEscKeyDown={this.handleClose}
                         onOverlayClick={this.handleClose}>
-                    {t('ghost_deleteText')}
+                    {t('dialog_ghostDeleteText')}
                 </Dialog>
             </div>
         );

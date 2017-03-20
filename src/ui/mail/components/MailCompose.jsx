@@ -16,16 +16,7 @@ const css = require('classnames');
     @computed get valid() {
         return this.props.ghost.recipients.length > 0;
     }
-    // todo: update on locale change
-    dialogActions = [
-        { label: t('cancel'), onClick: () => { this.hideDialog(); } },
-        { label: t('send'),
-            onClick: () => {
-                this.handleSubmit();
-                this.hideDialog();
-            }
-        }
-    ];
+
 
     constructor() {
         super();
@@ -63,6 +54,16 @@ const css = require('classnames');
 
 
     render() {
+        const dialogActions = [
+            { label: t('cancel'), onClick: () => { this.hideDialog(); } },
+            { label: t('send'),
+                onClick: () => {
+                    this.handleSubmit();
+                    this.hideDialog();
+                }
+            }
+        ];
+
         return (
             <div className="flex-row flex-grow-1">
                 <div className="compose-view">
@@ -108,7 +109,7 @@ const css = require('classnames');
                 </div>
                 {this.renderFilePicker()}
 
-                <Dialog actions={this.dialogActions}
+                <Dialog actions={dialogActions}
                         active={this.dialogActive}
                         onEscKeyDown={this.hideDialog}
                         onOverlayClick={this.hideDialog}

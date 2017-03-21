@@ -23,7 +23,7 @@ class MailSent extends React.Component {
             .then(() => {
                 this.handleClose();
                 systemWarnings.add({
-                    content: 'ghost_snackbarDeleted'
+                    content: 'snackbar_mailDeleted'
                 });
             });
     };
@@ -40,7 +40,7 @@ class MailSent extends React.Component {
     render() {
         const deleteActions = [
             { label: t('button_cancel'), onClick: () => { this.handleClose(); } },
-            { label: t('button_ghostDeleteAction'), onClick: () => { this.deleteGhost(); }, primary: true }
+            { label: t('button_delete'), onClick: () => { this.deleteGhost(); }, primary: true }
         ];
 
         return (
@@ -51,7 +51,7 @@ class MailSent extends React.Component {
                              style={{ height: '36px' }}>
                             <div className="subject">{this.props.ghost.subject}</div>
                             <TooltipIcon
-                                tooltip={t('delete_mail')}
+                                tooltip={t('button_delete')}
                                 tooltipDelay={250}
                                 tooltipPosition="bottom"
                                 icon="delete"
@@ -85,12 +85,12 @@ class MailSent extends React.Component {
 
                 </div>
                 <MailSentSidebar ghost={this.props.ghost} />
-                <Dialog title={t('title_ghostDelete')}
+                <Dialog title={t('title_mailDelete')}
                         actions={deleteActions}
                         active={this.deleteDialogActive}
                         onEscKeyDown={this.handleClose}
                         onOverlayClick={this.handleClose}>
-                    {t('dialog_ghostDeleteText')}
+                    {t('dialog_mailDeleteText')}
                 </Dialog>
             </div>
         );

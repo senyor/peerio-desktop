@@ -66,9 +66,9 @@ class Mail extends React.Component {
                             {t('title_sort')} <strong>{mailStore.selectedSort}</strong>
                         </div>
                         <IconMenu onSelect={this.handleSort} icon="arrow_drop_down">
-                            <MenuItem value="date" caption={t('option_date')} />
-                            <MenuItem value="attachment" onSelect={this.sort} caption={t('option_attachments')} />
-                            <MenuItem value="recipient" onSelect={this.sort} caption={t('option_recipients')} />
+                            <MenuItem value="date" caption={t('title_sortDate')} />
+                            <MenuItem value="attachment" onSelect={this.sort} caption={t('title_sortAttachments')} />
+                            <MenuItem value="recipient" onSelect={this.sort} caption={t('title_sortRecipients')} />
                         </IconMenu>
                     </div>
                     <div className="mail-list">

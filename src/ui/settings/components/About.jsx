@@ -28,26 +28,26 @@ class About extends React.Component {
                 <section className="section-divider">
                     <img alt="" className="logo" src="static/img/logo-blue.png" />
                     <p>
-                        {t('currentVersion')} : <strong>{version}</strong>
+                        {t('title_version')} <strong>{version}</strong>
                     </p>
 
                 </section>
 
                 <section>
-                    <div className="title">{t('support')}</div>
+                    <div className="title">{t('title_help')}</div>
                     <p>
-                        {t('description_support')}
+                        {t('title_helpText')}
                         {/* Other users can find you... */}
                     </p>
                     <div className="flex-row">
-                        <Button label={t('button_faq')} flat primary />
-                        <Button label={t('button_support')} flat primary />
+                        <Button label={t('button_HC')} flat primary />
+                        <Button label={t('button_contact')} flat primary />
                     </div>
                 </section>
                 <section>
                     &copy; 2017 Peerio Technologies , Inc. All rights reserved.
                     <br /><br />
-                    Peerio <Button onClick={this.showTermsDialog} label={t('terms')} />
+                    Peerio <Button onClick={this.showTermsDialog} label={t('button_terms')} />
                 </section>
 
                 <Dialog active={this.termsDialogOpen}

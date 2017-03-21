@@ -20,12 +20,12 @@ const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
     render() {
         return (
             <div>
-                <p>{t('ghost_passphraseExplanation')}</p>
-                <div className="dark-label">{t('ghost_passphrase')}</div>
+                <p>{t('title_passphraseExplanation')}</p>
+                <div className="dark-label">{t('title_passphrase')}</div>
                 <div className="passphrase">
                     <span ref={(pp) => { this.passphrase = pp; }}>{ this.props.ghost.passphrase }</span>
                     <TooltipIcon
-                        tooltip="copy"
+                        tooltip={t('title_copy')}
                         tooltipDelay={500}
                         tooltipPosition="bottom"
                         icon="content_copy"

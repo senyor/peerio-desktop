@@ -48,7 +48,7 @@ const emailFormatFn = validation.validators.emailFormat.action;
                         {c}
                     </Chip>
                 )}
-                <Input placeholder={t('mail_enterEmail')}
+                <Input placeholder={t('title_enterEmail')}
                        value={this.query}
                        onChange={this.handleTextChange}
                        onKeyDown={this.handleKeyDown}

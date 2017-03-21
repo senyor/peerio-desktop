@@ -38,16 +38,16 @@ class Settings extends React.Component {
             <div className="flex-row flex-justify-center settings">
                 <div className="tab-wrapper">
                     <div className="headline">
-                        {t('settings')}
+                        {t('title_settings')}
                     </div>
                     <Tabs index={this.index}
                           onChange={this.handleTabChange}
                           style={{ width: '1024px' }}
                           className="tabs">
-                        <Tab label={t('profile')} />
-                        <Tab label={t('security')} />
-                        <Tab label={t('preferences')} />
-                        <Tab label={t('about')} />
+                        <Tab label={t('title_settingsProfile')} />
+                        <Tab label={t('title_settingsSecurity')} />
+                        <Tab label={t('title_settingsPreferences')} />
+                        <Tab label={t('title_settingsAbout')} />
                     </Tabs>
                     {this.props.children}
                 </div>

@@ -55,8 +55,8 @@ const css = require('classnames');
 
     render() {
         const dialogActions = [
-            { label: t('cancel'), onClick: () => { this.hideDialog(); } },
-            { label: t('send'),
+            { label: t('button_cancel'), onClick: () => { this.hideDialog(); } },
+            { label: t('button_send'),
                 onClick: () => {
                     this.handleSubmit();
                     this.hideDialog();
@@ -69,20 +69,20 @@ const css = require('classnames');
                 <div className="compose-view">
                     <div className="compose-meta flex-row flex-shrink-0">
                         <div className="dark-label flex-col flex-justify-between">
-                            <div className="meta-input">{t('to')}</div>
-                            <div className="meta-input">{t('ghost_subject')}</div>
+                            <div className="meta-input">{t('title_to')}</div>
+                            <div className="meta-input">{t('title_subject')}</div>
                         </div>
                         <div className="flex-grow-1">
                             <div className="meta-input">
                                 <EmailPicker ghost={this.props.ghost} />
-                                <Button label={t('send')}
+                                <Button label={t('button_send')}
                                         primary
                                         disabled={!this.valid}
                                         onClick={this.validateAndSubmit}
                                 />
                             </div>
                             <div className="meta-input">
-                                <Input placeholder={t('mail_enterSubject')} value={this.props.ghost.subject} onChange={this.handleSubjectChange} />
+                                <Input placeholder={t('title_enterSubject')} value={this.props.ghost.subject} onChange={this.handleSubjectChange} />
                             </div>
                         </div>
                     </div>

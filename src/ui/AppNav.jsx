@@ -109,31 +109,31 @@ class AppNav extends React.Component {
                 <div className="avatar-menu-wrapper">
                     <div className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
                     <IconMenu icon="">
-                        <MenuItem value="profile" icon="person" caption="Profile"
+                        <MenuItem value="profile" icon="person" caption={t('title_settingsProfile')}
                                   onClick={this.toProfile} style={menuItemStyle}
                                   className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
-                        <MenuItem value="security" icon="security" caption="Security"
+                        <MenuItem value="security" icon="security" caption={t('title_settingsSecurity')}
                                   onClick={this.toSecurity} style={menuItemStyle} />
-                        <MenuItem value="preferences" icon="settings" caption="Preferences"
+                        <MenuItem value="preferences" icon="settings" caption={t('title_settingsPreferences')}
                                   onClick={this.toPrefs} style={menuItemStyle} />
                         <MenuItem value="about" icon="info" caption="About"
                                   onClick={this.toAbout} style={menuItemStyle} />
                         <MenuDivider />
-                        <MenuItem value="signout" icon="power_settings_new" caption="Sign out"
+                        <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
                                   onClick={this.signout} />
                     </IconMenu>
                     <Avatar contact={this.contact} />
                 </div>
                 <div className="app-menu">
-                    <AppNavButton tooltip={t('mail')} icon="mail" active={this.currentRoute === ROUTES.mail}
+                    <AppNavButton tooltip={t('title_mail')} icon="mail" active={this.currentRoute === ROUTES.mail}
                                   showBadge={mailStore.unreadMail > 0} badge={mailStore.unreadMail}
                                   onClick={this.toMail} />
 
-                    <AppNavButton tooltip={t('chat')} icon="forum" active={this.currentRoute === ROUTES.chat}
+                    <AppNavButton tooltip={t('title_chats')} icon="forum" active={this.currentRoute === ROUTES.chat}
                                   showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
                                   onClick={this.toChat} />
 
-                    <AppNavButton tooltip={t('files')} icon="folder" active={this.currentRoute === ROUTES.files}
+                    <AppNavButton tooltip={t('title_files')} icon="folder" active={this.currentRoute === ROUTES.files}
                                   showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
                                   onClick={this.toFiles} />
                 </div>

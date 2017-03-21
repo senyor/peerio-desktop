@@ -21,7 +21,7 @@ class MailSentSidebar extends React.Component {
             .then(() => {
                 this.hideRevokeDialog();
                 systemWarnings.add({
-                    content: 'warning_ghostRevoked'
+                    content: 'warning_mailRevoked'
                 });
             });
     }
@@ -45,18 +45,18 @@ class MailSentSidebar extends React.Component {
     render() {
         const revokeDialogActions = [
             { label: t('button_cancel'), onClick: () => { this.hideRevokeDialog(); } },
-            { label: t('button_ghostRevokeAction'), onClick: () => { this.revokeGhost(); } }
+            { label: t('button_mailRevoke'), onClick: () => { this.revokeGhost(); } }
         ];
         return (
             <div className="mail-sidebar">
                 <MailPassphrase ghost={this.props.ghost} />
                 <div className="sent-info">
                     <div className="read-recipt">
-                        <div className="dark-label">{t('ghost_url')}</div>
+                        <div className="dark-label">{t('title_mailUrl')}</div>
                         <div className="mail-link">
                             <a href={this.props.ghost.url}>{ this.props.ghost.url }</a>
                             <TooltipIcon
-                                tooltip={t('copy')}
+                                tooltip={t('title_copy')}
                                 tooltipDelay={500}
                                 tooltipPosition="bottom"
                                 icon="content_copy"
@@ -67,16 +67,16 @@ class MailSentSidebar extends React.Component {
                         {(this.ghostActive)
                             ?
                                 <div>
-                                    <div className="dark-label">{t('title_ghost_expires')}</div>
+                                    <div className="dark-label">{t('title_mailExpires')}</div>
                                     <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
-                                    <Button label={t('revoke')}
+                                    <Button label={t('button_mailRevoke')}
                                     onClick={this.showRevokeDialog}
                                     style={{ marginLeft: 'auto', marginTop: '8px' }}
                                     primary />
                                 </div>
                            :
                                 <div className="dark-label">
-                                    {this.props.ghost.revoked ? t('ghost_revoked') : t('ghost_expired')}
+                                    {this.props.ghost.revoked ? t('warning_mailRevoked') : t('title_mailExpired')}
                                 </div>
                     }
                     </div>
@@ -85,8 +85,8 @@ class MailSentSidebar extends React.Component {
                                              active={this.revokeDialogActive}
                                              onEscKeyDown={this.handleRevokeDialogToggle}
                                              onOverlayClick={this.handleRevokeDialogToggle}
-                                             title={t('title_ghostRevoke')}>
-                    <p>{t('dialog_ghostRevokeText')}</p>
+                                             title={t('title_mailRevoke')}>
+                    <p>{t('dialog_mailRevokeText')}</p>
                 </Dialog> : '' }
             </div>
         );

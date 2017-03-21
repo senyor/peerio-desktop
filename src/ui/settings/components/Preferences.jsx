@@ -10,27 +10,27 @@ class Preferences extends React.Component {
         return (
             <div>
                 <section className="section-divider">
-                    <div className="title">{t('notifications')}</div>
+                    <div className="title">{t('title_notifications')}</div>
                     <p>
-                        {t('description_notification')}
+                        {t('title_notificationsDetail')}
                         {/* Email you when... */}
                     </p>
-                    <Switch checked="true" label={t('never')} />
-                    <Switch checked="false" label={t('newMessage')} />
-                    <Switch checked="false" label={t('newFile')} />
-                    <Switch checked="false" label={t('contactRequest')} />
+                    <Switch checked="true" label={t('title_never')} />
+                    <Switch checked="false" label={t('title_notificationsMessage')} />
+                    <Switch checked="false" label={t('title_notificationsFile')} />
+                    <Switch checked="false" label={t('title_notificationsContact')} />
                 </section>
 
                 <section>
-                    <div className="title">{t('privacy')}</div>
+                    <div className="title">{t('title_privacy')}</div>
                     <p>
-                        {t('description_privacy')}
+                        {t('title_privacyDetail')}
                         {/* Other users can find you... */}
                     </p>
-                    <Switch checked="true" label={t('never')} />
-                    <Switch checked="false" label={t('byName')} />
-                    <Switch checked="false" label={t('byUsername')} />
-                    <Switch checked="false" label={t('byEmail')} />
+                    <Switch checked="true" label={t('title_never')} />
+                    <Switch checked="false" label={t('title_yourName')} />
+                    <Switch checked="false" label={t('title_yourUsername')} />
+                    <Switch checked="false" label={t('title_yourEmail')} />
                 </section>
             </div>
         );

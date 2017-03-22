@@ -113,8 +113,8 @@ const css = require('classnames');
                         active={this.dialogActive}
                         onEscKeyDown={this.hideDialog}
                         onOverlayClick={this.hideDialog}
-                        title={t('ghost_emptyTitle')}>
-                    <p>{t('ghost_emptyText')}</p>
+                        title={t('title_emptyMail')}>
+                    <p>{t('title_emptyMailDetail')}</p>
                 </Dialog>
             </div>
         );

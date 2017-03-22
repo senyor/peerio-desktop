@@ -47,7 +47,7 @@ class About extends React.Component {
                 <section>
                     &copy; 2017 Peerio Technologies, Inc. All rights reserved.
                     <br /><br />
-                    Peerio <Button onClick={this.showTermsDialog} label={t('button_terms')} />
+                    {t('title_appName')} <Button onClick={this.showTermsDialog} label={t('button_terms')} />
                 </section>
 
                 <Dialog active={this.termsDialogOpen}

@@ -34,7 +34,7 @@ class Profile extends React.Component {
                                label={t('title_firstName')}
                                value={User.current.firstName} />
                         <Input type="text"
-                               label={t('title_firstName')}
+                               label={t('title_lastName')}
                                value={User.current.lastName} />
                     </div>
                     <div className="input-row">

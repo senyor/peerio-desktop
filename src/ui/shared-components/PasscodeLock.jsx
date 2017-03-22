@@ -22,7 +22,7 @@ class PasscodeLock extends React.Component {
     };
 
     handleError = () => {
-        this.error = t('invalidPasscode');
+        this.error = t('error_wrongPassword');
     };
 
     validatePasscode = _.debounce(() => {
@@ -34,10 +34,10 @@ class PasscodeLock extends React.Component {
     render() {
         return (
             <div className="passcode-lock">
-                <p>{t('passcodeLockWhy')}</p>
+                <p>{t('title_enterPasswordDetail')}</p>
                 <Input type="password"
                     value={this.passcode}
-                       label={t('devicePassword')}
+                       label={t('title_devicePassword')}
                        onChange={this.handleChange}
                        error={this.error} />
             </div>

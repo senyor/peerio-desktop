@@ -5,6 +5,8 @@ const { Button, Dialog, Input } = require('~/react-toolbox');
 const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
+const T = require('~/ui/shared-components/T');
+const cfg = require('~/config.js')
 
 @observer
 class SecuritySettings extends React.Component {
@@ -54,25 +56,25 @@ class SecuritySettings extends React.Component {
 
     renderShowPassphraseSection() {
         const passphraseDialogActions = [
-         { label: t('button_ok'), onClick: this.hidePassphraseDialog }
+         { label: t('button_close'), onClick: this.hidePassphraseDialog }
         ];
 
         // if (!User.current.passcodeIsSet) return null;
         return (
             <div>
                 <div className="title">
-                    {t('passphrase')}
-                    <Button label={t('button_view')} onClick={this.showPassphraseDialog} flat primary />
+                    {t('title_MP')}
+                    <Button label={t('button_showMP')} onClick={this.showPassphraseDialog} flat primary />
                 </div>
                 <p>
-                    {t('description_MasterPassword')}
+                    {t('title_MPDetail', {mpDetailUrl: text => <a href={cfg.mpDetailUrl}>{text}</a>})}
                 </p>
                 <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}
                             onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}
-                            title={this.unlocked ? t('passphrase') : t('devicePasswordRequired')}>
+                            title={this.unlocked ? t('title_MP') : t('title_enterPassword')}>
                     { this.unlocked ?
                         <div>
-                            <p>{t('whatIsMasterPassword')}</p>
+                            <p>{t('title_MPDetail2')}</p>
                             <div style={{ marginTop: '40px', height: '48px' }}>
                                 <div className="passphrase headline">{User.current.passphrase}</div>
                             </div>
@@ -87,76 +89,78 @@ class SecuritySettings extends React.Component {
     render() {
         const backupCodesDialogActions = [
             { label: t('button_cancel'), onClick: this.hideBackupCodesDialog },
-            { label: t('button_download'), onClick: this.hideBackupCodesDialog }
+            { label: t('button_save'), onClick: this.hideBackupCodesDialog }
         ];
         const twoFactorDialogActions = [
             { label: t('button_cancel'), onClick: this.hideTwoFactorDialog },
-            { label: t('button_confirm'), onClick: this.hideTwoFactorDialog }
+            { label: t('button_enable2FA'), onClick: this.hideTwoFactorDialog }
         ];
 
         return (
             <div>
                 <section className="section-divider">
                     <div className="title" >
-                        {t('peerioPINForThisDeviceDesktop')}
-                        <Button label={t('button_update')} flat primary />
+                        {t('title_devicePassword')}
+                        <Button label={t('button_changePassword')} flat primary />
                     </div>
                     <p style={{ marginBottom: '40px' }}>
-                        {t('description_DevicePassword')}
+    <T k="title_passwordIntro" >
+                        {{
+                            emphasis: text => <strong>{text}</strong>
+                        }}
+                    </T>
                     </p>
-                    <div className="title">{t('2fa')}
+                    <div className="title">{t('title_2FA')}
                         <Button label={this.twoFactorActive ?
-                                t('button_backup_codes') : t('button_activate')}
+                                t('button_backupCodes') : t('button_enable2FA')}
                                 onClick={this.twoFactorActive ?
                                   this.showBackupCodesDialog : this.showTwoFactorDialog}
                                 flat primary />
                         { this.twoFactorActive ?
-                            <Button label={t('button_deactivate')}
+                            <Button label={t('button_disable2FA')}
                                       onClick={this.deactivateTwoFactor}
                                       flat primary /> : null }
                     </div>
                     <p>
-                        {t('description_2fa')}
+                        {t('title_2FADetail', {tfaDetailUrl: text => <a href={cfg.tfaDetailUrl}>{text}</a>})}
                     </p>
                 </section>
                 <section className="section-divider">
-                    <div className="title">{t('QRLogin')}
-                        <Button label={t('button_generate')} flat primary />
+                    <div className="title">{t('title_QRcode')}
+                        <Button label={t('button_showQR')} flat primary />
                     </div>
                     <p style={{ marginBottom: '40px' }}>
-                        {t('description_QRLogin')}
+                        {t('title_QRcodeDetail')}
                     </p>
                     {this.renderShowPassphraseSection()}
                 </section>
                 <section>
-                    <div className="title"> {t('accessLogs')}
-                        <Button label={t('button_view')} flat primary />
+                    <div className="title"> {t('title_accountActivity')}
+                        <Button label={t('button_showActivity')} flat primary />
                     </div>
                     <p>
-                        {t('description_accessLogs')}
+                        {t('title_accountActivityDetail')}
                     </p>
                 </section>
                 {/* Technically speaking: do we want 2 dialogs or 1 dialog with steps? */}
                 <Dialog active={this.setupTwoFactorDialogOpen} actions={twoFactorDialogActions}
                         onOverlayClick={this.hideTwoFactorDialog} onEscKeyDown={this.hideTwoFactorDialog}
-                        title={t('2fa')}>
+                        title={t('title_2FASetupDesktop')}>
                     <div>
-                        <p>{t('setupTwoFactor')}</p>
+                        <p>{t('title_2FASetupDesktopDetail')}</p>
                         {/* To set up 2FA enter the secret key into your authenticator app */}
-                        <div>{t('secretKey')}</div>
+                        <div>{t('title_2FASetupDesktopDetail2')}</div>
                         <div className="flex-row flex-align-center flex-justify-between">
-                            <div>I am Jack's secret key</div>
-                            <Button label={t('button_copy_key')} />
                         </div>
-                        <Input label={t('authenticatorCode')} />
+                        <Input label={t('title_2FACode')} />
                     </div>
                 </Dialog>
 
                 <Dialog active={this.backupCodesDialogOpen} actions={backupCodesDialogActions}
                         onOverlayClick={this.hideBackupCodesDialog} onEscKeyDown={this.hideBackupCodesDialog}
-                        title={t('backupCodes')}>
+                        title={t('title_backupCodes')}>
                     <div>
-                        <p>{t('whatAreBackupCodes')}</p>
+                        <p>{t('title_backupCodesDetail')}</p>
                         <div className="flex-col">
                             {/* repeat this */}
                             <div className="backup-row">

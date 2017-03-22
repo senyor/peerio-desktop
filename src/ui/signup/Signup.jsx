@@ -112,7 +112,7 @@ const T = require('~/ui/shared-components/T');
 
     render() {
         const termsDialogActions = [
-            { label: 'button_ok', onClick: this.hideTermsDialog }
+            { label: t('button_ok'), onClick: this.hideTermsDialog }
         ];
         const errorActions = [
             { label: t('button_ok'), onClick: this.navigateToProfile }

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.13.0"></a>
+# [1.13.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.12.2...v1.13.0) (2017-03-22)
+
+
+### Bug Fixes
+
+* **avatar:** you can have emoji in first name now woohoo ([5df2a60](https://github.com/PeerioTechnologies/peerio-desktop/commit/5df2a60))
+* **chat:** possible fix for duplicate react keys ([ecb0abc](https://github.com/PeerioTechnologies/peerio-desktop/commit/ecb0abc))
+* **copy:** stray space before a comma 🤢 ([5b92f30](https://github.com/PeerioTechnologies/peerio-desktop/commit/5b92f30))
+* **ghost:** alive status in list ([d4e7096](https://github.com/PeerioTechnologies/peerio-desktop/commit/d4e7096))
+
+
+### Features
+
+* **global:** connection status ([644f7a1](https://github.com/PeerioTechnologies/peerio-desktop/commit/644f7a1))
+
+
+
 <a name="1.12.2"></a>
 ## [1.12.2](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.12.1...v1.12.2) (2017-03-20)
 

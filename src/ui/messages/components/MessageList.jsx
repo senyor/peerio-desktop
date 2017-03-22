@@ -115,13 +115,17 @@ class MessageList extends React.Component {
             const m = i < msgs.length ? msgs[i] : limboMsgs[i - msgs.length];
             if (m.firstOfTheDay) {
                 const ts = m.timestamp.toLocaleDateString();
-                ret.push(<div key={ts + m.id} className="marker-wrapper">
+                ret.push(<div key={`marker${i}${ts}${m.id}`} className="marker-wrapper">
                     <div className="marker" />
                     <div className="content">{ts === new Date().toLocaleDateString() ? t('title_today') : ts}</div>
                     <div className="marker" />
                 </div>);
             }
-            ret.push(<Message key={m.tempId || m.id} message={m} light={m.groupWithPrevious} />);
+            let key = m.tempId || m.id;
+            if (i >= msgs.length) {
+                key += 'limbo';
+            }
+            ret.push(<Message key={key} message={m} light={m.groupWithPrevious} />);
         }
 
         if (chatStore.activeChat.canGoDown) {

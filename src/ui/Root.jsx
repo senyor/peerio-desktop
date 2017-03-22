@@ -59,7 +59,7 @@ class Root extends React.Component {
         return (
             <ThemeProvider theme={theme}>
                 <div>
-                    <div className={`status-bar ${socket.connected?'':'visible'}`}>connecting...</div>
+                    <div className={`status-bar ${socket.connected ? '' : 'visible'}`}>connecting...</div>
                     {this.props.children}
                     {/* <AutoUpdateDialog />*/}
                     {this.devtools}

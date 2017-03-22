@@ -13,7 +13,25 @@ if (isDevEnv) {
     // shortcut to use with promises
     window.clog = console.log.bind(console);
 }
+// !!!! DEBUG. !!!!!!!!!!!!!!!!!!!!!!!!!
+window.spamCounter = 0;
+window.spam = function(interval = 1000, words = 10) {
+    if (window.spamInterval) return;
+    const ice = require('~/icebear');
+    window.spamInterval = setInterval(() => {
+        if (!ice.chatStore.activeChat) return;
+        ice.chatStore.activeChat.sendMessage(
+            `${window.spamCounter++} ${ice.PhraseDictionaryCollection.current.getPassphrase(words)}`);
+    }, interval);
+};
 
+window.stopSpam = function() {
+    if (!window.spamInterval) return;
+    clearInterval(window.spamInterval);
+    window.spamInterval = null;
+};
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 document.title = remote.app.getName();
 
 document.addEventListener('DOMContentLoaded', () => {

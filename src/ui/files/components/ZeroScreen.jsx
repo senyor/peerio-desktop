@@ -18,11 +18,11 @@ function ZeroScreen(props) {
                                        marginBottom: '48px',
                                        lineHeight: '1.4'
                                    }}>
-                                    {t('title_filesNull2')}
+                                {t('title_filesNull2')}
                                 <br />
-                                    {t('title_filesNull3')}
+                                {t('title_filesNull3')}
                                 <br />
-                                    {t('title_filesNull4')}
+                                {t('title_filesNull4')}
                             </p>
                             <Button onClick={props.onUpload} primary label={t('button_upload')} />
                         </div>

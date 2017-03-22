@@ -10,8 +10,10 @@ const theme = require('~/react-toolbox/theme.js');
 const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
+const { socket } = require('~/icebear');
+const { observer } = require('mobx-react');
 
-
+@observer
 class Root extends React.Component {
 
     constructor() {
@@ -57,6 +59,7 @@ class Root extends React.Component {
         return (
             <ThemeProvider theme={theme}>
                 <div>
+                    <div className={`status-bar ${socket.connected?'':'visible'}`}>connecting...</div>
                     {this.props.children}
                     {/* <AutoUpdateDialog />*/}
                     {this.devtools}

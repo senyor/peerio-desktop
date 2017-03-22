@@ -71,7 +71,6 @@
     "electron-builder": "16.1.0",
     "electron-builder-squirrel-windows": "16.0.0",
     "electron-devtools-installer": "2.1.0",
-    "electron-publisher-s3": "16.1.0",
     "electron-rebuild": "1.5.7",
     "electron-reload": "1.1.0",
     "emojione": "2.2.7",

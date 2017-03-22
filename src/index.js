@@ -31,9 +31,6 @@ window.stopSpam = function() {
     window.spamInterval = null;
 };
 
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-document.title = remote.app.getName();
-
 document.addEventListener('DOMContentLoaded', () => {
     // <emojione> ------------------------------------------------------------------------------------------------
     // configuring emojione and preloading sprites

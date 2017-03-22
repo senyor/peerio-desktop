@@ -2,10 +2,9 @@
 const { app, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');
 const isDevEnv = require('~/helpers/is-dev-env');
-const config = require('~/config');
 // For dev builds we want to use separate user data directory
 if (isDevEnv) {
-    app.setPath('userData', path.resolve(app.getPath('appData'), `${config.appName.toLowerCase()}_dev`));
+    app.setPath('userData', path.resolve(app.getPath('appData'), `${app.getName().toLowerCase()}_dev`));
 }
 // <UPDATES> -----------------------------------------------------------------------------------------------------
 // If the app was started as a part of update process we don't want to proceed with startup
@@ -36,7 +35,7 @@ app.on('ready', () => {
                 center: true,
                 minWidth: 900,
                 minHeight: 728,
-                title: config.appName
+                title: app.getName()
             }));
 
             mainWindow.loadURL(`file://${__dirname}/index.html`);

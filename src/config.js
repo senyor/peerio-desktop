@@ -5,13 +5,12 @@ const isDevEnv = require('~/helpers/is-dev-env');
 const FileStream = require('~/icebear/models/files/node-file-stream');
 const StorageEngine = require('~/icebear/models/storage/node-json-storage');
 
-cfg.appName = 'Icebear';
 cfg.updateUrl = 'https://avadakedavra.peerio.com/update';
 cfg.appVersion = app.getVersion();
 cfg.platform = 'electron';
 cfg.arch = os.arch();
 cfg.ghostFrontendUrl = 'https://mail.peerio.com/';
-cfg.socketServerUrl = 'wss://hocuspocus.peerio.com';
+cfg.socketServerUrl = 'wss://icebear.peerio.com';
 // cfg.ghostFrontendUrl = 'https://alakazam.peerio.com/';
 
 cfg.FileStream = FileStream;

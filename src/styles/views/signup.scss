@@ -132,7 +132,7 @@
     }
   }
 
-  .focused + .hint-wrapper .passcode-hints {
+  .focused .passcode-hints {
     opacity: 1;
   }
 

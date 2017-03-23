@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = require('react');
-const { observable, computed, reaction, autorun } = require('mobx');
+const { observable, computed, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon } = require('~/react-toolbox');
 const { config, socket, validation } = require('~/icebear'); // eslint-disable-line
@@ -9,6 +9,7 @@ const zxcvbn = require('zxcvbn');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const T = require('~/ui/shared-components/T');
+const css = require('classnames');
 
 const { validators } = validation; // use common validation from core
 
@@ -155,6 +156,7 @@ class PasscodeStore extends OrderedFormStore {
             t('error_fieldRequired'),
             t('error_passwordShort')
         );
+        console.log(this.props.store);
 
         return (
             <div className="passcode">
@@ -177,7 +179,7 @@ class PasscodeStore extends OrderedFormStore {
                         emphasis: text => <strong>{text}</strong>
                     }}
                 </T></p>
-                <div className="hint-wrapper">
+                <div className={css('hint-wrapper', { focused: this.props.store.passcodeFocused })}>
                     <div className="password-sentiment">
                         <ValidatedInput type="password"
                                         name="passcode"

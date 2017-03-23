@@ -102,12 +102,12 @@ const css = require('classnames');
             });
     }
 
-    @action toggleFocus () {
+    @action toggleFocus() {
         this.isFocused = !this.isFocused;
         this.props.store[this.fFocused] = this.isFocused;
     }
 
-    @action handleBlur () {
+    @action handleBlur() {
         this.props.store[this.fDirty] = true;
         // mark all subsequent as dirty
         if (this.props.position !== undefined) {
@@ -120,7 +120,7 @@ const css = require('classnames');
         this.toggleFocus();
     }
 
-    @action handleChange (val) {
+    @action handleChange(val) {
         this.props.store[this.fName] = this.props.lowercase ? val.toLowerCase() : val;
         this.props.store[this.fDirty] = true;
     }

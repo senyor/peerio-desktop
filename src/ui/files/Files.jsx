@@ -9,7 +9,6 @@ const ZeroScreen = require('./components/ZeroScreen');
 const { pickSystemFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 
-
 @observer class Files extends React.Component {
     constructor() {
         super();
@@ -42,7 +41,7 @@ const { t } = require('peerio-translator');
 
     handleBulkDelete = () => {
         const selected = fileStore.getSelectedFiles();
-        if (confirm(`Remove ${selected.length} file(s)?`)) {
+        if (confirm(t('title_confirmRemoveFiles', { count: selected.length }))) {
             selected.forEach(f => fileStore.remove(f));
         }
     };

@@ -136,6 +136,8 @@
   "title_shareFromFiles":"Share from files",
   "title_uploadAndShare":"Upload and share",
   "title_confirmCancelUpload":"Cancel upload?",
+  "title_confirmRemoveFiles":"Remove {count} file(s)?",
+  "title_confirmRemoveFilename":"Remove file {name}?",
   "title_fileWillBeShared":"File(s) will be shared with the current chat",
   "title_dropToUpload":"Drop {count} file(s) to upload",
   "title_selectFileRecipients":"Select recipients for {count} file(s)",

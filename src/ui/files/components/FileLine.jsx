@@ -8,6 +8,7 @@ const { Checkbox, ProgressBar } = require('~/react-toolbox');
 const { fileStore } = require('~/icebear');
 const { downloadFile } = require('~/helpers/file');
 const uiStore = require('~/stores/ui-store');
+const { t } = require('peerio-translator');
 
 @observer
 class FileLine extends React.Component {
@@ -16,7 +17,7 @@ class FileLine extends React.Component {
         this.props.file.selected = val;
     };
     deleteFile = () => {
-        if (confirm(`Remove file ${this.props.file.name}?`)) {
+        if (confirm(t('title_confirmRemoveFilename', { name: this.props.file.name }))) {
             fileStore.remove(this.props.file);
         }
     };

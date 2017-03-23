@@ -58,17 +58,23 @@ class Mail extends React.Component {
     }
 
     render() {
+        const availableSorts = [
+            { sort: 'date', caption: t('title_sortDate') },
+            { sort: 'attachment', caption: t('title_sortAttachments') },
+            { sort: 'recipient', caption: t('title_sortRecipients') }
+        ];
+
         return (
             <div className="mail">
                 <div className="mail-list-wrapper">
                     <div className="mail-sorting">
                         <div>
-                            {t('title_sort')} <strong>{mailStore.selectedSort}</strong>
+                            {t('title_sort')} <strong>{availableSorts.find((s) => s.sort === mailStore.selectedSort).caption}</strong>
                         </div>
                         <IconMenu onSelect={this.handleSort} icon="arrow_drop_down">
-                            <MenuItem value="date" caption={t('title_sortDate')} />
-                            <MenuItem value="attachment" onSelect={this.sort} caption={t('title_sortAttachments')} />
-                            <MenuItem value="recipient" onSelect={this.sort} caption={t('title_sortRecipients')} />
+                            {availableSorts.map((s) => {
+                                return (<MenuItem key={s.sort} value={s.sort} caption={s.caption} />)
+                            })}
                         </IconMenu>
                     </div>
                     <div className="mail-list">

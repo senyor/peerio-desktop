@@ -2,7 +2,7 @@ const React = require('react');
 const { Component } = require('react');
 const { observable, computed, reaction, autorun } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon } = require('~/react-toolbox');
+const { FontIcon, Tooltip } = require('~/react-toolbox');
 const { config, socket, validation } = require('~/icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const zxcvbn = require('zxcvbn');
@@ -12,19 +12,29 @@ const T = require('~/ui/shared-components/T');
 
 const { validators } = validation; // use common validation from core
 
+
 const MIN_PASSWORD_LENGTH = 8;
 
 class PasscodeStore extends OrderedFormStore {
-    lastZScore = null;
+
     @observable fieldsExpected = 2;
     @observable passcode = '';
     @observable passcodeRepeat = '';
+    @observable passcodeStrength = 0;
+
+    get lastZScore() {
+        return this.cachedZscore;
+    }
+
+    set lastZScore(v) {
+        this.cachedZscore = v;
+    }
 
     @computed get hasErrors() {
         return !(this.initialized && socket.connected && this.passcodeValid && this.passcodeRepeatValid);
     }
 
-    @observable passwordHints = observable.map({
+    @observable passcodeHints = observable.map({
         length: false,
         case: false,
         number: false,
@@ -34,21 +44,24 @@ class PasscodeStore extends OrderedFormStore {
 
     constructor() {
         super();
+        this.cachedZscore = null;
         // hints are divorced from whether the user can actually register
         autorun(() => {
+            console.log('autorun', this.passcode);
             // iterate through the user's FAILINGS, set hint to true if passed
-            this.passwordHints.set('length', this.passcode.length > MIN_PASSWORD_LENGTH);
-            this.passwordHints.set('case', this.passcode.length > 0 &&
+            this.passcodeHints.set('length', this.passcode.length > MIN_PASSWORD_LENGTH);
+            this.passcodeHints.set('case', this.passcode.length > 0 &&
                 !(this.passcode.match(/^[a-z\d\W]+$/) || this.passcode.match(/^[A-Z\d\W]+$/)));
-            this.passwordHints.set('number', this.passcode.match(/\d/));
-            this.passwordHints.set('specialChars', this.passcode.match(/\W/));
+            this.passcodeHints.set('number', this.passcode.match(/\d/));
+            this.passcodeHints.set('specialChars', this.passcode.match(/\W/));
             let dictProblem = this.passcode.length > 0;
             if (this.lastZScore) {
                 dictProblem = !this.lastZScore.sequence.find((admonishment) => {
                     return ['repeat', 'dictionary'].indexOf(admonishment.pattern) > -1;
                 });
+                this.passcodeStrength = this.lastZScore.score;
             }
-            this.passwordHints.set('dictionary', dictProblem);
+            this.passcodeHints.set('dictionary', dictProblem);
         });
     }
 }
@@ -103,6 +116,7 @@ class PasscodeStore extends OrderedFormStore {
             }
             return Promise.resolve(true);
         }
+        this.props.store.lastZScore = null;
         return Promise.resolve({
             message: t('error_fieldRequired')
         });
@@ -118,8 +132,18 @@ class PasscodeStore extends OrderedFormStore {
     ];
 
     render() {
+        console.log('cached on render', this.props.store.lastZScore);
+        const passcodeStrengthMeter = [
+            { class: 'red', icon: 'sentiment_very_dissatisfied' },
+            { class: 'yellow', icon: 'sentiment_dissatisfied' },
+            { class: 'yellow', icon: 'sentiment_neutral' },
+            { class: 'green', icon: 'sentiment_satisfied' },
+            { class: 'green', icon: 'sentiment_very_satisfied' }
+        ];
         return (
             <div className="passcode">
+                <FontIcon value="sentiment_unsatisfied"
+                />
                 <div className="signup-title">{t('title_signupStep2')}</div>
                 <div className="signup-subtitle">{t('title_createPassword')}</div>
                 <p><T k="title_passwordIntro" className="signup-title">
@@ -138,22 +162,28 @@ class PasscodeStore extends OrderedFormStore {
                     }}
                 </T></p>
                 <div className="hint-wrapper">
-                    <ValidatedInput type="password"
-                                    name="passcode"
-                                    className="login-input"
-                                    label={t('title_password')}
-                                    store={this.props.store}
-                                    validator={this.passwordValidator}
-                                    validationArguments={{
-                                        hintStore: this.props.store.passwordHints,
-                                        equalsValue: this.props.store.passcodeRepeat,
-                                        equalsErrorMessage: t('error_passwordRepeat'),
-                                        banList: this.passwordBanList
-                                    }}
-                                    onKeyPress={this.handleKeyPress} />
+                    <div className="password-sentiment">
+                        <ValidatedInput type="password"
+                                        name="passcode"
+                                        className="login-input"
+                                        label={t('title_password')}
+                                        store={this.props.store}
+                                        validator={this.passwordValidator}
+                                        validationArguments={{
+                                            hintStore: this.props.store.passcodeHints,
+                                            equalsValue: this.props.store.passcodeRepeat,
+                                            equalsErrorMessage: t('error_passwordRepeat'),
+                                            banList: this.passwordBanList
+                                        }}
+                                        onKeyPress={this.handleKeyPress} />
+                        <FontIcon value={passcodeStrengthMeter[this.props.store.passcodeStrength].icon}
+                                     className={this.props.store.lastZScore === null ? 'hide' :
+                                        passcodeStrengthMeter[this.props.store.passcodeStrength].class}
+                                     />
+                    </div>
                     <ul className="passcode-hints">
                         <li className="heading">{t('title_passwordHints')}</li>
-                        {this.props.store.passwordHints.entries().map(([key, hint]) => {
+                        {this.props.store.passcodeHints.entries().map(([key, hint]) => {
                             return (
                                 <li key={key} className={hint ? 'passed' : ''}>
                                     <FontIcon value={hint ? 'lens' : 'panorama_fish_eye'} />

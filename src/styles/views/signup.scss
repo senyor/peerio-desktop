@@ -108,7 +108,31 @@
     white-space: normal;
   }
 
-  .focused + .passcode-hints {
+  .password-sentiment {
+    position: relative;
+  }
+
+  .password-sentiment .material-icons {
+    line-height: 36px;
+    margin-right: 5px;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+
+    &.red {
+      color: $color-error;
+    }
+
+    &.green {
+      color: $color-affirmative;
+    }
+
+    &.yellow {
+      color: $color-warning;
+    }
+  }
+
+  .focused + .hint-wrapper .passcode-hints {
     opacity: 1;
   }
 

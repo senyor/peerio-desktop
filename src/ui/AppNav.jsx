@@ -125,7 +125,7 @@ class AppNav extends React.Component {
                     <Avatar contact={this.contact} />
                 </div>
                 <div className="app-menu">
-                   
+
 
                     <AppNavButton tooltip={t('title_chats')} icon="forum" active={this.currentRoute === ROUTES.chat}
                                   showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}

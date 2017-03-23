@@ -78,7 +78,7 @@ class UserPicker extends React.Component {
                 <div className={css('flex-col selected-items', { banish: !this.props.sharing })} >
                     <List >
                         {/* TODO: dynamic file icon based on file type */}
-                        <ListSubHeader caption={t('selectedFiles')} />
+                        <ListSubHeader caption={t('title_selectedFiles')} />
                         {/* FIXME:  Should load selected files not entire file library. */}
                         {this.selectedFiles.map(f => <ListItem
                             leftIcon="insert_drive_file"

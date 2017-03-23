@@ -149,7 +149,7 @@ class LoginStore extends OrderedFormStore {
                                             onKeyPress={this.handleKeyPress} />
                             <TooltipIcon icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
                                          tooltip={this.loginStore.passwordVisible ?
-                                            t('hide_password') : t('show_password')}
+                                            t('title_hidePassword') : t('title_showPassword')}
                                          tooltipPosition="right"
                                          tooltipDelay={500}
                                          onClick={this.togglePasswordVisibility} />

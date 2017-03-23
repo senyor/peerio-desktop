@@ -9,7 +9,7 @@ const Autolinker = require('autolinker');
 const InlineFiles = require('./InlineFiles');
 const css = require('classnames');
 const { t } = require('peerio-translator');
-const config = require('~/config');
+const cfg = require('~/config');
 const { Button, FontIcon } = require('~/react-toolbox');
 const { isUrlAllowed } = require('~/helpers/url');
 
@@ -84,8 +84,8 @@ class Message extends React.Component {
                 </div>
                 {invalidSign ?
                     <div className="invalid-sign-warning">
-                        <div style={{ marginRight: 'auto' }}>{t('invalidSignWarning')}</div>
-                        <Button href={config.supportUrl} label={t('readMore')} flat primary />
+                        <div style={{ marginRight: 'auto' }}>{t('error_invalidMessageSignature')}</div>
+                        <Button href={cfg.msgSignatureUrl} label={t('title_readMore')} flat primary />
                     </div>
                     : null
                 }

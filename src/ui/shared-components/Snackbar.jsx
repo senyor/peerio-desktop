@@ -9,7 +9,7 @@ const snackbarControl = require('~/helpers/snackbar-control');
 @observer class Snackbar extends React.Component {
 
     @observable isForeground = false;
-    @observable label = t('ok');
+    @observable label = t('button_ok');
     @observable content;
     @observable action;
     @observable snackbarClass = '';
@@ -81,7 +81,7 @@ const snackbarControl = require('~/helpers/snackbar-control');
                     {this.content}
                     {/* TODO make optional */}
                     {this.action !== null ?
-                        <Button label={this.label || t('ok')} onClick={this.dismiss} /> : null
+                        <Button label={this.label || t('button_ok')} onClick={this.dismiss} /> : null
                         }
                 </div>
             </div>

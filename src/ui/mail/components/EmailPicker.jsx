@@ -13,10 +13,11 @@ const emailFormatFn = validation.validators.emailFormat.action;
     handleTextChange = newVal => {
         const newValLower = newVal.toLowerCase();
         if (newValLower.length > 1 && ', '.includes(newValLower[newValLower.length - 1])) {
-            this.query = newValLower.substr(0, newValLower.length - 1).trim();
+            this.query = newValLower.substr(0, newValLower.length - 1).replace(/,\s*$/);
             this.validate();
+        } else {
+            this.query = newValLower.trim();
         }
-        this.query = newValLower.trim();
     };
 
     validate = () => {

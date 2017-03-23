@@ -73,7 +73,7 @@ class Mail extends React.Component {
                         </div>
                         <IconMenu onSelect={this.handleSort} icon="arrow_drop_down">
                             {availableSorts.map((s) => {
-                                return (<MenuItem key={s.sort} value={s.sort} caption={s.caption} />)
+                                return (<MenuItem key={s.sort} value={s.sort} caption={s.caption} />);
                             })}
                         </IconMenu>
                     </div>

@@ -39,7 +39,13 @@ class MailSentSidebar extends React.Component {
     }
 
     copyLink = () => {
-        console.log('link copied :D');
+        const range = document.createRange();
+        const selection = document.getSelection();
+        selection.removeAllRanges();
+        range.selectNode(this.link);
+        selection.addRange(range);
+        document.execCommand('copy');
+        selection.removeAllRanges();
     };
 
     render() {
@@ -54,7 +60,7 @@ class MailSentSidebar extends React.Component {
                     <div className="read-recipt">
                         <div className="dark-label">{t('title_mailUrl')}</div>
                         <div className="mail-link">
-                            <a href={this.props.ghost.url}>{ this.props.ghost.url }</a>
+                            <a href={this.props.ghost.url} ref={(l) => { this.link = l; }}>{ this.props.ghost.url }</a>
                             <TooltipIcon
                                 tooltip={t('title_copy')}
                                 tooltipDelay={500}

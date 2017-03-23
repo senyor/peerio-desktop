@@ -1,5 +1,5 @@
 
-const { autoUpdater, appUpdater } = require('electron-updater');
+const { autoUpdater } = require('electron-updater');
 const isDevEnv = require('~/helpers/is-dev-env');
 const log = require('electron-log');
 

@@ -1,5 +1,5 @@
 
-const { autoUpdater } = require('electron-updater');
+const { autoUpdater, appUpdater } = require('electron-updater');
 const isDevEnv = require('~/helpers/is-dev-env');
 const log = require('electron-log');
 
@@ -15,11 +15,16 @@ function sendStatusToWindow(text) {
 
 function start(mainWindow) {
     window = mainWindow;
-    autoUpdater.setFeedUrl({
+
+    autoUpdater.setFeedURL({
         // this is a temporary, read-only token with access to repository that will be public soon
         // remove when switching to public release
-        token: '4d60ee659c9a6c21efe949ab42ba968663db86ee'
+        token: '4d60ee659c9a6c21efe949ab42ba968663db86ee',
+        provider: 'github',
+        owner: 'PeerioTechnologies',
+        repo: 'peerio-desktop'
     });
+
     if (!isDevEnv) {
         autoUpdater.checkForUpdates();
     } else {

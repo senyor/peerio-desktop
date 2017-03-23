@@ -15,6 +15,11 @@ function sendStatusToWindow(text) {
 
 function start(mainWindow) {
     window = mainWindow;
+    autoUpdater.setFeedUrl({
+        // this is a temporary, read-only token with access to repository that will be public soon
+        // remove when switching to public release
+        token: '4d60ee659c9a6c21efe949ab42ba968663db86ee'
+    });
     if (!isDevEnv) {
         autoUpdater.checkForUpdates();
     } else {

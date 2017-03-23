@@ -57,6 +57,7 @@ class OrderedFormStore {
         const validationProps = {};
         validationProps[`${fieldName}Valid`] = false;
         validationProps[`${fieldName}Dirty`] = false;
+        validationProps[`${fieldName}Focused`] = false;
         validationProps[`${fieldName}ValidationMessageText`] = '';
         extendObservable(this, validationProps);
         // add the field order

@@ -16,7 +16,7 @@
 const React = require('react');
 const _ = require('lodash');
 const { socket } = require('~/icebear'); // eslint-disable-line
-const { computed, reaction, when, isObservable, observable } = require('mobx');
+const { computed, reaction, when, isObservable, observable, action } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('~/react-toolbox');
@@ -37,14 +37,18 @@ const css = require('classnames');
     constructor(props) {
         super(props);
 
+        // bind stuff
+        this.toggleFocus = this.toggleFocus.bind(this);
+        this.handleBlur = this.handleBlur.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+
+        // ward off misuse
         if (!(this.props.store.constructor.prototype instanceof OrderedFormStore)) {
             throw new Error('ValidatedInput expects a store property that inherits from OrderedFormStore');
         }
-
         if (!this.props.name) {
             throw new Error('ValidatedInput expects a name property');
         }
-
         if (!isObservable(this.props.store, this.props.name)) {
             throw new Error(
                 `ValidatedInput expects ${this.props.name} to be an observable property in the (observable) store`
@@ -55,10 +59,11 @@ const css = require('classnames');
         this.fName = this.props.name;
         this.fDirty = `${this.fName}Dirty`;
         this.fValid = `${this.fName}Valid`;
+        this.fFocused = `${this.fName}Focused`;
         this.fMsgText = `${this.fName}ValidationMessageText`;
-
         this.props.store.addField(this.props.name, this, this.props.position);
 
+        // nothing validates offline
         this.validate = () => {
             when(() => socket.connected, () => this.validateConnected());
         };
@@ -68,7 +73,7 @@ const css = require('classnames');
         reaction(() => this.props.store[this.props.name], () => this.validate(), true);
     }
 
-    validateConnected() {
+    @action validateConnected() {
         const value = this.props.store[this.props.name];
         const fieldValidators = Array.isArray(this.props.validator) ?
             this.props.validator : [this.props.validator];
@@ -97,11 +102,12 @@ const css = require('classnames');
             });
     }
 
-    handleFocus = () => {
+    @action toggleFocus () {
         this.isFocused = !this.isFocused;
+        this.props.store[this.fFocused] = this.isFocused;
     }
 
-    handleBlur = () => {
+    @action handleBlur () {
         this.props.store[this.fDirty] = true;
         // mark all subsequent as dirty
         if (this.props.position !== undefined) {
@@ -111,14 +117,13 @@ const css = require('classnames');
                 }
             });
         }
+        this.toggleFocus();
+    }
 
-        this.handleFocus();
-    };
-
-    handleChange = (val) => {
+    @action handleChange (val) {
         this.props.store[this.fName] = this.props.lowercase ? val.toLowerCase() : val;
         this.props.store[this.fDirty] = true;
-    };
+    }
 
     render() {
         return (
@@ -129,7 +134,7 @@ const css = require('classnames');
                        onChange={this.handleChange}
                        onKeyPress={this.props.onKeyPress}
                        onBlur={this.handleBlur}
-                       onFocus={this.handleFocus}
+                       onFocus={this.toggleFocus}
                        error={this.validationMessage}
                        className={this.props.className}
                        maxLength={this.props.maxLength}

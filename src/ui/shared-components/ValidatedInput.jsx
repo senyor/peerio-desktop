@@ -80,7 +80,7 @@ const css = require('classnames');
                         if (rs === true) {
                             return rs;
                         }
-                        return (rs.message ? rs.message : validator.message);
+                        return (rs && rs.message ? rs.message : validator.message);
                     });
             }
             return r;

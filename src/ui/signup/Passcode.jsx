@@ -156,29 +156,9 @@ class PasscodeStore extends OrderedFormStore {
             t('error_fieldRequired'),
             t('error_passwordShort')
         );
-        console.log(this.props.store);
 
         return (
-            <div className="passcode">
-                <FontIcon value="sentiment_unsatisfied"
-                />
-                <div className="signup-title">{t('title_signupStep2')}</div>
-                <div className="signup-subtitle">{t('title_createPassword')}</div>
-                <p><T k="title_passwordIntro" className="signup-title">
-                    {{
-                        emphasis: text => <strong>{text}</strong>
-                    }}
-                </T></p>
-                <p><T k="title_MPIntro1" className="signup-title">
-                    {{
-                        emphasis: text => <strong>{text}</strong>
-                    }}
-                </T></p>
-                <p><T k="title_MPIntro2" className="signup-title">
-                    {{
-                        emphasis: text => <strong>{text}</strong>
-                    }}
-                </T></p>
+            <div>
                 <div className={css('hint-wrapper', { focused: this.props.store.passcodeFocused })}>
                     <div className="password-sentiment">
                         <ValidatedInput type="password"

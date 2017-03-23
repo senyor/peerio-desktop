@@ -17,11 +17,13 @@ const About = require('./settings/components/About');
 const DevTools = require('./dev-tools/DevTools');
 const DTDashboard = require('./dev-tools/Dashboard');
 const KegEditor = require('./dev-tools/KegEditor');
+const NewDevice = require('./login/NewDevice');
 
 module.exports = (
     <Route path="/" component={Root}>
         <IndexRoute component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/new-device" component={NewDevice} />
         <Route path="/app" component={App} >
             <IndexRoute component={Messages} />
             <Route path="new-message" component={NewMessage} />

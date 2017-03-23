@@ -113,7 +113,6 @@ const T = require('~/ui/shared-components/T');
         this.termsDialogOpen = true;
     };
 
-
     render() {
         const termsDialogActions = [
             { label: t('button_ok'), onClick: this.hideTermsDialog }
@@ -130,8 +129,29 @@ const T = require('~/ui/shared-components/T');
                     {
                         this.step === 1
                             ? <Profile store={this.profileStore} returnHandler={this.advance} />
-                            : <Passcode store={this.passcodeStore} profileStore={this.profileStore}
+                            : (
+                            <div className="passcode">
+                                <div className="signup-title">{t('title_signupStep2')}</div>
+                                <div className="signup-subtitle">{t('title_createPassword')}</div>
+                                <p><T k="title_passwordIntro" className="signup-title">
+                                    {{
+                                        emphasis: text => <strong>{text}</strong>
+                                    }}
+                                </T></p>
+                                <p><T k="title_MPIntro1" className="signup-title">
+                                    {{
+                                        emphasis: text => <strong>{text}</strong>
+                                    }}
+                                </T></p>
+                                <p><T k="title_MPIntro2" className="signup-title">
+                                    {{
+                                        emphasis: text => <strong>{text}</strong>
+                                    }}
+                                </T></p>
+                                <Passcode store={this.passcodeStore} profileStore={this.profileStore}
                                   returnHandler={this.advance} />
+                            </div>
+                        )
                     }
 
                     <T k="title_TOSRequestText" className="terms">
@@ -144,10 +164,13 @@ const T = require('~/ui/shared-components/T');
                     </T>
                 </div>
                 <div className="signup-nav">
-                    <Button flat label={this.step === 1 ? t('button_cancel') : t('button_back')}
+                    <Button flat
+                            label={this.step === 1 ? t('button_cancel') : t('button_back')}
                             onClick={this.retreat} />
-                    <Button flat label={this.step === 1 ? t('button_next') : t('button_finish')}
-                            onClick={this.advance} disabled={this.hasErrors} />
+                    <Button flat
+                            label={this.step === 1 ? t('button_next') : t('button_finish')}
+                            onClick={this.advance}
+                            disabled={this.hasErrors} />
                 </div>
                 {/* <div className="progress">
                     <div className={css('indicator', { active: this.step === 1 })} />

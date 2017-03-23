@@ -1,166 +1,92 @@
 const React = require('react');
-const { Component } = require('react');
-const { computed, reaction } = require('mobx');
+const { Button, Dialog } = require('~/react-toolbox');
+const { User, systemWarnings } = require('~/icebear');
+const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, Button } = require('~/react-toolbox');
-const { config, socket, validation } = require('~/icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
-const zxcvbn = require('zxcvbn');
-const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
+const css = require('classnames');
+const languageStore = require('~/stores/language-store');
+const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
+const { Passcode, PasscodeStore } = require('../signup/Passcode');
+const Snackbar = require('~/ui/shared-components/Snackbar');
 const T = require('~/ui/shared-components/T');
 
-const { validators } = validation; // use common validation from core
+@observer class NewDevice extends React.Component {
+    @observable busy = false;
 
-const MIN_PASSWORD_LENGTH = 8;
+    passcodeStore = new PasscodeStore();
 
-@observer class NewDevice extends Component {
-
-    @computed get passwordBanList() {
-        return [
-            this.props.profileStore.username,
-            this.props.profileStore.firstName,
-            this.props.profileStore.lastName,
-            'peerio'
-        ];
+    constructor() {
+        super();
+        this.createPasscode = this.createPasscode.bind(this);
     }
 
+    /**
+     * Disallow user's names.
+     */
     componentDidMount() {
-        // force passcodeRepeat to validate on subsequent passcode changes
-        reaction(() => this.props.store.passcode, () => {
-            if (this.props.store.passcodeRepeat) {
-                this.props.store.validatePasscodeRepeat();
-            }
-        });
+        this.passcodeStore.addToBanList([
+            User.current.username,
+            User.current.firstName,
+            User.current.lastName
+        ]);
     }
 
-    handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            this.props.returnHandler();
-        }
-    };
+    /**
+     * Set passcode.
+     *
+     * @returns {Promise}
+     */
+    @action createPasscode () {
+        if (this.passcodeStore.hasErrors || this.busy) return Promise.resolve(false);
+        this.busy = true;
+        User.current.setPasscode(this.passcodeStore.passcode)
+            .then(() => {
+                this.busy = false;
+                systemWarnings.add({
+                    content: 'warning_passcodeAdded'
+                });
+                window.router.push('/app');
+            });
+    }
 
     /**
-     * Checks that the password is > 8 characters long and not abysmal as per zxcvbn
-     *
-     * @param {String} value
-     * @param {Object} additionalArguments -- passed through ValidatedInput component
-     * @param {Array<String>} additionalArguments.banList
-     * @returns {Promise.<boolean>}
+     * Disable passcode.
      */
-    passwordStrengthValidator = (value, additionalArguments) => {
-        if (value) {
-            const zResult = zxcvbn(this.props.store.passcode, additionalArguments.banList || []);
-            this.props.store.lastZScore = zResult; // cache the last result to the store for hints
-            if (value.length < MIN_PASSWORD_LENGTH) {
-                return Promise.resolve({
-                    message: t('error_passwordShort')
-                });
-            }
-            if (zResult.guesses_log10 < 8) {
-                return Promise.resolve({
-                    message: t('error_passwordWeak')
-                });
-            }
-            return Promise.resolve(true);
-        }
-        return Promise.resolve({
-            message: t('error_fieldRequired')
-        });
-    };
-
-    /**
-     * Validator for the passcode field.
-     *
-     * @type {Array}
-     */
-    passwordValidator = [
-        { action: this.passwordStrengthValidator, message: t('error_passwordWeak') }
-    ];
+    skip () {
+       window.router.push('/app');
+    }
 
     render() {
         return (
-            <div className="signup rt-light-theme show">
+            <div className={css('signup', 'rt-light-theme', 'show')}>
                 <img alt="" className="logo" src="static/img/logo-white.png" />
                 <div className="signup-form">
-
                     <div className="passcode">
-                        <div className="signup-title">{t('title_newDeviceSetup')}</div>
+                        <div className="signup-title">{t('title_newDevice')}</div>
                         <div className="signup-subtitle">{t('title_createPassword')}</div>
                         <p><T k="title_passwordIntro" className="signup-title">
                             {{
                                 emphasis: text => <strong>{text}</strong>
                             }}
                         </T></p>
-
-                        <p><T k="title_MPIntro1" className="signup-title">
-                            {{
-                                emphasis: text => <strong>{text}</strong>
-                            }}
-                        </T></p>
-                        <p><T k="title_MPIntro2" className="signup-title">
-                            {{
-                                emphasis: text => <strong>{text}</strong>
-                            }}
-                        </T></p>
-
-                        <div className="hint-wrapper">
-                            <ValidatedInput type="password"
-                                            name="passcode"
-                                            className="login-input"
-                                            label={t('title_password')}
-                                            store={this.props.store}
-                                            validator={this.passwordValidator}
-                                            validationArguments={{
-                                                hintStore: this.props.store.passwordHints,
-                                                equalsValue: this.props.store.passcodeRepeat,
-                                                equalsErrorMessage: t('error_passwordRepeat'),
-                                                banList: this.passwordBanList
-                                            }}
-                                            onKeyPress={this.handleKeyPress} />
-                            <ul className="passcode-hints">
-                                <li className="heading">{t('title_passwordHints')}</li>
-                                {this.props.store.passwordHints.entries().map(([key, hint]) => {
-                                    return (
-                                        <li key={key} className={hint ? 'passed' : ''}>
-                                            <FontIcon value={hint ? 'lens' : 'panorama_fish_eye'} />
-                                            {t(`title_passwordHint_${key}`)}
-                                        </li>
-                                    );
-                                }
-                            )}
-                            </ul>
-                        </div>
-                        <ValidatedInput type="password"
-                                        name="passcodeRepeat"
-                                        className="login-input"
-                                        label={t('title_passwordConfirm')}
-                                        validator={validators.valueEquality}
-                                        validationArguments={{
-                                            equalsValue: this.props.store.passcode,
-                                            equalsErrorMessage: t('error_passwordRepeat')
-                                        }}
-                                        store={this.props.store}
-                                        onKeyPress={this.handleKeyPress} />
+                        <Passcode store={this.passcodeStore} returnHandler={this.createPasscode} />
                     </div>
 
-                    <T k="title_TOSRequestText" className="terms">
-                        {{
-                            emphasis: text => <strong>{text}</strong>,
-                            tosLink: text => <Button onClick={this.showTermsDialog}
-                                                       label={text}
-                                                       className="button-link" />
-                        }}
-                    </T>
                 </div>
+                <FullCoverLoader show={this.busy} />
+
                 <div className="signup-nav">
                     <Button flat label={t('button_skip')}
-                            onClick={this.retreat} />
+                                    onClick={this.skip} />
                     <Button flat label={t('button_finish')}
-                            onClick={this.advance} disabled={this.hasErrors} />
+                                    onClick={this.createPasscode}
+                                    disabled={this.hasErrors} />
                 </div>
             </div>
         );
     }
 }
+
 
 module.exports = NewDevice;

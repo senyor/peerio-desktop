@@ -68,13 +68,17 @@ const T = require('~/ui/shared-components/T');
             });
     }
 
-
     navigateToLogin = () => {
         window.router.push('/');
     };
 
     navigateToPasscode = () => {
         if (this.profileStore.hasErrors || this.busy) return;
+        this.passcodeStore.addToBanList([
+            this.profileStore.username,
+            this.profileStore.firstName,
+            this.profileStore.lastName
+        ]);
         this.step = 2;
         this.busy = false;
     };

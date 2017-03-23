@@ -22,10 +22,10 @@ class GlobalActions extends React.Component {
     render() {
         return (
             <div className="table-action-bar">
-                <div>{fileStore.selectedCount} selected</div>
+                <div>{fileStore.selectedCount} {t('title_selected')}</div>
                 <div className="table-actions">
                     <TooltipIcon
-                        tooltip={t('upload')}
+                        tooltip={t('button_upload')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="cloud_upload"
@@ -38,7 +38,7 @@ class GlobalActions extends React.Component {
                     {/* icon="file_download"*/}
                     {/* className={css({ active: true, disabled: true })} />*/}
                     <TooltipIcon
-                        tooltip={t('share')}
+                        tooltip={t('button_share')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="reply"
@@ -52,7 +52,7 @@ class GlobalActions extends React.Component {
                     {/* icon="create_new_folder"*/}
                     {/* className={css({ active: false, disabled: true })} />*/}
                     <TooltipIcon
-                        tooltip={t('delete')}
+                        tooltip={t('button_delete')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="delete"

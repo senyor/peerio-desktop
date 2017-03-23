@@ -7,6 +7,8 @@ const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
 const ZeroScreen = require('./components/ZeroScreen');
 const { pickSystemFiles } = require('~/helpers/file');
+const { t } = require('peerio-translator');
+
 
 @observer class Files extends React.Component {
     constructor() {
@@ -72,11 +74,11 @@ const { pickSystemFiles } = require('~/helpers/file');
                                             <Checkbox checked={fileStore.allVisibleSelected}
                                                       onChange={this.toggleSelection} />
                                         </th>
-                                        <th>Name</th>
-                                        <th>Owner</th>
-                                        <th className="text-right">Uploaded</th>
-                                        <th className="text-right">Size</th>
-                                        <th>Type</th>
+                                        <th>{t('title_name')}</th>
+                                        <th>{t('title_owner')}</th>
+                                        <th className="text-right">{t('title_uploaded')}</th>
+                                        <th className="text-right">{t('title_size')}</th>
+                                        <th>{t('title_type')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>

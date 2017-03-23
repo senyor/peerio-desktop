@@ -42,7 +42,7 @@ class FilePicker extends React.Component {
         ];
 
         return (
-            <Dialog title="Share Files"
+            <Dialog title={t('title_shareFromFiles')}
                     actions={actions}
                     active={this.props.active}
                     onEscKeyDown={this.handleClose}

@@ -13,7 +13,7 @@ function FileActions(props) {
             { props.downloadDisabled
                 ? <ProgressBar type="circular" mode="indeterminate" multicolor className="processing-file" />
                 : <TooltipIcon
-                    tooltip={t('download')}
+                    tooltip={t('title_download')}
                     tooltipDelay={delay}
                     tooltipPosition="top"
                     icon="file_download"
@@ -21,7 +21,7 @@ function FileActions(props) {
                     className={css({ disabled: props.downloadDisabled })} />
             }
             <TooltipIcon
-                tooltip={t('share')}
+                tooltip={t('button_share')}
                 tooltipDelay={delay}
                 tooltipPosition="top"
                 icon="reply"
@@ -35,7 +35,7 @@ function FileActions(props) {
             {/* onClick={noop}*/}
             {/* className={css({ disabled: props.newFolderDisabled })} />*/}
             <TooltipIcon
-                tooltip={t('delete')}
+                tooltip={t('button_delete')}
                 tooltipDelay={delay}
                 tooltipPosition="top"
                 icon="delete"

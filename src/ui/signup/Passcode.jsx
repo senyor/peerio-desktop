@@ -48,7 +48,7 @@ class PasscodeStore extends OrderedFormStore {
      * @param {Array} banArray
      */
     addToBanList(banArray) {
-        this.banList = [...new Set([...this.banList ,...banArray])];
+        this.banList = [...new Set([...this.banList, ...banArray])];
     }
 
     /**
@@ -66,7 +66,6 @@ class PasscodeStore extends OrderedFormStore {
         let hasDictionaryProblems = this.passcode.length > 0;
         if (this.passcode.length > 0) {
             this.zxcvbnScore = zxcvbn(this.passcode, this.banList || []);
-            console.log('set zxcvbn', this.zxcvbnScore)
             hasDictionaryProblems = !this.zxcvbnScore.sequence.find((admonishment) => {
                 return ['repeat', 'dictionary'].indexOf(admonishment.pattern) > -1;
             });

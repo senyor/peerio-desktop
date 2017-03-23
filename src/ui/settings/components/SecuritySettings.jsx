@@ -6,7 +6,7 @@ const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
 const T = require('~/ui/shared-components/T');
-const cfg = require('~/config.js')
+const cfg = require('~/config.js');
 
 @observer
 class SecuritySettings extends React.Component {
@@ -67,7 +67,7 @@ class SecuritySettings extends React.Component {
                     <Button label={t('button_showMP')} onClick={this.showPassphraseDialog} flat primary />
                 </div>
                 <p>
-                    {t('title_MPDetail', {mpDetailUrl: text => <a href={cfg.mpDetailUrl}>{text}</a>})}
+                    {t('title_MPDetail', { mpDetailUrl: text => <a href={cfg.mpDetailUrl}>{text}</a> })}
                 </p>
                 <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}
                             onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}
@@ -104,11 +104,11 @@ class SecuritySettings extends React.Component {
                         <Button label={t('button_changePassword')} flat primary />
                     </div>
                     <p style={{ marginBottom: '40px' }}>
-    <T k="title_passwordIntro" >
-                        {{
-                            emphasis: text => <strong>{text}</strong>
-                        }}
-                    </T>
+                        <T k="title_passwordIntro" >
+                            {{
+                                emphasis: text => <strong>{text}</strong>
+                            }}
+                        </T>
                     </p>
                     <div className="title">{t('title_2FA')}
                         <Button label={this.twoFactorActive ?
@@ -122,7 +122,7 @@ class SecuritySettings extends React.Component {
                                       flat primary /> : null }
                     </div>
                     <p>
-                        {t('title_2FADetail', {tfaDetailUrl: text => <a href={cfg.tfaDetailUrl}>{text}</a>})}
+                        {t('title_2FADetail', { tfaDetailUrl: text => <a href={cfg.tfaDetailUrl}>{text}</a> })}
                     </p>
                 </section>
                 <section className="section-divider">
@@ -150,8 +150,7 @@ class SecuritySettings extends React.Component {
                         <p>{t('title_2FASetupDesktopDetail')}</p>
                         {/* To set up 2FA enter the secret key into your authenticator app */}
                         <div>{t('title_2FASetupDesktopDetail2')}</div>
-                        <div className="flex-row flex-align-center flex-justify-between">
-                        </div>
+                        <div className="flex-row flex-align-center flex-justify-between" />
                         <Input label={t('title_2FACode')} />
                     </div>
                 </Dialog>

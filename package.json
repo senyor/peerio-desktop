@@ -167,10 +167,6 @@
     "asar": true,
     "compression": "normal",
     "publish": [
-      {
-        "provider": "s3",
-        "bucket": "peerio-client-icebear"
-      },
       "github"
     ],
     "squirrelWindows": {

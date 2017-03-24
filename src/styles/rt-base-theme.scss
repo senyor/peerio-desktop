@@ -131,13 +131,12 @@
 }
 
 .rt-input-inputElement {
+  @extend %input-text;
   background-color: transparent;
   border-bottom-color: transparent;
   color: $text-dark-primary;
   margin-top: 2px;
   padding: 0 $padding-small;
-
-  @extend %input-text;
 }
 
 .rt-input-label,

@@ -19,9 +19,8 @@
 }
 
 .dark-label {
-  color: $text-dark-hint;
-
   @extend %hint-error-label;
+  color: $text-dark-hint;
 }
 
 .text-light-helper {

@@ -33,7 +33,7 @@
       }
     }
 
-    .rt-dropdown-value:after {
+    .rt-dropdown-value::after {
       border-top: 6px solid $icon-light-inactive;
       right: 12px;
       top: 21px;

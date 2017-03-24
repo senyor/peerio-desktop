@@ -1,4 +1,5 @@
 const React = require('react');
+const _ = require('lodash');
 const { Component } = require('react');
 const { observable, computed, reaction } = require('mobx');
 const { observer } = require('mobx-react');
@@ -49,7 +50,7 @@ class PasscodeStore extends OrderedFormStore {
      * @param {Array} banArray
      */
     addToBanList(banArray) {
-        this.banList = [...new Set([...this.banList, ...banArray])];
+        this.banList = _.union(this.banList, banArray);
     }
 
     /**

@@ -83,10 +83,16 @@ class LoginStore extends OrderedFormStore {
         user.login().then(() => {
             User.current = user;
             if (!User.current.passcodeIsSet) {
-                window.router.push('/new-device');
-            } else {
-                window.router.push('/app');
+                return User.current.passcodeIsDisabled()
+                    .then((disabled) => {
+                        if (!disabled) {
+                            window.router.push('/new-device');
+                        } else {
+                            window.router.push('/app');
+                        }
+                    });
             }
+            return window.router.push('/app');
         }).catch(() => {
             // show error inline
             this.loginStore.passcodeOrPassphraseValidationMessageText = t('error_loginFailed');

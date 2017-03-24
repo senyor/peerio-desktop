@@ -1,11 +1,10 @@
 const React = require('react');
-const { Button, Dialog } = require('~/react-toolbox');
+const { Button } = require('~/react-toolbox');
 const { User, systemWarnings } = require('~/icebear');
-const { observable, computed, action } = require('mobx');
+const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const css = require('classnames');
-const languageStore = require('~/stores/language-store');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const { Passcode, PasscodeStore } = require('../signup/Passcode');
 const Snackbar = require('~/ui/shared-components/Snackbar');
@@ -19,6 +18,7 @@ const T = require('~/ui/shared-components/T');
     constructor() {
         super();
         this.createPasscode = this.createPasscode.bind(this);
+        this.skip = this.skip.bind(this);
     }
 
     /**
@@ -54,7 +54,12 @@ const T = require('~/ui/shared-components/T');
      * Disable passcode.
      */
     skip() {
-        window.router.push('/app');
+        this.busy = true;
+        User.current.disablePasscode()
+            .then(() => {
+                this.busy = false;
+                window.router.push('/app');
+            });
     }
 
     render() {

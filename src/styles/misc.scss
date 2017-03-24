@@ -76,25 +76,38 @@ img,
     margin-right: $margin-default;
   }
 }
-
 $status-bar-height: 30px;
 
 .status-bar {
-  position: fixed;
-  top: -$status-bar-height - 5;
-  left: 0;
-  right: 0;
-  height: $status-bar-height;
-  background-color: rgba(41, 127, 175, 0.6);
-  text-align: center;
+  align-items: center;
+  background-color: rgba(175, 41, 41, .6);
   border: none;
-  margin: 0;
-  padding: 6px 1px 0 1px;
   color: white;
+  display: flex;
   font-weight: 600;
-  transition: all .7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  height: $status-bar-height;
+  justify-content: center;
+  left: 0;
+  margin: 0;
+  padding: 6px 1px 0;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: -$status-bar-height - 5;
+  transition: all .7s cubic-bezier(.68, -.55, .27, 1.55);
+
   &.visible {
     top: -5px;
+  }
+
+  .rt-progress_bar-circular {
+    height: 18px;
+    margin-right: 5px;
+    width: 18px;
+  }
+
+  .rt-progress_bar-path {
+    stroke: white;
   }
 }
 

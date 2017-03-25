@@ -12,7 +12,7 @@ const _ = require('lodash');
 class MessageList extends React.Component {
 
     loadTriggerDistance = 20;
-    stickDistance = 220;
+    stickDistance = 250;
 
     componentWillMount() {
         this.stickToBottom = true;
@@ -32,7 +32,7 @@ class MessageList extends React.Component {
             if (this.lastTopElement) {
                 // setTimeout(() => {
                 if (!this.lastTopElement) return;
-                    // todo: animate
+                // todo: animate
                 this.containerRef.scrollTop = this.lastTopElement.offsetTop - this.lastTopElementOffset - 28;
                 this.lastTopElement = null;
                 // }, 0);
@@ -65,8 +65,8 @@ class MessageList extends React.Component {
     }
 
     scrollToBottom = () => {
-        if (!this.containerRef) return;
         setTimeout(() => {
+            if (!this.containerRef) return;
             this.containerRef.scrollTop = this.containerRef.scrollHeight - this.containerRef.clientHeight - 20;
         }, 0);
     };
@@ -76,7 +76,7 @@ class MessageList extends React.Component {
         if (this.containerRef.scrollHeight <= this.containerRef.clientHeight) return;
 
         const distanceToBottom = this.containerRef.scrollHeight - this.containerRef.scrollTop
-                                    - this.containerRef.clientHeight;
+            - this.containerRef.clientHeight;
         const distanceToTop = this.containerRef.scrollTop;
         // detecting sticking state
         this.stickToBottom = distanceToBottom < this.stickDistance && !chatStore.activeChat.canGoDown;
@@ -103,9 +103,9 @@ class MessageList extends React.Component {
         const ret = [];
         if (chatStore.activeChat.canGoUp) {
             ret.push(<div key="top-progress-bar" className="progress-wrapper"
-                      style={{ visibility: chatStore.activeChat.loadingTopPage ? 'visible' : 'hidden' }}>
+                style={{ visibility: chatStore.activeChat.loadingTopPage ? 'visible' : 'hidden' }}>
                 <ProgressBar type="circular" mode="indeterminate" multicolor
-                                  className="messages-inline-progress-bar" />
+                    className="messages-inline-progress-bar" />
             </div>);
         }
         const msgs = chatStore.activeChat.messages;
@@ -132,42 +132,39 @@ class MessageList extends React.Component {
             ret.push(<div key="bot-progress-bar" className="progress-wrapper"
                 style={{ visibility: chatStore.activeChat.loadingBottomPage ? 'visible' : 'hidden' }}>
                 <ProgressBar type="circular" mode="indeterminate" multicolor
-                                  className="messages-inline-progress-bar" />
+                    className="messages-inline-progress-bar" />
             </div>);
         }
 
         return ret;
     }
 
+    renderChatStart() {
+        if (chatStore.activeChat.canGoUp || !chatStore.activeChat.initialPageLoaded) return null;
+        return (
+            <div className="messages-start">
+                <div className="avatars">
+                    {chatStore.activeChat.participants.map(c => <Avatar key={c.username} contact={c} />)}
+                </div>
+                <div className="title">
+                    {t('title_chatBeginning')}
+                    &nbsp;<strong>{chatStore.activeChat.chatName}</strong>.
+                </div>
+            </div>
+        );
+    }
+
     render() {
         if (!chatStore.activeChat) return null;
-        const style = {
-            paddingTop: `${this.loadTriggerHeight}px`,
-            paddingBottom: `${this.loadTriggerHeight}px`
-        };
-        return (
-            <div className="messages-container" style={style}
-                    onScroll={this.handleScroll} ref={this.setContainerRef}>
-                { chatStore.activeChat.canGoUp || !chatStore.activeChat.initialPageLoaded ? null :
-                <div className="messages-start">
-                    <div className="avatars">
-                        {chatStore.activeChat.participants.map(c =>
-                            <Avatar key={c.username} contact={c} />)}
-                    </div>
-                    <div className="title">
-                        {t('title_chatBeginning')}
-                        &nbsp;<strong>{chatStore.activeChat.chatName}</strong>.
-                    </div>
-                </div>
-                }
 
+        return (
+            <div className="messages-container" onScroll={this.handleScroll} ref={this.setContainerRef}>
+                {this.renderChatStart()}
                 {chatStore.activeChat.loadingInitialPage
                     ? <ProgressBar type="circular" mode="indeterminate"
-                                   multicolor className="messages-progress-bar" />
+                        multicolor className="messages-progress-bar" />
                     : this.renderMessages()
                 }
-                {chatStore.activeChat.loadiingBottomPage ? <ProgressBar type="circular" mode="indeterminate"
-                                   multicolor className="messages-progress-bar bottom" /> : null }
             </div>
         );
     }

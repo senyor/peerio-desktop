@@ -37,10 +37,10 @@ const T = require('~/ui/shared-components/T');
      *
      * @returns {Promise}
      */
-    @action createPasscode () {
+    @action createPasscode() {
         if (this.passcodeStore.hasErrors || this.busy) return Promise.resolve(false);
         this.busy = true;
-        User.current.setPasscode(this.passcodeStore.passcode)
+        return User.current.setPasscode(this.passcodeStore.passcode)
             .then(() => {
                 this.busy = false;
                 systemWarnings.add({
@@ -53,8 +53,8 @@ const T = require('~/ui/shared-components/T');
     /**
      * Disable passcode.
      */
-    skip () {
-       window.router.push('/app');
+    skip() {
+        window.router.push('/app');
     }
 
     render() {
@@ -78,10 +78,10 @@ const T = require('~/ui/shared-components/T');
 
                 <div className="signup-nav">
                     <Button flat label={t('button_skip')}
-                                    onClick={this.skip} />
+                        onClick={this.skip} />
                     <Button flat label={t('button_finish')}
-                                    onClick={this.createPasscode}
-                                    disabled={this.hasErrors} />
+                        onClick={this.createPasscode}
+                        disabled={this.hasErrors} />
                 </div>
             </div>
         );

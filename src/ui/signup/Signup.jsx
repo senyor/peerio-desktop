@@ -164,6 +164,33 @@ const T = require('~/ui/shared-components/T');
                             }}
                         </T>
                     </div>
+                    <div className="signup-nav">
+                        <Button flat
+                                label={this.step === 1 ? t('button_cancel') : t('button_back')}
+                                onClick={this.retreat} />
+                        <Button flat
+                                label={this.step === 1 ? t('button_next') : t('button_finish')}
+                                onClick={this.advance}
+                                disabled={this.hasErrors} />
+                    </div>
+                    {/* <div className="progress">
+                        <div className={css('indicator', { active: this.step === 1 })} />
+                        <div className={css('indicator', { active: this.step === 2 })} />
+                    </div> */}
+                    <FullCoverLoader show={this.busy} />
+                    <Dialog actions={errorActions} active={this.errorVisible}
+                            onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
+                            title={t('title_error')}>{this.errorMessage}</Dialog>
+                    <Snackbar location="signup" />
+
+                    <Dialog active={this.termsDialogOpen}
+                            actions={termsDialogActions}
+                            onOverlayClick={this.hideTermsDialog}
+                            onEscKeyDown={this.hideTermsDialog}
+                            className="terms">
+                        <Terms />
+                    </Dialog>
+
                 </div>
             </div>
         );

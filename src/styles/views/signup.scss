@@ -21,7 +21,6 @@
   background-image: url('./static/img/bg-pattern.png');
   background-size: $background-pattern-size;
   color: $text-light-secondary;
-  height: 100vh;
   opacity: 0;
   transition: 350ms opcaity $transition-default;
   width: 100vw;
@@ -56,6 +55,16 @@
 
   &.show {
     opacity: 1;
+  }
+
+  .signup-content {
+    @extend %flex-col;
+    height: 100vh;
+
+    @media (max-width: #{$minimum-screen-width + 72}) {
+      margin-left: 64px;
+      margin-right: auto;
+    }
   }
 
   .signup-form {

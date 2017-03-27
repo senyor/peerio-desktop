@@ -65,28 +65,30 @@ const T = require('~/ui/shared-components/T');
     render() {
         return (
             <div className={css('signup', 'rt-light-theme', 'show')}>
-                <img alt="" className="logo" src="static/img/logo-white.png" />
-                <div className="signup-form">
-                    <div className="passcode">
-                        <div className="signup-title">{t('title_newDevice')}</div>
-                        <div className="signup-subtitle">{t('title_createPassword')}</div>
-                        <p><T k="title_passwordIntro" className="signup-title">
-                            {{
-                                emphasis: text => <strong>{text}</strong>
-                            }}
-                        </T></p>
-                        <Passcode store={this.passcodeStore} returnHandler={this.createPasscode} />
+                <div className="signup-content">
+                    <img alt="" className="logo" src="static/img/logo-white.png" />
+                    <div className="signup-form">
+                        <div className="passcode">
+                            <div className="signup-title">{t('title_newDevice')}</div>
+                            <div className="signup-subtitle">{t('title_createPassword')}</div>
+                            <p><T k="title_passwordIntro" className="signup-title">
+                                {{
+                                    emphasis: text => <strong>{text}</strong>
+                                }}
+                            </T></p>
+                            <Passcode store={this.passcodeStore} returnHandler={this.createPasscode} />
+                        </div>
+
                     </div>
+                    <FullCoverLoader show={this.busy} />
 
-                </div>
-                <FullCoverLoader show={this.busy} />
-
-                <div className="signup-nav">
-                    <Button flat label={t('button_skip')}
-                        onClick={this.skip} />
-                    <Button flat label={t('button_finish')}
-                        onClick={this.createPasscode}
-                        disabled={this.hasErrors} />
+                    <div className="signup-nav">
+                        <Button flat label={t('button_skip')}
+                            onClick={this.skip} />
+                        <Button flat label={t('button_finish')}
+                            onClick={this.createPasscode}
+                            disabled={this.hasErrors} />
+                    </div>
                 </div>
             </div>
         );

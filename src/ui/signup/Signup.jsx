@@ -123,73 +123,48 @@ const T = require('~/ui/shared-components/T');
 
         return (
             <div className={css('signup', 'rt-light-theme', { show: this.show })}>
-                <img alt="" className="logo" src="static/img/logo-white.png" />
-                <div className="signup-form">
+                <div className="signup-content">
+                    <img alt="" className="logo" src="static/img/logo-white.png" />
+                    <div className="signup-form">
 
-                    {
-                        this.step === 1
-                            ? <Profile store={this.profileStore} returnHandler={this.advance} />
-                            : (
-                                <div className="passcode">
-                                    <div className="signup-title">{t('title_signupStep2')}</div>
-                                    <div className="signup-subtitle">{t('title_createPassword')}</div>
-                                    <p><T k="title_passwordIntro" className="signup-title">
-                                        {{
-                                            emphasis: text => <strong>{text}</strong>
-                                        }}
-                                    </T></p>
-                                    <p><T k="title_MPIntro1" className="signup-title">
-                                        {{
-                                            emphasis: text => <strong>{text}</strong>
-                                        }}
-                                    </T></p>
-                                    <p><T k="title_MPIntro2" className="signup-title">
-                                        {{
-                                            emphasis: text => <strong>{text}</strong>
-                                        }}
-                                    </T></p>
-                                    <Passcode store={this.passcodeStore} profileStore={this.profileStore}
-                                  returnHandler={this.advance} />
-                                </div>
-                        )
-                    }
+                        {
+                            this.step === 1
+                                ? <Profile store={this.profileStore} returnHandler={this.advance} />
+                                : (
+                                    <div className="passcode">
+                                        <div className="signup-title">{t('title_signupStep2')}</div>
+                                        <div className="signup-subtitle">{t('title_createPassword')}</div>
+                                        <p><T k="title_passwordIntro" className="signup-title">
+                                            {{
+                                                emphasis: text => <strong>{text}</strong>
+                                            }}
+                                        </T></p>
+                                        <p><T k="title_MPIntro1" className="signup-title">
+                                            {{
+                                                emphasis: text => <strong>{text}</strong>
+                                            }}
+                                        </T></p>
+                                        <p><T k="title_MPIntro2" className="signup-title">
+                                            {{
+                                                emphasis: text => <strong>{text}</strong>
+                                            }}
+                                        </T></p>
+                                        <Passcode store={this.passcodeStore} profileStore={this.profileStore}
+                                      returnHandler={this.advance} />
+                                    </div>
+                            )
+                        }
 
-                    <T k="title_TOSRequestText" className="terms">
-                        {{
-                            emphasis: text => <strong>{text}</strong>,
-                            tosLink: text => <Button onClick={this.showTermsDialog}
-                                                     label={text}
-                                                     className="button-link" />
-                        }}
-                    </T>
+                        <T k="title_TOSRequestText" className="terms">
+                            {{
+                                emphasis: text => <strong>{text}</strong>,
+                                tosLink: text => <Button onClick={this.showTermsDialog}
+                                                         label={text}
+                                                         className="button-link" />
+                            }}
+                        </T>
+                    </div>
                 </div>
-                <div className="signup-nav">
-                    <Button flat
-                            label={this.step === 1 ? t('button_cancel') : t('button_back')}
-                            onClick={this.retreat} />
-                    <Button flat
-                            label={this.step === 1 ? t('button_next') : t('button_finish')}
-                            onClick={this.advance}
-                            disabled={this.hasErrors} />
-                </div>
-                {/* <div className="progress">
-                    <div className={css('indicator', { active: this.step === 1 })} />
-                    <div className={css('indicator', { active: this.step === 2 })} />
-                </div> */}
-                <FullCoverLoader show={this.busy} />
-                <Dialog actions={errorActions} active={this.errorVisible}
-                        onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
-                        title={t('title_error')}>{this.errorMessage}</Dialog>
-                <Snackbar location="signup" />
-
-                <Dialog active={this.termsDialogOpen}
-                        actions={termsDialogActions}
-                        onOverlayClick={this.hideTermsDialog}
-                        onEscKeyDown={this.hideTermsDialog}
-                        className="terms">
-                    <Terms />
-                </Dialog>
-
             </div>
         );
     }

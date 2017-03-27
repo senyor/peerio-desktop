@@ -177,7 +177,7 @@ const T = require('~/ui/shared-components/T');
                         <div className={css('indicator', { active: this.step === 1 })} />
                         <div className={css('indicator', { active: this.step === 2 })} />
                     </div> */}
-                    <FullCoverLoader show={this.busy} />
+
                     <Dialog actions={errorActions} active={this.errorVisible}
                             onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
                             title={t('title_error')}>{this.errorMessage}</Dialog>
@@ -192,6 +192,7 @@ const T = require('~/ui/shared-components/T');
                     </Dialog>
 
                 </div>
+                <FullCoverLoader show={this.busy} />
             </div>
         );
     }

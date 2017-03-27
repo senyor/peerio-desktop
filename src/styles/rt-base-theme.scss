@@ -20,6 +20,9 @@
 }
 // AVATAR
 .rt-avatar-avatar {
+  @extend %flex-row;
+  @extend %flex-align-center;
+  @extend %flex-justify-center;
   flex-shrink: 0;
 }
 

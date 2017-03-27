@@ -192,7 +192,10 @@ $radius-sign-warning: 18px;
       margin: 12px 0 0 $margin-small;
       padding: $padding-tiny 24px;
       position: relative;
-      width: 100%;
+
+      &:not(.invalid-sign) {
+        width: 100%;
+      }
 
       &:hover {
         background-color: $color-dark-03;
@@ -227,16 +230,21 @@ $radius-sign-warning: 18px;
       &.invalid-sign {
         background-color: rgba($color-error, .06);
         border-radius: $radius-sign-warning;
-        margin-left: 28px;
+        margin: 0 32px 0 28px;
         min-width: 320px;
         overflow: hidden;
-        padding: $padding-tiny $padding-tiny 0 $padding-tiny;
+        padding: $padding-tiny 0 0 $padding-tiny;
 
         .warning-icon {
           @extend %flex-shrink-0;
           color: $color-error;
-          margin: 4px 12px 0 auto;
+          margin: 0 12px 0 auto;
           width: 24px;
+
+          + .receipt-wrapper {
+            @extend %flex-align-center;
+            margin-left: 0;
+          }
         }
       }
 

@@ -10,7 +10,7 @@ const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 @observer
 class ChatList extends React.Component {
     componentWillMount() {
-        chatStore.loadAllChats();
+        chatStore.loadAllChats(15);
     }
 
     activateChat(id) {
@@ -29,8 +29,8 @@ class ChatList extends React.Component {
         const c = chat.unreadCount;
         return c > 0 ? (<div className="notification">{c}</div>) : null;
     };
-/* <ListItem caption="Bill" className="online" leftIcon="fiber_manual_record"
-   rightIcon={<div className="notification">12</div>} />*/
+    /* <ListItem caption="Bill" className="online" leftIcon="fiber_manual_record"
+       rightIcon={<div className="notification">12</div>} />*/
     render() {
         // todo: remove arrow function event handler
         return (

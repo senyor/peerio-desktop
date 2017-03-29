@@ -103,8 +103,8 @@ const css = require('classnames');
     }
 
     @action toggleFocus() {
-        this.isFocused = !this.isFocused;
-        this.props.store[this.fFocused] = this.isFocused;
+        this.props.store[this.fFocused] = !this.props.store[this.fFocused];
+        if (this.props.propagateFocus !== undefined) this.props.propagateFocus(this.props.store[this.fFocused]);
     }
 
     @action handleBlur() {
@@ -127,7 +127,7 @@ const css = require('classnames');
 
     render() {
         return (
-            <div className={css({ focused: this.isFocused })}>
+            <div className={css({ focused: this.props.store[this.fFocused] })}>
                 <Input type={this.props.type || 'text'}
                        value={this.props.store[this.props.name] || ''}
                        label={this.props.label}

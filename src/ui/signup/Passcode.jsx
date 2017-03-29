@@ -1,15 +1,14 @@
 const React = require('react');
 const _ = require('lodash');
 const { Component } = require('react');
-const { observable, computed, reaction } = require('mobx');
+const { observable, computed, reaction, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon } = require('~/react-toolbox');
-const { config, socket, validation } = require('~/icebear'); // eslint-disable-line
+const { socket, validation } = require('~/icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const zxcvbn = require('zxcvbn');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const OrderedFormStore = require('~/stores/ordered-form-store');
-const T = require('~/ui/shared-components/T');
 const css = require('classnames');
 
 const { validators } = validation; // use common validation from core
@@ -80,9 +79,12 @@ class PasscodeStore extends OrderedFormStore {
 }
 
 @observer class Passcode extends Component {
+    @observable focusPasscode = false;
 
     constructor() {
         super();
+        this.showHints = this.showHints.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.passcodeStrengthMeter = [
             { class: 'red', icon: 'sentiment_very_dissatisfied' },
             { class: 'yellow', icon: 'sentiment_dissatisfied' },
@@ -90,6 +92,16 @@ class PasscodeStore extends OrderedFormStore {
             { class: 'green', icon: 'sentiment_satisfied' },
             { class: 'green', icon: 'sentiment_very_satisfied' }
         ];
+    }
+
+    /**
+     * field focus status propagated from passcode input
+     *
+     * @param {Boolean} isFocused
+     */
+    @action showHints(isFocused) {
+        console.log('propagate focus', isFocused);
+        this.focusPasscode = isFocused;
     }
 
     /**
@@ -101,6 +113,15 @@ class PasscodeStore extends OrderedFormStore {
                 this.props.store.validatePasscodeRepeat();
             }
         });
+    }
+
+    /**
+     * Call the parent form's return handler.
+     */
+    @action handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            this.props.returnHandler();
+        }
     }
 
     /**
@@ -145,12 +166,6 @@ class PasscodeStore extends OrderedFormStore {
         ];
     }
 
-    handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            this.props.returnHandler();
-        }
-    };
-
     render() {
         const passcodeValidator = this.localizePasscodeValidator(
             t('error_passwordWeak'),
@@ -160,7 +175,7 @@ class PasscodeStore extends OrderedFormStore {
 
         return (
             <div>
-                <div className={css('hint-wrapper', { focused: this.props.store.passcodeFocused })}>
+                <div className={css('hint-wrapper', { focused: this.focusPasscode })}>
                     <div className="password-sentiment">
                         <ValidatedInput type="password"
                                         name="passcode"
@@ -168,6 +183,7 @@ class PasscodeStore extends OrderedFormStore {
                                         label={t('title_password')}
                                         store={this.props.store}
                                         validator={passcodeValidator}
+                                        propagateFocus={this.showHints}
                                         validationArguments={{
                                             zxcvbnScore: this.props.store.zxcvbnScore,
                                             equalsValue: this.props.store.passcodeRepeat,

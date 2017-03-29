@@ -82,11 +82,11 @@ const T = require('~/ui/shared-components/T');
                     </div>
                     <FullCoverLoader show={this.busy} />
 
-                <div className="signup-nav">
-                    <Button flat
+                    <div className="signup-nav">
+                        <Button flat
                             label={t('button_skip')}
                             onClick={this.skip} />
-                    <Button flat
+                        <Button flat
                             label={t('button_finish')}
                             onClick={this.createPasscode}
                             disabled={this.passcodeStore.hasErrors} />

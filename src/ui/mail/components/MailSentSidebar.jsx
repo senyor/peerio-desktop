@@ -72,7 +72,7 @@ class MailSentSidebar extends React.Component {
                     <div className="expire-info flex-col">
                         {(this.ghostActive)
                             ?
-                                <div>
+                                <div className="flex-col">
                                     <div className="dark-label">{t('title_mailExpires')}</div>
                                     <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
                                     <Button label={t('button_mailRevoke')}

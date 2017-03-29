@@ -15,6 +15,7 @@
   }
 
   .tabs {
+    @extend %flex-shrink-0;
     margin-top: 24px;
     width: 100%;
 

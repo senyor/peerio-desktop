@@ -69,13 +69,14 @@ const T = require('~/ui/shared-components/T');
                     <img alt="" className="logo" src="static/img/logo-white.png" />
                     <div className="signup-form">
                         <div className="passcode">
-                            <div className="signup-title">{t('title_newDevice')}</div>
+                            <div className="signup-title">{t('title_newDeviceSetup')}</div>
                             <div className="signup-subtitle">{t('title_createPassword')}</div>
                             <p><T k="title_passwordIntro" className="signup-title">
                                 {{
                                     emphasis: text => <strong>{text}</strong>
                                 }}
                             </T></p>
+                            <p>{t('title_passwordSkip')}</p>
                             <Passcode store={this.passcodeStore} returnHandler={this.createPasscode} />
                         </div>
 

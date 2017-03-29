@@ -50,6 +50,11 @@ const snackbarControl = require('~/helpers/snackbar-control');
             this.wrapperClass = '';
             setTimeout(() => {
                 this.snackbarClass = 'show';
+                if (this.autoDismiss) {
+                    setTimeout(() => {
+                        this.dismiss();
+                    }, 5000);
+                }
             }, 5);
         }, 200); // must happen *after* fadeOut
     };

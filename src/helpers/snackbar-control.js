@@ -1,6 +1,7 @@
 const { observable, reaction } = require('mobx');
 const { t } = require('peerio-translator');
 const { systemWarnings } = require('~/icebear');
+const { BrowserWindow } = require('electron').remote;
 
 /**
  * Snackbar control contains:
@@ -52,6 +53,7 @@ class SnackbarControl {
                 sComponent.content = t(message.content, message.data);
                 sComponent.action = message.action;
                 sComponent.label = t(message.label);
+                sComponent.autoDismiss = BrowserWindow.getFocusedWindow();
             });
         }
     }

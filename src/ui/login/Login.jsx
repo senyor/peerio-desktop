@@ -32,9 +32,9 @@ class LoginStore extends OrderedFormStore {
 
     @computed get hasErrors() {
         return !(
-                this.initialized &&  // store has its input properties
-                this.usernameValid && this.passcodeOrPassphraseValid && // fields ok
-                socket.connected // server is available
+            this.initialized &&  // store has its input properties
+            this.usernameValid && this.passcodeOrPassphraseValid && // fields ok
+            socket.connected // server is available
         );
     }
 }
@@ -100,7 +100,7 @@ class LoginStore extends OrderedFormStore {
         });
     };
 
-    handleKeyPress =(e) => {
+    handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             this.login();
         }
@@ -113,14 +113,16 @@ class LoginStore extends OrderedFormStore {
                     <div className="overflow ">{t('title_welcomeBack')}&nbsp;
                         <strong>
                             {this.loginStore.lastAuthenticatedUser.firstName
-                            || this.loginStore.lastAuthenticatedUser.username}
+                                || this.loginStore.lastAuthenticatedUser.username}
                         </strong>
                     </div>
                     <div className="subtitle">
                         <div className="overflow">
                             <T k="button_changeUserDesktop">
-                                {{ username: (this.loginStore.lastAuthenticatedUser.firstName
-                                                || this.loginStore.lastAuthenticatedUser.username) }}
+                                {{
+                                    username: (this.loginStore.lastAuthenticatedUser.firstName
+                                        || this.loginStore.lastAuthenticatedUser.username)
+                                }}
                             </T>
                         </div>
                     </div>
@@ -142,35 +144,35 @@ class LoginStore extends OrderedFormStore {
                             {t('title_login')}
                         </div>
                         <ValidatedInput label={t('title_username')}
-                                        name="username"
-                                        position="0"
-                                        lowercase="true"
-                                        store={this.loginStore}
-                                        validator={validators.usernameLogin}
-                                        onKeyPress={this.handleKeyPress}
-                                       className={css({ hide: this.loginStore.lastAuthenticatedUser })} />
+                            name="username"
+                            position="0"
+                            lowercase="true"
+                            store={this.loginStore}
+                            validator={validators.usernameLogin}
+                            onKeyPress={this.handleKeyPress}
+                            className={css({ hide: this.loginStore.lastAuthenticatedUser })} />
                         <div className="password">
                             <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
-                                            label={t('title_password')}
-                                            position="1"
-                                            store={this.loginStore}
-                                            validator={validators.stringExists}
-                                            name="passcodeOrPassphrase"
-                                            onKeyPress={this.handleKeyPress} />
+                                label={t('title_password')}
+                                position="1"
+                                store={this.loginStore}
+                                validator={validators.stringExists}
+                                name="passcodeOrPassphrase"
+                                onKeyPress={this.handleKeyPress} />
                             <TooltipIcon icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
-                                         tooltip={this.loginStore.passwordVisible ?
-                                            t('title_hidePassword') : t('title_showPassword')}
-                                         tooltipPosition="right"
-                                         tooltipDelay={500}
-                                         onClick={this.togglePasswordVisibility} />
+                                tooltip={this.loginStore.passwordVisible ?
+                                    t('title_hidePassword') : t('title_showPassword')}
+                                tooltipPosition="right"
+                                tooltipDelay={500}
+                                onClick={this.togglePasswordVisibility} />
                         </div>
                         {/* <Dropdown value={languageStore.language}
                                   source={languageStore.translationLangsDataSource}
                                   onChange={languageStore.changeLanguage} /> */}
                     </div>
                     <Button className="login-button" label={t('button_login')} flat
-                            onClick={this.login}
-                            disabled={this.loginStore.hasErrors} />
+                        onClick={this.login}
+                        disabled={this.loginStore.hasErrors} />
 
                     <div>{t('title_newUser')} &nbsp; <Link to="/signup">{t('button_signup')}</Link></div>
                 </div>

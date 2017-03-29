@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button, Dialog } = require('~/react-toolbox');
-const { User, errors } = require('~/icebear');
+const { PhraseDictionaryCollection, User, errors } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -12,7 +12,6 @@ const { Profile, ProfileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
 const Snackbar = require('~/ui/shared-components/Snackbar');
 const T = require('~/ui/shared-components/T');
-
 
 @observer class Signup extends React.Component {
     @observable busy = false;
@@ -52,7 +51,7 @@ const T = require('~/ui/shared-components/T');
         u.firstName = this.profileStore.firstName;
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
-        u.passphrase = 'icebear'; // PhraseDictionaryCollection.current.getPassphrase(5); TODO re-enable before beta
+        u.passphrase = PhraseDictionaryCollection.current.getPassphrase(5);
 
         return u.createAccountAndLogin()
             .then(() => {

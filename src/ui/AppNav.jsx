@@ -112,17 +112,17 @@ class AppNav extends React.Component {
                     <div className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
                     <IconMenu icon="">
                         <MenuItem value="profile" icon="person" caption={t('title_settingsProfile')}
-                                  onClick={this.toProfile} style={menuItemStyle}
-                                  className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
+                            onClick={this.toProfile} style={menuItemStyle}
+                            className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
                         <MenuItem value="security" icon="security" caption={t('title_settingsSecurity')}
-                                  onClick={this.toSecurity} style={menuItemStyle} />
-                        <MenuItem value="preferences" icon="settings" caption={t('title_settingsPreferences')}
-                                  onClick={this.toPrefs} style={menuItemStyle} />
+                            onClick={this.toSecurity} style={menuItemStyle} />
+                        {/* <MenuItem value="preferences" icon="settings" caption={t('title_settingsPreferences')}
+                                  onClick={this.toPrefs} style={menuItemStyle} />*/}
                         <MenuItem value="about" icon="info" caption="About"
-                                  onClick={this.toAbout} style={menuItemStyle} />
+                            onClick={this.toAbout} style={menuItemStyle} />
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
-                                  onClick={this.signout} />
+                            onClick={this.signout} />
                     </IconMenu>
                     <Avatar contact={this.contact} />
                 </div>
@@ -130,19 +130,19 @@ class AppNav extends React.Component {
 
 
                     <AppNavButton tooltip={t('title_chats')} icon="forum" active={this.currentRoute === ROUTES.chat}
-                                  showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
-                                  onClick={this.toChat} />
+                        showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
+                        onClick={this.toChat} />
 
                     <AppNavButton tooltip={t('title_files')} icon="folder" active={this.currentRoute === ROUTES.files}
-                                  showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
-                                  onClick={this.toFiles} />
+                        showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
+                        onClick={this.toFiles} />
 
                     {/*  TODO update tooltip and label content */}
                     <div className="usage">
                         <TooltipIcon
-                          tooltip="x% of n GB"
-                          tooltipPosition="right"
-                          icon="data_usage" />
+                            tooltip="x% of n GB"
+                            tooltipPosition="right"
+                            icon="data_usage" />
                         <div>25%</div>
                     </div>
                 </div>

@@ -2,11 +2,27 @@ const { observable, reaction, computed, action } = require('mobx');
 const { systemWarnings } = require('~/icebear');
 const { BrowserWindow } = require('electron').remote;
 
+// SAMPLE USAGE
+// const { systemWarnings } = require('~/icebear');
+// setTimeout(() => {
+//    systemWarnings.add({
+//        content: 'hello I am a snackbar'
+//    });
+// }, 1100);
+//
+// setTimeout(() => {
+//    systemWarnings.add({
+//        content: 'hello I am a DIALOG, no snackbar until i am gone',
+//        label: 'go away',
+//        level: 'severe'
+//    });
+// }, 3000);
+
 /**
  * Snackbar control contains:
  * - a queue of snackbar messages, including server warnings
  * - a priority system for snackbar & components, which are mounted several times,
- *      as well as a  systemdialog component
+ *      as well as a  SystemWarningDialog component
  *
  * Snackbars are expected to be objects with properties:
  *  - content (String, translation key)
@@ -19,7 +35,7 @@ const { BrowserWindow } = require('electron').remote;
  */
 class WarningController {
 
-    mountedWarningComponents=[];
+    mountedWarningComponents = [];
 
     @observable isVisible = false;
     @observable hasVisibleDialog = false;
@@ -30,8 +46,6 @@ class WarningController {
     }
 
     constructor() {
-        this.next = this.next.bind(this);
-
         reaction(() => this.current, (current) => {
             if (current) this.show();
         });
@@ -47,7 +61,7 @@ class WarningController {
             this.mountedWarningComponents.forEach((sComponent) => {
                 // properties only apply to snackbars
                 sComponent.isLocallyVisible = true; // needed for fade effect
-                sComponent.autoDismiss = BrowserWindow.getFocusedWindow();
+                sComponent.autoDismiss = !!BrowserWindow.getFocusedWindow();
             });
         }
     }
@@ -55,7 +69,7 @@ class WarningController {
     /**
      * If there is another message in the queue, show it. Otherwise hide & move position.
      */
-    @action next() {
+    @action.bound next() {
         systemWarnings.shift();
         this.show();
     }
@@ -102,23 +116,4 @@ class WarningController {
     }
 }
 
-const s = new WarningController();
-
-// SAMPLE USAGE
-
-// setTimeout(() => {
-//    systemWarnings.add({
-//        content: 'hello I am a snackbar'
-//    });
-// }, 1100);
-//
-// setTimeout(() => {
-//    systemWarnings.add({
-//        content: 'hello I am a DIALOG, no snackbar until i am gone',
-//        label: 'go away',
-//        level: 'severe'
-//    });
-// }, 3000);
-
-
-module.exports = s;
+module.exports = new WarningController();

@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button, Dialog } = require('~/react-toolbox');
-const { PhraseDictionaryCollection, User, errors } = require('~/icebear');
+const { PhraseDictionaryCollection, User, errors, systemWarnings } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -34,15 +34,6 @@ const T = require('~/ui/shared-components/T');
 
     createAccountWithPasscode = () => {
         if (this.passcodeStore.hasErrors || this.busy) return Promise.resolve(false);
-        return this.createAccount()
-            .then(() => User.current.setPasscode(this.passcodeStore.passcode))
-            .then(() => { window.router.push('/app'); })
-            .catch(err => {
-                console.error(err);
-            });
-    };
-
-    createAccount() {
         this.busy = true;
 
         const u = new User();
@@ -57,13 +48,21 @@ const T = require('~/ui/shared-components/T');
             .then(() => {
                 User.current = u;
                 this.busy = false;
+                User.current.setPasscode(this.passcodeStore.passcode)
+                    .catch(() => {
+                        systemWarnings.add({
+                            content: t('error_passcodeSetFailed'),
+                            label: t('ok'),
+                            level: 'severe'
+                        });
+                    });
                 window.router.push('/app');
             })
             .catch(err => {
                 this.busy = false;
                 this.errorVisible = true;
+                // todo: error message will not be localized, maybe don't use it at all
                 this.errorMessage = errors.normalize(err).message || t('error_signupServerError');
-                throw err;
             });
     }
 
@@ -149,28 +148,28 @@ const T = require('~/ui/shared-components/T');
                                             }}
                                         </T></p>
                                         <Passcode store={this.passcodeStore} profileStore={this.profileStore}
-                                      returnHandler={this.advance} />
+                                            returnHandler={this.advance} />
                                     </div>
-                            )
+                                )
                         }
 
                         <T k="title_TOSRequestText" className="terms">
                             {{
                                 emphasis: text => <strong>{text}</strong>,
                                 tosLink: text => <Button onClick={this.showTermsDialog}
-                                                         label={text}
-                                                         className="button-link" />
+                                    label={text}
+                                    className="button-link" />
                             }}
                         </T>
                     </div>
                     <div className="signup-nav">
                         <Button flat
-                                label={this.step === 1 ? t('button_cancel') : t('button_back')}
-                                onClick={this.retreat} />
+                            label={this.step === 1 ? t('button_cancel') : t('button_back')}
+                            onClick={this.retreat} />
                         <Button flat
-                                label={this.step === 1 ? t('button_next') : t('button_finish')}
-                                onClick={this.advance}
-                                disabled={this.hasErrors} />
+                            label={this.step === 1 ? t('button_next') : t('button_finish')}
+                            onClick={this.advance}
+                            disabled={this.hasErrors} />
                     </div>
                     {/* <div className="progress">
                         <div className={css('indicator', { active: this.step === 1 })} />
@@ -178,15 +177,15 @@ const T = require('~/ui/shared-components/T');
                     </div> */}
 
                     <Dialog actions={errorActions} active={this.errorVisible}
-                            onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
-                            title={t('title_error')}>{this.errorMessage}</Dialog>
+                        onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
+                        title={t('title_error')}>{this.errorMessage}</Dialog>
                     <Snackbar location="signup" />
 
                     <Dialog active={this.termsDialogOpen}
-                            actions={termsDialogActions}
-                            onOverlayClick={this.hideTermsDialog}
-                            onEscKeyDown={this.hideTermsDialog}
-                            className="terms">
+                        actions={termsDialogActions}
+                        onOverlayClick={this.hideTermsDialog}
+                        onEscKeyDown={this.hideTermsDialog}
+                        className="terms">
                         <Terms />
                     </Dialog>
 

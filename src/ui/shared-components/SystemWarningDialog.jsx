@@ -1,23 +1,14 @@
 const React = require('react');
 const { Dialog } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
-const { observable, computed, action } = require('mobx');
+const { computed, action } = require('mobx');
 const { t } = require('peerio-translator');
 const warningController = require('~/helpers/warning-controller');
 
-@observer class SystemDialog extends React.Component {
-    @observable active = false;
-    @observable content;
-    @observable action;
-    @observable title;
+@observer class SystemWarningDialog extends React.Component {
 
     @computed get isVisible() {
         return warningController.hasVisibleDialog && !!warningController.current;
-    }
-
-    constructor() {
-        super();
-        this.hide = this.hide.bind(this);
     }
 
     componentWillMount() {
@@ -28,7 +19,7 @@ const warningController = require('~/helpers/warning-controller');
         warningController.unregisterComponent(this);
     }
 
-    @action hide() {
+    @action.bound hide() {
         if (warningController.current.action) {
             warningController.current.action();
         }
@@ -43,13 +34,13 @@ const warningController = require('~/helpers/warning-controller');
         ];
         return (
             <Dialog className="dialog-warning"
-                    active={this.isVisible}
-                    title={t(warningController.current.title)}
-                    actions={actions}>
+                active={this.isVisible}
+                title={t(warningController.current.title)}
+                actions={actions}>
                 {t(warningController.current.content, warningController.current.data)}
             </Dialog>
         );
     }
 }
 
-module.exports = SystemDialog;
+module.exports = SystemWarningDialog;

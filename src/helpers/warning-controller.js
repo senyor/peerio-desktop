@@ -104,21 +104,21 @@ class WarningController {
 
 const s = new WarningController();
 
-// SAMPLE USAGE 
+// SAMPLE USAGE
 
- setTimeout(() => {
-    systemWarnings.add({
-        content: 'hello I am a snackbar'
-    });
- }, 1100);
-
- setTimeout(() => {
-     systemWarnings.add({
-        content: 'hello I am a DIALOG, no snackbar until i am gone',
-        label: 'go away',
-        level: 'severe'
-    });
- }, 3000);
+// setTimeout(() => {
+//    systemWarnings.add({
+//        content: 'hello I am a snackbar'
+//    });
+// }, 1100);
+//
+// setTimeout(() => {
+//    systemWarnings.add({
+//        content: 'hello I am a DIALOG, no snackbar until i am gone',
+//        label: 'go away',
+//        level: 'severe'
+//    });
+// }, 3000);
 
 
 module.exports = s;

@@ -137,13 +137,12 @@ class AppNav extends React.Component {
                         showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
                         onClick={this.toFiles} />
 
-                    {/*  TODO update tooltip and label content */}
                     <div className="usage">
                         <TooltipIcon
-                            tooltip="x% of n GB"
+                            tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
                             tooltipPosition="right"
                             icon="data_usage" />
-                        <div>25%</div>
+                        <div>{User.current.fileQuotaUsedPercent}</div>
                     </div>
                 </div>
             </div>

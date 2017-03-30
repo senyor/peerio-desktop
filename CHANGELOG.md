@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.16.0"></a>
+# [1.16.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.15.8...v1.16.0) (2017-03-30)
+
+
+### Bug Fixes
+
+* **avatar:** aligns avatar letters to centre of avatar background ([c89f0f8](https://github.com/PeerioTechnologies/peerio-desktop/commit/c89f0f8))
+* **chat:** corrects message signature error layout ([5c2fcfa](https://github.com/PeerioTechnologies/peerio-desktop/commit/5c2fcfa))
+* **chat:** fix scroll position on chat switch ([b461981](https://github.com/PeerioTechnologies/peerio-desktop/commit/b461981))
+* **login:** text for new device ([99b007c](https://github.com/PeerioTechnologies/peerio-desktop/commit/99b007c))
+* **mail:** comma separated emails ([7401cd5](https://github.com/PeerioTechnologies/peerio-desktop/commit/7401cd5))
+* **mail:** copy url ([9ce0799](https://github.com/PeerioTechnologies/peerio-desktop/commit/9ce0799))
+* **mail:** goodbye, mail tab! 👋 ([3a6bd3c](https://github.com/PeerioTechnologies/peerio-desktop/commit/3a6bd3c))
+* **mail:** i18n/captions for sort ([cb8aaa9](https://github.com/PeerioTechnologies/peerio-desktop/commit/cb8aaa9))
+* **navmenu:** remove perferences menu item ([499f4bf](https://github.com/PeerioTechnologies/peerio-desktop/commit/499f4bf))
+* **newdevice:** disable button until valid ([fa89190](https://github.com/PeerioTechnologies/peerio-desktop/commit/fa89190))
+* **passcode:** lodash instead of scary syntax ([19936b3](https://github.com/PeerioTechnologies/peerio-desktop/commit/19936b3))
+* **passcode:** sentiment css ([2bf8dd1](https://github.com/PeerioTechnologies/peerio-desktop/commit/2bf8dd1))
+* **passcode:** show hints on focus ([b0582e2](https://github.com/PeerioTechnologies/peerio-desktop/commit/b0582e2))
+* **setting:** cleanup security settings ([e0a0206](https://github.com/PeerioTechnologies/peerio-desktop/commit/e0a0206))
+* **settings:** comment out disabled stuff ([92c6a44](https://github.com/PeerioTechnologies/peerio-desktop/commit/92c6a44))
+* **settings:** prevents tabs from shrinking when tab state changes ([4bece0b](https://github.com/PeerioTechnologies/peerio-desktop/commit/4bece0b))
+* **snackbar:** auto-dismiss if in foreground ([6c8b93a](https://github.com/PeerioTechnologies/peerio-desktop/commit/6c8b93a))
+* **tools:** stylefmt and stylelint fix ([17524ac](https://github.com/PeerioTechnologies/peerio-desktop/commit/17524ac))
+* **updater:** catch all update errrors ([cd5e76e](https://github.com/PeerioTechnologies/peerio-desktop/commit/cd5e76e))
+* **validation:** fix that TypeError that just won’t go away ([6082ceb](https://github.com/PeerioTechnologies/peerio-desktop/commit/6082ceb))
+* displays device password hint text properly at smaller screen sizes. ([4185b7f](https://github.com/PeerioTechnologies/peerio-desktop/commit/4185b7f))
+* moves FullScreenLoader to cover everything when active ([ccda1dc](https://github.com/PeerioTechnologies/peerio-desktop/commit/ccda1dc))
+* returns sign up navigation. ([194810d](https://github.com/PeerioTechnologies/peerio-desktop/commit/194810d))
+
+
+### Features
+
+* **global:** connection status ([d0ef684](https://github.com/PeerioTechnologies/peerio-desktop/commit/d0ef684))
+* **login:** new device passcode setup ([0767d43](https://github.com/PeerioTechnologies/peerio-desktop/commit/0767d43))
+* **passcode:** remember skipping ([ae1ce94](https://github.com/PeerioTechnologies/peerio-desktop/commit/ae1ce94))
+* **quota:** storage quota stat display ([a940356](https://github.com/PeerioTechnologies/peerio-desktop/commit/a940356))
+* **signup:** passcode sentiment ([3a872b0](https://github.com/PeerioTechnologies/peerio-desktop/commit/3a872b0))
+* **signup:** real passphrases because we are grownups ([4c0822c](https://github.com/PeerioTechnologies/peerio-desktop/commit/4c0822c))
+
+
+### Performance Improvements
+
+* **chats:** limit chats amount that will load on startup ([7a92fce](https://github.com/PeerioTechnologies/peerio-desktop/commit/7a92fce))
+
+
+
 <a name="1.15.8"></a>
 ## [1.15.8](https://github.com/PeerioTechnologies/peerio-desktop/compare/v1.15.7...v1.15.8) (2017-03-23)
 

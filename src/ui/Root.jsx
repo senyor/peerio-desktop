@@ -14,6 +14,8 @@ const { ipcRenderer } = require('electron');
 const { socket } = require('~/icebear');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
+const SystemDialog = require('~/ui/shared-components/SystemDialog');
+
 
 @observer
 class Root extends React.Component {
@@ -69,6 +71,7 @@ class Root extends React.Component {
                     {/* <AutoUpdateDialog />*/}
                     {this.devtools}
                     <DropTarget />
+                    <SystemDialog />
                 </div>
             </ThemeProvider>
         );

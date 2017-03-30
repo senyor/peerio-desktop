@@ -100,8 +100,6 @@ class Mail extends React.Component {
             </div>
         );
     }
-
-
 }
 
 module.exports = Mail;

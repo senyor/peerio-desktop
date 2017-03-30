@@ -1,7 +1,7 @@
 {
   "name": "icebear-desktop",
   "description": "Peerio desktop client (codename Icebear)",
-  "version": "1.16.2",
+  "version": "1.16.3",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -154,13 +154,14 @@
       "!node_modules/**/{.npmignore,.eslintrc,.eslintrc.js,.jshintrc,.babelrc,karma.conf.js,.jsfmtrc}",
       "!node_modules/**/{example.js,Gruntfile.ls,build.ls,.coveralls.yml,.zuul.yml,component.json}"
     ],
-    "asar": false,
+    "asar": true,
     "compression": "normal",
     "publish": [
       {
         "provider": "generic",
         "url": "https://betaupdate.peerio.com"
-      }
+      },
+      "github"
     ],
     "squirrelWindows": {
       "msi": true

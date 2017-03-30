@@ -56,7 +56,7 @@ class SecuritySettings extends React.Component {
 
     renderShowPassphraseSection() {
         const passphraseDialogActions = [
-         { label: t('button_close'), onClick: this.hidePassphraseDialog }
+            { label: t('button_close'), onClick: this.hidePassphraseDialog }
         ];
 
         if (!User.current.passcodeIsSet) return null;
@@ -67,19 +67,19 @@ class SecuritySettings extends React.Component {
                     <Button label={t('button_showMP')} onClick={this.showPassphraseDialog} flat primary />
                 </div>
                 <p>
-                    {t('title_MPDetail', { mpDetailUrl: text => <a href={cfg.mpDetailUrl}>{text}</a> })}
+                    <T k="title_MPDetail"> {{ mpDetailUrl: text => <a href={cfg.mpDetailUrl}>{text}</a> }} </T>
                 </p>
                 <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}
-                            onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}
-                            title={this.unlocked ? t('title_MP') : t('title_enterPassword')}>
-                    { this.unlocked ?
+                    onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}
+                    title={this.unlocked ? t('title_MP') : t('title_enterPassword')}>
+                    {this.unlocked ?
                         <div>
                             <p>{t('title_MPDetail2')}</p>
                             <div style={{ marginTop: '40px', height: '48px' }}>
                                 <div className="passphrase headline">{User.current.passphrase}</div>
                             </div>
                         </div>
-                       : <PasscodeLock onUnlocked={this.unlock} />}
+                        : <PasscodeLock onUnlocked={this.unlock} />}
 
                 </Dialog>
             </div>
@@ -143,12 +143,11 @@ class SecuritySettings extends React.Component {
                     </p>
                 </section>*/}
                 {/* Technically speaking: do we want 2 dialogs or 1 dialog with steps? */}
-                <Dialog active={this.setupTwoFactorDialogOpen} actions={twoFactorDialogActions}
+                {/* <Dialog active={this.setupTwoFactorDialogOpen} actions={twoFactorDialogActions}
                         onOverlayClick={this.hideTwoFactorDialog} onEscKeyDown={this.hideTwoFactorDialog}
                         title={t('title_2FASetupDesktop')}>
                     <div>
                         <p>{t('title_2FASetupDesktopDetail')}</p>
-                        {/* To set up 2FA enter the secret key into your authenticator app */}
                         <div>{t('title_2FASetupDesktopDetail2')}</div>
                         <div className="flex-row flex-align-center flex-justify-between" />
                         <Input label={t('title_2FACode')} />
@@ -161,7 +160,6 @@ class SecuritySettings extends React.Component {
                     <div>
                         <p>{t('title_backupCodesDetail')}</p>
                         <div className="flex-col">
-                            {/* repeat this */}
                             <div className="backup-row">
                                 <strong>123456</strong><strong>123456</strong>
                             </div>
@@ -173,10 +171,10 @@ class SecuritySettings extends React.Component {
                             </div>
                         </div>
                     </div>
-                </Dialog>
+                </Dialog> */}
             </div>
         );
     }
-  }
+}
 
 module.exports = SecuritySettings;

@@ -157,10 +157,7 @@
     "asar": true,
     "compression": "normal",
     "publish": [
-      {
-        "provider": "github",
-        "url": "https://betaupdate.peerio.com"
-      }
+      "github"
     ],
     "squirrelWindows": {
       "msi": true

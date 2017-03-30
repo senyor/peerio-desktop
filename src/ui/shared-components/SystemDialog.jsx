@@ -32,12 +32,11 @@ const warningController = require('~/helpers/warning-controller');
         if (warningController.current.action) {
             warningController.current.action();
         }
-        console.log('next!')
+        console.log('next!');
         warningController.next();
     }
 
     render() {
-
         if (!warningController.current) return null;
         const actions = [
             { label: warningController.current.label || t('button_ok'), onClick: this.hide }

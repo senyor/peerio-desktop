@@ -69,7 +69,7 @@ const warningController = require('~/helpers/warning-controller');
                 }
             }, 5);
         }, 200); // must happen *after* fadeOut
-    };
+    }
 
     /**
      *  Animate fadeOut and dismiss warning.
@@ -80,7 +80,7 @@ const warningController = require('~/helpers/warning-controller');
             this.wrapperClass = 'banish';
             warningController.next();
         }, 150);
-    };
+    }
 
     /**
      *  Hide the snackbar. Will trigger fadeout.

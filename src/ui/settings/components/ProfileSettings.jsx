@@ -39,10 +39,10 @@ class Profile extends React.Component {
                     </div>
                     <div className="input-row">
                         <Input type="email" label={t('title_email')} value={User.current.primaryAddress} />
-                        {User.current.primaryAddressConfirmed ? null :
+                        {/*User.current.primaryAddressConfirmed ? null :
                         <Button label={t('button_resend')}
                                     style={{ marginTop: '46px' }}
-                                    flat primary /> }
+                                    flat primary /> */}
                     </div>
                     <div className="input-row">
                         {/*
@@ -54,7 +54,7 @@ class Profile extends React.Component {
                             nothing else...input.
                         */}
                         {/* TODO: INPUT MASK FOR THE PRETTIEST PHONE NUMBERS */}
-                        <Input type="tel" label={t('title_phone')} />
+                        {/*<Input type="tel" label={t('title_phone')} />*/}
                     </div>
 
                     <div className="row" style={{ marginTop: '40px' }} >
@@ -62,8 +62,8 @@ class Profile extends React.Component {
                         <div className="monospace">{f[0]} {f[1]} {f[2]}</div>
                         <div className="monospace">{f[3]} {f[4]} {f[5]}</div>
                     </div>
-                    <Button label={t('button_save')}
-                            style={{ marginTop: '40px' }} primary raised />
+                    {/* <Button label={t('button_save')}
+                            style={{ marginTop: '40px' }} primary raised /> */}
                 </div>
                 <div className="avatar-card"
                     style={{

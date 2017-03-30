@@ -59,7 +59,7 @@ class SecuritySettings extends React.Component {
          { label: t('button_close'), onClick: this.hidePassphraseDialog }
         ];
 
-        // if (!User.current.passcodeIsSet) return null;
+        if (!User.current.passcodeIsSet) return null; 
         return (
             <div>
                 <div className="title">
@@ -98,7 +98,7 @@ class SecuritySettings extends React.Component {
 
         return (
             <div>
-                <section className="section-divider">
+                {/*<section className="section-divider">
                     <div className="title" >
                         {t('title_devicePassword')}
                         <Button label={t('button_changePassword')} flat primary />
@@ -124,24 +124,24 @@ class SecuritySettings extends React.Component {
                     <p>
                         {t('title_2FADetail', { tfaDetailUrl: text => <a href={cfg.tfaDetailUrl}>{text}</a> })}
                     </p>
-                </section>
+                </section> */}
                 <section className="section-divider">
-                    <div className="title">{t('title_QRcode')}
+                    {/*<div className="title">{t('title_QRcode')}
                         <Button label={t('button_showQR')} flat primary />
                     </div>
                     <p style={{ marginBottom: '40px' }}>
                         {t('title_QRcodeDetail')}
-                    </p>
+                    </p>*/}
                     {this.renderShowPassphraseSection()}
                 </section>
-                <section>
+                {/*<section>
                     <div className="title"> {t('title_accountActivity')}
                         <Button label={t('button_showActivity')} flat primary />
                     </div>
                     <p>
                         {t('title_accountActivityDetail')}
                     </p>
-                </section>
+                </section>*/}
                 {/* Technically speaking: do we want 2 dialogs or 1 dialog with steps? */}
                 <Dialog active={this.setupTwoFactorDialogOpen} actions={twoFactorDialogActions}
                         onOverlayClick={this.hideTwoFactorDialog} onEscKeyDown={this.hideTwoFactorDialog}

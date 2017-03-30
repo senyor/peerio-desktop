@@ -14,21 +14,25 @@ function sendStatusToWindow(text) {
 }
 
 function start(mainWindow) {
-    window = mainWindow;
+    try {
+        window = mainWindow;
+        autoUpdater.setFeedURL({
+            // this is a temporary, read-only token with access to repository that will be public soon
+            // remove when switching to public release
+            token: '4d60ee659c9a6c21efe949ab42ba968663db86ee',
+            provider: 'github',
+            owner: 'PeerioTechnologies',
+            repo: 'peerio-desktop'
+        });
 
-    autoUpdater.setFeedURL({
-        // this is a temporary, read-only token with access to repository that will be public soon
-        // remove when switching to public release
-        token: '4d60ee659c9a6c21efe949ab42ba968663db86ee',
-        provider: 'github',
-        owner: 'PeerioTechnologies',
-        repo: 'peerio-desktop'
-    });
-
-    if (!isDevEnv) {
-        autoUpdater.checkForUpdates();
-    } else {
-        sendStatusToWindow('Updater did not start because dev build was detected.');
+        if (!isDevEnv) {
+            autoUpdater.checkForUpdates();
+        } else {
+            sendStatusToWindow('Updater did not start because dev build was detected.');
+        }
+    } catch (ex) {
+        sendStatusToWindow('Error starting updater.');
+        sendStatusToWindow(JSON.stringify(ex));
     }
 }
 

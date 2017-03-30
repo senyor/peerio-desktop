@@ -17,29 +17,28 @@ class MessageList extends React.Component {
     componentWillMount() {
         this.stickToBottom = true;
         // reaction to fix scroll position when scrolling up
-        this._reaction = reaction(() => chatStore.activeChat && chatStore.activeChat.loadingTopPage, (loading) => {
-            if (loading) {
-                this.lastTopElement = null;
-                for (let i = 0; i < this.containerRef.childNodes.length; i++) {
-                    const el = this.containerRef.childNodes[i];
-                    if (el.classList[0] !== 'message-content-wrapper') continue;
-                    this.lastTopElement = el;
-                    break;
+        this._topLoadReaction = reaction(() => chatStore.activeChat && chatStore.activeChat.loadingTopPage,
+            (loading) => {
+                if (loading) {
+                    this.lastTopElement = null;
+                    for (let i = 0; i < this.containerRef.childNodes.length; i++) {
+                        const el = this.containerRef.childNodes[i];
+                        if (el.classList[0] !== 'message-content-wrapper') continue;
+                        this.lastTopElement = el;
+                        break;
+                    }
+                    this.lastTopElementOffset = this.lastTopElement ? this.lastTopElement.offsetTop : 0;
+                    return;
                 }
-                this.lastTopElementOffset = this.lastTopElement ? this.lastTopElement.offsetTop : 0;
-                return;
-            }
-            if (this.lastTopElement) {
-                // setTimeout(() => {
-                if (!this.lastTopElement) return;
-                // todo: animate
-                this.containerRef.scrollTop = this.lastTopElement.offsetTop - this.lastTopElementOffset - 28;
-                this.lastTopElement = null;
-                // }, 0);
-            }
-        });
+                if (this.lastTopElement) {
+                    if (!this.lastTopElement) return;
+                    // todo: animate
+                    this.containerRef.scrollTop = this.lastTopElement.offsetTop - this.lastTopElementOffset - 28;
+                    this.lastTopElement = null;
+                }
+            });
         // reaction to jump to recent from history mode
-        this._resetReaction = reaction(
+        this._initialLoadReaction = reaction(
             () => chatStore.activeChat && chatStore.activeChat.loadingInitialPage,
             () => {
                 this.stickToBottom = true;
@@ -47,15 +46,21 @@ class MessageList extends React.Component {
             }
         );
         // reaction to paging down to cancel top scroll fix
-        this._resetReaction = reaction(
+        this._botLoadReaction = reaction(
             () => chatStore.activeChat && chatStore.activeChat.loadingBottomPage,
             () => { this.lastTopElement = null; }
         );
+        // reaction to user changing chats
+        this._chatSwitchReaction = reaction(() => chatStore.activeChat, (chat) => {
+            if (chat) this.scrollToBottom();
+        });
     }
 
     componentWillUnmount() {
-        this._reaction();
-        this._resetReaction();
+        this._topLoadReaction();
+        this._botLoadReaction();
+        this._initialLoadReaction();
+        this._chatSwitchReaction();
     }
 
     componentDidUpdate() {

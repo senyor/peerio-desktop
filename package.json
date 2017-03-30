@@ -1,7 +1,7 @@
 {
   "name": "icebear-desktop",
   "description": "Peerio desktop client (codename Icebear)",
-  "version": "1.16.1",
+  "version": "1.16.2",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -157,7 +157,10 @@
     "asar": false,
     "compression": "normal",
     "publish": [
-      "github"
+      {
+        "provider": "generic",
+        "url": "https://betaupdate.peerio.com"
+      }
     ],
     "squirrelWindows": {
       "msi": true

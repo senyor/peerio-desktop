@@ -47,6 +47,12 @@
     }
   }
 
+  .terms {
+    .rt-button-button {
+      margin-left: $margin-tiny;
+    }
+  }
+
   a {
     color: $text-light-primary;
     font-weight: $font-weight-semibold;

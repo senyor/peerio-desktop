@@ -3,7 +3,7 @@
 echo "[•••            ] setting flags"
 set -e
 export NODE_ENV=production
-export CSC_LINK=~/.cert/peerio_mac.p12
+#export CSC_LINK=~/.cert/peerio_mac.p12
 # EV certs use token instead of file, subject is set in electron-builder config: win/certificateSubjectName
 # export WIN_CSC_LINK=~/.cert
 echo "[••••••         ] cleaning up"

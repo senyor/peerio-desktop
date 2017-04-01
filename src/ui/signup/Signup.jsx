@@ -34,6 +34,7 @@ const T = require('~/ui/shared-components/T');
 
     createAccountWithPasscode = () => {
         if (this.passcodeStore.hasErrors || this.busy) return Promise.resolve(false);
+        this.hideError();
         this.busy = true;
 
         const u = new User();
@@ -62,7 +63,7 @@ const T = require('~/ui/shared-components/T');
                 this.busy = false;
                 this.errorVisible = true;
                 // todo: error message will not be localized, maybe don't use it at all
-                this.errorMessage = errors.normalize(err).message || t('error_signupServerError');
+                this.errorMessage = `${t('error_signupServerError')} ${errors.normalize(err).message}`;
             });
     }
 
@@ -111,12 +112,17 @@ const T = require('~/ui/shared-components/T');
         this.termsDialogOpen = true;
     };
 
+    hideError = () => {
+        this.errorVisible = false;
+    };
+
     render() {
         const termsDialogActions = [
             { label: t('button_ok'), onClick: this.hideTermsDialog }
         ];
         const errorActions = [
-            { label: t('button_ok'), onClick: this.navigateToProfile }
+            { label: t('button_cancel'), onClick: this.hideError },
+            { label: t('button_retry'), onClick: this.createAccountWithPasscode }
         ];
 
         return (
@@ -177,7 +183,7 @@ const T = require('~/ui/shared-components/T');
                     </div> */}
 
                     <Dialog actions={errorActions} active={this.errorVisible}
-                        onEscKeyDown={this.navigateToProfile} onOverlayClick={this.navigateToProfile}
+                        onEscKeyDown={this.hideError} onOverlayClick={this.hideError}
                         title={t('title_error')}>{this.errorMessage}</Dialog>
                     <Snackbar location="signup" />
 

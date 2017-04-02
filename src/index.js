@@ -21,7 +21,7 @@ window.spam = function(interval = 1000, words = 10) {
     window.spamInterval = setInterval(() => {
         if (!ice.chatStore.activeChat) return;
         ice.chatStore.activeChat.sendMessage(
-            `${window.spamCounter++} ${ice.PhraseDictionaryCollection.current.getPassphrase(words)}`);
+            `${window.spamCounter++} ${ice.PhraseDictionary.current.getPassphrase(words)}`);
     }, interval);
 };
 
@@ -68,6 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.on('router', (event, message) => {
         window.router.push(message);
     });
-  //  window.router.push('/dev-tools');
+    //  window.router.push('/dev-tools');
 });
 

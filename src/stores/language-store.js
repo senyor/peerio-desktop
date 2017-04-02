@@ -2,7 +2,7 @@ const { observable, action } = require('mobx');
 const { setLocale } = require('peerio-translator');
 const normalizeError = require('~/icebear').errors.normalize;
 const db = require('~/icebear').TinyDb;
-const { PhraseDictionaryCollection } = require('~/icebear');
+const { PhraseDictionary } = require('~/icebear');
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
@@ -58,8 +58,7 @@ class LanguageStore {
             electron.app.getAppPath(),
             `/build/static/locales/dict/${this.language}.txt`);
         const dict = fs.readFileSync(txtPath, 'utf8');
-        PhraseDictionaryCollection.addDictionary(this.language, dict);
-        PhraseDictionaryCollection.selectDictionary(this.language);
+        PhraseDictionary.setDictionary(this.language, dict);
     }
 
     @action changeLanguage(code) {

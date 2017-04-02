@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button, Dialog } = require('~/react-toolbox');
-const { PhraseDictionaryCollection, User, errors, systemWarnings } = require('~/icebear');
+const { PhraseDictionary, User, errors, systemWarnings } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -43,7 +43,7 @@ const T = require('~/ui/shared-components/T');
         u.firstName = this.profileStore.firstName;
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
-        u.passphrase = PhraseDictionaryCollection.current.getPassphrase(5);
+        u.passphrase = PhraseDictionary.current.getPassphrase(5);
 
         return u.createAccountAndLogin()
             .then(() => {

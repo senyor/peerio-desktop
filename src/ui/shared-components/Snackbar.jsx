@@ -97,8 +97,8 @@ const warningController = require('~/helpers/warning-controller');
                     {t(warningController.current.content, warningController.current.data)}
                     {/* TODO make optional */}
                     {this.action !== null ?
-                        <Button label={t(warningController.current.label) || t('button_ok')} onClick={this.close} /> : null
-                        }
+                        <Button label={t(warningController.current.label || 'button_ok')} onClick={this.close} /> : null
+                    }
                 </div>
             </div>
         );

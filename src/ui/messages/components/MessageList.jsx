@@ -118,8 +118,9 @@ class MessageList extends React.Component {
                     className="messages-inline-progress-bar" />
             </div>);
         }
-        const msgs = chatStore.activeChat.messages;
-        const limboMsgs = chatStore.activeChat.limboMessages;
+        const chat = chatStore.activeChat;
+        const msgs = chat.messages;
+        const limboMsgs = chat.limboMessages;
         const totalLength = msgs.length + limboMsgs.length;
         for (let i = 0; i < totalLength; i++) {
             const m = i < msgs.length ? msgs[i] : limboMsgs[i - msgs.length];
@@ -135,7 +136,7 @@ class MessageList extends React.Component {
             if (i >= msgs.length) {
                 key += 'limbo';
             }
-            ret.push(<Message key={key} message={m} light={m.groupWithPrevious} />);
+            ret.push(<Message key={key} message={m} chat={chat} light={m.groupWithPrevious} />);
         }
 
         if (chatStore.activeChat.canGoDown) {

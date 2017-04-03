@@ -60,23 +60,26 @@ class Message extends React.Component {
         return (
             <div className={
                 css('message-content-wrapper', {
-                    'invalid-sign': invalidSign, light: this.props.light })}>
+                    'invalid-sign': invalidSign || m.sendError, light: this.props.light
+                })}>
                 <div className="flex-row">
-                    { this.props.light ? null : <Avatar contact={m.sender} /> }
-                    { this.props.light ?
+                    {this.props.light ? null : <Avatar contact={m.sender} />}
+                    {this.props.light ?
                         <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div> : null
                     }
                     <div className="message-content">
-                        { this.props.light ? null :
-                        <div className="meta-data">
-                            <div className="user">{m.sender.username}</div>
-                            <div className="timestamp">{time.format(m.timestamp)}</div>
-                        </div>
+                        {
+                            this.props.light
+                                ? null
+                                : <div className="meta-data">
+                                    <div className="user">{m.sender.username}</div>
+                                    <div className="timestamp">{time.format(m.timestamp)}</div>
+                                </div>
                         }
                         <p dangerouslySetInnerHTML={processMessage(m)} />
                         {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
                     </div>
-                    {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null }
+                    {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null}
                     {m.receipts ?
                         <div key={`${m.tempId || m.id}receipts`} className="receipt-wrapper">
                             {m.receipts.map(u => <Avatar key={u} username={u} size="tiny" />)}
@@ -86,6 +89,14 @@ class Message extends React.Component {
                     <div className="invalid-sign-warning">
                         <div style={{ marginRight: 'auto' }}>{t('error_invalidMessageSignature')}</div>
                         <Button href={cfg.msgSignatureUrl} label={t('title_readMore')} flat primary />
+                    </div>
+                    : null
+                }
+                {m.sendError ?
+                    <div className="invalid-sign-warning">
+                        <div style={{ marginRight: 'auto' }}>{t('error_messageSendFail')}</div>
+                        <Button onClick={() => m.resend()} label={t('button_retry')} flat primary />
+                        <Button onClick={() => this.props.chat.removeMessage(m)} label={t('button_delete')} flat />
                     </div>
                     : null
                 }

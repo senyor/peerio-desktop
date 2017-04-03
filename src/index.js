@@ -8,11 +8,11 @@ if (isDevEnv) {
     require('module').globalPaths.push(PATH_APP_NODE_MODULES);
     // enable react-perf chrome dev tool
     window.Perf = require('react-addons-perf');
-    // debug aid global vars
-    window.ice = require('~/icebear');
-    // shortcut to use with promises
-    window.clog = console.log.bind(console);
 }
+    // debug aid global vars
+window.ice = require('~/icebear');
+    // shortcut to use with promises
+window.clog = console.log.bind(console);
 // !!!! DEBUG. !!!!!!!!!!!!!!!!!!!!!!!!!
 window.spamCounter = 0;
 window.spam = function(interval = 1000, words = 10) {

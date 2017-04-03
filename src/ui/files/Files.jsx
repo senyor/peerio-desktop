@@ -42,7 +42,7 @@ const { t } = require('peerio-translator');
     handleBulkDelete = () => {
         const selected = fileStore.getSelectedFiles();
         if (confirm(t('title_confirmRemoveFiles', { count: selected.length }))) {
-            selected.forEach(f => fileStore.remove(f));
+            selected.forEach(f => f.remove());
         }
     };
 
@@ -64,14 +64,14 @@ const { t } = require('peerio-translator');
                     <Filter />
                     <div className="flex-col" style={{ maxHeight: 'calc(100vh - 84px)' }}>
                         <GlobalActions onUpload={this.handleUpload} onDelete={this.handleBulkDelete}
-                                       onShare={this.handleFileShareIntent} />
+                            onShare={this.handleFileShareIntent} />
                         <div style={tableContainerStyle}>
                             <table>
                                 <thead>
                                     <tr>
                                         <th>
                                             <Checkbox checked={fileStore.allVisibleSelected}
-                                                      onChange={this.toggleSelection} />
+                                                onChange={this.toggleSelection} />
                                         </th>
                                         <th>{t('title_name')}</th>
                                         <th>{t('title_owner')}</th>

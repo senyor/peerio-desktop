@@ -12,13 +12,13 @@ const { t } = require('peerio-translator');
 
 @observer
 class FileLine extends React.Component {
-    @observable showActions=false;
+    @observable showActions = false;
     toggleChecked = val => {
         this.props.file.selected = val;
     };
     deleteFile = () => {
         if (confirm(t('title_confirmRemoveFilename', { name: this.props.file.name }))) {
-            fileStore.remove(this.props.file);
+            this.props.file.remove();
         }
     };
     cancelUploadOrDownload = () => {
@@ -48,16 +48,18 @@ class FileLine extends React.Component {
         const file = this.props.file;
         if (!file.show) return null;
         return (
-            <tr className={css({ selected: this.checked,
+            <tr className={css({
+                selected: this.checked,
                 'selected-row': file.selected,
-                'waiting-3rd-party': file.waitingForThirdParty })}
+                'waiting-3rd-party': file.waitingForThirdParty
+            })}
                 onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
                 <td>
                     {(file.downloading || file.uploading)
                         ? <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
-                                       onCancel={this.cancelUploadOrDownload} />
+                            onCancel={this.cancelUploadOrDownload} />
                         : <Checkbox disabled={!file.readyForDownload} checked={file.selected}
-                                    onChange={this.toggleChecked} />
+                            onChange={this.toggleChecked} />
                     }</td>
                 <td>{file.name}</td>
                 <td className="clickable-username" onClick={this.openContactDialog}>{file.owner}</td>
@@ -66,16 +68,16 @@ class FileLine extends React.Component {
                 <td className="hide-text uppercase">{file.ext}</td>
                 {
                     this.showActions
-                    ? <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
-                                   shareDisabled={!file.readyForDownload} newFolderDisabled deleteDisabled={false}
-                                   onDelete={this.deleteFile} onDownload={this.download} onShare={this.share} />
-                    : null
+                        ? <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
+                            shareDisabled={!file.readyForDownload} newFolderDisabled deleteDisabled={false}
+                            onDelete={this.deleteFile} onDownload={this.download} onShare={this.share} />
+                        : null
                 }
 
                 <td className="loading">
                     {(file.downloading || file.uploading)
                         ? <ProgressBar type="linear" mode="determinate" value={file.progress}
-                                        max={file.progressMax} />
+                            max={file.progressMax} />
                         : null }
                 </td>
             </tr>

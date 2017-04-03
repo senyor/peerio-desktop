@@ -14,4 +14,5 @@ echo "[••••••••••••   ] creating github release"
 ./node_modules/.bin/standard-version
 git push --follow-tags origin master
 echo "[•••••••••••••••] building bundles"
-build --mac --windows --ia32 --x64 --publish always
+build --mac --publish always
+build --windows --ia32 --x64

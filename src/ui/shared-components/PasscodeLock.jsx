@@ -8,7 +8,7 @@ const _ = require('lodash');
 
 @observer
 class PasscodeLock extends React.Component {
-    @observable passcode;
+    @observable passcode = '';
     @observable error;
 
     handleChange = (val) => {

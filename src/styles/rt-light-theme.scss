@@ -5,7 +5,9 @@
 
     input {
       background-color: $input-light-inactive;
-      border-width: 0;
+      border-color: transparent;
+      border-width: 0 0 4px;
+
       box-shadow: $shadow-2;
 
       &:hover {
@@ -83,24 +85,20 @@
   .rt-input-errored input {
     border: 0;
     border-bottom: 4px solid $border-error;
-    padding-top: 22px;
   }
 
   .rt-input-error {
     color: $text-light-error;
     display: block;
-    margin-top: 2px;
     white-space: nowrap;
-
-    + .rt-input-counter {
-      margin-top: 0;
-    }
   }
 
   .rt-input-counter {
-    color: $text-light-primary;
+    @extend %hint-error-label;
+    color: $text-dark-hint;
     line-height: 20px;
-    margin-top: 2px;
+    right: 8px;
+    top: 6px;
   }
 
   strong {

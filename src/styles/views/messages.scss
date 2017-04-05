@@ -378,6 +378,10 @@ $radius-sign-warning: 18px;
     .progress-title {
       line-height: 44px;
       margin-left: $margin-small;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }

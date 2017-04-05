@@ -41,7 +41,7 @@ class FileLine extends React.Component {
         this.showActions = false;
     };
     openContactDialog = () => {
-        uiStore.contactDialogUsername = this.props.file.owner;
+        uiStore.contactDialogUsername = this.props.file.fileOwner;
     };
 
     render() {
@@ -62,7 +62,7 @@ class FileLine extends React.Component {
                             onChange={this.toggleChecked} />
                     }</td>
                 <td>{file.name}</td>
-                <td className="clickable-username" onClick={this.openContactDialog}>{file.owner}</td>
+                <td className="clickable-username" onClick={this.openContactDialog}>{file.fileOwner}</td>
                 <td className="text-right">{file.uploadedAt && file.uploadedAt.toLocaleString()}</td>
                 <td className="hide-text text-right">{file.sizeFormatted}</td>
                 <td className="hide-text uppercase">{file.ext}</td>
@@ -78,7 +78,7 @@ class FileLine extends React.Component {
                     {(file.downloading || file.uploading)
                         ? <ProgressBar type="linear" mode="determinate" value={file.progress}
                             max={file.progressMax} />
-                        : null }
+                        : null}
                 </td>
             </tr>
         );

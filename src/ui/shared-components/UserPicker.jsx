@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
-        ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
+    ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore } = require('~/icebear');
 const css = require('classnames');
@@ -14,10 +14,6 @@ class UserPicker extends React.Component {
     @observable query = '';
     @observable noGood = false;
     accepted = false;
-
-    @computed get selectedFiles() {
-        return fileStore.getSelectedFiles();
-    }
 
     @computed get options() {
         return contactStore.contacts.filter(c => !c.loading && !c.notFound && !this.selected.includes(c));
@@ -77,10 +73,9 @@ class UserPicker extends React.Component {
             <div className="user-picker">
                 <div className={css('flex-col selected-items', { banish: !this.props.sharing })} >
                     <List >
-                        {/* TODO: dynamic file icon based on file type */}
                         <ListSubHeader caption={t('title_selectedFiles')} />
-                        {/* FIXME:  Should load selected files not entire file library. */}
-                        {this.selectedFiles.map(f => <ListItem
+                        {fileStore.getSelectedFiles().map(f => <ListItem
+                            key={f.id}
                             leftIcon="insert_drive_file"
                             caption={f.name}
                             rightIcon="remove_circle_outline" />)}
@@ -88,13 +83,14 @@ class UserPicker extends React.Component {
                     </List>
                 </div>
                 <div className="flex-row flex-justify-center"
-                     style={{ width: '100%' }}>
+                    style={{ width: '100%' }}>
                     <div className="flex-col"
                         style={{
                             width: '600px',
                             marginLeft: '64px',
                             marginRight: '64px',
-                            marginTop: '168px' }}>
+                            marginTop: '168px'
+                        }}>
                         <div className="chat-creation-header">
                             <div className="title">{this.props.title}</div>
                             <IconButton icon="close" onClick={this.handleClose} />
@@ -104,29 +100,29 @@ class UserPicker extends React.Component {
                             <div className="chip-wrapper">
                                 {this.selected.map(c =>
                                     <Chip key={c.username} className={css('chip-label', { 'not-found': c.notFound })}
-                                              onDeleteClick={() => this.selected.remove(c)} deletable>
-                                        { c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username }
+                                        onDeleteClick={() => this.selected.remove(c)} deletable>
+                                        {c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username}
                                     </Chip>
-                                    )}
+                                )}
                                 <Input placeholder={t('title_userSearch')} value={this.query}
-                                           onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
+                                    onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
                             </div>
                             {/* TODO: make label dynamic */}
                             <Button className={css('confirm', { hide: !this.selected.length })}
-                                    label={this.props.button || 'go'}
-                                    onClick={this.accept} disabled={!this.isValid} />
+                                label={this.props.button || 'go'}
+                                onClick={this.accept} disabled={!this.isValid} />
                         </div>
                         <List selectable ripple >
                             <ListSubHeader caption="Your contacts" />
                             <div className="user-list">
-                                { this.options.map(c =>
+                                {this.options.map(c =>
                                     <ListItem key={c.username}
-                                              leftActions={[<Avatar key="a" contact={c} />]}
-                                              caption={c.username}
-                                              legend={`${c.firstName} ${c.lastName}`}
-                                              onClick={() => this.selected.push(c)}
-                                              className={css({ warning: this.noGood })} />
-                                    )}
+                                        leftActions={[<Avatar key="a" contact={c} />]}
+                                        caption={c.username}
+                                        legend={`${c.firstName} ${c.lastName}`}
+                                        onClick={() => this.selected.push(c)}
+                                        className={css({ warning: this.noGood })} />
+                                )}
                             </div>
                         </List>
                     </div>

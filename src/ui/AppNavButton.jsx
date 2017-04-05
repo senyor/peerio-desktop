@@ -9,13 +9,13 @@ const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 class AppNav extends React.Component {
     render() {
         return (
-            <div className={css('menu-item', { active: this.props.active })}>
+            <div className={css('menu-item', { active: this.props.active })}
+                 onClick={this.props.onClick}>
                 <TooltipIcon
                     tooltip={this.props.tooltip}
                     tooltipDelay={500}
                     tooltipPosition="right"
-                    icon={this.props.icon}
-                    onClick={this.props.onClick} />
+                    icon={this.props.icon} />
                 <div className={this.props.showBadge ? 'look-at-me' : 'banish'}>
                     {this.props.badge}
                 </div>

@@ -3,13 +3,14 @@ const { Button } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const { observable, computed, reaction, action } = require('mobx');
 const { t } = require('peerio-translator');
-const css = require('classnames');
 const warningController = require('~/helpers/warning-controller');
-const config = require('~/config');
+const { executeWarningAction, urlKeyMap } = require('~/helpers/warning-helpers');
+const T = require('~/ui/shared-components/T');
 
 @observer class Snackbar extends React.Component {
-
-    @observable isForeground = false; // whether this particular snackbar instance is foregrounded
+    // whether this particular snackbar instance is foregrounded
+    // todo: this is set externally from warning-controller! disgusting! fix this!
+    @observable isForeground = false;
     @observable isLocallyVisible = true; // used to delay hiding for animation
     @observable snackbarClass = '';
     @observable wrapperClass = 'banish';
@@ -23,17 +24,12 @@ const config = require('~/config');
 
     constructor() {
         super();
-
-        this.fadeIn = this.fadeIn.bind(this);
-        this.close = this.close.bind(this);
-        this.fadeOutAndDismiss = this.fadeOutAndDismiss.bind(this);
-
         // handle animation
         reaction(() => this.isVisible, (visible) => {
             if (visible) {
                 this.fadeIn();
             } else {
-                this.fadeOutAndDismiss();
+                this.animateDismiss();
             }
         });
     }
@@ -58,7 +54,7 @@ const config = require('~/config');
     /**
      *  Animate fadeIn.
      **/
-    @action fadeIn() {
+    @action.bound fadeIn() {
         setTimeout(() => {
             this.wrapperClass = '';
             setTimeout(() => {
@@ -66,7 +62,7 @@ const config = require('~/config');
                 if (this.autoDismiss) {
                     setTimeout(() => {
                         this.close();
-                    }, 5000);
+                    }, 6000);
                 }
             }, 5);
         }, 200); // must happen *after* fadeOut
@@ -75,7 +71,7 @@ const config = require('~/config');
     /**
      *  Animate fadeOut and dismiss warning.
      **/
-    @action fadeOutAndDismiss() {
+    @action.bound animateDismiss() {
         this.snackbarClass = '';
         setTimeout(() => {
             this.wrapperClass = 'banish';
@@ -86,40 +82,52 @@ const config = require('~/config');
     /**
      *  Hide the snackbar. Will trigger fadeout.
      **/
-    @action close() {
+    @action.bound close() {
         this.isLocallyVisible = false;
     }
 
-    renderAnchor(url, text) {
-        return (<a href={url}>{text}</a>);
-    }
-
-    // USAGE EXAMPLE:
-    urlKeyMap = {
-        someLocaleKey: {
-            urlSegmentName1: this.renderAnchor.bind(config.someUrl),
-            urlSegmentName2: this.renderAnchor.bind(config.someUrl2)
-        }
-    }
-
     render() {
-        if (!warningController.current) return null;
-        const key = warningController.current.content;
-        let data = warningController.current.data || {};
-        if (this.urlKeyMap[key]) {
-            data = Object.assign(data, this.urlKeyMap[key]);
+        const w = warningController.current;
+        if (!w) return null;
+
+        const key = w.content;
+        let data = w.data || {};
+
+        // does server warning contain url?
+        if (urlKeyMap[key]) {
+            data = Object.assign(data, urlKeyMap[key]);
         }
+
         return (
             <div className={`snackbar-wrapper ${this.wrapperClass}`}>
                 <div className={`snackbar ${this.snackbarClass}`}>
-                    {t(key, data)}
-                    {/* TODO make optional */}
-                    {this.action !== null ?
-                        <Button label={t(warningController.current.label || 'button_ok')} onClick={this.close} /> : null
-                    }
+                    <T k={key}>{data}</T>
+                    {this.renderButtons(w.buttons)}
                 </div>
             </div>
         );
+    }
+
+    renderButtons(buttons) {
+        const btnElems = [];
+        if (buttons) {
+            for (let i = 0; i < buttons.length; i++) {
+                let label, wAction;
+                if (typeof buttons[i] === 'string') {
+                    label = buttons[i];
+                    wAction = this.close;
+                } else {
+                    label = buttons[i].label;
+                    wAction = () => { executeWarningAction(buttons[i].action); this.close(); };
+                }
+
+                btnElems.push(<Button key={label} label={t(label)} onClick={wAction} />);
+            }
+        }
+        if (!btnElems.length) {
+            btnElems.push(<Button key="button_ok" label={t('button_ok')} onClick={this.close} />);
+        }
+        return btnElems;
     }
 }
 

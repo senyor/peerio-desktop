@@ -15,6 +15,7 @@ cfg.fingerprintUrl = 'https://peerio.zendesk.com/hc/en-us/articles/204394135';
 cfg.mpDetailUrl = 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-';
 cfg.tfaDetailUrl = 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-';
 cfg.msgSignatureUrl = 'https://peerio.zendesk.com/hc/en-us/articles/204394135';
+cfg.upgradeUrl = 'https://www.peerio.com/pricing.html';
 // cfg.ghostFrontendUrl = 'https://alakazam.peerio.com/';
 
 cfg.FileStream = FileStream;

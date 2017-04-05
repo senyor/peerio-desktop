@@ -27,8 +27,8 @@ const { BrowserWindow } = require('electron').remote;
  * Snackbars are expected to be objects with properties:
  *  - content (String, translation key)
  *  - data (Object, fed to content translation -- optional)
- *  - label (String, translation key -- optional)
- *  - action (Function -- optional)
+ *  - buttons ([{label:'translation_key', action:'ACTION_NAME'}, 'default_button_transl_key'])
+ *  - dispose (Function -- optional)
  *  - level (String -- "severe" will render the warning as a dialog)
  *  - title (String, translation key -- severe only)
  *

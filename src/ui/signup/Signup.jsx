@@ -53,7 +53,6 @@ const T = require('~/ui/shared-components/T');
                     .catch(() => {
                         systemWarnings.add({
                             content: t('error_passcodeSetFailed'),
-                            label: t('ok'),
                             level: 'severe'
                         });
                     });

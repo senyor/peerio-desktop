@@ -4,6 +4,8 @@ const { observer } = require('mobx-react');
 const { computed, action } = require('mobx');
 const { t } = require('peerio-translator');
 const warningController = require('~/helpers/warning-controller');
+const { executeWarningAction, urlKeyMap } = require('~/helpers/warning-helpers');
+const T = require('~/ui/shared-components/T');
 
 @observer class SystemWarningDialog extends React.Component {
 
@@ -20,26 +22,48 @@ const warningController = require('~/helpers/warning-controller');
     }
 
     @action.bound hide() {
-        if (warningController.current.action) {
-            warningController.current.action();
-        }
-        console.log('next!');
         warningController.next();
     }
 
     render() {
-        if (!warningController.current) return null;
-        const actions = [
-            { label: warningController.current.label || t('button_ok'), onClick: this.hide }
-        ];
+        const w = warningController.current;
+        if (!w) return null;
+        const key = w.content;
+        let data = w.data || {};
+
+        // does server warning contain url?
+        if (urlKeyMap[key]) {
+            data = Object.assign(data, urlKeyMap[key]);
+        }
         return (
             <Dialog className="dialog-warning"
                 active={this.isVisible}
-                title={t(warningController.current.title)}
-                actions={actions}>
-                {t(warningController.current.content, warningController.current.data)}
+                title={t(w.title)}
+                actions={this.getActions(w.buttons)}>
+                <T k={key}>{data}</T>
             </Dialog>
         );
+    }
+
+    getActions(buttons) {
+        const actions = [];
+        if (buttons) {
+            for (let i = 0; i < buttons.length; i++) {
+                let label, wAction;
+                if (typeof buttons[i] === 'string') {
+                    label = buttons[i];
+                    wAction = this.hide;
+                } else {
+                    label = buttons[i].label;
+                    wAction = () => { executeWarningAction(buttons[i].action); this.hide(); };
+                }
+                actions.push({ label: t(label), onClick: wAction });
+            }
+        }
+        if (!actions.length) {
+            actions.push({ label: t('button_ok'), onClick: this.hide });
+        }
+        return actions;
     }
 }
 

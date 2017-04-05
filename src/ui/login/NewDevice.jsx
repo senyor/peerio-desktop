@@ -7,7 +7,6 @@ const { t } = require('peerio-translator');
 const css = require('classnames');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const { Passcode, PasscodeStore } = require('../signup/Passcode');
-const Snackbar = require('~/ui/shared-components/Snackbar');
 const T = require('~/ui/shared-components/T');
 
 @observer class NewDevice extends React.Component {

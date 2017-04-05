@@ -57,8 +57,6 @@ class AppNav extends React.Component {
     @observable currentRoute = window.router.getCurrentLocation().pathname;
 
     componentWillMount() {
-        this.contact = contactStore.getContact(User.current.username);
-        this.primaryAddressConfirmed = User.current.primaryAddressConfirmed;
         // since this component shows new items notifications, we also make it show dock icon notifications
         startDockNotifications();
         startSoundNotifications();
@@ -106,14 +104,17 @@ class AppNav extends React.Component {
     }
 
     render() {
+        const contact = contactStore.getContact(User.current.username);
+        const primaryAddressConfirmed = User.current.primaryAddressConfirmed;
+
         return (
             <div className="app-nav">
                 <div className="avatar-menu-wrapper">
-                    <div className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
+                    <div className={css({ 'avatar-notify': !primaryAddressConfirmed })} />
                     <IconMenu icon="">
                         <MenuItem value="profile" icon="person" caption={t('title_settingsProfile')}
                             onClick={this.toProfile} style={menuItemStyle}
-                            className={css({ 'avatar-notify': !this.primaryAddressConfirmed })} />
+                            className={css({ 'avatar-notify': !primaryAddressConfirmed })} />
                         <MenuItem value="security" icon="security" caption={t('title_settingsSecurity')}
                             onClick={this.toSecurity} style={menuItemStyle} />
                         {/* <MenuItem value="preferences" icon="settings" caption={t('title_settingsPreferences')}
@@ -124,7 +125,7 @@ class AppNav extends React.Component {
                         <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
                             onClick={this.signout} />
                     </IconMenu>
-                    <Avatar contact={this.contact} />
+                    <Avatar contact={contact} />
                 </div>
                 <div className="app-menu">
 

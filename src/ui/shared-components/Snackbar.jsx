@@ -5,6 +5,7 @@ const { observable, computed, reaction, action } = require('mobx');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const warningController = require('~/helpers/warning-controller');
+const config = require('~/config');
 
 @observer class Snackbar extends React.Component {
 
@@ -89,12 +90,29 @@ const warningController = require('~/helpers/warning-controller');
         this.isLocallyVisible = false;
     }
 
+    renderAnchor(url, text) {
+        return (<a href={url}>{text}</a>);
+    }
+
+    // USAGE EXAMPLE:
+    urlKeyMap = {
+        someLocaleKey: {
+            urlSegmentName1: this.renderAnchor.bind(config.someUrl),
+            urlSegmentName2: this.renderAnchor.bind(config.someUrl2)
+        }
+    }
+
     render() {
         if (!warningController.current) return null;
+        const key = warningController.current.content;
+        let data = warningController.current.data || {};
+        if (this.urlKeyMap[key]) {
+            data = Object.assign(data, this.urlKeyMap[key]);
+        }
         return (
-            <div className={css(`snackbar-wrapper ${this.wrapperClass}`)}>
-                <div className={css(`snackbar ${this.snackbarClass}`)}>
-                    {t(warningController.current.content, warningController.current.data)}
+            <div className={`snackbar-wrapper ${this.wrapperClass}`}>
+                <div className={`snackbar ${this.snackbarClass}`}>
+                    {t(key, data)}
                     {/* TODO make optional */}
                     {this.action !== null ?
                         <Button label={t(warningController.current.label || 'button_ok')} onClick={this.close} /> : null

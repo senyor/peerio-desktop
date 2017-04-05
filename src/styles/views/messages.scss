@@ -422,6 +422,11 @@ $radius-sign-warning: 18px;
 
   .active {
     background: $background-active-message;
+    font-weight: $font-weight-bold;
+
+    .rt-list-primary {
+      color: $text-light-primary;
+    }
   }
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover {

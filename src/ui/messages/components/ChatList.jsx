@@ -51,13 +51,15 @@ class ChatList extends React.Component {
                             onClick={() => this.activateChat(c.id)}
                             caption={c.chatName}
                             // TODO: make left icon user count when multiuser chat.
-                            leftIcon="fiber_manual_record"
-                            rightIcon={(!c.active && c.unreadCount > 0) ? this.getNotificationIcon(c) :
-                            <TooltipIcon
-                                    tooltip={t('title_chatRemove')}
-                                    tooltipDelay={500}
-                                    tooltipPosition="right"
-                                    icon="remove_circle_outline" />} />
+                            // TODO: add status funcationality
+                            // leftIcon="fiber_manual_record"
+                            rightIcon={(!c.active && c.unreadCount > 0) ? this.getNotificationIcon(c) : null} />
+                            // TODO: add functionality => remove chat item from list
+                            // <TooltipIcon
+                            //         tooltip={t('title_chatRemove')}
+                            //         tooltipDelay={500}
+                            //         tooltipPosition="right"
+                            //         icon="remove_circle_outline" />} />
                     )}
                 </List>
             </div>

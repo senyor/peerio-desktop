@@ -1,6 +1,6 @@
 {
   "name": "icebear-desktop",
-  "productName": "Icebear",
+  "productName": "Peerio 2",
   "version": "2.1.0",
   "description": "Peerio desktop client (codename Icebear)",
   "main": "build/main.js",
@@ -18,7 +18,7 @@
     "autolinker": "1.4.2",
     "blake2s-js": "1.2.2",
     "bluebird": "3.5.0",
-    "buffer": "5.0.5",
+    "buffer": "5.0.6",
     "classnames": "2.2.5",
     "dompurify": "0.8.5",
     "electron-log": "2.0.2",

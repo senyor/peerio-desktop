@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.1.0...v2.2.0) (2017-04-06)
+
+
+### Bug Fixes
+
+* **chat:** removes status indicator from chat list item ([7c309ad](https://github.com/PeerioTechnologies/peerio-desktop/commit/7c309ad))
+* **drag:** allow only file drop, use 'copy' cursor ([03fb885](https://github.com/PeerioTechnologies/peerio-desktop/commit/03fb885))
+* **files:** fix file owner display ([c309ff8](https://github.com/PeerioTechnologies/peerio-desktop/commit/c309ff8))
+* **input:** stops text bounce on errors and moves counter on username ([ef139f8](https://github.com/PeerioTechnologies/peerio-desktop/commit/ef139f8))
+* **messages:** stops really long titles from wrapping. ([f6ba31d](https://github.com/PeerioTechnologies/peerio-desktop/commit/f6ba31d))
+* **notif:** fix primary adress confirmation status not updating ([4019e01](https://github.com/PeerioTechnologies/peerio-desktop/commit/4019e01))
+* **ui:** avoid React warning ([3df1e2e](https://github.com/PeerioTechnologies/peerio-desktop/commit/3df1e2e))
+
+
+### Features
+
+* **warnings:** support urls in server warnings ([99550d6](https://github.com/PeerioTechnologies/peerio-desktop/commit/99550d6))
+
+
+
 <a name="2.1.0"></a>
 # 2.1.0 (2017-04-03)
 

@@ -50,6 +50,7 @@
 
   .avatar-card {
     @extend %flex-col;
+    @extend %flex-shrink-0;
     background-size: 100%;
     border-radius: 8px;
     height: 224px;

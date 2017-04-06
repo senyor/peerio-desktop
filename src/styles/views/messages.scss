@@ -264,6 +264,10 @@ $radius-sign-warning: 18px;
       @extend %flex-col;
       flex-grow: 0;
 
+      a {
+        word-break: break-word;
+      }
+
       .meta-data {
         @extend %flex-row;
         align-items: center;

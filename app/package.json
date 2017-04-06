@@ -1,6 +1,6 @@
 {
-  "name": "icebear-desktop",
-  "productName": "Peerio 2",
+  "name": "peerio-2",
+  "productName": "Peerio.2",
   "version": "2.2.0",
   "description": "Peerio desktop client (codename Icebear)",
   "main": "build/main.js",

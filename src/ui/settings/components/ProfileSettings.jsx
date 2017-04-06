@@ -21,6 +21,11 @@ class Profile extends React.Component {
     // handleAddAvatar = () => {
     //   this.avatarImage = 'url(http://placekitten.com/512/512)';
     // }
+    r
+    esend = () => {
+        // TODO: this should resend email
+        console.log('EMAIL SENT!');
+    }
 
     render() {
         // if (u.loading) return null; // todo: spinner
@@ -38,11 +43,18 @@ class Profile extends React.Component {
                                value={User.current.lastName} />
                     </div>
                     <div className="input-row">
-                        <Input type="email" label={t('title_email')} value={User.current.primaryAddress} />
-                        {/* User.current.primaryAddressConfirmed ? null :
+                        <div className="flex-col">
+                            <Input type="email" label={t('title_email')} value={User.current.primaryAddress} />
+                            {User.current.primaryAddressConfirmed ? null :
+                            <div className="error">{t('error_unconfirmedEmail')}</div>
+                            }
+                        </div>
+                        {User.current.primaryAddressConfirmed ? null :
                         <Button label={t('button_resend')}
-                                    style={{ marginTop: '46px' }}
-                                    flat primary /> */}
+                                // 46px because of 40px margin on top of input
+                                // and 6px margin around buttons.
+                                style={{ marginTop: '46px' }}
+                                flat primary />}
                     </div>
                     <div className="input-row">
                         {/*

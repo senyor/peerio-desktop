@@ -25,14 +25,7 @@
     }
 
     .avatar-notify::before {
-      background: $color-error;
-      border-radius: 10px;
-      content: "";
-      height: 10px;
-      position: absolute;
-      right: 0;
-      width: 10px;
-      z-index: 1;
+      @extend %notify;
     }
 
     li.avatar-notify::before {

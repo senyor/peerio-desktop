@@ -48,6 +48,19 @@
     margin-top: 0;
   }
 
+  .tab-notify::after {
+    @extend %notify;
+    left: 4px !important;
+    top: 19px;
+    z-index: 0 !important;
+  }
+
+  .error {
+    color: $color-error;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
   .avatar-card {
     @extend %flex-col;
     @extend %flex-shrink-0;

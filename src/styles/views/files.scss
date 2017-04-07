@@ -174,18 +174,18 @@
           transition: 150ms;
           width: 32px;
 
-          span:last-child {
+          > span:last-child {
             display: none;
           }
 
           &:hover {
             border-color: $color-error;
 
-            span:last-child {
+            > span:last-child {
               display: initial;
             }
 
-            span:first-child {
+            > span:first-child {
               display: none;
             }
 

@@ -22,8 +22,8 @@ class FileLine extends React.Component {
         }
     };
     cancelUploadOrDownload = () => {
-        if (this.props.file.uploading) fileStore.cancelUpload(this.props.file);
-        else fileStore.cancelDownload(this.props.file);
+        this.props.file.cancelUpload();
+        this.props.file.cancelDownload();
     };
     download = () => {
         downloadFile(this.props.file);
@@ -51,7 +51,7 @@ class FileLine extends React.Component {
             <tr className={css({
                 selected: this.checked,
                 'selected-row': file.selected,
-                'waiting-3rd-party': file.waitingForThirdParty
+                'waiting-3rd-party': !file.uploading && !file.readyForDownload
             })}
                 onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
                 <td>

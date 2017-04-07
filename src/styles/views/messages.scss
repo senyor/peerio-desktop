@@ -484,25 +484,14 @@ $radius-sign-warning: 18px;
 
 // zero state
 .zero-message {
+  @extend %flex-row;
+  @extend %flex-justify-center;
   height: 100vh;
 
   .display-3 {
     color: $text-dark-secondary;
     margin-bottom: 48px;
     margin-top: 80px;
-  }
-
-  ul {
-    @extend %headline;
-    list-style: none;
-    margin-left: 48px;
-
-    li {
-      @extend %flex-row;
-      @extend %flex-align-center;
-      height: 48px;
-      margin-bottom: $margin-small;
-    }
   }
 }
 

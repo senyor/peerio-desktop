@@ -21,7 +21,7 @@ class LanguageStore {
         'zh-CN': '汉语',
         de: 'Deutsch',
         es: 'Español',
-        fr: 'Francais',
+        fr: 'Français',
         it: 'Italiano',
         ja: '日本語',
         hu: 'Magyar',

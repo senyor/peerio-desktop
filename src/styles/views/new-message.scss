@@ -76,6 +76,7 @@
   }
 
   .rt-list-subheader {
+    @extend %flex-shrink-0;
     border-bottom: $divider-dark solid 1px;
   }
 

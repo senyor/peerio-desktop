@@ -351,9 +351,14 @@ $radius-sign-warning: 18px;
     margin: -.2ex .15em .2ex;
     min-height: 20px;
     min-width: 20px;
+    transition: transform 50ms ease;
     -webkit-user-select: initial;
     vertical-align: middle;
     width: auto;
+
+    &:hover {
+      transform: scale(2);
+    }
   }
 
   .chat-upload-progress {

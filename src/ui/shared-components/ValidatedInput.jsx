@@ -93,6 +93,10 @@ const css = require('classnames');
             return r;
         }, true)
             .then(v => {
+                if(this.props.store[this.props.name] !== value) {
+                    // console.log(`value changed ${this.props.name}, aborting`);
+                    return;
+                }
                 if (v === true) {
                     this.props.store[this.fValid] = true;
                     this.props.store[this.fMsgText] = '';

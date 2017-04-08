@@ -15,4 +15,4 @@ echo "[••••••••••••   ] creating github release"
 git push --follow-tags origin master
 echo "[•••••••••••••••] building bundles"
 build --windows --ia32 --x64
-build --mac --publish always
+build --mac --linux --publish always

@@ -68,6 +68,11 @@ class UserPicker extends React.Component {
         this.props.onClose();
     };
 
+    onInputMount(input) {
+        if (!input) return;
+        input.getWrappedInstance().focus();
+    }
+
     render() {
         return (
             <div className="user-picker">
@@ -104,7 +109,7 @@ class UserPicker extends React.Component {
                                         {c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username}
                                     </Chip>
                                 )}
-                                <Input placeholder={t('title_userSearch')} value={this.query}
+                                <Input ref={this.onInputMount} placeholder={t('title_userSearch')} value={this.query}
                                     onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
                             </div>
                             {/* TODO: make label dynamic */}

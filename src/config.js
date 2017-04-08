@@ -5,7 +5,6 @@ const isDevEnv = require('~/helpers/is-dev-env');
 const FileStream = require('~/icebear/models/files/node-file-stream');
 const StorageEngine = require('~/icebear/models/storage/node-json-storage');
 
-cfg.updateUrl = 'https://avadakedavra.peerio.com/update';
 cfg.appVersion = app.getVersion();
 cfg.platform = 'electron';
 cfg.arch = os.arch();
@@ -42,5 +41,13 @@ if (isDevEnv) {
 if (isDevEnv && process.env.PEERIO_STAGING_SOCKET_SERVER) {
     cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
 }
-
+try {
+    console.log(isDevEnv ? 'DEV environment detected' : 'PROD environment detected');
+    console.log(`Starting app: v${cfg.appVersion} | ${cfg.arch} | ${cfg.platform} | ` +
+        `${os.platform()}-${os.release()} | ${os.cpus().length} CPUs | ` +
+        `${os.totalmem() / 1024 / 1024 / 1024}GB RAM (${+(os.freemem() / 1024 / 1024 / 1024).toFixed(2)}GB free) | ` +
+        `${Math.round(os.uptime() / 60 / 60)} hours uptime`);
+} catch (err) {
+    console.log(err);
+}
 module.exports = cfg;

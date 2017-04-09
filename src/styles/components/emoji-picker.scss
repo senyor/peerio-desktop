@@ -16,6 +16,16 @@ $picker-border-radius: 6px;
     align-items: center;
     display: flex;
     padding: 0 0 0 5px;
+
+    .clear-keyword-button {
+      border-radius: 15px;
+      cursor: pointer;
+      margin-right: 5px;
+
+      &:hover {
+        background-color: #e6e6e6;
+      }
+    }
   }
 
   .emoji-search-input {
@@ -90,6 +100,7 @@ $picker-border-radius: 6px;
 
   .category {
     box-sizing: border-box;
+    cursor: pointer;
     opacity: .2;
     padding: 10px 10px 7px;
     transition: opacity .2s, background-color .2s;

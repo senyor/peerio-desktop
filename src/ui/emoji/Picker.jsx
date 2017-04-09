@@ -67,12 +67,8 @@ class Picker extends React.Component {
         }, 2000);
     };
 
-    onSearchKeywordChange = (ev) => {
-        this.searchKeyword = ev.target.value;
-    };
-
-    clearSearchKeyword = () => {
-        this.searchKeyword = '';
+    onSearchKeywordChange = (val) => {
+        this.searchKeyword = val;
     };
 
     handleScroll = _.throttle(() => {
@@ -84,6 +80,7 @@ class Picker extends React.Component {
             if (!c || c.offsetTop > (parent.offsetHeight + parent.scrollTop)) continue;
             candidates.push({ id: categories[i].id, offsetTop: c.offsetTop });
         }
+        if (!candidates.length) return;
         closest = candidates[0];
         for (let i = 1; i < candidates.length; i++) {
             if (Math.abs(parent.scrollTop - closest.offsetTop) > Math.abs(parent.scrollTop - candidates[i].offsetTop)) {
@@ -101,10 +98,20 @@ class Picker extends React.Component {
         const shortname = e.target.attributes['data-shortname'].value;
         this.props.onPicked(shortnameMap[shortname]);
     };
+    preventBlur = () => {
+        this.noBlur = true;
+    };
+    handleBlur = () => {
+        if (this.noBlur) {
+            this.noBlur = false;
+            return;
+        }
+        this.props.onBlur();
+    };
     render() {
         const searchLow = this.searchKeyword.toLowerCase();
         return (
-            <div className="emoji-picker">
+            <div className="emoji-picker" onBlur={this.handleBlur} onMouseDown={this.preventBlur}>
                 <div className="categories" key="categories">
                     {
                         categories.map(c =>
@@ -138,18 +145,32 @@ class Picker extends React.Component {
 
 @observer
 class SearchEmoji extends React.Component {
+    @observable keyword = '';
     inputRef(ref) {
         if (ref) ref.focus();
     }
+    onKeywordChange = (ev) => {
+        this.keyword = ev.target.value;
+        this.fireChangeEvent();
+    };
+    fireChangeEvent = _.throttle(() => {
+        this.props.onSearchKeywordChange(this.keyword);
+    }, 250);
+    clearSearchKeyword = () => {
+        this.keyword = '';
+        this.fireChangeEvent();
+    };
     render() {
+        // Don't make IconButton out of clear search keyword button, it messes up blur event
         return (<div className="emoji-search">
             <FontIcon value="search" className="search-icon" />
             <input className="emoji-search-input" type="text" placeholder={t('title_search')}
                 ref={this.inputRef}
-                onChange={this.props.onSearchKeywordChange} value={this.props.searchKeyword} />
+                onChange={this.onKeywordChange} value={this.keyword} />
             {
                 this.props.searchKeyword
-                    ? <IconButton icon="highlight_off" onClick={this.props.clearSearchKeyword} />
+                    ? <FontIcon className="clear-keyword-button"
+                        value="highlight_off" onClick={this.clearSearchKeyword} />
                     : null
             }
         </div>);

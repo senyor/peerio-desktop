@@ -81,7 +81,7 @@ class ComposeInput extends React.Component {
         this.permitEmptyBody = false;
         if (!this.cachedPicker) {
             this.cachedPicker = (
-                <EmojiPicker onPicked={onEmojiPicked} />
+                <EmojiPicker onPicked={onEmojiPicked} onBlur={this.hideEmojiPicker} />
             );
         }
     }
@@ -119,8 +119,8 @@ class ComposeInput extends React.Component {
         this.clearEditor();
     };
 
-    toggleEmojiPicker = () => {
-        this.emojiPickerVisible = !this.emojiPickerVisible;
+    showEmojiPicker = () => {
+        this.emojiPickerVisible = true;//! this.emojiPickerVisible;
     };
 
     hideEmojiPicker = () => {
@@ -184,7 +184,7 @@ class ComposeInput extends React.Component {
         this.quill.setText('');
         this.quill.history.clear();
     };
-    preventDrop= (e) => {
+    preventDrop = (e) => {
         e.preventDefault();
         return false;
     };
@@ -200,7 +200,7 @@ class ComposeInput extends React.Component {
 
     renderFilePicker() {
         return (<FilePicker active={this.filePickerActive} onClose={this.handleFilePickerClose}
-                            onShare={this.shareFiles} />);
+            onShare={this.shareFiles} />);
     }
 
     render() {

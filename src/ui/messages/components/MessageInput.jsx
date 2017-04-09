@@ -39,15 +39,15 @@ class MessageInput extends ComposeInput {
                     <MenuItem value="upload" caption={t('title_uploadAndShare')} onClick={this.handleUpload} />
                 </IconMenu>
                 <div id="messageEditor"
-                     ref={this.activateQuill}
-                     className="full-width"
-                     onFocus={this.hideEmojiPicker} />
-                <IconButton icon="mood" onClick={this.toggleEmojiPicker} />
+                    ref={this.activateQuill}
+                    className="full-width" />
+                <IconButton icon="mood" disabled={this.emojiPickerVisible} onClick={this.showEmojiPicker} />
+
                 {this.text === ''
                     ? <IconButton icon="thumb_up" onClick={this.props.onAck} className="color-brand" />
-                    : null }
+                    : null}
 
-                {this.emojiPickerVisible ? this.cachedPicker : null }
+                {this.emojiPickerVisible ? this.cachedPicker : null}
                 {this.renderFilePicker()}
             </div>
         );

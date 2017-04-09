@@ -30,6 +30,7 @@ $background-active-message: rgba($color-brand, .7);
 $background-brand: $color-brand;
 $background-cancel: $color-error;
 $background-hover-message: $color-light-50;
+$background-new-messages: rgba($color-error, .5);
 $background-message-list: rgba($color-brand, .12); // TODO: make this more generic
 $background-new-file: rgba($color-affirmative, .12);
 $background-light-button-hover: $color-light-12;
@@ -51,6 +52,8 @@ $text-light-primary: $color-light-100;
 $text-light-secondary: $color-light-70;
 $text-light-hint: $color-light-50;
 $text-light-disabled: $color-light-38;
+
+$text-new-messages: $color-error;
 
 // ERRORS
 $text-dark-error: $color-error;

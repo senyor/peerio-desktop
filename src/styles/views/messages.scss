@@ -98,6 +98,16 @@ $radius-sign-warning: 18px;
     }
   }
 
+  .marker-wrapper.new-messages {
+    .marker {
+      background: $background-new-messages;
+    }
+
+    .content {
+      color: $text-new-messages;
+    }
+  }
+
   .message-toolbar {
     align-items: center;
     border-bottom: 1px solid $divider-dark;
@@ -507,7 +517,6 @@ $radius-sign-warning: 18px;
 
   .display-3 {
     color: $text-dark-secondary;
-    margin-bottom: 48px;
     margin-top: 80px;
   }
 }

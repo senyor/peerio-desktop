@@ -401,6 +401,7 @@ $radius-sign-warning: 18px;
   background-color: $background-message-list;
   height: 100vh;
   overflow-y: auto;
+  position: relative;
   width: $message-list-width;
 
   .mutli-user-chat {
@@ -412,6 +413,12 @@ $radius-sign-warning: 18px;
     margin-right: 8px;
     text-align: center;
     width: 16px;
+  }
+
+  .rt-progress_bar-linear {
+    left: 0;
+    position: absolute;
+    top: 0;
   }
 
   .rt-list-itemContentRoot {

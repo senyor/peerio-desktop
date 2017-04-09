@@ -13,6 +13,7 @@ class AppState {
             this.isFocused = false;
         });
         this.isFocused = win.isFocused();
+        window.onunload = () => win.removeAllListeners();
     }
 }
 

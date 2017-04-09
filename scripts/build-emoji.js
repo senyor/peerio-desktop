@@ -63,7 +63,7 @@ function cleanOutputDir() {
     if (fs.existsSync(out)) cp.execSync(`rm -rf ${out}`);
     fs.mkdirSync(out);
     fs.writeFileSync(`${out}README.md`, '```\r\nThis directory is wiped and re-generated on build.\r\n' +
-                                        'Do not add or modify files manually\r\n```');
+        'Do not add or modify files manually\r\n```');
 }
 
 function convertToArray() {
@@ -79,6 +79,7 @@ function convertToArray() {
         item.index += `${item.keywords.join(' ')} `;
         item.index += `${item.aliases.join(' ')} `;
         item.index += `${item.aliases_ascii.join(' ')} `;
+        item.index = item.index.toLowerCase();
 
         delete item.unicode_alt;
         delete item.code_decimal;

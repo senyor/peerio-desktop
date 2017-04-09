@@ -12,13 +12,32 @@ $picker-border-radius: 6px;
   right: 49px;
   width: 400px;
 
+  .emoji-search {
+    align-items: center;
+    display: flex;
+    padding: 0 0 0 5px;
+  }
+
+  .emoji-search-input {
+    border: none;
+    font-size: 13px;
+    height: 34px;
+    padding: 0 5px;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
   .emojis {
     bottom: 73px;
     overflow-x: hidden;
     overflow-y: scroll;
     padding-left: 3px;
     position: absolute;
-    top: 36px;
+    top: 70px;
+    width: 100%;
 
     .emojione {
       box-sizing: content-box;

@@ -4,7 +4,9 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const data = require('~/static/emoji/emoji.json');
+const { FontIcon, IconButton } = require('~/react-toolbox');
 const _ = require('lodash');
+const { t } = require('peerio-translator');
 
 data.recent = [];
 
@@ -14,6 +16,7 @@ function buildMap() {
     for (let i = 0; i < catKeys.length; i++) {
         data[catKeys[i]].forEach(item => {
             shortnameMap[item.shortname] = item;
+            item.className = `emojione emojione-${item.unicode}`;
         });
     }
 }
@@ -39,22 +42,37 @@ class PickerStore {
 
 const store = new PickerStore();
 
+function skipNulls(i) {
+    if (i === null) return false;
+    return true;
+}
 @observer
 class Picker extends React.Component {
     @observable selectedCategory = categories[0].id;
+    @observable searchKeyword = '';
+
     dontHide = false;
 
     onCategoryClick = id => {
+        const el = document.getElementsByClassName(`category-header ${id}`)[0];
+        if (!el) return;
         this.selectedCategory = id;
-        document.getElementsByClassName(`category-header ${id}`)[0]
-                .scrollIntoView({ block: 'start', behavior: 'smooth' });
+        el.scrollIntoView({ block: 'start', behavior: 'smooth' });
     };
 
     resetHovered = () => {
         this.dontHide = false;
         setTimeout(() => {
-            if (!this.dontHide)store.hovered = null;
+            if (!this.dontHide) store.hovered = null;
         }, 2000);
+    };
+
+    onSearchKeywordChange = (ev) => {
+        this.searchKeyword = ev.target.value;
+    };
+
+    clearSearchKeyword = () => {
+        this.searchKeyword = '';
     };
 
     handleScroll = _.throttle(() => {
@@ -63,7 +81,7 @@ class Picker extends React.Component {
         const parent = document.getElementsByClassName(`emojis`)[0];
         for (let i = 0; i < categories.length; i++) {
             const c = document.getElementsByClassName(`category-header ${categories[i].id}`)[0];
-            if (c.offsetTop > (parent.offsetHeight + parent.scrollTop)) continue;
+            if (!c || c.offsetTop > (parent.offsetHeight + parent.scrollTop)) continue;
             candidates.push({ id: categories[i].id, offsetTop: c.offsetTop });
         }
         closest = candidates[0];
@@ -75,35 +93,66 @@ class Picker extends React.Component {
         if (this.selectedCategory !== closest.id) this.selectedCategory = closest.id;
     }, 1000);
 
+    onEmojiMouseEnter = (e) => {
+        this.dontHide = true;
+        store.hovered = e.target.attributes['data-shortname'].value;
+    };
+    onPicked = (e) => {
+        const shortname = e.target.attributes['data-shortname'].value;
+        this.props.onPicked(shortnameMap[shortname]);
+    };
     render() {
+        const searchLow = this.searchKeyword.toLowerCase();
         return (
             <div className="emoji-picker">
                 <div className="categories" key="categories">
                     {
                         categories.map(c =>
                             <Category id={c.id} key={c.id} selected={this.selectedCategory === c.id}
-                                      name={c.name} onClick={this.onCategoryClick} />)
+                                name={c.name} onClick={this.onCategoryClick} />)
                     }
                 </div>
+                <SearchEmoji searchKeyword={this.searchKeyword} onSearchKeywordChange={this.onSearchKeywordChange}
+                    clearSearchKeyword={this.clearSearchKeyword} />
                 <div className="emojis" key="emojis" onScroll={this.handleScroll}>
                     {
-                        categories.map(c =>
-                            <div key={c.id}>
+                        categories.map(c => {
+                            return (<div key={c.id}>
                                 <div className={`category-header ${c.id}`}>{c.name}</div>
                                 {data[c.id].map(e =>
-                                    <span onMouseEnter={() => { this.dontHide = true; store.hovered = e.shortname; }}
-                                          onMouseLeave={this.resetHovered}
-                                          onClick={() => this.props.onPicked(e)}
-                                          className={`emojione emojione-${e.unicode}`}
-                                          key={e.unicode} />
-                                )}
-                            </div>
-                        )
+                                    e.index.indexOf(searchLow) < 0 ? null :
+                                    <span onMouseEnter={this.onEmojiMouseEnter}
+                                            onMouseLeave={this.resetHovered} onClick={this.onPicked}
+                                            className={e.className}
+                                            key={e.unicode} data-shortname={e.shortname} />
+                                ).filter(skipNulls)}
+                            </div>);
+                        }).filter(item => item.props.children[1].length > 0)
                     }
                 </div>
                 <InfoPane />
             </div>
         );
+    }
+}
+
+@observer
+class SearchEmoji extends React.Component {
+    inputRef(ref) {
+        if (ref) ref.focus();
+    }
+    render() {
+        return (<div className="emoji-search">
+            <FontIcon value="search" className="search-icon" />
+            <input className="emoji-search-input" type="text" placeholder={t('title_search')}
+                ref={this.inputRef}
+                onChange={this.props.onSearchKeywordChange} value={this.props.searchKeyword} />
+            {
+                this.props.searchKeyword
+                    ? <IconButton icon="highlight_off" onClick={this.props.clearSearchKeyword} />
+                    : null
+            }
+        </div>);
     }
 }
 
@@ -120,7 +169,7 @@ class InfoPane extends React.Component {
         const item = shortnameMap[store.hovered];
         return (
             <div className="info-pane">
-                <span className={`emojione emojione-${item.unicode}`} />
+                <span className={item.className} />
                 <div>
                     <span className="bold">{item.name}</span><br />
                     {item.shortname} {item.aliases}<br />
@@ -134,9 +183,9 @@ class InfoPane extends React.Component {
 function Category(props) {
     return (
         <img src={`static/img/emoji-categories/${props.id}.svg`}
-             title={props.name} alt={props.name}
-             className={css('category', { selected: props.selected })}
-             onClick={() => props.onClick(props.id)} />
+            title={props.name} alt={props.name}
+            className={css('category', { selected: props.selected })}
+            onClick={() => props.onClick(props.id)} />
     );
 }
 

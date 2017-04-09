@@ -90,6 +90,11 @@ $radius-sign-warning: 18px;
       .rt-avatar-avatar {
         margin: 0 $margin-tiny;
       }
+
+      &.new-messages {
+        font-style: italic;
+        font-weight: normal;
+      }
     }
   }
 

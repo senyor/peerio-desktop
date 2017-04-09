@@ -137,6 +137,13 @@ class MessageList extends React.Component {
                 key += 'limbo';
             }
             ret.push(<Message key={key} message={m} chat={chat} light={m.groupWithPrevious} />);
+            if (i < (msgs.length - 1) && chat.newMessagesMarkerPos === m.id) {
+                ret.push(<div key={`newmsgsmarker${i}${m.id}`} className="marker-wrapper">
+                    <div className="marker" />
+                    <div className="content new-messages">{t('new_messages')}</div>
+                    <div className="marker" />
+                </div>);
+            }
         }
 
         if (chatStore.activeChat.canGoDown) {

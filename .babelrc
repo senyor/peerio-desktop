@@ -5,10 +5,20 @@
         "transform-decorators-legacy",
         "transform-class-properties",
         "transform-inline-environment-variables",
-         ["babel-root-import", {"rootPathSuffix": "build"}],
+        [
+            "babel-root-import",
+            {
+                "rootPathSuffix": "build"
+            }
+        ],
         "transform-es2015-modules-commonjs",
         "transform-export-extensions",
-        ["transform-object-rest-spread", { "useBuiltIns": true }],
+        [
+            "transform-object-rest-spread",
+            {
+                "useBuiltIns": true
+            }
+        ],
         "transform-react-jsx"
     ],
     "env": {
@@ -24,7 +34,8 @@
         "development": {
             "sourceMaps": true,
             "plugins": [
-                "transform-react-display-name"
+                "transform-react-display-name",
+                "transform-react-jsx-source"
             ]
         }
     }

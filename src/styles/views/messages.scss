@@ -94,6 +94,8 @@ $radius-sign-warning: 18px;
   }
 
   .marker-wrapper.new-messages {
+    margin: 0;
+
     .marker {
       background: $background-new-messages;
     }

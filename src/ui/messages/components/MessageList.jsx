@@ -140,7 +140,7 @@ class MessageList extends React.Component {
             if (i < (msgs.length - 1) && chat.newMessagesMarkerPos === m.id) {
                 ret.push(<div key={`newmsgsmarker${i}${m.id}`} className="marker-wrapper new-messages">
                     <div className="marker" />
-                    <div className="content">{t('new_messages')}</div>
+                    <div className="content">{t('title_newMessages')}</div>
                     <div className="marker" />
                 </div>);
             }

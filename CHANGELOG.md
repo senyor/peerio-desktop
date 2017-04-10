@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.4.0"></a>
+# [2.4.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.3.1...v2.4.0) (2017-04-10)
+
+
+### Bug Fixes
+
+* **chat:** prevents shrinkages of header ([b479276](https://github.com/PeerioTechnologies/peerio-desktop/commit/b479276))
+* **chats:** increase scroll to bottom timeout to make sure it scrolls on slower machines ([6399dfc](https://github.com/PeerioTechnologies/peerio-desktop/commit/6399dfc))
+* **chats:** user selector gets autofocus ([1cadedd](https://github.com/PeerioTechnologies/peerio-desktop/commit/1cadedd))
+* **emoji:** picker hide on click anywhere outside ([7bda2a2](https://github.com/PeerioTechnologies/peerio-desktop/commit/7bda2a2))
+* **files:** up/download cancel from file list works again ([d0ec4b1](https://github.com/PeerioTechnologies/peerio-desktop/commit/d0ec4b1))
+* **l18n:** Français spelled wrong ([9132664](https://github.com/PeerioTechnologies/peerio-desktop/commit/9132664))
+* **nav:** makes all dots clickable ([71142fc](https://github.com/PeerioTechnologies/peerio-desktop/commit/71142fc))
+* **ui:** reset valiation message before new run ([7e96f64](https://github.com/PeerioTechnologies/peerio-desktop/commit/7e96f64))
+* **validation:** ignore validation results if the value in store has ([3248cbc](https://github.com/PeerioTechnologies/peerio-desktop/commit/3248cbc))
+
+
+### Features
+
+* **app:** makes application logic aware of window focused state ([bfce792](https://github.com/PeerioTechnologies/peerio-desktop/commit/bfce792))
+* **chat:** 🚓 no Ack spamming allowed! ([7643517](https://github.com/PeerioTechnologies/peerio-desktop/commit/7643517))
+* **chat:** new messages marker ([110b76e](https://github.com/PeerioTechnologies/peerio-desktop/commit/110b76e))
+* **debug:** more debug information logs ([80f1866](https://github.com/PeerioTechnologies/peerio-desktop/commit/80f1866))
+* **emoji:** emoji picker search ([0ea11dc](https://github.com/PeerioTechnologies/peerio-desktop/commit/0ea11dc))
+* **emoji:** most recently used ([c40c3c7](https://github.com/PeerioTechnologies/peerio-desktop/commit/c40c3c7))
+
+
+
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.3.0...v2.3.1) (2017-04-07)
 

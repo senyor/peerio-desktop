@@ -119,9 +119,10 @@ class Picker extends React.Component {
     preventBlur = () => {
         this.noBlur = true;
     };
-    handleBlur = () => {
+    handleBlur = (ev) => {
         if (this.noBlur) {
             this.noBlur = false;
+            ev.target.focus();
             return;
         }
         this.props.onBlur();

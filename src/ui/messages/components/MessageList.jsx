@@ -141,7 +141,6 @@ class MessageList extends React.Component {
                 ret.push(<div key={`newmsgsmarker${i}${m.id}`} className="marker-wrapper new-messages">
                     <div className="marker" />
                     <div className="content">{t('title_newMessages')}</div>
-                    <div className="marker" />
                 </div>);
             }
         }

@@ -14,6 +14,14 @@
   justify-content: flex-start;
   width: 100vw;
 
+  .login-content {
+    @media (max-width: #{$minimum-screen-width + 72}) {
+      width: 330px;
+      margin-left: 64px;
+      margin-right: auto;
+    }
+  }
+
   .login-form {
     width: 275px;
   }
@@ -47,9 +55,7 @@
 
   .welcome-back-wrapper {
     background-color: $background-brand;
-    position: absolute;
-    top: 240px;
-    z-index: 5;
+    margin-top: $margin-large;
   }
 
   .welcome-back {

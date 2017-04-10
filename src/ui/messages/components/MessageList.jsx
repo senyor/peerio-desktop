@@ -73,7 +73,7 @@ class MessageList extends React.Component {
         setTimeout(() => {
             if (!this.containerRef) return;
             this.containerRef.scrollTop = this.containerRef.scrollHeight - this.containerRef.clientHeight - 20;
-        }, 0);
+        }, 50);
     };
     // todo: investigate why throttlig causes lags when scrolling with trackpad at big velocity
     handleScroll = // _.throttle(

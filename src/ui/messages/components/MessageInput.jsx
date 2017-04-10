@@ -44,7 +44,7 @@ class MessageInput extends ComposeInput {
                 <IconButton icon="mood" disabled={this.emojiPickerVisible} onClick={this.showEmojiPicker} />
 
                 {this.text === ''
-                    ? <IconButton icon="thumb_up" onClick={this.props.onAck} className="color-brand" />
+                    ? <IconButton disabled={!chatStore.activeChat.canSendAck} icon="thumb_up" onClick={this.props.onAck} className="color-brand" />
                     : null}
 
                 {this.emojiPickerVisible ? this.cachedPicker : null}

@@ -330,7 +330,7 @@ $radius-sign-warning: 18px;
     padding: 0 $padding-small;
     position: relative;
 
-    .color-brand > .material-icons {
+    .color-brand:not([disabled]) > .material-icons {
       color: $color-brand;
     }
 

@@ -1,14 +1,15 @@
 /* eslint-disable react/no-multi-comp */
 const React = require('react');
-const { observable } = require('mobx');
+const { observable, reaction, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const data = require('~/static/emoji/emoji.json');
-const { FontIcon, IconButton } = require('~/react-toolbox');
+const { FontIcon } = require('~/react-toolbox');
 const _ = require('lodash');
 const { t } = require('peerio-translator');
+const { User } = require('~/icebear');
 
-data.recent = [];
+data.recent = observable([]);
 
 const shortnameMap = {};
 function buildMap() {
@@ -24,7 +25,7 @@ function buildMap() {
 buildMap();
 
 const categories = [
-    { id: 'recent', name: 'Frequently Used' },
+    { id: 'recent', name: 'Recently Used' },
     { id: 'people', name: 'Smileys & People' },
     { id: 'nature', name: 'Animals & Nature' },
     { id: 'food', name: 'Food & Drink' },
@@ -34,6 +35,18 @@ const categories = [
     { id: 'symbols', name: 'Symbols' },
     { id: 'flags', name: 'Flags' }
 ];
+
+let mruInitialized = false;
+function initMRU() {
+    if (mruInitialized || !User.current) return;
+    mruInitialized = true;
+    User.current.emojiMRU.list.observe(action(event => {
+        data.recent.clear();
+        event.object.forEach(shortname => {
+            data.recent.push(shortnameMap[shortname]);
+        });
+    }), true);
+}
 
 // separate store is needed to avoid re-render of all emojis on hover
 class PickerStore {
@@ -52,6 +65,10 @@ class Picker extends React.Component {
     @observable searchKeyword = '';
 
     dontHide = false;
+
+    componentWillMount() {
+        initMRU();
+    }
 
     onCategoryClick = id => {
         const el = document.getElementsByClassName(`category-header ${id}`)[0];
@@ -96,6 +113,7 @@ class Picker extends React.Component {
     };
     onPicked = (e) => {
         const shortname = e.target.attributes['data-shortname'].value;
+        User.current.emojiMRU.addItem(shortname);
         this.props.onPicked(shortnameMap[shortname]);
     };
     preventBlur = () => {

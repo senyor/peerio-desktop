@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, IconMenu, MenuItem, MenuDivider, Tooltip } = require('~/react-toolbox');
+const { IconButton, IconMenu, MenuItem, MenuDivider, Tooltip, FontIcon } = require('~/react-toolbox');
 const { User, contactStore, chatStore, fileStore, mailStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
@@ -107,7 +107,7 @@ class AppNav extends React.Component {
     render() {
         const contact = contactStore.getContact(User.current.username);
         const primaryAddressConfirmed = User.current.primaryAddressConfirmed;
-
+        const cloudFillPercent = 22 + (79 - 22) * (User.current.fileQuotaUsedPercent / 100);
         return (
             <div className="app-nav">
                 <div className="avatar-menu-wrapper">
@@ -140,11 +140,15 @@ class AppNav extends React.Component {
                         onClick={this.toFiles} />
 
                     <div className="usage">
+                        <TooltipIcon style={{
+                            position: 'absolute',
+                            clipPath: `polygon(0 0, ${cloudFillPercent}% 0, ${cloudFillPercent}% 100%, 0% 100%)`
+                        }} icon="cloud" />
                         <TooltipIcon
-                          tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
-                          tooltipPosition="right"
-                          icon="cloud" />
-                        <div>{User.current.fileQuotaUsedPercent}</div>
+                            tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
+                            tooltipPosition="right"
+                            icon="cloud_queue" />
+                        <div>{User.current.fileQuotaUsedPercent}%</div>
                     </div>
                 </div>
             </div>

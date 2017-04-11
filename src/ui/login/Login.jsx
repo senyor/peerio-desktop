@@ -136,46 +136,44 @@ class LoginStore extends OrderedFormStore {
             <div className="flex-row app-root">
                 <FullCoverLoader show={this.loginStore.busy} />
                 <div className="login rt-light-theme">
-                    <div className=" flex-col flex-align-center login-content">
-                        <img alt="Peerio logo" className="logo" src="static/img/logo-white.png" />
-                        {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
-                        <div className="login-form">
-                            <div className={css('headline', { banish: this.loginStore.lastAuthenticatedUser })}>
-                                {t('title_login')}
-                            </div>
-                            <ValidatedInput label={t('title_username')}
-                                name="username"
-                                position="0"
-                                lowercase="true"
-                                store={this.loginStore}
-                                validator={validators.usernameLogin}
-                                onKeyPress={this.handleKeyPress}
-                                className={css({ banish: this.loginStore.lastAuthenticatedUser })} />
-                            <div className="password">
-                                <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
-                                    label={t('title_password')}
-                                    position="1"
-                                    store={this.loginStore}
-                                    validator={validators.stringExists}
-                                    name="passcodeOrPassphrase"
-                                    onKeyPress={this.handleKeyPress} />
-                                <TooltipIcon icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
-                                    tooltip={this.loginStore.passwordVisible ?
-                                        t('title_hidePassword') : t('title_showPassword')}
-                                    tooltipPosition="right"
-                                    tooltipDelay={500}
-                                    onClick={this.togglePasswordVisibility} />
-                            </div>
-                            {/* <Dropdown value={languageStore.language}
-                                      source={languageStore.translationLangsDataSource}
-                                      onChange={languageStore.changeLanguage} /> */}
+                    <img alt="Peerio logo" className="logo" src="static/img/logo-white.png" />
+                    {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
+                    <div className="login-form">
+                        <div className={css('headline', { banish: this.loginStore.lastAuthenticatedUser })}>
+                            {t('title_login')}
                         </div>
-                        <Button className="login-button" label={t('button_login')} flat
-                            onClick={this.login}
-                            disabled={this.loginStore.hasErrors} />
-
-                        <div>{t('title_newUser')} &nbsp; <Link to="/signup">{t('button_signup')}</Link></div>
+                        <ValidatedInput label={t('title_username')}
+                            name="username"
+                            position="0"
+                            lowercase="true"
+                            store={this.loginStore}
+                            validator={validators.usernameLogin}
+                            onKeyPress={this.handleKeyPress}
+                            className={css({ banish: this.loginStore.lastAuthenticatedUser })} />
+                        <div className="password">
+                            <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
+                                label={t('title_password')}
+                                position="1"
+                                store={this.loginStore}
+                                validator={validators.stringExists}
+                                name="passcodeOrPassphrase"
+                                onKeyPress={this.handleKeyPress} />
+                            <TooltipIcon icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
+                                tooltip={this.loginStore.passwordVisible ?
+                                    t('title_hidePassword') : t('title_showPassword')}
+                                tooltipPosition="right"
+                                tooltipDelay={500}
+                                onClick={this.togglePasswordVisibility} />
+                        </div>
+                        {/* <Dropdown value={languageStore.language}
+                                  source={languageStore.translationLangsDataSource}
+                                  onChange={languageStore.changeLanguage} /> */}
                     </div>
+                    <Button className="login-button" label={t('button_login')} flat
+                        onClick={this.login}
+                        disabled={this.loginStore.hasErrors} />
+
+                    <div>{t('title_newUser')} &nbsp; <Link to="/signup">{t('button_signup')}</Link></div>
                 </div>
                 <Snackbar location="login" />
             </div>

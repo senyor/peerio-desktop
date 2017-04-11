@@ -6,7 +6,11 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
-
+const ToolTipDiv = Tooltip()((props) => {
+    return (<div style={props.style} className={props.className} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
+        {props.children}
+    </div>);
+});
 @observer
 class ChatList extends React.Component {
     componentWillMount() {
@@ -49,17 +53,17 @@ class ChatList extends React.Component {
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
                             onClick={() => this.activateChat(c.id)}
-                            caption={c.chatName}
+                            itemContent={<ToolTipDiv tooltip={c.chatName}>{c.chatName}</ToolTipDiv>}
                             // TODO: make left icon user count when multiuser chat.
                             // TODO: add status funcationality
                             // leftIcon="fiber_manual_record"
                             rightIcon={(!c.active && c.unreadCount > 0) ? this.getNotificationIcon(c) : null} />
-                            // TODO: add functionality => remove chat item from list
-                            // <TooltipIcon
-                            //         tooltip={t('title_chatRemove')}
-                            //         tooltipDelay={500}
-                            //         tooltipPosition="right"
-                            //         icon="remove_circle_outline" />} />
+                        // TODO: add functionality => remove chat item from list
+                        // <TooltipIcon
+                        //         tooltip={t('title_chatRemove')}
+                        //         tooltipDelay={500}
+                        //         tooltipPosition="right"
+                        //         icon="remove_circle_outline" />} />
                     )}
                 </List>
             </div>

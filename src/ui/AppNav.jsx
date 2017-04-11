@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, IconMenu, MenuItem, MenuDivider, Tooltip } = require('~/react-toolbox');
+const { FontIcon, IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
 const { User, contactStore, chatStore, fileStore, mailStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
@@ -10,8 +10,6 @@ const sounds = require('~/helpers/sounds');
 const appControl = require('~/helpers/app-control');
 const AppNavButton = require('./AppNavButton');
 const { t } = require('peerio-translator');
-
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 const ROUTES = {
     chat: '/app',
@@ -139,11 +137,8 @@ class AppNav extends React.Component {
                         onClick={this.toFiles} />
 
                     <div className="usage">
-                        <TooltipIcon
-                            tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
-                            tooltipPosition="right"
-                            icon="data_usage" />
-                        <div>{User.current.fileQuotaUsedPercent}</div>
+                        <FontIcon value="cloud" />
+                        <div>{`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}</div>
                     </div>
                 </div>
             </div>

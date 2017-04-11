@@ -25,6 +25,9 @@ class PasscodeLock extends React.Component {
         this.error = t('error_wrongPassword');
     };
 
+    onInputMount(ref) {
+        if (ref) ref.refs.wrappedInstance.focus();
+    }
     validatePasscode = _.debounce(() => {
         User.current.validatePasscode(this.passcode)
             .then(this.unlock)
@@ -37,9 +40,10 @@ class PasscodeLock extends React.Component {
                 <p>{t('title_enterPasswordDetail')}</p>
                 <Input type="password"
                     value={this.passcode}
-                       label={t('title_devicePassword')}
-                       onChange={this.handleChange}
-                       error={this.error} />
+                    label={t('title_devicePassword')}
+                    onChange={this.handleChange}
+                    error={this.error}
+                    ref={this.onInputMount} />
             </div>
         );
     }

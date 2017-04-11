@@ -67,9 +67,15 @@
     @extend %flex-align-center;
     height: 100vh;
 
-    @media (max-width: #{$minimum-screen-width + 72}) {
-      margin-left: 64px;
-      margin-right: auto;
+    @media (max-width: #{$minimum-screen-width}) {
+      .passcode-hints {
+        margin-left: 48px;
+
+        .heading::before {
+          left: -40px;
+          width: 32px;
+        }
+      }
     }
   }
 
@@ -173,8 +179,9 @@
     .heading {
       color: $text-light-primary;
       display: block;
-      font-weight: $font-weight-semibold;
-      height: 60px;
+      font-weight: $font-weight-bold;
+      height: 48px;
+      line-height: 48px;
 
       &::before {
         background: $color-light-100;
@@ -195,8 +202,8 @@
       .material-icons {
         float: left;
         font-size: 14px;
-        line-height: 26px;
-        margin-right: 15px;
+        line-height: 28px;
+        margin-right: $margin-default;
       }
 
       &.passed .material-icons {

@@ -5,7 +5,7 @@ const css = require('classnames');
 const FileActions = require('./FileActions');
 const FileLoading = require('./FileLoading');
 const { Checkbox, ProgressBar } = require('~/react-toolbox');
-const { fileStore } = require('~/icebear');
+const { fileStore, User } = require('~/icebear');
 const { downloadFile } = require('~/helpers/file');
 const uiStore = require('~/stores/ui-store');
 const { t } = require('peerio-translator');
@@ -62,7 +62,8 @@ class FileLine extends React.Component {
                             onChange={this.toggleChecked} />
                     }</td>
                 <td>{file.name}</td>
-                <td className="clickable-username" onClick={this.openContactDialog}>{file.fileOwner}</td>
+                <td className="clickable-username" onClick={this.openContactDialog}>
+                    {file.fileOwner === User.current.username ? `(${t('title_you')})` : file.fileOwner}</td>
                 <td className="text-right">{file.uploadedAt && file.uploadedAt.toLocaleString()}</td>
                 <td className="hide-text text-right">{file.sizeFormatted}</td>
                 <td className="hide-text uppercase">{file.ext}</td>

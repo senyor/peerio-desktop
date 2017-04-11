@@ -417,16 +417,16 @@ $radius-sign-warning: 18px;
   position: relative;
   width: $message-list-width;
 
-  .mutli-user-chat {
-    border-radius: 2px;
-    display: block;
-    font-size: 12px;
-    height: 16px;
-    line-height: 16px;
-    margin-right: 8px;
-    text-align: center;
-    width: 16px;
-  }
+  // .mutli-user-chat {
+  //   border-radius: 2px;
+  //   display: block;
+  //   font-size: 12px;
+  //   height: 16px;
+  //   line-height: 16px;
+  //   margin-right: 8px;
+  //   text-align: center;
+  //   width: 16px;
+  // }
 
   .rt-progress_bar-linear {
     left: 0;
@@ -438,7 +438,7 @@ $radius-sign-warning: 18px;
     overflow: hidden;
   }
 
-  .rt-list-itemText {
+  .rt-list-item div {
     font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -453,7 +453,7 @@ $radius-sign-warning: 18px;
     background: $background-active-message;
     font-weight: $font-weight-bold;
 
-    .rt-list-primary {
+    .rt-list-item {
       color: $text-light-primary;
     }
   }

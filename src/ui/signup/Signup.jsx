@@ -142,16 +142,6 @@ const T = require('~/ui/shared-components/T');
                                                 emphasis: text => <strong>{text}</strong>
                                             }}
                                         </T></p>
-                                        <p><T k="title_MPIntro1" className="signup-title">
-                                            {{
-                                                emphasis: text => <strong>{text}</strong>
-                                            }}
-                                        </T></p>
-                                        <p><T k="title_MPIntro2" className="signup-title">
-                                            {{
-                                                emphasis: text => <strong>{text}</strong>
-                                            }}
-                                        </T></p>
                                         <Passcode store={this.passcodeStore} profileStore={this.profileStore}
                                             returnHandler={this.advance} />
                                     </div>

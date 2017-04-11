@@ -53,7 +53,7 @@ class ChatList extends React.Component {
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
                             onClick={() => this.activateChat(c.id)}
-                            itemContent={<ToolTipDiv tooltip={c.chatName}>{c.chatName}</ToolTipDiv>}
+                            itemContent={<ToolTipDiv tooltip={c.chatName} tooltipDelay={500}>{c.chatName}</ToolTipDiv>}
                             // TODO: make left icon user count when multiuser chat.
                             // TODO: add status funcationality
                             // leftIcon="fiber_manual_record"

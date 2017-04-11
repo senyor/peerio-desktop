@@ -180,7 +180,7 @@ class PasscodeStore extends OrderedFormStore {
                         <ValidatedInput type="password"
                                         name="passcode"
                                         className="login-input"
-                                        label={t('title_password')}
+                                        label={t('title_devicePassword')}
                                         store={this.props.store}
                                         validator={passcodeValidator}
                                         propagateFocus={this.showHints}
@@ -211,7 +211,7 @@ class PasscodeStore extends OrderedFormStore {
                 <ValidatedInput type="password"
                                 name="passcodeRepeat"
                                 className="login-input"
-                                label={t('title_passwordConfirm')}
+                                label={t('title_devicePasswordConfirm')}
                                 validator={validators.valueEquality}
                                 validationArguments={{
                                     equalsValue: this.props.store.passcode,

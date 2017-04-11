@@ -136,3 +136,7 @@ $status-bar-height: 30px;
     transform: scale(1);
   }
 }
+
+.no-select {
+  user-select: none;
+}

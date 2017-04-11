@@ -70,8 +70,8 @@ class SecuritySettings extends React.Component {
                     <T k="title_MPDetail"> {{ mpDetailUrl: text => <a href={cfg.mpDetailUrl}>{text}</a> }} </T>
                 </p>
                 <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}
-                    onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}
-                    title={this.unlocked ? t('title_MP') : t('title_enterPassword')}>
+                    className="no-select" title={this.unlocked ? t('title_MP') : t('title_enterPassword')}
+                    onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}>
                     {this.unlocked ?
                         <div>
                             <p>{t('title_MPDetail2')}</p>

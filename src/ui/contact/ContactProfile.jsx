@@ -19,7 +19,10 @@ class ContactProfile extends React.Component {
                 <div className="row flex-row flex-align-center">
                     {/* TODO: use our Avatar component instead, and strip it of mouse events */}
                     <RTAvatar style={{ backgroundColor: c.color }} >{c.letter}</RTAvatar>
-                    <div style={{ marginLeft: '8px' }}>{c.firstName} {c.lastName}</div>
+                    <div style={{ marginLeft: '8px' }} className="flex-col">
+                        <div className="title">{c.username}</div>
+                        <div >{c.firstName} {c.lastName}</div>
+                    </div>
                 </div>
                 <div className="row">
                     <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>

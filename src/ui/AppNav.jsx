@@ -148,7 +148,7 @@ class AppNav extends React.Component {
                             tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
                             tooltipPosition="right"
                             icon="cloud_queue" />
-                        <div>{User.current.fileQuotaUsedPercent}%</div>
+                        <div>{User.current.fileQuotaUsedPercent}</div>
                     </div>
                 </div>
             </div>

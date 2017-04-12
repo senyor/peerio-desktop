@@ -143,7 +143,7 @@ class MessageList extends React.Component {
                 key += 'limbo';
             }
             ret.push(<Message key={key} message={m} chat={chat} light={m.groupWithPrevious} />);
-            if (i < (msgs.length - 1) && chat.newMessagesMarkerPos === m.id) {
+            if (i < (msgs.length - 1) && chat.newMessagesMarkerPos === m.id && chat.showNewMessagesMarker) {
                 ret.push(<div key={`newmsgsmarker${i}${m.id}`} className="marker-wrapper new-messages">
                     <div className="marker" />
                     <div className="content">{t('title_newMessages')}</div>

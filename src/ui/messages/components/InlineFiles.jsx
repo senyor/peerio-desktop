@@ -3,6 +3,7 @@ const { fileStore } = require('~/icebear');
 const { FontIcon, ProgressBar } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
 const { observer } = require('mobx-react');
+const { t } = require('peerio-translator');
 
 @observer
 class InlineFiles extends React.Component {
@@ -21,7 +22,7 @@ class InlineFiles extends React.Component {
                 {
                     this.props.files.map(f => {
                         const file = fileStore.getById(f);
-                        if (!file) return <div className="invalid-file" key={f}>invalid file record</div>;
+                        if (!file) return <div className="invalid-file" key={f}>{t('error_fileRemoved')}</div>;
                         return (<div className="shared-file" key={f} data-id={f} onClick={this.download}>
                             <div className="flex-row flex-align-center">
                                 <div className="file-name"> {file ? file.name : f}</div>

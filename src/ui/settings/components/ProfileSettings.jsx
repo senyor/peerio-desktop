@@ -36,11 +36,11 @@ class Profile extends React.Component {
                 <div>
                     <div className="input-row">
                         <Input type="text"
-                               label={t('title_firstName')}
-                               value={User.current.firstName} />
+                            label={t('title_firstName')}
+                            value={User.current.firstName} />
                         <Input type="text"
-                               label={t('title_lastName')}
-                               value={User.current.lastName} />
+                            label={t('title_lastName')}
+                            value={User.current.lastName} />
                     </div>
                     <div className="input-row">
                         <div className="flex-col">
@@ -49,7 +49,7 @@ class Profile extends React.Component {
                             <div className="error">{t('error_unconfirmedEmail')}</div>
                             }
                         </div>
-                        {User.current.primaryAddressConfirmed ? null :
+                        {false && User.current.primaryAddressConfirmed ? null :
                         <Button label={t('button_resend')}
                                 // 46px because of 40px margin on top of input
                                 // and 6px margin around buttons.

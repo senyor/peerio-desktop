@@ -5,8 +5,8 @@ const isDev = process.env.NODE_ENV !== 'production';
 
 function startApp(context) {
     context.app = isDev
-            ? new Application({ path: './node_modules/.bin/electron', args: ['app'] })
-            : new Application({ path: `./dist/mac/Icebear.app/Contents/MacOS/Icebear` });
+            ? new Application({ path: './node_modules/.bin/electron', args: ['./app'] })
+            : new Application({ path: `./dist/mac/Peerio.2.app/Contents/MacOS/Peerio.2` });
 
     return context.app.start().then(() => {
         expect(context.app.isRunning()).to.be.true;

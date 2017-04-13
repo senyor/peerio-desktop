@@ -11,7 +11,7 @@ function startApp(context) {
     return context.app.start().then(() => {
         expect(context.app.isRunning()).to.be.true;
         chaiAsPromised.transferPromiseness = context.app.transferPromiseness;
-        return context.app.client.windowByIndex(isDev ? 1 : 0).waitUntilWindowLoaded();
+        return context.app.client.windowByIndex(0).waitUntilWindowLoaded();
     });
 }
 

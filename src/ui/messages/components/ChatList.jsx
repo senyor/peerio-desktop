@@ -61,14 +61,13 @@ class ChatList extends React.Component {
                             rightIcon={
                                 ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
                                     ? this.getNotificationIcon(c)
-                                    : null
+                                    : <TooltipIcon
+                                        tooltip={t('title_chatRemove')}
+                                        tooltipDelay={500}
+                                        tooltipPosition="right"
+                                        onClick={() => chatStore.unloadChat(c)}
+                                        icon="remove_circle_outline" />
                             } />
-                        // TODO: add functionality => remove chat item from list
-                        // <TooltipIcon
-                        //         tooltip={t('title_chatRemove')}
-                        //         tooltipDelay={500}
-                        //         tooltipPosition="right"
-                        //         icon="remove_circle_outline" />} />
                     )}
                 </List>
             </div>

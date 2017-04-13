@@ -115,6 +115,7 @@
     @extend %flex-col;
     @extend %hint-error-label;
     color: $text-light-secondary;
+    cursor: default;
     margin: auto 0 32px;
     text-align: center;
 

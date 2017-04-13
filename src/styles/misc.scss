@@ -137,6 +137,17 @@ $status-bar-height: 30px;
   }
 }
 
-.no-select {
+// Nonselectable items.
+// TOOD rewrite with %no-select and extend in specifi rules.
+.no-select,
+button,
+input,
+label,
+th,
+.welcome-back,
+.rt-list-subheader,
+.rt-list-item,
+.rt-menu-menuItem,
+.usage {
   user-select: none;
 }

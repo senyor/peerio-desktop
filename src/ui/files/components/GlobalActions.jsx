@@ -22,7 +22,7 @@ class GlobalActions extends React.Component {
     render() {
         return (
             <div className="table-action-bar">
-                <div>{fileStore.selectedCount} {t('title_selected')}</div>
+                <div className="no-select">{fileStore.selectedCount} {t('title_selected')}</div>
                 <div className="table-actions">
                     <TooltipIcon
                         tooltip={t('button_upload')}

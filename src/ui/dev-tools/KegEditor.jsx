@@ -20,7 +20,7 @@ class KegEditor extends React.Component {
     @action loadDbs() {
         this.dbs = [];
         this.loading = true;
-        socket.send('/auth/kegs/user/collections')
+        socket.send('/auth/kegs/user/dbs')
             .then(action(resp => {
                 resp.forEach(db => {
                     this.dbs.push({ id: db, name: db.replace(/_.*_/, '...') });
@@ -45,7 +45,7 @@ class KegEditor extends React.Component {
         this.selectedKeg = null;
         this.loading = true;
 
-        socket.send('/auth/kegs/collection/list', { collectionId: dbId })
+        socket.send('/auth/kegs/db/list', { kegDbId: dbId })
             .then(resp => {
                 this.kegIds = resp;
             })
@@ -61,7 +61,7 @@ class KegEditor extends React.Component {
     loadKeg(id) {
         this.selectedKeg = id;
         this.loading = true;
-        socket.send('/auth/kegs/get', { collectionId: this.selectedDb.id, kegId: id })
+        socket.send('/auth/kegs/get', { kegDbId: this.selectedDb.id, kegId: id })
             .then(resp => {
                 if (resp.payload instanceof ArrayBuffer) {
                     resp.payload = secret.decryptString(new Uint8Array(resp.payload), this.selectedDb.key);
@@ -92,8 +92,8 @@ class KegEditor extends React.Component {
                     {this.dbs.map(db => {
                         return (
                             <div key={db.id} title={db.id} onClick={() => this.loadKegIds(db.id)}
-                                 className={css('list-item',
-                                                { active: this.selectedDb && this.selectedDb.id === db.id })}>
+                                className={css('list-item',
+                                    { active: this.selectedDb && this.selectedDb.id === db.id })}>
                                 {db.name}
                             </div>
                         );
@@ -101,9 +101,9 @@ class KegEditor extends React.Component {
                 </div>
                 {
                     this.selectedDb
-                    ? <KegList onSelect={kegId => this.loadKeg(kegId)} kegIds={this.kegIds}
-                               selectedKeg={this.selectedKeg} />
-                    : null
+                        ? <KegList onSelect={kegId => this.loadKeg(kegId)} kegIds={this.kegIds}
+                            selectedKeg={this.selectedKeg} />
+                        : null
                 }
                 {
                     this.selectedDb
@@ -117,8 +117,8 @@ class KegEditor extends React.Component {
                 }
                 {
                     this.loading
-                    ? <div className="spinner-backdrop"><ProgressBar type="circular" multicolor /></div>
-                    : null
+                        ? <div className="spinner-backdrop"><ProgressBar type="circular" multicolor /></div>
+                        : null
                 }
             </div>
         );
@@ -132,7 +132,7 @@ function KegList(props) {
             {props.kegIds.map(kegId => {
                 return (
                     <div key={kegId} onClick={() => props.onSelect(kegId)}
-                                    className={css('list-item', { active: props.selectedKeg === kegId })}>
+                        className={css('list-item', { active: props.selectedKeg === kegId })}>
                         {kegId}
                     </div>
                 );

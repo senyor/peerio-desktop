@@ -114,9 +114,9 @@ $status-bar-height: 32px;
   }
 
   .rt-progress_bar-circular {
-    height: 18px;
-    margin-right: 5px;
-    width: 18px;
+    height: 20px;
+    margin-right: $margin-default;
+    width: 20px;
   }
 
   .rt-progress_bar-path {

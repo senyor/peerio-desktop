@@ -27,7 +27,7 @@
     "test": "npm run compile && mocha",
     "test:watch": "npm run test -- -w",
     "test:debug": "npm run compile && ./scripts/debug-tests.js",
-    "test:prod": "NODE_ENV=production build --mac -x64 --publish never && mocha",
+    "test:prod": "NODE_ENV=production npm internal-build && mocha",
     "internal-build": "NODE_ENV=production npm run compile && NODE_ENV=production build --mac --windows --x64 --publish never",
     "build-emoji": "./scripts/build-emoji.js",
     "validate": "npm-run-all -l -n -p code:lint style:lint",

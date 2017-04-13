@@ -6,7 +6,6 @@ const Avatar = require('~/ui/shared-components/Avatar');
 const Message = require('./Message');
 const { chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
-const _ = require('lodash');
 
 @observer
 class MessageList extends React.Component {

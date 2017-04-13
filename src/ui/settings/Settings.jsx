@@ -45,10 +45,11 @@ class Settings extends React.Component {
                         {t('title_settings')}
                     </div>
                     <Tabs index={this.index}
-                          onChange={this.handleTabChange}
-                          style={{ width: '1024px' }}
-                          className="tabs">
-                        <Tab label={t('title_settingsProfile')} className={css({ 'tab-notify': !primaryAddressConfirmed })} />
+                        onChange={this.handleTabChange}
+                        style={{ width: '1024px' }}
+                        className="tabs">
+                        <Tab label={t('title_settingsProfile')}
+                            className={css({ 'tab-notify': !primaryAddressConfirmed })} />
                         <Tab label={t('title_settingsSecurity')} />
                         {/* <Tab label={t('title_settingsPreferences')} />*/}
                         <Tab label={t('title_settingsAbout')} />

@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Input } = require('~/react-toolbox');
+const { Input } = require('~/react-toolbox');
 const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 
@@ -49,12 +49,12 @@ class Profile extends React.Component {
                             <div className="error">{t('error_unconfirmedEmail')}</div>
                             }
                         </div>
-                        {false && User.current.primaryAddressConfirmed ? null :
+                        {/* User.current.primaryAddressConfirmed ? null :
                         <Button label={t('button_resend')}
                                 // 46px because of 40px margin on top of input
                                 // and 6px margin around buttons.
                                 style={{ marginTop: '46px' }}
-                                flat primary />}
+                                flat primary />*/}
                     </div>
                     <div className="input-row">
                         {/*

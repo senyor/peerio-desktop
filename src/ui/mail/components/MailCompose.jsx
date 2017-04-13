@@ -56,7 +56,8 @@ const css = require('classnames');
     render() {
         const dialogActions = [
             { label: t('button_cancel'), onClick: () => { this.hideDialog(); } },
-            { label: t('button_send'),
+            {
+                label: t('button_send'),
                 onClick: () => {
                     this.handleSubmit();
                     this.hideDialog();
@@ -76,13 +77,14 @@ const css = require('classnames');
                             <div className="meta-input">
                                 <EmailPicker ghost={this.props.ghost} />
                                 <Button label={t('button_send')}
-                                        primary
-                                        disabled={!this.valid}
-                                        onClick={this.validateAndSubmit}
+                                    primary
+                                    disabled={!this.valid}
+                                    onClick={this.validateAndSubmit}
                                 />
                             </div>
                             <div className="meta-input">
-                                <Input placeholder={t('title_enterSubject')} value={this.props.ghost.subject} onChange={this.handleSubjectChange} />
+                                <Input placeholder={t('title_enterSubject')} value={this.props.ghost.subject}
+                                    onChange={this.handleSubjectChange} />
                             </div>
                         </div>
                     </div>
@@ -94,9 +96,9 @@ const css = require('classnames');
                             {this.props.ghost.files.map(f => {
                                 const file = fileStore.getById(f);
                                 return (<Chip key={file.name}
-                                              className={css('chip-label', { 'not-found': file.notFound })}
-                                              onDeleteClick={() => this.props.ghost.files.remove(f)} deletable>
-                                    { file.loading ? <ProgressBar type="linear" mode="indeterminate" /> : file.name }
+                                    className={css('chip-label', { 'not-found': file.notFound })}
+                                    onDeleteClick={() => this.props.ghost.files.remove(f)} deletable>
+                                    {file.loading ? <ProgressBar type="linear" mode="indeterminate" /> : file.name}
                                 </Chip>);
                             })}
                         </div>
@@ -110,10 +112,10 @@ const css = require('classnames');
                 {this.renderFilePicker()}
 
                 <Dialog actions={dialogActions}
-                        active={this.dialogActive}
-                        onEscKeyDown={this.hideDialog}
-                        onOverlayClick={this.hideDialog}
-                        title={t('title_emptyMail')}>
+                    active={this.dialogActive}
+                    onEscKeyDown={this.hideDialog}
+                    onOverlayClick={this.hideDialog}
+                    title={t('title_emptyMail')}>
                     <p>{t('title_emptyMailDetail')}</p>
                 </Dialog>
             </div>

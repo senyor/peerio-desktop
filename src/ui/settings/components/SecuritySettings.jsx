@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog, Input } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/react-toolbox');
 const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
@@ -87,14 +87,14 @@ class SecuritySettings extends React.Component {
     }
 
     render() {
-        const backupCodesDialogActions = [
-            { label: t('button_cancel'), onClick: this.hideBackupCodesDialog },
-            { label: t('button_save'), onClick: this.hideBackupCodesDialog }
-        ];
-        const twoFactorDialogActions = [
-            { label: t('button_cancel'), onClick: this.hideTwoFactorDialog },
-            { label: t('button_enable2FA'), onClick: this.hideTwoFactorDialog }
-        ];
+        // const backupCodesDialogActions = [
+        //     { label: t('button_cancel'), onClick: this.hideBackupCodesDialog },
+        //     { label: t('button_save'), onClick: this.hideBackupCodesDialog }
+        // ];
+        // const twoFactorDialogActions = [
+        //     { label: t('button_cancel'), onClick: this.hideTwoFactorDialog },
+        //     { label: t('button_enable2FA'), onClick: this.hideTwoFactorDialog }
+        // ];
 
         return (
             <div>

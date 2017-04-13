@@ -1,5 +1,5 @@
 const config = require('~/config');
-const React = require('react');
+// const React = require('react');
 
 function executeWarningAction(name) {
     switch (name) {
@@ -11,9 +11,9 @@ function executeWarningAction(name) {
     }
 }
 
-function renderAnchor(url, text) {
-    return React.createElement('a', { href: url }, text);
-}
+// function renderAnchor(url, text) {
+//    return React.createElement('a', { href: url }, text);
+// }
 
 const urlKeyMap = {
     // title_MPIntro1: {

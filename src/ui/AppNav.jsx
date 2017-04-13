@@ -1,8 +1,8 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, IconMenu, MenuItem, MenuDivider, Tooltip, FontIcon } = require('~/react-toolbox');
-const { User, contactStore, chatStore, fileStore, mailStore } = require('~/icebear');
+const { IconButton, IconMenu, MenuItem, MenuDivider, Tooltip } = require('~/react-toolbox');
+const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
 const app = require('electron').remote.app;
@@ -148,7 +148,7 @@ class AppNav extends React.Component {
                             tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
                             tooltipPosition="right"
                             icon="cloud_queue" />
-                        <div>{User.current.fileQuotaUsedPercent}</div>
+                        <div>{User.current.fileQuotaUsedPercent}%</div>
                     </div>
                 </div>
             </div>

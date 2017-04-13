@@ -14,7 +14,11 @@ class ContactProfile extends React.Component {
         const f = c.fingerprint.split('-');
         return (
             <div className="contact-profile">
-                { c.tofuError ? <div className="contact-error">{t('error_contactFingerprintChangedDetail', { contactFingerprintUrl: text => <a href={cfg.fingerprintUrl}>{text}</a> })}</div>
+                {c.tofuError
+                    ? <div className="contact-error">
+                        {t('error_contactFingerprintChangedDetail',
+                            { contactFingerprintUrl: text => <a href={cfg.fingerprintUrl}>{text}</a> })}
+                    </div>
                     : null}
                 <div className="row flex-row flex-align-center">
                     {/* TODO: use our Avatar component instead, and strip it of mouse events */}

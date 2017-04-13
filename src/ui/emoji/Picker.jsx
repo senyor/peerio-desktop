@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 const React = require('react');
-const { observable, reaction, action } = require('mobx');
+const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const data = require('~/static/emoji/emoji.json');
@@ -145,13 +145,14 @@ class Picker extends React.Component {
                         categories.map(c => {
                             return (<div key={c.id}>
                                 <div className={`category-header ${c.id}`}>{c.name}</div>
-                                {data[c.id].map(e =>
-                                    e.index.indexOf(searchLow) < 0 ? null :
-                                    <span onMouseEnter={this.onEmojiMouseEnter}
+                                {data[c.id].map(e => {
+                                    if (e.index.indexOf(searchLow) < 0) return null;
+                                    return (
+                                        <span onMouseEnter={this.onEmojiMouseEnter}
                                             onMouseLeave={this.resetHovered} onClick={this.onPicked}
                                             className={e.className}
-                                            key={e.unicode} data-shortname={e.shortname} />
-                                ).filter(skipNulls)}
+                                            key={e.unicode} data-shortname={e.shortname} />);
+                                }).filter(skipNulls)}
                             </div>);
                         }).filter(item => item.props.children[1].length > 0)
                     }

@@ -26,7 +26,7 @@ class Mail extends React.Component {
     }
 
     @action handleCompose() {
-        const newGhost = mailStore.createGhost();
+        mailStore.createGhost();
         this.sent = false;
     }
 
@@ -69,7 +69,9 @@ class Mail extends React.Component {
                 <div className="mail-list-wrapper">
                     <div className="mail-sorting">
                         <div>
-                            {t('title_sort')} <strong>{availableSorts.find((s) => s.sort === mailStore.selectedSort).caption}</strong>
+                            {t('title_sort')} <strong>
+                                {availableSorts.find((s) => s.sort === mailStore.selectedSort).caption}
+                            </strong>
                         </div>
                         <IconMenu onSelect={this.handleSort} icon="arrow_drop_down">
                             {availableSorts.map((s) => {
@@ -80,21 +82,21 @@ class Mail extends React.Component {
                     <div className="mail-list">
                         {mailStore.ghosts.map((m) => {
                             return (<MailItem key={m.ghostId}
-                                              sent={m.sent}
-                                              ghostId={m.ghostId}
-                                              subject={m.subject}
-                                              date={m.date.fromNow(true)}
-                                              recipient={m.recipients}
-                                              attachments={m.files.length > 0}
-                                              firstLine={m.preview}
-                                              alive={!m.expired && !m.revoked}
-                                              active={false} />
+                                sent={m.sent}
+                                ghostId={m.ghostId}
+                                subject={m.subject}
+                                date={m.date.fromNow(true)}
+                                recipient={m.recipients}
+                                attachments={m.files.length > 0}
+                                firstLine={m.preview}
+                                alive={!m.expired && !m.revoked}
+                                active={false} />
                             );
                         })}
                     </div>
                 </div>
-                {mailStore.ghosts.length === 0 && !mailStore.loading ? <ZeroMail /> : null }
-                {mailStore.selectedId && !mailStore.loading ? this.renderRight() : null }
+                {mailStore.ghosts.length === 0 && !mailStore.loading ? <ZeroMail /> : null}
+                {mailStore.selectedId && !mailStore.loading ? this.renderRight() : null}
 
                 <Button icon="add" floating accent onClick={this.handleCompose} />
             </div>

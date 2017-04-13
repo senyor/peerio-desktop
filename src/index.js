@@ -1,5 +1,5 @@
 const isDevEnv = require('~/helpers/is-dev-env');
-const { ipcRenderer, remote } = require('electron');
+const { ipcRenderer } = require('electron');
 
 if (isDevEnv) {
     // to allow require of development modules in dev environment
@@ -9,9 +9,9 @@ if (isDevEnv) {
     // enable react-perf chrome dev tool
     window.Perf = require('react-addons-perf');
 }
-    // debug aid global vars
+// debug aid global vars
 window.ice = require('~/icebear');
-    // shortcut to use with promises
+// shortcut to use with promises
 window.clog = console.log.bind(console);
 // !!!! DEBUG. !!!!!!!!!!!!!!!!!!!!!!!!!
 window.spamCounter = 0;

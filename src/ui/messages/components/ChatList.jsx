@@ -6,11 +6,12 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
-const ToolTipDiv = Tooltip()((props) => {
-    return (<div style={props.style} className={props.className} onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
+const ToolTipDiv = Tooltip()(props =>
+    <div style={props.style} className={props.className}
+        onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
         {props.children}
-    </div>);
-});
+    </div>
+);
 @observer
 class ChatList extends React.Component {
     componentWillMount() {
@@ -57,7 +58,11 @@ class ChatList extends React.Component {
                             // TODO: make left icon user count when multiuser chat.
                             // TODO: add status funcationality
                             // leftIcon="fiber_manual_record"
-                            rightIcon={((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0) ? this.getNotificationIcon(c) : null} />
+                            rightIcon={
+                                ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
+                                    ? this.getNotificationIcon(c)
+                                    : null
+                            } />
                         // TODO: add functionality => remove chat item from list
                         // <TooltipIcon
                         //         tooltip={t('title_chatRemove')}

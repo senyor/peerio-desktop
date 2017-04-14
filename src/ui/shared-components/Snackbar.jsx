@@ -91,12 +91,7 @@ const T = require('~/ui/shared-components/T');
         if (!w) return null;
 
         const key = w.content;
-        let data = w.data || {};
-
-        // does server warning contain url?
-        if (urlKeyMap[key]) {
-            data = Object.assign(data, urlKeyMap[key]);
-        }
+        const data = w.data || {};
 
         return (
             <div className={`snackbar-wrapper ${this.wrapperClass}`}>

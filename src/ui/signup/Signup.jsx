@@ -150,8 +150,7 @@ const T = require('~/ui/shared-components/T');
 
                         <T k="title_TOSRequestText" className="terms">
                             {{
-                                emphasis: text => <strong>{text}</strong>,
-                                tosLink: text => <Button onClick={this.showTermsDialog}
+                                tosButton: text => <Button onClick={this.showTermsDialog}
                                     label={text}
                                     className="button-link" />
                             }}

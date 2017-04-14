@@ -30,8 +30,8 @@ class AutoUpdateDialog extends React.Component {
 
         return (
             <Dialog actions={actions} onEscKeyDown={this.dismiss} onOverlayClick={this.dismiss} active={this.isActive()}
-                title={t('dialog_updateAvailable', { releaseName: '' })}>
-                <p>{t('dialog_updateAvailableDetails', { releaseMessage: '' })}</p>
+                title={t('dialog_updateAvailableTitle')}>
+                <p>{t('dialog_updateAvailable')}</p>
             </Dialog>
         );
     }

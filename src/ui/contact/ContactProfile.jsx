@@ -16,8 +16,7 @@ class ContactProfile extends React.Component {
             <div className="contact-profile">
                 {c.tofuError
                     ? <div className="contact-error">
-                        {t('error_contactFingerprintChangedDetail',
-                            { contactFingerprintUrl: text => <a href={cfg.fingerprintUrl}>{text}</a> })}
+                        {t('error_contactFingerprintChangedDetail')}
                     </div>
                     : null}
                 <div className="row flex-row flex-align-center">

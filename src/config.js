@@ -4,30 +4,43 @@ const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env');
 const FileStream = require('~/icebear/models/files/node-file-stream');
 const StorageEngine = require('~/icebear/models/storage/node-json-storage');
+const { setUrlMap, setTagHandler } = require('peerio-translator');
+const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
 
 cfg.appVersion = app.getVersion();
 cfg.platform = 'electron';
 cfg.arch = os.arch();
-cfg.ghostFrontendUrl = 'https://mail.peerio.com/';
 cfg.socketServerUrl = 'wss://icebear.peerio.com';
-cfg.fingerprintUrl = 'https://peerio.zendesk.com/hc/en-us/articles/204394135';
-cfg.mpDetailUrl = 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-';
-cfg.tfaDetailUrl = 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-';
-cfg.msgSignatureUrl = 'https://peerio.zendesk.com/hc/en-us/articles/204394135';
-cfg.upgradeUrl = 'https://www.peerio.com/pricing.html';
-// cfg.ghostFrontendUrl = 'https://alakazam.peerio.com/';
+cfg.ghostFrontendUrl = 'https://mail.peerio.com';
 
+// --- TRANSLATOR
+cfg.translator = {};
+cfg.translator.stringReplacements = []; // white label only
+cfg.translator.urlMap = {
+    fingerprint: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
+    mpDetail: 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
+    tfaDetail: 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-',
+    msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
+    upgrade: 'https://www.peerio.com/pricing.html'
+};
+
+setUrlMap(cfg.translator.urlMap);
+for (const name in tagHandlers) {
+    setTagHandler(name, tagHandlers[name]);
+}
+
+// --- PLATFORM SPECIFIC IMPLEMENTATIONS
 cfg.FileStream = FileStream;
 cfg.StorageEngine = StorageEngine;
 cfg.StorageEngine.storageFolder = app.getPath('userData');
 
+// --- FILE UPLOAD/DOWNLOAD SETTINGS
 cfg.download.maxDownloadChunkSize = 1024 * 1024 * 3;
 cfg.download.maxDecryptBufferSize = 1024 * 1024 * 3;
 cfg.upload.encryptBufferSize = 1024 * 1024 * 3;
 cfg.upload.uploadBufferSize = 1024 * 1024 * 3;
 
-cfg.stringReplacements = []; // white label only
-
+// --- DEV ENV SETTINGS
 if (isDevEnv) {
     try {
         cfg.autologin = require('../../autologin.json'); // eslint-disable-line
@@ -41,6 +54,8 @@ if (isDevEnv) {
 if (isDevEnv && process.env.PEERIO_STAGING_SOCKET_SERVER) {
     cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
 }
+
+// --- DIAGNOSTIC STARTUP LOG
 try {
     console.log(isDevEnv ? 'DEV environment detected' : 'PROD environment detected');
     console.log(`Starting app: v${cfg.appVersion} | ${cfg.arch} | ${cfg.platform} | ` +
@@ -50,4 +65,6 @@ try {
 } catch (err) {
     console.log(err);
 }
+
+
 module.exports = cfg;

@@ -24,7 +24,7 @@ class Root extends React.Component {
         super();
 
         // replace config-specific strings
-        config.stringReplacements.forEach((replacementObject) => {
+        config.translator.stringReplacements.forEach((replacementObject) => {
             setStringReplacement(replacementObject.original, replacementObject.replacement);
         });
         // UI language handling

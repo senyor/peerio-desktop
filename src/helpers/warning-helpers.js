@@ -11,14 +11,4 @@ function executeWarningAction(name) {
     }
 }
 
-// function renderAnchor(url, text) {
-//    return React.createElement('a', { href: url }, text);
-// }
-
-const urlKeyMap = {
-    // title_MPIntro1: {
-    //     emphasis: renderAnchor.bind(null, config.upgradeUrl)
-    // }
-};
-
-module.exports = { executeWarningAction, urlKeyMap };
+module.exports = { executeWarningAction };

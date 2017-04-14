@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { computed, action } = require('mobx');
 const { t } = require('peerio-translator');
 const warningController = require('~/helpers/warning-controller');
-const { executeWarningAction, urlKeyMap } = require('~/helpers/warning-helpers');
+const { executeWarningAction } = require('~/helpers/warning-helpers');
 const T = require('~/ui/shared-components/T');
 
 @observer class SystemWarningDialog extends React.Component {
@@ -29,12 +29,8 @@ const T = require('~/ui/shared-components/T');
         const w = warningController.current;
         if (!w) return null;
         const key = w.content;
-        let data = w.data || {};
+        const data = w.data || {};
 
-        // does server warning contain url?
-        if (urlKeyMap[key]) {
-            data = Object.assign(data, urlKeyMap[key]);
-        }
         return (
             <Dialog className="dialog-warning"
                 active={this.isVisible}

@@ -17,12 +17,15 @@ cfg.ghostFrontendUrl = 'https://mail.peerio.com';
 cfg.translator = {};
 cfg.translator.stringReplacements = []; // white label only
 cfg.translator.urlMap = {
-    fingerprint: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
+    contactFingerprint: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
     mpDetail: 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
     tfaDetail: 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-',
     msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
-    upgrade: 'https://www.peerio.com/pricing.html'
+    upgrade: 'https://www.peerio.com/pricing.html',
+    proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
+    proAccount: 'https://account.peerio.com',
 };
+
 
 setUrlMap(cfg.translator.urlMap);
 for (const name in tagHandlers) {

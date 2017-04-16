@@ -11,7 +11,7 @@ const css = require('classnames');
 const { t } = require('peerio-translator');
 const { Button, FontIcon } = require('~/react-toolbox');
 const { isUrlAllowed } = require('~/helpers/url');
-const urls = require('~/config').translator.urlMap
+const urls = require('~/config').translator.urlMap;
 
 const autolinker = new Autolinker({
     urls: {

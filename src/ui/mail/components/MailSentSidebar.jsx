@@ -4,7 +4,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Dialog } = require('~/react-toolbox');
-const { systemWarnings } = require('~/icebear');
+const { warnings } = require('~/icebear');
 const MailPassphrase = require('./MailPassphrase');
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
@@ -20,9 +20,7 @@ class MailSentSidebar extends React.Component {
         return this.props.ghost.revoke()
             .then(() => {
                 this.hideRevokeDialog();
-                systemWarnings.add({
-                    content: 'warning_mailRevoked'
-                });
+                warnings.add('warning_mailRevoked');
             });
     }
 
@@ -60,7 +58,7 @@ class MailSentSidebar extends React.Component {
                     <div className="read-recipt">
                         <div className="dark-label">{t('title_mailUrl')}</div>
                         <div className="mail-link">
-                            <a href={this.props.ghost.url} ref={(l) => { this.link = l; }}>{ this.props.ghost.url }</a>
+                            <a href={this.props.ghost.url} ref={(l) => { this.link = l; }}>{this.props.ghost.url}</a>
                             <TooltipIcon
                                 tooltip={t('title_copy')}
                                 tooltipDelay={500}
@@ -80,20 +78,20 @@ class MailSentSidebar extends React.Component {
                                     style={{ marginLeft: 'auto', marginTop: '8px' }}
                                     primary />
                                 </div>
-                           :
+                            :
                                 <div className="dark-label">
                                     {this.props.ghost.revoked ? t('warning_mailRevoked') : t('title_mailExpired')}
                                 </div>
-                    }
+                        }
                     </div>
                 </div>
-                { this.ghostActive ? <Dialog actions={revokeDialogActions}
-                                             active={this.revokeDialogActive}
-                                             onEscKeyDown={this.handleRevokeDialogToggle}
-                                             onOverlayClick={this.handleRevokeDialogToggle}
-                                             title={t('title_mailRevoke')}>
+                {this.ghostActive ? <Dialog actions={revokeDialogActions}
+                    active={this.revokeDialogActive}
+                    onEscKeyDown={this.handleRevokeDialogToggle}
+                    onOverlayClick={this.handleRevokeDialogToggle}
+                    title={t('title_mailRevoke')}>
                     <p>{t('dialog_mailRevokeText')}</p>
-                </Dialog> : '' }
+                </Dialog> : ''}
             </div>
         );
     }

@@ -5,7 +5,7 @@ const { t } = require('peerio-translator');
 const { Dialog, IconButton, IconMenu, MenuDivider, MenuItem, Tooltip } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
-const { fileStore, systemWarnings, mailStore } = require('~/icebear');
+const { fileStore, warnings, mailStore } = require('~/icebear');
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
@@ -22,9 +22,7 @@ class MailSent extends React.Component {
         mailStore.remove(this.props.ghost)
             .then(() => {
                 this.handleClose();
-                systemWarnings.add({
-                    content: 'snackbar_mailDeleted'
-                });
+                warnings.add('snackbar_mailDeleted');
             });
     };
 
@@ -48,7 +46,7 @@ class MailSent extends React.Component {
                 <div className="compose-view">
                     <div className="compose-meta sent">
                         <div className="flex-row flex-align-center flex-justify-between"
-                             style={{ height: '36px' }}>
+                            style={{ height: '36px' }}>
                             <div className="subject">{this.props.ghost.subject}</div>
                             <TooltipIcon
                                 tooltip={t('button_delete')}
@@ -62,14 +60,14 @@ class MailSent extends React.Component {
                                     {this.props.ghost.files.length}
                                     <IconMenu icon="attachment">
                                         <MenuItem caption="Download all"
-                                                  icon="file_download" />
+                                            icon="file_download" />
                                         <MenuDivider />
                                         {this.props.ghost.files.map(f => {
                                             const file = fileStore.getById(f);
                                             return (
                                                 <MenuItem key={f}
-                                                          caption={file.name}
-                                                          icon="file_download" />);
+                                                    caption={file.name}
+                                                    icon="file_download" />);
                                         })}
                                     </IconMenu>
                                 </div> : null
@@ -86,10 +84,10 @@ class MailSent extends React.Component {
                 </div>
                 <MailSentSidebar ghost={this.props.ghost} />
                 <Dialog title={t('title_mailDelete')}
-                        actions={deleteActions}
-                        active={this.deleteDialogActive}
-                        onEscKeyDown={this.handleClose}
-                        onOverlayClick={this.handleClose}>
+                    actions={deleteActions}
+                    active={this.deleteDialogActive}
+                    onEscKeyDown={this.handleClose}
+                    onOverlayClick={this.handleClose}>
                     {t('dialog_mailDeleteText')}
                 </Dialog>
             </div>

@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button, Dialog } = require('~/react-toolbox');
-const { PhraseDictionary, User, errors, systemWarnings } = require('~/icebear');
+const { PhraseDictionary, User, errors, warnings } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -10,7 +10,6 @@ const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const Terms = require('~/ui/shared-components/Terms');
 const { Profile, ProfileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
-const Snackbar = require('~/ui/shared-components/Snackbar');
 const T = require('~/ui/shared-components/T');
 
 @observer class Signup extends React.Component {
@@ -51,10 +50,7 @@ const T = require('~/ui/shared-components/T');
                 this.busy = false;
                 User.current.setPasscode(this.passcodeStore.passcode)
                     .catch(() => {
-                        systemWarnings.add({
-                            content: t('error_passcodeSetFailed'),
-                            level: 'severe'
-                        });
+                        warnings.addSevere('error_passcodeSetFailed');
                     });
                 window.router.push('/app');
             })
@@ -173,7 +169,6 @@ const T = require('~/ui/shared-components/T');
                     <Dialog actions={errorActions} active={this.errorVisible}
                         onEscKeyDown={this.hideError} onOverlayClick={this.hideError}
                         title={t('title_error')}>{this.errorMessage}</Dialog>
-                    <Snackbar location="signup" />
 
                     <Dialog active={this.termsDialogOpen}
                         actions={termsDialogActions}

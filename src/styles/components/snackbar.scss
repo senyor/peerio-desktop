@@ -4,17 +4,27 @@ $snackbar-min-width: 288px;
 
 .snackbar-wrapper {
   @extend %flex-row;
-  bottom: 0;
+  bottom: -50px;
   flex-shrink: 0;
   height: 48px;
   justify-content: center;
   overflow: hidden;
   position: absolute;
+  transition: 250ms $transition-ease-in;
   width: 100%;
+
+  &.show {
+    bottom: 0;
+  }
 }
 
-.message-input .snackbar-wrapper {
-  bottom: 100%;
+.snackbar-chat {
+  bottom: 0;
+  position: absolute;
+
+  &.show {
+    bottom: 100%;
+  }
 }
 
 .snackbar {
@@ -29,12 +39,7 @@ $snackbar-min-width: 288px;
   min-width: $snackbar-min-width;
   padding: 0 $padding-default 0 24px;
   position: absolute;
-  top: 100%;
-  transition: 250ms $transition-ease-in;
-
-  &.show {
-    top: 0;
-  }
+  top: 0;
 
   .rt-button-button:not([disabled]) {
     color: $button-primary;

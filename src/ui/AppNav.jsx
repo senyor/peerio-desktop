@@ -10,19 +10,9 @@ const sounds = require('~/helpers/sounds');
 const appControl = require('~/helpers/app-control');
 const AppNavButton = require('./AppNavButton');
 const { t } = require('peerio-translator');
+const routerStore = require('~/stores/router-store');
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
-
-
-const ROUTES = {
-    chat: '/app',
-    mail: '/app/mail',
-    files: 'app/files',
-    profile: '/app/settings/profile',
-    security: '/app/settings/security',
-    prefs: '/app/settings/preferences',
-    about: '/app/settings/about'
-};
 
 // todo: move this somewhere more appropriate
 let dockNotifsStarted = false;
@@ -51,53 +41,41 @@ function startSoundNotifications() {
 // todo: Paul, move this to stylesheets
 const menuItemStyle = { minWidth: '250px' };
 
-// todo: it will be useful to extract route tracking system to use it it other components
 @observer
 class AppNav extends React.Component {
-
-    @observable currentRoute = window.router.getCurrentLocation().pathname;
 
     componentWillMount() {
         // since this component shows new items notifications, we also make it show dock icon notifications
         startDockNotifications();
         startSoundNotifications();
-        this.disposeRouterListener = window.router.listen(this.handleRouteChange);
     }
-
-    componentWillUnmount() {
-        if (this.disposeRouterListener) this.disposeRouterListener();
-    }
-
-    handleRouteChange = route => {
-        this.currentRoute = route.pathname;
-    };
 
     toMail() {
-        window.router.push(ROUTES.mail);
+        window.router.push(routerStore.ROUTES.mail);
     }
 
     toChat() {
-        window.router.push(ROUTES.chat);
+        window.router.push(routerStore.ROUTES.chat);
     }
 
     toFiles() {
-        window.router.push(ROUTES.files);
+        window.router.push(routerStore.ROUTES.files);
     }
 
     toProfile() {
-        window.router.push(ROUTES.profile);
+        window.router.push(routerStore.ROUTES.profile);
     }
 
     toSecurity() {
-        window.router.push(ROUTES.security);
+        window.router.push(routerStore.ROUTES.security);
     }
 
     toPrefs() {
-        window.router.push(ROUTES.prefs);
+        window.router.push(routerStore.ROUTES.prefs);
     }
 
     toAbout() {
-        window.router.push(ROUTES.about);
+        window.router.push(routerStore.ROUTES.about);
     }
 
     signout() {
@@ -131,11 +109,13 @@ class AppNav extends React.Component {
                 <div className="app-menu">
 
 
-                    <AppNavButton tooltip={t('title_chats')} icon="forum" active={this.currentRoute === ROUTES.chat}
+                    <AppNavButton tooltip={t('title_chats')} icon="forum"
+                        active={routerStore.currentRoute === routerStore.ROUTES.chat}
                         showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
                         onClick={this.toChat} />
 
-                    <AppNavButton tooltip={t('title_files')} icon="folder" active={this.currentRoute === ROUTES.files}
+                    <AppNavButton tooltip={t('title_files')} icon="folder"
+                        active={routerStore.currentRoute === routerStore.ROUTES.files}
                         showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
                         onClick={this.toFiles} />
 

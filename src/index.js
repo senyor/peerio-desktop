@@ -58,16 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const { socket } = require('~/icebear');
     const { render } = require('react-dom');
     const { Router, createMemoryHistory } = require('react-router');
+    window.router = createMemoryHistory();
     const routes = require('~/ui/routes');
 
     socket.start();
 
-    window.router = createMemoryHistory();
     render(React.createElement(Router, { history: window.router, routes }), document.getElementById('root'));
 
     ipcRenderer.on('router', (event, message) => {
         window.router.push(message);
     });
-    //  window.router.push('/dev-tools');
 });
 

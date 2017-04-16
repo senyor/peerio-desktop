@@ -1,7 +1,6 @@
 const React = require('react');
 // const AutoUpdateDialog = require('~/ui/AutoUpdateDialog');
 const languageStore = require('~/stores/language-store');
-const { reaction } = require('mobx');
 const deepForceUpdate = require('react-deep-force-update');
 const isDevEnv = require('~/helpers/is-dev-env');
 const config = require('~/config');
@@ -11,14 +10,21 @@ const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
 const { ProgressBar } = require('~/react-toolbox');
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
-const { socket } = require('~/icebear');
+const { socket, clientApp } = require('~/icebear');
+const { computed, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const SystemWarningDialog = require('~/ui/shared-components/SystemWarningDialog');
-
+const Snackbar = require('~/ui/shared-components/Snackbar');
+const routerStore = require('~/stores/router-store');
+const appState = require('~/stores/app-state');
 
 @observer
 class Root extends React.Component {
+
+    @computed get snackbarVisible() {
+        return routerStore.currentRoute !== routerStore.ROUTES.chat;
+    }
 
     constructor() {
         super();
@@ -54,6 +60,12 @@ class Root extends React.Component {
         // <--------- Dev tools
     }
 
+    componentWillMount() {
+        clientApp.isFocused = appState.isFocused;
+        reaction(() => appState.isFocused, (focused) => {
+            clientApp.isFocused = focused;
+        });
+    }
 
     componentWillUnmount() {
         this.onLanguageChange();
@@ -68,10 +80,12 @@ class Root extends React.Component {
                         {t('connecting')}
                     </div>
                     {this.props.children}
+
                     {/* <AutoUpdateDialog />*/}
                     {this.devtools}
-                    <DropTarget />
+                    {this.snackbarVisible ? <Snackbar /> : null}
                     <SystemWarningDialog />
+                    <DropTarget />
                 </div>
             </ThemeProvider>
         );

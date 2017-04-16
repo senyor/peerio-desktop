@@ -22,20 +22,20 @@ class Messages extends React.Component {
     sendMessage(m) {
         sounds.sending.play();
         chatStore.activeChat.sendMessage(m)
-                 .then(() => sounds.sent.play())
-                 .catch(() => sounds.destroy.play());
+            .then(() => sounds.sent.play())
+            .catch(() => sounds.destroy.play());
     }
     sendAck() {
         sounds.sending.play();
         chatStore.activeChat.sendAck()
-                 .then(() => sounds.sent.play())
-                 .catch(() => sounds.destroy.play());
+            .then(() => sounds.sent.play())
+            .catch(() => sounds.destroy.play());
     }
     shareFiles = (files) => {
         sounds.sending.play();
         chatStore.activeChat.shareFiles(files)
-                 .then(() => sounds.sent.play())
-                 .catch(() => sounds.destroy.play());
+            .then(() => sounds.sent.play())
+            .catch(() => sounds.destroy.play());
     };
 
     render() {
@@ -44,7 +44,7 @@ class Messages extends React.Component {
                 <ChatList />
                 <div className="message-view">
                     <div className="message-toolbar">
-                        <div className="title">{ chatStore.activeChat && chatStore.activeChat.chatName}</div>
+                        <div className="title">{chatStore.activeChat && chatStore.activeChat.chatName}</div>
                     </div>
                     {(chatStore.chats.length === 0 && !chatStore.loading)
                         ? <NoChatSelected />
@@ -53,7 +53,7 @@ class Messages extends React.Component {
                         ? <UploadInChatProgress queue={chatStore.activeChat.uploadQueue} />
                         : null}
                     <MessageInput show={!!chatStore.activeChat && chatStore.activeChat.metaLoaded}
-                                  onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
+                        onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
                 </div>
             </div>
         );

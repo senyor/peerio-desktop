@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button } = require('~/react-toolbox');
-const { User, systemWarnings } = require('~/icebear');
+const { User, warnings } = require('~/icebear');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -42,9 +42,7 @@ const T = require('~/ui/shared-components/T');
         return User.current.setPasscode(this.passcodeStore.passcode)
             .then(() => {
                 this.busy = false;
-                systemWarnings.add({
-                    content: 'warning_passcodeAdded'
-                });
+                warnings.add('warning_passcodeAdded');
                 window.router.push('/app');
             });
     }

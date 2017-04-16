@@ -11,7 +11,6 @@ const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const T = require('~/ui/shared-components/T');
 const OrderedFormStore = require('~/stores/ordered-form-store');
-const Snackbar = require('~/ui/shared-components/Snackbar');
 const css = require('classnames');
 
 const { validators } = validation; // use common validation from core
@@ -175,7 +174,6 @@ class LoginStore extends OrderedFormStore {
 
                     <div>{t('title_newUser')} &nbsp; <Link to="/signup">{t('button_signup')}</Link></div>
                 </div>
-                <Snackbar location="login" />
             </div>
         );
     }

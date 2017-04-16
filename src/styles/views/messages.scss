@@ -319,8 +319,13 @@ $radius-sign-warning: 18px;
     }
   }
 
+  .message-input-wrapper {
+    position: relative;
+  }
+
   .message-input {
     align-items: center;
+    background-color: white;
     border-top: 1px solid $divider-dark;
     display: flex;
     //flex-grow: 1; FIXME: only grow when textarea grows.

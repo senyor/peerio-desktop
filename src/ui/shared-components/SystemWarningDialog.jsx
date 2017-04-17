@@ -4,6 +4,7 @@ const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { warnings } = require('~/icebear');
 const WarningDisplayBase = require('./WarningDisplayBase');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class SystemWarningDialog extends WarningDisplayBase {
@@ -19,7 +20,7 @@ class SystemWarningDialog extends WarningDisplayBase {
                 active={this.isVisible}
                 title={w ? t(w.title) : ''}
                 actions={[{ label: t('button_ok'), onClick: this.dismiss }]}>
-                {w ? t(w.content, w.data) : ''}
+                {w ? <T k={w.content}>{w.data}</T> : null}
             </Dialog>
         );
     }

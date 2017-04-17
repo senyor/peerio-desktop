@@ -1,9 +1,9 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { t } = require('peerio-translator');
 const { warnings } = require('~./icebear');
 const WarningDisplayBase = require('./WarningDisplayBase');
 const css = require('classnames');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class Snackbar extends WarningDisplayBase {
@@ -17,7 +17,7 @@ class Snackbar extends WarningDisplayBase {
             <div className={css(this.props.className, 'snackbar-wrapper', { show: this.isVisible })}
                 onClick={this.dismiss}>
                 <div className="snackbar">
-                    {w ? t(w.content, w.data) : ''}
+                    {w ? <T k={w.content}>{w.data}</T> : null}
                 </div>
             </div>
         );

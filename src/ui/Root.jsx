@@ -10,7 +10,7 @@ const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
 const { ProgressBar } = require('~/react-toolbox');
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
-const { socket, clientApp } = require('~/icebear');
+const { socket, clientApp, chatStore } = require('~/icebear');
 const { computed, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -23,7 +23,7 @@ const appState = require('~/stores/app-state');
 class Root extends React.Component {
 
     @computed get snackbarVisible() {
-        return routerStore.currentRoute !== routerStore.ROUTES.chat;
+        return !(routerStore.currentRoute === routerStore.ROUTES.chat && chatStore.activeChat);
     }
 
     constructor() {

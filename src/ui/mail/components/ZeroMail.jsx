@@ -21,9 +21,6 @@ class ZeroMail extends React.Component {
                                            lineHeight: '1.4'
                                        }}>
                                     <T k="title_mailNull2">
-                                        {{
-                                            emphasis: text => <strong>{text}</strong>
-                                        }}
                                     </T>
                                 </p>
                             </div>

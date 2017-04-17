@@ -23,7 +23,9 @@ cfg.translator.urlMap = {
     msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
     upgrade: 'https://www.peerio.com/pricing.html',
     proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
-    proAccount: 'https://account.peerio.com'
+    proAccount: 'https://account.peerio.com',
+    helpCenter: 'https://peerio.zendesk.com/',
+    contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new'
 };
 
 

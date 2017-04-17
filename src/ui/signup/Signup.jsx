@@ -134,9 +134,6 @@ const T = require('~/ui/shared-components/T');
                                         <div className="signup-title">{t('title_signupStep2')}</div>
                                         <div className="signup-subtitle">{t('title_createPassword')}</div>
                                         <p><T k="title_passwordIntro" className="signup-title">
-                                            {{
-                                                emphasis: text => <strong>{text}</strong>
-                                            }}
                                         </T></p>
                                         <Passcode store={this.passcodeStore} profileStore={this.profileStore}
                                             returnHandler={this.advance} />

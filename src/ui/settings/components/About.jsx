@@ -5,6 +5,7 @@ const { Button, Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
+const urls = require('~/config').translator.urlMap;
 
 @observer
 class About extends React.Component {
@@ -40,8 +41,8 @@ class About extends React.Component {
                         {/* Other users can find you... */}
                     </p>
                     <div className="flex-row">
-                        <Button label={t('button_HC')} flat primary />
-                        <Button label={t('button_contact')} flat primary />
+                        <Button href={urls.helpCenter} label={t('button_HC')} flat primary />
+                        <Button href={urls.contactSupport} label={t('button_contact')} flat primary />
                     </div>
                 </section>
                 <section>

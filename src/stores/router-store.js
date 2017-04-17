@@ -2,7 +2,6 @@
 const { observable } = require('mobx');
 
 class RouterStore {
-    @observable contactDialogUsername;
     @observable currentRoute = window.router.getCurrentLocation().pathname;
 
     constructor() {

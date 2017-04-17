@@ -47,6 +47,8 @@ const { t } = require('peerio-translator');
     };
 
     handleFileShareIntent = () => {
+        fileStore.deselectUnshareableFiles();
+        if (!fileStore.selectedCount) return;
         window.router.push('/app/sharefiles');
     };
 

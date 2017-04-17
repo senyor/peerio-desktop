@@ -68,8 +68,7 @@ const T = require('~/ui/shared-components/T');
                         <div className="passcode">
                             <div className="signup-title">{t('title_newDeviceSetup')}</div>
                             <div className="signup-subtitle">{t('title_createPassword')}</div>
-                            <p><T k="title_passwordIntro" className="signup-title">
-                            </T></p>
+                            <p><T k="title_passwordIntro" className="signup-title" /></p>
                             <p>{t('title_passwordSkip')}</p>
                             <Passcode store={this.passcodeStore} returnHandler={this.createPasscode} />
                         </div>

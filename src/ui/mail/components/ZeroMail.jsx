@@ -20,8 +20,7 @@ class ZeroMail extends React.Component {
                                            marginBottom: '48px',
                                            lineHeight: '1.4'
                                        }}>
-                                    <T k="title_mailNull2">
-                                    </T>
+                                    <T k="title_mailNull2" />
                                 </p>
                             </div>
                             <img src="static/img/ghost.png"

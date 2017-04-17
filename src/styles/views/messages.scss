@@ -172,18 +172,17 @@ $radius-sign-warning: 18px;
     .messages-start {
       margin-bottom: $margin-small;
       margin-top: auto;
-      padding: 0;
+      padding: 0 24px;
       width: 100%;
 
       .avatars {
         @extend %flex-row;
-        margin-bottom: $margin-default;
+        @extend %flex-wrap;
+        margin-bottom: $margin-small;
         margin-top: 64px;
-        overflow-x: auto;
-        padding: $padding-small 24px;
 
         .avatar-wrapper:not(:last-of-type) {
-          margin-right: $margin-small;
+          margin: 0 $margin-small $margin-small 0;
         }
 
         .rt-avatar-avatar {
@@ -198,7 +197,6 @@ $radius-sign-warning: 18px;
 
       .title {
         margin-bottom: $margin-default;
-        padding: 24px;
       }
     }
 

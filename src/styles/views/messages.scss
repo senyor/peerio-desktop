@@ -529,3 +529,16 @@ $radius-sign-warning: 18px;
   align-self: center;
   width: 35px;
 }
+
+// chat sidebar
+.chat-sidebar {
+  @extend %flex-col;
+  @extend %flex-shrink-0;
+  border-left: 1px solid $divider-dark;
+  transition: width 300ms $transition-ease-in;
+  width: 0;
+
+  &.open {
+    width: 304px;
+  }
+}

@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.5.0"></a>
+# [2.5.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.4.0...v2.5.0) (2017-04-17)
+
+
+### Bug Fixes
+
+* **chat:** don't show new messages marker for own messages ([3f078a6](https://github.com/PeerioTechnologies/peerio-desktop/commit/3f078a6))
+* **chat:** returns text overflow styling to chat list. ([b7c1fa8](https://github.com/PeerioTechnologies/peerio-desktop/commit/b7c1fa8))
+* **chat:** scroll to bottom when opening chats from other view ([ad31189](https://github.com/PeerioTechnologies/peerio-desktop/commit/ad31189))
+* **chat:** show notification counter on active chat if window gets focus ([76c0d18](https://github.com/PeerioTechnologies/peerio-desktop/commit/76c0d18))
+* **emoji:** fix picker not hiding after picking a category ([1016a40](https://github.com/PeerioTechnologies/peerio-desktop/commit/1016a40))
+* **files:** display '(you)' in own file owner column ([d3b31aa](https://github.com/PeerioTechnologies/peerio-desktop/commit/d3b31aa))
+* **login:** changes layout for smaller screens. removes shift when users move from log in to sign up. ([e0fa8e6](https://github.com/PeerioTechnologies/peerio-desktop/commit/e0fa8e6))
+* **meter:** removes additional % from data usage meter. ([fd756f7](https://github.com/PeerioTechnologies/peerio-desktop/commit/fd756f7))
+* **settings:** prevent accidental whitespace when copying passphrase ([8771ce9](https://github.com/PeerioTechnologies/peerio-desktop/commit/8771ce9))
+* **signup:** removes shifting alignment ([f425cbb](https://github.com/PeerioTechnologies/peerio-desktop/commit/f425cbb))
+* **snackbar:** snackbar not showing when there's no active chat ([81a441a](https://github.com/PeerioTechnologies/peerio-desktop/commit/81a441a))
+* **url:** message error button link ([18a638b](https://github.com/PeerioTechnologies/peerio-desktop/commit/18a638b))
+* **ux:** PasscodeLock auto focus ([dc9246a](https://github.com/PeerioTechnologies/peerio-desktop/commit/dc9246a))
+
+
+### Features
+
+* **chat:** hide that chat from the view! ([c1789f0](https://github.com/PeerioTechnologies/peerio-desktop/commit/c1789f0))
+* **chat:** tooltip on chat name ([6b0a4f1](https://github.com/PeerioTechnologies/peerio-desktop/commit/6b0a4f1))
+* **files:** disable sharing received files ([58ea362](https://github.com/PeerioTechnologies/peerio-desktop/commit/58ea362))
+
+
+
 <a name="2.4.0"></a>
 # [2.4.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.3.1...v2.4.0) (2017-04-10)
 

@@ -585,7 +585,9 @@ $radius-sign-warning: 18px;
 
   .rt-input-input {
     border-bottom: 1px solid $divider-dark;
+    height: 56px;
     margin-top: 0;
+    padding-bottom: $padding-small;
     padding-left: $padding-small;
 
     .rt-input-label {

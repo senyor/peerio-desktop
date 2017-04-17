@@ -107,6 +107,7 @@ $status-bar-height: 32px;
   text-align: center;
   top: -$status-bar-height - 20;
   transition: all .4s $transition-bounce-in-out;
+  user-select: none;
   z-index: 2;
 
   &.visible {

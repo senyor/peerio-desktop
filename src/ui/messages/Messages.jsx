@@ -101,7 +101,10 @@ class Messages extends React.Component {
                         </div>
                         <div className={css('chat-sidebar', { open: this.sidebarOpen })}>
                             <div className="title">{t('title_About')}</div>
-                            <Input label={t('title_title')} />
+                            <div className="flex-row">
+                                <Input label={t('title_title')} />
+                                {/* <IconButton icon="cancel" /> */}
+                            </div>
                             <div className="title">{t('title_Members')}</div>
                             <List selectable>
                                 {/* {this.members.map(u =>

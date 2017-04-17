@@ -179,6 +179,8 @@ $radius-sign-warning: 18px;
         @extend %flex-row;
         margin-bottom: $margin-default;
         margin-top: 64px;
+        overflow-x: auto;
+        padding: $padding-small;
 
         .avatar-wrapper:not(:last-of-type) {
           margin-right: $margin-small;

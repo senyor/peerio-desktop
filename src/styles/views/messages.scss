@@ -577,6 +577,26 @@ $radius-sign-warning: 18px;
   transition: width 300ms $transition-ease-in;
   width: 0;
 
+  .title {
+    height: 48px;
+    line-height: 48px;
+    margin: $margin-tiny $margin-default 0;
+  }
+
+  .rt-input-input {
+    border-bottom: 1px solid $divider-dark;
+    margin-top: 0;
+    padding-left: $padding-small;
+
+    .rt-input-label {
+      padding-left: $padding-default;
+    }
+
+    input {
+      border: 0;
+    }
+  }
+
   &.open {
     width: 304px;
   }

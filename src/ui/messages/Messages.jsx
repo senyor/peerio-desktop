@@ -2,6 +2,7 @@ const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon, IconButton, Input, List, ListItem, Tooltip } = require('~/react-toolbox');
+const Avatar = require('~/ui/shared-components/Avatar');
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
@@ -18,6 +19,7 @@ const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 class Messages extends React.Component {
     @observable sidebarOpen = false;
     @observable chatStarred = false;
+    // @observable members = chatStore.activeChat.
 
     componentWillMount() {
         if (chatStore.activeChat) chatStore.activeChat.loadMessages();
@@ -98,12 +100,16 @@ class Messages extends React.Component {
                                 onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
                         </div>
                         <div className={css('chat-sidebar', { open: this.sidebarOpen })}>
-                            <Input value={chatStore.activeChat && chatStore.activeChat.chatName} />
-                            <div>{t('title_Members')}</div>
+                            <div className="title">{t('title_About')}</div>
+                            <Input label={t('title_title')} />
+                            <div className="title">{t('title_Members')}</div>
                             <List selectable>
-                                <ListItem caption="Person 1" />
-                                <ListItem caption="Person 2" />
-                                <ListItem caption="Person 2" />
+                                {/* {this.members.map(u =>
+                                    <ListItem
+                                      avatar={<Avatar key={u} username={u} />}
+                                      caption="username"
+                                      legend="name" />
+                                )} */}
                             </List>
                         </div>
                     </div>

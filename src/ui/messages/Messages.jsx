@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, Input, List, ListItem } = require('~/react-toolbox');
+const { FontIcon, IconButton, Input, List, ListItem, Tooltip } = require('~/react-toolbox');
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
@@ -12,9 +12,12 @@ const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 
+const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
+
 @observer
 class Messages extends React.Component {
     @observable sidebarOpen = false;
+    @observable chatStarred = false;
 
     componentWillMount() {
         if (chatStore.activeChat) chatStore.activeChat.loadMessages();
@@ -47,13 +50,40 @@ class Messages extends React.Component {
         this.sidebarOpen = !this.sidebarOpen;
     }
 
+    handleStar = () => {
+        this.chatStarred = !this.chatStarred;
+    }
+
     render() {
         return (
             <div className="messages">
                 <ChatList />
                 <div className="message-view">
                     <div className="message-toolbar flex-justify-between">
-                        <div className="title">{chatStore.activeChat && chatStore.activeChat.chatName}</div>
+                        <div className="flex-col">
+                            <div className="title">
+                                <div className="title-content">
+                                    {chatStore.activeChat && chatStore.activeChat.chatName}
+                                </div>
+                                <FontIcon value="edit" />
+                            </div>
+                            <div className="flex-row meta-nav">
+                                <TooltipIcon icon={this.chatStarred ? 'star' : 'star_border'}
+                                             onClick={this.handleStar}
+                                             className={css({ starred: this.chatStarred })}
+                                             tooltip={t('title_starChannel')}
+                                             tooltipPosition="bottom"
+                                             tooltipDelay={500} />
+                                <div className="member-count">
+                                    <TooltipIcon icon="person"
+                                                 tooltip={t('title_memberCount')}
+                                                 tooltipPosition="bottom"
+                                                 tooltipDelay={500}
+                                                 onClick={this.handleSidebar} /> 1
+                                </div>
+
+                            </div>
+                        </div>
                         <IconButton icon="chrome_reader_mode" onClick={this.handleSidebar} />
                     </div>
                     <div className="flex-row flex-grow-1">

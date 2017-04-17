@@ -172,7 +172,7 @@ $radius-sign-warning: 18px;
     .messages-start {
       margin-bottom: $margin-small;
       margin-top: auto;
-      padding: 0 24px;
+      padding: 0;
       width: 100%;
 
       .avatars {
@@ -180,7 +180,7 @@ $radius-sign-warning: 18px;
         margin-bottom: $margin-default;
         margin-top: 64px;
         overflow-x: auto;
-        padding: $padding-small;
+        padding: $padding-small 24px;
 
         .avatar-wrapper:not(:last-of-type) {
           margin-right: $margin-small;
@@ -198,6 +198,7 @@ $radius-sign-warning: 18px;
 
       .title {
         margin-bottom: $margin-default;
+        padding: 24px;
       }
     }
 
@@ -326,16 +327,16 @@ $radius-sign-warning: 18px;
   }
 
   .message-input {
-    align-items: center;
-    background-color: white;
+    @extend %flex-row;
+    @extend %flex-align-center;
+    background-color: $background-root;
     border-top: 1px solid $divider-dark;
-    display: flex;
     //flex-grow: 1; FIXME: only grow when textarea grows.
     flex-shrink: 0;
     margin-top: auto;
     max-height: 112px;
     min-height: 64px;
-    padding: 0 $padding-small;
+    padding: 0 $padding-small 0 36px;
     position: relative;
 
     .color-brand:not([disabled]) > .material-icons {

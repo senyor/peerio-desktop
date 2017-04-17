@@ -37,15 +37,6 @@
   width: 100%;
 }
 
-// Don't select these items.
-img,
-.material-icons,
-.rt-avatar-avatar {
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
 .blur {
   filter: blur(5px);
 }
@@ -77,7 +68,7 @@ img,
     @extend %flex-row;
     @extend %flex-align-center;
     animation: pulse-scale;
-    animation-duration: 1s;
+    animation-duration: 1000ms;
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
   }
@@ -120,36 +111,38 @@ $status-bar-height: 32px;
   }
 
   .rt-progress_bar-path {
-    stroke: white;
+    stroke: $color-light-100;
   }
 }
 
 @keyframes pulse-scale {
-  0% {
+  0%,
+  100% {
     transform: scale(1);
   }
 
   50% {
     transform: scale(1.02);
   }
-
-  100% {
-    transform: scale(1);
-  }
 }
 
 // Nonselectable items.
 // TOOD rewrite with %no-select and extend in specifi rules.
 .no-select,
+img,
 button,
 input,
 label,
 th,
+.material-icons,
+.rt-avatar-avatar,
 .header-filter,
 .welcome-back,
 .rt-list-subheader,
 .rt-list-item,
 .rt-menu-menuItem,
 .usage {
+  -webkit-user-select: none;
   user-select: none;
+  -webkit-user-drag: none;
 }

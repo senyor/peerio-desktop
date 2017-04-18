@@ -416,13 +416,13 @@ $radius-sign-warning: 18px;
 }
 
 // message navigation
-.message-list {
+.chat-list {
   @extend %flex-shrink-0;
-  background-color: $background-message-list;
+  background-color: $background-chat-list;
   height: 100vh;
   overflow-y: auto;
   position: relative;
-  width: $message-list-width;
+  width: $chat-list-width;
 
   // .mutli-user-chat {
   //   border-radius: 2px;
@@ -453,20 +453,21 @@ $radius-sign-warning: 18px;
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,
   .rt-list-item.selectable:not(.disabled):hover {
-    background-color: transparent;
+    background-color: $background-hover-message;
   }
 
-  .active {
+  .rt-list-listItem.active .rt-list-item {
     background: $background-active-message;
+    color: $text-light-primary;
     font-weight: $font-weight-bold;
 
-    .rt-list-item {
-      color: $text-light-primary;
-    }
-  }
+    &:hover {
+      background-color: $background-hover-active-message;
 
-  .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover {
-    background: $background-hover-message;
+      .rt-button-button .material-icons {
+        color: $text-light-secondary;
+      }
+    }
   }
 
   .rt-ripple-ripple {
@@ -483,12 +484,10 @@ $radius-sign-warning: 18px;
     // Styling for chat list item delete
     .rt-button-button {
       display: none;
-      opacity: 0;
     }
 
     &:hover .rt-button-button {
       display: block;
-      opacity: 1;
     }
   }
   // contact status indicator

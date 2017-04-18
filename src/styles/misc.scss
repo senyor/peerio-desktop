@@ -129,19 +129,19 @@ $status-bar-height: 32px;
 // Nonselectable items.
 // TOOD rewrite with %no-select and extend in specifi rules.
 .no-select,
-img,
 button,
+img,
 input,
 label,
 th,
+.header-filter,
 .material-icons,
 .rt-avatar-avatar,
-.header-filter,
-.welcome-back,
 .rt-list-subheader,
 .rt-list-item,
 .rt-menu-menuItem,
-.usage {
+.usage,
+.welcome-back {
   -webkit-user-select: none;
   user-select: none;
   -webkit-user-drag: none;

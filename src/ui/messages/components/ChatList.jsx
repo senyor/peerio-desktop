@@ -39,7 +39,7 @@ class ChatList extends React.Component {
     render() {
         // todo: remove arrow function event handler
         return (
-            <div className="message-list">
+            <div className="chat-list">
                 {this.getProgressBar(chatStore.loading)}
                 <List selectable ripple>
                     <div key="list-header" className="list-header-wrapper">
@@ -54,7 +54,9 @@ class ChatList extends React.Component {
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
                             onClick={() => this.activateChat(c.id)}
-                            itemContent={<ToolTipDiv tooltip={c.chatName} tooltipDelay={500}>{c.chatName}</ToolTipDiv>}
+                            itemContent={<ToolTipDiv tooltip={c.chatName}
+                                                     tooltipDelay={500}
+                                                     className="flex-grow-1">{c.chatName}</ToolTipDiv>}
                             // TODO: make left icon user count when multiuser chat.
                             // TODO: add status funcationality
                             // leftIcon="fiber_manual_record"

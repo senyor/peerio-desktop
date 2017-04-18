@@ -6,7 +6,7 @@
   .selected-items {
     @extend %flex-grow-0;
     @extend %flex-shrink-0;
-    background-color: $background-message-list;
+    background-color: $background-chat-list;
     width: 256px;
 
     ul {

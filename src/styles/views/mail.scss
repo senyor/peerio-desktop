@@ -23,7 +23,7 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
     @extend %flex-grow-0;
     @extend %flex-shrink-0;
     @extend %flex-col;
-    background-color: $background-message-list;
+    background-color: $background-chat-list;
     border-right: 1px solid $divider-dark;
     height: 100%;
     width: $width-mail-list;

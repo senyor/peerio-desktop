@@ -9,7 +9,7 @@ const Autolinker = require('autolinker');
 const InlineFiles = require('./InlineFiles');
 const css = require('classnames');
 const { t } = require('peerio-translator');
-const { Button, FontIcon } = require('~/react-toolbox');
+const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
 const { isUrlAllowed } = require('~/helpers/url');
 const urls = require('~/config').translator.urlMap;
 
@@ -60,7 +60,7 @@ class Message extends React.Component {
         return (
             <div className={
                 css('message-content-wrapper', {
-                    'invalid-sign': invalidSign || m.sendError, light: this.props.light
+                    'invalid-sign': invalidSign, 'send-error': m.sendError, light: this.props.light
                 })}>
                 <div className="flex-row">
                     {this.props.light ? null : <Avatar contact={m.sender} />}
@@ -76,27 +76,38 @@ class Message extends React.Component {
                                     <div className="timestamp">{time.format(m.timestamp)}</div>
                                 </div>
                         }
-                        <p dangerouslySetInnerHTML={processMessage(m)} />
-                        {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
+                        <div className="flex-row flex-align-center">
+                            <p dangerouslySetInnerHTML={processMessage(m)} />
+                            {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
+                            {m.sendError ?
+                                <div className="send-error-menu">
+                                    <IconMenu icon="error" position="topLeft" menuRipple>
+                                        <MenuItem value={t('button_retry')}
+                                                  caption={t('button_retry')}
+                                                  onClick={() => m.resend()} />
+                                        <MenuItem value={t('button_delete')}
+                                                  caption={t('button_delete')}
+                                                  onClick={() => this.props.chat.removeMessage(m)} />
+                                    </IconMenu>
+                                </div>
+                                : null
+                            }
+                        </div>
+                        {m.sendError ?
+                            <div className="send-error-message">{t('error_messageSendFail')}</div>
+                            : null}
                     </div>
                     {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null}
                     {m.receipts ?
                         <div key={`${m.tempId || m.id}receipts`} className="receipt-wrapper">
                             {m.receipts.map(u => <Avatar key={u} username={u} size="tiny" />)}
                         </div> : null}
+
                 </div>
                 {invalidSign ?
                     <div className="invalid-sign-warning">
                         <div style={{ marginRight: 'auto' }}>{t('error_invalidMessageSignature')}</div>
                         <Button href={urls.msgSignature} label={t('title_readMore')} flat primary />
-                    </div>
-                    : null
-                }
-                {m.sendError ?
-                    <div className="invalid-sign-warning">
-                        <div style={{ marginRight: 'auto' }}>{t('error_messageSendFail')}</div>
-                        <Button onClick={() => m.resend()} label={t('button_retry')} flat primary />
-                        <Button onClick={() => this.props.chat.removeMessage(m)} label={t('button_delete')} flat />
                     </div>
                     : null
                 }

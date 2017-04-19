@@ -169,6 +169,20 @@ $radius-sign-warning: 18px;
       padding: 0 $padding-small 0 $padding-default;
     }
 
+    .send-error {
+      &-menu {
+        .material-icons {
+          color: $color-error;
+        }
+      }
+
+      &-message {
+        @extend %hint-error-label;
+        color: $color-error;
+        margin-left: $margin-default;
+      }
+    }
+
     .messages-start {
       margin-bottom: $margin-small;
       margin-top: auto;

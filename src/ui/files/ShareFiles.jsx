@@ -25,7 +25,7 @@ class ShareFiles extends React.Component {
     render() {
         return (
             <div className="create-new-message">
-                <UserPicker title={t('title_selectFileRecipients', { count: fileStore.selectedCount })}
+                <UserPicker title={t('title_shareWith')}
                     button={t('button_share')}
                     onAccept={this.handleFileShareAccept}
                     onClose={this.closeUserPicker}

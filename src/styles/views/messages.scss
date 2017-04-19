@@ -462,7 +462,7 @@ $radius-sign-warning: 18px;
     font-weight: $font-weight-bold;
 
     &:hover {
-      background-color: $background-hover-active-message;
+      background: $background-active-message;
 
       .rt-button-button .material-icons {
         color: $text-light-secondary;

@@ -77,7 +77,7 @@ class Root extends React.Component {
                 <div>
                     <div className={`status-bar ${socket.connected ? '' : 'visible'}`}>
                         {socket.connected ? null : <ProgressBar type="circular" mode="indeterminate" />}
-                        {t('connecting')}
+                        {t('error_connecting')}
                     </div>
                     {this.props.children}
 

@@ -26,11 +26,12 @@ function requestDownloadPath(fileName) {
 function downloadFile(file) {
     let finalPath;
     return requestDownloadPath(file.name)
-           .then(path => {
-               finalPath = path;
-               return file.download(path);
-           })
-           .then(() => electron.app.dock && electron.app.dock.downloadFinished(finalPath));
+        .then(path => {
+            finalPath = path;
+            return file.download(path);
+        })
+        .then(() => electron.app.dock && electron.app.dock.downloadFinished(finalPath))
+        .then(() => electron.getCurrentWindow().previewFile(finalPath));
 }
 
 function pickSystemFiles() {

@@ -1,7 +1,7 @@
 const React = require('react');
 
 function a(text, url) {
-    return <a href={url}>{text}</a>;
+    return <a key={url} href={url}>{text}</a>;
 }
 
 function b(text) {

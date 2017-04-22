@@ -313,6 +313,11 @@ $radius-sign-warning: 18px;
         }
       }
 
+      .system-message {
+        color: #777;
+        font-style: italic;
+      }
+
       p {
         line-height: 1.5;
         margin: 0 0 0 $margin-default;

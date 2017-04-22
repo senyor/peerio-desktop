@@ -92,8 +92,4 @@ class Root extends React.Component {
     }
 }
 
-Root.propTypes = {
-    children: React.PropTypes.element.isRequired
-};
-
 module.exports = Root;

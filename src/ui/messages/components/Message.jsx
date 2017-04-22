@@ -52,6 +52,17 @@ function processMessage(msg) {
  */
 @observer
 class Message extends React.Component {
+    renderSystemData(m) {
+        if (!m.systemData) return null;
+        // eslint-disable-next-line default-case
+        switch (m.systemData.action) {
+            case 'rename':
+                return (
+                    <span className="system-message">{t('title_chatRenamed', { name: m.systemData.newName })}</span>
+                );
+        }
+        return null;
+    }
     render() {
         const m = this.props.message;
         // console.log('Rendering message ', m.tempId || m.id);
@@ -79,15 +90,16 @@ class Message extends React.Component {
                         <div className="flex-row flex-align-center">
                             <p dangerouslySetInnerHTML={processMessage(m)} />
                             {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
+                            {this.renderSystemData(m)}
                             {m.sendError ?
                                 <div className="send-error-menu">
                                     <IconMenu icon="error" position="topLeft" menuRipple>
                                         <MenuItem value={t('button_retry')}
-                                                  caption={t('button_retry')}
-                                                  onClick={() => m.resend()} />
+                                            caption={t('button_retry')}
+                                            onClick={() => m.send()} />
                                         <MenuItem value={t('button_delete')}
-                                                  caption={t('button_delete')}
-                                                  onClick={() => this.props.chat.removeMessage(m)} />
+                                            caption={t('button_delete')}
+                                            onClick={() => this.props.chat.removeMessage(m)} />
                                     </IconMenu>
                                 </div>
                                 : null

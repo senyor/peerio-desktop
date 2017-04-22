@@ -7,14 +7,14 @@ const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
 const NoChatSelected = require('./components/NoChatSelected');
-const { chatStore } = require('~/icebear');
+const { chatStore, TinyDb } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 
 const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
-
+const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 @observer
 class Messages extends React.Component {
     @observable sidebarOpen = false;
@@ -22,11 +22,15 @@ class Messages extends React.Component {
     // @observable members = chatStore.activeChat.
 
     componentWillMount() {
-        if (chatStore.activeChat) chatStore.activeChat.loadMessages();
-        this.loaderDisposer = reaction(() => chatStore.activeChat, () => chatStore.activeChat.loadMessages());
+        this.reactionToDispose = reaction(() => this.sidebarOpen, open => {
+            TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
+        }, { delay: 1000 });
+        TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
+            if (isOpen) this.sidebarOpen = isOpen;
+        });
     }
     componentWillUnmount() {
-        this.loaderDisposer();
+        this.reactionToDispose();
     }
 
     sendMessage(m) {
@@ -71,17 +75,17 @@ class Messages extends React.Component {
                             </div>
                             <div className="flex-row meta-nav">
                                 <TooltipIcon icon={this.chatStarred ? 'star' : 'star_border'}
-                                             onClick={this.handleStar}
-                                             className={css({ starred: this.chatStarred })}
-                                             tooltip={t('title_starChannel')}
-                                             tooltipPosition="bottom"
-                                             tooltipDelay={500} />
+                                    onClick={this.handleStar}
+                                    className={css({ starred: this.chatStarred })}
+                                    tooltip={t('title_starChannel')}
+                                    tooltipPosition="bottom"
+                                    tooltipDelay={500} />
                                 <div className="member-count">
                                     <TooltipIcon icon="person"
-                                                 tooltip={t('title_memberCount')}
-                                                 tooltipPosition="bottom"
-                                                 tooltipDelay={500}
-                                                 onClick={this.handleSidebar} /> 1
+                                        tooltip={t('title_memberCount')}
+                                        tooltipPosition="bottom"
+                                        tooltipDelay={500}
+                                        onClick={this.handleSidebar} /> 1
                                 </div>
 
                             </div>

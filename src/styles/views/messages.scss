@@ -112,16 +112,57 @@ $radius-sign-warning: 18px;
     border-bottom: 1px solid $divider-dark;
     display: flex;
     flex: 0 0 64px;
-    padding: 0 8px 0 24px;
+    margin-top: 8px;
+    padding: 0 $padding-default 0 24px;
 
     .title {
+      @extend %flex-row;
       color: $text-dark-secondary;
       font-size: 16px;
       font-weight: $font-weight-bold;
-      margin-right: auto;
+      height: 24px;
+      margin-right: $margin-default;
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+
+      .title-content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .material-icons {
+        display: none;
+        margin-left: $margin-small;
+      }
+
+      &:hover {
+        .material-icons {
+          display: block;
+        }
+      }
+    }
+
+    .meta-nav {
+      @extend %flex-row;
+      @extend %flex-align-center;
+      height: 20px;
+      margin: 2px 0;
+      margin-left: -$margin-small;
+
+      .material-icons {
+        font-size: 16px;
+      }
+
+      .starred .material-icons {
+        color: gold;
+      }
+
+      .member-count {
+        @extend %flex-row;
+        @extend %flex-align-center;
+        border-left: 1px solid $divider-dark;
+        height: 20px;
+      }
     }
 
     .search {
@@ -547,4 +588,39 @@ $radius-sign-warning: 18px;
 .messages-inline-progress-bar {
   align-self: center;
   width: 35px;
+}
+
+// chat sidebar
+.chat-sidebar {
+  @extend %flex-col;
+  @extend %flex-shrink-0;
+  border-left: 1px solid $divider-dark;
+  transition: width 300ms $transition-ease-in;
+  width: 0;
+
+  .title {
+    height: 48px;
+    line-height: 48px;
+    margin: $margin-tiny $margin-default 0;
+  }
+
+  .rt-input-input {
+    border-bottom: 1px solid $divider-dark;
+    height: 56px;
+    margin-top: 0;
+    padding-bottom: $padding-small;
+    padding-left: $padding-small;
+
+    .rt-input-label {
+      padding-left: $padding-default;
+    }
+
+    input {
+      border: 0;
+    }
+  }
+
+  &.open {
+    width: 304px;
+  }
 }

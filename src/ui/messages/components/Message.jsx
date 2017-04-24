@@ -53,6 +53,7 @@ function processMessage(msg) {
 @observer
 class Message extends React.Component {
     renderSystemData(m) {
+        // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
         // eslint-disable-next-line default-case
         switch (m.systemData.action) {
@@ -90,7 +91,10 @@ class Message extends React.Component {
                         <div className="flex-row flex-align-center">
                             <p dangerouslySetInnerHTML={processMessage(m)} />
                             {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
-                            {this.renderSystemData(m)}
+                            {
+                                /* SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML */
+                                this.renderSystemData(m)
+                            }
                             {m.sendError ?
                                 <div className="send-error-menu">
                                     <IconMenu icon="error" position="topLeft" menuRipple>

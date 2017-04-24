@@ -18,7 +18,7 @@ class Search extends React.Component {
             <div className="search">
                 <FontIcon value="search" className="search-icon" />
                 <Input placeholder={t('title_search')} value={this.props.query} onChange={this.handleChange} />
-                {this.query === '' ? null : <IconButton icon="highlight_off" onClick={this.handleClear} />}
+                {this.props.query === '' ? null : <IconButton icon="highlight_off" onClick={this.handleClear} />}
             </div>
         );
     }

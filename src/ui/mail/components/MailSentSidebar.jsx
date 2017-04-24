@@ -1,13 +1,11 @@
 const React = require('react');
-const { Button, IconButton, Tooltip } = require('~/react-toolbox');
+const { Button, IconButton, Tooltip, TooltipIconButton } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Dialog } = require('~/react-toolbox');
 const { warnings } = require('~/icebear');
 const MailPassphrase = require('./MailPassphrase');
-
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 @observer
 class MailSentSidebar extends React.Component {
@@ -59,7 +57,7 @@ class MailSentSidebar extends React.Component {
                         <div className="dark-label">{t('title_mailUrl')}</div>
                         <div className="mail-link">
                             <a href={this.props.ghost.url} ref={(l) => { this.link = l; }}>{this.props.ghost.url}</a>
-                            <TooltipIcon
+                            <TooltipIconButton
                                 tooltip={t('title_copy')}
                                 tooltipDelay={500}
                                 tooltipPosition="bottom"
@@ -68,17 +66,17 @@ class MailSentSidebar extends React.Component {
                         </div>
                     </div>
                     <div className="expire-info flex-col">
-                        {(this.ghostActive)
-                            ?
+                        {
+                            this.ghostActive ?
                                 <div className="flex-col">
                                     <div className="dark-label">{t('title_mailExpires')}</div>
                                     <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
                                     <Button label={t('button_mailRevoke')}
-                                    onClick={this.showRevokeDialog}
-                                    style={{ marginLeft: 'auto', marginTop: '8px' }}
-                                    primary />
+                                        onClick={this.showRevokeDialog}
+                                        style={{ marginLeft: 'auto', marginTop: '8px' }}
+                                        primary />
                                 </div>
-                            :
+                                :
                                 <div className="dark-label">
                                     {this.props.ghost.revoked ? t('warning_mailRevoked') : t('title_mailExpired')}
                                 </div>

@@ -1,11 +1,10 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { IconButton, List, ListItem, ListSubHeader, ProgressBar, Tooltip } = require('~/react-toolbox');
+const { List, ListItem, ListSubHeader, ProgressBar, Tooltip, TooltipIconButton } = require('~/react-toolbox');
 const { chatStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 const ToolTipDiv = Tooltip()(props =>
     <div style={props.style} className={props.className}
         onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
@@ -44,7 +43,7 @@ class ChatList extends React.Component {
                 <List selectable ripple>
                     <div key="list-header" className="list-header-wrapper">
                         <ListSubHeader caption={t('title_chats')} />
-                        <TooltipIcon
+                        <TooltipIconButton
                             tooltip={t('title_chatAdd')}
                             tooltipDelay={500}
                             tooltipPosition="right"
@@ -55,15 +54,15 @@ class ChatList extends React.Component {
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
                             onClick={() => this.activateChat(c.id)}
                             itemContent={<ToolTipDiv tooltip={c.chatName}
-                                                     tooltipDelay={500}
-                                                     className="flex-grow-1">{c.chatName}</ToolTipDiv>}
+                                tooltipDelay={500}
+                                className="flex-grow-1">{c.chatName}</ToolTipDiv>}
                             // TODO: make left icon user count when multiuser chat.
                             // TODO: add status funcationality
                             // leftIcon="fiber_manual_record"
                             rightIcon={
                                 ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
                                     ? this.getNotificationIcon(c)
-                                    : <TooltipIcon
+                                    : <TooltipIconButton
                                         tooltip={t('title_chatRemove')}
                                         tooltipDelay={500}
                                         tooltipPosition="right"

@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, IconButton, Input, List, ListItem, Tooltip } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
+const { FontIcon, IconButton, TooltipIconButton } = require('~/react-toolbox');
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
@@ -12,23 +11,25 @@ const sounds = require('~/helpers/sounds');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
 const css = require('classnames');
+const ChatSideBar = require('./components/ChatSideBar');
+const ChatNameEditor = require('./components/ChatNameEditor');
 
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 @observer
 class Messages extends React.Component {
-    @observable sidebarOpen = false;
+    @observable static sidebarOpen = false; // static, so it acts like lazy internal store
     @observable chatStarred = false;
-    // @observable members = chatStore.activeChat.
+    @observable chatNameEditorVisible = false;
 
     componentWillMount() {
-        this.reactionToDispose = reaction(() => this.sidebarOpen, open => {
+        this.reactionToDispose = reaction(() => Messages.sidebarOpen, open => {
             TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
         }, { delay: 1000 });
         TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
-            if (isOpen) this.sidebarOpen = isOpen;
+            if (isOpen) Messages.sidebarOpen = isOpen;
         });
     }
+
     componentWillUnmount() {
         this.reactionToDispose();
     }
@@ -39,12 +40,14 @@ class Messages extends React.Component {
             .then(() => sounds.sent.play())
             .catch(() => sounds.destroy.play());
     }
+
     sendAck() {
         sounds.sending.play();
         chatStore.activeChat.sendAck()
             .then(() => sounds.sent.play())
             .catch(() => sounds.destroy.play());
     }
+
     shareFiles = (files) => {
         sounds.sending.play();
         chatStore.activeChat.shareFiles(files)
@@ -52,13 +55,21 @@ class Messages extends React.Component {
             .catch(() => sounds.destroy.play());
     };
 
-    handleSidebar = () => {
-        this.sidebarOpen = !this.sidebarOpen;
-    }
+    toggleSidebar = () => {
+        Messages.sidebarOpen = !Messages.sidebarOpen;
+    };
 
-    handleStar = () => {
+    toggleStar = () => {
         this.chatStarred = !this.chatStarred;
-    }
+    };
+
+    showChatNameEditor = () => {
+        this.chatNameEditorVisible = true;
+    };
+
+    hideChatNameEditor = () => {
+        this.chatNameEditorVisible = false;
+    };
 
     render() {
         return (
@@ -66,35 +77,42 @@ class Messages extends React.Component {
                 <ChatList />
                 <div className="message-view">
                     <div className="message-toolbar flex-justify-between">
-                        <div className="flex-col">
-                            <div className="title">
-                                <div className="title-content">
-                                    {chatStore.activeChat && chatStore.activeChat.chatName}
-                                </div>
-                                <FontIcon value="edit" />
+                        <div className="flex-col" style={{ width: '90%' }}>
+                            <div className="title" onClick={this.showChatNameEditor}>
+                                {
+                                    this.chatNameEditorVisible
+                                        ? <ChatNameEditor showLabel={false} className="name-editor"
+                                            onBlur={this.hideChatNameEditor} />
+                                        : <div className="title-content">
+                                            {chatStore.activeChat && chatStore.activeChat.chatName}
+                                            <FontIcon value="edit" />
+                                        </div>
+                                }
                             </div>
                             <div className="flex-row meta-nav">
-                                <TooltipIcon icon={this.chatStarred ? 'star' : 'star_border'}
-                                    onClick={this.handleStar}
+                                <TooltipIconButton icon={this.chatStarred ? 'star' : 'star_border'}
+                                    onClick={this.toggleStar}
                                     className={css({ starred: this.chatStarred })}
                                     tooltip={t('title_starChannel')}
                                     tooltipPosition="bottom"
                                     tooltipDelay={500} />
                                 <div className="member-count">
-                                    <TooltipIcon icon="person"
+                                    <TooltipIconButton icon="person"
                                         tooltip={t('title_memberCount')}
                                         tooltipPosition="bottom"
                                         tooltipDelay={500}
-                                        onClick={this.handleSidebar} /> 1
+                                        onClick={this.toggleSidebar} />
+                                    {chatStore.activeChat && chatStore.activeChat.participants ?
+                                        chatStore.activeChat.participants.length : ''}
                                 </div>
 
                             </div>
                         </div>
-                        <IconButton icon="chrome_reader_mode" onClick={this.handleSidebar} />
+                        <IconButton icon="chrome_reader_mode" onClick={this.toggleSidebar} />
                     </div>
                     <div className="flex-row flex-grow-1">
                         <div className="flex-col flex-grow-1">
-                            {(chatStore.chats.length === 0 && !chatStore.loading)
+                            {chatStore.chats.length === 0 && !chatStore.loading
                                 ? <NoChatSelected />
                                 : <MessageList />}
                             {chatStore.activeChat && chatStore.activeChat.uploadQueue.length
@@ -103,22 +121,7 @@ class Messages extends React.Component {
                             <MessageInput show={!!chatStore.activeChat && chatStore.activeChat.metaLoaded}
                                 onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
                         </div>
-                        <div className={css('chat-sidebar', { open: this.sidebarOpen })}>
-                            <div className="title">{t('title_About')}</div>
-                            <div className="flex-row">
-                                <Input label={t('title_title')} />
-                                {/* <IconButton icon="cancel" /> */}
-                            </div>
-                            <div className="title">{t('title_Members')}</div>
-                            <List selectable>
-                                {/* {this.members.map(u =>
-                                    <ListItem
-                                      avatar={<Avatar key={u} username={u} />}
-                                      caption="username"
-                                      legend="name" />
-                                )} */}
-                            </List>
-                        </div>
+                        <ChatSideBar open={Messages.sidebarOpen} />
                     </div>
                 </div>
             </div>

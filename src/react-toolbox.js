@@ -16,7 +16,6 @@ module.exports.Dialog = require('react-toolbox/lib/dialog/Dialog').default;
 module.exports.Drawer = require('react-toolbox/lib/drawer/Drawer').default;
 module.exports.Dropdown = require('react-toolbox/lib/dropdown/Dropdown').default;
 module.exports.FontIcon = require('react-toolbox/lib/font_icon/FontIcon').default;
-// module.exports.Form = require('react-toolbox/lib/form/Form').default;
 module.exports.Input = require('react-toolbox/lib/input/Input').default;
 module.exports.Layout = require('react-toolbox/lib/layout/Layout').default;
 module.exports.NavDrawer = require('react-toolbox/lib/layout/NavDrawer').default;
@@ -49,4 +48,6 @@ module.exports.Tab = require('react-toolbox/lib/tabs/Tab').default;
 module.exports.Tabs = require('react-toolbox/lib/tabs/Tabs').default;
 module.exports.Tooltip = require('react-toolbox/lib/tooltip/Tooltip').default;
 module.exports.TimePicker = require('react-toolbox/lib/time_picker/TimePicker').default;
+
+module.exports.TooltipIconButton = module.exports.Tooltip()(module.exports.IconButton);
 

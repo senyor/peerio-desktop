@@ -1,12 +1,11 @@
 const React = require('react');
-const { IconButton, Tooltip } = require('~/react-toolbox');
+const { TooltipIconButton } = require('~/react-toolbox');
 const Search = require('~/ui/shared-components/Search');
 const css = require('classnames');
 const { fileStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 const delay = 500;
 
 @observer
@@ -24,20 +23,20 @@ class GlobalActions extends React.Component {
             <div className="table-action-bar">
                 <div className="no-select">{fileStore.selectedCount} {t('title_selected')}</div>
                 <div className="table-actions">
-                    <TooltipIcon
+                    <TooltipIconButton
                         tooltip={t('button_upload')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="cloud_upload"
                         className="active"
                         onClick={this.props.onUpload} />
-                    {/* <TooltipIcon*/}
+                    {/* <TooltipIconButton*/}
                     {/* tooltip="Download"*/}
                     {/* tooltipDelay={delay}*/}
                     {/* tooltipPosition="top"*/}
                     {/* icon="file_download"*/}
                     {/* className={css({ active: true, disabled: true })} />*/}
-                    <TooltipIcon
+                    <TooltipIconButton
                         tooltip={t('button_share')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
@@ -45,13 +44,13 @@ class GlobalActions extends React.Component {
                         className={css('reverse-icon', 'active', { disabled: !fileStore.hasSelectedShareableFiles })}
                         onClick={this.props.onShare}
                     />
-                    {/* <TooltipIcon*/}
+                    {/* <TooltipIconButton*/}
                     {/* tooltip="Add to folder"*/}
                     {/* tooltipDelay={delay}*/}
                     {/* tooltipPosition="top"*/}
                     {/* icon="create_new_folder"*/}
                     {/* className={css({ active: false, disabled: true })} />*/}
-                    <TooltipIcon
+                    <TooltipIconButton
                         tooltip={t('button_delete')}
                         tooltipDelay={delay}
                         tooltipPosition="top"

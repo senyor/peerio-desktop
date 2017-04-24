@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
     ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { fileStore, contactStore } = require('~/icebear');
+const { fileStore, contactStore, User } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 
@@ -16,7 +16,11 @@ class UserPicker extends React.Component {
     accepted = false;
 
     @computed get options() {
-        return contactStore.contacts.filter(c => !c.loading && !c.notFound && !this.selected.includes(c));
+        return contactStore.contacts.filter(c =>
+            !c.loading &&
+            !c.notFound &&
+            !this.selected.includes(c) &&
+            c.username !== User.current.username);
     }
 
     @computed get isValid() {

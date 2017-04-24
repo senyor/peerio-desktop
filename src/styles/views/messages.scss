@@ -124,6 +124,19 @@ $radius-sign-warning: 18px;
       margin-right: $margin-default;
       overflow: hidden;
 
+      .name-editor {
+        height: 24px;
+        margin: 0;
+        padding: 0;
+
+        input {
+          border: none;
+          height: 24px;
+          margin: 0;
+          padding: 0;
+        }
+      }
+
       .title-content {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -132,6 +145,7 @@ $radius-sign-warning: 18px;
 
       .material-icons {
         display: none;
+        float: right;
         margin-left: $margin-small;
       }
 

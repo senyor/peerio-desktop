@@ -2,12 +2,11 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { Dialog, IconButton, IconMenu, MenuDivider, MenuItem, Tooltip } = require('~/react-toolbox');
+const { Dialog, IconMenu, MenuDivider, MenuItem, TooltipIconButton } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../messages/components/InlineFiles');
 const { fileStore, warnings, mailStore } = require('~/icebear');
 
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 @observer
 class MailSent extends React.Component {
@@ -48,7 +47,7 @@ class MailSent extends React.Component {
                         <div className="flex-row flex-align-center flex-justify-between"
                             style={{ height: '36px' }}>
                             <div className="subject">{this.props.ghost.subject}</div>
-                            <TooltipIcon
+                            <TooltipIconButton
                                 tooltip={t('button_delete')}
                                 tooltipDelay={250}
                                 tooltipPosition="bottom"

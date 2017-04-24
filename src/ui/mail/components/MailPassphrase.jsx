@@ -1,9 +1,8 @@
 const React = require('react');
-const { Tooltip, IconButton } = require('~/react-toolbox');
+const { Tooltip, IconButton, TooltipIconButton } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 @observer class MailPassphrase extends React.Component {
 
@@ -23,8 +22,8 @@ const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
                 <p>{t('title_passphraseExplanation')}</p>
                 <div className="dark-label">{t('title_passphrase')}</div>
                 <div className="passphrase">
-                    <span ref={(pp) => { this.passphrase = pp; }}>{ this.props.ghost.passphrase }</span>
-                    <TooltipIcon
+                    <span ref={(pp) => { this.passphrase = pp; }}>{this.props.ghost.passphrase}</span>
+                    <TooltipIconButton
                         tooltip={t('title_copy')}
                         tooltipDelay={500}
                         tooltipPosition="bottom"

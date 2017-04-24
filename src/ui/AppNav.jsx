@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, IconMenu, MenuItem, MenuDivider, Tooltip } = require('~/react-toolbox');
+const { IconButton, IconMenu, MenuItem, MenuDivider, Tooltip, TooltipIconButton } = require('~/react-toolbox');
 const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
@@ -12,7 +12,6 @@ const AppNavButton = require('./AppNavButton');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
 
-const TooltipIcon = Tooltip()(IconButton); //eslint-disable-line
 
 // todo: move this somewhere more appropriate
 let dockNotifsStarted = false;
@@ -120,11 +119,11 @@ class AppNav extends React.Component {
                         onClick={this.toFiles} />
 
                     <div className="usage">
-                        <TooltipIcon style={{
+                        <TooltipIconButton style={{
                             position: 'absolute',
                             clipPath: `polygon(0 0, ${cloudFillPercent}% 0, ${cloudFillPercent}% 100%, 0% 100%)`
                         }} icon="cloud" />
-                        <TooltipIcon
+                        <TooltipIconButton
                             tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
                             tooltipPosition="right"
                             icon="cloud_queue" />

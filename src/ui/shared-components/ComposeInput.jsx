@@ -161,6 +161,7 @@ class ComposeInput extends React.Component {
         }
         // const quill =
         this.quill = new Quill(el, opts);
+        this.quill.focus();
 
         // quill.on('text-change', (delta, oldDelta, source) => {
         //     if (source === Quill.sources.USER) {

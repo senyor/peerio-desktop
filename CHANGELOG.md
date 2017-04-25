@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.7.0"></a>
+# [2.7.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.5.0...v2.7.0) (2017-04-25)
+
+
+### Bug Fixes
+
+* **avatar:** fixes overflowing avatars. tweaks message input. ([ac739bc](https://github.com/PeerioTechnologies/peerio-desktop/commit/ac739bc))
+* **chat:** auto-focus on chat input ([e04ca8f](https://github.com/PeerioTechnologies/peerio-desktop/commit/e04ca8f))
+* **chat:** corrects active chat list item hover colour. ([3945533](https://github.com/PeerioTechnologies/peerio-desktop/commit/3945533))
+* **chat:** fixes avatars overflow ([5910db3](https://github.com/PeerioTechnologies/peerio-desktop/commit/5910db3))
+* **chat:** makes avatars scrollable. ([7279f1c](https://github.com/PeerioTechnologies/peerio-desktop/commit/7279f1c))
+* **chat:** makes chat list items look and act appropriately. ([8b4a01b](https://github.com/PeerioTechnologies/peerio-desktop/commit/8b4a01b))
+* **l18n:** remove unneeded emphasis and add links to about page buttons ([38ec691](https://github.com/PeerioTechnologies/peerio-desktop/commit/38ec691))
+* **search:** remove clear button from empty search box ([edb7a68](https://github.com/PeerioTechnologies/peerio-desktop/commit/edb7a68))
+* **ui:** harmonize with mock and mobile ([da74056](https://github.com/PeerioTechnologies/peerio-desktop/commit/da74056))
+* **ui:** remove parentheses from You owner ([9ac9058](https://github.com/PeerioTechnologies/peerio-desktop/commit/9ac9058))
+
+
+### Features
+
+* **chat:** chat sidebar and rename ([ab0b052](https://github.com/PeerioTechnologies/peerio-desktop/commit/ab0b052))
+* **chat:** fav chats ([0d42f81](https://github.com/PeerioTechnologies/peerio-desktop/commit/0d42f81))
+* **chat:** render system messages ([4e8c0ca](https://github.com/PeerioTechnologies/peerio-desktop/commit/4e8c0ca))
+* **chat:** sidebar state persistance ([efa8ec8](https://github.com/PeerioTechnologies/peerio-desktop/commit/efa8ec8))
+* **files:** file preview on mac ([8fbd3b3](https://github.com/PeerioTechnologies/peerio-desktop/commit/8fbd3b3))
+
+
+### Reverts
+
+* emojione update ([120da21](https://github.com/PeerioTechnologies/peerio-desktop/commit/120da21))
+
+
+
 <a name="2.6.0"></a>
 # [2.6.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.5.0...v2.6.0) (2017-04-25)
 

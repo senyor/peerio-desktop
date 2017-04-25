@@ -18,7 +18,6 @@ const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 @observer
 class Messages extends React.Component {
     @observable static sidebarOpen = false; // static, so it acts like lazy internal store
-    @observable chatStarred = false;
     @observable chatNameEditorVisible = false;
 
     componentWillMount() {
@@ -59,9 +58,6 @@ class Messages extends React.Component {
         Messages.sidebarOpen = !Messages.sidebarOpen;
     };
 
-    toggleStar = () => {
-        this.chatStarred = !this.chatStarred;
-    };
 
     showChatNameEditor = () => {
         this.chatNameEditorVisible = true;
@@ -70,58 +66,61 @@ class Messages extends React.Component {
     hideChatNameEditor = () => {
         this.chatNameEditorVisible = false;
     };
+    // assumes active chat exists, don't render if it doesn't
+    renderHeader() {
+        const chat = chatStore.activeChat;
+        return (
+            <div className="message-toolbar flex-justify-between">
+                <div className="flex-col" style={{ width: '90%' }}>
+                    <div className="title" onClick={this.showChatNameEditor}>
+                        {
+                            this.chatNameEditorVisible
+                                ? <ChatNameEditor showLabel={false} className="name-editor"
+                                    onBlur={this.hideChatNameEditor} />
+                                : <div className="title-content">
+                                    {chat.chatName}
+                                    <FontIcon value="edit" />
+                                </div>
+                        }
+                    </div>
+                    <div className="flex-row meta-nav">
+                        <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
+                            onClick={chat.toggleFavoriteState}
+                            className={css({ starred: chat.isFavorite })}
+                            tooltip={t('title_starChannel')}
+                            tooltipPosition="bottom"
+                            tooltipDelay={500} />
+                        <div className="member-count">
+                            <TooltipIconButton icon="person"
+                                tooltip={t('title_memberCount')}
+                                tooltipPosition="bottom"
+                                tooltipDelay={500}
+                                onClick={this.toggleSidebar} />
+                            {chat.participants ? chat.participants.length : ''}
+                        </div>
 
+                    </div>
+                </div>
+                <IconButton icon="chrome_reader_mode" onClick={this.toggleSidebar} />
+            </div>
+        );
+    }
     render() {
+        const chat = chatStore.activeChat;
+
         return (
             <div className="messages">
                 <ChatList />
                 <div className="message-view">
-                    <div className="message-toolbar flex-justify-between">
-                        <div className="flex-col" style={{ width: '90%' }}>
-                            <div className="title" onClick={this.showChatNameEditor}>
-                                {
-                                    this.chatNameEditorVisible
-                                        ? <ChatNameEditor showLabel={false} className="name-editor"
-                                            onBlur={this.hideChatNameEditor} />
-                                        : <div className="title-content">
-                                            {chatStore.activeChat && chatStore.activeChat.chatName}
-                                            <FontIcon value="edit" />
-                                        </div>
-                                }
-                            </div>
-                            <div className="flex-row meta-nav">
-                                <TooltipIconButton icon={this.chatStarred ? 'star' : 'star_border'}
-                                    onClick={this.toggleStar}
-                                    className={css({ starred: this.chatStarred })}
-                                    tooltip={t('title_starChannel')}
-                                    tooltipPosition="bottom"
-                                    tooltipDelay={500} />
-                                <div className="member-count">
-                                    <TooltipIconButton icon="person"
-                                        tooltip={t('title_memberCount')}
-                                        tooltipPosition="bottom"
-                                        tooltipDelay={500}
-                                        onClick={this.toggleSidebar} />
-                                    {chatStore.activeChat && chatStore.activeChat.participants ?
-                                        chatStore.activeChat.participants.length : ''}
-                                </div>
-
-                            </div>
-                        </div>
-                        <IconButton icon="chrome_reader_mode" onClick={this.toggleSidebar} />
-                    </div>
+                    {chat ? this.renderHeader() : null}
                     <div className="flex-row flex-grow-1">
                         <div className="flex-col flex-grow-1">
-                            {chatStore.chats.length === 0 && !chatStore.loading
-                                ? <NoChatSelected />
-                                : <MessageList />}
-                            {chatStore.activeChat && chatStore.activeChat.uploadQueue.length
-                                ? <UploadInChatProgress queue={chatStore.activeChat.uploadQueue} />
-                                : null}
-                            <MessageInput show={!!chatStore.activeChat && chatStore.activeChat.metaLoaded}
+                            {chatStore.chats.length === 0 && !chatStore.loading ? <NoChatSelected /> : <MessageList />}
+                            {chat && chat.uploadQueue.length ? <UploadInChatProgress queue={chat.uploadQueue} /> : null}
+                            <MessageInput show={!!chat && chat.metaLoaded}
                                 onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
                         </div>
-                        <ChatSideBar open={Messages.sidebarOpen} />
+                        {chat ? <ChatSideBar open={Messages.sidebarOpen} /> : null}
                     </div>
                 </div>
             </div>

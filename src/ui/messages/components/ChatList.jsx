@@ -66,7 +66,7 @@ class ChatList extends React.Component {
                                         tooltip={t('title_chatRemove')}
                                         tooltipDelay={500}
                                         tooltipPosition="right"
-                                        onClick={() => chatStore.unloadChat(c)}
+                                        onClick={c.hide}
                                         icon="remove_circle_outline" />
                             } />
                     )}

@@ -68,7 +68,7 @@
     "devtron": "1.4.0",
     "diff2html-cli": "2.5.0",
     "electron": "1.6.5",
-    "electron-builder": "17.0.1",
+    "electron-builder": "17.1.1",
     "electron-builder-squirrel-windows": "17.0.1",
     "electron-devtools-installer": "2.2.0",
     "electron-rebuild": "1.5.7",

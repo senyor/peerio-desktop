@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.7.5"></a>
+## [2.7.5](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.7.3...v2.7.5) (2017-04-26)
+
+
+### Bug Fixes
+
+* **focus:** remove BetterInput auto focus and accidental chat renames ([db29c00](https://github.com/PeerioTechnologies/peerio-desktop/commit/db29c00))
+
+
+
 <a name="2.7.4"></a>
 ## [2.7.4](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.7.3...v2.7.4) (2017-04-26)
 

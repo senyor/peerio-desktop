@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.7.3"></a>
+## [2.7.3](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.7.2...v2.7.3) (2017-04-26)
+
+
+### Bug Fixes
+
+* **chat:** fix invalid blur events caused by react and triggering chat rename ([2097071](https://github.com/PeerioTechnologies/peerio-desktop/commit/2097071))
+
+
+
 <a name="2.7.2"></a>
 ## [2.7.2](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.7.1...v2.7.2) (2017-04-26)
 

@@ -16,7 +16,6 @@ class ChatNameEditor extends React.Component {
     };
 
     setNameInputRef = (ref) => {
-        if (ref) ref.focus();
         this.nameInput = ref;
     };
 

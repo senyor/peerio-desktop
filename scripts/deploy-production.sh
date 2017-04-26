@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+npm run get-locales
 echo "[•••            ] setting flags"
 set -e
 export NODE_ENV=production

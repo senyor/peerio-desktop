@@ -16,6 +16,14 @@ class ChatSideBar extends React.Component {
                 <div className="flex-row">
                     <ChatNameEditor showLabel />
                 </div>
+                <List selectable>
+                    <ListItem
+                      leftIcon="remove_circle_outline"
+                      caption="button_hideChat" />
+                    {/* <ListItem
+                      leftIcon="notifications_none"
+                      caption="button_muteChat" /> */}
+                </List>
                 <div className="title">{t('title_Members')}</div>
                 <List selectable>
                     {chatStore.activeChat && chatStore.activeChat.participants ?
@@ -32,4 +40,3 @@ class ChatSideBar extends React.Component {
 }
 
 module.exports = ChatSideBar;
-

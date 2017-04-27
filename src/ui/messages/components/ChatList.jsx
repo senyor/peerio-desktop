@@ -42,7 +42,7 @@ class ChatList extends React.Component {
                 {this.getProgressBar(chatStore.loading)}
                 <div className="wrapper-button-add-chat">
                     <Button icon="add" accent mini onClick={this.newMessage} floating />
-                    <div>{t('title_chats')}</div>
+                    <div>{t('title_haveAChat')}</div>
                 </div>
                 <List selectable ripple>
                     {chatStore.chats.map(c =>

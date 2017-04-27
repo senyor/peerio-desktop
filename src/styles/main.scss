@@ -73,7 +73,7 @@ section {
   position: relative;
 
   & + & {
-    margin-left: #{-$margin-tiny};
+    margin-left: #{ - $margin-tiny};
   }
 
   .material-icons {

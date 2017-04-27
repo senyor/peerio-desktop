@@ -4,6 +4,11 @@ $radius-sign-warning: 18px;
 .messages {
   display: flex;
   flex-direction: row;
+
+  .starred,
+  .starred .material-icons {
+    color: gold;
+  }
 }
 
 // message content, input, toolbar
@@ -100,7 +105,7 @@ $radius-sign-warning: 18px;
         input {
           border: 1px solid rgba($color-brand, .54);
           border-radius: 4px;
-          color: text-dark-secondary;
+          color: $text-dark-secondary;
           font-weight: $font-weight-bold;
           height: 24px;
           line-height: 20px;
@@ -138,10 +143,6 @@ $radius-sign-warning: 18px;
 
       .material-icons {
         font-size: 16px;
-      }
-
-      .starred .material-icons {
-        color: gold;
       }
 
       .member-count {
@@ -488,6 +489,16 @@ $radius-sign-warning: 18px;
     }
   }
   .rt-list-left .rt-list-itemAction span { width: 40px; }
+
+  .avatar-group-chat {
+    background-color: rgba($color-brand, 70);
+    border-radius: 40px;
+    color: $text-light-primary;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    width: 40px;
+  }
 
   .rt-avatar-avatar {
     margin: 0 24px 0 0;

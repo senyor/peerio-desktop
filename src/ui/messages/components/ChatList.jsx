@@ -47,18 +47,19 @@ class ChatList extends React.Component {
                 <List selectable ripple>
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
-                            leftIcon={[<Avatar key="a" contact={c.chatName} />]}
+                            leftIcon={<div className="avatar-group-chat material-icons">people</div>
+                                }
+                                // FIXME: <Avatar key="a" contact={c.participants[0]} />
                             onClick={() => this.activateChat(c.id)}
                             rightIcon={
                                 ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
                                     ? this.getNotificationIcon(c)
                                     : null
                             }
-
-                            // itemContent={<ToolTipDiv tooltip={c.chatName}
-                            //     tooltipDelay={500}
-                            //     className="flex-grow-1">{c.chatName}</ToolTipDiv>} />
-                            caption={c.chatName}
+                            // FIXME: add star to chat name of favourite chat.
+                            caption={chatStore.chats[1].isFavorite
+                                ? <span className="starred">&#x2605;</span>
+                                : c.chatName}
                             legend="last thing said in chat" />
                     )}
                 </List>

@@ -618,6 +618,10 @@ $radius-sign-warning: 18px;
     margin: $margin-tiny $margin-default 0;
   }
 
+  .rt-list-list {
+    overflow-y: auto;
+  }
+
   .rt-input-input {
     border-bottom: 1px solid $divider-dark;
     height: 56px;

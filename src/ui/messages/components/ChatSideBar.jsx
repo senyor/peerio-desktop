@@ -13,7 +13,7 @@ class ChatSideBar extends React.Component {
         return (
             <div className={css('chat-sidebar', { open: this.props.open })}>
                 <div className="title">{t('title_About')}</div>
-                <div className="flex-row">
+                <div className="flex-row flex-shrink-0">
                     <ChatNameEditor showLabel />
                 </div>
                 <div className="title">{t('title_Members')}</div>
@@ -32,4 +32,3 @@ class ChatSideBar extends React.Component {
 }
 
 module.exports = ChatSideBar;
-

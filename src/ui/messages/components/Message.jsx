@@ -61,6 +61,10 @@ class Message extends React.Component {
                 return (
                     <span className="system-message">{t('title_chatRenamed', { name: m.systemData.newName })}</span>
                 );
+            case 'create':
+                return (
+                    <span className="system-message">{t('title_chatCreated')}</span>
+                );
         }
         return null;
     }

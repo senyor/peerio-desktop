@@ -22,6 +22,7 @@ class ChatNameEditor extends React.Component {
     render() {
         return (
             <BetterInput label={this.props.showLabel ? t('title_title') : null}
+                hint="Press esc to cancel. Press enter to save"
                 className={this.props.className}
                 onBlur={this.props.onBlur}
                 onReject={this.cancelNameEdit}
@@ -33,4 +34,3 @@ class ChatNameEditor extends React.Component {
 }
 
 module.exports = ChatNameEditor;
-

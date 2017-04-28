@@ -5,35 +5,9 @@ $radius-sign-warning: 18px;
   display: flex;
   flex-direction: row;
 
-  .list-header-wrapper {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-
-    .rt-list-subheader {
-      cursor: default;
-      margin-top: 0;
-    }
-
-    .rt-button-button {
-      display: flex;
-      height: 48px;
-      margin-right: 6px;
-      width: 48px;
-
-      .new-message {
-        align-self: center;
-        background-image: url('./static/img/icon_add_chat.png');
-        background-size: contain;
-        height: 20px;
-        padding: 2px;
-        width: 20px;
-      }
-    }
-
-    .rt-ripple-rippleWrapper {
-      border-radius: 24px;
-    }
+  .starred,
+  .starred .material-icons {
+    color: gold;
   }
 }
 
@@ -44,7 +18,7 @@ $radius-sign-warning: 18px;
   @extend %flex-shrink-1;
   position: relative;
   // FIXME remove calc?
-  width: calc(100vw - 304px);
+  width: calc(100vw - 352px);
 
   .receipt-wrapper {
     @extend %flex-row;
@@ -111,17 +85,16 @@ $radius-sign-warning: 18px;
     align-items: center;
     border-bottom: 1px solid $divider-dark;
     display: flex;
-    flex: 0 0 64px;
-    margin-top: 8px;
+    flex: 0 0 80px;
     padding: 0 $padding-default 0 24px;
 
     .title {
       @extend %flex-row;
       color: $text-dark-secondary;
-      font-size: 16px;
+      font-size: 20px;
       font-weight: $font-weight-bold;
       height: 24px;
-      margin-right: $margin-default;
+      margin: $margin-default $margin-default $margin-tiny 0;
       overflow: hidden;
 
       .name-editor {
@@ -130,14 +103,19 @@ $radius-sign-warning: 18px;
         padding: 0;
 
         input {
-          border: none;
+          border: 1px solid rgba($color-brand, .54);
+          border-radius: 4px;
+          color: $text-dark-secondary;
+          font-weight: $font-weight-bold;
           height: 24px;
+          line-height: 20px;
           margin: 0;
-          padding: 0;
+          padding: $padding-tiny $padding-small;
         }
       }
 
       .title-content {
+        line-height: 20px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -165,10 +143,6 @@ $radius-sign-warning: 18px;
 
       .material-icons {
         font-size: 16px;
-      }
-
-      .starred .material-icons {
-        color: gold;
       }
 
       .member-count {
@@ -492,23 +466,49 @@ $radius-sign-warning: 18px;
 // message navigation
 .chat-list {
   @extend %flex-shrink-0;
-  background-color: $background-chat-list;
+  border-right: 1px solid $divider-dark;
   height: 100vh;
   overflow-y: auto;
   position: relative;
   width: $chat-list-width;
 
-  // .mutli-user-chat {
-  //   border-radius: 2px;
-  //   display: block;
-  //   font-size: 12px;
-  //   height: 16px;
-  //   line-height: 16px;
-  //   margin-right: 8px;
-  //   text-align: center;
-  //   width: 16px;
-  // }
+  .wrapper-button-add-chat {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    background-color: $color-dark-06;
+    border-bottom: 1px solid $divider-dark;
+    height: 80px;
+    padding: 0 16px;
 
+    .rt-button-button {
+      margin-right: $margin-default;
+    }
+
+    .material-icons {
+      color: $text-light-primary;
+    }
+  }
+  .rt-list-left .rt-list-itemAction span { width: 40px; }
+
+  .avatar-group-chat {
+    background-color: rgba($color-brand, 70);
+    border-radius: 40px;
+    color: $text-light-primary;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    width: 40px;
+  }
+
+  .rt-avatar-avatar {
+    margin: 0 24px 0 0;
+  }
+
+  .rt-list-list {
+    padding-top: 0;
+  }
+
+  // shown when when loading chats in the chat list.
   .rt-progress_bar-linear {
     left: 0;
     position: absolute;
@@ -519,7 +519,12 @@ $radius-sign-warning: 18px;
     overflow: hidden;
   }
 
-  .rt-list-item div {
+  .rt-list-item {
+    border-bottom: 1px solid $divider-dark;
+  }
+
+  .rt-list-primary,
+  .rt-list-itemText {
     font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -532,15 +537,18 @@ $radius-sign-warning: 18px;
 
   .rt-list-listItem.active .rt-list-item {
     background: $background-active-message;
-    color: $text-light-primary;
-    font-weight: $font-weight-bold;
+
+    .rt-list-itemText {
+      color: $text-light-secondary;
+    }
+
+    .rt-list-primary {
+      color: $text-light-primary;
+      font-weight: $font-weight-bold;
+    }
 
     &:hover {
       background: $background-active-message;
-
-      .rt-button-button .material-icons {
-        color: $text-light-secondary;
-      }
     }
   }
 
@@ -552,38 +560,14 @@ $radius-sign-warning: 18px;
     margin: 0;
   }
 
-  .rt-list-item {
-    padding-right: 12px;
-
-    // Styling for chat list item delete
-    .rt-button-button {
-      display: none;
-    }
-
-    &:hover .rt-button-button {
-      display: block;
-    }
-  }
   // contact status indicator
-  .rt-list-left .rt-list-itemAction {
-    [data-react-toolbox='font-icon'] {
-      margin-right: $margin-small;
-      width: 16px;
-    }
-
-    .material-icons {
-      font-size: 16px;
-      margin-right: $margin-small;
-      width: 16px;
-    }
-  }
   // status should be applied to list item parent.
-  .online .rt-list-left .material-icons {
-    color: $status-online;
+  .online .rt-list-left .avatar {
+    border-color: $status-online;
   }
 
   .busy .rt-list-left .material-icons {
-    color: $status-busy;
+    border-color: $status-busy;
   }
 }
 
@@ -618,8 +602,8 @@ $radius-sign-warning: 18px;
     margin: $margin-tiny $margin-default 0;
   }
 
-  .rt-list-list {
-    overflow-y: auto;
+  .rt-list-subheader {
+    border-bottom: 1px solid $divider-dark;
   }
 
   .rt-input-input {

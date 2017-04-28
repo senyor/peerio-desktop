@@ -72,6 +72,10 @@ section {
 .avatar-wrapper {
   position: relative;
 
+  & + & {
+    margin-left: #{ - $margin-tiny};
+  }
+
   .material-icons {
     background-color: $background-root;
     border-radius: 12px;

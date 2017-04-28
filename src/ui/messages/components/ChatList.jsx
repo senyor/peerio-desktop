@@ -1,6 +1,6 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { List, ListItem, ListSubHeader, ProgressBar, Tooltip, TooltipIconButton } = require('~/react-toolbox');
+const { Avatar, Button, List, ListItem, ProgressBar, Tooltip } = require('~/react-toolbox');
 const { chatStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
@@ -40,35 +40,27 @@ class ChatList extends React.Component {
         return (
             <div className="chat-list">
                 {this.getProgressBar(chatStore.loading)}
+                <div className="wrapper-button-add-chat">
+                    <Button icon="add" accent mini onClick={this.newMessage} floating />
+                    <div>{t('title_haveAChat')}</div>
+                </div>
                 <List selectable ripple>
-                    <div key="list-header" className="list-header-wrapper">
-                        <ListSubHeader caption={t('title_chats')} />
-                        <TooltipIconButton
-                            tooltip={t('title_chatAdd')}
-                            tooltipDelay={500}
-                            tooltipPosition="right"
-                            icon={<div className="new-message" />}
-                            onClick={this.newMessage} />
-                    </div>
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
+                            leftIcon={<div className="avatar-group-chat material-icons">people</div>
+                                }
+                                // FIXME: <Avatar key="a" contact={c.participants[0]} />
                             onClick={() => this.activateChat(c.id)}
-                            itemContent={<ToolTipDiv tooltip={c.chatName}
-                                tooltipDelay={500}
-                                className="flex-grow-1">{c.chatName}</ToolTipDiv>}
-                            // TODO: make left icon user count when multiuser chat.
-                            // TODO: add status funcationality
-                            // leftIcon="fiber_manual_record"
                             rightIcon={
                                 ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
                                     ? this.getNotificationIcon(c)
-                                    : <TooltipIconButton
-                                        tooltip={t('title_chatRemove')}
-                                        tooltipDelay={500}
-                                        tooltipPosition="right"
-                                        onClick={c.hide}
-                                        icon="remove_circle_outline" />
-                            } />
+                                    : null
+                            }
+                            // FIXME: add star to chat name of favourite chat.
+                            caption={chatStore.chats[1].isFavorite
+                                ? <span className="starred">&#x2605;</span>
+                                : c.chatName}
+                            legend="last thing said in chat" />
                     )}
                 </List>
             </div>

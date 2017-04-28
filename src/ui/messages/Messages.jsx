@@ -66,6 +66,10 @@ class Messages extends React.Component {
     hideChatNameEditor = () => {
         this.chatNameEditorVisible = false;
     };
+
+    chatNameEditorRef = ref => {
+        if (ref) ref.nameInput.focus();
+    };
     // assumes active chat exists, don't render if it doesn't
     renderHeader() {
         const chat = chatStore.activeChat;
@@ -76,7 +80,7 @@ class Messages extends React.Component {
                         {
                             this.chatNameEditorVisible
                                 ? <ChatNameEditor showLabel={false} className="name-editor"
-                                    onBlur={this.hideChatNameEditor} />
+                                    onBlur={this.hideChatNameEditor} ref={this.chatNameEditorRef} />
                                 : <div className="title-content">
                                     {chat.chatName}
                                     <FontIcon value="edit" />

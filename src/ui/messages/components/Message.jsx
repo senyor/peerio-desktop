@@ -58,9 +58,9 @@ class Message extends React.Component {
         // eslint-disable-next-line default-case
         switch (m.systemData.action) {
             case 'rename':
-                return (
-                    <span className="system-message">{t('title_chatRenamed', { name: m.systemData.newName })}</span>
-                );
+                return m.systemData.newName
+                    ? <span className="system-message">{t('title_chatRenamed', { name: m.systemData.newName })}</span>
+                    : <span className="system-message">{t('title_chatNameRemoved')}</span>;
             case 'create':
                 return (
                     <span className="system-message">{t('title_chatCreated')}</span>

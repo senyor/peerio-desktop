@@ -1,6 +1,7 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { Avatar, Button, List, ListItem, ProgressBar, Tooltip } = require('~/react-toolbox');
+const { Button, List, ListItem, ProgressBar, Tooltip } = require('~/react-toolbox');
+const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
@@ -36,7 +37,6 @@ class ChatList extends React.Component {
     /* <ListItem caption="Bill" className="online" leftIcon="fiber_manual_record"
        rightIcon={<div className="notification">12</div>} />*/
     render() {
-        // todo: remove arrow function event handler
         return (
             <div className="chat-list">
                 {this.getProgressBar(chatStore.loading)}
@@ -47,26 +47,39 @@ class ChatList extends React.Component {
                 <List selectable ripple>
                     {chatStore.chats.map(c =>
                         <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
-                            leftIcon={<div className="avatar-group-chat material-icons">people</div>
-                                }
-                                // FIXME: <Avatar key="a" contact={c.participants[0]} />
+                            leftIcon={
+                                !c.participants || c.participants.length !== 1
+                                    ? <div className="avatar-group-chat material-icons">people</div>
+                                    : null}
+                            leftActions={[
+                                c.participants && c.participants.length === 1
+                                    ? <Avatar key="a" contact={c.participants[0]} />
+                                    : null
+                            ]}
+
                             onClick={() => this.activateChat(c.id)}
                             rightIcon={
                                 ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
                                     ? this.getNotificationIcon(c)
                                     : null
                             }
-                            // FIXME: add star to chat name of favourite chat.
-                            caption={chatStore.chats[1].isFavorite
-                                ? <span className="starred">&#x2605;</span>
-                                : c.chatName}
-                            legend="last thing said in chat" />
+                            itemContent={
+                                <span>
+                                    <span className="rt-list-itemText rt-list-primary">
+                                        {c.isFavorite ? <span className="starred">&#x2605;</span> : null}
+                                        {c.chatName}
+                                    </span>
+                                    <span className="rt-list-itemText">{c.lastMessageSnippet}</span>
+                                </span>
+                            } />
                     )}
                 </List>
             </div>
         );
     }
 }
-
+/*
+<span class="rt-list-itemContentRoot rt-list-large"><span data-react-toolbox="list-item-text" class="rt-list-itemText rt-list-primary">anritest21</span><span data-react-toolbox="list-item-text" class="rt-list-itemText">sdfsdf</span></span>
+ */
 
 module.exports = ChatList;

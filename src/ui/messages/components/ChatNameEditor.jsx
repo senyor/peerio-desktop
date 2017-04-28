@@ -22,7 +22,7 @@ class ChatNameEditor extends React.Component {
     render() {
         return (
             <BetterInput label={this.props.showLabel ? t('title_title') : null}
-                hint="Press esc to cancel. Press enter to save"
+                hint={t('title_chatNameHint')}
                 className={this.props.className}
                 onBlur={this.props.onBlur}
                 onReject={this.cancelNameEdit}

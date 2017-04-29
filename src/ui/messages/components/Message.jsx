@@ -12,6 +12,7 @@ const { t } = require('peerio-translator');
 const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
 const { isUrlAllowed } = require('~/helpers/url');
 const urls = require('~/config').translator.urlMap;
+const getSystemMessageText = require('~/helpers/system-messages');
 
 const autolinker = new Autolinker({
     urls: {
@@ -55,18 +56,7 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
-        // eslint-disable-next-line default-case
-        switch (m.systemData.action) {
-            case 'rename':
-                return m.systemData.newName
-                    ? <span className="system-message">{t('title_chatRenamed', { name: m.systemData.newName })}</span>
-                    : <span className="system-message">{t('title_chatNameRemoved')}</span>;
-            case 'create':
-                return (
-                    <span className="system-message">{t('title_chatCreated')}</span>
-                );
-        }
-        return null;
+        return <span className="system-message">{getSystemMessageText(m)}</span>;
     }
     render() {
         const m = this.props.message;

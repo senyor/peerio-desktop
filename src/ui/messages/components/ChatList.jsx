@@ -5,6 +5,7 @@ const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
+const getSystemMessageText = require('~/helpers/system-messages');
 
 const ToolTipDiv = Tooltip()(props =>
     <div style={props.style} className={props.className}
@@ -34,8 +35,14 @@ class ChatList extends React.Component {
         const c = chat.unreadCount;
         return c > 0 ? (<div className="notification">{c}</div>) : null;
     };
-    /* <ListItem caption="Bill" className="online" leftIcon="fiber_manual_record"
-       rightIcon={<div className="notification">12</div>} />*/
+
+    renderMostRecentMessage(c) {
+        if (!c.mostRecentMessage) return '';
+        if (c.mostRecentMessage.systemData) {
+            return getSystemMessageText(c.mostRecentMessage);
+        }
+        return c.mostRecentMessage.text;
+    }
     render() {
         return (
             <div className="chat-list">
@@ -69,8 +76,7 @@ class ChatList extends React.Component {
                                         {c.isFavorite ? <span className="starred">&#x2605;</span> : null}
                                         {c.chatName}
                                     </span>
-                                    <span className="rt-list-itemText">{
-                                        c.mostRecentMessage ? c.mostRecentMessage.text : ''}</span>
+                                    <span className="rt-list-itemText">{this.renderMostRecentMessage(c)}</span>
                                 </span>
                             } />
                     )}
@@ -79,8 +85,5 @@ class ChatList extends React.Component {
         );
     }
 }
-/*
-<span class="rt-list-itemContentRoot rt-list-large"><span data-react-toolbox="list-item-text" class="rt-list-itemText rt-list-primary">anritest21</span><span data-react-toolbox="list-item-text" class="rt-list-itemText">sdfsdf</span></span>
- */
 
 module.exports = ChatList;

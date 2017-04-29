@@ -42,7 +42,7 @@ class ChatList extends React.Component {
             <div className="chat-list">
                 {this.getProgressBar(chatStore.loading)}
                 <div className="wrapper-button-add-chat">
-                    <Button icon="add" accent mini onClick={this.newMessage} floating />
+                    <Button icon="add" accent mini floating onClick={this.newMessage} />
                     <div>{t('title_haveAChat')}</div>
                 </div>
                 <List selectable ripple>
@@ -65,7 +65,10 @@ class ChatList extends React.Component {
                                     : null
                             }
                             itemContent={
-                                <TooltipDiv tooltip={c.chatName} tooltipDelay={500} tooltipPosition="right">
+                                <TooltipDiv className="item-content"
+                                  tooltip={c.chatName}
+                                  tooltipDelay={500}
+                                  tooltipPosition="right">
                                     <span className="rt-list-itemText rt-list-primary">
                                         {c.isFavorite ? <span className="starred">&#x2605;</span> : null}
                                         {c.chatName}

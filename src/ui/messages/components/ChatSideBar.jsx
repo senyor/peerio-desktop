@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { List, ListSubHeader, ListDivider, ListItem } = require('~/react-toolbox');
+const { List, ListItem } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
@@ -19,13 +19,15 @@ class ChatSideBar extends React.Component {
                 <List selectable>
                     <ListItem
                       leftIcon="remove_circle_outline"
-                      caption="button_hideChat" />
+                      caption="button_hideChat"
+                      onClick={chatStore.activeChat.hide}
+                    />
                     {/* <ListItem
                       leftIcon="notifications_none"
                       caption="button_muteChat" /> */}
                 </List>
                 <div className="rt-list-subheader">{t('title_Members')} </div>
-                <List selectable>
+                <List>
                     {chatStore.activeChat && chatStore.activeChat.participants ?
                         chatStore.activeChat.participants.map(c =>
                             <ListItem key={c.username}

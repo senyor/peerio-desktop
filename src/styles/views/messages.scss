@@ -121,10 +121,13 @@ $radius-sign-warning: 18px;
         white-space: nowrap;
       }
 
+      // styling for edit icon in title bar thing.
       .material-icons {
+        color: $color-dark-38;
         display: none;
-        float: right;
-        margin-left: $margin-small;
+        font-size: 18px;
+        left: 2px;
+        position: absolute; // FIXME: rewrite to remove absolute positioning - Paul
       }
 
       &:hover {
@@ -247,7 +250,7 @@ $radius-sign-warning: 18px;
       @extend %flex-col;
       @extend %flex-shrink-0;
       border-radius: 2px;
-      margin: 12px 0 0 $margin-small;
+      margin: 12px 0 0;
       padding: $padding-tiny 24px;
       position: relative;
 
@@ -382,7 +385,7 @@ $radius-sign-warning: 18px;
     margin-top: auto;
     max-height: 112px;
     min-height: 64px;
-    padding: 0 $padding-small 0 36px;
+    padding: 0 $padding-small 0 26px;
     position: relative;
 
     .color-brand:not([disabled]) > .material-icons {
@@ -396,7 +399,7 @@ $radius-sign-warning: 18px;
     .ql-container {
       font-family: inherit;
       font-size: inherit;
-      margin-left: $margin-default;
+      margin-left: 18px;
       padding: $padding-small 0;
       width: 100%;
     }
@@ -468,9 +471,12 @@ $radius-sign-warning: 18px;
   @extend %flex-shrink-0;
   border-right: 1px solid $divider-dark;
   height: 100vh;
-  overflow-y: auto;
   position: relative;
   width: $chat-list-width;
+
+  .starred {
+    margin-right: $margin-tiny;
+  }
 
   .wrapper-button-add-chat {
     @extend %flex-row;
@@ -491,7 +497,7 @@ $radius-sign-warning: 18px;
   .rt-list-left .rt-list-itemAction span { width: 40px; }
 
   .avatar-group-chat {
-    background-color: rgba($color-brand, 70);
+    background-color: $color-dark-54;
     border-radius: 40px;
     color: $text-light-primary;
     height: 40px;
@@ -505,7 +511,18 @@ $radius-sign-warning: 18px;
   }
 
   .rt-list-list {
+    height: calc(100vh - 80px);
+    overflow-x: hidden;
+    overflow-y: auto;
     padding-top: 0;
+
+    .item-content {
+      overflow: hidden;
+    }
+
+    .rt-list-itemText {
+      white-space: nowrap;
+    }
   }
 
   // shown when when loading chats in the chat list.
@@ -521,6 +538,7 @@ $radius-sign-warning: 18px;
 
   .rt-list-item {
     border-bottom: 1px solid $divider-dark;
+    height: 72px;
   }
 
   .rt-list-primary,
@@ -600,6 +618,12 @@ $radius-sign-warning: 18px;
     height: 48px;
     line-height: 48px;
     margin: $margin-tiny $margin-default 0;
+  }
+
+  .chat-actions {
+    .rt-list-item {
+      cursor: pointer;
+    }
   }
 
   .rt-list-subheader {

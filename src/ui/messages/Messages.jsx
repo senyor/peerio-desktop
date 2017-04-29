@@ -34,23 +34,17 @@ class Messages extends React.Component {
     }
 
     sendMessage(m) {
-        sounds.sending.play();
         chatStore.activeChat.sendMessage(m)
-            .then(() => sounds.sent.play())
             .catch(() => sounds.destroy.play());
     }
 
     sendAck() {
-        sounds.sending.play();
         chatStore.activeChat.sendAck()
-            .then(() => sounds.sent.play())
             .catch(() => sounds.destroy.play());
     }
 
     shareFiles = (files) => {
-        sounds.sending.play();
         chatStore.activeChat.shareFiles(files)
-            .then(() => sounds.sent.play())
             .catch(() => sounds.destroy.play());
     };
 

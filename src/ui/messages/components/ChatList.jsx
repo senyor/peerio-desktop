@@ -1,18 +1,12 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { Button, List, ListItem, ProgressBar, Tooltip } = require('~/react-toolbox');
+const { Button, List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const getSystemMessageText = require('~/helpers/system-messages');
 
-const ToolTipDiv = Tooltip()(props =>
-    <div style={props.style} className={props.className}
-        onMouseEnter={props.onMouseEnter} onMouseLeave={props.onMouseLeave}>
-        {props.children}
-    </div>
-);
 @observer
 class ChatList extends React.Component {
     componentWillMount() {
@@ -71,13 +65,13 @@ class ChatList extends React.Component {
                                     : null
                             }
                             itemContent={
-                                <span>
+                                <TooltipDiv tooltip={c.chatName} tooltipDelay={500} tooltipPosition="right">
                                     <span className="rt-list-itemText rt-list-primary">
                                         {c.isFavorite ? <span className="starred">&#x2605;</span> : null}
                                         {c.chatName}
                                     </span>
                                     <span className="rt-list-itemText">{this.renderMostRecentMessage(c)}</span>
-                                </span>
+                                </TooltipDiv>
                             } />
                     )}
                 </List>

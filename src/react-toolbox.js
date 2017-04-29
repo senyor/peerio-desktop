@@ -1,3 +1,5 @@
+const React = require('react');
+
 module.exports.AppBar = require('react-toolbox/lib/app_bar/AppBar').default;
 module.exports.Autocomplete = require('react-toolbox/lib/autocomplete/Autocomplete').default;
 module.exports.Avatar = require('react-toolbox/lib/avatar/Avatar').default;
@@ -50,4 +52,11 @@ module.exports.Tooltip = require('react-toolbox/lib/tooltip/Tooltip').default;
 module.exports.TimePicker = require('react-toolbox/lib/time_picker/TimePicker').default;
 
 module.exports.TooltipIconButton = module.exports.Tooltip()(module.exports.IconButton);
-
+module.exports.TooltipDiv = module.exports.Tooltip()(props =>
+    React.createElement('div', {
+        style: props.style,
+        className: props.className,
+        onMouseEnter: props.onMouseEnter,
+        onMouseLeave: props.onMouseLeave
+    }, props.children)
+);

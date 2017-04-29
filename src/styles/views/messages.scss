@@ -517,6 +517,7 @@ $radius-sign-warning: 18px;
     padding-top: 0;
 
     .item-content {
+      @extend %flex-grow-1;
       overflow: hidden;
     }
 

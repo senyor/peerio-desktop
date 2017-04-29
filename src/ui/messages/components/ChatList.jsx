@@ -69,7 +69,8 @@ class ChatList extends React.Component {
                                         {c.isFavorite ? <span className="starred">&#x2605;</span> : null}
                                         {c.chatName}
                                     </span>
-                                    <span className="rt-list-itemText">{c.lastMessageSnippet}</span>
+                                    <span className="rt-list-itemText">{
+                                        c.mostRecentMessage ? c.mostRecentMessage.text : ''}</span>
                                 </span>
                             } />
                     )}

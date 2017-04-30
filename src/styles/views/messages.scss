@@ -154,6 +154,12 @@ $radius-sign-warning: 18px;
         border-left: 1px solid $divider-dark;
         height: 20px;
       }
+
+      .rt-progress_bar-circular {
+        height: 20px;
+        margin: 0 8px;
+        width: 20px;
+      }
     }
 
     .search {
@@ -494,7 +500,10 @@ $radius-sign-warning: 18px;
       color: $text-light-primary;
     }
   }
-  .rt-list-left .rt-list-itemAction span { width: 40px; }
+
+  .rt-list-left .rt-list-itemAction span {
+    width: 40px;
+  }
 
   .avatar-group-chat {
     background-color: $color-dark-54;

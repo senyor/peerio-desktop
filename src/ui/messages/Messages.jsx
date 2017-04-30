@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, IconButton, TooltipIconButton } = require('~/react-toolbox');
+const { FontIcon, IconButton, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
@@ -74,7 +74,7 @@ class Messages extends React.Component {
                         {
                             this.chatNameEditorVisible
                                 ? <ChatNameEditor showLabel={false} className="name-editor"
-                                        onBlur={this.hideChatNameEditor} ref={this.chatNameEditorRef} />
+                                    onBlur={this.hideChatNameEditor} ref={this.chatNameEditorRef} />
                                 : <div className="flex-row">
                                     <FontIcon value="edit" />
                                     <div className="title-content">
@@ -84,12 +84,15 @@ class Messages extends React.Component {
                         }
                     </div>
                     <div className="flex-row meta-nav">
+                        {chat.changingFavState ? <ProgressBar type="circular" mode="indeterminate" /> :
+
                         <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
-                            onClick={chat.toggleFavoriteState}
-                            className={css({ starred: chat.isFavorite })}
-                            tooltip={t('title_starChannel')}
-                            tooltipPosition="bottom"
-                            tooltipDelay={500} />
+                                onClick={chat.toggleFavoriteState}
+                                className={css({ starred: chat.isFavorite })}
+                                tooltip={t('title_starChannel')}
+                                tooltipPosition="bottom"
+                                tooltipDelay={500} />
+                        }
                         <div className="member-count">
                             <TooltipIconButton icon="person"
                                 tooltip={t('title_memberCount')}

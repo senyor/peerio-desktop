@@ -2,7 +2,7 @@ const React = require('react');
 const { t } = require('peerio-translator');
 const { Button, List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
-const { chatStore } = require('~/icebear');
+const { chatStore, User } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const getSystemMessageText = require('~/helpers/system-messages');
@@ -35,7 +35,9 @@ class ChatList extends React.Component {
         if (c.mostRecentMessage.systemData) {
             return <em>{getSystemMessageText(c.mostRecentMessage)}</em>;
         }
-        return <span><strong>{c.mostRecentMessage.sender.username}:</strong> {c.mostRecentMessage.text}</span>;
+        let username = c.mostRecentMessage.sender.username;
+        if (username === User.current.username) username = t('title_you');
+        return <span><strong>{username}:</strong> {c.mostRecentMessage.text}</span>;
     }
 
     render() {

@@ -18,7 +18,8 @@
   box-shadow: $shadow-2;
 }
 
-.reverse-icon {
+%reverse-icon {
+  text-align: right;
   transform: rotateY(180deg);
 }
 

@@ -54,47 +54,33 @@ const { t } = require('peerio-translator');
 
     render() {
         if (!fileStore.files.length && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
-        const tableContainerStyle = {
-            display: 'flex',
-            flexShrink: '1',
-            maxHeight: '100vh',
-            overflow: 'auto'
-        };
+
         return (
             <div className="files">
-                <div className="table-wrapper">
+                <div className="file-wrapper">
                     <Filter />
-                    <div className="flex-col" style={{ maxHeight: 'calc(100vh - 84px)' }}>
-                        <GlobalActions onUpload={this.handleUpload} onDelete={this.handleBulkDelete}
-                            onShare={this.handleFileShareIntent} />
-                        <div style={tableContainerStyle}>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <Checkbox checked={fileStore.allVisibleSelected}
-                                                onChange={this.toggleSelection} />
-                                        </th>
-                                        <th>{t('title_name')}</th>
-                                        <th>{t('title_owner')}</th>
-                                        <th className="text-right">{t('title_uploaded')}</th>
-                                        <th className="text-right">{t('title_size')}</th>
-                                        <th>{t('title_type')}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {fileStore.files.map(f => <FileLine key={f.fileId} file={f} />)}
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="table-paging">
-                            {/* <div>Rows per page:</div> */}
-                            {/* TODO make Dropdown work */}
-                            {/* <Dropdown /> */}
-                            {/* <div>1-10 of 234</div> */}
-                            {/* <IconButton icon="chevron_left" /> */}
-                            {/* <IconButton icon="chevron_right" /> */}
-                        </div>
+                    <GlobalActions onUpload={this.handleUpload} onDelete={this.handleBulkDelete}
+                      onShare={this.handleFileShareIntent} />
+                    <div className="file-table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <Checkbox checked={fileStore.allVisibleSelected}
+                                            onChange={this.toggleSelection} />
+                                    </th>
+                                    <th>{t('title_name')}</th>
+                                    <th>{t('title_owner')}</th>
+                                    <th className="text-right">{t('title_uploaded')}</th>
+                                    <th className="text-right">{t('title_size')}</th>
+                                    <th>{t('title_type')}</th>
+                                    <th />
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {fileStore.files.map(f => <FileLine key={f.fileId} file={f} />)}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

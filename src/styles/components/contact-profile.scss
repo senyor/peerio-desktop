@@ -10,9 +10,9 @@
 
 .clickable-username {
   cursor: pointer;
-
+  
   &:hover {
-    opacity: .7;
+    color: $color-brand;
   }
 }
 

@@ -61,20 +61,15 @@ class FileLine extends React.Component {
                         : <Checkbox disabled={!file.readyForDownload} checked={file.selected}
                             onChange={this.toggleChecked} />
                     }</td>
-                <td>{file.name}</td>
+                <td className="file-title">{file.name}</td>
                 <td className="clickable-username" onClick={this.openContactDialog}>
                     {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}</td>
                 <td className="text-right">{file.uploadedAt && file.uploadedAt.toLocaleString()}</td>
-                <td className="hide-text text-right">{file.sizeFormatted}</td>
-                <td className="hide-text uppercase">{file.ext}</td>
-                {
-                    this.showActions
-                        ? <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
-                            shareDisabled={!file.readyForDownload || !file.canShare} newFolderDisabled deleteDisabled={false}
-                            onDelete={this.deleteFile} onDownload={this.download} onShare={this.share} />
-                        : null
-                }
-
+                <td className="text-right">{file.sizeFormatted}</td>
+                <td className="uppercase">{file.ext}</td>
+                <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
+                  shareDisabled={!file.readyForDownload || !file.canShare} newFolderDisabled deleteDisabled={false}
+                  onDelete={this.deleteFile} onDownload={this.download} onShare={this.share} />
                 <td className="loading">
                     {(file.downloading || file.uploading)
                         ? <ProgressBar type="linear" mode="determinate" value={file.progress}

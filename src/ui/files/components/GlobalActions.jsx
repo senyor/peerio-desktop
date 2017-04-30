@@ -37,11 +37,19 @@ class GlobalActions extends React.Component {
                     {/* icon="file_download"*/}
                     {/* className={css({ active: true, disabled: true })} />*/}
                     <TooltipIconButton
-                        tooltip={t('button_share')}
+                        tooltip={t('button_shareViaChat')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
-                        icon="reply"
-                        className={css('reverse-icon', 'active', { disabled: !fileStore.hasSelectedShareableFiles })}
+                        icon="chat"
+                        className={css('active', { disabled: !fileStore.hasSelectedShareableFiles })}
+                        onClick={this.props.onShare}
+                    />
+                    <TooltipIconButton
+                        tooltip={t('button_shareViaMail')}
+                        tooltipDelay={delay}
+                        tooltipPosition="top"
+                        icon="email"
+                        className={css('active', { disabled: !fileStore.hasSelectedShareableFiles })}
                         onClick={this.props.onShare}
                     />
                     {/* <TooltipIconButton*/}

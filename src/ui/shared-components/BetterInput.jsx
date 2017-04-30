@@ -48,7 +48,7 @@ class BetterInput extends React.Component {
             this.inputRef.getWrappedInstance().blur();
         } if (e.key === 'Escape') {
             this.rejected = true;
-            this.props.onReject();
+            if (this.props.onReject) this.props.onReject();
             this.value = this.props.value || '';
             this.inputRef.getWrappedInstance().blur();
         }

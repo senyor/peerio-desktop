@@ -4,6 +4,7 @@ const { observer } = require('mobx-react');
 const { Input } = require('~/react-toolbox');
 const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
+const BetterInput = require('~/ui/shared-components/BetterInput');
 
 @observer
 class Profile extends React.Component {
@@ -27,6 +28,22 @@ class Profile extends React.Component {
         console.log('EMAIL SENT!');
     }
 
+    saveFirstName(val) {
+        const prev = User.current.firstName;
+        User.current.firstName = val;
+        User.current.saveProfile().catch(() => {
+            User.current.firstName = prev;
+        });
+    }
+
+    saveLastName(val) {
+        const prev = User.current.lastName;
+        User.current.lastName = val;
+        User.current.saveProfile().catch(() => {
+            User.current.lastName = prev;
+        });
+    }
+
     render() {
         // if (u.loading) return null; // todo: spinner
         const f = this.contact.fingerprint.split('-');
@@ -35,18 +52,20 @@ class Profile extends React.Component {
             <section className="flex-row">
                 <div>
                     <div className="input-row">
-                        <Input type="text"
+                        <BetterInput onAccept={this.saveFirstName}
                             label={t('title_firstName')}
                             value={User.current.firstName} />
-                        <Input type="text"
+                        <BetterInput onAccept={this.saveLastName}
                             label={t('title_lastName')}
                             value={User.current.lastName} />
                     </div>
                     <div className="input-row">
                         <div className="flex-col">
                             <Input type="email" label={t('title_email')} value={User.current.primaryAddress} />
-                            {User.current.primaryAddressConfirmed ? null :
-                            <div className="error">{t('error_unconfirmedEmail')}</div>
+                            {
+                                User.current.primaryAddressConfirmed
+                                    ? null
+                                    : <div className="error">{t('error_unconfirmedEmail')}</div>
                             }
                         </div>
                         {/* User.current.primaryAddressConfirmed ? null :

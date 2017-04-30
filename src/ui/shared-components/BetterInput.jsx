@@ -77,6 +77,7 @@ class BetterInput extends React.Component {
         props.onKeyDown = this.onKeyDown;
         props.ref = this.setRef;
         props.value = this.value;
+        props.type = 'text';
         return React.createElement(Input, props);
     }
 

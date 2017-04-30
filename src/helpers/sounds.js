@@ -3,6 +3,7 @@
  * Usage: require('./sounds').ack.play()
  */
 
+const uiStore = require('~/stores/ui-store');
 // 1. add file to static/snd
 // 2. add file name here
 const files = [
@@ -16,7 +17,8 @@ class Sound {
     }
 
     play() {
-        return this.node.play();
+        if (!uiStore.soundsEnabled) return;
+        return this.node.play(); //eslint-disable-line
     }
 
     get volume() {

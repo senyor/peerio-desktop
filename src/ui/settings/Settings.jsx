@@ -9,7 +9,7 @@ const css = require('classnames');
 const ROUTES = [
     '/app/settings/profile',
     '/app/settings/security',
-    // '/app/settings/preferences',
+    '/app/settings/preferences',
     '/app/settings/about'
 ];
 
@@ -51,7 +51,7 @@ class Settings extends React.Component {
                         <Tab label={t('title_settingsProfile')}
                             className={css({ 'tab-notify': !primaryAddressConfirmed })} />
                         <Tab label={t('title_settingsSecurity')} />
-                        {/* <Tab label={t('title_settingsPreferences')} />*/}
+                        <Tab label={t('title_settingsPreferences')} />}
                         <Tab label={t('title_settingsAbout')} />
                     </Tabs>
                     {this.props.children}

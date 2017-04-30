@@ -95,8 +95,8 @@ class AppNav extends React.Component {
                             className={css({ 'avatar-notify': !primaryAddressConfirmed })} />
                         <MenuItem value="security" icon="security" caption={t('title_settingsSecurity')}
                             onClick={this.toSecurity} style={menuItemStyle} />
-                        {/* <MenuItem value="preferences" icon="settings" caption={t('title_settingsPreferences')}
-                                  onClick={this.toPrefs} style={menuItemStyle} />*/}
+                        <MenuItem value="preferences" icon="settings" caption={t('title_settingsPreferences')}
+                            onClick={this.toPrefs} style={menuItemStyle} />
                         <MenuItem value="about" icon="info" caption="About"
                             onClick={this.toAbout} style={menuItemStyle} />
                         <MenuDivider />

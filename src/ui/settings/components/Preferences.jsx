@@ -2,10 +2,18 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
+const { User } = require('~/icebear');
+const uiStore = require('~/stores/ui-store');
 
 @observer
 class Preferences extends React.Component {
-
+    onMsgNotifChanged(value) {
+        User.current.settings.messageNotifications = value;
+        User.current.saveSettings();
+    }
+    onSoundsChanged(value) {
+        uiStore.soundsEnabled = value;
+    }
     render() {
         return (
             <div>
@@ -13,28 +21,35 @@ class Preferences extends React.Component {
                     <div className="title">{t('title_notifications')}</div>
                     <p>
                         {t('title_notificationsDetail')}
-                        {/* Email you when... */}
                     </p>
-                    <Switch checked="true" label={t('title_never')} />
-                    <Switch checked="false" label={t('title_notificationsMessage')} />
-                    <Switch checked="false" label={t('title_notificationsFile')} />
-                    <Switch checked="false" label={t('title_notificationsContact')} />
+                    <Switch checked={User.current.settings.messageNotifications}
+                        label={t('title_notificationsMessage')}
+                        onChange={this.onMsgNotifChanged} />
                 </section>
-
-                <section>
-                    <div className="title">{t('title_privacy')}</div>
+                <section className="section-divider">
+                    <div className="title">{t('title_sounds')}</div>
                     <p>
-                        {t('title_privacyDetail')}
-                        {/* Other users can find you... */}
+                        {t('title_soundsDetail')}
                     </p>
-                    <Switch checked="true" label={t('title_never')} />
-                    <Switch checked="false" label={t('title_yourName')} />
-                    <Switch checked="false" label={t('title_yourUsername')} />
-                    <Switch checked="false" label={t('title_yourEmail')} />
+                    <Switch checked={uiStore.soundsEnabled}
+                        label={t('title_soundsMessage')}
+                        onChange={this.onSoundsChanged} />
                 </section>
             </div>
         );
     }
-  }
+}
+/*
+ <section>
+     <div className="title">{t('title_privacy')}</div>
+     <p>
+         {t('title_privacyDetail')}
+                         </p>
+     <Switch checked="true" label={t('title_never')} />
+     <Switch checked="false" label={t('title_yourName')} />
+     <Switch checked="false" label={t('title_yourUsername')} />
+     <Switch checked="false" label={t('title_yourEmail')} />
+ </section>
+*/
 
 module.exports = Preferences;

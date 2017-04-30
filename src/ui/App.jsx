@@ -5,8 +5,7 @@ const { Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const ContactProfile = require('~/ui/contact/ContactProfile');
 const { observer } = require('mobx-react');
-const { observable, reaction } = require('mobx');
-const { User } = require('~/icebear');
+const { observable } = require('mobx');
 
 @observer
 class App extends React.Component {
@@ -22,6 +21,9 @@ class App extends React.Component {
         }, 500);
     };
 
+    componentWillMount() {
+        uiStore.init();
+    }
 
     render() {
         const contactDialogActions = [

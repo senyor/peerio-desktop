@@ -333,7 +333,7 @@ $radius-sign-warning: 18px;
         @extend %flex-row;
         align-items: center;
         color: $text-dark-secondary;
-        margin-bottom: $margin-small;
+        margin-bottom: $margin-tiny;
 
         .timestamp {
           @extend %hint-error-label;
@@ -351,13 +351,13 @@ $radius-sign-warning: 18px;
       }
 
       p {
-        line-height: 1.5;
+        line-height: 1.4;
         margin: 0 0 0 $margin-default;
         white-space: pre-wrap;
       }
 
       p + p {
-        margin-top: $margin-small;
+        margin-top: $margin-tiny;
       }
 
       b,
@@ -522,7 +522,7 @@ $radius-sign-warning: 18px;
     }
 
     .rt-list-itemText {
-      white-space: nowrap;
+      font-size: 12px;
     }
   }
 
@@ -539,14 +539,16 @@ $radius-sign-warning: 18px;
 
   .rt-list-item {
     border-bottom: 1px solid $divider-dark;
-    height: 72px;
+    font-size: 14px;
+    height: 64px;
   }
 
   .rt-list-primary,
   .rt-list-itemText {
-    font-size: 14px;
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,

@@ -37,6 +37,7 @@ class ChatList extends React.Component {
         }
         return c.mostRecentMessage.text;
     }
+
     render() {
         return (
             <div className="chat-list">
@@ -69,11 +70,15 @@ class ChatList extends React.Component {
                                   tooltip={c.chatName}
                                   tooltipDelay={500}
                                   tooltipPosition="right">
-                                    <span className="rt-list-itemText rt-list-primary">
+                                    <span className="rt-list-primary">
                                         {c.isFavorite ? <span className="starred">&#x2605;</span> : null}
                                         {c.chatName}
                                     </span>
-                                    <span className="rt-list-itemText">{this.renderMostRecentMessage(c)}</span>
+                                    <span className="rt-list-itemText">
+                                        {/* if system message don't show sender. */}
+                                        <strong>Sender:</strong> {this.renderMostRecentMessage(c)}
+                                        {/* I am a system message <em>system message</em> */}
+                                    </span>
                                 </TooltipDiv>
                             } />
                     )}

@@ -12,12 +12,15 @@ const { User } = require('~/icebear');
 data.recent = observable([]);
 
 const shortnameMap = {};
+function getCategoryName(item) {
+    return item.diversity ? 'diversity' : (item.origCategory || item.category);
+}
 function buildMap() {
     const catKeys = Object.keys(data);
     for (let i = 0; i < catKeys.length; i++) {
         data[catKeys[i]].forEach(item => {
             shortnameMap[item.shortname] = item;
-            item.className = `emojione emojione-${item.unicode}`;
+            item.className = `emojione emojione-32-${getCategoryName(item)} _${item.unicode}`;
         });
     }
 }
@@ -146,7 +149,7 @@ class Picker extends React.Component {
                             return (<div key={c.id}>
                                 <div className={`category-header ${c.id}`}>{c.name}</div>
                                 {data[c.id].map(e => {
-                                    if (e.index.indexOf(searchLow) < 0) return null;
+                                    if (!e || e.index.indexOf(searchLow) < 0) return null;
                                     return (
                                         <span onMouseEnter={this.onEmojiMouseEnter}
                                             onMouseLeave={this.resetHovered} onClick={this.onPicked}
@@ -203,7 +206,7 @@ class InfoPane extends React.Component {
         if (!store.hovered) {
             return (
                 <div className="info-pane default">
-                    <span className="emojione emojione-1f446" /> Pick your emoji
+                    <span className="emojione emojione-32-people _1f446" /> Pick your emoji
                 </div>
             );
         }
@@ -214,7 +217,7 @@ class InfoPane extends React.Component {
                 <div>
                     <span className="bold">{item.name}</span><br />
                     {item.shortname} {item.aliases}<br />
-                    <span className="monospace">{item.aliases_ascii}</span>
+                    <span className="monospace">{item.ascii}</span>
                 </div>
             </div>
         );

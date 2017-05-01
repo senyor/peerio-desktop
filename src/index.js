@@ -37,22 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const emojione = require('~/static/emoji/emojione.js');
     emojione.ascii = true;
     emojione.imagePathPNG = './static/emoji/png/';
-    emojione.imagePathSVG = '';
-    emojione.imagePathSVGSprites = '';
     emojione.sprites = false;
+    emojione.greedyMatch = true;
 
-    let preloadSpritesContainer = document.createElement('span');
-    preloadSpritesContainer.className = 'emoji-picker hide';
-    preloadSpritesContainer.style.zIndex = '-10000';
-    let preloadSprites = document.createElement('span');
-    preloadSprites.className = 'emojione emojione-1f602 hide';
-    preloadSpritesContainer.appendChild(preloadSprites);
-    document.body.appendChild(preloadSpritesContainer);
-    setTimeout(() => {
-        document.body.removeChild(preloadSpritesContainer);
-        preloadSpritesContainer = undefined;
-        preloadSprites = undefined;
-    }, 2000);
+    // let preloadSpritesContainer = document.createElement('span');
+    // preloadSpritesContainer.className = 'emoji-picker hide';
+    // preloadSpritesContainer.style.zIndex = '10000';
+    // let preloadSprites = document.createElement('span');
+    // preloadSprites.className = 'emojione emojione-32-diversity _1f469-1f3fb-1f692 hide';
+    // preloadSpritesContainer.appendChild(preloadSprites);
+    // document.body.appendChild(preloadSpritesContainer);
+    // setTimeout(() => {
+    //     document.body.removeChild(preloadSpritesContainer);
+    //     preloadSpritesContainer = undefined;
+    //     preloadSprites = undefined;
+    // }, 2000);
     // </emojione> -----------------------------------------------------------------------------------------------
     const React = require('react');
     const { socket } = require('~/icebear');

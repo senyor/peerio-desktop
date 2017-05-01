@@ -53,9 +53,9 @@ $picker-border-radius: 6px;
       box-sizing: content-box;
       cursor: pointer;
       display: inline-block;
-      margin: 16px 7px 7px;
+      margin: 14px 7px 7px;
       transition: transform .15s ease;
-      zoom: .5;
+      // zoom: .5;
     }
 
     .emojione:hover {

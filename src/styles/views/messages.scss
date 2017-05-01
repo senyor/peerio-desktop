@@ -425,10 +425,10 @@ $radius-sign-warning: 18px;
     transition: transform 50ms ease;
     -webkit-user-select: initial;
     vertical-align: middle;
-    width: auto;
+    //  width: auto;
 
     &:hover {
-      transform: scale(2);
+      transform: scale(1.4);
     }
   }
 
@@ -494,7 +494,10 @@ $radius-sign-warning: 18px;
       color: $text-light-primary;
     }
   }
-  .rt-list-left .rt-list-itemAction span { width: 40px; }
+
+  .rt-list-left .rt-list-itemAction span {
+    width: 40px;
+  }
 
   .avatar-group-chat {
     background-color: $color-dark-54;

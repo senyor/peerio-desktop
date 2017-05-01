@@ -1,15 +1,13 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Input } = require('~/react-toolbox');
+const { Input, Button } = require('~/react-toolbox');
 const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 
 @observer
 class Profile extends React.Component {
-    // @observable avatarImage = 'url(http://placekitten.com/512/512)';
-    @observable initial = User.current.firstName.slice(0, 1);
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
@@ -43,37 +41,47 @@ class Profile extends React.Component {
             User.current.lastName = prev;
         });
     }
+    saveEmail(val) {
+        const prev = User.current.primaryAddress;
+        User.current.primaryAddress = val;
+        User.current.saveProfile().catch(() => {
+            User.current.primaryAddress = prev;
+        });
+    }
 
     render() {
-        // if (u.loading) return null; // todo: spinner
         const f = this.contact.fingerprint.split('-');
-
+        const user = User.current;
         return (
             <section className="flex-row">
                 <div>
                     <div className="input-row">
                         <BetterInput onAccept={this.saveFirstName}
                             label={t('title_firstName')}
-                            value={User.current.firstName} />
+                            value={user.firstName} />
                         <BetterInput onAccept={this.saveLastName}
                             label={t('title_lastName')}
-                            value={User.current.lastName} />
+                            value={user.lastName} />
                     </div>
                     <div className="input-row">
                         <div className="flex-col">
-                            <Input type="email" label={t('title_email')} value={User.current.primaryAddress} />
+                            <BetterInput type="email" label={t('title_email')} value={user.primaryAddress}
+                                onAccept={this.saveEmail} />
                             {
-                                User.current.primaryAddressConfirmed
+                                user.primaryAddressConfirmed
                                     ? null
                                     : <div className="error">{t('error_unconfirmedEmail')}</div>
                             }
                         </div>
-                        {/* User.current.primaryAddressConfirmed ? null :
-                        <Button label={t('button_resend')}
-                                // 46px because of 40px margin on top of input
-                                // and 6px margin around buttons.
-                                style={{ marginTop: '46px' }}
-                                flat primary />*/}
+                        {
+                            user.primaryAddressConfirmed
+                                ? null
+                                : <Button label={t('button_resend')}
+                                    // 46px because of 40px margin on top of input
+                                    // and 6px margin around buttons.
+                                    style={{ marginTop: '46px' }}
+                                    flat primary />
+                        }
                     </div>
                     <div className="input-row">
                         {/*
@@ -103,15 +111,15 @@ class Profile extends React.Component {
                     }}>
                     <div className="avatar-card-user">
                         <div className="avatar-card-display-name">
-                            {User.current.firstName} {User.current.lastName}
+                            {user.fullName}
                         </div>
                         <div className="avatar-card-username">
-                            {User.current.username}
+                            {user.username}
                         </div>
                     </div>
                     <div className="avatar-card-initial">
-                        {/* {this.avatarImage ? '' : this.initial} */}
-                        {this.initial}
+                        {/* {this.avatarImage ? '' : this.contact.letter} */}
+                        {this.contact.letter}
                     </div>
                     <div className="card-footer">
                         {/* <IconButton icon="delete"

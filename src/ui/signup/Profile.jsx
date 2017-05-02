@@ -58,14 +58,14 @@ class ProfileStore extends OrderedFormStore {
                                 hint={t('title_hintEmail')} />
                 {/* "ex. info@peerio.com" */}
                 <div className="input-row">
-                    <div className="first">
+                    <div className="test-first">
                         <ValidatedInput label={t('title_firstName')}
                                         position="2"
                                         validator={validators.firstName}
                                         name="firstName"
                                         store={this.props.store} />
                     </div>
-                    <div className="second">
+                    <div className="test-second">
                         <ValidatedInput label={t('title_lastName')}
                                         position="3"
                                         validator={validators.lastName}

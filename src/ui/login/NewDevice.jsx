@@ -61,7 +61,7 @@ const T = require('~/ui/shared-components/T');
 
     render() {
         return (
-            <div className={css('signup', 'rt-light-theme', 'show', 'new-device')}>
+            <div className={css('signup', 'rt-light-theme', 'show', 'test-new-device')}>
                 <div className="signup-content">
                     <img alt="" className="logo" src="static/img/logo-white.png" />
                     <div className="signup-form">

@@ -90,7 +90,7 @@ function login(context) {
                 .click('div.login > button');
         })
         .then(() => {
-            return context.app.client.waitForVisible('.new-device', 30000);
+            return context.app.client.waitForVisible('.test-new-device', 30000);
         })
         .catch((err) => {
             return Promise.reject(err);

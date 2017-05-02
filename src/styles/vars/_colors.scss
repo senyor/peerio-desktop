@@ -26,7 +26,8 @@ $color-affirmative: rgb(44, 207, 132);
 $color-warning: rgb(244, 203, 66);
 
 // BACKGROUNDS
-$background-active-message: rgba($color-brand, .7);
+$background-active-message: rgba($color-brand, 1);
+$background-hover-active-message: rgba($color-brand, .7);
 $background-brand: $color-brand;
 $background-cancel: $color-error;
 $background-hover-message: rgba($color-brand, .12);

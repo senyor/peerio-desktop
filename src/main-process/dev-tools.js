@@ -19,7 +19,7 @@ function onAppReady(mainWindow) {
     if (!isDevEnv) return;
     console.log('Initializing development tools.');
     installExtensions();
-    setTimeout(() => mainWindow.openDevTools(), 1000);
+    mainWindow.openDevTools();
 }
 
 function installExtensions(forceReinstall) {

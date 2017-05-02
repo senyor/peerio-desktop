@@ -8,6 +8,10 @@ if (isDevEnv) {
     require('module').globalPaths.push(PATH_APP_NODE_MODULES);
     // enable react-perf chrome dev tool
     window.Perf = require('react-addons-perf');
+
+    // enable shortcuts for recording tests
+    window.recordUI = require('~/helpers/test-recorder').recordUI;
+    window.stopRecording = require('~/helpers/test-recorder').stopRecording;
 }
 // debug aid global vars
 window.ice = require('~/icebear');

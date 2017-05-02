@@ -57,6 +57,7 @@ if (isDevEnv) {
 // FOR DEV ENVIRONMENT ONLY
 // DEV MACHINE OVERRIDES SOCKET SERVER VALUE WITH THIS
 if (isDevEnv && process.env.PEERIO_STAGING_SOCKET_SERVER) {
+    console.log('dev env');
     cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
 }
 

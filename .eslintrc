@@ -40,6 +40,8 @@
         "WebSocket": false,
         "beforeEach": false,
         "afterEach": false,
-        "xit": false
+        "xit": false,
+        "delay": false,
+        "testUser": false
     }
 }

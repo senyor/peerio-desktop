@@ -2,6 +2,7 @@
 const { autoUpdater } = require('electron-updater');
 const isDevEnv = require('~/helpers/is-dev-env');
 const log = require('electron-log');
+const { ipcMain } = require('electron');
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -10,16 +11,19 @@ let window;
 
 function sendStatusToWindow(text) {
     log.info(text);
-    window.webContents.send('updater', text);
+    window.webContents.send('console_log', text);
 }
 
 function start(mainWindow) {
     try {
         window = mainWindow;
         autoUpdater.setFeedURL('https://betaupdate.peerio.com');
-
+        ipcMain.on('install-update', () => {
+            log.info('Client approved update installation.');
+            autoUpdater.quitAndInstall();
+        });
         if (!isDevEnv) {
-            autoUpdater.checkForUpdates();
+            setTimeout(() => autoUpdater.checkForUpdates(), 3000);
         } else {
             sendStatusToWindow('Updater did not start because dev build was detected.');
         }
@@ -36,6 +40,7 @@ autoUpdater.on('checking-for-update', () => {
 autoUpdater.on('update-available', (ev, info) => {
     sendStatusToWindow('Update available.');
     sendStatusToWindow(JSON.stringify(info));
+    window.webContents.send('warning', 'title_updateDownloading');
 });
 
 autoUpdater.on('update-not-available', (ev, info) => {
@@ -54,15 +59,9 @@ autoUpdater.on('download-progress', (ev, progressObj) => {
 });
 
 autoUpdater.on('update-downloaded', (ev, info) => {
-    sendStatusToWindow('Update downloaded. Will install in 5 seconds');
+    sendStatusToWindow('Update downloaded.');
     sendStatusToWindow(JSON.stringify(info));
-});
-
-autoUpdater.on('update-downloaded', (ev, info) => {
-    sendStatusToWindow(JSON.stringify(info));
-    setTimeout(() => {
-        autoUpdater.quitAndInstall();
-    });
+    window.webContents.send('update-will-restart');
 });
 
 module.exports = { start };

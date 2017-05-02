@@ -10,7 +10,7 @@ const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
 const { ProgressBar } = require('~/react-toolbox');
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
-const { socket, clientApp, chatStore } = require('~/icebear');
+const { socket, clientApp, chatStore, warnings } = require('~/icebear');
 const { computed, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -41,8 +41,13 @@ class Root extends React.Component {
                 deepForceUpdate(this);
             }
         );
-        // updater
-        ipcRenderer.on('updater', console.log.bind(console));
+        // events from main process
+        ipcRenderer.on('warning', (ev, key) => warnings.add(key));
+        ipcRenderer.on('update-will-restart', () => {
+            alert(t('title_updateWillRestart'));
+            ipcRenderer.send('install-update');
+        });
+        ipcRenderer.on('console_log', (ev, arg) => console.log(arg));
         // Dev tools ---------->
         this.devtools = null;
         if (isDevEnv) {

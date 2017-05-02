@@ -7,7 +7,7 @@ function getSystemMessageText(msg) {
                 ? t('title_chatRenamed', { name: msg.systemData.newName })
                 : t('title_chatNameRemoved');
         case 'create':
-            return t('title_chatCreated', {fullName: msg.sender.fullName });
+            return t('title_chatCreated', { fullName: msg.sender.fullName });
         default:
             return '';
     }

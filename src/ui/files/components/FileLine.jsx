@@ -66,7 +66,7 @@ class FileLine extends React.Component {
                     {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}</td>
                 <td className="text-right">{file.uploadedAt && file.uploadedAt.toLocaleString()}</td>
                 <td className="text-right">{file.sizeFormatted}</td>
-                <td className="uppercase">{file.ext}</td>
+                <td>file.shareable</td>
                 <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
                   shareDisabled={!file.readyForDownload || !file.canShare} newFolderDisabled deleteDisabled={false}
                   onDelete={this.deleteFile} onDownload={this.download} onShare={this.share} />

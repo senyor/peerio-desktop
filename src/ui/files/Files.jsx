@@ -73,7 +73,7 @@ const { t } = require('peerio-translator');
                                     <th>{t('title_owner')}</th>
                                     <th className="text-right">{t('title_uploaded')}</th>
                                     <th className="text-right">{t('title_size')}</th>
-                                    <th>{t('title_type')}</th>
+                                    <th>{t('title_permissions')}</th>
                                     <th />
                                 </tr>
                             </thead>

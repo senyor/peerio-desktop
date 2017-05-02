@@ -20,10 +20,11 @@ function FileActions(props) {
                         icon="chat"
                         onClick={props.onShare}
                         className={css({ disabled: props.shareDisabled })} />
-                <MenuItem caption={t('button_shareViaMail')}
+                {/* SHARE VIA MAIL ACTION no mail so it's commented out. */}
+                {/* <MenuItem caption={t('button_shareViaMail')}
                         icon="email"
                         onClick={props.onShare}
-                        className={css({ disabled: props.shareDisabled })} />
+                        className={css({ disabled: props.shareDisabled })} /> */}
                 {/* <TooltipDiv*/}
                 {/* tooltip="Add to folder"*/}
                 {/* tooltipDelay={delay}*/}

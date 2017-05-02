@@ -44,14 +44,15 @@ class GlobalActions extends React.Component {
                         className={css('active', { disabled: !fileStore.hasSelectedShareableFiles })}
                         onClick={this.props.onShare}
                     />
-                    <TooltipIconButton
+                    {/* NO MAIL YET. Uncomment when we have mail.  */}
+                    {/* <TooltipIconButton
                         tooltip={t('button_shareViaMail')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="email"
                         className={css('active', { disabled: !fileStore.hasSelectedShareableFiles })}
                         onClick={this.props.onShare}
-                    />
+                    /> */}
                     {/* <TooltipIconButton*/}
                     {/* tooltip="Add to folder"*/}
                     {/* tooltipDelay={delay}*/}

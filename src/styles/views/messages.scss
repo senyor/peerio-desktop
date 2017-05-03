@@ -469,6 +469,7 @@ $radius-sign-warning: 18px;
 // message navigation
 .chat-list {
   @extend %flex-shrink-0;
+  background: $color-dark-03;
   border-right: 1px solid $divider-dark;
   height: 100vh;
   position: relative;
@@ -496,21 +497,25 @@ $radius-sign-warning: 18px;
   }
 
   .rt-list-left .rt-list-itemAction span {
-    width: 40px;
+    width: 32px;
   }
 
   .avatar-group-chat {
     background-color: $color-dark-54;
     border-radius: 40px;
     color: $text-light-primary;
-    height: 40px;
-    line-height: 40px;
+    height: 32px;
+    line-height: 32px;
     text-align: center;
-    width: 40px;
+    width: 32px;
   }
 
   .rt-avatar-avatar {
+    font-size: 20px;
+    height: 32px;
+    line-height: 32px;
     margin: 0 24px 0 0;
+    width: 32px;
   }
 
   .rt-list-list {
@@ -616,9 +621,16 @@ $radius-sign-warning: 18px;
 .chat-sidebar {
   @extend %flex-col;
   @extend %flex-shrink-0;
+  background: $color-dark-03;
   border-left: 1px solid $divider-dark;
   transition: width 300ms $transition-ease-in;
   width: 0;
+
+  .rt-avatar-avatar {
+    height: 32px;
+    line-height: 32px;
+    width: 32px;
+  }
 
   .title {
     height: 48px;

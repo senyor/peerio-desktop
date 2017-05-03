@@ -95,7 +95,7 @@ class Messages extends React.Component {
                         }
                         <div className="member-count">
                             <TooltipIconButton icon="person"
-                                tooltip={t('title_memberCount')}
+                                tooltip={t('title_Members')}
                                 tooltipPosition="bottom"
                                 tooltipDelay={500}
                                 onClick={this.toggleSidebar} />

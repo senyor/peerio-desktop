@@ -32,7 +32,7 @@ class Preferences extends React.Component {
                         {t('title_soundsDetail')}
                     </p>
                     <Switch checked={uiStore.soundsEnabled}
-                        label={t('title_soundsMessage')}
+                        label={t('title_notificationsMessage')}
                         onChange={this.onSoundsChanged} />
                 </section>
             </div>

@@ -6,28 +6,13 @@ const FileStream = require('~/icebear/models/files/node-file-stream');
 const StorageEngine = require('~/icebear/models/storage/node-json-storage');
 const { setUrlMap, setTagHandler } = require('peerio-translator');
 const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
+const cfgBase = require('~/config-base');
+
+Object.assign(cfg, cfgBase);
 
 cfg.appVersion = app.getVersion();
 cfg.platform = 'electron';
 cfg.arch = os.arch();
-cfg.socketServerUrl = 'wss://icebear.peerio.com';
-cfg.ghostFrontendUrl = 'https://mail.peerio.com';
-
-// --- TRANSLATOR
-cfg.translator = {};
-cfg.translator.stringReplacements = []; // white label only
-cfg.translator.urlMap = {
-    contactFingerprint: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
-    mpDetail: 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
-    tfaDetail: 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-',
-    msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
-    upgrade: 'https://www.peerio.com/pricing.html',
-    proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
-    proAccount: 'https://account.peerio.com',
-    helpCenter: 'https://peerio.zendesk.com/',
-    contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new'
-};
-
 
 setUrlMap(cfg.translator.urlMap);
 for (const name in tagHandlers) {

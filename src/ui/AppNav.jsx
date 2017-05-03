@@ -100,6 +100,10 @@ class AppNav extends React.Component {
                         <MenuItem value="about" icon="info" caption="About"
                             onClick={this.toAbout} style={menuItemStyle} />
                         <MenuDivider />
+                        {/* TODO: make upgrade button launch website */}
+                        <MenuItem value="upgrade" icon="open_in_browser" caption={t('title_upgrade')}
+                            onClick={this.handleUpgrade} disabled />
+                        <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
                             onClick={this.signout} />
                     </IconMenu>

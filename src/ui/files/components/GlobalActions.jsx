@@ -37,11 +37,11 @@ class GlobalActions extends React.Component {
                     {/* icon="file_download"*/}
                     {/* className={css({ active: true, disabled: true })} />*/}
                     <TooltipIconButton
-                        tooltip={t('button_shareViaChat')}
+                        tooltip={t('button_share')}
                         tooltipDelay={delay}
                         tooltipPosition="top"
-                        icon="chat"
-                        className={css('active', { disabled: !fileStore.hasSelectedShareableFiles })}
+                        icon="reply"
+                        className={css('reverse-icon active', { disabled: !fileStore.hasSelectedShareableFiles })}
                         onClick={this.props.onShare}
                     />
                     {/* NO MAIL YET. Uncomment when we have mail.  */}

@@ -16,10 +16,10 @@ function FileActions(props) {
                   onClick={props.onDownload}
                   className={css({ disabled: props.downloadDisabled })} />
 
-                <MenuItem caption={t('button_shareViaChat')}
-                        icon="chat"
+                <MenuItem caption={t('button_share')}
+                        icon="reply"
                         onClick={props.onShare}
-                        className={css({ disabled: props.shareDisabled })} />
+                        className={css('reverse-icon', { disabled: props.shareDisabled })} />
                 {/* SHARE VIA MAIL ACTION no mail so it's commented out. */}
                 {/* <MenuItem caption={t('button_shareViaMail')}
                         icon="email"

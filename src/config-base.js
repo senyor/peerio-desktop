@@ -3,6 +3,8 @@
  * release channel/whitelabel.
  */
 module.exports = {
+    appId: 'com.peerio.desktop', // must the the same as in package.json
+
     socketServerUrl: 'wss://icebear.peerio.com',
     ghostFrontendUrl: 'https://mail.peerio.com',
 

@@ -18,6 +18,7 @@ const applyMiscHooks = require('~/main-process/misc-hooks');
 const { saveWindowState, getSavedWindowState } = require('~/main-process/state-persistance');
 const setMainMenu = require('~/main-process/main-menu');
 const updater = require('./main-process/updater');
+const config = require('~/config');
 
 let mainWindow;
 
@@ -27,6 +28,7 @@ app.on('ready', () => {
     console.log('Electron ready event - Starting app.');
     buildGlobalShortcuts();
     setMainMenu();
+    app.setAppUserModelId(config.appId);
 
     getSavedWindowState()
         .then(state => {

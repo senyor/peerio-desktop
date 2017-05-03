@@ -27,15 +27,17 @@ class ChatSideBar extends React.Component {
                       caption="button_muteChat" /> */}
                 </List>
                 <div className="rt-list-subheader">{t('title_Members')} </div>
-                <List>
-                    {chatStore.activeChat && chatStore.activeChat.participants ?
-                        chatStore.activeChat.participants.map(c =>
-                            <ListItem key={c.username}
-                                leftActions={[<Avatar key="a" contact={c} />]}
-                                caption={c.username}
-                                legend={c.fullName} />
-                        ) : null}
-                </List>
+                <div style={{ overflow: 'auto' }}>
+                    <List>
+                        {chatStore.activeChat && chatStore.activeChat.participants ?
+                            chatStore.activeChat.participants.map(c =>
+                                <ListItem key={c.username}
+                                    leftActions={[<Avatar key="a" contact={c} />]}
+                                    caption={c.username}
+                                    legend={c.fullName} />
+                            ) : null}
+                    </List>
+                </div>
             </div>
         );
     }

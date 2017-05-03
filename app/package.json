@@ -31,7 +31,7 @@
     "mobx-react": "4.1.8",
     "tweetnacl": "1.0.0-rc.1",
     "moment": "2.18.1",
-    "normalize.css": "6.0.0",
+    "normalize.css": "7.0.0",
     "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
     "quill": "1.2.4",
     "react": "15.5.4",

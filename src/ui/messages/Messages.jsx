@@ -89,7 +89,7 @@ class Messages extends React.Component {
                         <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
                                 onClick={chat.toggleFavoriteState}
                                 className={css({ starred: chat.isFavorite })}
-                                tooltip={t('title_starChannel')}
+                                tooltip={t('title_starChat')}
                                 tooltipPosition="bottom"
                                 tooltipDelay={500} />
                         }

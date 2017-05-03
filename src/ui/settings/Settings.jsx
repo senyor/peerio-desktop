@@ -52,7 +52,7 @@ class Settings extends React.Component {
                             className={css({ 'tab-notify': !primaryAddressConfirmed })} />
                         <Tab label={t('title_settingsSecurity')} />
                         <Tab label={t('title_settingsPreferences')} />}
-                        <Tab label={t('title_settingsAbout')} />
+                        <Tab label={t('title_About')} />
                     </Tabs>
                     {this.props.children}
                 </div>

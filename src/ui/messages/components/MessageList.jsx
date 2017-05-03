@@ -1,11 +1,12 @@
 const React = require('react');
 const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { ProgressBar } = require('~/react-toolbox');
+const { Link, ProgressBar } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const Message = require('./Message');
 const { chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
+const urls = require('~/config').translator.urlMap;
 
 @observer
 class MessageList extends React.Component {
@@ -172,6 +173,13 @@ class MessageList extends React.Component {
                     {t('title_chatBeginning')}
                     &nbsp;<strong>{chatStore.activeChat.chatName}</strong>.
                 </div>
+                {/* <div className="flex-row">
+                    // Messages older than 90 days will be archived.
+                    // Messages older than 90 days have been archived.
+                    {t('title_chatArchive')}
+                    // button_upgradeForArchive: Upgrade to accesss your archive.
+                    &nbsp;<Link href={urls.upgrade} label={t('button_upgradeForArchive')} />
+                </div> */}
             </div>
         );
     }

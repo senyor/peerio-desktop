@@ -11,6 +11,7 @@ const appControl = require('~/helpers/app-control');
 const AppNavButton = require('./AppNavButton');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
+const urls = require('~/config').translator.urlMap;
 
 
 // todo: move this somewhere more appropriate
@@ -81,6 +82,10 @@ class AppNav extends React.Component {
         appControl.relaunch();
     }
 
+    toUpgrade() {
+        return window.open(urls.upgrade);
+    }
+
     render() {
         const contact = contactStore.getContact(User.current.username);
         const primaryAddressConfirmed = User.current.primaryAddressConfirmed;
@@ -99,10 +104,9 @@ class AppNav extends React.Component {
                             onClick={this.toPrefs} style={menuItemStyle} />
                         <MenuItem value="about" icon="info" caption="About"
                             onClick={this.toAbout} style={menuItemStyle} />
-                        <MenuDivider />
-                        {/* TODO: make upgrade button launch website */}
+                        {/* <MenuDivider />
                         <MenuItem value="upgrade" icon="open_in_browser" caption={t('title_upgrade')}
-                            onClick={this.handleUpgrade} disabled />
+                            onClick={this.toUpgrade} /> */}
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
                             onClick={this.signout} />

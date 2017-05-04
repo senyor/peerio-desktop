@@ -28,7 +28,8 @@ class ChatNameEditor extends React.Component {
                 onReject={this.cancelNameEdit}
                 onAccept={this.acceptNameEdit}
                 ref={this.setNameInputRef}
-                value={chatStore.activeChat ? chatStore.activeChat._chatName : ''} />
+                value={chatStore.activeChat ? chatStore.activeChat._chatName : ''}
+                tabIndex={this.props.tabIndex} />
         );
     }
 }

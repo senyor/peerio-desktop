@@ -14,7 +14,7 @@ class ChatSideBar extends React.Component {
             <div className={css('chat-sidebar', { open: this.props.open })}>
                 <div className="title">{t('title_About')}</div>
                 <div className="flex-row flex-shrink-0">
-                    <ChatNameEditor showLabel />
+                    <ChatNameEditor showLabel tabIndex="-1" />
                 </div>
                 <List selectable>
                     <ListItem

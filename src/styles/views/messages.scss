@@ -334,6 +334,10 @@ $radius-sign-warning: 18px;
         word-break: break-word;
       }
 
+      .mention {
+        background-color: #ffff00;
+      }
+
       .meta-data {
         @extend %flex-row;
         align-items: center;

@@ -13,6 +13,7 @@ const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
 const { isUrlAllowed } = require('~/helpers/url');
 const urls = require('~/config').translator.urlMap;
 const getSystemMessageText = require('~/helpers/system-messages');
+const { User } = require('~/icebear');
 
 const autolinker = new Autolinker({
     urls: {
@@ -33,14 +34,20 @@ const autolinker = new Autolinker({
     className: '',
     stripTrailingSlash: false
 });
+let usernameRegex;// = /@[a-z0-9_]{1,32}/g;
+function highlightMentions(str) {
+    if (!usernameRegex) usernameRegex = new RegExp(`@${User.current.username}`, 'g');
+    return str.replace(usernameRegex, '<span class="mention">$&</span>');
+}
 
 function processMessage(msg) {
     if (msg.processedText != null) return msg.processedText;
     // removes all html except whitelisted
     // closes unclosed tags
     let str = sanitizeChatMessage(msg.text);
-    str = emojione.unicodeToImage(str);
     str = autolinker.link(str);
+    str = emojione.unicodeToImage(str);
+    str = highlightMentions(str);
     str = { __html: str };
     msg.processedText = str;
     return str;

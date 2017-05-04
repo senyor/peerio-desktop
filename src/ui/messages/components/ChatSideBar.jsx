@@ -19,7 +19,7 @@ class ChatSideBar extends React.Component {
                 <List selectable>
                     <ListItem
                       leftIcon="remove_circle_outline"
-                      caption="button_hideChat"
+                      caption={t('button_hideChat')}
                       onClick={chatStore.activeChat.hide}
                     />
                     {/* <ListItem

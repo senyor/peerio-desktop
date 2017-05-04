@@ -645,6 +645,12 @@ $radius-sign-warning: 18px;
   transition: width 300ms $transition-ease-in;
   width: 0;
 
+  .rt-input-hint {
+    font-size: 14px;
+    line-height: 14px;
+    margin-left: $margin-default;
+    top: 28px;
+  }
   // TODO: combine with chat list avatar styles.
   .rt-avatar-avatar {
     font-size: 20px;

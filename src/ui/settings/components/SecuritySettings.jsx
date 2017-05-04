@@ -76,7 +76,7 @@ class SecuritySettings extends React.Component {
                         <div>
                             <p>{t('title_MPDetail2')}</p>
                             <div style={{ marginTop: '40px', height: '48px' }}>
-                                <div className="passphrase headline">{User.current.passphrase}</div>
+                                <div className="passphrase headline selectable">{User.current.passphrase}</div>
                             </div>
                         </div>
                         : <PasscodeLock onUnlocked={this.unlock} />}

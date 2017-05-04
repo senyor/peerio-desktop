@@ -13,6 +13,9 @@
 * {
   font-family: $font-stack;
   -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 // but that ^ overrides icon font, so:
 .material-icons * {

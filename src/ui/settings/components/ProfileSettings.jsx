@@ -131,8 +131,8 @@ class Profile extends React.Component {
 
                     <div className="row" style={{ marginTop: '40px' }} >
                         <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>
-                        <div className="monospace">{f[0]} {f[1]} {f[2]}</div>
-                        <div className="monospace">{f[3]} {f[4]} {f[5]}</div>
+                        <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
+                        <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
                     </div>
                     {/* <Button label={t('button_save')}
                             style={{ marginTop: '40px' }} primary raised /> */}

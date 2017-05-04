@@ -56,7 +56,7 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
-        return <span className="system-message">{getSystemMessageText(m)}</span>;
+        return <span className="system-message selectable">{getSystemMessageText(m)}</span>;
     }
     render() {
         const m = this.props.message;
@@ -78,12 +78,12 @@ class Message extends React.Component {
                             this.props.light
                                 ? null
                                 : <div className="meta-data">
-                                    <div className="user">{m.sender.username}</div>
-                                    <div className="timestamp">{time.format(m.timestamp)}</div>
+                                    <div className="user selectable">{m.sender.username}</div>
+                                    <div className="timestamp selectable">{time.format(m.timestamp)}</div>
                                 </div>
                         }
                         <div className="flex-row flex-align-center">
-                            <p dangerouslySetInnerHTML={processMessage(m)} />
+                            <p dangerouslySetInnerHTML={processMessage(m)} className="selectable" />
                             {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
                             {
                                 /* SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML */

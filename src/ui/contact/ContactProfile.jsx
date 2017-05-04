@@ -29,8 +29,8 @@ class ContactProfile extends React.Component {
                 </div>
                 <div className="row">
                     <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>
-                    <div className="monospace">{f[0]} {f[1]} {f[2]}</div>
-                    <div className="monospace">{f[3]} {f[4]} {f[5]}</div>
+                    <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
+                    <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
                 </div>
             </div>
         );

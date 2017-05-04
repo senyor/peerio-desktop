@@ -1,29 +1,18 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Input, Button } = require('~/react-toolbox');
+const { Input, Button, TooltipIconButton, FontIcon, IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
 const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 
 @observer
 class Profile extends React.Component {
+    @observable addMode = false;
+    @observable newEmail = '';
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
-    }
-
-    // handleDeleteAvatar = () => {
-    //     this.avatarImage = '';
-    // }
-    //
-    // handleAddAvatar = () => {
-    //   this.avatarImage = 'url(http://placekitten.com/512/512)';
-    // }
-    r
-    esend = () => {
-        // TODO: this should resend email
-        console.log('EMAIL SENT!');
     }
 
     saveFirstName(val) {
@@ -41,14 +30,41 @@ class Profile extends React.Component {
             User.current.lastName = prev;
         });
     }
-    saveEmail(val) {
-        const prev = User.current.primaryAddress;
-        User.current.primaryAddress = val;
-        User.current.saveProfile().catch(() => {
-            User.current.primaryAddress = prev;
-        });
+    // ----- Emails -----
+    switchToAddMode = () => {
+        this.newEmail = '';
+        this.addMode = true;
+    };
+
+    onNewEmailChange = val => {
+        this.newEmail = val;
+    };
+
+    cancelNewEmail = () => {
+        this.addMode = false;
+        this.newEmail = '';
+    };
+
+    saveNewEmail = () => {
+        User.current.addEmail(this.newEmail);
+        this.addMode = false;
+        this.newEmail = false;
+    };
+
+    removeEmail(email) {
+        if (!confirm(`${t('title_confirmRemoveEmail')} ${email}`)) return;
+        User.current.removeEmail(email);
     }
 
+    resendConfirmation(email) {
+        User.current.resendEmailConfirmation(email);
+    }
+
+    makePrimary(email) {
+        User.current.makeEmailPrimary(email);
+    }
+
+    // ------ /Emails -----
     render() {
         const f = this.contact.fingerprint.split('-');
         const user = User.current;
@@ -63,38 +79,55 @@ class Profile extends React.Component {
                             label={t('title_lastName')}
                             value={user.lastName} />
                     </div>
-                    <div className="input-row">
-                        <div className="flex-col">
-                            <BetterInput type="email" label={t('title_email')} value={user.primaryAddress}
-                                onAccept={this.saveEmail} />
-                            {
-                                user.primaryAddressConfirmed
-                                    ? null
-                                    : <div className="error">{t('error_unconfirmedEmail')}</div>
-                            }
-                        </div>
-                        {
-                            user.primaryAddressConfirmed
-                                ? null
-                                : <Button label={t('button_resend')}
-                                    // 46px because of 40px margin on top of input
-                                    // and 6px margin around buttons.
-                                    style={{ marginTop: '46px' }}
-                                    flat primary />
-                        }
-                    </div>
-                    <div className="input-row">
-                        {/*
-                            This will probably be a custom input.
-                            The current plan  for phone numbers is that when the
-                            user clicks the country code are it will open a
-                            dropdown. The input is designed to look like one
-                            single solitary individual all alone by itself with
-                            nothing else...input.
-                        */}
-                        {/* TODO: INPUT MASK FOR THE PRETTIEST PHONE NUMBERS */}
-                        {/* <Input type="tel" label={t('title_phone')} />*/}
-                    </div>
+                    <br /><br />
+                    {
+                        user.addresses.map(a => {
+                            return (<div key={a.address} className="email-row">
+                                {a.confirmed ? null : <div className="error">{t('error_unconfirmedEmail')}:</div>}
+                                {a.primary && user.addresses.length > 1
+                                    ? <span className="starred">★&nbsp;</span> : null}
+                                {a.address}
+                                <IconMenu icon="more_vert">
+                                    {
+                                        a.primary
+                                            ? null
+                                            : <MenuItem caption={t('button_makePrimary')} icon="star"
+                                                onClick={() => { this.makePrimary(a.address); }} />
+                                    }
+                                    {
+                                        a.confirmed
+                                            ? null
+                                            : <MenuItem caption={t('button_resend')} icon="mail"
+                                                onClick={() => { this.resendConfirmation(a.address); }} />
+                                    }
+                                    {
+                                        a.primary
+                                            ? null
+                                            : <MenuItem caption={t('button_delete')} icon="delete"
+                                                onClick={() => { this.removeEmail(a.address); }} />
+                                    }
+                                </IconMenu>
+                            </div>);
+                        })
+                    }
+                    <br />
+                    {
+                        this.addMode
+                            ? <div className="flex-row">
+                                <Input type="email" label={t('title_email')} value={this.newEmail}
+                                    onChange={this.onNewEmailChange} />
+                                <TooltipIconButton tooltip={t('button_save')} icon="done"
+                                    onClick={this.saveNewEmail} />
+                                <TooltipIconButton tooltip={t('button_cancel')} icon="delete"
+                                    onClick={this.cancelNewEmail} />
+                            </div>
+                            : null
+                    }
+                    {
+                        this.addMode || user.addresses.length > 2
+                            ? null
+                            : <Button label={t('button_add')} onClick={this.switchToAddMode} raised primary />
+                    }
 
                     <div className="row" style={{ marginTop: '40px' }} >
                         <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>
@@ -129,7 +162,7 @@ class Profile extends React.Component {
                                     onClick={this.handleAddAvatar} /> */}
                     </div>
                 </div>
-            </section>
+            </section >
         );
     }
 }

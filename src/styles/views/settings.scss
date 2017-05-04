@@ -38,13 +38,14 @@
     &.section-divider {
       border-bottom: 1px solid $divider-dark;
     }
-
-    .rt-button-button {
-      margin-left: $margin-small;
-    }
   }
 
-  .input-row:first-of-type .rt-input-input {
+  .email-row {
+    margin-top: 5px;
+  }
+
+  .input-row:first-of-type .rt-input-input,
+  .flex-row .rt-input-input {
     margin-top: 0;
   }
 

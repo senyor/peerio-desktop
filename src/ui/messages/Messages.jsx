@@ -75,7 +75,7 @@ class Messages extends React.Component {
                             this.chatNameEditorVisible
                                 ? <ChatNameEditor showLabel={false} className="name-editor"
                                     onBlur={this.hideChatNameEditor} ref={this.chatNameEditorRef} />
-                                : <div className="flex-row">
+                                : <div style={{ overflow: 'hidden' }}>
                                     <FontIcon value="edit" />
                                     <div className="title-content">
                                         {chat.chatName}

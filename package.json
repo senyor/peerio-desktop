@@ -1,5 +1,5 @@
 {
-  "name": "peerio-2",
+  "name": "peerio-messenger",
   "description": "Peerio desktop client (codename Icebear)",
   "version": "2.7.6",
   "scripts": {
@@ -139,7 +139,7 @@
   },
   "build": {
     "appId": "com.peerio.desktop",
-    "productName": "Peerio.2",
+    "productName": "Peerio Messenger",
     "artifactName": "${productName}-${arch}-${version}.${ext}",
     "directories": {
       "buildResources": "dist-assets"

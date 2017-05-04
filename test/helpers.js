@@ -18,7 +18,7 @@ function startApp(context) {
     context.app = isDev
             ? new Application({ path: electron, args: ['./app'] })
             : new Application({
-                path: `./dist/mac/Peerio.2.app/Contents/MacOS/Peerio.2`
+                path: `./dist/mac/Peerio Messenger.app/Contents/MacOS/Peerio Messenger`
             });
 
     return context.app.start().then(() => {

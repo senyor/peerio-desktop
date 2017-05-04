@@ -162,7 +162,7 @@ class Profile extends React.Component {
                                     onClick={this.handleAddAvatar} /> */}
                     </div>
                 </div>
-            </section >
+            </section>
         );
     }
 }

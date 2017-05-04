@@ -73,7 +73,7 @@
     "electron-devtools-installer": "2.2.0",
     "electron-rebuild": "1.5.7",
     "electron-reload": "1.1.0",
-    "emojione": "3.0.2",
+    "emojione": "3.0.3",
     "emojione-assets": "3.0.0",
     "eslint": "3.19.0",
     "eslint-config-peerio": "*",

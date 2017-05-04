@@ -117,7 +117,7 @@ class Messages extends React.Component {
                 <div className="message-view">
                     {chat ? this.renderHeader() : null}
                     <div className="flex-row flex-grow-1">
-                        <div className="flex-col flex-grow-1">
+                        <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
                             {chatStore.chats.length === 0 && !chatStore.loading ? <NoChatSelected /> : <MessageList />}
                             {chat && chat.uploadQueue.length ? <UploadInChatProgress queue={chat.uploadQueue} /> : null}
                             <MessageInput show={!!chat && chat.metaLoaded}

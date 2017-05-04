@@ -1,6 +1,6 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { Button, List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
+const { FontIcon, List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore, User } = require('~/icebear');
 const { observer } = require('mobx-react');
@@ -44,8 +44,8 @@ class ChatList extends React.Component {
         return (
             <div className="chat-list">
                 {this.getProgressBar(chatStore.loading)}
-                <div className="wrapper-button-add-chat">
-                    <Button icon="add" accent mini floating onClick={this.newMessage} />
+                <div className="wrapper-button-add-chat" onClick={this.newMessage}>
+                    <FontIcon value="add" />
                     <div>{t('title_haveAChat')}</div>
                 </div>
                 <List selectable ripple>

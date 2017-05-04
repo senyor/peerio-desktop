@@ -434,24 +434,25 @@ $radius-sign-warning: 18px;
 
   .chat-upload-progress {
     @extend %flex-col;
-    background-color: rgba($color-brand, .7);
-    box-shadow: $shadow-5;
-    color: $text-light-primary;
-    font-weight: $font-weight-semibold;
+    background: $color-light-100;
+    color: $text-dark-primary;
     height: 48px;
     left: 0;
-    margin: 0 $margin-large;
+    margin: 0;
     position: absolute;
     right: 0;
-    top: 68px;
+    top: 0;
 
     .progress-content {
       @extend %flex-row;
       @extend %flex-align-center;
-      padding: 0 $padding-small;
+      background-color: $color-dark-06;
+      height: 48px;
+      padding: 0 24px;
+      width: 100%;
 
       .material-icons {
-        color: $text-light-primary;
+        color: $text-dark-secondary;
       }
     }
 
@@ -484,15 +485,23 @@ $radius-sign-warning: 18px;
     @extend %flex-align-center;
     background-color: $color-dark-06;
     border-bottom: 1px solid $divider-dark;
+    cursor: pointer;
     height: 80px;
     padding: 0 16px;
 
-    .rt-button-button {
-      margin-right: $margin-default;
+    &:hover {
+      background-color: $color-dark-03;
     }
 
     .material-icons {
+      background: $color-accent;
+      border-radius: 40px;
       color: $text-light-primary;
+      height: 40px;
+      line-height: 40px;
+      margin-right: $margin-default;
+      text-align: center;
+      width: 40px;
     }
   }
 

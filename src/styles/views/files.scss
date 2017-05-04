@@ -28,10 +28,10 @@
       @extend %flex-col;
       @extend %flex-grow-1;
       @extend %flex-shrink-0;
-      height: calc(100vh - 128px);
+      height: calc(100vh - 144px);
       overflow-x: hidden;
       overflow-y: auto;
-
+      padding-bottom: $padding-default;
     }
 
     .table-action-bar {

@@ -496,7 +496,7 @@ $radius-sign-warning: 18px;
     border-bottom: 1px solid $divider-dark;
     cursor: pointer;
     height: 80px;
-    padding: 0 16px;
+    padding: 0 12px;
 
     &:hover {
       background-color: $color-dark-03;
@@ -508,7 +508,7 @@ $radius-sign-warning: 18px;
       color: $text-light-primary;
       height: 40px;
       line-height: 40px;
-      margin-right: $margin-default;
+      margin-right: $margin-large;
       text-align: center;
       width: 40px;
     }

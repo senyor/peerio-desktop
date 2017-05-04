@@ -34,10 +34,18 @@ const autolinker = new Autolinker({
     className: '',
     stripTrailingSlash: false
 });
+
 let usernameRegex;// = /@[a-z0-9_]{1,32}/g;
 function highlightMentions(str) {
     if (!usernameRegex) usernameRegex = new RegExp(`@${User.current.username}`, 'g');
     return str.replace(usernameRegex, '<span class="mention">$&</span>');
+}
+
+const inlinePreRegex = /`(.*)`/g;
+const blockPreRegex = /`{3}([^`]*)`{3}/g;
+function formatPre(str) {
+    return str.replace(blockPreRegex, '<div class="pre">$1</div>')
+        .replace(inlinePreRegex, '<span class="pre">$1</span>');
 }
 
 function processMessage(msg) {
@@ -48,6 +56,7 @@ function processMessage(msg) {
     str = autolinker.link(str);
     str = emojione.unicodeToImage(str);
     str = highlightMentions(str);
+    str = formatPre(str);
     str = { __html: str };
     msg.processedText = str;
     return str;

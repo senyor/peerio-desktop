@@ -93,9 +93,9 @@ class UserPicker extends React.Component {
                 </div>
                 <div className="flex-row flex-justify-center"
                     style={{ width: '100%' }}>
-                    <div className="flex-col"
+                    <div className="flex-col flex-grow-1"
                         style={{
-                            width: '600px',
+                            maxWidth: '600px',
                             marginLeft: '64px',
                             marginRight: '64px',
                             marginTop: '168px'

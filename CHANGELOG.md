@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.8.0"></a>
+# [2.8.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.7.6...v2.8.0) (2017-05-04)
+
+
+### Bug Fixes
+
+* **chat:** better most recent message ([755b49b](https://github.com/PeerioTechnologies/peerio-desktop/commit/755b49b))
+* **chat:** bring back receiving message sound notification ([17caaac](https://github.com/PeerioTechnologies/peerio-desktop/commit/17caaac))
+* **chat:** chatlist render complete ([1076148](https://github.com/PeerioTechnologies/peerio-desktop/commit/1076148))
+* **chat:** focus on chat name editor in title on click ([7dd55ff](https://github.com/PeerioTechnologies/peerio-desktop/commit/7dd55ff))
+* **chat:** makes long member lists scrollable. ([63e66ce](https://github.com/PeerioTechnologies/peerio-desktop/commit/63e66ce))
+* **chat:** replace own username with 'you' in chat list ([3191843](https://github.com/PeerioTechnologies/peerio-desktop/commit/3191843))
+* **chat:** stops long participant lists from crushing title area, also scrolling. ([6cb7113](https://github.com/PeerioTechnologies/peerio-desktop/commit/6cb7113))
+* BetterInput doesn't fail if there's no onReject prop ([cf81cd1](https://github.com/PeerioTechnologies/peerio-desktop/commit/cf81cd1))
+* **chat:** wire new chatlist ([e0e2b0c](https://github.com/PeerioTechnologies/peerio-desktop/commit/e0e2b0c))
+* **sidebar:** adds negative tabIndex to ChatNameEditor in sidebar ([54e42be](https://github.com/PeerioTechnologies/peerio-desktop/commit/54e42be))
+* updates what is and isn’t selectable in app. ([76c31c3](https://github.com/PeerioTechnologies/peerio-desktop/commit/76c31c3))
+
+
+### Features
+
+* **app:** app updater prompt ([715c5bf](https://github.com/PeerioTechnologies/peerio-desktop/commit/715c5bf))
+* **app:** set Application User Model ID to appId ([8fa8a7b](https://github.com/PeerioTechnologies/peerio-desktop/commit/8fa8a7b))
+* **chat:** indicate chat fav state changing progress and prevent click spam ([08b0cd6](https://github.com/PeerioTechnologies/peerio-desktop/commit/08b0cd6))
+* **chat:** render chat name removal fact separately ([19fc7f2](https://github.com/PeerioTechnologies/peerio-desktop/commit/19fc7f2))
+* **chat:** render system message 'create' at the chat beginning ([1af5f56](https://github.com/PeerioTechnologies/peerio-desktop/commit/1af5f56))
+* **chat:** use system messages for 'most recent' ([f3dd894](https://github.com/PeerioTechnologies/peerio-desktop/commit/f3dd894))
+* **emoji:** migrate to emojione 3.1 ([c3ccd78](https://github.com/PeerioTechnologies/peerio-desktop/commit/c3ccd78))
+* **profile:** change first/last name ([636d4b4](https://github.com/PeerioTechnologies/peerio-desktop/commit/636d4b4))
+* **profile:** email editor ([f58cb82](https://github.com/PeerioTechnologies/peerio-desktop/commit/f58cb82))
+* **profile:** email update ([46c6404](https://github.com/PeerioTechnologies/peerio-desktop/commit/46c6404))
+* **settings:** unleash the settings page! ([0b2c6ea](https://github.com/PeerioTechnologies/peerio-desktop/commit/0b2c6ea))
+
+
+
 <a name="2.7.6"></a>
 ## [2.7.6](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.7.5...v2.7.6) (2017-04-26)
 

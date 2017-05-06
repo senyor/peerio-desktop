@@ -146,8 +146,9 @@ $radius-sign-warning: 18px;
       margin-left: -$margin-small;
 
       .rt-progress_bar-circular {
-        height: 36px;
-        width: 36px;
+        height: 20px;
+        margin: 4px 9px 0 7px;
+        width: 20px;
       }
 
       .material-icons {

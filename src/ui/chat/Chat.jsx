@@ -19,19 +19,18 @@ const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 class Chat extends React.Component {
     @observable static sidebarOpen = false; // static, so it acts like lazy internal store
     @observable chatNameEditorVisible = false;
-
+    static sidebarStateSaver;
     componentWillMount() {
-        this.reactionToDispose = reaction(() => Chat.sidebarOpen, open => {
-            TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
-        }, { delay: 1000 });
         TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
-            if (isOpen) Chat.sidebarOpen = isOpen;
+            Chat.sidebarOpen = !!isOpen;
         });
+        if (!Chat.sidebarStateSaver) {
+            Chat.sidebarStateSaver = reaction(() => Chat.sidebarOpen, open => {
+                TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
+            }, { delay: 1000 });
+        }
     }
 
-    componentWillUnmount() {
-        this.reactionToDispose();
-    }
 
     sendMessage(m) {
         chatStore.activeChat.sendMessage(m)

@@ -31,13 +31,20 @@ class ChatList extends React.Component {
     };
 
     renderMostRecentMessage(c) {
-        if (!c.mostRecentMessage) return '';
-        if (c.mostRecentMessage.systemData) {
-            return <em>{getSystemMessageText(c.mostRecentMessage)}</em>;
+        const m = c.mostRecentMessage;
+        if (!m) return '';
+        if (m.systemData) {
+            return <em>{getSystemMessageText(m)}</em>;
         }
-        let username = c.mostRecentMessage.sender.username;
+        let username = m.sender.username;
         if (username === User.current.username) username = t('title_you');
-        return <span><strong>{username}:</strong> {c.mostRecentMessage.text}</span>;
+        return (
+            <span><strong>{username}:</strong>&nbsp;
+                {m.files && m.files.length
+                    ? t('title_filesShared', { count: m.files.length })
+                    : m.text}
+            </span>
+        );
     }
 
     render() {

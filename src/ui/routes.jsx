@@ -4,8 +4,8 @@ const App = require('./App');
 const Root = require('./Root');
 const Login = require('./login/Login');
 const Signup = require('./signup/Signup');
-const Messages = require('./messages/Messages');
-const NewMessage = require('./messages/NewMessage');
+const Chat = require('./chat/Chat');
+const NewMessage = require('./chat/NewMessage');
 const Files = require('./files/Files');
 const ShareFiles = require('./files/ShareFiles');
 const Mail = require('./mail/Mail');
@@ -25,7 +25,7 @@ module.exports = (
         <Route path="/signup" component={Signup} />
         <Route path="/new-device" component={NewDevice} />
         <Route path="/app" component={App} >
-            <IndexRoute component={Messages} />
+            <IndexRoute component={Chat} />
             <Route path="new-message" component={NewMessage} />
             <Route path="files" component={Files} />
             <Route path="sharefiles" component={ShareFiles} />

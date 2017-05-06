@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Dialog, IconMenu, MenuDivider, MenuItem, TooltipIconButton } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
-const InlineFiles = require('../../messages/components/InlineFiles');
+const InlineFiles = require('../../chat/components/InlineFiles');
 const { fileStore, warnings, mailStore } = require('~/icebear');
 
 

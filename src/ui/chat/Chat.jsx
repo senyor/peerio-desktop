@@ -16,16 +16,16 @@ const ChatNameEditor = require('./components/ChatNameEditor');
 
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 @observer
-class Messages extends React.Component {
+class Chat extends React.Component {
     @observable static sidebarOpen = false; // static, so it acts like lazy internal store
     @observable chatNameEditorVisible = false;
 
     componentWillMount() {
-        this.reactionToDispose = reaction(() => Messages.sidebarOpen, open => {
+        this.reactionToDispose = reaction(() => Chat.sidebarOpen, open => {
             TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
         }, { delay: 1000 });
         TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
-            if (isOpen) Messages.sidebarOpen = isOpen;
+            if (isOpen) Chat.sidebarOpen = isOpen;
         });
     }
 
@@ -49,7 +49,7 @@ class Messages extends React.Component {
     };
 
     toggleSidebar = () => {
-        Messages.sidebarOpen = !Messages.sidebarOpen;
+        Chat.sidebarOpen = !Chat.sidebarOpen;
     };
 
 
@@ -123,7 +123,7 @@ class Messages extends React.Component {
                             <MessageInput show={!!chat && chat.metaLoaded}
                                 onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
                         </div>
-                        {chat ? <ChatSideBar open={Messages.sidebarOpen} /> : null}
+                        {chat ? <ChatSideBar open={Chat.sidebarOpen} /> : null}
                     </div>
                 </div>
             </div>
@@ -132,4 +132,4 @@ class Messages extends React.Component {
 }
 
 
-module.exports = Messages;
+module.exports = Chat;

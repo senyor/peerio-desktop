@@ -12,8 +12,7 @@ const { t } = require('peerio-translator');
 const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
 const { isUrlAllowed } = require('~/helpers/url');
 const urls = require('~/config').translator.urlMap;
-const getSystemMessageText = require('~/helpers/system-messages');
-const { User } = require('~/icebear');
+const { User, systemMessages } = require('~/icebear');
 
 const autolinker = new Autolinker({
     urls: {
@@ -72,7 +71,7 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
-        return <span className="system-message selectable">{getSystemMessageText(m)}</span>;
+        return <span className="system-message selectable">{systemMessages.getSystemMessageText(m)}</span>;
     }
     render() {
         const m = this.props.message;

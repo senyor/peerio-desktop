@@ -87,26 +87,30 @@ class Profile extends React.Component {
                                 {a.primary && user.addresses.length > 1
                                     ? <span className="starred">★&nbsp;</span> : null}
                                 {a.address}
-                                <IconMenu icon="more_vert">
-                                    {
-                                        a.primary
-                                            ? null
-                                            : <MenuItem caption={t('button_makePrimary')} icon="star"
-                                                onClick={() => { this.makePrimary(a.address); }} />
-                                    }
-                                    {
-                                        a.confirmed
-                                            ? null
-                                            : <MenuItem caption={t('button_resend')} icon="mail"
-                                                onClick={() => { this.resendConfirmation(a.address); }} />
-                                    }
-                                    {
-                                        a.primary
-                                            ? null
-                                            : <MenuItem caption={t('button_delete')} icon="delete"
-                                                onClick={() => { this.removeEmail(a.address); }} />
-                                    }
-                                </IconMenu>
+                                {
+                                    a.primary && a.confirmed
+                                        ? null
+                                        : <IconMenu icon="more_vert">
+                                            {
+                                                a.primary
+                                                    ? null
+                                                    : <MenuItem caption={t('button_makePrimary')} icon="star"
+                                                        onClick={() => { this.makePrimary(a.address); }} />
+                                            }
+                                            {
+                                                a.confirmed
+                                                    ? null
+                                                    : <MenuItem caption={t('button_resend')} icon="mail"
+                                                        onClick={() => { this.resendConfirmation(a.address); }} />
+                                            }
+                                            {
+                                                a.primary
+                                                    ? null
+                                                    : <MenuItem caption={t('button_delete')} icon="delete"
+                                                        onClick={() => { this.removeEmail(a.address); }} />
+                                            }
+                                        </IconMenu>
+                                }
                             </div>);
                         })
                     }

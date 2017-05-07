@@ -43,7 +43,7 @@ textarea {
 }
 
 a {
-  color: $color-brand;
+  color: $color-brand-blue;
 }
 
 *,
@@ -55,7 +55,7 @@ a {
 body,
 #root,
 .app-root {
-  background-color: $background-root;
+  background-image: $background-gradient;
   color: $text-dark-primary;
   font: 14px/1.45 $font-stack;
   height: 100vh;

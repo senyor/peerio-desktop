@@ -73,7 +73,7 @@
 }
 
 .rt-ripple-ripple {
-  background-color: $color-brand;
+  background-color: $color-brand-blue;
 }
 
 .rt-button-rippleWrapper {
@@ -84,7 +84,7 @@
   min-width: 64px;
 
   .rt-dialog-navigation &:last-of-type {
-    color: $color-brand;
+    color: $color-brand-blue;
   }
 }
 
@@ -189,8 +189,8 @@
 .chip-label {
   @extend %flex-shrink-0;
   background: $background-root;
-  border: 1px solid $color-brand;
-  color: $color-brand;
+  border: 1px solid $color-brand-blue;
+  color: $color-brand-blue;
   margin-bottom: $margin-tiny;
   margin-right: 0;
   margin-top: $margin-tiny;
@@ -211,14 +211,14 @@
   }
 
   .rt-chip-delete {
-    border: 2px solid rgba($color-brand, .35);
+    border: 2px solid rgba($color-brand-blue, .35);
     border-radius: 24px;
 
     &:hover {
-      background: $color-brand;
+      background: $color-brand-blue;
 
       .rt-chip-deleteIcon {
-        background: $color-brand;
+        background: $color-brand-blue;
       }
 
       .rt-chip-deleteX {
@@ -234,7 +234,7 @@
     width: 20px;
 
     .rt-chip-deleteX {
-      stroke: rgba($color-brand, .35);
+      stroke: rgba($color-brand-blue, .35);
       stroke-width: 4px;
     }
   }

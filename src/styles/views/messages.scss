@@ -2,6 +2,7 @@ $radius-sign-warning: 18px;
 
 // view wrapper
 .messages {
+  background: $background-root;
   display: flex;
   flex-direction: row;
 
@@ -103,7 +104,7 @@ $radius-sign-warning: 18px;
         padding: 0;
 
         input {
-          border: 1px solid rgba($color-brand, .54);
+          border: 1px solid rgba($color-brand-blue, .54);
           border-radius: 4px;
           color: $text-dark-secondary;
           font-weight: $font-weight-bold;
@@ -387,7 +388,7 @@ $radius-sign-warning: 18px;
       }
 
       a {
-        color: $color-brand;
+        color: $color-brand-blue;
       }
     }
   }
@@ -410,7 +411,7 @@ $radius-sign-warning: 18px;
     position: relative;
 
     .color-brand:not([disabled]) > .material-icons {
-      color: $color-brand;
+      color: $color-brand-blue;
     }
 
     .color-affirmative > .material-icons {
@@ -612,7 +613,7 @@ $radius-sign-warning: 18px;
   }
 
   .rt-ripple-ripple {
-    background-color: $color-brand;
+    background-color: $color-brand-blue;
   }
 
   .rt-list-itemAction {

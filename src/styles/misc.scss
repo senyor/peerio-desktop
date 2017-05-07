@@ -86,7 +86,7 @@ $status-bar-height: 32px;
   @extend %flex-row;
   @extend %flex-align-center;
   @extend %flex-justify-center;
-  background-color: lighten($color-brand, 10%);
+  background-color: lighten($color-brand-blue, 10%);
   border-radius: 4px;
   box-shadow: $shadow-8;
   color: $text-light-primary;

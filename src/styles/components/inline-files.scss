@@ -7,7 +7,7 @@
     @extend %flex-col;
     @extend %flex-justify-center;
     background: $color-dark-03;
-    border-left: 4px solid $color-brand;
+    border-left: 4px solid $color-brand-blue;
     border-radius: 2px;
     cursor: pointer;
     height: 48px;
@@ -20,10 +20,10 @@
     }
 
     &:hover {
-      color: $color-brand;
+      color: $color-brand-blue;
 
       .material-icons {
-        color: $color-brand;
+        color: $color-brand-blue;
       }
     }
 
@@ -35,10 +35,10 @@
     }
 
     &:hover {
-      color: $color-brand;
+      color: $color-brand-blue;
 
       .material-icons {
-        color: $color-brand;
+        color: $color-brand-blue;
       }
     }
   }

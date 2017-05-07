@@ -31,10 +31,10 @@ class ChatSideBar extends React.Component {
                     <List>
                         {chatStore.activeChat && chatStore.activeChat.participants ?
                             chatStore.activeChat.participants.map(c =>
-                                <ListItem key={c.username}
+                                (<ListItem key={c.username}
                                     leftActions={[<Avatar key="a" contact={c} />]}
                                     caption={c.username}
-                                    legend={c.fullName} />
+                                    legend={c.fullName} />)
                             ) : null}
                     </List>
                 </div>

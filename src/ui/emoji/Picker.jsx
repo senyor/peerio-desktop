@@ -137,8 +137,8 @@ class Picker extends React.Component {
                 <div className="categories" key="categories">
                     {
                         categories.map(c =>
-                            <Category id={c.id} key={c.id} selected={this.selectedCategory === c.id}
-                                name={c.name} onClick={this.onCategoryClick} />)
+                            (<Category id={c.id} key={c.id} selected={this.selectedCategory === c.id}
+                                name={c.name} onClick={this.onCategoryClick} />))
                     }
                 </div>
                 <SearchEmoji searchKeyword={this.searchKeyword} onSearchKeywordChange={this.onSearchKeywordChange}

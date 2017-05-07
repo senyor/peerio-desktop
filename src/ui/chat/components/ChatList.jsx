@@ -2,10 +2,9 @@ const React = require('react');
 const { t } = require('peerio-translator');
 const { FontIcon, List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
-const { chatStore, User } = require('~/icebear');
+const { chatStore, User, systemMessages } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const getSystemMessageText = require('~/helpers/system-messages');
 
 @observer
 class ChatList extends React.Component {
@@ -34,7 +33,7 @@ class ChatList extends React.Component {
         const m = c.mostRecentMessage;
         if (!m) return '';
         if (m.systemData) {
-            return <em>{getSystemMessageText(m)}</em>;
+            return <em>{systemMessages.getSystemMessageText(m)}</em>;
         }
         let username = m.sender.username;
         if (username === User.current.username) username = t('title_you');
@@ -57,7 +56,7 @@ class ChatList extends React.Component {
                 </div>
                 <List selectable ripple>
                     {chatStore.chats.map(c =>
-                        <ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
+                        (<ListItem key={c.id || c.tempId} className={css('online', { active: c.active })}
                             leftIcon={
                                 !c.participants || c.participants.length !== 1
                                     ? <div className="avatar-group-chat material-icons">people</div>
@@ -87,7 +86,7 @@ class ChatList extends React.Component {
                                         {this.renderMostRecentMessage(c)}
                                     </span>
                                 </TooltipDiv>
-                            } />
+                            } />)
                     )}
                 </List>
             </div>

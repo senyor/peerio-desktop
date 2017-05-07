@@ -42,12 +42,12 @@ const emailFormatFn = validation.validators.emailFormat.action;
         return (
             <div className="chip-wrapper">
                 {this.props.ghost.recipients.map((c, pos) =>
-                    <Chip key={c}
+                    (<Chip key={c}
                           className="chip-label"
                           deletable
                           onDeleteClick={() => this.props.ghost.recipients.splice(pos, 1)}>
                         {c}
-                    </Chip>
+                    </Chip>)
                 )}
                 <Input placeholder={t('title_enterEmail')}
                        value={this.query}

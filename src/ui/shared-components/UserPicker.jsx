@@ -83,11 +83,11 @@ class UserPicker extends React.Component {
                 <div className={css('flex-col selected-items', { banish: !this.props.sharing })} >
                     <List >
                         <ListSubHeader caption={t('title_selectedFiles')} />
-                        {fileStore.getSelectedFiles().map(f => <ListItem
+                        {fileStore.getSelectedFiles().map(f => (<ListItem
                             key={f.id}
                             leftIcon="insert_drive_file"
                             caption={f.name}
-                            rightIcon="remove_circle_outline" />)}
+                            rightIcon="remove_circle_outline" />))}
 
                     </List>
                 </div>
@@ -108,10 +108,10 @@ class UserPicker extends React.Component {
                             <FontIcon value="search" />
                             <div className="chip-wrapper">
                                 {this.selected.map(c =>
-                                    <Chip key={c.username} className={css('chip-label', { 'not-found': c.notFound })}
+                                    (<Chip key={c.username} className={css('chip-label', { 'not-found': c.notFound })}
                                         onDeleteClick={() => this.selected.remove(c)} deletable>
                                         {c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username}
-                                    </Chip>
+                                    </Chip>)
                                 )}
                                 <Input ref={this.onInputMount} placeholder={t('title_userSearch')} value={this.query}
                                     onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
@@ -125,12 +125,12 @@ class UserPicker extends React.Component {
                             <ListSubHeader caption="Your contacts" />
                             <div className="user-list">
                                 {this.options.map(c =>
-                                    <ListItem key={c.username}
+                                    (<ListItem key={c.username}
                                         leftActions={[<Avatar key="a" contact={c} />]}
                                         caption={c.username}
                                         legend={`${c.firstName} ${c.lastName}`}
                                         onClick={() => this.selected.push(c)}
-                                        className={css({ warning: this.noGood })} />
+                                        className={css({ warning: this.noGood })} />)
                                 )}
                             </div>
                         </List>

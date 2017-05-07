@@ -98,7 +98,11 @@ class Message extends React.Component {
                                 </div>
                         }
                         <div className="flex-row flex-align-center">
-                            <p dangerouslySetInnerHTML={processMessage(m)} className="selectable" />
+                            {
+                                m.systemData
+                                    ? null
+                                    : <p dangerouslySetInnerHTML={processMessage(m)} className="selectable" />
+                            }
                             {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
                             {
                                 /* SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML */

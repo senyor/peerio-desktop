@@ -71,7 +71,7 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
-        return <span className="system-message selectable">{systemMessages.getSystemMessageText(m)}</span>;
+        return <p className="system-message selectable">{systemMessages.getSystemMessageText(m)}</p>;
     }
     render() {
         const m = this.props.message;
@@ -99,7 +99,7 @@ class Message extends React.Component {
                         }
                         <div className="flex-row flex-align-center">
                             {
-                                m.systemData
+                                m.systemData || m.files
                                     ? null
                                     : <p dangerouslySetInnerHTML={processMessage(m)} className="selectable" />
                             }

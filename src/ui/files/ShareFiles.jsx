@@ -8,13 +8,7 @@ const { t } = require('peerio-translator');
 class ShareFiles extends React.Component {
 
     handleFileShareAccept = (users) => {
-        const files = fileStore.getSelectedFiles();
-        fileStore.clearSelection();
-        users.forEach(username => {
-            files.forEach(file => {
-                file.share(username);
-            });
-        });
+        fileStore.shareSelectedFiles(users);
         this.closeUserPicker();
     };
 

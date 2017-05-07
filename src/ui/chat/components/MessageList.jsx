@@ -173,13 +173,10 @@ class MessageList extends React.Component {
                     {t('title_chatBeginning')}
                     &nbsp;<strong>{chatStore.activeChat.chatName}</strong>.
                 </div>
-                {/* <div className="flex-row">
-                    // Messages older than 90 days will be archived.
-                    // Messages older than 90 days have been archived.
+                <div className="flex-row">
                     {t('title_chatArchive')}
-                    // button_upgradeForArchive: Upgrade to accesss your archive.
                     &nbsp;<Link href={urls.upgrade} label={t('button_upgradeForArchive')} />
-                </div> */}
+                </div>
             </div>
         );
     }

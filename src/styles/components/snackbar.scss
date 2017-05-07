@@ -10,7 +10,7 @@ $snackbar-min-width: 288px;
   justify-content: center;
   overflow: hidden;
   position: absolute;
-  transition: 250ms $transition-ease-in;
+  transition: 250ms $transition-easing-ease-in;
   width: 100%;
 
   &.show {

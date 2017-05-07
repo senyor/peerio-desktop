@@ -22,7 +22,7 @@
   background-size: $background-pattern-size;
   color: $text-light-secondary;
   opacity: 0;
-  transition: 350ms opcaity $transition-default;
+  transition: 350ms opcaity $transition-easing-default;
   width: 100vw;
 
   .text-light-helper {
@@ -168,7 +168,7 @@
     padding-left: 0;
     position: absolute;
     top: 0;
-    transition: 150ms $transition-default;
+    transition: 150ms $transition-easing-default;
 
     .heading {
       color: $text-light-primary;

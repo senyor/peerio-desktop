@@ -98,7 +98,7 @@ $status-bar-height: 32px;
   right: 0;
   text-align: center;
   top: -$status-bar-height - 20;
-  transition: all .4s $transition-bounce-in-out;
+  transition: all 400ms $transition-easing-bounce-in-out;
   user-select: none;
   z-index: 2;
 
@@ -139,7 +139,7 @@ $status-bar-height: 32px;
   padding: 0 $padding-default;
   position: absolute;
   top: -48px;
-  transition: top .4s $transition-bounce-in-out;
+  transition: top 400ms $transition-easing-bounce-in-out;
 
   &.show {
     top: 0;
@@ -150,9 +150,10 @@ $status-bar-height: 32px;
   }
 }
 
-// Nonselectable items.
-// TOOD rewrite with %no-select and extend in specifi rules.
-.selectable {
+// All items are not selectable by default
+// use this class to make items selectable
+.selectable,
+%selectable {
   -webkit-user-select: auto;
   user-select: auto;
   -webkit-user-drag: auto;

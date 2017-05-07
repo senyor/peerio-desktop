@@ -341,16 +341,11 @@ $radius-sign-warning: 18px;
       }
 
       .pre {
-        background-color: #eaeaea;
+        background-color: $color-dark-03;
         border-radius: 4px;
-        color: #000;
         font-family: monospace;
-        padding: 0 5px;
-      }
-
-      div.pre {
-        padding-bottom: 3px;
-        padding-top: 3px;
+        margin-right: $margin-tiny;
+        padding: $padding-tiny 6px;
       }
 
       .meta-data {

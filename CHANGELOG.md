@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.9.0"></a>
+# [2.9.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.8.0...v2.9.0) (2017-05-08)
+
+
+### Bug Fixes
+
+* **chat:** aligns input hint text ([1c4804f](https://github.com/PeerioTechnologies/peerio-desktop/commit/1c4804f))
+* **chat:** aligns system messages and files ([1ba8c89](https://github.com/PeerioTechnologies/peerio-desktop/commit/1ba8c89))
+* **chat:** empty message preview when it contains files ([9285b79](https://github.com/PeerioTechnologies/peerio-desktop/commit/9285b79))
+* **chat:** resizes star loader to appropriate size ([f011241](https://github.com/PeerioTechnologies/peerio-desktop/commit/f011241))
+* **chat:** returns background to user picker ([3e835e8](https://github.com/PeerioTechnologies/peerio-desktop/commit/3e835e8))
+* **chat:** returns ellipses to long titles ([3419766](https://github.com/PeerioTechnologies/peerio-desktop/commit/3419766))
+* **chat:** stops messages from crushing sidebar ([291563d](https://github.com/PeerioTechnologies/peerio-desktop/commit/291563d))
+* **files:** adds padding to bottom of file list. ([34ed16a](https://github.com/PeerioTechnologies/peerio-desktop/commit/34ed16a))
+* **files:** allows file sharing in files when window is at minimum width. ([a719327](https://github.com/PeerioTechnologies/peerio-desktop/commit/a719327))
+* **files:** title_shareable wasn't passed to translator ([cf22984](https://github.com/PeerioTechnologies/peerio-desktop/commit/cf22984))
+* **profile:** remove empty menu from confirmed primary email ([36b647c](https://github.com/PeerioTechnologies/peerio-desktop/commit/36b647c))
+
+
+### Features
+
+* **app:** undo/redo/cut/copy/paste/selectall context menu, separate main menu and menu for inputs ([ba379ca](https://github.com/PeerioTechnologies/peerio-desktop/commit/ba379ca))
+* **chat:** 90 days message archive warning ([1b2b7c7](https://github.com/PeerioTechnologies/peerio-desktop/commit/1b2b7c7))
+* **chat:** highlight mentions ([434af81](https://github.com/PeerioTechnologies/peerio-desktop/commit/434af81))
+* **chat:** preformatted message syntax ([01cdea8](https://github.com/PeerioTechnologies/peerio-desktop/commit/01cdea8))
+* **chat:** remember message input contents for every chat during session ([5f19f3b](https://github.com/PeerioTechnologies/peerio-desktop/commit/5f19f3b))
+* add DMG and Windows installer icons ([339f55d](https://github.com/PeerioTechnologies/peerio-desktop/commit/339f55d))
+* **files:** warn user about deleting shared files ([2264f72](https://github.com/PeerioTechnologies/peerio-desktop/commit/2264f72))
+
+
+
 <a name="2.8.0"></a>
 # [2.8.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.7.6...v2.8.0) (2017-05-04)
 

@@ -5,6 +5,8 @@ const { TinyDb } = require('~/icebear');
 class UIStore {
     @observable contactDialogUsername;
     @observable soundsEnabled = true;
+    // key: chat id, value: text
+    unsentMessages = {};
 
     async init() {
         this.soundsEnabled = !!await TinyDb.user.getValue('pref_soundsEnabled');

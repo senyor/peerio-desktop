@@ -1,5 +1,6 @@
 .user-picker {
   @extend %flex-row;
+  background: $background-root;
   height: 100%;
   width: 100%;
 

@@ -43,7 +43,11 @@ const urls = require('~/config').translator.urlMap;
 
     handleBulkDelete = () => {
         const selected = fileStore.getSelectedFiles();
-        if (confirm(t('title_confirmRemoveFiles', { count: selected.length }))) {
+        const hasSharedFiles = selected.some((f) => f.shared);
+
+        let msg = t('title_confirmRemoveFiles', { count: selected.length });
+        if (hasSharedFiles) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
+        if (confirm(msg)) {
             selected.forEach(f => f.remove());
         }
     };
@@ -66,7 +70,7 @@ const urls = require('~/config').translator.urlMap;
                 <div className="file-wrapper">
                     <Filter />
                     <GlobalActions onUpload={this.handleUpload} onDelete={this.handleBulkDelete}
-                      onShare={this.handleFileShareIntent} />
+                        onShare={this.handleFileShareIntent} />
                     <div className="file-table-wrapper">
                         <table>
                             <thead>

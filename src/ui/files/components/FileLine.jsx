@@ -17,7 +17,11 @@ class FileLine extends React.Component {
         this.props.file.selected = val;
     };
     deleteFile = () => {
-        if (confirm(t('title_confirmRemoveFilename', { name: this.props.file.name }))) {
+        let msg = t('title_confirmRemoveFilename', { name: this.props.file.name });
+        if (this.props.file.shared) {
+            msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
+        }
+        if (confirm()) {
             this.props.file.remove();
         }
     };

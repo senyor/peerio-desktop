@@ -175,6 +175,10 @@
         "nsis"
       ]
     },
+    "nsis": {
+      "artifactName": "${name}-setup-${version}.${ext}",
+      "installerIcon": "dist-assets/win-installer.ico"
+    },
     "mac": {
       "category": "public.app-category.productivity",
       "target": [
@@ -183,6 +187,7 @@
       ]
     },
     "dmg": {
+      "icon": "dist-assets/dmg-icon.icns",
       "title": "${productName} ${version}",
       "window": {
         "x": 200,

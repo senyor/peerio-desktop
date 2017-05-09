@@ -7,7 +7,12 @@
   width: 100vw;
 
   @media (max-width: #{$minimum-screen-width}) {
-    margin: 0;
+    padding: 0;
+
+    // hides size column at minimum-screen-width
+    .text-right + .text-right {
+      display: none;
+    }
   }
 
   .file-wrapper {
@@ -245,6 +250,9 @@
 
       .file-title {
         font-weight: $font-weight-semibold;
+        max-width: 304px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

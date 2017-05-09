@@ -334,6 +334,7 @@ $radius-sign-warning: 18px;
       flex-grow: 1;
 
       a {
+        @extend %selectable;
         word-break: break-word;
       }
 

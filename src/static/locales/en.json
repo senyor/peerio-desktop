@@ -14,7 +14,7 @@
   "title_wait": "Working...",
   "title_error": "Error",
   "title_search": "Search",
-  "title_dontShowAgain":"Don't show this again",
+  "title_dontShowAgain": "Don't show this again",
   "button_signup": "Sign up",
   "button_next": "Next",
   "button_back": "Back",
@@ -208,6 +208,7 @@
   "title_publicKey": "Peerio ID#",
   "error_saveSettings": "Unable to save changes",
   "error_unconfirmedEmail": "Unconfirmed email",
+  "error_resendConfirmation": "Unable to email confirmation link, please try again later.",
   "error_contactFingerprintChangedDetail": "This contact's Peerio ID# has changed. Verify the new ID# with your contact by calling them or using another messaging service to be sure of their identity. <a-contactFingerprint>Find out more.</>",
   "button_resend": "Resend link",
   "button_save": "Save",
@@ -287,5 +288,6 @@
   "title_publicKeyHelp": "What is this?",
   "title_HHdownloadPeerioHeader": "Simple security by <b>Peerio</>",
   "title_HHdownloadPeerioContent": "<a-downloadApp>Download our mobile and desktop apps</> for more features like encrypted chat, emails, file sharing, and cloud storage.",
-  "title_storageUsage": "Storage used"
+  "title_storageUsage": "Storage used",
+  "title_messageInputPlaceholder": "Message {chatName}"
 }

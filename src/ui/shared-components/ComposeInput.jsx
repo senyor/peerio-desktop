@@ -86,6 +86,11 @@ class ComposeInput extends React.Component {
         }
     }
 
+    componentWillReceiveProps(newProps) {
+        if (!this.quill) return;
+        this.quill.root.setAttribute('data-placeholder', newProps.placeholder);
+    }
+
     getCleanContents = () => {
         let data = document.getElementsByClassName('ql-editor')[0].innerHTML;
         data = data.trim();
@@ -112,6 +117,10 @@ class ComposeInput extends React.Component {
         return data;
     };
 
+    setPlaceholder(text) {
+        if (!this.quill) return;
+        this.quill.root.setAttribute('data-placeholder', text);
+    }
     handleSubmit = () => {
         const data = this.getCleanContents();
         if (data === '' && !this.permitEmptyBody) return;
@@ -136,7 +145,7 @@ class ComposeInput extends React.Component {
     activateQuill = el => {
         if (!el) return;
         const opts = {
-            placeholder: t('title_chatPlaceholder'),
+            placeholder: this.props.placeholder || t('title_chatPlaceholder'),
             formats: ['bold', 'italic', 'emoji'],
             modules: {
                 keyboard: {
@@ -146,6 +155,7 @@ class ComposeInput extends React.Component {
                 }
             }
         };
+
         if (this.returnToSend === true) {
             opts.modules.keyboard.bindings.enter = {
                 key: Keyboard.keys.ENTER,

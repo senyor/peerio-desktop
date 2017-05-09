@@ -120,6 +120,11 @@ class Chat extends React.Component {
                             {chatStore.chats.length === 0 && !chatStore.loading ? <NoChatSelected /> : <MessageList />}
                             {chat && chat.uploadQueue.length ? <UploadInChatProgress queue={chat.uploadQueue} /> : null}
                             <MessageInput show={!!chat && chat.metaLoaded}
+                                placeholder={
+                                    chatStore.activeChat ?
+                                        t('title_messageInputPlaceholder', { chatName: chatStore.activeChat.chatName })
+                                        : null
+                                }
                                 onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
                         </div>
                         {chat ? <ChatSideBar open={Chat.sidebarOpen} /> : null}

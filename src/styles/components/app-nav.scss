@@ -21,18 +21,9 @@
     @extend %flex-align-center;
     @extend %flex-justify-center;
     @extend %flex-shrink-0;
-    background: $color-brand-blue;
     height: 80px;
     position: relative;
     width: 80px;
-
-    &::before {
-      background: $color-dark-12;
-      content: "";
-      height: 80px;
-      position: absolute;
-      width: 80px;
-    }
 
     .rt-menu-active {
       min-width: 250px !important;

@@ -1,15 +1,16 @@
 const React = require('react');
-const { IconMenu, MenuItem } = require('~/react-toolbox');
+// const { IconMenu, MenuItem } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 
 function Filter() {
     return (
-        <div className="header-filter">All files
-            <IconMenu icon="filter_list">
+        <div className="header-filter">{t('title_files')}
+            {/*  TODO: make filters work. Also decide what filters we want. */}
+            {/* <IconMenu icon="filter_list">
                 <MenuItem value="all-files" caption={t('title_fileFilterAll')} />
                 <MenuItem value="shared-by-me" caption={t('title_fileFilterShared')} />
                 <MenuItem value="shared-with-me" caption={t('title_fileFilterReceived')} />
-            </IconMenu>
+            </IconMenu> */}
         </div>
     );
 }

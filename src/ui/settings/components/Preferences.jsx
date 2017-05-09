@@ -2,7 +2,7 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { User } = require('~/icebear');
+const { User, chatStore } = require('~/icebear');
 const uiStore = require('~/stores/ui-store');
 
 @observer
@@ -13,6 +13,9 @@ class Preferences extends React.Component {
     }
     onSoundsChanged(value) {
         uiStore.soundsEnabled = value;
+    }
+    onUnreadChatSorting(value) {
+        chatStore.unreadChatsAlwaysOnTop = value;
     }
     render() {
         return (
@@ -35,6 +38,12 @@ class Preferences extends React.Component {
                         label={t('title_notificationsMessage')}
                         onChange={this.onSoundsChanged} />
                 </section>
+                <section className="section-divider">
+                    <Switch checked={chatStore.unreadChatsAlwaysOnTop}
+                        label={t('title_unreadChatsOnTop')}
+                        onChange={this.onUnreadChatSorting} />
+                </section>
+
             </div>
         );
     }

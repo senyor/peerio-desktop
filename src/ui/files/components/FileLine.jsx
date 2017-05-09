@@ -65,7 +65,7 @@ class FileLine extends React.Component {
                         : <Checkbox disabled={!file.readyForDownload} checked={file.selected}
                             onChange={this.toggleChecked} />
                     }</td>
-                <td className="file-title selectable">{file.name}</td>
+                <td className="file-title selectable" onClick={this.download}>{file.name}</td>
                 <td className="clickable-username" onClick={this.openContactDialog}>
                     {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}</td>
                 <td className="text-right">{file.uploadedAt && file.uploadedAt.toLocaleString()}</td>

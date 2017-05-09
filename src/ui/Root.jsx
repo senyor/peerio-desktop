@@ -11,7 +11,7 @@ const { ProgressBar } = require('~/react-toolbox');
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
 const { socket, clientApp, chatStore, warnings } = require('~/icebear');
-const { computed, reaction } = require('mobx');
+const { computed, reaction, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const SystemWarningDialog = require('~/ui/shared-components/SystemWarningDialog');
@@ -25,6 +25,8 @@ class Root extends React.Component {
     @computed get snackbarVisible() {
         return !(routerStore.currentRoute === routerStore.ROUTES.chat && chatStore.activeChat);
     }
+
+    @observable showOfflineNotification = false;
 
     constructor() {
         super();
@@ -48,6 +50,17 @@ class Root extends React.Component {
             ipcRenderer.send('install-update');
         });
         ipcRenderer.on('console_log', (ev, arg) => console.log(arg));
+
+        reaction(() => socket.connected, (connected) => {
+            if (connected) {
+                this.showOfflineNotification = false;
+                return;
+            }
+            setTimeout(() => {
+                this.showOfflineNotification = !socket.connected;
+            }, 5000);
+        });
+
         // Dev tools ---------->
         this.devtools = null;
         if (isDevEnv) {
@@ -80,8 +93,9 @@ class Root extends React.Component {
         return (
             <ThemeProvider theme={theme}>
                 <div>
-                    <div className={`status-bar ${socket.connected ? '' : 'visible'}`}>
-                        {socket.connected ? null : <ProgressBar type="circular" mode="indeterminate" />}
+                    <div className={`status-bar ${!this.showOfflineNotification ? '' : 'visible'}`}>
+                        {/* don't let invisible svg to always run */}
+                        {this.showOfflineNotification ? <ProgressBar type="circular" mode="indeterminate" /> : null}
                         {t('error_connecting')}
                     </div>
                     {this.props.children}

@@ -343,6 +343,7 @@ $radius-sign-warning: 18px;
       }
 
       .pre {
+        @extend %selectable;
         background-color: $color-dark-03;
         border-radius: 4px;
         font-family: monospace;

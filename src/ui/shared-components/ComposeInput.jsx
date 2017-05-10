@@ -145,7 +145,7 @@ class ComposeInput extends React.Component {
     activateQuill = el => {
         if (!el) return;
         const opts = {
-            placeholder: this.props.placeholder || t('title_chatPlaceholder'),
+            placeholder: this.props.placeholder || '',
             formats: ['bold', 'italic', 'emoji'],
             modules: {
                 keyboard: {

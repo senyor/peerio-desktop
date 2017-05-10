@@ -107,9 +107,9 @@ class KegEditor extends React.Component {
                 }
                 {
                     this.selectedDb
-                        ? (<div className="list keg-view">
+                        ? (<div className="list keg-view selectable">
                             <ChatInfo c={this.selectedDb} />
-                            <div className="keg">
+                            <div className="keg selectable">
                                 {this.keg ? JSON.stringify(this.keg, null, 2) : '<- select keg to inspect it'}
                             </div>
                         </div>)
@@ -144,12 +144,12 @@ function KegList(props) {
 function ChatInfo(props) {
     if (!props.c || !props.c.key) return <div>Loading chat metadata...</div>;
     return (
-        <div>
-            <Chip>{props.c.id}</Chip><br />
+        <div className="selectable">
+            <Chip className="selectable">{props.c.id}</Chip><br />
             {
                 props.c.participants
                     ? props.c.participants.map(p => <Chip key={p.username}>{p.username}</Chip>)
-                    : <Chip>{User.current.username}</Chip>
+                    : <Chip className="selectable">{User.current.username}</Chip>
             }
         </div>
     );

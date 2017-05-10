@@ -32,9 +32,9 @@ class DevTools extends React.Component {
             <div className="dev-tools-root">
                 <link key="dev_tools_style" rel="stylesheet" href="./dev-tools-style.css" />
                 <AppBar fixed leftIcon="menu" rightIcon="close" title="Developer tools"
-                        onLeftIconClick={this.toggleMenu} onRightIconClick={this.quit}>
+                    onLeftIconClick={this.toggleMenu} onRightIconClick={this.quit}>
                     <Menu className="menu" position="topLeft" menuRipple active={this.menuActive}
-                          onHide={this.hideMenu}>
+                        onHide={this.hideMenu}>
                         <MenuItem icon="dashboard" caption="Dashboard" onClick={this.gotoDashboard} />
                         <MenuItem icon="grid_on" caption="Keg Editor" onClick={this.gotoKegEditor} />
                         <MenuDivider />

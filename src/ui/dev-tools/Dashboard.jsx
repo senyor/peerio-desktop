@@ -8,7 +8,7 @@ const { observer } = require('mobx-react');
 class DevToolsDashboard extends React.Component {
     render() {
         return (
-            <div className="dashboard">
+            <div className="dashboard selectable">
                 <Card style={{ width: '100%' }}>
                     <CardTitle title="Socket server" />
                     <CardText>
@@ -24,7 +24,7 @@ class DevToolsDashboard extends React.Component {
                 <Card style={{ width: '57%' }}>
                     <CardTitle title="Config" />
                     <CardText>
-                        <pre>{JSON.stringify(config, null, 2)}</pre>
+                        <pre className="selectable">{JSON.stringify(config, null, 2)}</pre>
                     </CardText>
                 </Card>
             </div>
@@ -37,7 +37,7 @@ function UserDetails() {
         return <span>Not authenticated.</span>;
     }
     return (
-        <span>
+        <span className="selectable">
             Username: <strong>{User.current.username}</strong><br />
             First name: <strong>{User.current.firstName}</strong><br />
             Last name: <strong>{User.current.lastName}</strong>
@@ -63,10 +63,10 @@ class ChangeServer extends React.Component {
         }
 
         return (
-            <span>
+            <span className="selectable">
                 Current server: {socket.socket.io.uri}
                 <Input type="text" value={this.server} onChange={this.onServerChange}
-                       label="Server url" /><br />
+                    label="Server url" /><br />
                 <Button label="Change and reconnect" raised primary onClick={this.changeServer} />
             </span>
         );

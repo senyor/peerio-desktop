@@ -85,12 +85,12 @@ class ChatList extends React.Component {
                                         }
                                         itemContent={
                                             <TooltipDiv className="item-content"
-                                                tooltip={c.chatName}
+                                                tooltip={c.name}
                                                 tooltipDelay={500}
                                                 tooltipPosition="right">
                                                 <span className="rt-list-primary">
                                                     {c.isFavorite ? <span className="starred">&#x2605;</span> : null}
-                                                    {c.chatName}
+                                                    {c.name}
                                                 </span>
                                                 <span className="rt-list-itemText">
                                                     {this.renderMostRecentMessage(c)}

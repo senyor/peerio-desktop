@@ -77,7 +77,7 @@ class Chat extends React.Component {
                                 : <div style={{ overflow: 'hidden' }}>
                                     <FontIcon value="edit" />
                                     <div className="title-content">
-                                        {chat.chatName}
+                                        {chat.name}
                                     </div>
                                 </div>
                         }
@@ -122,7 +122,7 @@ class Chat extends React.Component {
                             <MessageInput show={!!chat && chat.metaLoaded}
                                 placeholder={
                                     chatStore.activeChat ?
-                                        t('title_messageInputPlaceholder', { chatName: chatStore.activeChat.chatName })
+                                        t('title_messageInputPlaceholder', { chatName: chatStore.activeChat.name })
                                         : null
                                 }
                                 onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />

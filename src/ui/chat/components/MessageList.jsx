@@ -171,7 +171,7 @@ class MessageList extends React.Component {
                 </div>
                 <div className="title">
                     {t('title_chatBeginning')}
-                    &nbsp;<strong>{chatStore.activeChat.chatName}</strong>.
+                    &nbsp;<strong>{chatStore.activeChat.name}</strong>.
                 </div>
                 <div className="flex-row">
                     {t('title_chatArchive')}

@@ -32,7 +32,7 @@
     "build-emoji": "./scripts/build-emoji.js",
     "validate": "npm-run-all -l -n -p code:lint style:lint",
     "get-locales": "./scripts/get-locales.sh",
-    "dist": "npm-run-all get-locales compile",
+    "dist": "npm-run-all compile",
     "react-toolbox": "react-toolbox-themr"
   },
   "repository": {

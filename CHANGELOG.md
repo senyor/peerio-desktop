@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.10.0"></a>
+# [2.10.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.9.0...v2.10.0) (2017-05-10)
+
+
+### Bug Fixes
+
+* **app:** don't show offline state for first 5 seconds of it ([b626a0a](https://github.com/PeerioTechnologies/peerio-desktop/commit/b626a0a))
+* **chat:** allows for preformatted items to be selected. ([b809cfd](https://github.com/PeerioTechnologies/peerio-desktop/commit/b809cfd))
+* **chat:** makes links and email addresses selectable. ([bb48fcc](https://github.com/PeerioTechnologies/peerio-desktop/commit/bb48fcc))
+* **files:** prevents long file names from pushing actions off of screen. ([83d527b](https://github.com/PeerioTechnologies/peerio-desktop/commit/83d527b))
+* **l18n:** fix my typo ([4156443](https://github.com/PeerioTechnologies/peerio-desktop/commit/4156443))
+
+
+### Features
+
+* **chat:** dynamic placeholder for message input ([df6752e](https://github.com/PeerioTechnologies/peerio-desktop/commit/df6752e))
+* **chat:** full names in message header ([f5468e2](https://github.com/PeerioTechnologies/peerio-desktop/commit/f5468e2))
+* **chatlist:** animated chat list ([fc77de5](https://github.com/PeerioTechnologies/peerio-desktop/commit/fc77de5))
+* **desktop:** inform icebear about user being in chats view or file view ([d0d6795](https://github.com/PeerioTechnologies/peerio-desktop/commit/d0d6795))
+* **files:** share button is not available if 1+ unsharable files are selected ([926e874](https://github.com/PeerioTechnologies/peerio-desktop/commit/926e874))
+* **settings:** new preference option 'Unread chats always on top' ([d60eeca](https://github.com/PeerioTechnologies/peerio-desktop/commit/d60eeca))
+* **setup:** update macOS disk image icon ([71fa1e3](https://github.com/PeerioTechnologies/peerio-desktop/commit/71fa1e3))
+
+
+
 <a name="2.9.0"></a>
 # [2.9.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.8.0...v2.9.0) (2017-05-08)
 

@@ -364,6 +364,10 @@ $radius-sign-warning: 18px;
         .user {
           font-weight: $font-weight-bold;
           margin: 0 $padding-small 0 $padding-default;
+
+          .username {
+            font-weight: $font-weight-regular;
+          }
         }
       }
 

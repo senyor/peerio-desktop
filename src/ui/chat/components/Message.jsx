@@ -93,7 +93,9 @@ class Message extends React.Component {
                             this.props.light
                                 ? null
                                 : <div className="meta-data">
-                                    <div className="user selectable">{m.sender.username}</div>
+                                    <div className="user selectable">
+                                        {m.sender.fullName} <span className="username">{m.sender.username}</span>
+                                    </div>
                                     <div className="timestamp selectable">{time.format(m.timestamp)}</div>
                                 </div>
                         }

@@ -8,6 +8,7 @@ const Quill = require('quill/dist/quill.core');
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const FilePicker = require('~/ui/files/components/FilePicker');
 const { t } = require('peerio-translator');
+const htmlDecoder = require('html-entities').AllHtmlEntities;
 
 // todo: this file is messy as hell, maybe refactor it
 
@@ -93,6 +94,7 @@ class ComposeInput extends React.Component {
 
     getCleanContents = () => {
         let data = document.getElementsByClassName('ql-editor')[0].innerHTML;
+        data = htmlDecoder.decode(data);
         data = data.trim();
         if (data === '') return '';
         data = data.replace(/<br\/?>/gim, '\n');

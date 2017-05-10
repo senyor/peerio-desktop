@@ -59,7 +59,7 @@ class Root extends React.Component {
             setTimeout(() => {
                 this.showOfflineNotification = !socket.connected;
             }, 5000);
-        });
+        }, { fireImmediately: true });
 
         // Dev tools ---------->
         this.devtools = null;

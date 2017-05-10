@@ -1,5 +1,5 @@
 const isDevEnv = require('~/helpers/is-dev-env');
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, webFrame } = require('electron');
 
 if (isDevEnv) {
     // to allow require of development modules in dev environment
@@ -73,3 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Disable zoom.
+webFrame.setVisualZoomLevelLimits(1, 1);
+webFrame.setLayoutZoomLevelLimits(0, 0);

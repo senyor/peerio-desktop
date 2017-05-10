@@ -10,7 +10,7 @@ const FlipMove = require('react-flip-move');
 @observer
 class ChatList extends React.Component {
     componentWillMount() {
-        chatStore.loadAllChats(15);
+        chatStore.loadAllChats();
     }
 
     activateChat(id) {

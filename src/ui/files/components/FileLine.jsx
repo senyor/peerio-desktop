@@ -21,7 +21,7 @@ class FileLine extends React.Component {
         if (this.props.file.shared) {
             msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
         }
-        if (confirm()) {
+        if (confirm(msg)) {
             this.props.file.remove();
         }
     };

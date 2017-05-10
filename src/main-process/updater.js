@@ -24,6 +24,7 @@ function start(mainWindow) {
         });
         if (!isDevEnv) {
             setTimeout(() => autoUpdater.checkForUpdates(), 3000);
+            setInterval(() => autoUpdater.checkForUpdates(), 60 * 60 * 1000);
         } else {
             sendStatusToWindow('Updater did not start because dev build was detected.');
         }

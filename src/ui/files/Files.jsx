@@ -1,7 +1,7 @@
 const React = require('react');
 const { Button, Checkbox } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
-const { fileStore } = require('~/icebear');
+const { fileStore, clientApp } = require('~/icebear');
 const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
@@ -19,11 +19,11 @@ const urls = require('~/config').translator.urlMap;
 
     componentWillMount() {
         fileStore.loadAllFiles();
-        fileStore.active = true;
+        clientApp.isInFilesView = true;
     }
 
     componentWillUnmount() {
-        fileStore.active = false;
+        clientApp.isInFilesView = false;
     }
 
     handleUpload() {

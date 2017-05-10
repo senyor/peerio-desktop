@@ -6,7 +6,7 @@ const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
 const NoChatSelected = require('./components/NoChatSelected');
-const { chatStore, TinyDb } = require('~/icebear');
+const { chatStore, TinyDb, clientApp } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
@@ -21,6 +21,7 @@ class Chat extends React.Component {
     @observable chatNameEditorVisible = false;
     static sidebarStateSaver;
     componentWillMount() {
+        clientApp.isInChatsView = true;
         TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
             Chat.sidebarOpen = !!isOpen;
         });
@@ -29,6 +30,9 @@ class Chat extends React.Component {
                 TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
             }, { delay: 1000 });
         }
+    }
+    componentWillUnmount() {
+        clientApp.isInChatsView = false;
     }
 
 

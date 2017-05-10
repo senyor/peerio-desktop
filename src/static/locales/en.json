@@ -118,7 +118,7 @@
   "button_send": "Send",
   "button_upgrade": "Upgrade",
   "error_mailQuotaExceeded": "You're out of mail to email addresses. <a-upgrade>Upgrade</> to send more.",
-  "error_fileQuotaExceeded": "You don't have enough space. <a-upgrade>Upgrade</a> for more storage.",
+  "error_fileQuotaExceeded": "You don't have enough space. <a-upgrade>Upgrade</> for more storage.",
   "serverWarning_Welcome": "A Pro Plan has been registered to your account. You can view your plan benefits and learn <a-proWelcome>how to manage your account</>.",
   "serverWarning_Cancelled": "Your Peerio Pro plan has been cancelled. Your Pro benefits will expire on the end date of your plan and your plan will not be renewed.",
   "serverWarning_Expire": "Your Peerio Pro plan will expire in 7 days. Please renew your plan to ensure your service is uninterrupted. If you do not renew and have stored more data than what is offered in Peerio's free service, you may experience limited functionality until your account is within its storage limit.",
@@ -136,7 +136,7 @@
   "title_haveAChat": "Start chat",
   "title_chatBeginning": "This is the beginning of your chat history with",
   "title_chatCreated": "{fullName} created this encrypted chat",
-  "title_chatPlaceholder": "Enter your message...",
+  "title_messageInputPlaceholder": "Message {chatName}",
   "title_title": "Title",
   "title_About": "About",
   "title_Members": "Members",
@@ -250,6 +250,7 @@
   "title_notificationsFile": "You receive a new file",
   "title_sounds": "Sounds",
   "title_soundsDetail": "Play a sound when...",
+  "title_unreadChatsOnTop": "Move chats with unread messages to the top of the chat list",
   "title_privacy": "Privacy",
   "title_privacyDetail": "Users can find you...",
   "title_yourName": "By name",
@@ -288,6 +289,5 @@
   "title_publicKeyHelp": "What is this?",
   "title_HHdownloadPeerioHeader": "Simple security by <b>Peerio</>",
   "title_HHdownloadPeerioContent": "<a-downloadApp>Download our mobile and desktop apps</> for more features like encrypted chat, emails, file sharing, and cloud storage.",
-  "title_storageUsage": "Storage used",
-  "title_messageInputPlaceholder": "Message {chatName}"
+  "title_storageUsage": "Storage used"
 }

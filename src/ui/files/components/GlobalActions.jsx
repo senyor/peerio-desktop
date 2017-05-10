@@ -41,7 +41,7 @@ class GlobalActions extends React.Component {
                         tooltipDelay={delay}
                         tooltipPosition="top"
                         icon="reply"
-                        className={css('reverse-icon active', { disabled: !fileStore.hasSelectedShareableFiles })}
+                        className={css('reverse-icon active', { disabled: !fileStore.canShareSelectedFiles })}
                         onClick={this.props.onShare}
                     />
                     {/* NO MAIL YET. Uncomment when we have mail.  */}

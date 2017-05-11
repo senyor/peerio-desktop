@@ -591,9 +591,10 @@ $radius-sign-warning: 18px;
     border-bottom: 1px solid $divider-dark;
     font-size: 14px;
     height: 64px;
+    transition: 150ms;
 
     &:hover:not(.active) {
-      background-color: rgba(255, 255, 255, 1);
+      background-color: $background-hover-message;
     }
   }
 

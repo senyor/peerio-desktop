@@ -1,8 +1,6 @@
 .rt-light-theme {
   // INPUTS
   .rt-input-input {
-    background-color: $color-brand-blue;
-
     input {
       background-color: $input-light-inactive;
       border-color: transparent;
@@ -42,24 +40,24 @@
   }
 
   .rt-dropdown-values {
-    background-color: #53aee0;
     padding: 0;
 
     li {
-      color: $text-light-hint;
+      color: $text-dark-hint;
       height: 48px;
       line-height: 48px;
       padding: 0 $padding-small;
 
       &:hover {
-        background-color: $background-light-dropdown;
-        color: $text-light-primary;
+        color: $text-dark-primary;
       }
     }
   }
 
   .rt-dropdown-values > li.rt-dropdown-selected {
+    background-color: rgba($color-brand-blue, .7);
     color: $text-light-primary;
+    font-weight: $font-weight-semibold;
   }
 
   .rt-button-icon,

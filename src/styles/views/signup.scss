@@ -80,7 +80,7 @@
 
   .signup-title,
   .signup-subtitle {
-    color: $text-light-secondary;
+    color: $text-light-primary;
   }
 
   .signup-subtitle {
@@ -96,26 +96,6 @@
     margin-top: auto;
     padding: 6px 0;
     width: 330px;
-  }
-
-  .progress {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    margin: $margin-default 0;
-    width: 100%;
-
-    .indicator {
-      background-color: $color-light-50;
-      border-radius: 4px;
-      height: 8px;
-      margin: 0 $margin-small;
-      width: 8px;
-
-      &.active {
-        background-color: $color-light-100;
-      }
-    }
   }
 
   .rt-input-error {

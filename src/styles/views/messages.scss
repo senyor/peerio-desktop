@@ -504,6 +504,7 @@ $radius-sign-warning: 18px;
   @extend %flex-shrink-0;
   background: $color-dark-03;
   border-right: 1px solid $divider-dark;
+  cursor: pointer;
   height: 100vh;
   position: relative;
   width: $chat-list-width;
@@ -590,6 +591,10 @@ $radius-sign-warning: 18px;
     border-bottom: 1px solid $divider-dark;
     font-size: 14px;
     height: 64px;
+
+    &:hover:not(.active) {
+      background-color: rgba(255, 255, 255, 1);
+    }
   }
 
   .rt-list-primary,

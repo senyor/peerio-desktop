@@ -12,14 +12,16 @@
     "extends": [
         "peerio"
     ],
-    "settings":{
-        "import/core-modules": [ "electron" ]
+    "settings": {
+        "import/core-modules": [
+            "electron"
+        ]
     },
-    "rules":{
+    "rules": {
         "global-require": 0,
         "import/no-dynamic-require": 0,
-        "import/no-unresolved":0,
-        "import/no-extraneous-dependencies":0,
+        "import/no-unresolved": 0,
+        "import/no-extraneous-dependencies": 0,
         "react/prop-types": 0,
         "react/sort-comp": 0,
         "react/prefer-stateless-function": 0,
@@ -27,12 +29,12 @@
         "react/no-multi-comp": 0,
         "jsx-a11y/no-static-element-interactions": 0,
         "jsx-a11y/img-has-alt": 1,
-        "no-alert":0,
-        "no-mixed-operators":0,
-        "no-multi-assign":0,
+        "no-alert": 0,
+        "no-mixed-operators": 0,
+        "no-multi-assign": 0,
         "no-void": 0
     },
-    "globals":{
+    "globals": {
         "document": false,
         "alert": false,
         "confirm": false,
@@ -42,6 +44,7 @@
         "afterEach": false,
         "xit": false,
         "delay": false,
-        "testUser": false
+        "testUser": false,
+        "XMLHttpRequest": true
     }
 }

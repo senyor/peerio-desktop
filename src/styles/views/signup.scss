@@ -19,10 +19,15 @@
   background-blend-mode: overlay;
   background-image: url('./static/img/bg-pattern.png');
   background-size: $background-pattern-size;
-  color: $text-light-secondary;
+  color: $text-light-primary;
   opacity: 0;
   transition: 350ms opcaity $transition-easing-default;
   width: 100vw;
+
+  p {
+    margin: 32px 0 0;
+    width: 304px;
+  }
 
   .text-light-helper {
     line-height: 20px;
@@ -37,11 +42,16 @@
   .terms {
     display: block;
     // TODO: line-height variables?
-    line-height: 1.45;
+    line-height: 1.25;
     margin-top: 48px;
 
     + .help {
       margin-top: $margin-large;
+    }
+
+    .button-link {
+      height: 20px;
+      line-height: 20px;
     }
   }
 
@@ -70,6 +80,19 @@
         }
       }
     }
+  }
+  // For Account Key screen.
+  .warning-line {
+    @extend %flex-row;
+    align-self: center;
+    background: rgba(0, 0, 0, .25);
+    border-bottom: 1px solid $color-light-100;
+    border-top: 1px solid $color-light-100;
+    height: 104px;
+    justify-content: center;
+    line-height: 1;
+    margin-top: 32px;
+    width: 100vw;
   }
 
   .signup-form {

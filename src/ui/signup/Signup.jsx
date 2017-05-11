@@ -10,6 +10,8 @@ const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const Terms = require('~/ui/shared-components/Terms');
 const { Profile, ProfileStore } = require('./Profile');
 const { Passcode, PasscodeStore } = require('./Passcode');
+const AccountKey = require('./AccountKey');
+const SaveNow = require('./SaveNow');
 const T = require('~/ui/shared-components/T');
 
 @observer class Signup extends React.Component {
@@ -66,7 +68,7 @@ const T = require('~/ui/shared-components/T');
         window.router.push('/');
     };
 
-    navigateToPasscode = () => {
+    navigateToAccountKey = () => {
         if (this.profileStore.hasErrors || this.busy) return;
         this.passcodeStore.addToBanList([
             this.profileStore.username,
@@ -85,7 +87,7 @@ const T = require('~/ui/shared-components/T');
 
     advance = () => {
         if (this.step === 1) {
-            this.navigateToPasscode();
+            this.navigateToAccountKey();
         } else {
             this.createAccountWithPasscode();
         }
@@ -132,9 +134,8 @@ const T = require('~/ui/shared-components/T');
                                 : (
                                     <div className="passcode">
                                         <div className="signup-title">{t('title_signupStep2')}</div>
-                                        <div className="signup-subtitle">{t('title_createPassword')}</div>
-                                        <p><T k="title_passwordIntro" className="signup-title" /></p>
-                                        <Passcode store={this.passcodeStore} profileStore={this.profileStore}
+                                        <div className="signup-subtitle">{t('title_AccountKey')}</div>
+                                        <AccountKey store={this.passcodeStore} profileStore={this.profileStore}
                                             returnHandler={this.advance} />
                                     </div>
                                 )

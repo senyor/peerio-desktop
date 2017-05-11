@@ -74,8 +74,8 @@ class ProfileStore extends OrderedFormStore {
                                         store={this.props.store} />
                     </div>
                 </div>
-                <Dropdown value={languageStore.language}
-                    source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
+                {/* <Dropdown value={languageStore.language}
+                    source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} /> */}
             </div>
         );
     }

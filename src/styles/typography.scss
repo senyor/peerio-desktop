@@ -1,3 +1,7 @@
+.display-1 {
+  @extend %display-1;
+}
+
 .display-2 {
   @extend %display-2;
 }
@@ -49,6 +53,8 @@
 }
 
 .passphrase {
+  font-size: 28px;
   font-weight: $font-weight-bold;
+  line-height: 1;
   user-select: text;
 }

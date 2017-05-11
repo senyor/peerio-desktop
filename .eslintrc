@@ -45,6 +45,7 @@
         "xit": false,
         "delay": false,
         "testUser": false,
-        "XMLHttpRequest": true
+        "XMLHttpRequest": false,
+        "performance": false
     }
 }

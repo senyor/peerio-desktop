@@ -33,7 +33,7 @@ class MessageList extends React.Component {
                 if (this.lastTopElement) {
                     if (!this.lastTopElement) return;
                     // todo: animate
-                    this.containerRef.scrollTop = this.lastTopElement.offsetTop - this.lastTopElementOffset - 28;
+                    this.containerRef.scrollTop = this.lastTopElement.offsetTop - this.lastTopElementOffset - 25;
                     this.lastTopElement = null;
                 }
             });
@@ -76,11 +76,18 @@ class MessageList extends React.Component {
     }
 
     scrollToBottom = () => {
-        setTimeout(() => {
-            if (!this.containerRef) return;
-            this.containerRef.scrollTop = this.containerRef.scrollHeight - this.containerRef.clientHeight;
-        }, 100);
+        window.requestAnimationFrame(this.smoothScrollStep);
     };
+
+    smoothScrollStep = () => {
+        const el = this.containerRef;
+        if (!el) return;
+        const goal = el.scrollHeight - el.clientHeight;
+        if (el.scrollTop >= goal - 1) return;
+        el.scrollTop += (goal - el.scrollTop) / 2;
+        window.requestAnimationFrame(this.smoothScrollStep);
+    }
+
     // todo: investigate why throttlig causes lags when scrolling with trackpad at big velocity
     handleScroll = // _.throttle(
     () => {

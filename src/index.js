@@ -17,6 +17,7 @@ if (isDevEnv) {
 window.ice = require('~/icebear');
 // shortcut to use with promises
 window.clog = console.log.bind(console);
+window.cerr = console.error.bind(console);
 // !!!! DEBUG. !!!!!!!!!!!!!!!!!!!!!!!!!
 window.spamCounter = 0;
 window.spam = function(interval = 1000, words = 10) {

@@ -20,7 +20,8 @@ class UserPicker extends React.Component {
             !c.loading &&
             !c.notFound &&
             !this.selected.includes(c) &&
-            c.username !== User.current.username);
+            c.username !== User.current.username
+            && c.username.startsWith(this.query));
     }
 
     @computed get isValid() {

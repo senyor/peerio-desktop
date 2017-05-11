@@ -1,5 +1,4 @@
-const http = require('http');
-const https = require('https');
+const { http, https } = require('follow-redirects');
 const URL = require('url');
 
 function getHeaders(url) {
@@ -8,7 +7,9 @@ function getHeaders(url) {
         if (options.protocol !== 'http:' && options.protocol !== 'https:') {
             options.protocol = 'http:';
         }
-        const req = (options.protocol === 'http:' ? http : https).request(options, res => resolve(res.headers));
+        const req = (options.protocol === 'http:' ? http : https).request(options, res => {
+            resolve(res.headers);
+        });
         req.on('error', reject);
         req.end();
     }).timeout(60000);

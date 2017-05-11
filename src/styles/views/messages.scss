@@ -397,6 +397,13 @@ $radius-sign-warning: 18px;
         color: $color-brand-blue;
       }
     }
+
+    .inline-image {
+      margin: 10px 0;
+      max-height: 500px;
+      max-width: 100%;
+      object-fit: contain;
+    }
   }
 
   .message-input-wrapper {

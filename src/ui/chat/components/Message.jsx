@@ -13,6 +13,10 @@ const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
 const { isUrlAllowed } = require('~/helpers/url');
 const urls = require('~/config').translator.urlMap;
 const { User, systemMessages } = require('~/icebear');
+const { getHeaders } = require('~/helpers/http');
+
+// ugly, but works. autolinker has only one global replacer fn, and we need to get message object in there somehow
+let currentProcessingMessage;
 
 const autolinker = new Autolinker({
     urls: {
@@ -21,7 +25,25 @@ const autolinker = new Autolinker({
         tldMatches: true
     },
     replaceFn(match) {
-        return isUrlAllowed(match.getAnchorHref());
+        if (match.getType() === 'url') {
+            const url = match.getUrl();
+            if (!isUrlAllowed(url)) return false;
+            const msg = currentProcessingMessage;
+            if (msg.inlineImages.length > 3) return true;
+
+            getHeaders(url).then(headers => {
+                const type = headers['content-type'];
+                if (!type || !type.startsWith('image/')) return;
+                const length = +headers['content-length'];
+                if (length > 1024 * 1024 * 1024 * 3) return;
+                if (msg.inlineImages.length > 3) return;
+                if (!msg.inlineImages.includes(url)) msg.inlineImages.push(url);
+            });
+            return true;
+        }
+
+
+        return false;
     },
     email: true,
     phone: true,
@@ -48,7 +70,9 @@ function formatPre(str) {
 }
 
 function processMessage(msg) {
+    if (msg.lastProcessedVersion !== msg.version) msg.processedText = null;
     if (msg.processedText != null) return msg.processedText;
+    currentProcessingMessage = msg;
     // removes all html except whitelisted
     // closes unclosed tags
     let str = sanitizeChatMessage(msg.text);
@@ -58,6 +82,7 @@ function processMessage(msg) {
     str = formatPre(str);
     str = { __html: str };
     msg.processedText = str;
+    msg.lastProcessedVersion = msg.version;
     return str;
 }
 
@@ -110,7 +135,11 @@ class Message extends React.Component {
                                 /* SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML */
                                 this.renderSystemData(m)
                             }
-                            {m.sendError ?
+                        </div>
+                        {m.inlineImages.map(url => (
+                            <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />))}
+                        {m.sendError ?
+                            <div className="flex-row flex-align-center">
                                 <div className="send-error-menu">
                                     <IconMenu icon="error" position="topLeft" menuRipple>
                                         <MenuItem value={t('button_retry')}
@@ -121,12 +150,10 @@ class Message extends React.Component {
                                             onClick={() => this.props.chat.removeMessage(m)} />
                                     </IconMenu>
                                 </div>
-                                : null
-                            }
-                        </div>
-                        {m.sendError ?
-                            <div className="send-error-message">{t('error_messageSendFail')}</div>
-                            : null}
+                                <div className="send-error-message">{t('error_messageSendFail')}</div>
+                            </div>
+                            : null
+                        }
                     </div>
                     {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null}
                     {m.receipts ?

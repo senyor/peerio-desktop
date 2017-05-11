@@ -88,6 +88,10 @@ class MessageList extends React.Component {
         window.requestAnimationFrame(this.smoothScrollStep);
     }
 
+    onImageLoaded = () => {
+        if (this.stickToBottom && !chatStore.activeChat.canGoDown) this.scrollToBottom();
+    }
+
     // todo: investigate why throttlig causes lags when scrolling with trackpad at big velocity
     handleScroll = // _.throttle(
     () => {
@@ -149,7 +153,8 @@ class MessageList extends React.Component {
             if (i >= msgs.length) {
                 key += 'limbo';
             }
-            ret.push(<Message key={key} message={m} chat={chat} light={m.groupWithPrevious} />);
+            ret.push(<Message key={key} message={m} chat={chat} light={m.groupWithPrevious}
+                onImageLoaded={this.onImageLoaded} />);
             if (i < (msgs.length - 1) && chat.newMessagesMarkerPos === m.id && chat.showNewMessagesMarker) {
                 ret.push(<div key={`newmsgsmarker${i}${m.id}`} className="marker-wrapper new-messages">
                     <div className="marker" />

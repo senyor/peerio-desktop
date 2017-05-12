@@ -1,4 +1,5 @@
 const { MenuItem } = require('electron');
+const L = require('l.js');
 const isDevEnv = require('~/helpers/is-dev-env');
 const path = require('path');
 
@@ -17,13 +18,13 @@ if (isDevEnv) {
 
 function onAppReady(mainWindow) {
     if (!isDevEnv) return;
-    console.log('Initializing development tools.');
+    L.info('Initializing development tools.');
     installExtensions();
     mainWindow.openDevTools();
 }
 
 function installExtensions(forceReinstall) {
-    console.log('installing extensions.');
+    L.info('installing extensions.');
     const devtron = require('devtron');
 
     if (forceReinstall) {
@@ -34,17 +35,17 @@ function installExtensions(forceReinstall) {
     const installer = require('electron-devtools-installer');
     const extensions = ['REACT_DEVELOPER_TOOLS', 'REACT_PERF'];
     for (const name of extensions) {
-        console.log('installing %s', name);
+        L.info('installing {0}', name);
         try {
             installer.default(installer[name], forceReinstall);
         } catch (e) {
-            console.error("Failed to install extension '%s'", name, e);
+            L.error("Failed to install extension '{0}' with error {1}", name, e);
         }
     }
 }
 
 function extendContextMenu(menu, mainWindow, rightClickPos) {
-    console.log('Extending context menu with dev tools.');
+    L.info('Extending context menu with dev tools.');
     menu.append(new MenuItem({ type: 'separator' }));
     menu.append(new MenuItem({
         label: '🔧 Dev tools',

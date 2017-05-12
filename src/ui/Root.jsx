@@ -1,4 +1,5 @@
 const React = require('react');
+const L = require('l.js');
 // const AutoUpdateDialog = require('~/ui/AutoUpdateDialog');
 const languageStore = require('~/stores/language-store');
 const deepForceUpdate = require('react-deep-force-update');
@@ -49,7 +50,7 @@ class Root extends React.Component {
             alert(t('title_updateWillRestart'));
             ipcRenderer.send('install-update');
         });
-        ipcRenderer.on('console_log', (ev, arg) => console.log(arg));
+        ipcRenderer.on('console_log', (ev, arg) => L.info(arg));
 
         reaction(() => socket.connected, (connected) => {
             if (connected) {

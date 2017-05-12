@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 const React = require('react');
+const L = require('l.js');
 const { ProgressBar, Chip } = require('~/react-toolbox');
 const { User, socket } = require('~/icebear');
 const secret = require('~/icebear/crypto/secret');
@@ -27,7 +28,7 @@ class KegEditor extends React.Component {
                 });
             }))
             .catch(err => {
-                console.error(err);
+                L.error(err);
                 alert(err);
             })
             .finally(() => {
@@ -50,7 +51,7 @@ class KegEditor extends React.Component {
                 this.kegIds = resp;
             })
             .catch(err => {
-                console.error(err);
+                L.error(err);
                 alert(err);
             })
             .finally(() => {
@@ -70,7 +71,7 @@ class KegEditor extends React.Component {
                 this.keg = resp;
             })
             .catch(err => {
-                console.error(err);
+                L.error(err);
                 alert(err);
             })
             .finally(() => {

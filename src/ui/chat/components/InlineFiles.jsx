@@ -1,4 +1,5 @@
 const React = require('react');
+const L = require('l.js');
 const { fileStore } = require('~/icebear');
 const { FontIcon, ProgressBar } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
@@ -13,7 +14,7 @@ class InlineFiles extends React.Component {
         const file = fileStore.getById(attr.value);
         if (!file || file.downloading) return;
         downloadFile(file);
-        console.log(ev.currentTarget.attributes['data-id'].value);
+        L.info(ev.currentTarget.attributes['data-id'].value);
     }
     render() {
         if (!this.props.files.map) return null;

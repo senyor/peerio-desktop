@@ -1,6 +1,7 @@
 /* eslint-disable react/no-danger */
 const React = require('react');
 const Avatar = require('~/ui/shared-components/Avatar');
+const L = require('l.js');
 const { observer } = require('mobx-react');
 const { time } = require('~/helpers/formatter');
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');
@@ -100,7 +101,7 @@ class Message extends React.Component {
     }
     render() {
         const m = this.props.message;
-        // console.log('Rendering message ', m.tempId || m.id);
+        // L.info('Rendering message ', m.tempId || m.id);
         const invalidSign = m.signatureError === true;
 
         return (

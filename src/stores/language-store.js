@@ -1,4 +1,5 @@
 const { observable, action } = require('mobx');
+const L = require('l.js');
 const { setLocale } = require('peerio-translator');
 const normalizeError = require('~/icebear').errors.normalize;
 const db = require('~/icebear').TinyDb;
@@ -75,9 +76,9 @@ class LanguageStore {
             this.buildDictionary();
             // set locale for dates
             moment.locale(code);
-            console.log(`Language changed to ${code}`);
+            L.info(`Language changed to ${code}`);
         } catch (err) {
-            console.error(`Failed switch language to: ${code} ${normalizeError(err)}`);
+            L.error(`Failed switch language to: ${code} ${normalizeError(err)}`);
         }
     }
 

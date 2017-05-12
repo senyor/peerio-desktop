@@ -1,4 +1,5 @@
 const { Menu, MenuItem, globalShortcut } = require('electron');
+const L = require('l.js');
 const appControl = require('~/helpers/app-control');
 const devtools = require('~/main-process/dev-tools');
 const isDevEnv = require('~/helpers/is-dev-env');
@@ -37,7 +38,7 @@ Menu.buildFromTemplate([
 let devToolsMenuCreated = false;
 
 function buildContextMenu(mainWindow) {
-    console.log('Building context menu.');
+    L.info('Building context menu.');
     if (isDevEnv) {
         devtools.extendContextMenu(menu, mainWindow, rightClickPos);
     } else {

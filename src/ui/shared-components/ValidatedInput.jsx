@@ -14,6 +14,7 @@
  * Validators are expected to follow the format specified in peerio-icebear
  */
 const React = require('react');
+const L = require('l.js');
 const _ = require('lodash');
 const { socket } = require('~/icebear'); // eslint-disable-line
 const { computed, reaction, when, isObservable, observable, action } = require('mobx');
@@ -94,7 +95,7 @@ const css = require('classnames');
         }, true)
             .then(v => {
                 if (this.props.store[this.props.name] !== value) {
-                    // console.log(`value changed ${this.props.name}, aborting`);
+                    // L.info(`value changed ${this.props.name}, aborting`);
                     return;
                 }
                 if (v === true) {

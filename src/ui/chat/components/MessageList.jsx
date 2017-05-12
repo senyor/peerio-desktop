@@ -1,4 +1,5 @@
 const React = require('react');
+const L = require('l.js');
 const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Link, ProgressBar } = require('~/react-toolbox');
@@ -95,23 +96,23 @@ class MessageList extends React.Component {
     // todo: investigate why throttlig causes lags when scrolling with trackpad at big velocity
     handleScroll = // _.throttle(
     () => {
-        // console.log('SCROLL');
+        // L.info('SCROLL');
         // we can't handle scroll if content height is too small
         if (this.containerRef.scrollHeight <= this.containerRef.clientHeight) return;
 
         const distanceToBottom = this.containerRef.scrollHeight - this.containerRef.scrollTop
             - this.containerRef.clientHeight;
         const distanceToTop = this.containerRef.scrollTop;
-        // console.log(distanceToTop, distanceToBottom);
+        // L.info(distanceToTop, distanceToBottom);
         // detecting sticking state
         this.stickToBottom = distanceToBottom < this.stickDistance && !chatStore.activeChat.canGoDown;
         // triggering page load
         if (distanceToBottom < this.loadTriggerDistance) {
-            //  console.log('TRIGGER');
+            //  L.info('TRIGGER');
             chatStore.activeChat.loadNextPage();
         }
         if (distanceToTop < this.loadTriggerDistance) {
-            // console.log('TRIGGER');
+            // L.info('TRIGGER');
             chatStore.activeChat.loadPreviousPage();
         }
     }// , 150, { leading: true, trailing: true });

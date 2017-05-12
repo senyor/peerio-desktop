@@ -28,7 +28,8 @@
             "plugins": [
                 "transform-react-constant-elements",
                 "transform-react-inline-elements",
-                "transform-remove-debugger"
+                "transform-remove-debugger",
+                "transform-remove-console"
             ]
         },
         "development": {

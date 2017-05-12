@@ -1,4 +1,5 @@
 const React = require('react');
+const L = require('l.js');
 const _ = require('lodash');
 const { Component } = require('react');
 const { observable, computed, reaction, action } = require('mobx');
@@ -100,7 +101,7 @@ class PasscodeStore extends OrderedFormStore {
      * @param {Boolean} isFocused
      */
     @action showHints(isFocused) {
-        console.log('propagate focus', isFocused);
+        L.info('propagate focus', isFocused);
         this.focusPasscode = isFocused;
     }
 

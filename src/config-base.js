@@ -19,7 +19,9 @@ module.exports = {
             proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
             proAccount: 'https://account.peerio.com',
             helpCenter: 'https://peerio.zendesk.com/',
-            contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new'
+            contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new',
+            errorServerUrl: 'https://errors.peerio.com',
+            errorServerProjectKey: 'a356be460e68de68b1d336e3bb4c06ed'
         }
     }
 };

@@ -11,16 +11,24 @@ class Preferences extends React.Component {
         User.current.settings.messageNotifications = value;
         User.current.saveSettings();
     }
-    onPromoSubscriptionChanged(value) {
-        User.current.settings.subscribeToPromoEmails = value;
-        User.current.saveSettings();
-    }
     onSoundsChanged(value) {
         uiStore.soundsEnabled = value;
     }
     onUnreadChatSorting(value) {
         chatStore.unreadChatsAlwaysOnTop = value;
+        User.current.saveSettings();
     }
+
+    onErrorTrackingChanged(value) {
+        User.current.settings.errorTracking = value;
+        User.current.saveSettings();
+    }
+
+    onDataCollectionChanged(value) {
+        User.current.settings.dataCollection = value;
+        User.current.saveSettings();
+    }
+
     render() {
         return (
             <div>
@@ -32,23 +40,33 @@ class Preferences extends React.Component {
                     <Switch checked={User.current.settings.messageNotifications}
                         label={t('title_notificationsMessage')}
                         onChange={this.onMsgNotifChanged} />
-                </section>
-                <section className="section-divider">
-                    <div className="title">{t('title_sounds')}</div>
-                    <p>
-                        {t('title_soundsDetail')}
-                    </p>
                     <Switch checked={uiStore.soundsEnabled}
                         label={t('title_notificationsMessage')}
                         onChange={this.onSoundsChanged} />
-                </section>
-                <section className="section-divider">
                     <Switch checked={User.current.settings.subscribeToPromoEmails}
                         label={t('title_promoConsent')}
                         onChange={this.onPromoSubscriptionChanged} />
+                </section>
+                <section className="section-divider">
+                    <div className="title">{t('title_displayPreferences')}</div>
+                    <p>
+                        {t('title_unreadChatsOnTopDetail')}
+                    </p>
                     <Switch checked={chatStore.unreadChatsAlwaysOnTop}
                         label={t('title_unreadChatsOnTopDetail')}
                         onChange={this.onUnreadChatSorting} />
+                </section>
+                <section className="section-divider">
+                    <div className="title">{t('title_dataPreferences')}</div>
+                    <p>
+                        {t('title_dataDetail')}
+                    </p>
+                    <Switch checked={uiStore.errorTrackingEnabled}
+                        label={t('title_errorTrackingMessage')}
+                        onChange={this.onErrorTrackingChanged} />
+                    <Switch checked={uiStore.dataCollectionEnabled}
+                        label={t('title_dataCollectionMessage')}
+                        onChange={this.onDataCollectionChanged} />
                 </section>
 
             </div>

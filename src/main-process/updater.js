@@ -1,16 +1,15 @@
 
 const { autoUpdater } = require('electron-updater');
 const isDevEnv = require('~/helpers/is-dev-env');
-const log = require('electron-log');
 const { ipcMain } = require('electron');
+const L = require('l.js');
 
-autoUpdater.logger = log;
-autoUpdater.logger.transports.file.level = 'info';
+autoUpdater.logger = L;
 
 let window;
 
 function sendStatusToWindow(text) {
-    log.info(text);
+    L.info(text);
     window.webContents.send('console_log', text);
 }
 
@@ -19,7 +18,7 @@ function start(mainWindow) {
         window = mainWindow;
         autoUpdater.setFeedURL('https://betaupdate.peerio.com');
         ipcMain.on('install-update', () => {
-            log.info('Client approved update installation.');
+            L.info('Client approved update installation.');
             autoUpdater.quitAndInstall();
         });
         if (!isDevEnv) {

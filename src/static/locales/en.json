@@ -266,6 +266,7 @@
   "title_help": "Help",
   "title_helpText": "Get help and give us feedback.",
   "button_HC": "Help Center",
+  "button_emailLogs": "Debug (email)",
   "button_contact": "Contact Peerio",
   "button_terms": "Terms",
   "dialog_updateAvailable": "Peerio Update",

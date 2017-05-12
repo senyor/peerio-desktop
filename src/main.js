@@ -1,6 +1,7 @@
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');
+const L = require('l.js');
 const isDevEnv = require('~/helpers/is-dev-env');
 // For dev builds we want to use separate user data directory
 if (isDevEnv) {
@@ -10,6 +11,9 @@ if (isDevEnv) {
 // If the app was started as a part of update process we don't want to proceed with startup
 if (require('~/main-process/handle-windows-update')) app.quit();
 // </UPDATES> ----------------------------------------------------------------------------------------------------
+
+// configure logging
+require('~/helpers/logging');
 
 const devtools = require('~/main-process/dev-tools');
 const buildContextMenu = require('~/main-process/context-menu');
@@ -25,7 +29,7 @@ let mainWindow;
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
 
 app.on('ready', () => {
-    console.log('Electron ready event - Starting app.');
+    L.info('Electron ready event - Starting app.');
     buildGlobalShortcuts();
     setMainMenu();
     app.setAppUserModelId(config.appId);

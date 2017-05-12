@@ -6,6 +6,7 @@ const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
 const urls = require('~/config').translator.urlMap;
+const L = require('l.js');
 
 @observer
 class About extends React.Component {
@@ -43,6 +44,7 @@ class About extends React.Component {
                     <div className="flex-row">
                         <Button href={urls.helpCenter} label={t('button_HC')} flat primary />
                         <Button href={urls.contactSupport} label={t('button_contact')} flat primary />
+                        <Button href={`mailto:support@peerio.com?subject=Logs&body=${L.writers.cache.print()}`} label={t('button_emailLogs')} flat primary />
                     </div>
                 </section>
                 <section>

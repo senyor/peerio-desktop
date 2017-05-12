@@ -1,3 +1,5 @@
+# Development
+
 ## Local setup
 
 Assuming you have nodejs and npm installed.
@@ -9,11 +11,15 @@ Assuming you have nodejs and npm installed.
 
 ## Dependency management
 
+Due to the 2-package.json structure, as well as other idiosyncracies, the following gotchas must be observed when adding dependencies to peerio-desktop:
+1. If you add a dependency to peerio-icebear, you should add it to both the dependencies and peerDependencies of that project.
+2. Only dependencies from `app/` will end up in a prod build, and they have to be added to `app/package.json` manually. 
 
-... 
+## Logging
 
+`console.log` and `console.err` will be removed from production builds by babel. 
 
-# UI Tests
+## UI Tests
 
 Tests run with Spectron.
 

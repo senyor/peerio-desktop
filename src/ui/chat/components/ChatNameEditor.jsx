@@ -1,4 +1,5 @@
 const React = require('react');
+const L = require('l.js');
 const { observer } = require('mobx-react');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const { chatStore } = require('~/icebear');
@@ -7,11 +8,11 @@ const { t } = require('peerio-translator');
 @observer
 class ChatNameEditor extends React.Component {
     cancelNameEdit = () => {
-        console.log('Cancel name edit');
+        L.info('Cancel name edit');
     };
 
     acceptNameEdit = (val) => {
-        console.log('new chat name:', val);
+        L.info('new chat name:', val);
         chatStore.activeChat.rename(val);
     };
 

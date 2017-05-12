@@ -1,5 +1,6 @@
 const isDevEnv = require('~/helpers/is-dev-env');
 const { ipcRenderer, webFrame } = require('electron');
+const L = require('l.js');
 
 if (isDevEnv) {
     // to allow require of development modules in dev environment
@@ -13,11 +14,15 @@ if (isDevEnv) {
     window.recordUI = require('~/helpers/test-recorder').recordUI;
     window.stopRecording = require('~/helpers/test-recorder').stopRecording;
 }
+
+// configure logging
+require('../build/helpers/logging');
+
 // debug aid global vars
 window.ice = require('~/icebear');
 // shortcut to use with promises
-window.clog = console.log.bind(console);
-window.cerr = console.error.bind(console);
+window.clog = L.info.bind(L);
+window.cerr = L.error.bind(L);
 // !!!! DEBUG. !!!!!!!!!!!!!!!!!!!!!!!!!
 window.spamCounter = 0;
 window.spam = function(interval = 1000, words = 10) {

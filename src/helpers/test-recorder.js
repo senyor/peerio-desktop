@@ -6,14 +6,16 @@
  * State-related classes will be stripped, e.g. those conveying error and focus status. 
  */
 const csspath = require('cssman');
+const L = require('l.js');
+
 let actions = [];
 
 function recordUI() {
-    console.log('👀 ⏺ Started recording for tests. Stop with stopRecording() to print results.');
+    L.info('👀 ⏺ Started recording for tests. Stop with stopRecording() to print results.');
 
     window.onclick = (ev) => {
         actions.push({ event: 'click', selector: csspath(ev.target) });
-        console.log(csspath(ev.target));
+        L.info(csspath(ev.target));
     };
 
     // const observer = new MutationObserver(check);
@@ -42,12 +44,12 @@ function stopRecording() {
             s += `.setValue('${selector}', '${a.val}')\n`;
         }
     });
-    console.log('👀 ⏹ Recording stopped.');
-    console.log('👀 Pseudocode for spectron tests:');
-    console.log(' ');
-    console.log(s);
-    console.log(' ');
-    console.log('👀 --- Note that selectors have been stripped of classes like .focused and may not be accurate as a result.');
+    L.info('👀 ⏹ Recording stopped.');
+    L.info('👀 Pseudocode for spectron tests:');
+    L.info(' ');
+    L.info(s);
+    L.info(' ');
+    L.info('👀 --- Note that selectors have been stripped of classes like .focused and may not be accurate as a result.');
     actions = [];
 }
 

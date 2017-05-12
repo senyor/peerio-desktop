@@ -1,5 +1,5 @@
 const electron = require('electron').remote;
-
+const L = require('l.js');
 
 function requestDownloadPath(fileName) {
     return new Promise((resolve, reject) => {
@@ -8,7 +8,7 @@ function requestDownloadPath(fileName) {
             const downloadsDir = electron.app.getPath('downloads');
             path = `${downloadsDir}/${path}`;
         } catch (err) {
-            console.log(err);
+            L.info(err);
         }
 
         const win = electron.getCurrentWindow();

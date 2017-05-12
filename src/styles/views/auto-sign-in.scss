@@ -1,0 +1,47 @@
+.auto-sign-in {
+  @extend %background-pattern;
+  color: $text-light-primary;
+  height: 100vh;
+
+  .display-1 {
+    margin: 48px 0;
+  }
+
+  .options {
+    @extend %flex-row;
+    @extend %flex-justify-between;
+    margin-top: 48px;
+
+    .option {
+      @extend %flex-col;
+      @extend %flex-align-center;
+      width: 208px;
+
+      & + .option {
+        margin-left: 48px;
+      }
+
+      .rt-button-button {
+        background-color: $color-light-12;
+        border: 2px solid $color-light-12;
+        line-height: 32px;
+        transition: 250ms;
+        width: 168px;
+
+        &:hover {
+          border-color: $color-light-100;
+        }
+
+        &.primary {
+          background-image: linear-gradient(to right, rgba($color-brand-blue, .5), rgba($color-brand-green, .75));
+          border-color: $color-light-70;
+
+          &:hover {
+            background-image: $background-gradient;
+          }
+        }
+      }
+
+    }
+  }
+}

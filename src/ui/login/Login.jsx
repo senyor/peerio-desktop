@@ -2,7 +2,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { Button, IconButton, Tooltip, TooltipIconButton } = require('~/react-toolbox');
-const { config, socket, User, validation } = require('~/icebear');
+const { config, socket, User, validation, errors } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -12,6 +12,7 @@ const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const T = require('~/ui/shared-components/T');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
+const uiStore = require('~/stores/ui-store');
 
 const { validators } = validation; // use common validation from core
 
@@ -44,6 +45,9 @@ class LoginStore extends OrderedFormStore {
         this.loginStore = new LoginStore();
     }
 
+    componentWillMount() {
+        uiStore.legacyMigrationCredentials = null;
+    }
     componentDidMount() {
         User.getLastAuthenticated()
             .then((lastUserObject) => {
@@ -91,10 +95,16 @@ class LoginStore extends OrderedFormStore {
                     });
             }
             return window.router.push('/app');
-        }).catch(() => {
+        }).catch((e) => {
+            this.loginStore.busy = false;
+            if (e && (e.code === errors.ServerError.codes.accountMigrationRequired)) {
+                uiStore.legacyMigrationCredentials = { username: user.username, passphrase: user.passphrase };
+                window.router.push('/signup');
+                return;
+            }
+
             // show error inline
             this.loginStore.passcodeOrPassphraseValidationMessageText = t('error_loginFailed');
-            this.loginStore.busy = false;
         });
     };
 

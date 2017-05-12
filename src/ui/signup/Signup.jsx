@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button, Dialog } = require('~/react-toolbox');
-const { PhraseDictionary, User, errors, warnings } = require('~/icebear');
+const { PhraseDictionary, User, errors, warnings, legacyMigrator } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -9,10 +9,10 @@ const languageStore = require('~/stores/language-store');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const Terms = require('~/ui/shared-components/Terms');
 const { Profile, ProfileStore } = require('./Profile');
-const { Passcode, PasscodeStore } = require('./Passcode');
+// const { Passcode, PasscodeStore } = require('./Passcode');
 const AccountKey = require('./AccountKey');
-const SaveNow = require('./SaveNow');
 const T = require('~/ui/shared-components/T');
+const uiStore = require('~/stores/ui-store');
 
 @observer class Signup extends React.Component {
     @observable busy = false;
@@ -22,38 +22,54 @@ const T = require('~/ui/shared-components/T');
     @observable errorMessage = undefined;
     @observable termsDialogOpen = false;
 
-    passcodeStore = new PasscodeStore();
+    // passcodeStore = new PasscodeStore();
     profileStore = new ProfileStore();
 
     @computed get hasErrors() {
-        return this.step === 1 ? this.profileStore.hasErrors : this.passcodeStore.hasErrors;
+        return this.step === 1 ? this.profileStore.hasErrors : false;// this.passcodeStore.hasErrors;
     }
 
+    componentWillMount() {
+        if (uiStore.legacyMigrationCredentials) {
+            this.profileStore.isMigration = true;
+            this.profileStore.username = uiStore.legacyMigrationCredentials.username;
+            this.profileStore.passphrase = this.profileStore.legacyPassphrase
+                = uiStore.legacyMigrationCredentials.passphrase;
+        } else {
+            this.profileStore.rerollPassphrase();
+        }
+    }
     componentDidMount() {
         this.show = true;
     }
+    componenWillUnmount() {
+        uiStore.legacyMigrationCredentials = null;
+    }
 
-    createAccountWithPasscode = () => {
-        if (this.passcodeStore.hasErrors || this.busy) return Promise.resolve(false);
+    createAccount = () => {
+        if (this.busy) return Promise.resolve(false);
         this.hideError();
         this.busy = true;
-
         const u = new User();
         u.username = this.profileStore.username;
         u.email = this.profileStore.email;
         u.firstName = this.profileStore.firstName;
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
-        u.passphrase = PhraseDictionary.current.getPassphrase(5);
+        u.passphrase = this.profileStore.passphrase;
 
-        return u.createAccountAndLogin()
+        const p = this.profileStore.isMigration
+            ? legacyMigrator.authenticate(u.username, this.profileStore.legacyPassphrase)
+            : Promise.resolve();
+
+        return p.then(u.createAccountAndLogin)
             .then(() => {
                 User.current = u;
                 this.busy = false;
-                User.current.setPasscode(this.passcodeStore.passcode)
-                    .catch(() => {
-                        warnings.addSevere('error_passcodeSetFailed');
-                    });
+                // User.current.setPasscode(this.passcodeStore.passcode)
+                //    .catch(() => {
+                //        warnings.addSevere('error_passcodeSetFailed');
+                //    });
                 window.router.push('/app');
             })
             .catch(err => {
@@ -70,11 +86,11 @@ const T = require('~/ui/shared-components/T');
 
     navigateToAccountKey = () => {
         if (this.profileStore.hasErrors || this.busy) return;
-        this.passcodeStore.addToBanList([
-            this.profileStore.username,
-            this.profileStore.firstName,
-            this.profileStore.lastName
-        ]);
+        // this.passcodeStore.addToBanList([
+        //     this.profileStore.username,
+        //     this.profileStore.firstName,
+        //     this.profileStore.lastName
+        // ]);
         this.step = 2;
         this.busy = false;
     };
@@ -89,7 +105,7 @@ const T = require('~/ui/shared-components/T');
         if (this.step === 1) {
             this.navigateToAccountKey();
         } else {
-            this.createAccountWithPasscode();
+            this.createAccount();
         }
     };
 
@@ -119,7 +135,7 @@ const T = require('~/ui/shared-components/T');
         ];
         const errorActions = [
             { label: t('button_cancel'), onClick: this.hideError },
-            { label: t('button_retry'), onClick: this.createAccountWithPasscode }
+            { label: t('button_retry'), onClick: this.createAccount }
         ];
 
         return (
@@ -135,7 +151,7 @@ const T = require('~/ui/shared-components/T');
                                     <div className="passcode">
                                         <div className="signup-title">{t('title_signupStep2')}</div>
                                         <div className="signup-subtitle">{t('title_AccountKey')}</div>
-                                        <AccountKey store={this.passcodeStore} profileStore={this.profileStore}
+                                        <AccountKey profileStore={this.profileStore}
                                             returnHandler={this.advance} />
                                     </div>
                                 )

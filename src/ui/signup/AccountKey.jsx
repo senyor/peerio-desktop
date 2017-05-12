@@ -5,6 +5,7 @@ const { observer } = require('mobx-react');
 const { socket, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const languageStore = require('~/stores/language-store');
+const { Button } = require('~/react-toolbox');
 
 
 const { validators } = validation; // use common validation from core
@@ -29,7 +30,8 @@ const { validators } = validation; // use common validation from core
                 <p>Peerio doesn’t use <em>passwords</em> like other apps. This key protects all your info, <strong>so keep it safe!</strong></p>
                 <div>
                     <p>Your Account Key</p>
-                    <div className="passphrase">account key goes here Anri</div>
+                    <div className="passphrase selectable">{this.props.profileStore.passphrase}</div>
+
                 </div>
                 <p><strong>Save this now.</strong> You’re going to need it later.</p>
             </div>

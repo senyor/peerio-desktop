@@ -4,10 +4,11 @@ const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dropdown } = require('~/react-toolbox');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
-const { socket, validation } = require('~/icebear');
+const { socket, validation, PhraseDictionary } = require('~/icebear');
 const { t } = require('peerio-translator');
 const languageStore = require('~/stores/language-store');
 const OrderedFormStore = require('~/stores/ordered-form-store');
+const uiStore = require('~/stores/ui-store');
 
 const { validators } = validation; // use common validation from core
 
@@ -18,6 +19,12 @@ class ProfileStore extends OrderedFormStore {
     @observable email = ''; // also has emailValid, emailDirty
     @observable firstName = ''; // etc
     @observable lastName = ''; // etc
+    @observable isMigration = false;
+    @observable passphrase = '';
+
+    rerollPassphrase() {
+        this.passphrase = PhraseDictionary.current.getPassphrase(5);
+    }
 
     @computed get hasErrors() {
         return !(this.initialized && this.usernameValid && this.emailValid &&
@@ -39,39 +46,39 @@ class ProfileStore extends OrderedFormStore {
                 <div className="signup-title">{t('title_signupStep1')}</div>
                 <div className="signup-subtitle">{t('title_settingsProfile')}</div>
                 <ValidatedInput label={t('title_username')}
-                                value={this.props.store.username}
-                                position="0"
-                                lowercase="true"
-                                validator={validators.username}
-                                maxLength={16}
-                                name="username"
-                                store={this.props.store}
-                                hint={t('title_hintUsername')} />
+                    disabled={this.props.store.isMigration}
+                    position="0"
+                    lowercase="true"
+                    validator={this.props.store.isMigration ? null : validators.username}
+                    maxLength={16}
+                    name="username"
+                    store={this.props.store}
+                    hint={t('title_hintUsername')} />
                 {/* a-Z, 0-9, and _ only. */}
 
                 <ValidatedInput label={t('title_email')}
-                                position="1"
-                                lowercase="true"
-                                validator={validators.email}
-                                name="email"
-                                store={this.props.store}
-                                hint={t('title_hintEmail')} />
+                    position="1"
+                    lowercase="true"
+                    validator={validators.email}
+                    name="email"
+                    store={this.props.store}
+                    hint={t('title_hintEmail')} />
                 {/* "ex. info@peerio.com" */}
                 <div className="input-row">
                     <div className="test-first">
                         <ValidatedInput label={t('title_firstName')}
-                                        position="2"
-                                        validator={validators.firstName}
-                                        name="firstName"
-                                        store={this.props.store} />
+                            position="2"
+                            validator={validators.firstName}
+                            name="firstName"
+                            store={this.props.store} />
                     </div>
                     <div className="test-second">
                         <ValidatedInput label={t('title_lastName')}
-                                        position="3"
-                                        validator={validators.lastName}
-                                        name="lastName"
-                                        onKeyPress={this.handleKeyPress}
-                                        store={this.props.store} />
+                            position="3"
+                            validator={validators.lastName}
+                            name="lastName"
+                            onKeyPress={this.handleKeyPress}
+                            store={this.props.store} />
                     </div>
                 </div>
                 {/* <Dropdown value={languageStore.language}

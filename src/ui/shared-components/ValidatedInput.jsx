@@ -36,7 +36,6 @@ const css = require('classnames');
 
     constructor(props) {
         super(props);
-
         // bind stuff
         this.toggleFocus = this.toggleFocus.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
@@ -83,6 +82,7 @@ const css = require('classnames');
         this.props.store[this.fMsgText] = '';
 
         Promise.reduce(fieldValidators, (r, validator) => {
+            if (!validator) return true;
             if (r === true) {
                 return validator.action(value, this.props.validationArguments || {})
                     .then(rs => {
@@ -135,15 +135,16 @@ const css = require('classnames');
         return (
             <div className={css({ focused: this.props.store[this.fFocused] })}>
                 <Input type={this.props.type || 'text'}
-                       value={this.props.store[this.props.name] || ''}
-                       label={this.props.label}
-                       onChange={this.handleChange}
-                       onKeyPress={this.props.onKeyPress}
-                       onBlur={this.handleBlur}
-                       onFocus={this.toggleFocus}
-                       error={this.validationMessage}
-                       className={this.props.className}
-                       maxLength={this.props.maxLength}
+                    value={this.props.store[this.props.name] || ''}
+                    label={this.props.label}
+                    onChange={this.handleChange}
+                    onKeyPress={this.props.onKeyPress}
+                    onBlur={this.handleBlur}
+                    onFocus={this.toggleFocus}
+                    error={this.validationMessage}
+                    className={this.props.className}
+                    maxLength={this.props.maxLength}
+                    disabled={this.props.disabled}
                 />
                 <div className="text-light-helper">{this.props.hint}</div>
             </div>

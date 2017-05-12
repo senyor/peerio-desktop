@@ -7,6 +7,7 @@ class UIStore {
     @observable soundsEnabled = true;
     // key: chat id, value: text
     unsentMessages = {};
+    legacyMigrationCredentials = null;
 
     async init() {
         this.soundsEnabled = !!await TinyDb.user.getValue('pref_soundsEnabled');

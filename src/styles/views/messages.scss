@@ -399,7 +399,7 @@ $radius-sign-warning: 18px;
     }
 
     .inline-image {
-      margin: 10px 0;
+      margin: $margin-small auto $margin-small $margin-default;
       max-height: 500px;
       max-width: 100%;
       object-fit: contain;

@@ -380,6 +380,7 @@ $radius-sign-warning: 18px;
         flex-grow: 1;
         line-height: 1.4;
         margin: 0 0 0 $margin-default;
+        max-width: calc(100% - 100px);
         white-space: pre-wrap;
         word-break: break-word;
       }

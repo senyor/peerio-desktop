@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.11.0"></a>
+# [2.11.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.10.0...v2.11.0) (2017-05-12)
+
+
+### Bug Fixes
+
+* **app:** disable zoom ([ae318c3](https://github.com/PeerioTechnologies/peerio-desktop/commit/ae318c3))
+* **chat:** makes input act in a way that users would expect. ([da90321](https://github.com/PeerioTechnologies/peerio-desktop/commit/da90321))
+* **chat:** updates chat hover colour and transition. ([ecc4586](https://github.com/PeerioTechnologies/peerio-desktop/commit/ecc4586))
+* **chats:** decode html entities like &amp; so they display correctly on mobile ([f4d9b1b](https://github.com/PeerioTechnologies/peerio-desktop/commit/f4d9b1b))
+
+
+### Features
+
+* **app:** check for app updates every hour ([9d1d657](https://github.com/PeerioTechnologies/peerio-desktop/commit/9d1d657))
+* **chat:** paste image to message input ([9842d79](https://github.com/PeerioTechnologies/peerio-desktop/commit/9842d79))
+* **chat:** secret ([3da337a](https://github.com/PeerioTechnologies/peerio-desktop/commit/3da337a))
+* **contacts:** filter contacts in user picker ([e539e91](https://github.com/PeerioTechnologies/peerio-desktop/commit/e539e91))
+* **devtools:** hide devtools in prod build and make a shortcut ([c27508a](https://github.com/PeerioTechnologies/peerio-desktop/commit/c27508a))
+* **settings:** promo newsletter toggle ([781b412](https://github.com/PeerioTechnologies/peerio-desktop/commit/781b412))
+* **user:** legacy account migration ([bbc53ef](https://github.com/PeerioTechnologies/peerio-desktop/commit/bbc53ef))
+
+
+
 <a name="2.10.0"></a>
 # [2.10.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.9.0...v2.10.0) (2017-05-10)
 

@@ -11,6 +11,10 @@ class Preferences extends React.Component {
         User.current.settings.messageNotifications = value;
         User.current.saveSettings();
     }
+    onPromoSubscriptionChanged(value) {
+        User.current.settings.subscribeToPromoEmails = value;
+        User.current.saveSettings();
+    }
     onSoundsChanged(value) {
         uiStore.soundsEnabled = value;
     }
@@ -39,6 +43,9 @@ class Preferences extends React.Component {
                         onChange={this.onSoundsChanged} />
                 </section>
                 <section className="section-divider">
+                    <Switch checked={User.current.settings.subscribeToPromoEmails}
+                        label={t('title_promoConsent')}
+                        onChange={this.onPromoSubscriptionChanged} />
                     <Switch checked={chatStore.unreadChatsAlwaysOnTop}
                         label={t('title_unreadChatsOnTop')}
                         onChange={this.onUnreadChatSorting} />

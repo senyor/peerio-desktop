@@ -15,10 +15,9 @@
       margin-top: 32px;
     }
   }
+
+  @extend %background-pattern;
   align-items: center;
-  background-blend-mode: overlay;
-  background-image: url('./static/img/bg-pattern.png');
-  background-size: $background-pattern-size;
   color: $text-light-primary;
   opacity: 0;
   transition: 350ms opcaity $transition-easing-default;

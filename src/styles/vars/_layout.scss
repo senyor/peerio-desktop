@@ -23,3 +23,8 @@ $minimum-screen-width: 900px;
 
 // BACKGROUND PATTERN
 $background-pattern-size: 280px;
+
+%background-pattern {
+  background-image: url('./static/img/bg-pattern.png');
+  background-size: $background-pattern-size;
+}

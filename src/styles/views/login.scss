@@ -2,9 +2,7 @@
   @extend %flex-col;
   @extend %flex-align-center;
   @extend %flex-justify-start;
-  background-blend-mode: overlay;
-  background-image: url('./static/img/bg-pattern.png');
-  background-size: $background-pattern-size;
+  @extend %background-pattern;
   color: $text-light-primary;
   flex: 0 0 auto;
   width: 100vw;

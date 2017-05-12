@@ -35,7 +35,7 @@ const autolinker = new Autolinker({
                 const type = headers['content-type'];
                 if (!type || !type.startsWith('image/')) return;
                 const length = +headers['content-length'];
-                if (length > 1024 * 1024 * 1024 * 3) return;
+                if (length > 1024 * 1024 * 1024 * 5) return;
                 if (msg.inlineImages.length > 3) return;
                 if (!msg.inlineImages.includes(url)) msg.inlineImages.push(url);
             });

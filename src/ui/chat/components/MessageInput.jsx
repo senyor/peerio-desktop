@@ -9,6 +9,9 @@ const { pickSystemFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const Snackbar = require('~/ui/shared-components/Snackbar');
 const uiStore = require('~/stores/ui-store');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
 
 @observer
 class MessageInput extends ComposeInput {
@@ -68,12 +71,39 @@ class MessageInput extends ComposeInput {
         }
     }
 
+    onPaste = (ev) => {
+        const items = ev.clipboardData.items;
+        for (let i = 0; i < items.length; i++) {
+            if (!items[i].type.startsWith('image/')) continue;
+            const blob = items[i].getAsFile();
+            ev.preventDefault();
+            ev.stopPropagation();
+            const reader = new FileReader();
+            if (!confirm(t('title_uploadPastedFile'))) break;
+            const tmpPath = path.join(os.tmpdir(), `peerio-${Date.now()}.${items[i].type.split('/')[1]}`);
+
+            // eslint-disable-next-line
+            reader.onloadend = () => {
+                const buffer = new Buffer(reader.result);
+                fs.writeFile(tmpPath, buffer, {}, (err, res) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                    chatStore.activeChat.uploadAndShareFile(tmpPath, '', true);
+                });
+            };
+            reader.readAsArrayBuffer(blob);
+            break;
+        }
+    }
+
     render() {
         if (!this.props.show) return null;
         return (
             <div className="message-input-wrapper">
                 <Snackbar className="snackbar-chat" />
-                <div className="message-input" onDrop={this.preventDrop}>
+                <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
                     <IconMenu icon="add_circle_outline">
                         <MenuItem value="share" caption={t('title_shareFromFiles')} onClick={this.showFilePicker} />
                         <MenuItem value="upload" caption={t('title_uploadAndShare')} onClick={this.handleUpload} />

@@ -46,6 +46,7 @@
         "delay": false,
         "testUser": false,
         "XMLHttpRequest": false,
-        "performance": false
+        "performance": false,
+        "FileReader": false
     }
 }

@@ -44,8 +44,6 @@ function installExtensions(forceReinstall) {
 }
 
 function extendContextMenu(menu, mainWindow, rightClickPos) {
-    // todo: uncomment when going to prod
-    // if (!isDevEnv) return;
     console.log('Extending context menu with dev tools.');
     menu.append(new MenuItem({ type: 'separator' }));
     menu.append(new MenuItem({

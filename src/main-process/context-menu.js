@@ -1,6 +1,7 @@
-const { Menu, MenuItem } = require('electron');
+const { Menu, MenuItem, globalShortcut } = require('electron');
 const appControl = require('~/helpers/app-control');
 const devtools = require('~/main-process/dev-tools');
+const isDevEnv = require('~/helpers/is-dev-env');
 
 const rightClickPos = { x: 0, y: 0 };
 
@@ -33,10 +34,20 @@ Menu.buildFromTemplate([
     { type: 'separator' }
 ]).items.forEach(i => menu.append(i));
 
+let devToolsMenuCreated = false;
+
 function buildContextMenu(mainWindow) {
     console.log('Building context menu.');
+    if (isDevEnv) {
+        devtools.extendContextMenu(menu, mainWindow, rightClickPos);
+    } else {
+        globalShortcut.register('Ctrl+Shift+P+I+O', () => {
+            if (devToolsMenuCreated) return;
+            devtools.extendContextMenu(menu, mainWindow, rightClickPos);
+            devToolsMenuCreated = true;
+        });
+    }
 
-    devtools.extendContextMenu(menu, mainWindow, rightClickPos);
 
     mainWindow.webContents.on('context-menu', (e, props) => {
         rightClickPos.x = props.x;

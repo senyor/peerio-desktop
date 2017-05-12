@@ -160,7 +160,7 @@ class LoginStore extends OrderedFormStore {
                             className={css({ banish: this.loginStore.lastAuthenticatedUser })} />
                         <div className="password">
                             <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
-                                label={t('title_password')}
+                                label={t('title_AccountKey')}
                                 position="1"
                                 store={this.loginStore}
                                 validator={validators.stringExists}
@@ -168,7 +168,7 @@ class LoginStore extends OrderedFormStore {
                                 onKeyPress={this.handleKeyPress} />
                             <TooltipIconButton icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
                                 tooltip={this.loginStore.passwordVisible ?
-                                    t('title_hidePassword') : t('title_showPassword')}
+                                    t('title_hideAccountKey') : t('title_showAccountKey')}
                                 tooltipPosition="right"
                                 tooltipDelay={500}
                                 onClick={this.togglePasswordVisibility} />

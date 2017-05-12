@@ -63,18 +63,18 @@ class SecuritySettings extends React.Component {
         return (
             <div>
                 <div className="title">
-                    {t('title_MP')}
-                    <Button label={t('button_showMP')} onClick={this.showPassphraseDialog} flat primary />
+                    {t('title_AccountKey')}
+                    <Button label={t('button_showAK')} onClick={this.showPassphraseDialog} flat primary />
                 </div>
                 <p>
-                    {t('title_MPDetail')}
+                    {t('title_AKDetail')}
                 </p>
                 <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}
-                    className="no-select" title={this.unlocked ? t('title_MP') : t('title_enterPassword')}
+                    className="no-select" title={this.unlocked ? t('title_AccountKey') : t('title_enterPassword')}
                     onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}>
                     {this.unlocked ?
                         <div>
-                            <p>{t('title_MPDetail2')}</p>
+                            <p>{t('title_AKDetail2')}</p>
                             <div style={{ marginTop: '40px', height: '48px' }}>
                                 <div className="passphrase headline selectable">{User.current.passphrase}</div>
                             </div>

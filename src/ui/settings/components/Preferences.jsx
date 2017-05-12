@@ -47,7 +47,7 @@ class Preferences extends React.Component {
                         label={t('title_promoConsent')}
                         onChange={this.onPromoSubscriptionChanged} />
                     <Switch checked={chatStore.unreadChatsAlwaysOnTop}
-                        label={t('title_unreadChatsOnTop')}
+                        label={t('title_unreadChatsOnTopDetail')}
                         onChange={this.onUnreadChatSorting} />
                 </section>
 

@@ -1,16 +1,42 @@
 const React = require('react');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const RTAvatar = require('~/react-toolbox').Avatar;
+const { ProgressBar } = require('~/react-toolbox');
 const cfg = require('~/config.js');
 const { contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 
 @observer
 class ContactProfile extends React.Component {
-
+    @observable contact;
+    componentWillMount() {
+        this.contact = contactStore.getContact(this.props.username);
+    }
+    componentWillReceiveProps(next) {
+        this.contact = contactStore.getContact(next.username);
+    }
     render() {
-        const c = contactStore.getContact(this.props.username);
-        if (c.loading) return null; // todo: spinner
+        const c = this.contact;
+        if (!c) return null;
+        if (c.loading) {
+            return (
+                <div className="contact-profile">
+                    <div className="row flex-row flex-align-center">
+                        <ProgressBar type="circular" mode="indeterminate" />
+                    </div>
+                </div>
+            );
+        }
+        if (c.notFound) {
+            return (
+                <div className="contact-profile">
+                    <div className="row flex-row flex-align-center">
+                        {t('error_usernameNotFound')}
+                    </div>
+                </div>
+            );
+        }
         const f = c.fingerprint.split('-');
         return (
             <div className="contact-profile">

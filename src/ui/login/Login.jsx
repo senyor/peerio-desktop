@@ -181,7 +181,7 @@ class LoginStore extends OrderedFormStore {
                         onClick={this.login}
                         disabled={this.loginStore.hasErrors} />
 
-                    <div>{t('title_newUser')} &nbsp; <Link to="/signup">{t('button_signup')}</Link></div>
+                    <div>{t('title_newUser')} &nbsp; <Link to="/signup">{t('button_CreateAccount')}</Link></div>
                 </div>
             </div>
         );

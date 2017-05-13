@@ -15,6 +15,7 @@ const { isUrlAllowed } = require('~/helpers/url');
 const urls = require('~/config').translator.urlMap;
 const { User, systemMessages } = require('~/icebear');
 const { getHeaders } = require('~/helpers/http');
+const uiStore = require('~/stores/ui-store');
 
 // ugly, but works. autolinker has only one global replacer fn, and we need to get message object in there somehow
 let currentProcessingMessage;
@@ -57,10 +58,18 @@ const autolinker = new Autolinker({
     stripTrailingSlash: false
 });
 
-let usernameRegex;// = /@[a-z0-9_]{1,32}/g;
+let ownUsernameRegex;
 function highlightMentions(str) {
-    if (!usernameRegex) usernameRegex = new RegExp(`@${User.current.username}`, 'g');
-    return str.replace(usernameRegex, '<span class="mention">$&</span>');
+    if (!ownUsernameRegex) ownUsernameRegex = new RegExp(`@${User.current.username}`, 'gi');
+    return str.replace(ownUsernameRegex, '<span class="mention self">$&</span>');
+}
+// HACK: make this as a proper react component
+window.openContact = function(username) {
+    uiStore.contactDialogUsername = username;
+};
+const mentionRegex = /(\s*|^)@([a-zA-Z0-9_]{1,32})/gm;
+function linkifyMentions(str) {
+    return str.replace(mentionRegex, '$1<span class="mention clickable" onClick=openContact("$2")>@$2</span>');
 }
 
 const inlinePreRegex = /`(.*)`/g;
@@ -80,6 +89,7 @@ function processMessage(msg) {
     str = autolinker.link(str);
     str = emojione.unicodeToImage(str);
     str = highlightMentions(str);
+    str = linkifyMentions(str);
     str = formatPre(str);
     str = { __html: str };
     msg.processedText = str;

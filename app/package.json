@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "dependencies": {
-    "airbrake-js": "0.8.7",
+    "airbrake-js": "0.8.8",
     "autolinker": "1.4.3",
     "blake2s-js": "1.2.2",
     "bluebird": "3.5.0",

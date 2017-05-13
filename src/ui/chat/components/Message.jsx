@@ -16,6 +16,7 @@ const urls = require('~/config').translator.urlMap;
 const { User, systemMessages } = require('~/icebear');
 const { getHeaders } = require('~/helpers/http');
 const uiStore = require('~/stores/ui-store');
+const htmlEncoder = require('html-entities').AllHtmlEntities;
 
 // ugly, but works. autolinker has only one global replacer fn, and we need to get message object in there somehow
 let currentProcessingMessage;
@@ -83,9 +84,12 @@ function processMessage(msg) {
     if (msg.lastProcessedVersion !== msg.version) msg.processedText = null;
     if (msg.processedText != null) return msg.processedText;
     currentProcessingMessage = msg;
-    // removes all html except whitelisted
-    // closes unclosed tags
-    let str = sanitizeChatMessage(msg.text);
+    // we don't expect any html in original text,
+    // if there are any tags - user entered them, we consider them plaintext and encode
+    let str = htmlEncoder.encode(msg.text);
+    // in case some tags magically sneak in - remove all html except whitelisted
+    str = sanitizeChatMessage(str);
+    // now we start producing our own html
     str = autolinker.link(str);
     str = emojione.unicodeToImage(str);
     str = highlightMentions(str);

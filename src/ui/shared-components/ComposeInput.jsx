@@ -116,7 +116,7 @@ class ComposeInput extends React.Component {
 
         // this shortnameToUnicode catches pasted shortnames and emoticons
         data = emojione.shortnameToUnicode(data);
-        data = sanitizeChatMessage(data);
+        // data = sanitizeChatMessage(data);
 
         data = data.trim();
         return data;

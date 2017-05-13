@@ -1,7 +1,7 @@
 const DOMPurify = require('dompurify');
 
 const chatMsgOptions = {
-    ALLOWED_TAGS: ['b', 'i'],
+    ALLOWED_TAGS: [],
     ALLOWED_ATTR: []
 };
 

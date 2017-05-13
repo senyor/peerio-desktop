@@ -65,19 +65,21 @@ class MessageList extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.stickToBottom) {
-            this.scrollToBottom();
-        }
+        this.scrollToBottomIfSticky();
     }
 
     componentDidMount() {
-        if (this.stickToBottom) {
-            this.scrollToBottom();
-        }
+        this.scrollToBottomIfSticky();
     }
 
     scrollToBottom = () => {
         window.requestAnimationFrame(this.smoothScrollStep);
+    };
+
+    scrollToBottomIfSticky = () => {
+        if (this.stickToBottom) {
+            this.scrollToBottom();
+        }
     };
 
     smoothScrollStep = () => {
@@ -197,6 +199,7 @@ class MessageList extends React.Component {
     render() {
         if (!chatStore.activeChat) return null;
 
+        setTimeout(this.scrollToBottomIfSticky, 400);
         return (
             <div className="messages-container" onScroll={this.handleScroll} ref={this.setContainerRef}>
                 {this.renderChatStart()}

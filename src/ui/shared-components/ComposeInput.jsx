@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp, no-cond-assign */
 const React = require('react');
-const { observable } = require('mobx');
+const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const EmojiPicker = require('~/ui/emoji/Picker');
 const emojione = require('~/static/emoji/emojione.js');
@@ -88,6 +88,13 @@ class ComposeInput extends React.Component {
                 <EmojiPicker onPicked={onEmojiPicked} onBlur={this.hideEmojiPicker} />
             );
         }
+
+        reaction(() => this.selectedSuggestIndex, ind => {
+            if (ind < 0) return;
+            const el = document.querySelector(`.suggests>.suggest-item:nth-of-type(${ind + 1})`);
+            if (!el) return;
+            el.scrollIntoViewIfNeeded(true);
+        });
     }
 
     componentWillReceiveProps(newProps) {

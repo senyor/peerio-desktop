@@ -99,14 +99,17 @@ class MessageInput extends ComposeInput {
     }
 
     renderSuggests() {
+        if (!this.suggests || !this.suggests.length) return null;
         let c = 0;
         return (
-            <div className={`suggests ${this.suggests && this.suggests.length ? 'show' : ''}`} >
-                {this.suggests ?
-                    this.suggests.map(s => (
-                        <div className={`suggest-item ${c++ === this.selectedSuggestIndex ? 'selected' : ''}`}
-                            key={s.username}>@{s.username} - {s.fullName}</div>
-                    )) : null}
+            <div className="suggests-wrapper" >
+                <div className="suggests">
+                    {this.suggests ?
+                        this.suggests.map(s => (
+                            <div className={`suggest-item ${c++ === this.selectedSuggestIndex ? 'selected' : ''}`}
+                                key={s.username}>@{s.username} - {s.fullName}</div>
+                        )) : null}
+                </div>
             </div>
         );
     }

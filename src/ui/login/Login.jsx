@@ -45,9 +45,6 @@ class LoginStore extends OrderedFormStore {
         this.loginStore = new LoginStore();
     }
 
-    componentWillMount() {
-        uiStore.legacyMigrationCredentials = null;
-    }
     componentDidMount() {
         User.getLastAuthenticated()
             .then((lastUserObject) => {
@@ -97,12 +94,6 @@ class LoginStore extends OrderedFormStore {
             return window.router.push('/app');
         }).catch((e) => {
             this.loginStore.busy = false;
-            if (e && (e.code === errors.ServerError.codes.accountMigrationRequired)) {
-                uiStore.legacyMigrationCredentials = { username: user.username, passphrase: user.passphrase };
-                window.router.push('/signup');
-                return;
-            }
-
             // show error inline
             this.loginStore.passcodeOrPassphraseValidationMessageText = t('error_loginFailed');
         });

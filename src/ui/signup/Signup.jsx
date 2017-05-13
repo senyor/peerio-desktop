@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button, Dialog } = require('~/react-toolbox');
-const { PhraseDictionary, User, errors, warnings, legacyMigrator } = require('~/icebear');
+const { PhraseDictionary, User, errors, warnings } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -30,20 +30,10 @@ const uiStore = require('~/stores/ui-store');
     }
 
     componentWillMount() {
-        if (uiStore.legacyMigrationCredentials) {
-            this.profileStore.isMigration = true;
-            this.profileStore.username = uiStore.legacyMigrationCredentials.username;
-            this.profileStore.passphrase = this.profileStore.legacyPassphrase
-                = uiStore.legacyMigrationCredentials.passphrase;
-        } else {
-            this.profileStore.rerollPassphrase();
-        }
+        this.profileStore.rerollPassphrase();
     }
     componentDidMount() {
         this.show = true;
-    }
-    componenWillUnmount() {
-        uiStore.legacyMigrationCredentials = null;
     }
 
     createAccount = () => {
@@ -58,11 +48,7 @@ const uiStore = require('~/stores/ui-store');
         u.locale = languageStore.language;
         u.passphrase = this.profileStore.passphrase;
 
-        const p = this.profileStore.isMigration
-            ? legacyMigrator.authenticate(u.username, this.profileStore.legacyPassphrase)
-            : Promise.resolve();
-
-        return p.then(u.createAccountAndLogin)
+        return u.createAccountAndLogin()
             .then(() => {
                 User.current = u;
                 this.busy = false;

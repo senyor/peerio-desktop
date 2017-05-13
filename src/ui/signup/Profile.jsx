@@ -8,7 +8,6 @@ const { socket, validation, PhraseDictionary } = require('~/icebear');
 const { t } = require('peerio-translator');
 const languageStore = require('~/stores/language-store');
 const OrderedFormStore = require('~/stores/ordered-form-store');
-const uiStore = require('~/stores/ui-store');
 
 const { validators } = validation; // use common validation from core
 
@@ -19,7 +18,6 @@ class ProfileStore extends OrderedFormStore {
     @observable email = ''; // also has emailValid, emailDirty
     @observable firstName = ''; // etc
     @observable lastName = ''; // etc
-    @observable isMigration = false;
     @observable passphrase = '';
 
     rerollPassphrase() {
@@ -46,10 +44,9 @@ class ProfileStore extends OrderedFormStore {
                 <div className="signup-title">{t('title_signupStep1')}</div>
                 <div className="signup-subtitle">{t('title_settingsProfile')}</div>
                 <ValidatedInput label={t('title_username')}
-                    disabled={this.props.store.isMigration}
                     position="0"
                     lowercase="true"
-                    validator={this.props.store.isMigration ? null : validators.username}
+                    validator={validators.username}
                     maxLength={16}
                     name="username"
                     store={this.props.store}

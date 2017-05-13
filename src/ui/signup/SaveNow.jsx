@@ -23,18 +23,17 @@ const { validators } = validation; // use common validation from core
             <div className="flex-col profile">
                 <div className="warning-line">
                     <div className="flex-col flex-justify-center" style={{ width: '275px' }}>
-                        <span className="display-1">No really, </span>
-                        <strong className="display-2">this is important!</strong>
+                        <span className="display-1">{t('title_saveNow1')}</span>
+                        <strong className="display-2">{t('title_saveNow2')}</strong>
                     </div>
                 </div>
-                <p>We never store your key, so we can’t recover or reset it for you.</p>
-                <p>If you lose this key you will lose all your Peerio contacts and files,
-                   and you’ll have to create a new account. Save it now!</p>
+                <p>{t('title_saveNow3')}</p>
+                <p>{t('title_saveNow4')}</p>
                 <div>
-                    <p>Your Account Key</p>
+                    <p>{t('title_yourAccountKey')}</p>
                     <div className="passphrase">account key goes here Anri</div>
                 </div>
-                <Button icon="file_download" label="Save now" className="gradient" />
+                <Button icon="file_download" label={t('button_save')} className="gradient" />
             </div>
         );
     }

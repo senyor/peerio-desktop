@@ -26,7 +26,6 @@ $radius-sign-warning: 18px;
     @extend %flex-align-end;
     @extend %flex-justify-end;
     margin-left: auto;
-    margin-right: $margin-small;
   }
 
   .progress-wrapper {

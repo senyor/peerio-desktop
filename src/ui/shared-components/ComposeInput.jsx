@@ -43,17 +43,17 @@ class EmojiBlot extends Embed {
 EmojiBlot.blotName = 'emoji';
 EmojiBlot.tagName = 'img';
 
-class BoldBlot extends Inline { }
-BoldBlot.blotName = 'bold';
-BoldBlot.tagName = 'b';
+// class BoldBlot extends Inline { }
+// BoldBlot.blotName = 'bold';
+// BoldBlot.tagName = 'b';
 
-class ItalicBlot extends Inline { }
-ItalicBlot.blotName = 'italic';
-ItalicBlot.tagName = 'i';
+// class ItalicBlot extends Inline { }
+// ItalicBlot.blotName = 'italic';
+// ItalicBlot.tagName = 'i';
 
 Quill.register(EmojiBlot);
-Quill.register(ItalicBlot);
-Quill.register(BoldBlot);
+// Quill.register(ItalicBlot);
+// Quill.register(BoldBlot);
 
 // this makes it impossible to have 2 ComposeInput rendered at the same time
 // for the sake of emoji picker performance.

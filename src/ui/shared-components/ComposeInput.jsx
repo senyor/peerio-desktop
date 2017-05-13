@@ -9,8 +9,9 @@ const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const FilePicker = require('~/ui/files/components/FilePicker');
 const { t } = require('peerio-translator');
 const htmlDecoder = require('html-entities').AllHtmlEntities;
+const { chatStore } = require('~/icebear');
 
-// todo: this file is messy as hell, maybe refactor it
+// todo: this file is messy as hell, refactor it
 
 const Embed = Quill.import('blots/embed');
 const Inline = Quill.import('blots/inline');
@@ -71,6 +72,8 @@ class ComposeInput extends React.Component {
     @observable text = '';
     @observable emojiPickerVisible = false;
     @observable suggests = null;
+    @observable selectedSuggestIndex = -1;
+    @observable currentSuggestToken = '';
     @observable filePickerActive = false;
 
 
@@ -131,6 +134,7 @@ class ComposeInput extends React.Component {
     };
 
     showEmojiPicker = () => {
+        this.suggests = null;
         this.emojiPickerVisible = true;//! this.emojiPickerVisible;
     };
 
@@ -142,6 +146,16 @@ class ComposeInput extends React.Component {
         const ind = this.quill.getSelection(true).index;
         this.quill.insertEmbed(ind, 'emoji', emoji.unicode, Quill.sources.USER);
         this.quill.insertText(ind + 1, ' ', Quill.sources.USER);
+    };
+
+    acceptSuggestedString = () => {
+        let ind = this.quill.getSelection(true).index;
+        this.quill.insertText(ind - this.currentSuggestToken.length,
+            `${this.suggests[this.selectedSuggestIndex].username} `, Quill.sources.USER);
+
+        ind = this.quill.getSelection(true).index;
+        this.quill.deleteText(ind - this.currentSuggestToken.length, this.currentSuggestToken.length);
+        this.suggests = [];
     };
 
     activateQuill = el => {
@@ -167,23 +181,101 @@ class ComposeInput extends React.Component {
                 altKey: false,
                 // eslint-disable-next-line
                 handler: (range, context) => {
+                    if (this.suggests && this.suggests.length && this.selectedSuggestIndex >= 0) {
+                        this.acceptSuggestedString();
+                        return;
+                    }
                     this.handleSubmit();
                 }
             };
         }
+
         // const quill =
         this.quill = new Quill(el, opts);
         setTimeout(() => this.quill.focus(), 1500);
 
-        // quill.on('text-change', (delta, oldDelta, source) => {
-        //     if (source === Quill.sources.USER) {
-        //         this.tryShowEmojiSuggestions();
-        //     }
-        // });
+        const usernameRegex = /(^|\s+)@([a-zA-Z0-9_]{0,32})$/;
+
+        const getUsernameToken = () => {
+            const sel = this.quill.getSelection(true);
+            if (!sel) return null;
+            const text = this.quill.getText().substring(0, sel.index);
+            const matches = text.match(usernameRegex);
+            if (matches && matches.length) return matches[matches.length - 1];
+            return null;
+        };
+
+        this.quill.on('text-change', (delta, oldDelta, source) => {
+            if (source === Quill.sources.USER) {
+                if (!chatStore.activeChat.participants.length) return;
+                let token = getUsernameToken();
+                if (token === null) {
+                    this.suggests = null;
+                    return;
+                }
+                token = token.toLowerCase();
+                this.currentSuggestToken = token;
+                this.suggests = chatStore.activeChat.participants.filter((c) => c.username.startsWith(token));
+                this.selectedSuggestIndex = this.suggests.length ? 0 : -1;
+                // console.log(delta, oldDelta);
+                //                this.tryShowEmojiSuggestions();
+            }
+        });
+
+        this.quill.keyboard.addBinding({
+            key: 37, // left
+            shortKey: false
+        }, (range, context) => {
+            this.suggests = null;
+            return true;
+        });
+
+        this.quill.keyboard.addBinding({
+            key: 39, // right
+            shortKey: false
+        }, (range, context) => {
+            this.suggests = null;
+            return true;
+        });
+
+        this.quill.keyboard.addBinding({
+            key: 27, // esc
+            shortKey: false
+        }, (range, context) => {
+            this.suggests = null;
+            return true;
+        });
+
+        this.quill.keyboard.addBinding({
+            key: 38, // up
+            shortKey: false
+        }, (range, context) => {
+            if (!this.suggests || !this.suggests.length) {
+                return true;
+            }
+            if (this.selectedSuggestIndex > 0) {
+                this.selectedSuggestIndex--;
+            }
+            return false;
+        });
+
+        this.quill.keyboard.addBinding({
+            key: 40, // down
+            shortKey: false
+        }, (range, context) => {
+            if (!this.suggests || !this.suggests.length) {
+                return true;
+            }
+            if (this.selectedSuggestIndex < this.suggests.length - 1) {
+                this.selectedSuggestIndex++;
+            }
+            return false;
+        });
+
+
+        window.q = this.quill;
     };
-    //     ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ":", "k", "i", "s", "_", "w", "|", "c", "o", "u",
-    // "p", "l", "e", "m", "f", "a", "y", "b", "g", "t", "h", "r", "n", "d", "z", "v", "x", "j", "-", "\", "+",
-    // "q"]
+
     // tryShowEmojiSuggestions = () =>{
     //     const sel = this.quill.getSelection();
     //     if(sel.length){

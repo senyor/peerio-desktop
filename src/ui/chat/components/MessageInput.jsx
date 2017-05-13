@@ -98,11 +98,25 @@ class MessageInput extends ComposeInput {
         }
     }
 
+    renderSuggests() {
+        let c = 0;
+        return (
+            <div className={`suggests ${this.suggests && this.suggests.length ? 'show' : ''}`} >
+                {this.suggests ?
+                    this.suggests.map(s => (
+                        <div className={`suggest-item ${c++ === this.selectedSuggestIndex ? 'selected' : ''}`}
+                            key={s.username}>@{s.username} - {s.fullName}</div>
+                    )) : null}
+            </div>
+        );
+    }
+
     render() {
         if (!this.props.show) return null;
         return (
             <div className="message-input-wrapper">
                 <Snackbar className="snackbar-chat" />
+                {this.renderSuggests()}
                 <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
                     <IconMenu icon="add_circle_outline">
                         <MenuItem value="share" caption={t('title_shareFromFiles')} onClick={this.showFilePicker} />
@@ -125,4 +139,6 @@ class MessageInput extends ComposeInput {
         );
     }
 }
+
+
 module.exports = MessageInput;

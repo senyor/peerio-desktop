@@ -1,4 +1,5 @@
 const os = require('os');
+const path = require('path');
 const cfg = require('~/icebear').config;
 const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env');
@@ -32,7 +33,7 @@ cfg.upload.encryptBufferSize = 1024 * 1024 * 3;
 cfg.upload.uploadBufferSize = 1024 * 1024 * 3;
 
 // --- DEBUG
-cfg.nodeLogFolder = `${app.getPath('userData')}/logs/`;
+cfg.nodeLogFolder = path.join(app.getPath('userData'), 'logs');
 
 // --- DEV ENV SETTINGS
 if (isDevEnv) {

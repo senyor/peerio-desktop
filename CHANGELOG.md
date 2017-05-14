@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.12.1"></a>
+## [2.12.1](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.12.0...v2.12.1) (2017-05-14)
+
+
+### Bug Fixes
+
+* fixes stuff that didn’t fix with last fix. ([5d7cbc7](https://github.com/PeerioTechnologies/peerio-desktop/commit/5d7cbc7))
+* merge conflicts ([7a31fd1](https://github.com/PeerioTechnologies/peerio-desktop/commit/7a31fd1))
+* **app:** fresh installation no longer fails due to unsafe log file handling ([e731551](https://github.com/PeerioTechnologies/peerio-desktop/commit/e731551))
+* **signup:** text on save now screen no longer overflows. ([a73e6d0](https://github.com/PeerioTechnologies/peerio-desktop/commit/a73e6d0))
+
+
+
 <a name="2.12.0"></a>
 # [2.12.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.11.0...v2.12.0) (2017-05-14)
 

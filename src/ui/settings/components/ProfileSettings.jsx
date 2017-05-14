@@ -2,7 +2,7 @@ const React = require('react');
 const L = require('l.js');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Input, Button, TooltipIconButton, FontIcon, IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
+const { Button, Input, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -65,6 +65,25 @@ class Profile extends React.Component {
         User.current.makeEmailPrimary(email);
     }
 
+    renderButton(a) {
+        return (
+            !a.confirmed && !a.primary
+            ? <div>
+                <TooltipIconButton tooltip={t('button_resend')} icon="mail"
+                      onClick={() => { this.resendConfirmation(a.address); }} />
+                <TooltipIconButton tooltip={t('button_delete')} icon="delete"
+                      onClick={() => { this.removeEmail(a.address); }} />
+            </div>
+           : null);
+    }
+
+    renderPrimaryEmail(a) {
+        return (
+            a.primary
+            ? <span className="dark-label">{t('title_primaryEmail')}</span>
+            : null);
+    }
+
     // ------ /Emails -----
     render() {
         const f = this.contact.fingerprint.split('-');
@@ -80,42 +99,37 @@ class Profile extends React.Component {
                             label={t('title_lastName')}
                             value={user.lastName} />
                     </div>
-                    <br /><br />
-                    {
-                        user.addresses.map(a => {
-                            return (<div key={a.address} className="email-row">
-                                {a.confirmed ? null : <div className="error">{t('error_unconfirmedEmail')}:</div>}
-                                {a.primary && user.addresses.length > 1
-                                    ? <span className="starred">★&nbsp;</span> : null}
-                                {a.address}
-                                {
-                                    a.primary && a.confirmed
-                                        ? null
-                                        : <IconMenu icon="more_vert">
-                                            {
-                                                a.primary
-                                                    ? null
-                                                    : <MenuItem caption={t('button_makePrimary')} icon="star"
-                                                        onClick={() => { this.makePrimary(a.address); }} />
-                                            }
-                                            {
-                                                a.confirmed
-                                                    ? null
-                                                    : <MenuItem caption={t('button_resend')} icon="mail"
-                                                        onClick={() => { this.resendConfirmation(a.address); }} />
-                                            }
-                                            {
-                                                a.primary
-                                                    ? null
-                                                    : <MenuItem caption={t('button_delete')} icon="delete"
+                    <div className="dark-label"
+                         style={{ height: '24px',
+                             lineHeight: '48px',
+                             paddingLeft: '12px',
+                             marginBottom: '-8px' }}>
+                        {t('title_email')}
+                    </div>
+                    <List>
+                        {
+                            user.addresses.map(a => {
+                                return (<ListItem key={a.address}
+                                            className="email-row"
+                                            caption={a.address}
+                                            legend={a.confirmed
+                                              ? this.renderPrimaryEmail(a)
+                                              : <div className="error">{t('error_unconfirmedEmail')}</div>}
+                                            leftIcon={a.primary && user.addresses.length > 1
+                                                ? 'radio_button_checked'
+                                                : <TooltipIconButton
+                                                    tooltip={t('button_makePrimary')} icon="radio_button_unchecked"
+                                                    onClick={() => { this.makePrimary(a.address); }} />}
+                                            rightIcon={
+                                                  a.confirmed && !a.primary
+                                                    ? <TooltipIconButton tooltip={t('button_delete')} icon="delete"
                                                         onClick={() => { this.removeEmail(a.address); }} />
+                                                    : this.renderButton(a)
                                             }
-                                        </IconMenu>
-                                }
-                            </div>);
-                        })
-                    }
-                    <br />
+                                           />);
+                            })
+                        }
+                    </List>
                     {
                         this.addMode
                             ? <div className="flex-row">
@@ -123,7 +137,7 @@ class Profile extends React.Component {
                                     onChange={this.onNewEmailChange} />
                                 <TooltipIconButton tooltip={t('button_save')} icon="done"
                                     onClick={this.saveNewEmail} />
-                                <TooltipIconButton tooltip={t('button_cancel')} icon="delete"
+                                <TooltipIconButton tooltip={t('button_cancel')} icon="cancel"
                                     onClick={this.cancelNewEmail} />
                             </div>
                             : null
@@ -131,7 +145,7 @@ class Profile extends React.Component {
                     {
                         this.addMode || user.addresses.length > 2
                             ? null
-                            : <Button label={t('button_add')} onClick={this.switchToAddMode} raised primary />
+                            : <Button label={t('button_addEmail')} onClick={this.switchToAddMode} raised primary />
                     }
 
                     <div className="row" style={{ marginTop: '40px' }} >

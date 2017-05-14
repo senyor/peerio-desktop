@@ -6,7 +6,7 @@ const { socket, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const languageStore = require('~/stores/language-store');
 const { Button } = require('~/react-toolbox');
-
+const T = require('~/ui/shared-components/T');
 
 const { validators } = validation; // use common validation from core
 
@@ -27,13 +27,13 @@ const { validators } = validation; // use common validation from core
                         <strong className="display-2">{t('title_AKwarn2')}</strong>
                     </div>
                 </div>
-                <p>{t('title_AKwarn3')}</p>
+                <T k="title_AKwarn3" tag="p" />
                 <div>
-                    <p>{t('title_yourAccountKey')}</p>
+                    <T k="title_yourAccountKey" tag="p" />
                     <div className="passphrase selectable">{this.props.profileStore.passphrase}</div>
 
                 </div>
-                <p>{t('title_AKwarn4')}</p>
+                <T k="title_AKwarn4" tag="p" />
             </div>
         );
     }

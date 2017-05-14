@@ -16,7 +16,7 @@ const React = require('react');
 const { t } = require('peerio-translator');
 
 function T(props) {
-    return React.createElement('span', props.className ? { className: props.className } : null,
+    return React.createElement(props.tag || 'span', props.className ? { className: props.className } : null,
                                     ...t(props.k, props.children));
 }
 

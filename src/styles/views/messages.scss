@@ -219,7 +219,6 @@ $suggests-max-height: 200px;
       &-message {
         @extend %hint-error-label;
         color: $color-error;
-        margin-left: $margin-default;
       }
     }
 

@@ -86,24 +86,32 @@ $status-bar-height: 32px;
   @extend %flex-row;
   @extend %flex-align-center;
   @extend %flex-justify-center;
-  background-color: lighten($color-brand-blue, 10%);
+  animation: 4s infinite gradient;
+  background-image: $background-gradient;
+  background-size: 400%;
   border-radius: 4px;
   box-shadow: $shadow-8;
   color: $text-light-primary;
   font-weight: $font-weight-semibold;
   height: $status-bar-height;
   left: 0;
-  margin: $margin-tiny $margin-small;
+  margin: $margin-default $margin-small;
   position: fixed;
   right: 0;
   text-align: center;
-  top: -$status-bar-height - 20;
+  top: -$status-bar-height - 36;
   transition: all 400ms $transition-easing-bounce-in-out;
   user-select: none;
   z-index: 2;
 
   &.visible {
     top: 0;
+  }
+
+  @keyframes gradient {
+    0%,
+    100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   .rt-progress_bar-circular {
@@ -168,4 +176,3 @@ $status-bar-height: 32px;
     background-image: $background-gradient;
   }
 }
-

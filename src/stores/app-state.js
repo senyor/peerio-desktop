@@ -1,5 +1,6 @@
 const { observable } = require('mobx');
 const electron = require('electron').remote;
+const L = require('l.js');
 
 class AppState {
     @observable isFocused = false;
@@ -8,11 +9,11 @@ class AppState {
         const win = electron.getCurrentWindow();
         win.on('focus', () => {
             this.isFocused = true;
-            console.debug('App got focus');
+            L.info('App got focus');
         });
         win.on('blur', () => {
             this.isFocused = false;
-            console.debug('App lost focus');
+            L.info('App lost focus');
         });
         this.isFocused = win.isFocused();
         window.onunload = () => win.removeAllListeners();

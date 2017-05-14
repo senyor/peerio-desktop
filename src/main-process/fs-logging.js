@@ -1,6 +1,10 @@
 const fs = require('fs');
-const config = require('~/config');
+const path = require('path');
 const L = require('l.js');
+const { app } = (require('electron').remote || require('electron'));
+const FileStream = require('~/icebear/models/files/node-file-stream');
+
+const MAX_LOG_FILE_SIZE = 1 * 1024 * 1024;
 
 /**
  * File stream with dead simple rotation.
@@ -8,17 +12,26 @@ const L = require('l.js');
 class FileTransport extends L.Transport {
     constructor(level) {
         super(level);
-        this.MAX_FILESIZE = 1000000;
-        if (!fs.existsSync(config.nodeLogFolder)) fs.mkdirSync(config.nodeLogFolder);
-        const fileName = `${config.nodeLogFolder}recent.log`;
-        const archiveFileName = `${config.nodeLogFolder}archived.log`;
+        console.log('constructing file trnsport');
+        let logFolder = app.getPath('userData');
+        if (!fs.existsSync(logFolder)) {
+            fs.mkdirSync(logFolder);
+        }
+        logFolder = path.join(logFolder, 'logs');
+        if (!fs.existsSync(logFolder)) {
+            fs.mkdirSync(logFolder);
+        }
+
+        const fileName = path.join(logFolder, 'recent.log');
+        L.info(fileName);
+        const archiveFileName = path.join(logFolder, 'archived.log');
         const fd = fs.openSync(fileName, fs.existsSync(fileName) ? 'a' : 'w');
         const s = fs.fstatSync(fd);
-        if (s.size > this.MAX_FILESIZE) {
+        if (s.size > MAX_LOG_FILE_SIZE) {
             if (fs.existsSync(archiveFileName)) fs.unlinkSync(archiveFileName);
             fs.renameSync(fileName, archiveFileName);
         }
-        this.stream = new config.FileStream(fileName, 'append');
+        this.stream = new FileStream(fileName, 'append');
         this.stream.open();
     }
 

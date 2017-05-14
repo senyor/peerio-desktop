@@ -97,6 +97,9 @@ class MessageInput extends ComposeInput {
             break;
         }
     }
+    onInputBlur = () => {
+        setTimeout(() => { this.suggests = null; });
+    }
 
     renderSuggests() {
         if (!this.suggests || !this.suggests.length) return null;
@@ -105,10 +108,22 @@ class MessageInput extends ComposeInput {
             <div className="suggests-wrapper" >
                 <div className="suggests">
                     {this.suggests ?
-                        this.suggests.map(s => (
-                            <div className={`suggest-item ${c++ === this.selectedSuggestIndex ? 'selected' : ''}`}
-                                key={s.username}>@{s.username} - {s.fullName}</div>
-                        )) : null}
+                        this.suggests.map(s => {
+                            const i = c++;
+                            return (
+                                <div className={`suggest-item ${i === this.selectedSuggestIndex ? 'selected' : ''}`}
+                                    key={s.username}
+                                    onMouseDown={() => {
+                                        this.selectedSuggestIndex = i;
+                                        this.acceptSuggestedString();
+                                    }}
+                                    onMouseOver={() => {
+                                        this.selectedSuggestIndex = i;
+                                    }}>
+                                    @{s.username} - {s.fullName}
+                                </div>
+                            );
+                        }) : null}
                 </div>
             </div>
         );
@@ -125,7 +140,7 @@ class MessageInput extends ComposeInput {
                         <MenuItem value="share" caption={t('title_shareFromFiles')} onClick={this.showFilePicker} />
                         <MenuItem value="upload" caption={t('title_uploadAndShare')} onClick={this.handleUpload} />
                     </IconMenu>
-                    <div id="messageEditor"
+                    <div id="messageEditor" onBlur={this.onInputBlur}
                         ref={this.activateQuill}
                         className="full-width" />
                     <IconButton icon="mood" disabled={this.emojiPickerVisible} onClick={this.showEmojiPicker} />

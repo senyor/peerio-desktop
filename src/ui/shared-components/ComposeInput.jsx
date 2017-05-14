@@ -163,6 +163,7 @@ class ComposeInput extends React.Component {
         ind = this.quill.getSelection(true).index;
         this.quill.deleteText(ind - this.currentSuggestToken.length, this.currentSuggestToken.length);
         this.suggests = [];
+        setTimeout(() => this.quill.focus()); // for the cases when user clicked on the dropdown causing blur
     };
 
     activateQuill = el => {

@@ -6,16 +6,39 @@ const { Button } = require('~/react-toolbox');
 const { socket, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const languageStore = require('~/stores/language-store');
-
+const fs = require('fs');
+const electron = require('electron').remote;
 
 const { validators } = validation; // use common validation from core
 
 @observer class SaveNow extends Component {
 
-    handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            this.props.returnHandler();
-        }
+    wwref = (ref) => {
+        this.ref = ref;
+    }
+
+    save = () => {
+        const store = this.props.store;
+        this.replaceTemplateVars(store.username, store.email, store.passphrase, () => {
+            const win = electron.getCurrentWindow();
+            electron.dialog.showSaveDialog(win, { defaultPath: `${store.username}.pdf` }, this.printToPdf);
+        });
+    };
+
+    replaceTemplateVars(username, email, key, callback) {
+        const js = `
+            document.getElementById('username').innerHTML = '${username}';
+            document.getElementById('email').innerHTML = '${email}';
+            document.getElementById('key').innerHTML = '${key}';
+            `;
+        this.ref.executeJavaScript(js, true, callback);
+    }
+
+    printToPdf = (filePath) => {
+        if (!filePath) return;
+        this.ref.printToPDF({ printBackground: true, landscape: false }, (er, data) => {
+            fs.writeFileSync(filePath, data);
+        });
     };
 
     render() {
@@ -31,9 +54,11 @@ const { validators } = validation; // use common validation from core
                 <p>{t('title_saveNow4')}</p>
                 <div>
                     <p>{t('title_yourAccountKey')}</p>
-                    <div className="passphrase">account key goes here Anri</div>
+                    <div className="passphrase">{this.props.store.passphrase}</div>
                 </div>
-                <Button icon="file_download" label={t('button_save')} className="gradient" />
+                <Button icon="file_download" label={t('button_save')} className="gradient" onClick={this.save} />
+                <webview ref={this.wwref} src="./AccountKeyBackup.html"
+                    style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />
             </div>
         );
     }

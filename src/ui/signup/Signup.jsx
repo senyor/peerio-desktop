@@ -13,6 +13,7 @@ const { Profile, ProfileStore } = require('./Profile');
 const AccountKey = require('./AccountKey');
 const T = require('~/ui/shared-components/T');
 const uiStore = require('~/stores/ui-store');
+const SaveNow = require('~/ui/signup/SaveNow');
 
 @observer class Signup extends React.Component {
     @observable busy = false;
@@ -90,6 +91,8 @@ const uiStore = require('~/stores/ui-store');
     advance = () => {
         if (this.step === 1) {
             this.navigateToAccountKey();
+        } else if (this.step === 2) {
+            this.step = 3;
         } else {
             this.createAccount();
         }
@@ -98,8 +101,10 @@ const uiStore = require('~/stores/ui-store');
     retreat = () => {
         if (this.step === 1) {
             this.navigateToLogin();
-        } else {
+        } else if (this.step === 2) {
             this.navigateToProfile();
+        } else {
+            this.step = 2;
         }
     };
 
@@ -133,14 +138,23 @@ const uiStore = require('~/stores/ui-store');
                         {
                             this.step === 1
                                 ? <Profile store={this.profileStore} returnHandler={this.advance} />
-                                : (
+                                : null
+                        }
+                        {
+                            this.step === 2
+                                ? (
                                     <div className="passcode">
                                         <div className="signup-title">{t('title_signupStep2')}</div>
                                         <div className="signup-subtitle">{t('title_AccountKey')}</div>
                                         <AccountKey profileStore={this.profileStore}
                                             returnHandler={this.advance} />
                                     </div>
-                                )
+                                ) : null
+                        }
+                        {
+                            this.step === 3
+                                ? <SaveNow store={this.profileStore} />
+                                : null
                         }
 
                         <T k="title_TOSRequestText" className="terms">
@@ -156,7 +170,7 @@ const uiStore = require('~/stores/ui-store');
                             label={this.step === 1 ? t('button_cancel') : t('button_back')}
                             onClick={this.retreat} />
                         <Button flat
-                            label={this.step === 1 ? t('button_next') : t('button_finish')}
+                            label={this.step === 1 || this.step === 2 ? t('button_next') : t('button_finish')}
                             onClick={this.advance}
                             disabled={this.hasErrors} />
                     </div>

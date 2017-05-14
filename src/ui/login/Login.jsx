@@ -129,7 +129,6 @@ class LoginStore extends OrderedFormStore {
             </div>
         );
     };
-
     render() {
         return (
             <div className="flex-row app-root">

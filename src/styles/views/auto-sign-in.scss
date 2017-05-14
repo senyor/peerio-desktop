@@ -31,17 +31,7 @@
         &:hover {
           border-color: $color-light-100;
         }
-
-        &.primary {
-          background-image: linear-gradient(to right, rgba($color-brand-blue, .5), rgba($color-brand-green, .75));
-          border-color: $color-light-70;
-
-          &:hover {
-            background-image: $background-gradient;
-          }
-        }
       }
-
     }
   }
 }

@@ -158,3 +158,13 @@ $status-bar-height: 32px;
   user-select: auto;
   -webkit-user-drag: auto;
 }
+
+// BUTTONS
+.button-gradient {
+  background-image: linear-gradient(to right, rgba($color-brand-blue, .5), rgba($color-brand-green, .75));
+  border-color: $color-light-70;
+
+  &:hover {
+    background-image: $background-gradient;
+  }
+}

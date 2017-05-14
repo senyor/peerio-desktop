@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.12.0"></a>
+# [2.12.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.11.0...v2.12.0) (2017-05-14)
+
+
+### Bug Fixes
+
+* **chat:** aligns images with messages. ([94ebca9](https://github.com/PeerioTechnologies/peerio-desktop/commit/94ebca9))
+* **chat:** attempt to make receipts to not reflow message content ([88e7e5e](https://github.com/PeerioTechnologies/peerio-desktop/commit/88e7e5e))
+* **chat:** more reliable scroll to bottom of the chat ([2ef60f6](https://github.com/PeerioTechnologies/peerio-desktop/commit/2ef60f6))
+* **chat:** new, html-less storage format for messages ([e3c6290](https://github.com/PeerioTechnologies/peerio-desktop/commit/e3c6290))
+* **chat:** prevents text wrap and adds overflow ellipses. ([b023631](https://github.com/PeerioTechnologies/peerio-desktop/commit/b023631))
+* scroll and animation on suggest ([508fd5e](https://github.com/PeerioTechnologies/peerio-desktop/commit/508fd5e))
+* **signup:** corrects line height on account keys. keeps buttons on screen an minimum screen height. ([89df178](https://github.com/PeerioTechnologies/peerio-desktop/commit/89df178))
+
+
+### Features
+
+* log levels, files, optional error server, email logs ([#14](https://github.com/PeerioTechnologies/peerio-desktop/issues/14)) ([24b07c0](https://github.com/PeerioTechnologies/peerio-desktop/commit/24b07c0))
+* **chat:** clickable mentions ([e645628](https://github.com/PeerioTechnologies/peerio-desktop/commit/e645628))
+* **chat:** user mention suggest ([9bfaef2](https://github.com/PeerioTechnologies/peerio-desktop/commit/9bfaef2))
+* **contacts:** contact profile dialog now can handle loading state and contacts that were not found ([5509ced](https://github.com/PeerioTechnologies/peerio-desktop/commit/5509ced))
+* **signup:** save key to pdf ([cd61e8f](https://github.com/PeerioTechnologies/peerio-desktop/commit/cd61e8f))
+* **suggest:** mouse events on suggest ([384e55a](https://github.com/PeerioTechnologies/peerio-desktop/commit/384e55a))
+
+
+### Reverts
+
+* account migration through signup ([4dd23e5](https://github.com/PeerioTechnologies/peerio-desktop/commit/4dd23e5))
+
+
+
 <a name="2.11.0"></a>
 # [2.11.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.10.0...v2.11.0) (2017-05-12)
 

@@ -11,24 +11,24 @@ const template = [
             { role: 'cut' },
             { role: 'copy' },
             { role: 'paste' },
-           // { role: 'pasteandmatchstyle' },
+            // { role: 'pasteandmatchstyle' },
             { role: 'delete' },
             { role: 'selectall' }
         ]
     },
-    {
-        label: 'View',
-        submenu: [
-            { role: 'reload' },
-            { role: 'toggledevtools' },
-            { type: 'separator' },
-            { role: 'resetzoom' },
-            { role: 'zoomin' },
-            { role: 'zoomout' },
-            { type: 'separator' },
-            { role: 'togglefullscreen' }
-        ]
-    },
+    // {
+    //     label: 'View',
+    //     submenu: [
+    //         // { role: 'reload' },
+    //         // { role: 'toggledevtools' },
+    //         // { type: 'separator' },
+    //         // { role: 'resetzoom' },
+    //         // { role: 'zoomin' },
+    //         // { role: 'zoomout' },
+    //         // { type: 'separator' },
+    //         { role: 'togglefullscreen' }
+    //     ]
+    // },
     {
         role: 'window',
         submenu: [
@@ -65,7 +65,7 @@ if (process.platform === 'darwin') {
             { role: 'quit' }
         ]
     });
-  // Edit menu.
+    // Edit menu.
     template[1].submenu.push(
         {
             type: 'separator'
@@ -77,8 +77,8 @@ if (process.platform === 'darwin') {
                 { role: 'stopspeaking' }
             ]
         }
-  );
-  // Window menu.
+    );
+    // Window menu.
     template[3].submenu = [
         {
             label: 'Close',

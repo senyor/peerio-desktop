@@ -18,7 +18,7 @@ const T = require('~/ui/shared-components/T');
                     <div className="display-2">Enable Automatic Sign-in?</div>
                     <div className="options">
                         <div className="option">
-                            <Button label="enable" value="enable" className="button-gradient" />
+                            <Button label="enable" value="enable" className="primary" />
                             <p>
                                 <em>Account Key</em> is never required to sign in. Sign out to disable.
                             </p>

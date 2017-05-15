@@ -654,6 +654,7 @@ $suggests-max-height: 200px;
   }
 
   .rt-list-item {
+    background: $background-chat-list-item; // background colour for Anri. - Paul
     border-bottom: 1px solid $divider-dark;
     font-size: 14px;
     height: 64px;

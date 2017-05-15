@@ -39,6 +39,7 @@ $background-cancel: $color-error;
 $background-hover-message: rgba($color-brand-blue, .12);
 $background-new-messages: rgba($color-error, .38);
 $background-chat-list: rgba($color-brand-blue, .12); // TODO: make this more generic
+$background-chat-list-item: #f8f8f8; // $color-dark-06 over white backgrond.
 $background-new-file: rgba($color-affirmative, .12);
 $background-light-button-hover: $color-light-12;
 $background-light-dropdown: $color-light-12;

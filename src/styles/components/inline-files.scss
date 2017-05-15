@@ -2,7 +2,7 @@
   color: $text-dark-secondary;
   font-weight: $font-weight-bold;
   padding-left: $padding-small;
-  width: 100%;
+  width: calc(100% - 100px); // reduce reflow from read receipts
 
   .shared-file {
     @extend %flex-col;

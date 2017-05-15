@@ -31,8 +31,7 @@ Menu.buildFromTemplate([
     { type: 'separator' },
     { role: 'cut' },
     { role: 'copy' },
-    { role: 'paste' },
-    { type: 'separator' }
+    { role: 'paste' }
 ]).items.forEach(i => menu.append(i));
 
 let devToolsMenuCreated = false;
@@ -42,7 +41,7 @@ function buildContextMenu(mainWindow) {
     if (isDevEnv) {
         devtools.extendContextMenu(menu, mainWindow, rightClickPos);
     } else {
-        globalShortcut.register('Ctrl+Shift+P+I+O', () => {
+        globalShortcut.register('CommandOrControl+Alt+P+O', () => {
             if (devToolsMenuCreated) return;
             devtools.extendContextMenu(menu, mainWindow, rightClickPos);
             devToolsMenuCreated = true;

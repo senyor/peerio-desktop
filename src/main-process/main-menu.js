@@ -1,5 +1,6 @@
 const { app, Menu } = require('electron');
 const config = require('~/config');
+const isDevEnv = require('~/helpers/is-dev-env');
 
 const template = [
     {
@@ -15,20 +16,22 @@ const template = [
             { role: 'delete' },
             { role: 'selectall' }
         ]
-    },
-    // {
-    //     label: 'View',
-    //     submenu: [
-    //         // { role: 'reload' },
-    //         // { role: 'toggledevtools' },
-    //         // { type: 'separator' },
-    //         // { role: 'resetzoom' },
-    //         // { role: 'zoomin' },
-    //         // { role: 'zoomout' },
-    //         // { type: 'separator' },
-    //         { role: 'togglefullscreen' }
-    //     ]
-    // },
+    }];
+
+if (isDevEnv) {
+    template.push(
+        {
+            label: 'View',
+            submenu: [
+                { role: 'reload' },
+                { role: 'toggledevtools' }
+            ]
+        }
+
+    );
+}
+
+template.push(
     {
         role: 'window',
         submenu: [
@@ -45,7 +48,7 @@ const template = [
             }
         ]
     }
-];
+);
 
 if (process.platform === 'darwin') {
     template.unshift({

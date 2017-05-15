@@ -8,12 +8,13 @@
     @extend %flex-col;
     @extend %flex-justify-center;
     background: $color-dark-03;
-    border: 1px solid $color-dark-54;
+    border: 1px solid $divider-dark;
     border-left-width: 8px;
     border-radius: 2px;
     cursor: pointer;
     height: 48px;
     padding-left: $padding-tiny;
+    transition: 250ms;
 
     .material-icons {
       padding: 0 12px;
@@ -21,6 +22,7 @@
 
     &:hover {
       border-color: currentColor;
+      box-shadow: $shadow-8;
       color: $color-brand-blue;
 
       .material-icons {
@@ -33,14 +35,6 @@
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-
-    &:hover {
-      color: $color-brand-blue;
-
-      .material-icons {
-        color: $color-brand-blue;
-      }
     }
   }
 

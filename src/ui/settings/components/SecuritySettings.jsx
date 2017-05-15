@@ -63,15 +63,16 @@ class SecuritySettings extends React.Component {
             <div>
                 <div className="title">
                     {t('title_AccountKey')}
-                    <Button label={t('button_showAK')} onClick={this.showPassphraseDialog} flat primary />
+                    <Button label={t('button_showAK')} onClick={this.showPassphraseDialog} primary />
+                    <Button icon="file_download"
+                            label={t('button_saveAccountKey')}
+                            style={{ marginTop: '32px' }}
+                            onClick={this.save}
+                            primary />
                 </div>
                 <p>
                     {t('title_AKDetail')}
                 </p>
-                <Button icon="file_download"
-                        label={t('button_saveAccountKey')}
-                        style={{ marginTop: '32px' }}
-                        onClick={this.save} />
                 <webview ref={this.wwref} src="../../AccountKeyBackup.html"
                     style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />
 

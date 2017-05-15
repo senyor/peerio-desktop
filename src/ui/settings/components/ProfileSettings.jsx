@@ -146,7 +146,7 @@ class Profile extends React.Component {
                     {
                         this.addMode || user.addresses.length > 2
                             ? null
-                            : <Button label={t('button_addEmail')} onClick={this.switchToAddMode} raised primary />
+                            : <Button label={t('button_addEmail')} onClick={this.switchToAddMode} primary />
                     }
 
                     <div className="row" style={{ marginTop: '40px' }} >

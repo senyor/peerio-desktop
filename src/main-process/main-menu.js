@@ -106,7 +106,9 @@ if (process.platform === 'darwin') {
         }
     ];
 }
+
 function setMainMenu() {
+    if (process.platform !== 'darwin') return;
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
 }

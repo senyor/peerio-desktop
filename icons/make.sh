@@ -15,7 +15,7 @@ convert \
     $BASE_DIR/win-icon/icon_48x48.png \
     $BASE_DIR/win-icon/icon_32x32.png \
     $BASE_DIR/win-icon/icon_16x16.png \
-    $BASE_DIR/../dist-assets/win-installer.ico
+    $BASE_DIR/../dist-assets/icon.ico
 
 convert \
     $BASE_DIR/win-installer/icon_256x256.png \
@@ -23,7 +23,7 @@ convert \
     $BASE_DIR/win-installer/icon_48x48.png \
     $BASE_DIR/win-installer/icon_32x32.png \
     $BASE_DIR/win-installer/icon_16x16.png \
-    $BASE_DIR/../dist-assets/icon.ico
+    $BASE_DIR/../dist-assets/win-installer.ico
 
 # Linux window icon
 cp $BASE_DIR/icon.iconset/icon_512x512@2x.png $BASE_DIR/../src/static/img/icon.png

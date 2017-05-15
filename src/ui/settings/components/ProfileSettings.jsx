@@ -1,5 +1,4 @@
 const React = require('react');
-const L = require('l.js');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Input, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
@@ -68,20 +67,20 @@ class Profile extends React.Component {
     renderButton(a) {
         return (
             !a.confirmed && !a.primary
-            ? <div>
-                <TooltipIconButton tooltip={t('button_resend')} icon="mail"
-                      onClick={() => { this.resendConfirmation(a.address); }} />
-                <TooltipIconButton tooltip={t('button_delete')} icon="delete"
-                      onClick={() => { this.removeEmail(a.address); }} />
-            </div>
-           : null);
+                ? <div>
+                    <TooltipIconButton tooltip={t('button_resend')} icon="mail"
+                        onClick={() => { this.resendConfirmation(a.address); }} />
+                    <TooltipIconButton tooltip={t('button_delete')} icon="delete"
+                        onClick={() => { this.removeEmail(a.address); }} />
+                </div>
+                : null);
     }
 
     renderPrimaryEmail(a) {
         return (
             a.primary
-            ? <span className="dark-label">{t('title_primaryEmail')}</span>
-            : null);
+                ? <span className="dark-label">{t('title_primaryEmail')}</span>
+                : null);
     }
 
     // ------ /Emails -----
@@ -100,33 +99,35 @@ class Profile extends React.Component {
                             value={user.lastName} />
                     </div>
                     <div className="dark-label"
-                         style={{ height: '24px',
-                             lineHeight: '48px',
-                             paddingLeft: '12px',
-                             marginBottom: '-8px' }}>
+                        style={{
+                            height: '24px',
+                            lineHeight: '48px',
+                            paddingLeft: '12px',
+                            marginBottom: '-8px'
+                        }}>
                         {t('title_email')}
                     </div>
                     <List>
                         {
                             user.addresses.map(a => {
                                 return (<ListItem key={a.address}
-                                            className="email-row"
-                                            caption={a.address}
-                                            legend={a.confirmed
-                                              ? this.renderPrimaryEmail(a)
-                                              : <div className="error">{t('error_unconfirmedEmail')}</div>}
-                                            leftIcon={a.primary && user.addresses.length > 1
-                                                ? 'radio_button_checked'
-                                                : <TooltipIconButton
-                                                    tooltip={t('button_makePrimary')} icon="radio_button_unchecked"
-                                                    onClick={() => { this.makePrimary(a.address); }} />}
-                                            rightIcon={
-                                                  a.confirmed && !a.primary
-                                                    ? <TooltipIconButton tooltip={t('button_delete')} icon="delete"
-                                                        onClick={() => { this.removeEmail(a.address); }} />
-                                                    : this.renderButton(a)
-                                            }
-                                           />);
+                                    className="email-row"
+                                    caption={a.address}
+                                    legend={a.confirmed
+                                        ? this.renderPrimaryEmail(a)
+                                        : <div className="error">{t('error_unconfirmedEmail')}</div>}
+                                    leftIcon={a.primary && user.addresses.length > 1
+                                        ? 'radio_button_checked'
+                                        : <TooltipIconButton
+                                            tooltip={t('button_makePrimary')} icon="radio_button_unchecked"
+                                            onClick={() => { this.makePrimary(a.address); }} />}
+                                    rightIcon={
+                                        a.confirmed && !a.primary
+                                            ? <TooltipIconButton tooltip={t('button_delete')} icon="delete"
+                                                onClick={() => { this.removeEmail(a.address); }} />
+                                            : this.renderButton(a)
+                                    }
+                                />);
                             })
                         }
                     </List>

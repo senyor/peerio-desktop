@@ -1,7 +1,6 @@
 /* eslint-disable react/no-danger */
 const React = require('react');
 const Avatar = require('~/ui/shared-components/Avatar');
-const L = require('l.js');
 const { observer } = require('mobx-react');
 const { time } = require('~/helpers/formatter');
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');

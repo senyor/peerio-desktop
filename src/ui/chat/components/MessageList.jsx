@@ -1,5 +1,4 @@
 const React = require('react');
-const L = require('l.js');
 const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Link, ProgressBar } = require('~/react-toolbox');

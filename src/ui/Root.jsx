@@ -1,5 +1,4 @@
 const React = require('react');
-const L = require('l.js');
 // const AutoUpdateDialog = require('~/ui/AutoUpdateDialog');
 const languageStore = require('~/stores/language-store');
 const deepForceUpdate = require('react-deep-force-update');

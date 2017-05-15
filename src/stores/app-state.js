@@ -1,6 +1,5 @@
 const { observable } = require('mobx');
 const electron = require('electron').remote;
-const L = require('l.js');
 
 class AppState {
     @observable isFocused = false;

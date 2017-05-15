@@ -1,5 +1,4 @@
 const { observable, action } = require('mobx');
-const L = require('l.js');
 const { setLocale } = require('peerio-translator');
 const normalizeError = require('~/icebear').errors.normalize;
 const db = require('~/icebear').TinyDb;

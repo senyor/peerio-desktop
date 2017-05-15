@@ -1,12 +1,11 @@
 /* eslint-disable */
 /**
- * Tooling for UI tests -- record some DOM activity and spit it out. 
+ * Tooling for UI tests -- record some DOM activity and spit it out.
  *
  * Output will have redundant stuff, e.g. both a click and an set value for an input.
- * State-related classes will be stripped, e.g. those conveying error and focus status. 
+ * State-related classes will be stripped, e.g. those conveying error and focus status.
  */
 const csspath = require('cssman');
-const L = require('l.js');
 
 let actions = [];
 

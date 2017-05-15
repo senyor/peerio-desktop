@@ -1,5 +1,4 @@
 const React = require('react');
-const L = require('l.js');
 const _ = require('lodash');
 const { Component } = require('react');
 const { observable, computed, reaction, action } = require('mobx');
@@ -179,22 +178,22 @@ class PasscodeStore extends OrderedFormStore {
                 <div className={css('hint-wrapper', { focused: this.focusPasscode })}>
                     <div className="password-sentiment">
                         <ValidatedInput type="password"
-                                        name="passcode"
-                                        className="login-input"
-                                        label={t('title_devicePassword')}
-                                        store={this.props.store}
-                                        validator={passcodeValidator}
-                                        propagateFocus={this.showHints}
-                                        validationArguments={{
-                                            zxcvbnScore: this.props.store.zxcvbnScore,
-                                            equalsValue: this.props.store.passcodeRepeat,
-                                            equalsErrorMessage: t('error_passwordRepeat')
-                                        }}
-                                        onKeyPress={this.handleKeyPress} />
+                            name="passcode"
+                            className="login-input"
+                            label={t('title_devicePassword')}
+                            store={this.props.store}
+                            validator={passcodeValidator}
+                            propagateFocus={this.showHints}
+                            validationArguments={{
+                                zxcvbnScore: this.props.store.zxcvbnScore,
+                                equalsValue: this.props.store.passcodeRepeat,
+                                equalsErrorMessage: t('error_passwordRepeat')
+                            }}
+                            onKeyPress={this.handleKeyPress} />
                         <FontIcon value={this.passcodeStrengthMeter[this.props.store.passcodeStrength].icon}
-                                     className={this.props.store.zxcvbnScore === null ? 'hide' :
-                                        this.passcodeStrengthMeter[this.props.store.passcodeStrength].class}
-                                     />
+                            className={this.props.store.zxcvbnScore === null ? 'hide' :
+                                this.passcodeStrengthMeter[this.props.store.passcodeStrength].class}
+                        />
                     </div>
                     <ul className="passcode-hints">
                         <li className="heading">{t('title_passwordHints')}</li>
@@ -206,20 +205,20 @@ class PasscodeStore extends OrderedFormStore {
                                 </li>
                             );
                         }
-                    )}
+                        )}
                     </ul>
                 </div>
                 <ValidatedInput type="password"
-                                name="passcodeRepeat"
-                                className="login-input"
-                                label={t('title_devicePasswordConfirm')}
-                                validator={validators.valueEquality}
-                                validationArguments={{
-                                    equalsValue: this.props.store.passcode,
-                                    equalsErrorMessage: t('error_passwordRepeat')
-                                }}
-                                store={this.props.store}
-                                onKeyPress={this.handleKeyPress} />
+                    name="passcodeRepeat"
+                    className="login-input"
+                    label={t('title_devicePasswordConfirm')}
+                    validator={validators.valueEquality}
+                    validationArguments={{
+                        equalsValue: this.props.store.passcode,
+                        equalsErrorMessage: t('error_passwordRepeat')
+                    }}
+                    store={this.props.store}
+                    onKeyPress={this.handleKeyPress} />
             </div>
         );
     }

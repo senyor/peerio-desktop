@@ -1,7 +1,15 @@
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');
-const L = require('l.js');
+global.L = require('l.js');
+
+let appReady = false;
+let mainWindow;
+
+process.on('uncaughtException', (error) => {
+    L.error('uncaughtException in Node:', error);
+});
+
 const isDevEnv = require('~/helpers/is-dev-env');
 // For dev builds we want to use separate user data directory
 if (isDevEnv) {
@@ -24,7 +32,6 @@ const setMainMenu = require('~/main-process/main-menu');
 const updater = require('./main-process/updater');
 const config = require('~/config');
 
-let mainWindow;
 
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
 
@@ -49,7 +56,7 @@ app.on('ready', () => {
             }
 
             mainWindow = new BrowserWindow(winConfig);
-
+            appReady = true;
             mainWindow.loadURL(`file://${__dirname}/index.html`);
 
             mainWindow.once('ready-to-show', () => {

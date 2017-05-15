@@ -7,8 +7,8 @@ const FileStream = require('~/icebear/models/files/node-file-stream');
 const StorageEngine = require('~/icebear/models/storage/node-json-storage');
 const { setUrlMap, setTagHandler } = require('peerio-translator');
 const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
-const L = require('l.js');
 const cfgBase = require('~/config-base');
+const L = require('l.js');
 
 Object.assign(cfg, cfgBase);
 

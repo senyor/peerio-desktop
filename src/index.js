@@ -20,6 +20,8 @@ require('../build/helpers/logging');
 
 // debug aid global vars
 window.ice = require('~/icebear');
+// logging should be easy
+window.L = L;
 // shortcut to use with promises
 window.clog = L.info.bind(L);
 window.cerr = L.error.bind(L);

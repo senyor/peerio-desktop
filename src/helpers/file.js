@@ -1,5 +1,4 @@
 const electron = require('electron').remote;
-const L = require('l.js');
 
 function requestDownloadPath(fileName) {
     return new Promise((resolve, reject) => {

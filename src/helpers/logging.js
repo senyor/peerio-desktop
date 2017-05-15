@@ -1,9 +1,9 @@
-const L = require('l.js');
 const isDevEnv = require('~/helpers/is-dev-env');
 const Airbrake = require('airbrake-js');
 const config = require('~/config');
 const { User, socket } = require('~/icebear');
 const { reaction } = require('mobx');
+const L = require('l.js');
 
 /**
  * Plugs into the Airbrake API in order to send errors.

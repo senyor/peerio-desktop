@@ -1,5 +1,4 @@
 const React = require('react');
-const L = require('l.js');
 const { fileStore } = require('~/icebear');
 const { FontIcon, ProgressBar } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
@@ -32,7 +31,7 @@ class InlineFiles extends React.Component {
 
                             {file.downloading
                                 ? <ProgressBar type="linear" mode="determinate" value={file.progress}
-                                               max={file.progressMax} />
+                                    max={file.progressMax} />
                                 : null
                             }
                         </div>);

@@ -47,6 +47,7 @@
         "testUser": false,
         "XMLHttpRequest": false,
         "performance": false,
-        "FileReader": false
+        "FileReader": false,
+        "L": false
     }
 }

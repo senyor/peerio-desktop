@@ -1,5 +1,4 @@
 const { Menu, MenuItem, globalShortcut } = require('electron');
-const L = require('l.js');
 const appControl = require('~/helpers/app-control');
 const devtools = require('~/main-process/dev-tools');
 const isDevEnv = require('~/helpers/is-dev-env');

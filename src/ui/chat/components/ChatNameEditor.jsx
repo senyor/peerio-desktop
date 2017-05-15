@@ -1,5 +1,4 @@
 const React = require('react');
-const L = require('l.js');
 const { observer } = require('mobx-react');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const { chatStore } = require('~/icebear');

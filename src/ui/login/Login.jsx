@@ -2,7 +2,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { Button, IconButton, Tooltip, TooltipIconButton } = require('~/react-toolbox');
-const { config, socket, User, validation, errors } = require('~/icebear');
+const { config, socket, User, validation, errors, TinyDb } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -13,6 +13,7 @@ const T = require('~/ui/shared-components/T');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
 const uiStore = require('~/stores/ui-store');
+const keychain = require('~/helpers/keychain');
 
 const { validators } = validation; // use common validation from core
 
@@ -48,14 +49,21 @@ class LoginStore extends OrderedFormStore {
     componentDidMount() {
         User.getLastAuthenticated()
             .then((lastUserObject) => {
-                if (config.autologin) {
-                    this.loginStore.username = config.autologin ? config.autologin.username : '';
-                    this.loginStore.passcodeOrPassphrase = config.autologin ? config.autologin.passphrase : '';
+                if (config.devAutologin) {
+                    this.loginStore.username = config.devAutologin.username;
+                    this.loginStore.passcodeOrPassphrase = config.devAutologin.passphrase;
                     return;
                 }
                 if (lastUserObject) {
                     this.loginStore.lastAuthenticatedUser = lastUserObject;
                     this.loginStore.username = lastUserObject.username;
+                    keychain.getPassphrase(this.loginStore.username)
+                        .then(passphrase => {
+                            if (!passphrase) return;
+                            this.loginStore.passcodeOrPassphrase = passphrase;
+                            this.login(true);
+                        }).catch(() => { // don't care
+                        });
                 }
             });
     }
@@ -72,22 +80,31 @@ class LoginStore extends OrderedFormStore {
                 this.loginStore.username = undefined;
             });
     };
-
-    login = () => {
-        if (this.loginStore.busy || this.loginStore.hasErrors) return;
+    // need this to sqallow event arguments
+    onLoginClick = () => {
+        this.login();
+    };
+    login = (isAutologin = false) => {
+        if (this.loginStore.busy) return;
+        if (!isAutologin && this.loginStore.hasErrors) return;
+        if (isAutologin && !socket.connected) {
+            socket.onceConnected(() => this.login(true));
+            return;
+        }
         this.loginStore.busy = true;
         const user = new User();
         user.username = this.loginStore.username || this.loginStore.lastAuthenticatedUser.username;
         user.passphrase = this.loginStore.passcodeOrPassphrase;
+        user.autologinEnabled = isAutologin;
         user.login().then(() => {
             User.current = user;
-            if (!User.current.passcodeIsSet) {
-                return User.current.passcodeIsDisabled()
-                    .then((disabled) => {
-                        if (!disabled) {
-                            window.router.push('/new-device');
-                        } else {
+            if (!User.current.autologinEnabled) {
+                return TinyDb.user.getValue('autologinSuggested')
+                    .then((suggested) => {
+                        if (suggested) {
                             window.router.push('/app');
+                        } else {
+                            window.router.push('/autologin');
                         }
                     });
             }
@@ -168,7 +185,7 @@ class LoginStore extends OrderedFormStore {
                                   onChange={languageStore.changeLanguage} /> */}
                     </div>
                     <Button className="login-button" label={t('button_login')} flat
-                        onClick={this.login}
+                        onClick={this.onLoginClick}
                         disabled={this.loginStore.hasErrors} />
 
                     <div>{t('title_newUser')} &nbsp; <Link to="/signup">{t('button_CreateAccount')}</Link></div>

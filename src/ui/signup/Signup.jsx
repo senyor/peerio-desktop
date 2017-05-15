@@ -57,7 +57,7 @@ const SaveNow = require('~/ui/signup/SaveNow');
                 //    .catch(() => {
                 //        warnings.addSevere('error_passcodeSetFailed');
                 //    });
-                window.router.push('/app');
+                window.router.push('/autologin');
             })
             .catch(err => {
                 this.busy = false;

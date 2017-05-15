@@ -18,12 +18,14 @@ const DevTools = require('./dev-tools/DevTools');
 const DTDashboard = require('./dev-tools/Dashboard');
 const KegEditor = require('./dev-tools/KegEditor');
 const NewDevice = require('./login/NewDevice');
+const AutoLogin = require('~/ui/login/AutoLogin');
 
 module.exports = (
     <Route path="/" component={Root}>
         <IndexRoute component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/new-device" component={NewDevice} />
+        <Route path="autologin" component={AutoLogin} />
         <Route path="/app" component={App} >
             <IndexRoute component={Chat} />
             <Route path="new-message" component={NewMessage} />

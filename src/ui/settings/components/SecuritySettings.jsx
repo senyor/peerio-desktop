@@ -1,12 +1,14 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog } = require('~/react-toolbox');
-const { User } = require('~/icebear');
+const { Button, Dialog, Switch } = require('~/react-toolbox');
+const { User, warnings } = require('~/icebear');
 const { t } = require('peerio-translator');
 const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
 const T = require('~/ui/shared-components/T');
 const cfg = require('~/config.js');
+const keychain = require('~/helpers/keychain');
+
 
 @observer
 class SecuritySettings extends React.Component {
@@ -93,6 +95,33 @@ class SecuritySettings extends React.Component {
         );
     }
 
+    onToggleAutologin(enabled) {
+        User.current.autologinEnabled = enabled;
+        if (enabled) {
+            keychain.savePassphrase(User.current.username, User.current.passphrase)
+                .then((ret) => {
+                    if (!ret) {
+                        console.error('Failed to set autologin (libary returned false).');
+                        warnings.addSevere('title_autologinSetFail');
+                    }
+                    User.current.autologinEnabled = true;
+                })
+                .catch(() => {
+                    User.current.autologinEnabled = false;
+                    warnings.addSevere('title_autologinSetFail');
+                });
+        } else {
+            keychain.removePassphrase(User.current.username, User.current.passphrase)
+                .then(() => {
+                    User.current.autologinEnabled = false;
+                })
+                .catch(() => {
+                    User.current.autologinEnabled = true;
+                    warnings.addSevere('title_autologinDisableFail');
+                });
+        }
+    }
+
     render() {
         // const backupCodesDialogActions = [
         //     { label: t('button_cancel'), onClick: this.hideBackupCodesDialog },
@@ -105,6 +134,11 @@ class SecuritySettings extends React.Component {
 
         return (
             <div>
+                <section className="section-divider">
+                    <Switch checked={User.current.autologinEnabled}
+                        label={t('title_autologinSetting')}
+                        onChange={this.onToggleAutologin} />
+                </section>
                 {/* <section className="section-divider">
                     <div className="title" >
                         {t('title_devicePassword')}

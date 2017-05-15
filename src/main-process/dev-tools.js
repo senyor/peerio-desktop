@@ -35,11 +35,11 @@ function installExtensions(forceReinstall) {
     const installer = require('electron-devtools-installer');
     const extensions = ['REACT_DEVELOPER_TOOLS', 'REACT_PERF'];
     for (const name of extensions) {
-        L.info('installing {0}', name);
+        L.info(`installing ${name}`);
         try {
             installer.default(installer[name], forceReinstall);
         } catch (e) {
-            L.error("Failed to install extension '{0}' with error {1}", name, e);
+            L.error(`Failed to install extension ${name} with error ${e}`);
         }
     }
 }

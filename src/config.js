@@ -7,8 +7,8 @@ const FileStream = require('~/icebear/models/files/node-file-stream');
 const StorageEngine = require('~/icebear/models/storage/node-json-storage');
 const { setUrlMap, setTagHandler } = require('peerio-translator');
 const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
-const cfgBase = require('~/config-base');
 const L = require('l.js');
+const cfgBase = require('~/config-base');
 
 Object.assign(cfg, cfgBase);
 
@@ -38,7 +38,7 @@ cfg.nodeLogFolder = path.join(app.getPath('userData'), 'logs');
 // --- DEV ENV SETTINGS
 if (isDevEnv) {
     try {
-        cfg.autologin = require('../../autologin.json'); // eslint-disable-line
+        cfg.devAutologin = require('../../autologin.json'); // eslint-disable-line
     } catch (err) {
         // don't care
     }

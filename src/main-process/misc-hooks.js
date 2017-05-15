@@ -23,7 +23,7 @@ function applyMiscHooks(mainWindow) {
 
     // TODO: new api will be released soon, arguments and callback change a little
     mainWindow.webContents.session.setCertificateVerifyProc((hostname, cert, callback) => {
-        L.info('CERTIFICATE VERIFICATION: {0} {1}', hostname, cert.fingerprint);
+        L.info(`CERTIFICATE VERIFICATION: ${hostname} ${cert.fingerprint}`);
         let ret = true;
         certData.forEach((d) => {
             if (hostname.match(d.hostRegex)) {

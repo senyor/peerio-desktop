@@ -1,3 +1,5 @@
+const cfg = require('~/config-base');
+
 /**
  * Keytar is a native module and we suspect it might not always work as expected.
  * Keytar malfunction is not blocking user from using the app so we'll try to handle errors gracefully.
@@ -9,8 +11,7 @@ try {
     L.error('Keytar error', err);
 }
 
-// DO NOT CHANGE THIS. Unless you want to invalidate autologin for all users ;)
-const service = 'PeerioMessenger';
+const service = cfg.keychainService;
 
 async function savePassphrase(username, passphrase) {
     if (!keytar) return false;

@@ -5,6 +5,10 @@
 module.exports = {
     appId: 'com.peerio.desktop', // must the the same as in package.json
 
+    // App-unique name of keychain service for storing Account Key.
+    // IMPORTANT: Changing this for the same app will invalidate autologin for all users.
+    keychainService: 'PeerioMessenger',
+
     socketServerUrl: 'wss://icebear.peerio.com',
     ghostFrontendUrl: 'https://mail.peerio.com',
 

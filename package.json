@@ -143,6 +143,7 @@
     "appId": "com.peerio.desktop",
     "productName": "Peerio Messenger",
     "artifactName": "${productName}-${arch}-${version}.${ext}",
+    "npmSkipBuildFromSource": true,
     "directories": {
       "buildResources": "dist-assets"
     },

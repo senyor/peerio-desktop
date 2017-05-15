@@ -57,7 +57,11 @@ const { validators } = validation; // use common validation from core
                     <div className="passphrase">{this.props.store.passphrase}</div>
                 </div>
 
-                <Button icon="file_download" label={t('button_save')} className="button-gradient" onClick={this.save} />
+                <Button icon="file_download"
+                        label={t('button_save')}
+                        className="button-gradient"
+                        style={{ marginTop: '16px' }}
+                        onClick={this.save} />
                 <webview ref={this.wwref} src="./AccountKeyBackup.html"
                     style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />
             </div>

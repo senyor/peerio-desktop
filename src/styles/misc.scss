@@ -175,9 +175,13 @@ $status-bar-height: 32px;
 // BUTTONS
 .button-gradient {
   background-image: linear-gradient(to right, rgba($color-brand-blue, .5), rgba($color-brand-green, .75));
+  border: 1px solid $color-light-70;
   border-color: $color-light-70;
+  border-radius: 4px;
+  line-height: 34px;
 
   &:hover {
-    background-image: $background-gradient;
+    background-image: $background-gradient !important;
+    border: 1px solid $color-light-100;
   }
 }

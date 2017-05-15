@@ -53,7 +53,6 @@ class SecuritySettings extends React.Component {
         this.backupCodesDialogOpen = true;
     };
 
-
     renderShowPassphraseSection() {
         const passphraseDialogActions = [
             { label: t('button_close'), onClick: this.hidePassphraseDialog }
@@ -69,6 +68,13 @@ class SecuritySettings extends React.Component {
                 <p>
                     {t('title_AKDetail')}
                 </p>
+                <Button icon="file_download"
+                        label={t('button_saveAccountKey')}
+                        style={{ marginTop: '32px' }}
+                        onClick={this.save} />
+                <webview ref={this.wwref} src="../../AccountKeyBackup.html"
+                    style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />
+
                 <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}
                     className="no-select" title={this.unlocked ? t('title_AccountKey') : t('title_enterPassword')}
                     onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}>

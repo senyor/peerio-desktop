@@ -45,22 +45,22 @@ const { validators } = validation; // use common validation from core
         return (
             <div className="flex-col profile">
                 <div className="warning-line">
-                    <div className="flex-col flex-justify-center">
+                    <div className="flex-col flex-justify-center" style={{ width: '275px', whiteSpace: 'nowrap' }}>
                         <span className="display-1">{t('title_saveNow1')}</span>
                         <strong className="display-2">{t('title_saveNow2')}</strong>
                     </div>
                 </div>
                 <p>{t('title_saveNow3')}</p>
                 <p>{t('title_saveNow4')}</p>
-                <div>
+                {/* <div>
                     <p>{t('title_yourAccountKey')}</p>
                     <div className="passphrase">{this.props.store.passphrase}</div>
-                </div>
+                </div> */}
 
                 <Button icon="file_download"
-                        label={t('button_save')}
+                        label={t('button_saveAccountKey')}
                         className="button-gradient"
-                        style={{ marginTop: '16px' }}
+                        style={{ marginTop: '32px' }}
                         onClick={this.save} />
                 <webview ref={this.wwref} src="./AccountKeyBackup.html"
                     style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />

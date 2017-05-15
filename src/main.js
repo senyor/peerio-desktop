@@ -36,13 +36,19 @@ app.on('ready', () => {
 
     getSavedWindowState()
         .then(state => {
-            mainWindow = new BrowserWindow(Object.assign(state, {
+            const winConfig = Object.assign(state, {
                 show: false,
                 center: true,
                 minWidth: 900,
                 minHeight: 728,
                 title: app.getName()
-            }));
+            });
+
+            if (process.platform === 'linux') {
+                state.icon = `${__dirname}/static/img/icon.png`;
+            }
+
+            mainWindow = new BrowserWindow(winConfig);
 
             mainWindow.loadURL(`file://${__dirname}/index.html`);
 

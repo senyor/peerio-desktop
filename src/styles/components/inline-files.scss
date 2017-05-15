@@ -2,17 +2,17 @@
   color: $text-dark-secondary;
   font-weight: $font-weight-bold;
   padding-left: $padding-small;
+  width: 100%;
 
   .shared-file {
     @extend %flex-col;
     @extend %flex-justify-center;
     background: $color-dark-03;
-    border-left: 4px solid $color-brand-blue;
+    border: 1px solid $color-dark-54;
+    border-left-width: 8px;
     border-radius: 2px;
     cursor: pointer;
     height: 48px;
-    max-width: 300px;
-    min-width: 200px;
     padding-left: $padding-tiny;
 
     .material-icons {
@@ -20,6 +20,7 @@
     }
 
     &:hover {
+      border-color: currentColor;
       color: $color-brand-blue;
 
       .material-icons {

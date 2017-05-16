@@ -52,7 +52,6 @@ $suggests-max-height: 200px;
     }
 
     .content {
-      font-weight: $font-weight-bold;
       padding: 0 $padding-small;
 
       .material-icons {
@@ -78,7 +77,7 @@ $suggests-max-height: 200px;
 
     .content {
       color: $text-new-messages;
-      padding-right: 24px;
+      padding-right: $padding-default;
     }
   }
 

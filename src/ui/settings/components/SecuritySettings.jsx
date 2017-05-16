@@ -134,6 +134,16 @@ class SecuritySettings extends React.Component {
 
         return (
             <div>
+                {/* NOTE: Account key should always be at the top.  */}
+                <section className="section-divider">
+                    {/* <div className="title">{t('title_QRcode')}
+                        <Button label={t('button_showQR')} flat primary />
+                    </div>
+                    <p style={{ marginBottom: '40px' }}>
+                        {t('title_QRcodeDetail')}
+                    </p>*/}
+                    {this.renderShowPassphraseSection()}
+                </section>
                 <section className="section-divider">
                     <Switch checked={User.current.autologinEnabled}
                         label={t('title_autologinSetting')}
@@ -166,15 +176,7 @@ class SecuritySettings extends React.Component {
                         {t('title_2FADetail', { tfaDetailUrl: text => <a href={cfg.tfaDetailUrl}>{text}</a> })}
                     </p>
                 </section> */}
-                <section className="section-divider">
-                    {/* <div className="title">{t('title_QRcode')}
-                        <Button label={t('button_showQR')} flat primary />
-                    </div>
-                    <p style={{ marginBottom: '40px' }}>
-                        {t('title_QRcodeDetail')}
-                    </p>*/}
-                    {this.renderShowPassphraseSection()}
-                </section>
+
                 {/* <section>
                     <div className="title"> {t('title_accountActivity')}
                         <Button label={t('button_showActivity')} flat primary />

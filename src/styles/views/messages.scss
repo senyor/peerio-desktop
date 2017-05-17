@@ -250,6 +250,10 @@ $suggests-max-height: 200px;
       .title {
         margin-bottom: $margin-small;
       }
+
+      .archive-link {
+        .rt-link-link { display: inline-block; }
+      }
     }
 
     .message-content-wrapper {

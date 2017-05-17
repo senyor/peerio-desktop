@@ -187,7 +187,7 @@ class MessageList extends React.Component {
                     {t('title_chatBeginning')}
                     &nbsp;<strong>{chatStore.activeChat.name}</strong>.
                 </div>
-                <div className="flex-row">
+                <div className="archive-link">
                     {t('title_chatArchive')}
                     &nbsp;<Link href={urls.upgrade} label={t('button_upgradeForArchive')} />
                 </div>

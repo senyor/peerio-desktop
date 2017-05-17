@@ -38,7 +38,11 @@ function _setAutologin(enabled) {
 }
 
 function getPassphrase(username) {
-    return keychain.getSecret(username).then(crypto.cryptoUtil.unpadPassphrase);
+    return keychain.getSecret(username)
+        .then((padded) => {
+            if (padded) return crypto.cryptoUtil.unpadPassphrase(padded);
+            return false;
+        });
 }
 
 /**

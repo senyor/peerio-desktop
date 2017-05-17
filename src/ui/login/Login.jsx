@@ -25,7 +25,7 @@ class LoginStore extends OrderedFormStore {
     @observable passcodeOrPassphrase = '';
 
     // non ValidatedInput-enhanced observables
-    @observable busy = false;
+    @observable busy = true;
     @observable passwordVisible = false;
     @observable lastAuthenticatedUser = undefined;
 
@@ -51,6 +51,7 @@ class LoginStore extends OrderedFormStore {
                 if (config.devAutologin) {
                     this.loginStore.username = config.devAutologin.username;
                     this.loginStore.passcodeOrPassphrase = config.devAutologin.passphrase;
+                    this.loginStore.busy = false;
                     return;
                 }
                 if (lastUserObject) {
@@ -58,12 +59,15 @@ class LoginStore extends OrderedFormStore {
                     this.loginStore.username = lastUserObject.username;
                     autologin.getPassphrase(this.loginStore.username)
                         .then(passphrase => {
-                            if (!passphrase) return;
+                            if (!passphrase) {
+                                this.loginStore.busy = false;
+                                return;
+                            }
                             this.loginStore.passcodeOrPassphrase = passphrase;
                             this.login(true);
-                        }).catch(() => { // don't care
-                        });
-                }
+                        })
+                        .catch(() => { this.loginStore.busy = false; });
+                } else this.loginStore.busy = false;
             });
     }
 
@@ -84,7 +88,7 @@ class LoginStore extends OrderedFormStore {
         this.login();
     };
     login = (isAutologin = false) => {
-        if (this.loginStore.busy) return;
+        if (this.loginStore.busy && !isAutologin) return;
         if (!isAutologin && this.loginStore.hasErrors) return;
         if (isAutologin && !socket.connected) {
             socket.onceConnected(() => this.login(true));

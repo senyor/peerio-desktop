@@ -10,7 +10,7 @@ const css = require('classnames');
 @observer
 class Profile extends React.Component {
     @observable addMode = false;
-    @observable newEmail = '';
+    // @observable newEmail = '';
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
@@ -39,6 +39,7 @@ class Profile extends React.Component {
 
     onNewEmailChange = val => {
         this.newEmail = val;
+        this.saveNewEmail();
     };
 
     cancelNewEmail = () => {
@@ -135,8 +136,8 @@ class Profile extends React.Component {
                     {
                         this.addMode
                             ? <div className="flex-row">
-                                <Input type="email" label={t('title_email')} value={this.newEmail}
-                                    onChange={this.onNewEmailChange} />
+                                <BetterInput type="email" label={t('title_email')}
+                                    onAccept={this.onNewEmailChange} onReject={this.cancelNewEmail} />
                                 <TooltipIconButton tooltip={t('button_save')} icon="done"
                                     onClick={this.saveNewEmail} />
                                 <TooltipIconButton tooltip={t('button_cancel')} icon="cancel"

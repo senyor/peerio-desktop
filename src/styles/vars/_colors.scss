@@ -23,7 +23,7 @@ $color-accent: rgb(246, 146, 35);
 
 // Gradients - used with background-image property
 $color-brand-gradient: linear-gradient(to right, $color-brand-blue, $color-brand-green);
-$color-brand-gradient-bottom: linear-gradient(to bottom, $color-brand-blue, $color-brand-green);
+$color-brand-gradient-bottom: linear-gradient(to bottom, $color-brand-blue 0, $color-brand-green 50%);
 
 // Status (warning/error/etc)
 $color-error: rgb(208, 2, 27);

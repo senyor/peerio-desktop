@@ -130,7 +130,11 @@ class UserPicker extends React.Component {
                                         leftActions={[<Avatar key="a" contact={c} />]}
                                         caption={c.username}
                                         legend={`${c.firstName} ${c.lastName}`}
-                                        onClick={() => this.selected.push(c)}
+                                        onClick={() => {
+                                            this.selected.push(c);
+                                            this.query = '';
+                                        }
+                                        }
                                         className={css({ warning: this.noGood })} />)
                                 )}
                             </div>

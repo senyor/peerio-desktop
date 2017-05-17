@@ -12,7 +12,7 @@ const AppNavButton = require('./AppNavButton');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
 const urls = require('~/config').translator.urlMap;
-
+const autologin = require('~/helpers/autologin');
 
 // todo: move this somewhere more appropriate
 let dockNotifsStarted = false;
@@ -78,7 +78,8 @@ class AppNav extends React.Component {
         window.router.push(routerStore.ROUTES.about);
     }
 
-    signout() {
+    async signout() {
+        await autologin.disable();
         appControl.relaunch();
     }
 

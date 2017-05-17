@@ -1,39 +1,18 @@
 const React = require('react');
 const { Button } = require('~/react-toolbox');
-const { User, errors, warnings, TinyDb } = require('~/icebear');
-const { observable, computed } = require('mobx');
+const { TinyDb } = require('~/icebear');
 const { observer } = require('mobx-react');
-const { t } = require('peerio-translator');
-const css = require('classnames');
-const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
-const T = require('~/ui/shared-components/T');
-const keychain = require('~/helpers/keychain');
+const autologin = require('~/helpers/autologin');
 
 @observer class AutoLogin extends React.Component {
     enable() {
-        keychain.savePassphrase(User.current.username, User.current.passphrase)
-            .then((ret) => {
-                if (!ret) {
-                    console.error('Failed to set autologin (libary returned false).');
-                    warnings.addSevere('title_autologinSetFail');
-                }
-                User.current.autologinEnabled = true;
-            })
-            .catch(() => {
-                warnings.addSevere('title_autologinSetFail');
-            });
-        TinyDb.user.setValue('autologinSuggested', true);
+        autologin.enable();
+        autologin.dontSuggestEnablingAgain();
         window.router.push('/app');
     }
     disable() {
-        keychain.removePassphrase(User.current.username, User.current.passphrase)
-            .then(() => {
-                User.current.autologinEnabled = false;
-            })
-            .catch(() => {
-                warnings.addSevere('title_autologinDisableFail');
-            });
-        TinyDb.user.setValue('autologinSuggested', true);
+        autologin.disable();
+        autologin.dontSuggestEnablingAgain();
         window.router.push('/app');
     }
     render() {

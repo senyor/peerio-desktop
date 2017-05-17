@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions*/
 const React = require('react');
 const { Component } = require('react');
-const { Button, IconButton, Tooltip, TooltipIconButton } = require('~/react-toolbox');
-const { config, socket, User, validation, errors, TinyDb } = require('~/icebear');
+const { Button, TooltipIconButton } = require('~/react-toolbox');
+const { config, socket, User, validation, TinyDb } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -12,8 +12,7 @@ const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const T = require('~/ui/shared-components/T');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
-const uiStore = require('~/stores/ui-store');
-const keychain = require('~/helpers/keychain');
+const autologin = require('~/helpers/autologin');
 
 const { validators } = validation; // use common validation from core
 
@@ -57,7 +56,7 @@ class LoginStore extends OrderedFormStore {
                 if (lastUserObject) {
                     this.loginStore.lastAuthenticatedUser = lastUserObject;
                     this.loginStore.username = lastUserObject.username;
-                    keychain.getPassphrase(this.loginStore.username)
+                    autologin.getPassphrase(this.loginStore.username)
                         .then(passphrase => {
                             if (!passphrase) return;
                             this.loginStore.passcodeOrPassphrase = passphrase;
@@ -99,13 +98,9 @@ class LoginStore extends OrderedFormStore {
         user.login().then(() => {
             User.current = user;
             if (!User.current.autologinEnabled) {
-                return TinyDb.user.getValue('autologinSuggested')
-                    .then((suggested) => {
-                        if (suggested) {
-                            window.router.push('/app');
-                        } else {
-                            window.router.push('/autologin');
-                        }
+                return autologin.shouldSuggestEnabling()
+                    .then(suggest => {
+                        window.router.push(suggest ? '/autologin' : '/app');
                     });
             }
             return window.router.push('/app');

@@ -3,6 +3,7 @@ const cfg = require('~/config-base');
 /**
  * Keytar is a native module and we suspect it might not always work as expected.
  * Keytar malfunction is not blocking user from using the app so we'll try to handle errors gracefully.
+ * The purpose of this module is to wrap keytar API into more suitable to us manner.
  */
 let keytar;
 try {
@@ -13,7 +14,7 @@ try {
 
 const service = cfg.keychainService;
 
-async function savePassphrase(username, passphrase) {
+async function saveSecret(username, passphrase) {
     if (!keytar) return false;
     try {
         await keytar.setPassword(service, username, passphrase);
@@ -24,7 +25,7 @@ async function savePassphrase(username, passphrase) {
     }
 }
 
-async function getPassphrase(username) {
+async function getSecret(username) {
     if (!keytar) return false;
     try {
         const ret = await keytar.getPassword(service, username);
@@ -35,7 +36,7 @@ async function getPassphrase(username) {
     }
 }
 
-async function removePassphrase(username) {
+async function removeSecret(username) {
     if (!keytar) return false;
     try {
         await keytar.deletePassword(service, username);
@@ -46,4 +47,4 @@ async function removePassphrase(username) {
     }
 }
 
-module.exports = { savePassphrase, getPassphrase, removePassphrase };
+module.exports = { saveSecret, getSecret, removeSecret };

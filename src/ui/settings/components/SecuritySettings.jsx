@@ -2,12 +2,12 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Dialog, Switch } = require('~/react-toolbox');
-const { User, warnings } = require('~/icebear');
+const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
 const T = require('~/ui/shared-components/T');
 const cfg = require('~/config.js');
-const keychain = require('~/helpers/keychain');
+const autologin = require('~/helpers/autologin');
 
 
 @observer
@@ -67,10 +67,10 @@ class SecuritySettings extends React.Component {
                     {t('title_AccountKey')}
                     <Button label={t('button_showAK')} onClick={this.showPassphraseDialog} primary />
                     <Button icon="file_download"
-                            label={t('button_saveAccountKey')}
-                            style={{ marginTop: '32px' }}
-                            onClick={this.save}
-                            primary />
+                        label={t('button_saveAccountKey')}
+                        style={{ marginTop: '32px' }}
+                        onClick={this.save}
+                        primary />
                 </div>
                 <p>
                     {t('title_AKDetail')}
@@ -95,31 +95,8 @@ class SecuritySettings extends React.Component {
         );
     }
 
-    onToggleAutologin(enabled) {
-        User.current.autologinEnabled = enabled;
-        if (enabled) {
-            keychain.savePassphrase(User.current.username, User.current.passphrase)
-                .then((ret) => {
-                    if (!ret) {
-                        console.error('Failed to set autologin (libary returned false).');
-                        warnings.addSevere('title_autologinSetFail');
-                    }
-                    User.current.autologinEnabled = true;
-                })
-                .catch(() => {
-                    User.current.autologinEnabled = false;
-                    warnings.addSevere('title_autologinSetFail');
-                });
-        } else {
-            keychain.removePassphrase(User.current.username, User.current.passphrase)
-                .then(() => {
-                    User.current.autologinEnabled = false;
-                })
-                .catch(() => {
-                    User.current.autologinEnabled = true;
-                    warnings.addSevere('title_autologinDisableFail');
-                });
-        }
+    onToggleAutologin(enable) {
+        enable ? autologin.enable() : autologin.disable();
     }
 
     render() {

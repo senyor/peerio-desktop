@@ -21,7 +21,7 @@ class ProfileStore extends OrderedFormStore {
     @observable passphrase = '';
 
     rerollPassphrase() {
-        this.passphrase = PhraseDictionary.current.getPassphrase(5);
+        this.passphrase = PhraseDictionary.current.getPassphrase(8);
     }
 
     @computed get hasErrors() {

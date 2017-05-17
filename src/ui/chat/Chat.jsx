@@ -102,7 +102,7 @@ class Chat extends React.Component {
                                 tooltipPosition="bottom"
                                 tooltipDelay={500}
                                 onClick={this.toggleSidebar} />
-                            {chat.participants ? chat.participants.length : ''}
+                            {chat.participants && chat.participants.length ? chat.participants.length : ''}
                         </div>
 
                     </div>

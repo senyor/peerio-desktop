@@ -10,6 +10,8 @@ const ChatNameEditor = require('./ChatNameEditor');
 @observer
 class ChatSideBar extends React.Component {
     render() {
+        const banishHeader = chatStore.activeChat.participants && chatStore.activeChat.participants.length
+            ? '' : 'banish';
         return (
             <div className={css('chat-sidebar', { open: this.props.open })}>
                 <div className="title">{t('title_About')}</div>
@@ -27,7 +29,7 @@ class ChatSideBar extends React.Component {
                       leftIcon="notifications_none"
                       caption="button_muteChat" /> */}
                 </List>
-                <div className="rt-list-subheader">{t('title_Members')} </div>
+                <div className={`rt-list-subheader ${banishHeader}`}>{t('title_Members')} </div>
                 <div style={{ overflow: 'auto' }}>
                     <List>
                         {chatStore.activeChat && chatStore.activeChat.participants ?

@@ -343,10 +343,10 @@ $suggests-max-height: 200px;
       .mention {
         color: $text-dark-primary;
         cursor: pointer;
-        font-weight: 500;
+        font-weight: $font-weight-semibold;
 
         &.self {
-          background-color: #ff0;
+          background-color: rgba($color-brand-green, .5);
         }
 
         &:hover {

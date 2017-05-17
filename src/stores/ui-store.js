@@ -1,10 +1,12 @@
 // global UI store
 const { observable, reaction } = require('mobx');
-const { TinyDb } = require('~/icebear');
+const { TinyDb, Clock } = require('~/icebear');
 
 class UIStore {
     @observable contactDialogUsername;
     @observable soundsEnabled = true;
+    minuteClock = new Clock(60);
+
     // key: chat id, value: text
     unsentMessages = {};
 

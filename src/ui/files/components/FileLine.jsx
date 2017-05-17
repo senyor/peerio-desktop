@@ -9,6 +9,7 @@ const { fileStore, User } = require('~/icebear');
 const { downloadFile } = require('~/helpers/file');
 const uiStore = require('~/stores/ui-store');
 const { t } = require('peerio-translator');
+const moment = require('moment');
 
 @observer
 class FileLine extends React.Component {
@@ -47,10 +48,16 @@ class FileLine extends React.Component {
     openContactDialog = () => {
         uiStore.contactDialogUsername = this.props.file.fileOwner;
     };
+    formatDate(date) {
+        if (!date) return '';
+        return moment(date).fromNow();
+    }
 
     render() {
         const file = this.props.file;
         if (!file.show) return null;
+        // minuteClock.now is never null, but this will subscribe us to clock events to re-render relative timesamp
+        if (!uiStore.minuteClock.now) return null;
         return (
             <tr className={css({
                 selected: this.checked,
@@ -68,7 +75,9 @@ class FileLine extends React.Component {
                 <td className="file-title selectable" onClick={this.download}>{file.name}</td>
                 <td className="clickable-username" onClick={this.openContactDialog}>
                     {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}</td>
-                <td className="text-right">{file.uploadedAt && file.uploadedAt.toLocaleString()}</td>
+                <td className="text-right" title={file.uploadedAt ? file.uploadedAt.toLocaleString() : ''}>
+                    {this.formatDate(file.uploadedAt)}
+                </td>
                 <td className="text-right">{file.sizeFormatted}</td>
                 <td>{file.canShare ? t('button_yes') : ''} </td>
                 <FileActions downloadDisabled={!file.readyForDownload || file.downloading}

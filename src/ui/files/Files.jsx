@@ -1,7 +1,7 @@
 const React = require('react');
 const { Button, Checkbox } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
-const { fileStore, clientApp } = require('~/icebear');
+const { fileStore, clientApp, Clock } = require('~/icebear');
 const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
@@ -60,7 +60,6 @@ const urls = require('~/config').translator.urlMap;
 
     render() {
         if (!fileStore.files.length && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
-
         return (
             <div className="files">
                 {/* <div className={css('notice-upgrade', { show: noMoreStorage })}>

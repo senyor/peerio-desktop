@@ -2,11 +2,13 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Input } = require('~/react-toolbox');
+const { t } = require('peerio-translator');
 
 @observer
 class BetterInput extends React.Component {
 
     @observable value = '';
+    @observable isValid = true;
     accepted = false;
     rejected = false;
     focused = false;
@@ -20,8 +22,23 @@ class BetterInput extends React.Component {
 
     onChange = val => {
         this.value = val;
+        if (this.props.validator) {
+            const res = this.props.validator(val);
+            if (res instanceof Promise) {
+                res.then(valid => {
+                    this.isValid = valid;
+                    this.emitConsumerOnChange(val, valid);
+                });
+            } else {
+                this.isValid = res;
+                this.emitConsumerOnChange(val, res);
+            }
+        } else this.emitConsumerOnChange(val, true);
+    };
 
-        if (this.props.onChange) this.props.onChange(val);
+    emitConsumerOnChange = (val, valid) => {
+        if (!this.props.onChange) return;
+        this.props.onChange(val, valid);
     };
 
     onFocus = () => {
@@ -34,18 +51,19 @@ class BetterInput extends React.Component {
     onBlur = () => {
         // WORKAROUND: under some circumstances like calling focus() on message input react calls false blur event
         if (!this.focused) return;
-        if (this.props.acceptOnBlur === 'false') return;
+        if (this.props.acceptOnBlur === 'false' || !this.isValid) return;
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
         if (this.accepted || this.rejected) return;
-        this.props.onAccept(this.inputRef.getWrappedInstance().inputNode.value);
+        this.props.onAccept(this.inputRef.getWrappedInstance().inputNode.value, this.isValid);
         this.accepted = true;
     };
 
     onKeyDown = (e) => {
         if (e.key === 'Enter') {
+            if (!this.isValid) return;
             this.accepted = true;
-            this.props.onAccept(this.value);
+            this.props.onAccept(this.value, this.isValid);
             this.inputRef.getWrappedInstance().blur();
         } if (e.key === 'Escape') {
             this.rejected = true;
@@ -71,7 +89,8 @@ class BetterInput extends React.Component {
 
 
     render() {
-        const { onFocus, onBlur, onChange, onKeyDown, onAccept, onReject, value, acceptOnBlur, ...props } = this.props;
+        const { onFocus, onBlur, onChange, onKeyDown, onAccept, onReject,
+            value, acceptOnBlur, validator, error, ...props } = this.props;
         props.onFocus = this.onFocus;
         props.onBlur = this.onBlur;
         props.onChange = this.onChange;
@@ -79,6 +98,7 @@ class BetterInput extends React.Component {
         props.ref = this.setRef;
         props.value = this.value;
         props.type = 'text';
+        props.error = this.isValid ? '' : t(error);
         return React.createElement(Input, props);
     }
 

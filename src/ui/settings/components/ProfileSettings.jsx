@@ -2,7 +2,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Input, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
-const { User, contactStore } = require('~/icebear');
+const { User, contactStore, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const css = require('classnames');
@@ -10,7 +10,8 @@ const css = require('classnames');
 @observer
 class Profile extends React.Component {
     @observable addMode = false;
-    // @observable newEmail = '';
+    @observable newEmail = '';
+    @observable newEmailValid = false;
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
@@ -37,20 +38,26 @@ class Profile extends React.Component {
         this.addMode = true;
     };
 
-    onNewEmailChange = val => {
+    onNewEmailChange = (val, isValid) => {
         this.newEmail = val;
-        this.saveNewEmail();
+        this.newEmailValid = isValid;
     };
+
+    onNewEmailAccept = (val, isValid) => {
+        this.newEmail = val;
+        this.newEmailValid = isValid;
+        this.saveNewEmail();
+    }
 
     cancelNewEmail = () => {
         this.addMode = false;
+        this.newEmailValid = false;
         this.newEmail = '';
     };
 
     saveNewEmail = () => {
-        User.current.addEmail(this.newEmail);
-        this.addMode = false;
-        this.newEmail = false;
+        if (this.newEmail && this.newEmailValid) User.current.addEmail(this.newEmail);
+        this.cancelNewEmail();
     };
 
     removeEmail(email) {
@@ -137,9 +144,11 @@ class Profile extends React.Component {
                         this.addMode
                             ? <div className="flex-row">
                                 <BetterInput type="email" label={t('title_email')} acceptOnBlur="false"
-                                    onAccept={this.onNewEmailChange} onReject={this.cancelNewEmail} />
+                                    validator={validation.validators.emailFormat.action}
+                                    onChange={this.onNewEmailChange} value={this.newEmail} error="error_invalidEmail"
+                                    onAccept={this.onNewEmailAccept} onReject={this.cancelNewEmail} />
                                 <TooltipIconButton tooltip={t('button_save')} icon="done"
-                                    onClick={this.saveNewEmail} />
+                                    onClick={this.saveNewEmail} disabled={!this.newEmailValid} />
                                 <TooltipIconButton tooltip={t('button_cancel')} icon="cancel"
                                     onClick={this.cancelNewEmail} />
                             </div>

@@ -5,6 +5,7 @@ const { Button, Input, List, ListItem, TooltipIconButton } = require('~/react-to
 const { User, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
+const css = require('classnames');
 
 @observer
 class Profile extends React.Component {
@@ -79,7 +80,7 @@ class Profile extends React.Component {
     renderPrimaryEmail(a) {
         return (
             a.primary
-                ? <span className="dark-label">{t('title_primaryEmail')}</span>
+                ? t('title_primaryEmail')
                 : null);
     }
 
@@ -111,11 +112,11 @@ class Profile extends React.Component {
                         {
                             user.addresses.map(a => {
                                 return (<ListItem key={a.address}
-                                    className="email-row"
+                                    className={css('email-row', { unconfirmed: !a.confirmed })}
                                     caption={a.address}
                                     legend={a.confirmed
                                         ? this.renderPrimaryEmail(a)
-                                        : <div className="error">{t('error_unconfirmedEmail')}</div>}
+                                        : t('error_unconfirmedEmail')}
                                     leftIcon={a.primary && user.addresses.length > 1
                                         ? 'radio_button_checked'
                                         : <TooltipIconButton

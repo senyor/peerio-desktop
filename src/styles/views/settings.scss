@@ -42,7 +42,15 @@
   }
 
   .email-row {
-    margin-top: 5px;
+    margin-top: $margin-small;
+
+    .rt-list-itemText:not(.rt-list-primary) { @extend %hint-error-label; }
+
+    &.unconfirmed {
+      .rt-list-itemText:not(.rt-list-primary) {
+        color: $color-error;
+      }
+    }
   }
 
   .input-row:first-of-type .rt-input-input,

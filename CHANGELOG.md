@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.13.0"></a>
+# [2.13.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.12.1...v2.13.0) (2017-05-17)
+
+
+### Bug Fixes
+
+* **app:** fix menus and shortcuts ([8b2d1c7](https://github.com/PeerioTechnologies/peerio-desktop/commit/8b2d1c7))
+* **autologin:** disable autologin when user chooses to sign out explicitly ([9307494](https://github.com/PeerioTechnologies/peerio-desktop/commit/9307494))
+* **chat:** add hex background colour to chat list items ([e0cfb84](https://github.com/PeerioTechnologies/peerio-desktop/commit/e0cfb84))
+* **chat:** don't let hiding next chat before previous hide operation completes ([ec0e0d4](https://github.com/PeerioTechnologies/peerio-desktop/commit/ec0e0d4))
+* **chat:** makes archive link and info line behave as expected. ([e8e7b2f](https://github.com/PeerioTechnologies/peerio-desktop/commit/e8e7b2f))
+* **chat:** prevents wrapping of title hint text. ([bd4388d](https://github.com/PeerioTechnologies/peerio-desktop/commit/bd4388d))
+* **files:** relative timestamp ([0d568fb](https://github.com/PeerioTechnologies/peerio-desktop/commit/0d568fb))
+* **linux:** set window icon for Gnome ([#15](https://github.com/PeerioTechnologies/peerio-desktop/issues/15)) ([1f53a67](https://github.com/PeerioTechnologies/peerio-desktop/commit/1f53a67))
+* no main menu for windows and linux ([2b2b876](https://github.com/PeerioTechnologies/peerio-desktop/commit/2b2b876))
+* **login:** disable login page until autologin situation is cleared out ([9bc651a](https://github.com/PeerioTechnologies/peerio-desktop/commit/9bc651a))
+* **profile:** email editor separates format error from availability error ([a91b323](https://github.com/PeerioTechnologies/peerio-desktop/commit/a91b323))
+* **profile:** refactors email legend content. ([d3e9155](https://github.com/PeerioTechnologies/peerio-desktop/commit/d3e9155))
+* **profile:** remove accept on blur from email editor, add new property to BetterInput ([4e55e3b](https://github.com/PeerioTechnologies/peerio-desktop/commit/4e55e3b))
+* **userpicker:** clear user picker query when selecting a user ([0ba9a74](https://github.com/PeerioTechnologies/peerio-desktop/commit/0ba9a74))
+* **ux:** don't show participant count in chat with self, also don't show 'members' section in sidebar ([977ddf3](https://github.com/PeerioTechnologies/peerio-desktop/commit/977ddf3))
+
+
+### Features
+
+* **autologin:** autologin all the things ([342d4a2](https://github.com/PeerioTechnologies/peerio-desktop/commit/342d4a2))
+* **chat:** filter mention suggest by full name too, search from any position in string and sort by relevancy ([7c85df5](https://github.com/PeerioTechnologies/peerio-desktop/commit/7c85df5))
+* **profile:** new email input in settings reacts to Enter and Esc keys ([8450be4](https://github.com/PeerioTechnologies/peerio-desktop/commit/8450be4))
+* **security:** increase passphrase length ([fe12c56](https://github.com/PeerioTechnologies/peerio-desktop/commit/fe12c56))
+
+
+
 <a name="2.12.1"></a>
 ## [2.12.1](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.12.0...v2.12.1) (2017-05-14)
 

@@ -34,6 +34,7 @@ class BetterInput extends React.Component {
     onBlur = () => {
         // WORKAROUND: under some circumstances like calling focus() on message input react calls false blur event
         if (!this.focused) return;
+        if (this.props.acceptOnBlur === 'false') return;
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
         if (this.accepted || this.rejected) return;
@@ -70,7 +71,7 @@ class BetterInput extends React.Component {
 
 
     render() {
-        const { onFocus, onBlur, onChange, onKeyDown, onAccept, onReject, value, ...props } = this.props;
+        const { onFocus, onBlur, onChange, onKeyDown, onAccept, onReject, value, acceptOnBlur, ...props } = this.props;
         props.onFocus = this.onFocus;
         props.onBlur = this.onBlur;
         props.onChange = this.onChange;

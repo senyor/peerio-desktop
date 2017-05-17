@@ -136,7 +136,7 @@ class Profile extends React.Component {
                     {
                         this.addMode
                             ? <div className="flex-row">
-                                <BetterInput type="email" label={t('title_email')}
+                                <BetterInput type="email" label={t('title_email')} acceptOnBlur="false"
                                     onAccept={this.onNewEmailChange} onReject={this.cancelNewEmail} />
                                 <TooltipIconButton tooltip={t('button_save')} icon="done"
                                     onClick={this.saveNewEmail} />

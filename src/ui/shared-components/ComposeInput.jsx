@@ -212,7 +212,6 @@ class ComposeInput extends React.Component {
             if (matches && matches.length) return matches[matches.length - 1];
             return null;
         };
-
         this.quill.on('text-change', (delta, oldDelta, source) => {
             if (source === Quill.sources.USER) {
                 if (!chatStore.activeChat.participants.length) return;
@@ -223,7 +222,15 @@ class ComposeInput extends React.Component {
                 }
                 token = token.toLowerCase();
                 this.currentSuggestToken = token;
-                this.suggests = chatStore.activeChat.participants.filter((c) => c.username.startsWith(token));
+                this.suggests = chatStore.activeChat.participants
+                    .filter((c) => c.username.includes(token) || c.fullNameLower.includes(token))
+                    .sort((c1, c2) => {
+                        if (c1.username.startsWith(token)) return -1;
+                        if (c2.username.startsWith(token)) return 1;
+                        if (c1.fullNameLower.startsWith(token)) return -1;
+                        if (c2.fullNameLower.startsWith(token)) return 1;
+                        return 0;
+                    });
                 this.selectedSuggestIndex = this.suggests.length ? 0 : -1;
                 // console.log(delta, oldDelta);
                 //                this.tryShowEmojiSuggestions();

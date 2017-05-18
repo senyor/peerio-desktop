@@ -16,7 +16,7 @@ const { validators } = validation; // use common validation from core
     wwref = (ref) => {
         this.ref = ref;
     }
-
+    // TODO: this is duplicated with Security settings, FIX IT
     save = () => {
         const store = this.props.store;
         this.replaceTemplateVars(store.username, store.email, store.passphrase, () => {
@@ -58,10 +58,10 @@ const { validators } = validation; // use common validation from core
                 </div> */}
 
                 <Button icon="file_download"
-                        label={t('button_saveAccountKey')}
-                        className="button-gradient"
-                        style={{ marginTop: '32px' }}
-                        onClick={this.save} />
+                    label={t('button_saveAccountKey')}
+                    className="button-gradient"
+                    style={{ marginTop: '32px' }}
+                    onClick={this.save} />
                 <webview ref={this.wwref} src="./AccountKeyBackup.html"
                     style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />
             </div>

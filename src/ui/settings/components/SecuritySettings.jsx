@@ -9,6 +9,8 @@ const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
 const T = require('~/ui/shared-components/T');
 const cfg = require('~/config.js');
 const autologin = require('~/helpers/autologin');
+const fs = require('fs');
+const electron = require('electron').remote;
 
 const { validators } = validation; // use common validation from core
 
@@ -20,6 +22,7 @@ class SecuritySettings extends React.Component {
     @observable setupTwoFactorDialogOpen = false;
     @observable twoFactorActive = false;
     @observable backupCodesDialogOpen = false;
+    @observable passphraseVisible = false;
 
     unlock = () => {
         this.unlocked = true;
@@ -32,6 +35,10 @@ class SecuritySettings extends React.Component {
 
     showPassphraseDialog = () => {
         this.passphraseDialogOpen = true;
+    };
+
+    togglePassphraseVisibility = () => {
+        this.passphraseVisible = !this.passphraseVisible;
     };
 
 
@@ -57,6 +64,34 @@ class SecuritySettings extends React.Component {
         this.backupCodesDialogOpen = true;
     };
 
+    wwref = (ref) => {
+        this.webviewref = ref;
+    }
+    // TODO: this is duplicated with Security settings, FIX IT
+    save = () => {
+        this.replaceTemplateVars(User.current.username, User.current.primaryAddress, User.current.passphrase, () => {
+            const win = electron.getCurrentWindow();
+            electron.dialog.showSaveDialog(win, { defaultPath: `${User.current.username}.pdf` }, this.printToPdf);
+        });
+    };
+
+    replaceTemplateVars(username, email, key, callback) {
+        const js = `
+            document.getElementById('username').innerHTML = '${username}';
+            document.getElementById('email').innerHTML = '${email}';
+            document.getElementById('key').innerHTML = '${key}';
+            `;
+        this.webviewref.executeJavaScript(js, true, callback);
+    }
+
+    printToPdf = (filePath) => {
+        if (!filePath) return;
+        this.webviewref.printToPDF({ printBackground: true, landscape: false }, (er, data) => {
+            fs.writeFileSync(filePath, data);
+        });
+    };
+
+
     renderShowPassphraseSection() {
         const passphraseDialogActions = [
             { label: t('button_close'), onClick: this.hidePassphraseDialog }
@@ -74,24 +109,18 @@ class SecuritySettings extends React.Component {
                         primary />
                 </div>
                 <div className="input-with-action">
-                    <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
-                        label={t('title_AccountKey')}
-                        position="1"
-                        store={this.loginStore}
-                        validator={validators.stringExists}
-                        name="passcodeOrPassphrase"
-                        onKeyPress={this.handleKeyPress} />
-                    <TooltipIconButton icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
-                        tooltip={this.loginStore.passwordVisible ?
+                    {this.passphraseVisible ? User.current.passphrase : '**************'}
+                    <TooltipIconButton icon={this.passphraseVisible ? 'visibility_off' : 'visibility'}
+                        tooltip={this.passphraseVisible ?
                             t('title_hideAccountKey') : t('title_showAccountKey')}
                         tooltipPosition="right"
                         tooltipDelay={500}
-                        onClick={this.togglePasswordVisibility} />
+                        onClick={this.togglePassphraseVisibility} />
                 </div>
                 <p>
                     {t('title_AKDetail')}
                 </p>
-                <webview ref={this.wwref} src="../../AccountKeyBackup.html"
+                <webview ref={this.wwref} src="./AccountKeyBackup.html"
                     style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />
 
                 {/* <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}

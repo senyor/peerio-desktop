@@ -11,7 +11,7 @@ const emailFormatFn = validation.validators.emailFormat.action;
     @observable query = '';
 
     handleTextChange = newVal => {
-        const newValLower = newVal.toLowerCase();
+        const newValLower = newVal.toLocaleLowerCase();
         if (newValLower.length > 1 && ', '.includes(newValLower[newValLower.length - 1])) {
             this.query = newValLower.substr(0, newValLower.length - 1).replace(/,\s*$/);
             this.validate();
@@ -43,17 +43,17 @@ const emailFormatFn = validation.validators.emailFormat.action;
             <div className="chip-wrapper">
                 {this.props.ghost.recipients.map((c, pos) =>
                     (<Chip key={c}
-                          className="chip-label"
-                          deletable
-                          onDeleteClick={() => this.props.ghost.recipients.splice(pos, 1)}>
+                        className="chip-label"
+                        deletable
+                        onDeleteClick={() => this.props.ghost.recipients.splice(pos, 1)}>
                         {c}
                     </Chip>)
                 )}
                 <Input placeholder={t('title_enterEmail')}
-                       value={this.query}
-                       onChange={this.handleTextChange}
-                       onKeyDown={this.handleKeyDown}
-                       onBlur={this.validate}
+                    value={this.query}
+                    onChange={this.handleTextChange}
+                    onKeyDown={this.handleKeyDown}
+                    onBlur={this.validate}
                 />
             </div>
         );

@@ -127,7 +127,7 @@ const css = require('classnames');
     }
 
     @action handleChange(val) {
-        this.props.store[this.fName] = this.props.lowercase ? val.toLowerCase() : val;
+        this.props.store[this.fName] = this.props.lowercase ? val.toLocaleLowerCase() : val;
         this.props.store[this.fDirty] = true;
     }
 

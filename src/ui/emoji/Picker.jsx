@@ -131,7 +131,7 @@ class Picker extends React.Component {
         this.props.onBlur();
     };
     render() {
-        const searchLow = this.searchKeyword.toLowerCase();
+        const searchLow = this.searchKeyword.toLocaleLowerCase();
         return (
             <div className="emoji-picker" onBlur={this.handleBlur} onMouseDown={this.preventBlur}>
                 <div className="categories" key="categories">

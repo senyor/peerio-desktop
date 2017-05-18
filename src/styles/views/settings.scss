@@ -41,6 +41,11 @@
     }
   }
 
+  .account-key-toggle {
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+
   .email-row {
     margin-top: $margin-small;
 

@@ -97,29 +97,32 @@ class SecuritySettings extends React.Component {
             { label: t('button_close'), onClick: this.hidePassphraseDialog }
         ];
 
-        if (!User.current.passcodeIsSet) return null;
         return (
             <div>
                 <div className="title">
                     {t('title_AccountKey')}
-                    <Button icon="file_download"
-                        label={t('button_saveAccountKey')}
-                        style={{ marginTop: '32px' }}
-                        onClick={this.save}
-                        primary />
                 </div>
-                <div className="input-with-action">
-                    {this.passphraseVisible ? User.current.passphrase : '**************'}
+                <p>
+                    {t('title_AKDetail')}
+                </p>
+                <div className="account-key-toggle">
+                    {this.passphraseVisible
+                      ? User.current.passphrase
+                      : '**********************************' }
                     <TooltipIconButton icon={this.passphraseVisible ? 'visibility_off' : 'visibility'}
                         tooltip={this.passphraseVisible ?
                             t('title_hideAccountKey') : t('title_showAccountKey')}
                         tooltipPosition="right"
                         tooltipDelay={500}
                         onClick={this.togglePassphraseVisibility} />
+
+                    <Button icon="file_download"
+                        label={t('button_saveAccountKey')}
+                        style={{ marginLeft: '32px' }}
+                        onClick={this.save}
+                        primary />
                 </div>
-                <p>
-                    {t('title_AKDetail')}
-                </p>
+
                 <webview ref={this.wwref} src="./AccountKeyBackup.html"
                     style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />
 

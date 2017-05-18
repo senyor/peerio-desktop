@@ -73,7 +73,7 @@ class SecuritySettings extends React.Component {
                         onClick={this.save}
                         primary />
                 </div>
-                <div className="password">
+                <div className="input-with-action">
                     <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
                         label={t('title_AccountKey')}
                         position="1"

@@ -150,6 +150,27 @@
   color: $text-dark-hint;
 }
 
+// TODO: review password class in rt-light-theme.scss
+.input-with-action {
+  margin-top: 40px;
+  position: relative;
+
+  .rt-button-button {
+    color: $icon-dark-active;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+
+    .rt-button-icon {
+      color: $icon-dark-active;
+    }
+  }
+
+  .rt-input-inputElement {
+    padding-right: 40px;
+  }
+}
+
 .rt-dropdown-value {
   align-items: center;
   display: flex;

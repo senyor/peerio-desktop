@@ -612,9 +612,8 @@ $suggests-max-height: 200px;
   }
 
   .avatar-group-chat {
-    background-color: $color-dark-54;
     border-radius: 40px;
-    color: $text-light-primary;
+    color: $text-dark-secondary;
     height: 32px;
     line-height: 32px;
     text-align: center;
@@ -688,6 +687,7 @@ $suggests-max-height: 200px;
       color: $text-light-secondary;
     }
 
+    .avatar-group-chat,
     .rt-list-primary {
       color: $text-light-primary;
       font-weight: $font-weight-bold;

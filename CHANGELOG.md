@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.14.0"></a>
+# [2.14.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.13.0...v2.14.0) (2017-05-18)
+
+
+### Bug Fixes
+
+* **core:** toLocaleLowerCase where applicable ([bb7d835](https://github.com/PeerioTechnologies/peerio-desktop/commit/bb7d835))
+
+
+### Features
+
+* **security:** key preview and backup from settings ([9775d87](https://github.com/PeerioTechnologies/peerio-desktop/commit/9775d87))
+* **userpicker:** smart search in user picker ([78d0642](https://github.com/PeerioTechnologies/peerio-desktop/commit/78d0642))
+* support for desktop notifs + preference reorganization ([#26](https://github.com/PeerioTechnologies/peerio-desktop/issues/26)) ([8a1cb0c](https://github.com/PeerioTechnologies/peerio-desktop/commit/8a1cb0c))
+
+
+
 <a name="2.13.0"></a>
 # [2.13.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.12.1...v2.13.0) (2017-05-17)
 

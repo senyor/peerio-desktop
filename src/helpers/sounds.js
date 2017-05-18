@@ -17,7 +17,6 @@ class Sound {
     }
 
     play() {
-        if (!uiStore.soundsEnabled) return;
         return this.node.play(); //eslint-disable-line
     }
 

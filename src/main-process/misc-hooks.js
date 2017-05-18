@@ -1,4 +1,4 @@
-const { shell } = require('electron');
+const { shell, ipcMain, app } = require('electron');
 const L = require('l.js');
 const { isUrlAllowed } = require('../helpers/url');
 const certData = require('../cert_fingerprints');

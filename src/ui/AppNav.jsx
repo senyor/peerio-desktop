@@ -5,37 +5,60 @@ const { IconButton, IconMenu, MenuItem, MenuDivider, Tooltip, TooltipIconButton 
 const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
-const app = require('electron').remote.app;
-const sounds = require('~/helpers/sounds');
+const remote = require('electron').remote;
+const { ipcRenderer } = require('electron');
+const notificationFactory = require('~/helpers/notifications');
 const appControl = require('~/helpers/app-control');
 const AppNavButton = require('./AppNavButton');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
 const urls = require('~/config').translator.urlMap;
 const autologin = require('~/helpers/autologin');
+const path = require('path');
+
+const { app, nativeImage } = remote;
+
 
 // todo: move this somewhere more appropriate
 let dockNotifsStarted = false;
 function startDockNotifications() {
-    if (dockNotifsStarted || (!app.setBadgeCount && !app.dock && !app.dock.bounce)) return;
+    // if (dockNotifsStarted || (!app.setBadgeCount && !app.dock && !app.dock.bounce)) return;
+    if (dockNotifsStarted) return;
     dockNotifsStarted = true;
     autorunAsync(() => {
         const unreadItems = chatStore.unreadMessages + fileStore.unreadFiles;
-        if (app.setBadgeCount) app.setBadgeCount(unreadItems);
-        if (app.dock && app.dock.bounce && chatStore.unreadMessages > 0) {
-            app.dock.bounce();
+        // mac
+        if (app.setBadgeCount && app.dock && app.dock.bounce) {
+            if (app.setBadgeCount) app.setBadgeCount(unreadItems);
+            if (unreadItems > 0) {
+                app.dock.bounce();
+            }
         }
     }, 250);
 }
 
-// todo: move this somewhere more appropriate
-let soundNotificationsStarted = false;
-function startSoundNotifications() {
-    if (soundNotificationsStarted) return;
-    soundNotificationsStarted = true;
-    chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
-        sounds.received.play();
-    });
+let taskbarOverlayStarted = false;
+function startTaskbarOverlay() {
+    // if (dockNotifsStarted || (!app.setBadgeCount && !app.dock && !app.dock.bounce)) return;
+    if (taskbarOverlayStarted) return;
+    taskbarOverlayStarted = true;
+    autorunAsync(() => {
+        const unreadItems = chatStore.unreadMessages + fileStore.unreadFiles;
+        // windows
+        if (typeof remote.getCurrentWindow().setOverlayIcon === 'function') {
+            const overlay = nativeImage.createFromPath(
+                path.join(app.getAppPath(), 'build/static/img/taskbar-overlay.png')
+            );
+            remote.getCurrentWindow().setOverlayIcon(unreadItems ? overlay : null, unreadItems ? 'newmessages' : '');
+        }
+    }, 250);
+}
+
+let desktopNotificationsStarted = false;
+function startDesktopNotifications() {
+    if (desktopNotificationsStarted) return;
+    desktopNotificationsStarted = true;
+    chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, notificationFactory.send);
 }
 
 // todo: Paul, move this to stylesheets
@@ -47,7 +70,8 @@ class AppNav extends React.Component {
     componentWillMount() {
         // since this component shows new items notifications, we also make it show dock icon notifications
         startDockNotifications();
-        startSoundNotifications();
+        startDesktopNotifications();
+        startTaskbarOverlay();
     }
 
     toMail() {
@@ -72,6 +96,10 @@ class AppNav extends React.Component {
 
     toPrefs() {
         window.router.push(routerStore.ROUTES.prefs);
+    }
+
+    toAccount() {
+        window.router.push(routerStore.ROUTES.account);
     }
 
     toAbout() {
@@ -103,6 +131,8 @@ class AppNav extends React.Component {
                             onClick={this.toSecurity} style={menuItemStyle} />
                         <MenuItem value="preferences" icon="settings" caption={t('title_settingsPreferences')}
                             onClick={this.toPrefs} style={menuItemStyle} />
+                        <MenuItem value="account" icon="account_circle" caption={t('title_settingsAccount')}
+                            onClick={this.toAccount} style={menuItemStyle} />
                         <MenuItem value="about" icon="info" caption="About"
                             onClick={this.toAbout} style={menuItemStyle} />
                         {/* <MenuDivider />
@@ -126,7 +156,6 @@ class AppNav extends React.Component {
                         active={routerStore.currentRoute === routerStore.ROUTES.files}
                         showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
                         onClick={this.toFiles} />
-
                     <div className="usage">
                         <TooltipIconButton style={{
                             position: 'absolute',

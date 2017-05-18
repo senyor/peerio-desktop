@@ -12,7 +12,7 @@ const { t } = require('peerio-translator');
 const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
 const { isUrlAllowed } = require('~/helpers/url');
 const urls = require('~/config').translator.urlMap;
-const { User, systemMessages } = require('~/icebear');
+const { User, systemMessages, contactStore } = require('~/icebear');
 const { getHeaders } = require('~/helpers/http');
 const uiStore = require('~/stores/ui-store');
 const htmlEncoder = require('html-entities').AllHtmlEntities;
@@ -44,7 +44,6 @@ const autolinker = new Autolinker({
             return true;
         }
 
-
         return false;
     },
     email: true,
@@ -58,10 +57,11 @@ const autolinker = new Autolinker({
     stripTrailingSlash: false
 });
 
-let ownUsernameRegex;
 function highlightMentions(str) {
-    if (!ownUsernameRegex) ownUsernameRegex = new RegExp(`@${User.current.username}`, 'gi');
-    return str.replace(ownUsernameRegex, '<span class="mention self">$&</span>');
+    return str.replace(
+        contactStore.getContact(User.current.username).mentionRegex,
+        '<span class="mention self">$&</span>'
+    );
 }
 // HACK: make this as a proper react component
 window.openContact = function(username) {

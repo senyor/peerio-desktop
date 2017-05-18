@@ -4,16 +4,33 @@ const { TinyDb, Clock } = require('~/icebear');
 
 class UIStore {
     @observable contactDialogUsername;
-    @observable soundsEnabled = true;
     minuteClock = new Clock(60);
+
+    // stored with 'pref_' prefix in tinydb
+    @observable prefs = {
+        messageSoundsEnabled: false,
+        mentionSoundsEnabled: false,
+        errorSoundsEnabled: false,
+        messageDesktopNotificationsEnabled: false,
+        mentionDesktopNotificationsEnabled: false
+    };
 
     // key: chat id, value: text
     unsentMessages = {};
 
-    async init() {
-        this.soundsEnabled = !!await TinyDb.user.getValue('pref_soundsEnabled');
-        reaction(() => this.soundsEnabled, () => {
-            TinyDb.user.setValue('pref_soundsEnabled', this.soundsEnabled);
+    init() {
+        console.log('here', this.prefs)
+        Object.keys(this.prefs).forEach((key) => {
+            console.log('loading', key)
+
+            const prefKey = `pref_${key}`;
+            TinyDb.user.getValue(prefKey)
+            .then((loadedValue) => {
+                this.prefs[key] = !!loadedValue;
+                reaction(() => this.prefs[key], () => {
+                    TinyDb.user.setValue(prefKey, this.prefs[key]);
+                });
+            });
         });
     }
 }

@@ -1,11 +1,13 @@
 const React = require('react');
-const { observable } = require('mobx');
+const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
 const urls = require('~/config').translator.urlMap;
+const L = require('l.js');
+const { contactStore, chatStore } = require('~/icebear');
 
 @observer
 class About extends React.Component {
@@ -19,6 +21,13 @@ class About extends React.Component {
         this.termsDialogOpen = true;
     };
 
+    // feedback = () => {
+    //     const support = contactStore.getContact('erenbear');
+    //     when(() => !support.loading, () => {
+    //         chatStore.startChat([support]);
+    //         window.router.push('/app');
+    //     });
+    // }
 
     render() {
         const termsDialogActions = [
@@ -44,6 +53,7 @@ class About extends React.Component {
                         <Button href={urls.helpCenter} label={t('button_HC')} flat primary />
                         <Button href={urls.contactSupport} label={t('button_contact')} flat primary />
                         <Button href={`mailto:support@peerio.com?subject=Logs&body=${L.writers.cache.print()}`} label={t('button_emailLogs')} flat primary />
+                        { /* <Button onClick={this.feedback} flat primary label={t('button_feedback')} /> */ }
                     </div>
                 </section>
                 <section>

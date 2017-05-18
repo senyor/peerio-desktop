@@ -1,4 +1,5 @@
 const React = require('react');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
@@ -7,25 +8,42 @@ const uiStore = require('~/stores/ui-store');
 
 @observer
 class Preferences extends React.Component {
-    onMsgNotifChanged(value) {
+    @observable mentionSoundsSwitchDisabled = false;
+    @observable mentionDesktopNotificationsSwitchDisabled = false;
+
+    onMsgNotifChanged = (value) => {
         User.current.settings.messageNotifications = value;
         User.current.saveSettings();
     }
-    onSoundsChanged(value) {
-        uiStore.soundsEnabled = value;
+
+    onErrorSoundsChanged = (value) => {
+        uiStore.prefs.errorSoundsEnabled = value;
     }
-    onUnreadChatSorting(value) {
+
+    onMentionSoundsChanged = (value) => {
+        if (value === false) uiStore.prefs.messageSoundsEnabled = false;
+        uiStore.prefs.mentionSoundsEnabled = value;
+    }
+
+    onMessageSoundsChanged = (value) => {
+        if (value === true) uiStore.prefs.mentionSoundsEnabled = false;
+        this.mentionSoundsSwitchDisabled = value;
+        uiStore.prefs.messageSoundsEnabled = value;
+    }
+
+    onMentionDesktopNotificationsChanged = (value) => {
+        if (value === false) uiStore.prefs.messageDesktopNotificationsEnabled = false;
+        uiStore.prefs.mentionDesktopNotificationsEnabled = value;
+    }
+
+    onMessageDesktopNotificationsChanged = (value) => {
+        if (value === true) uiStore.prefs.mentionDesktopNotificationsEnabled = false;
+        this.mentionDesktopNotificationsSwitchDisabled = value;
+        uiStore.prefs.messageDesktopNotificationsEnabled = value;
+    }
+
+    onUnreadChatSorting = (value) => {
         chatStore.unreadChatsAlwaysOnTop = value;
-        User.current.saveSettings();
-    }
-
-    onErrorTrackingChanged(value) {
-        User.current.settings.errorTracking = value;
-        User.current.saveSettings();
-    }
-
-    onDataCollectionChanged(value) {
-        User.current.settings.dataCollection = value;
         User.current.saveSettings();
     }
 
@@ -33,42 +51,49 @@ class Preferences extends React.Component {
         return (
             <div>
                 <section className="section-divider">
-                    <div className="title">{t('title_notifications')}</div>
+                    <div className="title">{t('title_emailNotifications')}</div>
                     <p>
-                        {t('title_notificationsDetail')}
+                        {t('title_emailsDetail')}
                     </p>
                     <Switch checked={User.current.settings.messageNotifications}
-                        label={t('title_notificationsMessage')}
+                        label={t('title_notificationsEmailMessage')}
                         onChange={this.onMsgNotifChanged} />
-                    <Switch checked={uiStore.soundsEnabled}
-                        label={t('title_notificationsMessage')}
-                        onChange={this.onSoundsChanged} />
-                    <Switch checked={User.current.settings.subscribeToPromoEmails}
-                        label={t('title_promoConsent')}
-                        onChange={this.onPromoSubscriptionChanged} />
+                </section>
+                <section className="section-divider">
+                    <div className="title">{t('title_soundNotifications')}</div>
+                    <p>
+                        {t('title_soundsDetail')}
+                    </p>
+                    <Switch checked={uiStore.prefs.messageSoundsEnabled}
+                        label={t('title_soundsMessage')}
+                        onChange={this.onMessageSoundsChanged} />
+                    <Switch checked={uiStore.prefs.mentionSoundsEnabled}
+                        disabled={this.mentionSoundsSwitchDisabled}
+                        label={t('title_soundsMention')}
+                        onChange={this.onMentionSoundsChanged} />
+                    <Switch checked={uiStore.prefs.errorSoundsEnabled}
+                        label={t('title_soundsError')}
+                        onChange={this.onErrorSoundsChanged} />
+                </section>
+                <section className="section-divider">
+                    <div className="title">{t('title_desktopNotifications')}</div>
+                    <p>
+                        {t('title_desktopNotificationsDetail')}
+                    </p>
+                    <Switch checked={uiStore.prefs.messageDesktopNotificationsEnabled}
+                        label={t('title_messageDesktopNotificationsMessage')}
+                        onChange={this.onMessageDesktopNotificationsChanged} />
+                    <Switch checked={uiStore.prefs.mentionDesktopNotificationsEnabled}
+                        label={t('title_mentionDesktopNotificationsMessage')}
+                        disabled={this.mentionDesktopNotificationsSwitchDisabled}
+                        onChange={this.onMentionDesktopNotificationsChanged} />
                 </section>
                 <section className="section-divider">
                     <div className="title">{t('title_displayPreferences')}</div>
-                    <p>
-                        {t('title_unreadChatsOnTopDetail')}
-                    </p>
                     <Switch checked={chatStore.unreadChatsAlwaysOnTop}
                         label={t('title_unreadChatsOnTopDetail')}
                         onChange={this.onUnreadChatSorting} />
                 </section>
-                <section className="section-divider">
-                    <div className="title">{t('title_dataPreferences')}</div>
-                    <p>
-                        {t('title_dataDetail')}
-                    </p>
-                    <Switch checked={uiStore.errorTrackingEnabled}
-                        label={t('title_errorTrackingMessage')}
-                        onChange={this.onErrorTrackingChanged} />
-                    <Switch checked={uiStore.dataCollectionEnabled}
-                        label={t('title_dataCollectionMessage')}
-                        onChange={this.onDataCollectionChanged} />
-                </section>
-
             </div>
         );
     }

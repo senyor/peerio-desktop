@@ -8,6 +8,7 @@ const MessageList = require('./components/MessageList');
 const NoChatSelected = require('./components/NoChatSelected');
 const { chatStore, TinyDb, clientApp } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
+const uiStore = require('~/stores/ui-store');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
 const css = require('classnames');
@@ -31,30 +32,33 @@ class Chat extends React.Component {
             }, { delay: 1000 });
         }
     }
+
     componentWillUnmount() {
         clientApp.isInChatsView = false;
     }
 
-
     sendMessage(m) {
         chatStore.activeChat.sendMessage(m)
-            .catch(() => sounds.destroy.play());
+            .catch(() => this.playErrorSound());
     }
 
     sendAck() {
         chatStore.activeChat.sendAck()
-            .catch(() => sounds.destroy.play());
+            .catch(() => this.playErrorSound());
     }
 
     shareFiles = (files) => {
         chatStore.activeChat.shareFiles(files)
-            .catch(() => sounds.destroy.play());
+            .catch(() => this.playErrorSound());
     };
+
+    playErrorSound = () => {
+        if (uiStore.prefs.errorSoundsEnabled) sounds.destroy.play();
+    }
 
     toggleSidebar = () => {
         Chat.sidebarOpen = !Chat.sidebarOpen;
     };
-
 
     showChatNameEditor = () => {
         this.chatNameEditorVisible = true;

@@ -9,7 +9,7 @@ const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const FilePicker = require('~/ui/files/components/FilePicker');
 const { t } = require('peerio-translator');
 const htmlDecoder = require('html-entities').AllHtmlEntities;
-const { chatStore } = require('~/icebear');
+const { chatStore, contactStore } = require('~/icebear');
 
 // todo: this file is messy as hell, refactor it
 
@@ -220,17 +220,9 @@ class ComposeInput extends React.Component {
                     this.suggests = null;
                     return;
                 }
-                token = token.toLowerCase();
+                token = token.toLocaleLowerCase();
                 this.currentSuggestToken = token;
-                this.suggests = chatStore.activeChat.participants
-                    .filter((c) => c.username.includes(token) || c.fullNameLower.includes(token))
-                    .sort((c1, c2) => {
-                        if (c1.username.startsWith(token)) return -1;
-                        if (c2.username.startsWith(token)) return 1;
-                        if (c1.fullNameLower.startsWith(token)) return -1;
-                        if (c2.fullNameLower.startsWith(token)) return 1;
-                        return 0;
-                    });
+                this.suggests = contactStore.filter(token, chatStore.activeChat.participants);
                 this.selectedSuggestIndex = this.suggests.length ? 0 : -1;
                 // console.log(delta, oldDelta);
                 //                this.tryShowEmojiSuggestions();

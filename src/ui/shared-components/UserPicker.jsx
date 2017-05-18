@@ -16,12 +16,7 @@ class UserPicker extends React.Component {
     accepted = false;
 
     @computed get options() {
-        return contactStore.contacts.filter(c =>
-            !c.loading &&
-            !c.notFound &&
-            !this.selected.includes(c) &&
-            c.username !== User.current.username
-            && c.username.startsWith(this.query));
+        return contactStore.filter(this.query);
     }
 
     @computed get isValid() {
@@ -29,7 +24,7 @@ class UserPicker extends React.Component {
     }
 
     handleTextChange = newVal => {
-        const newValLower = newVal.toLowerCase();
+        const newValLower = newVal.toLocaleLowerCase();
         if (newValLower.length > 1 && ', '.includes(newValLower[newValLower.length - 1])) {
             this.query = newValLower.substr(0, newValLower.length - 1).trim();
             this.tryAcceptUsername();

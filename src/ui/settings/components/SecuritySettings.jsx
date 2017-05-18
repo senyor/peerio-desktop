@@ -1,14 +1,16 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog, Switch } = require('~/react-toolbox');
-const { User } = require('~/icebear');
+const { Button, Switch, TooltipIconButton } = require('~/react-toolbox');
+const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
+const { User, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
 const T = require('~/ui/shared-components/T');
 const cfg = require('~/config.js');
 const autologin = require('~/helpers/autologin');
 
+const { validators } = validation; // use common validation from core
 
 @observer
 class SecuritySettings extends React.Component {
@@ -65,12 +67,26 @@ class SecuritySettings extends React.Component {
             <div>
                 <div className="title">
                     {t('title_AccountKey')}
-                    <Button label={t('button_showAK')} onClick={this.showPassphraseDialog} primary />
                     <Button icon="file_download"
                         label={t('button_saveAccountKey')}
                         style={{ marginTop: '32px' }}
                         onClick={this.save}
                         primary />
+                </div>
+                <div className="password">
+                    <ValidatedInput type={this.loginStore.passwordVisible ? 'text' : 'password'}
+                        label={t('title_AccountKey')}
+                        position="1"
+                        store={this.loginStore}
+                        validator={validators.stringExists}
+                        name="passcodeOrPassphrase"
+                        onKeyPress={this.handleKeyPress} />
+                    <TooltipIconButton icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
+                        tooltip={this.loginStore.passwordVisible ?
+                            t('title_hideAccountKey') : t('title_showAccountKey')}
+                        tooltipPosition="right"
+                        tooltipDelay={500}
+                        onClick={this.togglePasswordVisibility} />
                 </div>
                 <p>
                     {t('title_AKDetail')}
@@ -78,7 +94,7 @@ class SecuritySettings extends React.Component {
                 <webview ref={this.wwref} src="../../AccountKeyBackup.html"
                     style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />
 
-                <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}
+                {/* <Dialog active={this.passphraseDialogOpen} actions={passphraseDialogActions}
                     className="no-select" title={this.unlocked ? t('title_AccountKey') : t('title_enterPassword')}
                     onOverlayClick={this.hidePassphraseDialog} onEscKeyDown={this.hidePassphraseDialog}>
                     {this.unlocked ?
@@ -90,7 +106,7 @@ class SecuritySettings extends React.Component {
                         </div>
                         : <PasscodeLock onUnlocked={this.unlock} />}
 
-                </Dialog>
+                </Dialog> */}
             </div>
         );
     }

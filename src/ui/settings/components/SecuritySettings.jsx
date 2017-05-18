@@ -107,8 +107,10 @@ class SecuritySettings extends React.Component {
                 </p>
                 <div className="account-key-toggle">
                     {this.passphraseVisible
-                      ? User.current.passphrase
-                      : '**********************************' }
+                        ? User.current.passphrase
+                        : <span style={{ fontSize: '300%', lineHeight: '90%' }}>
+                            &middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;
+                        </span>}
                     <TooltipIconButton icon={this.passphraseVisible ? 'visibility_off' : 'visibility'}
                         tooltip={this.passphraseVisible ?
                             t('title_hideAccountKey') : t('title_showAccountKey')}
@@ -139,7 +141,7 @@ class SecuritySettings extends React.Component {
                         : <PasscodeLock onUnlocked={this.unlock} />}
 
                 </Dialog> */}
-            </div>
+            </div >
         );
     }
 

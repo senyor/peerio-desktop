@@ -19,9 +19,9 @@ class UIStore {
     unsentMessages = {};
 
     init() {
-        console.log('here', this.prefs)
+        console.log('here', this.prefs);
         Object.keys(this.prefs).forEach((key) => {
-            console.log('loading', key)
+            console.log('loading', key);
 
             const prefKey = `pref_${key}`;
             TinyDb.user.getValue(prefKey)

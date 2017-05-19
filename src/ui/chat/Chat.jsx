@@ -39,20 +39,20 @@ class Chat extends React.Component {
 
     sendMessage(m) {
         chatStore.activeChat.sendMessage(m)
-            .catch(() => this.playErrorSound());
+            .catch(() => Chat.playErrorSound());
     }
 
     sendAck() {
         chatStore.activeChat.sendAck()
-            .catch(() => this.playErrorSound());
+            .catch(() => Chat.playErrorSound());
     }
 
     shareFiles = (files) => {
         chatStore.activeChat.shareFiles(files)
-            .catch(() => this.playErrorSound());
+            .catch(() => Chat.playErrorSound());
     };
 
-    playErrorSound = () => {
+    static playErrorSound() {
         if (uiStore.prefs.errorSoundsEnabled) sounds.destroy.play();
     }
 

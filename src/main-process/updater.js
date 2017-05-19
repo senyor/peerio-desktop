@@ -16,7 +16,7 @@ function sendStatusToWindow(text) {
 function start(mainWindow) {
     try {
         window = mainWindow;
-        autoUpdater.setFeedURL('https://betaupdate.peerio.com');
+        autoUpdater.setFeedURL('https://privaterelease.peerio.com');
         ipcMain.on('install-update', () => {
             L.info('Client approved update installation.');
             autoUpdater.quitAndInstall();

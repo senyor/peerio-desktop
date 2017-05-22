@@ -13,6 +13,11 @@
     position: relative;
     width: $chat-list-width;
 
+    .active {
+      background: $color-dark-12;
+      font-weight: $font-weight-bold;
+    }
+
     .rt-list-list {
       padding-top: 0;
 

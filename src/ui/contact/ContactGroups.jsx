@@ -18,7 +18,7 @@ class ContactGroups extends React.Component {
                     <div>{t('title_inviteAContact')}</div>
                 </div>
                 <List selectable ripple>
-                    <ListItem caption="Your contacts (34)" />
+                    <ListItem caption="Your contacts (34)" className="active" />
                     <ListItem caption="Invited contacts (3)" />
                     <ListDivider />
                     <ListItem caption="All contacts (56)" />

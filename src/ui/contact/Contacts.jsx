@@ -10,6 +10,8 @@ const { t } = require('peerio-translator');
 @observer
 class Contacts extends React.Component {
     @observable query = '';
+    @observable yourContact = true;
+    @observable invitedContact = false;
     @computed get options() {
         return contactStore.filter(this.query);
     }
@@ -17,7 +19,9 @@ class Contacts extends React.Component {
     contactActions() {
         return (<div>
             <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} />
-            <TooltipIconButton icon="delete" tooltip={t('button_delete')} />
+            { this.yourContact
+                    ? <TooltipIconButton icon="delete" tooltip={t('button_delete')} />
+                    : <TooltipIconButton icon="person_add" tooltip={t('button_addToYourContacts')} /> }
         </div>
         );
     }
@@ -48,7 +52,9 @@ class Contacts extends React.Component {
                                         caption={c.username}
                                         legend={`${c.firstName} ${c.lastName}`}
                                         rightIcon={
-                                          this.contactActions()
+                                          this.invitedContact
+                                            ? <TooltipIconButton icon="email" tooltip={t('button_resendInvite')} />
+                                            : this.contactActions()
                                         } />)
                                 )}
                             </List>

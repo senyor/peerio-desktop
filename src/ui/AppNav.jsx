@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconButton, IconMenu, MenuItem, MenuDivider, Tooltip, TooltipIconButton } = require('~/react-toolbox');
+const { IconMenu, MenuItem, MenuDivider, TooltipIconButton } = require('~/react-toolbox');
 const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
@@ -86,6 +86,10 @@ class AppNav extends React.Component {
         window.router.push(routerStore.ROUTES.files);
     }
 
+    toContacts() {
+        window.router.push(routerStore.ROUTES.contacts);
+    }
+
     toProfile() {
         window.router.push(routerStore.ROUTES.profile);
     }
@@ -145,8 +149,6 @@ class AppNav extends React.Component {
                     <Avatar contact={contact} />
                 </div>
                 <div className="app-menu">
-
-
                     <AppNavButton tooltip={t('title_chats')} icon="forum"
                         active={routerStore.currentRoute === routerStore.ROUTES.chat}
                         showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
@@ -156,6 +158,11 @@ class AppNav extends React.Component {
                         active={routerStore.currentRoute === routerStore.ROUTES.files}
                         showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
                         onClick={this.toFiles} />
+
+                    <AppNavButton tooltip={t('title_contacts')} icon="people"
+                        active={routerStore.currentRoute === routerStore.ROUTES.contacts}
+                        onClick={this.toContacts} />
+
                     <div className="usage">
                         <TooltipIconButton style={{
                             position: 'absolute',

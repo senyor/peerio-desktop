@@ -30,7 +30,7 @@
   "button_changeUserMobile": "Change User",
   "button_useAccountKey": "Use Account Key",
   "title_showAccountKey": "Show Account Key",
-  "title_hideAccountKey": "Hide AccountKey",
+  "title_hideAccountKey": "Hide Account Key",
   "title_autloginSetFail": "Unable to enable autologin, you will need your Account Key to sign in.",
   "title_autologinDisableFail":"Unable to disable autologin, you will be logged in automatically when Peerio Messenger starts.",
   "title_enableAutomatic": "Enable Automatic Sign-in?",

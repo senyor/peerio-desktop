@@ -3,7 +3,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { User, chatStore } = require('~/icebear');
+const { User } = require('~/icebear');
 const uiStore = require('~/stores/ui-store');
 
 @observer
@@ -15,6 +15,7 @@ class Account extends React.Component {
     }
 
     onErrorTrackingChanged = (value) => {
+
         User.current.settings.errorTracking = value;
         User.current.saveSettings();
     }
@@ -38,10 +39,10 @@ class Account extends React.Component {
                     <p>
                         {t('title_dataDetail')}
                     </p>
-                    <Switch checked={uiStore.errorTrackingEnabled}
+                    <Switch checked={User.current.settings.errorTracking}
                         label={t('title_errorTrackingMessage')}
                         onChange={this.onErrorTrackingChanged} />
-                    <Switch checked={uiStore.dataCollectionEnabled}
+                    <Switch checked={User.current.settings.dataCollection}
                         label={t('title_dataCollectionMessage')}
                         onChange={this.onDataCollectionChanged} />
                 </section>

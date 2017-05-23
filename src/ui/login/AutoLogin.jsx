@@ -4,6 +4,7 @@ const { TinyDb } = require('~/icebear');
 const { observer } = require('mobx-react');
 const autologin = require('~/helpers/autologin');
 const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T');
 
 @observer class AutoLogin extends React.Component {
     enable() {
@@ -26,13 +27,13 @@ const { t } = require('peerio-translator');
                         <div className="option">
                             <Button label={t('button_enable')} value="enable" className="button-gradient" onClick={this.enable} />
                             <p>
-                                {t('title_enableAutomatic1')}
+                                <T k="title_enableAutomatic1" />
                             </p>
                         </div>
                         <div className="option">
                             <Button label={t('button_disable')} value="disable" onClick={this.disable} />
                             <p>
-                                {t('title_enableAutomatic2')}
+                                <T k="title_enableAutomatic2" />
                             </p>
                         </div>
                     </div>

@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.14.3"></a>
+## [2.14.3](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.14.2...v2.14.3) (2017-05-23)
+
+
+### Bug Fixes
+
+* react key warning on autologin page ([efdc7d1](https://github.com/PeerioTechnologies/peerio-desktop/commit/efdc7d1))
+
+
+
 <a name="2.14.2"></a>
 ## [2.14.2](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.14.1...v2.14.2) (2017-05-23)
 

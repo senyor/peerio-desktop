@@ -3,10 +3,11 @@
   @extend %flex-align-center;
   background: $background-root;
   height: 100vh;
-  padding: 0 5vw;
+  padding: 0 24px;
   width: 100vw;
 
-  @media (max-width: #{$minimum-screen-width}) {
+  // 36px added to ensure that the file actions button never over flows.
+  @media (max-width: #{$minimum-screen-width + 36}) {
     padding: 0;
 
     // hides size column at minimum-screen-width
@@ -135,20 +136,12 @@
       th,
       td {
         border-bottom: 1px solid $divider-dark;
+        padding-right: 24px;
         white-space: nowrap;
 
         &:first-of-type {
           padding: 0 24px;
           width: 18px;
-        }
-
-        &:last-of-type,
-        &:nth-of-type(2) {
-          padding-right: 24px;
-        }
-
-        &:not(:first-of-type):not(:last-of-type):not(:nth-of-type(2)) {
-          padding-right: 56px;
         }
       }
 

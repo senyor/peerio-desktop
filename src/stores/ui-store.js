@@ -8,10 +8,10 @@ class UIStore {
 
     // stored with 'pref_' prefix in tinydb
     @observable prefs = {
-        messageSoundsEnabled: false,
+        messageSoundsEnabled: true,
         mentionSoundsEnabled: false,
-        errorSoundsEnabled: false,
-        messageDesktopNotificationsEnabled: false,
+        errorSoundsEnabled: true,
+        messageDesktopNotificationsEnabled: true,
         mentionDesktopNotificationsEnabled: false
     };
 

@@ -2,7 +2,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const RTAvatar = require('~/react-toolbox').Avatar;
-const { ProgressBar } = require('~/react-toolbox');
+const { ProgressBar, TooltipIconButton } = require('~/react-toolbox');
 const cfg = require('~/config.js');
 const { contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
@@ -46,12 +46,29 @@ class ContactProfile extends React.Component {
                     </div>
                     : null}
                 <div className="row flex-row flex-align-center">
-                    {/* TODO: use our Avatar component instead, and strip it of mouse events */}
-                    <RTAvatar style={{ backgroundColor: c.color }} >{c.letter}</RTAvatar>
-                    <div style={{ marginLeft: '8px' }} className="flex-col">
-                        <div className="title">{c.username}</div>
-                        <div >{c.firstName} {c.lastName}</div>
+                    <div className="flex-row flex-align-center flex-grow-1">
+                        {/* TODO: use our Avatar component instead, and strip it of mouse events */}
+                        <RTAvatar style={{ backgroundColor: c.color }} >{c.letter}</RTAvatar>
+                        <div style={{ marginLeft: '8px' }} className="flex-col">
+                            <div className="title">{c.username}</div>
+                            <div >{c.firstName} {c.lastName}</div>
+                        </div>
                     </div>
+                    <div className="profile-actions">
+                        <TooltipIconButton
+                            tooltip={t('title_haveAChat')}
+                            tooltipDelay={500}
+                            icon="forum" />
+                        {/* TODO:
+                            button should be for adding and removing contact once
+                            contacts are implemented.
+                        */}
+                        {/* <TooltipIconButton
+                            tooltip={t('title_removeContact')}
+                            tooltipDelay={500}
+                            icon="delete" /> */}
+                    </div>
+
                 </div>
                 <div className="row">
                     <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>

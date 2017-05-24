@@ -19,7 +19,8 @@
                 "useBuiltIns": true
             }
         ],
-        "transform-react-jsx"
+        "transform-react-jsx",
+        "console-kungfu"
     ],
     "env": {
         "production": {

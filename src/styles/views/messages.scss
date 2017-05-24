@@ -366,11 +366,11 @@ $suggests-max-height: 200px;
       .meta-data {
         @extend %flex-row;
         align-items: center;
-        color: $text-dark-secondary;
         margin-bottom: $margin-tiny;
 
         .timestamp {
           @extend %hint-error-label;
+          color: $text-dark-secondary;
         }
 
         .user {
@@ -379,6 +379,7 @@ $suggests-max-height: 200px;
 
           .username {
             font-weight: $font-weight-regular;
+            font-style: italic;
           }
         }
       }

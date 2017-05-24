@@ -15,7 +15,6 @@ class Account extends React.Component {
     }
 
     onErrorTrackingChanged = (value) => {
-
         User.current.settings.errorTracking = value;
         User.current.saveSettings();
     }

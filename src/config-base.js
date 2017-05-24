@@ -12,6 +12,12 @@ module.exports = {
     socketServerUrl: 'wss://icebear.peerio.com',
     ghostFrontendUrl: 'https://mail.peerio.com',
 
+    contacts: {
+        supportUser: 'support',
+        supportEmail: 'support@peerio.com',
+        feedbackUser: 'feedback'
+    },
+
     translator: {
         stringReplacements: [],
         urlMap: {

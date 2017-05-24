@@ -1,13 +1,15 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog } = require('~/react-toolbox');
+const { Button, Dialog, FontIcon, IconButton, TooltipIconButton } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
+const T = require('../../shared-components/T');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
 const urls = require('~/config').translator.urlMap;
 const L = require('l.js');
 const { contactStore, chatStore } = require('~/icebear');
+const config = require('../../../config');
 
 @observer
 class About extends React.Component {
@@ -21,13 +23,32 @@ class About extends React.Component {
         this.termsDialogOpen = true;
     };
 
-    // feedback = () => {
-    //     const support = contactStore.getContact('erenbear');
-    //     when(() => !support.loading, () => {
-    //         chatStore.startChat([support]);
-    //         window.router.push('/app');
-    //     });
-    // }
+    feedback = () => {
+        console.log('feedback', config.contacts.feedbackUser);
+        const feedback = contactStore.getContact(config.contacts.feedbackUser);
+        when(() => !feedback.loading, () => {
+            chatStore.startChat([feedback]);
+            window.router.push('/app');
+        });
+    }
+
+    support = () => {
+        const support = contactStore.getContact(config.contacts.supportUser);
+        when(() => !support.loading, () => {
+            chatStore.startChat([support]);
+            window.router.push('/app');
+        });
+    }
+
+    copyLogs = () => {
+        const range = document.createRange();
+        const selection = document.getSelection();
+        selection.removeAllRanges();
+        range.selectNode(this.logs);
+        selection.addRange(range);
+        document.execCommand('copy');
+        selection.removeAllRanges();
+    };
 
     render() {
         const termsDialogActions = [
@@ -45,15 +66,24 @@ class About extends React.Component {
 
                 <section>
                     <div className="title">{t('title_help')}</div>
-                    <p>
-                        {t('title_helpText')}
-                        {/* Other users can find you... */}
-                    </p>
                     <div className="flex-row">
-                        <Button href={urls.helpCenter} label={t('button_HC')} flat primary />
-                        <Button href={urls.contactSupport} label={t('button_contact')} flat primary />
-                        <Button href={`mailto:support@peerio.com?subject=Logs&body=${L.writers.cache.print()}`} label={t('button_emailLogs')} flat primary />
-                        { /* <Button onClick={this.feedback} flat primary label={t('button_feedback')} /> */ }
+                        <T k="title_helpText" />
+                        <TooltipIconButton icon="live_help" href={urls.helpCenter} tooltip={t('button_HC')} flat primary />
+                    </div>
+                    <div className="flex-row">
+                        <T k="title_supportIntro" />
+                        <TooltipIconButton icon="chat" onClick={this.support} flat primary tooltip={t('button_supportChat')} />
+                        <TooltipIconButton icon="email" href={urls.contactSupport} tooltip={t('button_supportEmail')} primary />
+                    </div>
+                    <div className="flex-row">
+                        <T k="title_logsIntro" />
+                        <TooltipIconButton icon="content_copy" onClick={this.copyLogs} tooltip={t('button_copyLogs')} primary />
+                        <TooltipIconButton icon="email" href={`mailto:${config.supportEmail}?subject=Logs&body=${L.writers.cache.print()}`} tooltip={t('button_emailLogs')} primary />
+                        <span ref={(l) => { this.logs = l; }} className="hiddenLogs">{L.writers.cache.print()}</span>
+                    </div>
+                    <div className="flex-row">
+                        <T k="title_feedbackIntro" />
+                        <TooltipIconButton icon="chat" onClick={this.feedback} flat primary tooltip={t('button_feedbackChat')} />
                     </div>
                 </section>
                 <section>

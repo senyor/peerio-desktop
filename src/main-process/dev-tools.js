@@ -1,5 +1,4 @@
 const { MenuItem } = require('electron');
-
 const isDevEnv = require('~/helpers/is-dev-env');
 const path = require('path');
 

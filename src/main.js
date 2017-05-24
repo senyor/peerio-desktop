@@ -1,7 +1,6 @@
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');
-global.L = require('l.js');
 
 let appReady = false;
 let mainWindow;

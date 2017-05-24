@@ -7,6 +7,7 @@ const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class UserPicker extends React.Component {
@@ -14,6 +15,7 @@ class UserPicker extends React.Component {
     @observable query = '';
     @observable noGood = false;
     accepted = false;
+    @observable suggestInviteEmail = '';
 
     @computed get options() {
         return contactStore.filter(this.query);
@@ -46,10 +48,14 @@ class UserPicker extends React.Component {
         if (this.selected.find(s => s.username === this.query)) {
             return;
         }
-        const c = contactStore.getContact(this.query);
+        const q = this.query;
+        const c = contactStore.getContact(q);
+        const atInd = q.indexOf('@');
+        const isEmail = atInd > -1 && atInd === q.lastIndexOf('@');
         this.selected.push(c);
         when(() => !c.loading, () => {
             setTimeout(() => c.notFound && this.selected.remove(c), 3000);
+            if (isEmail) this.suggestInviteEmail = q;
         });
         this.query = '';
     }
@@ -71,6 +77,11 @@ class UserPicker extends React.Component {
     onInputMount(input) {
         if (!input) return;
         input.getWrappedInstance().focus();
+    }
+
+    invite = () => {
+        contactStore.invite(this.suggestInviteEmail);
+        this.suggestInviteEmail = '';
     }
 
     render() {
@@ -114,9 +125,15 @@ class UserPicker extends React.Component {
                             </div>
                             {/* TODO: make label dynamic */}
                             <Button className={css('confirm', { hide: !this.selected.length })}
-                                label={this.props.button || 'go'}
+                                label={this.props.button || t('button_go')}
                                 onClick={this.accept} disabled={!this.isValid} />
                         </div>
+                        {this.suggestInviteEmail ?
+                            <div className="flex-row flex-align-center flex-justify-between">
+                                <div className="email-invite"><T k="error_emailNotFound" />&nbsp;&nbsp;{this.suggestInviteEmail}</div>
+                                <Button primary raised onClick={this.invite} label={t('button_inviteEmailContact')} />
+                            </div>
+                            : null}
                         <List selectable ripple >
                             <ListSubHeader caption="Your contacts" />
                             <div className="user-list">

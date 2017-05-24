@@ -7,9 +7,9 @@ const T = require('../../shared-components/T');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
 const urls = require('~/config').translator.urlMap;
-const L = require('l.js');
 const { contactStore, chatStore } = require('~/icebear');
-const config = require('../../../config');
+const config = require('~/config');
+const { clipboard } = require('electron').remote;
 
 @observer
 class About extends React.Component {
@@ -41,13 +41,7 @@ class About extends React.Component {
     }
 
     copyLogs = () => {
-        const range = document.createRange();
-        const selection = document.getSelection();
-        selection.removeAllRanges();
-        range.selectNode(this.logs);
-        selection.addRange(range);
-        document.execCommand('copy');
-        selection.removeAllRanges();
+        clipboard.writeText(console.history.toString());
     };
 
     render() {
@@ -66,24 +60,25 @@ class About extends React.Component {
 
                 <section>
                     <div className="title">{t('title_help')}</div>
-                    <div className="flex-row">
+                    <div className="flex-row flex-align-center">
                         <T k="title_helpText" />
-                        <TooltipIconButton icon="live_help" href={urls.helpCenter} tooltip={t('button_HC')} flat primary />
+                        <TooltipIconButton icon="live_help" href={urls.helpCenter} tooltip={t('button_HC')} primary />
                     </div>
-                    <div className="flex-row">
+                    <div className="flex-row flex-align-center">
                         <T k="title_supportIntro" />
-                        <TooltipIconButton icon="chat" onClick={this.support} flat primary tooltip={t('button_supportChat')} />
+                        <TooltipIconButton icon="chat" onClick={this.support} primary tooltip={t('button_supportChat')} />
                         <TooltipIconButton icon="email" href={urls.contactSupport} tooltip={t('button_supportEmail')} primary />
                     </div>
-                    <div className="flex-row">
+                    <div className="flex-row flex-align-center">
                         <T k="title_logsIntro" />
-                        <TooltipIconButton icon="content_copy" onClick={this.copyLogs} tooltip={t('button_copyLogs')} primary />
-                        <TooltipIconButton icon="email" href={`mailto:${config.supportEmail}?subject=Logs&body=${L.writers.cache.print()}`} tooltip={t('button_emailLogs')} primary />
-                        <span ref={(l) => { this.logs = l; }} className="hiddenLogs">{L.writers.cache.print()}</span>
+                        <TooltipIconButton icon="content_copy" onClick={this.copyLogs}
+                            tooltip={t('button_copyLogs')} primary />
+                        <TooltipIconButton icon="email" tooltip={t('button_emailLogs')} primary
+                            href={`mailto:${config.contacts.supportEmail}?subject=Logs&body=${console.history.toString()}`} />
                     </div>
-                    <div className="flex-row">
+                    <div className="flex-row flex-align-center">
                         <T k="title_feedbackIntro" />
-                        <TooltipIconButton icon="chat" onClick={this.feedback} flat primary tooltip={t('button_feedbackChat')} />
+                        <TooltipIconButton icon="chat" onClick={this.feedback} primary tooltip={t('button_feedbackChat')} />
                     </div>
                 </section>
                 <section>

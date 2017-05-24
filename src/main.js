@@ -7,7 +7,7 @@ let appReady = false;
 let mainWindow;
 
 process.on('uncaughtException', (error) => {
-    L.error('uncaughtException in Node:', error);
+    console.error('uncaughtException in Node:', error);
 });
 
 const isDevEnv = require('~/helpers/is-dev-env');
@@ -36,7 +36,7 @@ const config = require('~/config');
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
 
 app.on('ready', () => {
-    L.info('Electron ready event - Starting app.');
+    console.log('Electron ready event - Starting app.');
     buildGlobalShortcuts();
     setMainMenu();
     app.setAppUserModelId(config.appId);

@@ -36,7 +36,7 @@ Menu.buildFromTemplate([
 let devToolsMenuCreated = false;
 
 function buildContextMenu(mainWindow) {
-    L.info('Building context menu.');
+    console.log('Building context menu.');
     if (isDevEnv) {
         devtools.extendContextMenu(menu, mainWindow, rightClickPos);
     } else {

@@ -100,7 +100,7 @@ class PasscodeStore extends OrderedFormStore {
      * @param {Boolean} isFocused
      */
     @action showHints(isFocused) {
-        L.info('propagate focus', isFocused);
+        console.log('propagate focus', isFocused);
         this.focusPasscode = isFocused;
     }
 

@@ -7,7 +7,7 @@ function requestDownloadPath(fileName) {
             const downloadsDir = electron.app.getPath('downloads');
             path = `${downloadsDir}/${path}`;
         } catch (err) {
-            L.info(err);
+            console.log(err);
         }
 
         const win = electron.getCurrentWindow();

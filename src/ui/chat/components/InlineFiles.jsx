@@ -13,7 +13,7 @@ class InlineFiles extends React.Component {
         const file = fileStore.getById(attr.value);
         if (!file || file.downloading) return;
         downloadFile(file);
-        L.info(ev.currentTarget.attributes['data-id'].value);
+        console.log(ev.currentTarget.attributes['data-id'].value);
     }
     render() {
         if (!this.props.files.map) return null;

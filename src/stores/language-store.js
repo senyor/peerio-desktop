@@ -75,9 +75,9 @@ class LanguageStore {
             this.buildDictionary();
             // set locale for dates
             moment.locale(code);
-            L.info(`Language changed to ${code}`);
+            console.log(`Language changed to ${code}`);
         } catch (err) {
-            L.error(`Failed switch language to: ${code} ${normalizeError(err)}`);
+            console.error(`Failed switch language to: ${code} ${normalizeError(err)}`);
         }
     }
 

@@ -97,23 +97,23 @@ class MessageList extends React.Component {
     // todo: investigate why throttlig causes lags when scrolling with trackpad at big velocity
     handleScroll = // _.throttle(
     () => {
-        // L.info('SCROLL');
+        // console.log('SCROLL');
         // we can't handle scroll if content height is too small
         if (this.containerRef.scrollHeight <= this.containerRef.clientHeight) return;
 
         const distanceToBottom = this.containerRef.scrollHeight - this.containerRef.scrollTop
             - this.containerRef.clientHeight;
         const distanceToTop = this.containerRef.scrollTop;
-        // L.info(distanceToTop, distanceToBottom);
+        // console.log(distanceToTop, distanceToBottom);
         // detecting sticking state
         this.stickToBottom = distanceToBottom < this.stickDistance && !chatStore.activeChat.canGoDown;
         // triggering page load
         if (distanceToBottom < this.loadTriggerDistance) {
-            //  L.info('TRIGGER');
+            //  console.log('TRIGGER');
             chatStore.activeChat.loadNextPage();
         }
         if (distanceToTop < this.loadTriggerDistance) {
-            // L.info('TRIGGER');
+            // console.log('TRIGGER');
             chatStore.activeChat.loadPreviousPage();
         }
     }// , 150, { leading: true, trailing: true });

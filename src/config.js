@@ -7,7 +7,7 @@ const FileStream = require('~/icebear/models/files/node-file-stream');
 const StorageEngine = require('~/icebear/models/storage/node-json-storage');
 const { setUrlMap, setTagHandler } = require('peerio-translator');
 const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
-const L = require('l.js');
+
 const cfgBase = require('~/config-base');
 
 Object.assign(cfg, cfgBase);
@@ -47,19 +47,19 @@ if (isDevEnv) {
 // FOR DEV ENVIRONMENT ONLY
 // DEV MACHINE OVERRIDES SOCKET SERVER VALUE WITH THIS
 if (isDevEnv && process.env.PEERIO_STAGING_SOCKET_SERVER) {
-    L.info('dev env');
+    console.log('dev env');
     cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
 }
 
 // --- DIAGNOSTIC STARTUP LOG
 try {
-    L.info(isDevEnv ? 'DEV environment detected' : 'PROD environment detected');
-    L.info(`Starting app: v${cfg.appVersion} | ${cfg.arch} | ${cfg.platform} | ` +
+    console.log(isDevEnv ? 'DEV environment detected' : 'PROD environment detected');
+    console.log(`Starting app: v${cfg.appVersion} | ${cfg.arch} | ${cfg.platform} | ` +
         `${os.platform()}-${os.release()} | ${os.cpus().length} CPUs | ` +
         `${os.totalmem() / 1024 / 1024 / 1024}GB RAM (${+(os.freemem() / 1024 / 1024 / 1024).toFixed(2)}GB free) | ` +
         `${Math.round(os.uptime() / 60 / 60)} hours uptime`);
 } catch (err) {
-    L.info(err);
+    console.log(err);
 }
 
 

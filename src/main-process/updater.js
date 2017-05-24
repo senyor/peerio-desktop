@@ -2,14 +2,14 @@
 const { autoUpdater } = require('electron-updater');
 const isDevEnv = require('~/helpers/is-dev-env');
 const { ipcMain } = require('electron');
-const L = require('l.js');
+
 
 autoUpdater.logger = L;
 
 let window;
 
 function sendStatusToWindow(text) {
-    L.info(text);
+    console.log(text);
     window.webContents.send('console_log', text);
 }
 
@@ -18,7 +18,7 @@ function start(mainWindow) {
         window = mainWindow;
         autoUpdater.setFeedURL('https://privaterelease.peerio.com');
         ipcMain.on('install-update', () => {
-            L.info('Client approved update installation.');
+            console.log('Client approved update installation.');
             autoUpdater.quitAndInstall();
         });
         if (!isDevEnv) {

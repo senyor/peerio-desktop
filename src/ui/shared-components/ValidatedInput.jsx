@@ -94,7 +94,7 @@ const css = require('classnames');
         }, true)
             .then(v => {
                 if (this.props.store[this.props.name] !== value) {
-                    // L.info(`value changed ${this.props.name}, aborting`);
+                    // console.log(`value changed ${this.props.name}, aborting`);
                     return;
                 }
                 if (v === true) {

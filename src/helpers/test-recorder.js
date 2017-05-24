@@ -10,11 +10,11 @@ const csspath = require('cssman');
 let actions = [];
 
 function recordUI() {
-    L.info('👀 ⏺ Started recording for tests. Stop with stopRecording() to print results.');
+    console.log('👀 ⏺ Started recording for tests. Stop with stopRecording() to print results.');
 
     window.onclick = (ev) => {
         actions.push({ event: 'click', selector: csspath(ev.target) });
-        L.info(csspath(ev.target));
+        console.log(csspath(ev.target));
     };
 
     // const observer = new MutationObserver(check);
@@ -43,12 +43,12 @@ function stopRecording() {
             s += `.setValue('${selector}', '${a.val}')\n`;
         }
     });
-    L.info('👀 ⏹ Recording stopped.');
-    L.info('👀 Pseudocode for spectron tests:');
-    L.info(' ');
-    L.info(s);
-    L.info(' ');
-    L.info('👀 --- Note that selectors have been stripped of classes like .focused and may not be accurate as a result.');
+    console.log('👀 ⏹ Recording stopped.');
+    console.log('👀 Pseudocode for spectron tests:');
+    console.log(' ');
+    console.log(s);
+    console.log(' ');
+    console.log('👀 --- Note that selectors have been stripped of classes like .focused and may not be accurate as a result.');
     actions = [];
 }
 

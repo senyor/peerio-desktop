@@ -27,7 +27,7 @@ class KegEditor extends React.Component {
                 });
             }))
             .catch(err => {
-                L.error(err);
+                console.error(err);
                 alert(err);
             })
             .finally(() => {
@@ -50,7 +50,7 @@ class KegEditor extends React.Component {
                 this.kegIds = resp;
             })
             .catch(err => {
-                L.error(err);
+                console.error(err);
                 alert(err);
             })
             .finally(() => {
@@ -70,7 +70,7 @@ class KegEditor extends React.Component {
                 this.keg = resp;
             })
             .catch(err => {
-                L.error(err);
+                console.error(err);
                 alert(err);
             })
             .finally(() => {

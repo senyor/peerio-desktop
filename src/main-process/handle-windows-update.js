@@ -1,5 +1,5 @@
 const { app } = require('electron');
-const L = require('l.js');
+
 
 /**
  * Almost completely stock squirrel installer code. Runs the installer and seamlessly installs the app.
@@ -24,7 +24,7 @@ function handleSquirrelEvent() {
         try {
             spawnedProcess = ChildProcess.spawn(command, args, { detached: true });
         } catch (err) {
-            L.error(err);
+            console.error(err);
         }
 
         return spawnedProcess;

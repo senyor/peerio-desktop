@@ -49,7 +49,7 @@ class Root extends React.Component {
             alert(t('title_updateWillRestart'));
             ipcRenderer.send('install-update');
         });
-        ipcRenderer.on('console_log', (ev, arg) => L.info(arg));
+        ipcRenderer.on('console_log', (ev, arg) => console.log(arg));
 
         reaction(() => socket.connected, (connected) => {
             if (connected) {

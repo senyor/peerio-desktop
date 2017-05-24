@@ -1,6 +1,7 @@
+require('~/helpers/console-history');
 const isDevEnv = require('~/helpers/is-dev-env');
 const { ipcRenderer, webFrame } = require('electron');
-const L = require('l.js');
+
 
 if (isDevEnv) {
     // to allow require of development modules in dev environment
@@ -20,11 +21,9 @@ require('../build/helpers/logging');
 
 // debug aid global vars
 window.ice = require('~/icebear');
-// logging should be easy
-window.L = L;
 // shortcut to use with promises
-window.clog = L.info.bind(L);
-window.cerr = L.error.bind(L);
+window.clog = console.log.bind(console);
+window.cerr = console.error.bind(console);
 // !!!! DEBUG. !!!!!!!!!!!!!!!!!!!!!!!!!
 window.spamCounter = 0;
 window.spam = function(interval = 1000, words = 10) {

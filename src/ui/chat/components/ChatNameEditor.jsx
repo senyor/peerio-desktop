@@ -7,11 +7,11 @@ const { t } = require('peerio-translator');
 @observer
 class ChatNameEditor extends React.Component {
     cancelNameEdit = () => {
-        L.info('Cancel name edit');
+        console.log('Cancel name edit');
     };
 
     acceptNameEdit = (val) => {
-        L.info('new chat name:', val);
+        console.log('new chat name:', val);
         chatStore.activeChat.rename(val);
     };
 

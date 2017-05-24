@@ -8,11 +8,11 @@ class AppState {
         const win = electron.getCurrentWindow();
         win.on('focus', () => {
             this.isFocused = true;
-            L.info('App got focus');
+            console.log('App got focus');
         });
         win.on('blur', () => {
             this.isFocused = false;
-            L.info('App lost focus');
+            console.log('App lost focus');
         });
         this.isFocused = win.isFocused();
         window.onunload = () => win.removeAllListeners();

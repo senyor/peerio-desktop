@@ -9,7 +9,7 @@ let keytar;
 try {
     keytar = require('keytar');
 } catch (err) {
-    L.error('Keytar error', err);
+    console.error('Keytar error', err);
 }
 
 const service = cfg.keychainService;
@@ -20,7 +20,7 @@ async function saveSecret(username, passphrase) {
         await keytar.setPassword(service, username, passphrase);
         return Promise.resolve(true);// we want bluebird promises
     } catch (err) {
-        L.error('Error setting passphrase with keytar', err);
+        console.error('Error setting passphrase with keytar', err);
         return Promise.resolve(false);
     }
 }
@@ -31,7 +31,7 @@ async function getSecret(username) {
         const ret = await keytar.getPassword(service, username);
         return ret || Promise.resolve(false);
     } catch (err) {
-        L.error('Error getting passphrase with keytar', err);
+        console.error('Error getting passphrase with keytar', err);
         return Promise.resolve(false);
     }
 }
@@ -42,7 +42,7 @@ async function removeSecret(username) {
         await keytar.deletePassword(service, username);
         return Promise.resolve(true);
     } catch (err) {
-        L.error('Error getting passphrase with keytar', err);
+        console.error('Error getting passphrase with keytar', err);
         return Promise.resolve(false);
     }
 }

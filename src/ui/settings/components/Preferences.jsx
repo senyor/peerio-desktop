@@ -8,8 +8,8 @@ const uiStore = require('~/stores/ui-store');
 
 @observer
 class Preferences extends React.Component {
-    @observable mentionSoundsSwitchDisabled = false;
-    @observable mentionDesktopNotificationsSwitchDisabled = false;
+    // @observable mentionSoundsSwitchDisabled = false;
+    // @observable mentionDesktopNotificationsSwitchDisabled = false;
 
     onMsgNotifChanged = (value) => {
         User.current.settings.messageNotifications = value;
@@ -21,24 +21,22 @@ class Preferences extends React.Component {
     }
 
     onMentionSoundsChanged = (value) => {
-        if (value === false) uiStore.prefs.messageSoundsEnabled = false;
+        uiStore.prefs.messageSoundsEnabled = false;
         uiStore.prefs.mentionSoundsEnabled = value;
     }
 
     onMessageSoundsChanged = (value) => {
         if (value === true) uiStore.prefs.mentionSoundsEnabled = false;
-        this.mentionSoundsSwitchDisabled = value;
         uiStore.prefs.messageSoundsEnabled = value;
     }
 
     onMentionDesktopNotificationsChanged = (value) => {
-        if (value === false) uiStore.prefs.messageDesktopNotificationsEnabled = false;
+        uiStore.prefs.messageDesktopNotificationsEnabled = false;
         uiStore.prefs.mentionDesktopNotificationsEnabled = value;
     }
 
     onMessageDesktopNotificationsChanged = (value) => {
         if (value === true) uiStore.prefs.mentionDesktopNotificationsEnabled = false;
-        this.mentionDesktopNotificationsSwitchDisabled = value;
         uiStore.prefs.messageDesktopNotificationsEnabled = value;
     }
 

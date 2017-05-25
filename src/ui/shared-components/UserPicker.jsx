@@ -108,7 +108,10 @@ class UserPicker extends React.Component {
                             marginTop: '168px'
                         }}>
                         <div className="chat-creation-header">
-                            <div className="title">{this.props.title}</div>
+                            <div className="title">
+                                {this.props.title}
+                                {this.props.subtitle ? <span>{this.props.subtitle}</span> : '' }
+                            </div>
                             <IconButton icon="close" onClick={this.handleClose} />
                         </div>
                         <div className="new-message-search">

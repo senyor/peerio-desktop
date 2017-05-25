@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.15.0"></a>
+# [2.15.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.14.3...v2.15.0) (2017-05-25)
+
+
+### Bug Fixes
+
+* **account:** data & error settings ([bf3a77f](https://github.com/PeerioTechnologies/peerio-desktop/commit/bf3a77f))
+* **chat:** extra heading in user picker re: invitations ([d242f7b](https://github.com/PeerioTechnologies/peerio-desktop/commit/d242f7b))
+* **files:** updates padding to fix overflow bugs at smaller screen widths. ([a7abbc2](https://github.com/PeerioTechnologies/peerio-desktop/commit/a7abbc2))
+* **notifications:** enable sounds & desktop notifs by default ([a5adb60](https://github.com/PeerioTechnologies/peerio-desktop/commit/a5adb60))
+* **preferences:** wonky mention/message notif toggles ([bb30a93](https://github.com/PeerioTechnologies/peerio-desktop/commit/bb30a93))
+* **userpicker:** email invite suggest appeared even if email was found ([53d78ea](https://github.com/PeerioTechnologies/peerio-desktop/commit/53d78ea))
+
+
+### Features
+
+* reorganized About +copy logs +chat with support ([#27](https://github.com/PeerioTechnologies/peerio-desktop/issues/27)) ([18f977f](https://github.com/PeerioTechnologies/peerio-desktop/commit/18f977f))
+* **contact:** invite contact from chat create view ([d32adb8](https://github.com/PeerioTechnologies/peerio-desktop/commit/d32adb8))
+
+
+
 <a name="2.14.3"></a>
 ## [2.14.3](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.14.2...v2.14.3) (2017-05-23)
 

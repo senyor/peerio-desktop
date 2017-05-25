@@ -4,7 +4,7 @@ const isDevEnv = require('~/helpers/is-dev-env');
 const { ipcMain } = require('electron');
 
 
-autoUpdater.logger = L;
+// autoUpdater.logger = L;
 
 let window;
 

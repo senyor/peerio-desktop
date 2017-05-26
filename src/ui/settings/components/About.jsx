@@ -73,8 +73,6 @@ class About extends React.Component {
                         <T k="title_logsIntro" />
                         <TooltipIconButton icon="content_copy" onClick={this.copyLogs}
                             tooltip={t('button_copyLogs')} primary />
-                        <TooltipIconButton icon="email" tooltip={t('button_emailLogs')} primary
-                            href={`mailto:${config.contacts.supportEmail}?subject=Logs&body=${console.history.toString()}`} />
                     </div>
                     <div className="flex-row flex-align-center">
                         <T k="title_feedbackIntro" />

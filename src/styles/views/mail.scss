@@ -177,7 +177,7 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
 
     .rt-button-neutral:not([disabled]).rt-button-flat:hover,
     .rt-button-neutral:not([disabled]).rt-button-toggle:hover {
-      background-color: rgba($color-brand-blue, .38);
+      background-color: rgba($color-brand-primary, .38);
 
       .material-icons {
         color: $text-light-primary;
@@ -188,7 +188,7 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
       position: relative;
 
       .count {
-        background: $color-brand-blue;
+        background: $color-brand-primary;
         border: 2px white solid;
         border-radius: 20px;
         color: $text-light-primary;
@@ -221,7 +221,7 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
       color: $icon-dark-inactive;
 
       .active {
-        color: $color-brand-blue;
+        color: $color-brand-primary;
       }
     }
   }
@@ -269,7 +269,7 @@ $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
       cursor: pointer;
 
       .material-icons {
-        color: $color-brand-blue;
+        color: $color-brand-primary;
       }
     }
 

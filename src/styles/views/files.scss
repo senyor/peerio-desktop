@@ -77,12 +77,12 @@
       }
 
       .material-icons {
-        color: rgba($color-brand-blue, .5);
+        color: rgba($color-brand-primary, .5);
         transition: 250ms;
       }
 
       .rt-button-button:hover .material-icons {
-        color: $color-brand-blue;
+        color: $color-brand-primary;
       }
 
       .disabled,
@@ -96,7 +96,7 @@
       }
 
       .rt-ripple-ripple {
-        background-color: $color-brand-blue;
+        background-color: $color-brand-primary;
       }
     }
 
@@ -149,14 +149,14 @@
         position: relative;
 
         &.selected-row {
-          background: rgba($color-brand-blue, .12);
+          background: rgba($color-brand-primary, .12);
         }
 
         &:hover {
-          background: rgba($color-brand-blue, .12);
+          background: rgba($color-brand-primary, .12);
 
           .rt-menu-iconMenu {
-            background: rgba($color-brand-blue, .38);
+            background: rgba($color-brand-primary, .38);
             border-radius: 4px;
           }
         }
@@ -250,7 +250,7 @@
         transition: 150ms;
 
         &:hover {
-          color: $color-brand-blue;
+          color: $color-brand-primary;
         }
       }
     }

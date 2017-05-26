@@ -103,7 +103,7 @@ $suggests-max-height: 200px;
         padding: 0;
 
         input {
-          border: 1px solid rgba($color-brand-blue, .54);
+          border: 1px solid rgba($color-brand-primary, .54);
           border-radius: 4px;
           color: $text-dark-secondary;
           font-weight: $font-weight-bold;
@@ -346,7 +346,7 @@ $suggests-max-height: 200px;
         font-weight: $font-weight-semibold;
 
         &.self {
-          background-color: rgba($color-brand-green, .5);
+          background-color: rgba($color-brand-secondary, .5);
         }
 
         &:hover {
@@ -408,7 +408,7 @@ $suggests-max-height: 200px;
       }
 
       a {
-        color: $color-brand-blue;
+        color: $color-brand-primary;
       }
     }
 
@@ -461,7 +461,7 @@ $suggests-max-height: 200px;
     }
 
     .selected {
-      background-color: $color-brand-blue;
+      background-color: $color-brand-primary;
       color: white;
     }
   }
@@ -480,7 +480,7 @@ $suggests-max-height: 200px;
     position: relative;
 
     .color-brand:not([disabled]) > .material-icons {
-      color: $color-brand-blue;
+      color: $color-brand-primary;
     }
 
     .color-affirmative > .material-icons {
@@ -700,7 +700,7 @@ $suggests-max-height: 200px;
   }
 
   .rt-ripple-ripple {
-    background-color: $color-brand-blue;
+    background-color: $color-brand-primary;
   }
 
   .rt-list-itemAction {

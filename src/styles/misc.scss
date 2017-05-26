@@ -174,7 +174,7 @@ $status-bar-height: 32px;
 
 // BUTTONS
 .button-gradient {
-  background-image: linear-gradient(to right, rgba($color-brand-blue, .5), rgba($color-brand-green, .75));
+  background-image: linear-gradient(to right, rgba($color-brand-primary, .5), rgba($color-brand-secondary, .75));
   border: 2px solid $color-light-70 !important;
   border-color: $color-light-70;
   border-radius: 4px;

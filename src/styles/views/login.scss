@@ -28,7 +28,7 @@
     &:not([disabled]),
     &:hover:not([disabled]) {
       background-color: $color-light-100 !important; // so important
-      color: $color-brand-blue !important; // :( - Paul
+      color: $color-brand-primary !important; // :( - Paul
     }
   }
 
@@ -109,7 +109,7 @@
 
 .welcome-title {
   @extend %display-3;
-  color: $color-brand-blue;
+  color: $color-brand-primary;
   font-weight: $font-weight-bold;
   text-align: center;
 }

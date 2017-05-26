@@ -16,29 +16,20 @@ $color-dark-12: rgba(0, 0, 0, .12);
 $color-dark-06: rgba(0, 0, 0, .06);
 $color-dark-03: rgba(0, 0, 0, .03);
 
-// Primary brand color
-$color-brand-blue: rgb(44, 149, 207);
-$color-brand-green: rgb(50, 206, 195);
-$color-accent: rgb(246, 146, 35);
-
-// Gradients - used with background-image property
-$color-brand-gradient: linear-gradient(to right, $color-brand-blue, $color-brand-green);
-$color-brand-gradient-bottom: linear-gradient(to bottom, $color-brand-blue 0, $color-brand-green 50%);
-
 // Status (warning/error/etc)
 $color-error: rgb(208, 2, 27);
 $color-affirmative: rgb(44, 207, 132);
 $color-warning: rgb(244, 203, 66);
 
 // BACKGROUNDS
-$background-active-message: rgba($color-brand-blue, .7);
-$background-brand: $color-brand-blue;
+$background-active-message: rgba($color-brand-primary, .7);
+$background-brand: $color-brand-primary;
 $background-gradient: $color-brand-gradient;
 $background-gradient-bottom: $color-brand-gradient-bottom;
 $background-cancel: $color-error;
-$background-hover-message: rgba($color-brand-blue, .12);
+$background-hover-message: rgba($color-brand-primary, .12);
 $background-new-messages: rgba($color-error, .38);
-$background-chat-list: rgba($color-brand-blue, .12); // TODO: make this more generic
+$background-chat-list: rgba($color-brand-primary, .12); // TODO: make this more generic
 $background-chat-list-item: #f8f8f8; // $color-dark-06 over white backgrond.
 $background-new-file: rgba($color-affirmative, .12);
 $background-light-button-hover: $color-light-12;
@@ -79,7 +70,7 @@ $input-light-inactive: $color-light-70;
 $input-dark-border: $color-dark-38;
 
 // BUTTONS
-$button-primary: $color-brand-blue;
+$button-primary: $color-brand-primary;
 $button-dark-disabled: $color-dark-38;
 $button-light-disabled: $color-light-50;
 $button-affirmative: $color-affirmative;

@@ -1,14 +1,6 @@
 //  Base overwrites
 // TODO: removed all #colors
 //       replace padding and margins with variables where applicable
-
-@import './vars/_colors';
-@import './vars/_grid';
-@import './vars/_layout';
-@import './vars/_shadows';
-@import './vars/transitions';
-@import './vars/_typography';
-
 // so that I don't have to write millions of font rules to overwrite RTs millions of font rules.
 * {
   font-family: $font-stack;
@@ -73,7 +65,7 @@
 }
 
 .rt-ripple-ripple {
-  background-color: $color-brand-blue;
+  background-color: $color-brand-primary;
 }
 
 .rt-button-rippleWrapper {
@@ -84,7 +76,7 @@
   min-width: 64px;
 
   .rt-dialog-navigation &:last-of-type {
-    color: $color-brand-blue;
+    color: $color-brand-primary;
   }
 }
 
@@ -209,8 +201,8 @@
 .chip-label {
   @extend %flex-shrink-0;
   background: $background-root;
-  border: 1px solid $color-brand-blue;
-  color: $color-brand-blue;
+  border: 1px solid $color-brand-primary;
+  color: $color-brand-primary;
   margin-bottom: $margin-tiny;
   margin-right: 0;
   margin-top: $margin-tiny;
@@ -231,14 +223,14 @@
   }
 
   .rt-chip-delete {
-    border: 2px solid rgba($color-brand-blue, .35);
+    border: 2px solid rgba($color-brand-primary, .35);
     border-radius: 24px;
 
     &:hover {
-      background: $color-brand-blue;
+      background: $color-brand-primary;
 
       .rt-chip-deleteIcon {
-        background: $color-brand-blue;
+        background: $color-brand-primary;
       }
 
       .rt-chip-deleteX {
@@ -254,7 +246,7 @@
     width: 20px;
 
     .rt-chip-deleteX {
-      stroke: rgba($color-brand-blue, .35);
+      stroke: rgba($color-brand-primary, .35);
       stroke-width: 4px;
     }
   }

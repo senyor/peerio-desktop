@@ -32,7 +32,7 @@ const { getListOfFiles } = require('~/helpers/file');
             if (!paths || !paths.length) return;
             const list = getListOfFiles(paths);
             if (!list.success.length) return;
-            fileStore.upload(list.success);
+            list.success.forEach(fileStore.upload);
         });
     }
 

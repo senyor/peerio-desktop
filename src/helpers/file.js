@@ -40,7 +40,9 @@ function downloadFile(file) {
 function pickSystemFiles() {
     return new Promise(resolve => {
         const win = electron.getCurrentWindow();
-        electron.dialog.showOpenDialog(win, { properties: ['openFile', 'showHiddenFiles'] }, resolve);
+        electron.dialog.showOpenDialog(win, {
+            properties: ['openFile', 'openDirectory', 'multiSelections', 'showHiddenFiles']
+        }, resolve);
     });
 }
 

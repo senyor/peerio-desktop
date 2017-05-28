@@ -17,8 +17,35 @@ const { getHeaders } = require('~/helpers/http');
 const uiStore = require('~/stores/ui-store');
 const htmlEncoder = require('html-entities').AllHtmlEntities;
 
+
+// TODO: move somewhere?
+const URL_STATE = { WAITING: 1, FAILED: 2, GOOD: 3, SKIP: 4 }; // don't make this start from 0
+const urlMap = {}; // key - url, value - URL_STATE
+const MAX_IMG_SIZE = 1024 * 1024 * 1024 * 5;
 // ugly, but works. autolinker has only one global replacer fn, and we need to get message object in there somehow
 let currentProcessingMessage;
+
+function processUrl(url) {
+    const msg = currentProcessingMessage;
+    if (urlMap[url]) {
+        if (urlMap[url] === URL_STATE.GOOD && !msg.inlineImages.includes(url)) msg.inlineImages.push(url);
+        return;
+    }
+    urlMap[url] = URL_STATE.WAITING;
+
+    getHeaders(url).then(headers => {
+        const type = headers['content-type'];
+        const length = +headers['content-length'];
+        if (!type || !type.startsWith('image/') || length > MAX_IMG_SIZE) {
+            urlMap[url] = URL_STATE.SKIP;
+            return;
+        }
+        urlMap[url] = URL_STATE.GOOD;
+        if (!msg.inlineImages.includes(url)) msg.inlineImages.push(url);
+    }).catch(err => {
+        urlMap[url] = URL_STATE.FAILED;
+    });
+}
 
 const autolinker = new Autolinker({
     urls: {
@@ -28,26 +55,17 @@ const autolinker = new Autolinker({
     },
     replaceFn(match) {
         if (match.getType() === 'url') {
-            const url = match.getUrl();
+            let url = match.getUrl();
+            url = htmlEncoder.decode(url);
             if (!isUrlAllowed(url)) return false;
-            const msg = currentProcessingMessage;
-            if (msg.inlineImages.length > 3) return true;
-
-            getHeaders(url).then(headers => {
-                const type = headers['content-type'];
-                if (!type || !type.startsWith('image/')) return;
-                const length = +headers['content-length'];
-                if (length > 1024 * 1024 * 1024 * 5) return;
-                if (msg.inlineImages.length > 3) return;
-                if (!msg.inlineImages.includes(url)) msg.inlineImages.push(url);
-            });
+            processUrl(url);
             return true;
         }
 
         return false;
     },
     email: true,
-    phone: true,
+    phone: false,
     mention: false,
     hashtag: false,
     stripPrefix: false,

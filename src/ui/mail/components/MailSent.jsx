@@ -5,7 +5,7 @@ const { t } = require('peerio-translator');
 const { Dialog, IconMenu, MenuDivider, MenuItem, TooltipIconButton } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../chat/components/InlineFiles');
-const { fileStore, warnings, mailStore } = require('~/icebear');
+const { fileStore, warnings, ghostStore } = require('~/icebear');
 
 
 @observer
@@ -18,7 +18,7 @@ class MailSent extends React.Component {
     };
 
     deleteGhost = () => {
-        mailStore.remove(this.props.ghost)
+        ghostStore.remove(this.props.ghost)
             .then(() => {
                 this.handleClose();
                 warnings.add('snackbar_mailDeleted');

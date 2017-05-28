@@ -2,7 +2,7 @@ const React = require('react');
 const { Button, IconMenu, MenuItem } = require('~/react-toolbox');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
-const { mailStore } = require('~/icebear');
+const { ghostStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const MailItem = require('./components/MailItem');
 const MailCompose = require('./components/MailCompose');
@@ -14,7 +14,7 @@ class Mail extends React.Component {
     @observable sent = true;
 
     componentWillMount() {
-        mailStore.loadAllGhosts();
+        ghostStore.loadAllGhosts();
     }
 
     constructor() {
@@ -26,31 +26,31 @@ class Mail extends React.Component {
     }
 
     @action handleCompose() {
-        mailStore.createGhost();
+        ghostStore.createGhost();
         this.sent = false;
     }
 
     @action handleSend(data) {
-        mailStore.selectedGhost.send(data);
+        ghostStore.selectedGhost.send(data);
     }
 
     @action handleAttach(files) {
-        mailStore.selectedGhost.attachFiles(files);
+        ghostStore.selectedGhost.attachFiles(files);
     }
 
     @action handleSort(value) {
-        mailStore.sort(value);
+        ghostStore.sort(value);
     }
 
     renderRight() {
-        if (mailStore.selectedGhost.sent) {
+        if (ghostStore.selectedGhost.sent) {
             return (
-                <MailSent ghost={mailStore.selectedGhost} />
+                <MailSent ghost={ghostStore.selectedGhost} />
             );
         }
         return (
             <MailCompose
-                ghost={mailStore.selectedGhost}
+                ghost={ghostStore.selectedGhost}
                 onSend={this.handleSend}
                 onFileShare={this.handleAttach}
             />
@@ -70,7 +70,7 @@ class Mail extends React.Component {
                     <div className="mail-sorting">
                         <div>
                             {t('title_sort')} <strong>
-                                {availableSorts.find((s) => s.sort === mailStore.selectedSort).caption}
+                                {availableSorts.find((s) => s.sort === ghostStore.selectedSort).caption}
                             </strong>
                         </div>
                         <IconMenu onSelect={this.handleSort} icon="arrow_drop_down">
@@ -80,7 +80,7 @@ class Mail extends React.Component {
                         </IconMenu>
                     </div>
                     <div className="mail-list">
-                        {mailStore.ghosts.map((m) => {
+                        {ghostStore.ghosts.map((m) => {
                             return (<MailItem key={m.ghostId}
                                 sent={m.sent}
                                 ghostId={m.ghostId}
@@ -95,8 +95,8 @@ class Mail extends React.Component {
                         })}
                     </div>
                 </div>
-                {mailStore.ghosts.length === 0 && !mailStore.loading ? <ZeroMail /> : null}
-                {mailStore.selectedId && !mailStore.loading ? this.renderRight() : null}
+                {ghostStore.ghosts.length === 0 && !ghostStore.loading ? <ZeroMail /> : null}
+                {ghostStore.selectedId && !ghostStore.loading ? this.renderRight() : null}
 
                 <Button icon="add" floating accent onClick={this.handleCompose} />
             </div>

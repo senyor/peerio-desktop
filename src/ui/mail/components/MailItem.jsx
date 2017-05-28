@@ -1,18 +1,18 @@
 const React = require('react');
 // const { IconMenu, MenuItem } = require('~/react-toolbox');
 const css = require('classnames');
-const { mailStore } = require('~/icebear');
+const { ghostStore } = require('~/icebear');
 
 
 class MailItem extends React.Component {
     handleSelect = () => {
-        mailStore.selectedId = this.props.ghostId;
+        ghostStore.selectedId = this.props.ghostId;
     };
 
     render() {
         return (
             <div className={css('mail-item', {
-                active: mailStore.selectedId === this.props.ghostId,
+                active: ghostStore.selectedId === this.props.ghostId,
                 draft: !this.props.sent,
                 alive: this.props.alive,
                 attachments: this.props.attachments

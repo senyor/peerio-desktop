@@ -10,6 +10,7 @@ const { pickSystemFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const urls = require('~/config').translator.urlMap;
+const { getListOfFiles } = require('~/helpers/file');
 
 @observer class Files extends React.Component {
     constructor() {
@@ -29,7 +30,9 @@ const urls = require('~/config').translator.urlMap;
     handleUpload() {
         pickSystemFiles().then(paths => {
             if (!paths || !paths.length) return;
-            fileStore.upload(paths[0]);
+            const list = getListOfFiles(paths);
+            if (!list.success.length) return;
+            fileStore.upload(list.success);
         });
     }
 

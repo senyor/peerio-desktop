@@ -3,7 +3,7 @@ const dragStore = require('~/stores/drag-drop-store');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon, Dialog } = require('~/react-toolbox');
-const { fileStore, chatStore } = require('~/icebear');
+const { fileStore, chatStore, util } = require('~/icebear');
 const { t } = require('peerio-translator');
 
 @observer
@@ -20,23 +20,23 @@ class DropTarget extends React.Component {
         this._files = [];
     };
 
-    upload = (files) => {
-        if (this.dialogActive) return;
-        this._files = files;
+    upload = (list) => {
+        if (this.dialogActive || list.success.length === 0) return;
+        this._files = list;
         if (window.router.getCurrentLocation().pathname === '/app' && chatStore.activeChat) {
             this.dialogActive = true;
             return;
         }
-        this.justUpload(files);
+        this.justUpload();
     };
 
     justUpload = () => {
-        this._files.forEach(f => { fileStore.upload(f); });
+        this._files.success.forEach(f => { fileStore.upload(f); });
         this.dialogActive = false;
     };
 
     uploadAndShare = () => {
-        this._files.forEach(f => void chatStore.activeChat.uploadAndShareFile(f));
+        this._files.success.forEach(f => void chatStore.activeChat.uploadAndShareFile(f));
         this.dialogActive = false;
     };
 
@@ -50,11 +50,11 @@ class DropTarget extends React.Component {
 
             return (
                 <Dialog
-                  actions={uploadActions}
-                  active
-                  onEscKeyDown={this.cancelUpload}
-                  onOverlayClick={this.cancelUpload}
-                  title={t('title_uploadAndShare')}>
+                    actions={uploadActions}
+                    active
+                    onEscKeyDown={this.cancelUpload}
+                    onOverlayClick={this.cancelUpload}
+                    title={t('title_uploadAndShare')}>
                     <p>{t('title_fileWillBeShared')}</p>
                 </Dialog>
             );
@@ -67,6 +67,7 @@ class DropTarget extends React.Component {
                     <FontIcon value="cloud_upload" />
                     <div className="display-2">
                         {t('title_dropToUpload', { count: dragStore.hoveringFileCount })}
+                        <div className="display-1">{util.formatBytes(dragStore.hoveringFileSize)}</div>
                     </div>
                 </div>
             </div>

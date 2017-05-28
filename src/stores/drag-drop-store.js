@@ -1,45 +1,62 @@
-const { observable } = require('mobx');
+const { observable, action } = require('mobx');
 const { User } = require('~/icebear');
+const { getListOfFiles } = require('~/helpers/file');
 
 class DragDropStore {
     @observable hovering;
     @observable hoveringFileCount = 0;
+    @observable hoveringFileSize = 0;
     _counter = 0;
     _subscribers = [];
+    _hoveringFiles = null;
 
-    _onEnter = (ev) => {
+    _extractPath(dropFile) {
+        return dropFile.path;
+    }
+    @action.bound _onEnter(ev) {
+        console.log('enter', this._counter, ev.dataTransfer.files.length);
+
         ev.preventDefault();
         if (!User.current || !ev.dataTransfer.files.length) return;
         this._counter++;
         if (this._counter === 1) {
+            let list = Array.prototype.slice.call(ev.dataTransfer.files);
+            list = getListOfFiles(list.map(this._extractPath));
+            console.debug(`Hovering ${list.success.length} files of ${list.successBytes} bytes`);
             this.hovering = true;
-            this.hoveringFileCount = ev.dataTransfer.files.length;
+            this.hoveringFileCount = list.success.length;
+            this.hoveringFileSize = list.successBytes;
+            this._hoveringFiles = list;
         }
-    };
+    }
 
     _onLeave = (ev) => {
+        console.log('leave', this._counter, ev.dataTransfer.files.length);
         ev.preventDefault();
         if (!User.current || !ev.dataTransfer.files.length) return;
         if (this._counter > 0) this._counter--;
-        if (this._counter === 0) this.hovering = false;
+        if (this._counter === 0) {
+            this.hovering = false;
+            this.hoveringFileCount = 0;
+            this.hoveringFileSize = 0;
+        }
     };
 
     _onDrop = (ev) => {
+        console.log('drop', this._counter, ev.dataTransfer.files.length);
         ev.preventDefault();
         if (!User.current) return;
         this._counter = 0;
         this.hovering = false;
         this.hoveringFileCount = 0;
-        const files = [];
-        for (let i = 0; i < ev.dataTransfer.files.length; i++) {
-            files.push(ev.dataTransfer.files[i].path);
-        }
-        if (files.length && this._subscribers.length) {
-            this._subscribers.forEach(handler => { handler(files); });
+        this.hoveringFileSize = 0;
+        if (this._subscribers.length) {
+            this._subscribers.forEach(handler => { handler(this._hoveringFiles); });
         }
     };
 
     _onOver = (ev) => {
+        console.log('over', this._counter, ev.dataTransfer.files.length);
         ev.preventDefault();
         if (!User.current || !ev.dataTransfer.files.length) {
             ev.dataTransfer.dropEffect = 'none';

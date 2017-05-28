@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const RTAvatar = require('~/react-toolbox').Avatar;
 const { ProgressBar, TooltipIconButton } = require('~/react-toolbox');
 const cfg = require('~/config.js');
-const { contactStore } = require('~/icebear');
+const { contactStore, chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 
 @observer
@@ -16,6 +16,10 @@ class ContactProfile extends React.Component {
     componentWillReceiveProps(next) {
         this.contact = contactStore.getContact(next.username);
     }
+    startChat = () => {
+        chatStore.startChat([this.contact]);
+        if (this.props.onClose) this.props.onClose();
+    };
     render() {
         const c = this.contact;
         if (!c) return null;
@@ -58,7 +62,8 @@ class ContactProfile extends React.Component {
                         <TooltipIconButton
                             tooltip={t('title_haveAChat')}
                             tooltipDelay={500}
-                            icon="forum" />
+                            icon="forum"
+                            onClick={this.startChat} />
                         {/* TODO:
                             button should be for adding and removing contact once
                             contacts are implemented.

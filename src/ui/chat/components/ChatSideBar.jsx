@@ -37,7 +37,8 @@ class ChatSideBar extends React.Component {
                                 (<ListItem key={c.username}
                                     leftActions={[<Avatar key="a" contact={c} />]}
                                     caption={c.username}
-                                    legend={c.fullName} />)
+                                    legend={c.fullName}
+                                    onClick={() => chatStore.startChat([c])} />)
                             ) : null}
                     </List>
                 </div>

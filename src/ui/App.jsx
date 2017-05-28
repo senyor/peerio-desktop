@@ -40,7 +40,8 @@ class App extends React.Component {
                     title={t('title_settingsProfile')}>
                     {
                         uiStore.contactDialogUsername
-                            ? <ContactProfile username={uiStore.contactDialogUsername} />
+                            ? <ContactProfile username={uiStore.contactDialogUsername}
+                                onClose={this.hideContactDialog} />
                             : null
                     }
                 </Dialog>

@@ -770,6 +770,10 @@ $suggests-max-height: 200px;
     }
   }
 
+  .rt-list-itemContentRoot {
+    cursor: pointer;
+  }
+
   .rt-list-subheader {
     border-bottom: 1px solid $divider-dark;
   }

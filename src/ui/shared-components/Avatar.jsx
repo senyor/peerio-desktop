@@ -7,7 +7,8 @@ const { contactStore } = require('~/icebear');
 // todo: cache avatar component for every contact?
 @observer
 class Avatar extends React.Component {
-    openContactDialog = () => {
+    openContactDialog = (ev) => {
+        ev.stopPropagation();
         uiStore.contactDialogUsername = this.props.contact ? this.props.contact.username : this.props.username;
     };
     render() {
@@ -22,7 +23,7 @@ class Avatar extends React.Component {
         return (
             <div className="avatar-wrapper">
                 <RTAvatar style={style}
-                          onClick={this.openContactDialog} className="clickable-avatar">
+                    onClick={this.openContactDialog} className="clickable-avatar">
                     <div>{contact.letter}</div>
                 </RTAvatar>
                 {contact.tofuError ?

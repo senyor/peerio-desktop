@@ -83,9 +83,9 @@ const { getListOfFiles } = require('~/helpers/file');
                                     </th>
                                     <th>{t('title_name')}</th>
                                     <th>{t('title_owner')}</th>
+                                    <th>{t('title_shareable')}</th>
                                     <th className="text-right">{t('title_uploaded')}</th>
                                     <th className="text-right">{t('title_size')}</th>
-                                    <th>{t('title_shareable')}</th>
                                     <th />
                                 </tr>
                             </thead>

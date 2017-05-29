@@ -74,12 +74,13 @@ class FileLine extends React.Component {
                     }</td>
                 <td className="file-title selectable" onClick={this.download}>{file.name}</td>
                 <td className="clickable-username" onClick={this.openContactDialog}>
-                    {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}</td>
+                    {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
+                </td>
+                <td>{file.canShare ? t('button_yes') : ''} </td>
                 <td className="text-right" title={file.uploadedAt ? file.uploadedAt.toLocaleString() : ''}>
                     {this.formatDate(file.uploadedAt)}
                 </td>
                 <td className="text-right">{file.sizeFormatted}</td>
-                <td>{file.canShare ? t('button_yes') : ''} </td>
                 <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
                     shareDisabled={!file.readyForDownload || !file.canShare} newFolderDisabled deleteDisabled={false}
                     onDelete={this.deleteFile} onDownload={this.download} onShare={this.share} />

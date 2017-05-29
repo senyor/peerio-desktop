@@ -132,6 +132,18 @@
     }
   }
 
+  .settings-terms {
+    margin-top: $margin-large;
+
+    .rt-button-button {
+      color: $color-brand-primary;
+      font-weight: $font-weight-regular;
+      min-width: 0;
+      padding: 0 $padding-tiny;
+      text-transform: none;
+      width: auto;
+    }
+  }
 }
 
 .backup-row {
@@ -140,4 +152,3 @@
   height: 48px;
   line-height: 48px;
 }
-

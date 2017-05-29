@@ -279,24 +279,36 @@
 
   .rt-switch-off,
   .rt-switch-on {
-    background: $color-dark-12;
-    height: 6px;
-    margin-top: $margin-small;
+    border: 1px solid $divider-dark;
+    height: 24px;
+    margin-top: 0;
     order: 2;
     width: 48px;
   }
 
+  .rt-switch-off {
+    background: $color-dark-12;
+  }
+
+  .rt-switch-on {
+    background: $color-brand-primary;
+    border-color: $color-brand-primary !important;
+  }
+
   .rt-switch-thumb {
-    height: 24px;
-    top: -9px;
-    width: 24px;
+    height: 22px;
+    top: 0;
+    width: 22px;
   }
 
   .rt-switch-off .rt-switch-thumb {
-    background: #9b9b9b;
+    background: $color-dark-12;
+    box-shadow: none;
   }
 
   .rt-switch-on .rt-switch-thumb {
+    background-color: $color-light-100;
+    box-shadow: none;
     left: 24px;
   }
 }

@@ -21,7 +21,8 @@ class RouterStore {
             security: '/app/settings/security',
             prefs: '/app/settings/preferences',
             account: '/app/settings/account',
-            about: '/app/settings/about'
+            about: '/app/settings/about',
+            help: '/app/settings/help'
         };
     }
 

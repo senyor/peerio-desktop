@@ -11,7 +11,8 @@ const ROUTES = [
     '/app/settings/security',
     '/app/settings/preferences',
     '/app/settings/account',
-    '/app/settings/about'
+    '/app/settings/about',
+    '/app/settings/help'
 ];
 
 const ROUTES_MAP = ROUTES.reduce((map, route, ind) => { map[route] = ind; return map; }, {});
@@ -55,6 +56,7 @@ class Settings extends React.Component {
                         <Tab label={t('title_settingsPreferences')} />
                         <Tab label={t('title_settingsAccount')} />
                         <Tab label={t('title_About')} />
+                        <Tab label={t('title_help')} />
                     </Tabs>
                     {this.props.children}
                 </div>

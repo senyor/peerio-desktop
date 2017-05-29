@@ -106,6 +106,10 @@ class AppNav extends React.Component {
         window.router.push(routerStore.ROUTES.about);
     }
 
+    toHelp() {
+        window.router.push(routerStore.ROUTES.help);
+    }
+
     async signout() {
         await autologin.disable();
         appControl.relaunch();
@@ -135,6 +139,8 @@ class AppNav extends React.Component {
                             onClick={this.toAccount} style={menuItemStyle} />
                         <MenuItem value="about" icon="info" caption="About"
                             onClick={this.toAbout} style={menuItemStyle} />
+                        <MenuItem value="help" icon="help" caption="Help"
+                            onClick={this.toHelp} style={menuItemStyle} />
                         {/* <MenuDivider />
                         <MenuItem value="upgrade" icon="open_in_browser" caption={t('title_upgrade')}
                             onClick={this.toUpgrade} /> */}

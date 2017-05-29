@@ -173,10 +173,10 @@ class SecuritySettings extends React.Component {
                 </section>
                 <section className="section-divider">
                     <div className="title">
-                        {t('title_deviceRelatedStuff')}
+                        {t('title_securityDeviceSettings')}
                     </div>
                     <p>
-                        {t('title_deviceRelatedStuffDetail')}
+                        {t('title_securityDeviceSettingsDetail')}
                     </p>
                     <Switch checked={User.current.autologinEnabled}
                         label={t('title_autologinSetting')}

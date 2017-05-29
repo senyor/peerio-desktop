@@ -162,7 +162,7 @@ class SecuritySettings extends React.Component {
         return (
             <div>
                 {/* NOTE: Account key should always be at the top.  */}
-                <section className="section-divider">
+                <section className="section-divider section-account-key">
                     {/* <div className="title">{t('title_QRcode')}
                         <Button label={t('button_showQR')} flat primary />
                     </div>
@@ -171,7 +171,7 @@ class SecuritySettings extends React.Component {
                     </p>*/}
                     {this.renderShowPassphraseSection()}
                 </section>
-                <section className="section-divider">
+                <section>
                     <div className="title">
                         {t('title_securityDeviceSettings')}
                     </div>

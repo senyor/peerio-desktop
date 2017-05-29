@@ -33,7 +33,7 @@ class Account extends React.Component {
                         label={t('title_promoConsent')}
                         onChange={this.onPromoSubscriptionChanged} />
                 </section>
-                <section className="section-divider">
+                <section>
                     <div className="title">{t('title_dataPreferences')}</div>
                     <p>
                         {t('title_dataDetail')}

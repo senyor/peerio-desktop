@@ -39,6 +39,18 @@
     &.section-divider {
       border-bottom: 1px solid $divider-dark;
     }
+
+    &.section-account-key {
+      background: $color-dark-03;
+      padding-left: $padding-default;
+      padding-right: $padding-default;
+
+      .title {
+        @extend %display-2;
+        color: $color-brand-primary;
+        font-weight: $font-weight-semibold;
+      }
+    }
   }
 
   .account-key-toggle {

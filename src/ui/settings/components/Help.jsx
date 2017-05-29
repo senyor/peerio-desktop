@@ -6,7 +6,7 @@ const { t } = require('peerio-translator');
 const T = require('../../shared-components/T');
 const config = require('~/config');
 const urls = require('~/config').translator.urlMap;
-const { contactStore, chatStore } = require('~/icebear');
+const { contactStore, chatStore, warnings } = require('~/icebear');
 const { clipboard } = require('electron').remote;
 
 @observer
@@ -30,6 +30,7 @@ class Help extends React.Component {
 
     copyLogs = () => {
         clipboard.writeText(console.history.toString());
+        warnings.add('snackbar_logsCopied');
     };
 
     render() {

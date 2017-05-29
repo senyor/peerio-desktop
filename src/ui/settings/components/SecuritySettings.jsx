@@ -172,6 +172,12 @@ class SecuritySettings extends React.Component {
                     {this.renderShowPassphraseSection()}
                 </section>
                 <section className="section-divider">
+                    <div className="title">
+                        {t('title_deviceRelatedStuff')}
+                    </div>
+                    <p>
+                        {t('title_deviceRelatedStuffDetail')}
+                    </p>
                     <Switch checked={User.current.autologinEnabled}
                         label={t('title_autologinSetting')}
                         onChange={this.onToggleAutologin} />

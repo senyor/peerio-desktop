@@ -76,6 +76,7 @@ class MessageInput extends ComposeInput {
         for (let i = 0; i < items.length; i++) {
             if (!items[i].type.startsWith('image/')) continue;
             const blob = items[i].getAsFile();
+            if (!blob) return;
             ev.preventDefault();
             ev.stopPropagation();
             const reader = new FileReader();

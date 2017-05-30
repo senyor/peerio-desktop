@@ -59,9 +59,14 @@
   }
 
   .email-invite {
-    font-size: 120%;
-    font-weight: 500;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .error-search {
+    @extend %hint-error-label;
+    color: $color-error;
+    margin-left: 48px;
+    margin-top: 6px;
   }
 }

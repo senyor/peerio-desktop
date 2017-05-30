@@ -114,27 +114,30 @@ class UserPicker extends React.Component {
                             </div>
                             <IconButton icon="close" onClick={this.handleClose} />
                         </div>
-                        <div className="new-message-search">
-                            <FontIcon value="search" />
-                            <div className="chip-wrapper">
-                                {this.selected.map(c =>
-                                    (<Chip key={c.username} className={css('chip-label', { 'not-found': c.notFound })}
-                                        onDeleteClick={() => this.selected.remove(c)} deletable>
-                                        {c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username}
-                                    </Chip>)
-                                )}
-                                <Input ref={this.onInputMount} placeholder={t('title_userSearch')} value={this.query}
-                                    onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
+                        <div className="message-search-wrapper">
+                            <div className="new-message-search">
+                                <FontIcon value="search" />
+                                <div className="chip-wrapper">
+                                    {this.selected.map(c =>
+                                        (<Chip key={c.username} className={css('chip-label', { 'not-found': c.notFound })}
+                                            onDeleteClick={() => this.selected.remove(c)} deletable>
+                                            {c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username}
+                                        </Chip>)
+                                    )}
+                                    <Input ref={this.onInputMount} placeholder={t('title_userSearch')} value={this.query}
+                                        onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
+                                </div>
+                                {/* TODO: make label dynamic */}
+                                <Button className={css('confirm', { hide: !this.selected.length })}
+                                    label={this.props.button || t('button_go')}
+                                    onClick={this.accept} disabled={!this.isValid} />
                             </div>
-                            {/* TODO: make label dynamic */}
-                            <Button className={css('confirm', { hide: !this.selected.length })}
-                                label={this.props.button || t('button_go')}
-                                onClick={this.accept} disabled={!this.isValid} />
+                            <div className="error-search"><T k="error_userNotFound" /></div>
                         </div>
                         {this.suggestInviteEmail ?
-                            <div className="flex-row flex-align-center flex-justify-between">
-                                <div className="email-invite"><T k="error_emailNotFound" />&nbsp;&nbsp;{this.suggestInviteEmail}</div>
-                                <Button primary raised onClick={this.invite} label={t('button_inviteEmailContact')} />
+                            <div className="flex-row flex-align-center flex-justify-between flex-shrink-0">
+                                <div className="email-invite">{this.suggestInviteEmail}</div>
+                                <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
                             </div>
                             : null}
                         <List selectable ripple >

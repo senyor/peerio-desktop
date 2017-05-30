@@ -18,7 +18,7 @@ class NewMessage extends React.Component {
     render() {
         return (
             <div className="create-new-message">
-                <UserPicker title={t('title_chatWith')} subtitle={t('title_chatWithSubtitle')} onAccept={this.handleAccept} onClose={this.handleClose} />
+                <UserPicker title={t('title_chatWith')} onAccept={this.handleAccept} onClose={this.handleClose} />
             </div>
         );
     }

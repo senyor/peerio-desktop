@@ -16,6 +16,7 @@ class UserPicker extends React.Component {
     @observable noGood = false;
     accepted = false;
     @observable suggestInviteEmail = '';
+    @observable showNotFoundError;
 
     @computed get options() {
         return contactStore.filter(this.query);
@@ -45,6 +46,7 @@ class UserPicker extends React.Component {
     };
 
     tryAcceptUsername() {
+        this.showNotFoundError = false;
         if (this.selected.find(s => s.username === this.query)) {
             return;
         }
@@ -56,6 +58,7 @@ class UserPicker extends React.Component {
         when(() => !c.loading, () => {
             setTimeout(() => c.notFound && this.selected.remove(c), 3000);
             this.suggestInviteEmail = (c.notFound && isEmail) ? q : '';
+            this.showNotFoundError = c.notFound;
         });
         this.query = '';
     }
@@ -76,7 +79,7 @@ class UserPicker extends React.Component {
 
     onInputMount(input) {
         if (!input) return;
-        input.getWrappedInstance().focus();
+        input.focus();
     }
 
     invite = () => {
@@ -110,7 +113,7 @@ class UserPicker extends React.Component {
                         <div className="chat-creation-header">
                             <div className="title">
                                 {this.props.title}
-                                {this.props.subtitle ? <span>{this.props.subtitle}</span> : '' }
+                                {this.props.subtitle ? <span>{this.props.subtitle}</span> : ''}
                             </div>
                             <IconButton icon="close" onClick={this.handleClose} />
                         </div>
@@ -124,7 +127,7 @@ class UserPicker extends React.Component {
                                             {c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username}
                                         </Chip>)
                                     )}
-                                    <Input ref={this.onInputMount} placeholder={t('title_userSearch')} value={this.query}
+                                    <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')} value={this.query}
                                         onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
                                 </div>
                                 {/* TODO: make label dynamic */}
@@ -132,7 +135,8 @@ class UserPicker extends React.Component {
                                     label={this.props.button || t('button_go')}
                                     onClick={this.accept} disabled={!this.isValid} />
                             </div>
-                            <div className="error-search"><T k="error_userNotFound" /></div>
+                            {this.showNotFoundError ? <T k="error_userNotFound" tag="div" className="error-search" /> : null}
+
                         </div>
                         {this.suggestInviteEmail ?
                             <div className="flex-row flex-align-center flex-justify-between flex-shrink-0">

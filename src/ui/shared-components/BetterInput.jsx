@@ -55,7 +55,7 @@ class BetterInput extends React.Component {
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
         if (this.accepted || this.rejected) return;
-        this.props.onAccept(this.inputRef.getWrappedInstance().inputNode.value, this.isValid);
+        this.props.onAccept(this.inputRef.inputNode.value, this.isValid);
         this.accepted = true;
     };
 
@@ -64,12 +64,12 @@ class BetterInput extends React.Component {
             if (!this.isValid) return;
             this.accepted = true;
             this.props.onAccept(this.value, this.isValid);
-            this.inputRef.getWrappedInstance().blur();
+            this.inputRef.blur();
         } if (e.key === 'Escape') {
             this.rejected = true;
             if (this.props.onReject) this.props.onReject();
             this.value = this.props.value || '';
-            this.inputRef.getWrappedInstance().blur();
+            this.inputRef.blur();
         }
     };
 
@@ -84,7 +84,7 @@ class BetterInput extends React.Component {
     }
 
     focus() {
-        if (this.inputRef) this.inputRef.getWrappedInstance().focus();
+        if (this.inputRef) this.inputRef.focus();
     }
 
 
@@ -95,7 +95,7 @@ class BetterInput extends React.Component {
         props.onBlur = this.onBlur;
         props.onChange = this.onChange;
         props.onKeyDown = this.onKeyDown;
-        props.ref = this.setRef;
+        props.innerRef = this.setRef;
         props.value = this.value;
         props.type = 'text';
         props.error = this.isValid ? '' : t(error);

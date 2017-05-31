@@ -26,7 +26,7 @@ class PasscodeLock extends React.Component {
     };
 
     onInputMount(ref) {
-        if (ref) ref.refs.wrappedInstance.focus();
+        if (ref) ref.focus();
     }
     validatePasscode = _.debounce(() => {
         User.current.validatePasscode(this.passcode)
@@ -43,7 +43,7 @@ class PasscodeLock extends React.Component {
                     label={t('title_devicePassword')}
                     onChange={this.handleChange}
                     error={this.error}
-                    ref={this.onInputMount} />
+                    innerRef={this.onInputMount} />
             </div>
         );
     }

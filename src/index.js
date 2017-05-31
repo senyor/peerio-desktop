@@ -1,5 +1,5 @@
-require('~/helpers/console-history');
 const isDevEnv = require('~/helpers/is-dev-env');
+if (!isDevEnv) require('~/helpers/console-history');
 const { ipcRenderer, webFrame } = require('electron');
 
 

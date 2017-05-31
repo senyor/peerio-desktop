@@ -107,7 +107,7 @@ class SecuritySettings extends React.Component {
                 </p>
                 <div className="account-key-toggle">
                     {this.passphraseVisible
-                        ? User.current.passphrase
+                        ? <span style={{ userSelect: 'text' }}>{User.current.passphrase}</span>
                         : <span style={{ fontSize: '300%', lineHeight: '90%' }}>
                             &middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;
                         </span>}

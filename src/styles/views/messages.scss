@@ -90,7 +90,7 @@ $suggests-max-height: 200px;
 
     .title {
       @extend %flex-row;
-      color: $text-dark-secondary;
+      color: $text-dark-primary;
       font-size: 20px;
       font-weight: $font-weight-bold;
       height: 24px;
@@ -378,8 +378,9 @@ $suggests-max-height: 200px;
           margin: 0 $padding-small 0 $padding-default;
 
           .username {
-            font-weight: $font-weight-regular;
+            color: $text-dark-secondary;
             font-style: italic;
+            font-weight: $font-weight-regular;
           }
         }
       }

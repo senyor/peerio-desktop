@@ -267,6 +267,7 @@
     padding: $padding-default;
     position: absolute;
     width: 100%;
+    z-index: 10;
   }
 
   .zero-file {

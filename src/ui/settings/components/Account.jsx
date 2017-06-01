@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Switch } = require('~/react-toolbox');
+const { Button, Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
 const uiStore = require('~/stores/ui-store');
@@ -26,7 +26,7 @@ class Account extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="flex-col flex-grow-1">
                 <section className="section-divider">
                     <div className="title">{t('title_promoConsentRequestTitle')}</div>
                     <Switch checked={User.current.settings.subscribeToPromoEmails}
@@ -45,7 +45,12 @@ class Account extends React.Component {
                         label={t('title_dataCollectionMessage')}
                         onChange={this.onDataCollectionChanged} />
                 </section>
+                <section className="delete-account">
 
+                    {/* TODO: This button should trigger a dialog that will actually start the delete process.
+
+                      <Button label="button_deleteAccount" /> */}
+                </section>
             </div>
         );
     }

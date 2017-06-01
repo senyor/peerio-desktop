@@ -22,6 +22,7 @@ class RouterStore {
             chat: '/app',
             mail: '/app/mail',
             files: 'app/files',
+            contacts: 'app/contacts',
             profile: '/app/settings/profile',
             security: '/app/settings/security',
             prefs: '/app/settings/preferences',

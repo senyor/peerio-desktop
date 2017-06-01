@@ -3,9 +3,8 @@ $suggests-max-height: 200px;
 
 // view wrapper
 .messages {
+  @extend %flex-row;
   background: $background-root;
-  display: flex;
-  flex-direction: row;
 
   .starred,
   .starred .material-icons {

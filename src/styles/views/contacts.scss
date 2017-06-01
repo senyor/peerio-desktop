@@ -1,0 +1,149 @@
+.contacts {
+  @extend %flex-row;
+  background: $background-root;
+
+  // TODO: this is pretty much the same as chat-list. Make a more generic style that both can use.
+  // the same styling will probably be used for file folders UI as well.
+  .contact-groups {
+    @extend %flex-shrink-0;
+    background: $color-dark-03;
+    border-right: 1px solid $divider-dark;
+    cursor: pointer;
+    height: 100vh;
+    position: relative;
+    width: $chat-list-width;
+
+    .active {
+      background: $color-dark-12;
+      font-weight: $font-weight-bold;
+    }
+
+    .rt-list-list {
+      padding-top: 0;
+
+      .rt-list-itemText {
+        font-size: 14px;
+      }
+    }
+
+    .wrapper-button-add-chat {
+      @extend %flex-row;
+      @extend %flex-align-center;
+      background-color: $color-dark-06;
+      border-bottom: 1px solid $divider-dark;
+      cursor: pointer;
+      height: 80px;
+      padding: 0 12px;
+
+      &:hover {
+        background-color: $color-dark-03;
+      }
+
+      .material-icons {
+        background: $color-accent;
+        border-radius: 40px;
+        color: $text-light-primary;
+        height: 40px;
+        line-height: 40px;
+        margin-right: $margin-large;
+        text-align: center;
+        width: 40px;
+      }
+    }
+  }
+
+  .contacts-view {
+    @extend %flex-col;
+    @extend %flex-grow-1;
+    @extend %flex-shrink-1;
+    position: relative;
+    // FIXME remove calc?
+    width: calc(100vw - 352px);
+  }
+
+  .toolbar {
+    @extend %flex-row;
+    @extend %flex-shrink-0;
+    @extend %flex-align-center;
+    border-bottom: 1px solid $divider-dark;
+    height: 80px;
+
+    .material-icons {
+      font-size: 48px;
+      margin-left: 32px;
+    }
+
+    .rt-input-input {
+      margin-left: $margin-small;
+      margin-top: 0;
+
+      input {
+        border: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .list-sort {
+    @extend %flex-row;
+    @extend %flex-shrink-0;
+    @extend %flex-align-center;
+    background: $color-dark-06;
+    height: 48px;
+    padding-left: 32px;
+    width: 100%;
+  }
+
+  .contact-list {
+    @extend %flex-col;
+    overflow: auto;
+    padding-top: 8px;
+
+    .contact-list-section {
+      @extend %flex-row;
+      border-bottom: 1px solid $divider-dark;
+      padding: 24px 0 32px;
+
+      .contact-list-section-marker {
+        @extend %flex-row;
+        @extend %flex-grow-1;
+        @extend %flex-justify-center;
+        color: $color-brand-blue;
+        font-size: 24px;
+        max-width: 224px;
+        min-width: 120px;
+        padding-top: $padding-large;
+      }
+
+      .contact-list-section-content {
+        @extend %flex-col;
+        width: 600px;
+      }
+    }
+  }
+
+  .invite-form {
+    width: 480px;
+
+    .invite-form-actions {
+      @extend %flex-row;
+      @extend %flex-justify-end;
+      margin-top: $margin-large;
+    }
+
+    .facebook-share-button,
+    .twitter-share-button {
+      @extend %flex-row;
+      @extend %flex-align-center;
+      @extend %flex-justify-center;
+      height: 36px;
+      width: 36px;
+
+      img {
+        height: 24px;
+        opacity: .54;
+        width: 24px;
+      }
+    }
+  }
+}

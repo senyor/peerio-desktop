@@ -49,15 +49,15 @@ class ContactProfile extends React.Component {
                         {t('error_contactFingerprintChangedDetail')}
                     </div>
                     : null}
-                <div className="row flex-col">
-                    <div className="flex-row flex-align-center flex-grow-1">
-                        {/* TODO: use our Avatar component instead, and strip it of mouse events */}
-                        <RTAvatar style={{ backgroundColor: c.color }} >{c.letter}</RTAvatar>
-                        <div style={{ marginLeft: '8px' }} className="flex-col">
-                            <div className="title">{c.username}</div>
-                            <div >{c.firstName} {c.lastName}</div>
-                        </div>
+                <div className="flex-row flex-align-center flex-grow-1">
+                    {/* TODO: use our Avatar component instead, and strip it of mouse events */}
+                    <RTAvatar style={{ backgroundColor: c.color }} >{c.letter}</RTAvatar>
+                    <div style={{ marginLeft: '8px' }} className="flex-col">
+                        <div className="title">{c.username}</div>
+                        <div >{c.firstName} {c.lastName}</div>
                     </div>
+                </div>
+                <div className="row flex-row flex-align-center">
                     <div className="profile-actions">
                         <TooltipIconButton
                             tooltip={t('title_haveAChat')}
@@ -73,7 +73,6 @@ class ContactProfile extends React.Component {
                             tooltipDelay={500}
                             icon="delete" /> */}
                     </div>
-
                 </div>
                 <div className="row">
                     <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>

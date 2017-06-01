@@ -776,7 +776,8 @@ $suggests-max-height: 200px;
   }
 
   .rt-list-subheader {
-    border-bottom: 1px solid $divider-dark;
+    // border-bottom: 1px solid $divider-dark;
+    margin-top: 0;
   }
 
   .rt-input-input {

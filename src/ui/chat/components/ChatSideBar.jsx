@@ -18,17 +18,19 @@ class ChatSideBar extends React.Component {
                 <div className="flex-row flex-shrink-0">
                     <ChatNameEditor showLabel tabIndex="-1" />
                 </div>
-                <List selectable>
+                {/* Commenting out for now. Current state of functionality is confusing users.
+                  <List selectable>
                     <ListItem
                         disabled={chatStore.hidingChat}
                         leftIcon="remove_circle_outline"
                         caption={t('button_hideChat')}
                         onClick={chatStore.activeChat.hide}
                     />
-                    {/* <ListItem
+                    <ListItem
                       leftIcon="notifications_none"
-                      caption="button_muteChat" /> */}
-                </List>
+                      caption="button_muteChat" />
+                  </List>
+                */}
                 <div className={`rt-list-subheader ${banishHeader}`}>{t('title_Members')} </div>
                 <div style={{ overflow: 'auto' }}>
                     <List>

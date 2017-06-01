@@ -49,7 +49,7 @@ class ContactProfile extends React.Component {
                         {t('error_contactFingerprintChangedDetail')}
                     </div>
                     : null}
-                <div className="row flex-row flex-align-center">
+                <div className="row flex-col">
                     <div className="flex-row flex-align-center flex-grow-1">
                         {/* TODO: use our Avatar component instead, and strip it of mouse events */}
                         <RTAvatar style={{ backgroundColor: c.color }} >{c.letter}</RTAvatar>

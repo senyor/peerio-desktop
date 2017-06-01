@@ -6,6 +6,7 @@ const { ProgressBar, TooltipIconButton } = require('~/react-toolbox');
 const cfg = require('~/config.js');
 const { contactStore, chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
+const routerStore = require('~/stores/router-store');
 
 @observer
 class ContactProfile extends React.Component {
@@ -17,6 +18,7 @@ class ContactProfile extends React.Component {
         this.contact = contactStore.getContact(next.username);
     }
     startChat = () => {
+        routerStore.navigateTo(routerStore.ROUTES.chat);
         chatStore.startChat([this.contact]);
         if (this.props.onClose) this.props.onClose();
     };

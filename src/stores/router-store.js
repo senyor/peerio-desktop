@@ -12,6 +12,11 @@ class RouterStore {
         this.currentRoute = route.pathname;
     };
 
+    navigateTo(path) {
+        if (this.currentRoute === path) return;
+        window.router.push(path);
+    }
+
     get ROUTES() {
         return {
             chat: '/app',

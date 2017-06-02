@@ -46,9 +46,7 @@ class Account extends React.Component {
                         onChange={this.onDataCollectionChanged} />
                 </section>
                 <section className="delete-account">
-
                     {/* TODO: This button should trigger a dialog that will actually start the delete process.
-
                       <Button label="button_deleteAccount" /> */}
                 </section>
             </div>

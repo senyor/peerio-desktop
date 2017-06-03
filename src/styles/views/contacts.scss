@@ -115,6 +115,7 @@
       @extend %flex-row;
       border-bottom: 1px solid $divider-dark;
       padding: 24px 0 32px;
+      flex-shrink: 0;
 
       .contact-list-section-marker {
         @extend %flex-row;

@@ -12,10 +12,10 @@ class InvitedContacts extends React.Component {
 
     contactActions() {
         return (<div>
-            <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} />
+            <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} tooltipPosition="left" />
             {this.added
-                ? <TooltipIconButton icon="delete" tooltip={t('button_delete')} />
-                : <TooltipIconButton icon="person_add" tooltip={t('button_addToYourContacts')} />}
+                ? <TooltipIconButton icon="delete" tooltip={t('button_delete')} tooltipPosition="left" />
+                : <TooltipIconButton icon="person_add" tooltip={t('button_addToYourContacts')} tooltipPosition="left" />}
         </div>
         );
     }
@@ -30,11 +30,11 @@ class InvitedContacts extends React.Component {
                 <div className="contact-list">
                     <List selectable ripple className="contact-list-section-content">
                         {contactStore.invitedContacts.map(c =>
-                                    (<ListItem key={c.email}
-                                        caption={c.email}
-                                        legend={moment(c.added).fromNow()}
-                                        rightIcon={this.contactActions()}
-                                        />)
+                            (<ListItem key={c.email}
+                                caption={c.email}
+                                legend={moment(c.added).fromNow()}
+                                rightIcon={this.contactActions()}
+                            />)
                         )}
                     </List>
                 </div>

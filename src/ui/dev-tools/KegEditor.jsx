@@ -63,11 +63,12 @@ class KegEditor extends React.Component {
         this.loading = true;
         socket.send('/auth/kegs/get', { kegDbId: this.selectedDb.id, kegId: id })
             .then(resp => {
+                this.keg = resp; // in case decrypt fails
                 if (resp.payload instanceof ArrayBuffer) {
                     resp.payload = secret.decryptString(new Uint8Array(resp.payload), this.selectedDb.key);
                 }
                 resp.payload = JSON.parse(resp.payload);
-                this.keg = resp;
+                this.keg = resp; // to trigger mobx render
             })
             .catch(err => {
                 console.error(err);

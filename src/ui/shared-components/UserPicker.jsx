@@ -118,7 +118,7 @@ class UserPicker extends React.Component {
                             <IconButton icon="close" onClick={this.handleClose} />
                         </div>
                         <div className="message-search-wrapper">
-                            <div className="new-message-search">
+                            <div className="new-chat-search">
                                 <FontIcon value="search" />
                                 <div className="chip-wrapper">
                                     {this.selected.map(c =>
@@ -130,7 +130,6 @@ class UserPicker extends React.Component {
                                     <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')} value={this.query}
                                         onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
                                 </div>
-                                {/* TODO: make label dynamic */}
                                 <Button className={css('confirm', { hide: !this.selected.length })}
                                     label={this.props.button || t('button_go')}
                                     onClick={this.accept} disabled={!this.isValid} />

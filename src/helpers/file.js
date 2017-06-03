@@ -32,9 +32,9 @@ function downloadFile(file) {
         .then(p => {
             finalPath = p;
             return file.download(p);
-        })
-        .then(() => electron.app.dock && electron.app.dock.downloadFinished(finalPath))
-        .then(() => electron.getCurrentWindow().previewFile(finalPath));
+        }) // todo: file.cached is a temporary hack
+        .then(() => file.cached && electron.app.dock && electron.app.dock.downloadFinished(finalPath))
+        .then(() => file.cached && electron.getCurrentWindow().previewFile(finalPath));
 }
 
 function pickSystemFiles() {

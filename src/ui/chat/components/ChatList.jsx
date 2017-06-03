@@ -18,7 +18,7 @@ class ChatList extends React.Component {
     }
 
     newMessage = () => {
-        window.router.push('/app/new-message');
+        window.router.push('/app/new-chat');
     };
 
     getProgressBar = loading => {

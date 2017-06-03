@@ -151,7 +151,7 @@ class Message extends React.Component {
                                 ? null
                                 : <div className="meta-data">
                                     <div className="user selectable">
-                                        {m.sender.fullName} <span className="username">{m.sender.username}</span>
+                                        {m.sender.fullName} <span className="username selectable">{m.sender.username}</span>
                                     </div>
                                     <div className="timestamp selectable">{time.format(m.timestamp)}</div>
                                 </div>

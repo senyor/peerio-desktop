@@ -1,66 +1,54 @@
 const React = require('react');
-const { observable, computed } = require('mobx');
-const { observer } = require('mobx-react');
-const { FontIcon, Input, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
-const ContactGroups = require('./ContactGroups');
-const Avatar = require('~/ui/shared-components/Avatar');
-const { contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
+const { FontIcon, List, ListItem, ListDivider } = require('~/react-toolbox');
+const { observer } = require('mobx-react');
+const routerStore = require('~/stores/router-store');
+const { contactStore } = require('~/icebear');
+const css = require('classnames');
 
 @observer
 class Contacts extends React.Component {
-    @observable query = '';
-    @observable yourContact = true;
-    @observable invitedContact = false;
-    @computed get options() {
-        return contactStore.filter(this.query);
+    toAddNew() {
+        routerStore.navigateTo(routerStore.ROUTES.newContact);
     }
 
-    contactActions() {
-        return (<div>
-            <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} />
-            { this.yourContact
-                    ? <TooltipIconButton icon="delete" tooltip={t('button_delete')} />
-                    : <TooltipIconButton icon="person_add" tooltip={t('button_addToYourContacts')} /> }
-        </div>
-        );
+    toAdded() {
+        routerStore.navigateTo(routerStore.ROUTES.contacts);
+        contactStore.uiViewFilter = 'added';
+    }
+    toInvited() {
+        routerStore.navigateTo(routerStore.ROUTES.invitedContacts);
+    }
+
+    toAll() {
+        routerStore.navigateTo(routerStore.ROUTES.contacts);
+        contactStore.uiViewFilter = 'all';
     }
 
     render() {
+        const isAddedActive = routerStore.currentRoute === routerStore.ROUTES.contacts
+                && contactStore.uiViewFilter === 'added';
+        const isAllActive = routerStore.currentRoute === routerStore.ROUTES.contacts
+                && contactStore.uiViewFilter === 'all';
+        const isInvitedActive = routerStore.currentRoute === routerStore.ROUTES.invitedContacts;
         return (
             <div className="contacts">
-                <ContactGroups />
-                <div className="contacts-view">
-                    <div className="toolbar">
-                        <FontIcon value="search" />
-                        <Input placeholder="Find a contact" />
+                <div className="contact-groups">
+                    <div className="wrapper-button-add-chat" onClick={this.toAddNew}>
+                        <FontIcon value="add" />
+                        <div>{t('button_addAContact')}</div>
                     </div>
-                    <div className="list-sort">
-                        Sort by: <strong>First name</strong> <FontIcon value="keyboard_arrow_down" />
-                    </div>
-
-                    <div className="contact-list">
-                        {/* A section per letter. */}
-                        <div className="contact-list-section">
-                            <div className="contact-list-section-marker">
-                              A
-                            </div>
-                            <List selectable ripple className="contact-list-section-content">
-                                {this.options.map(c =>
-                                    (<ListItem key={c.username}
-                                        leftActions={[<Avatar key="a" contact={c} />]}
-                                        caption={c.username}
-                                        legend={`${c.firstName} ${c.lastName}`}
-                                        rightIcon={
-                                          this.invitedContact
-                                            ? <TooltipIconButton icon="email" tooltip={t('button_resendInvite')} />
-                                            : this.contactActions()
-                                        } />)
-                                )}
-                            </List>
-                        </div>
-                    </div>
+                    <List selectable ripple>
+                        <ListItem caption={`${t('title_yourContacts')} (${contactStore.addedContacts.length})`}
+                        className={css({ active: isAddedActive })} onClick={this.toAdded} />
+                        <ListItem caption={`${t('title_invitedContacts')} (${contactStore.invitedContacts.length})`}
+                            className={css({ active: isInvitedActive })} onClick={this.toInvited} />
+                        <ListDivider />
+                        <ListItem caption={`${t('title_allContacts')} (${contactStore.contacts.length})`}
+                            className={css({ active: isAllActive })} onClick={this.toAll} />
+                    </List>
                 </div>
+                {this.props.children}
             </div>
         );
     }

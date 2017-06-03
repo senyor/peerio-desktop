@@ -3,7 +3,7 @@ const AppNav = require('~/ui/AppNav');
 const uiStore = require('~/stores/ui-store');
 const { Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const ContactProfile = require('~/ui/contact/ContactProfile');
+const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { observer } = require('mobx-react');
 const { observable } = require('mobx');
 

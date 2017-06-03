@@ -67,51 +67,21 @@ const menuItemStyle = { minWidth: '250px' };
 @observer
 class AppNav extends React.Component {
 
+    constructor() {
+        super();
+        ['mail', 'chat', 'files', 'contacts', 'profile', 'security', 'prefs', 'account', 'about', 'help']
+        .forEach(route => {
+            this[`to${route[0].toUpperCase()}${route.slice(1)}`] = function() {
+                routerStore.navigateTo(routerStore.ROUTES[route]);
+            };
+        });
+    }
+
     componentWillMount() {
         // since this component shows new items notifications, we also make it show dock icon notifications
         startDockNotifications();
         startDesktopNotifications();
         startTaskbarOverlay();
-    }
-
-    toMail() {
-        window.router.push(routerStore.ROUTES.mail);
-    }
-
-    toChat() {
-        window.router.push(routerStore.ROUTES.chat);
-    }
-
-    toFiles() {
-        window.router.push(routerStore.ROUTES.files);
-    }
-
-    toContacts() {
-        window.router.push(routerStore.ROUTES.contacts);
-    }
-
-    toProfile() {
-        window.router.push(routerStore.ROUTES.profile);
-    }
-
-    toSecurity() {
-        window.router.push(routerStore.ROUTES.security);
-    }
-
-    toPrefs() {
-        window.router.push(routerStore.ROUTES.prefs);
-    }
-
-    toAccount() {
-        window.router.push(routerStore.ROUTES.account);
-    }
-
-    toAbout() {
-        window.router.push(routerStore.ROUTES.about);
-    }
-
-    toHelp() {
-        window.router.push(routerStore.ROUTES.help);
     }
 
     async signout() {
@@ -156,17 +126,17 @@ class AppNav extends React.Component {
                 </div>
                 <div className="app-menu">
                     <AppNavButton tooltip={t('title_chats')} icon="forum"
-                        active={routerStore.currentRoute === routerStore.ROUTES.chat}
+                        active={routerStore.currentRoute.startsWith(routerStore.ROUTES.chat)}
                         showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
                         onClick={this.toChat} />
 
                     <AppNavButton tooltip={t('title_files')} icon="folder"
-                        active={routerStore.currentRoute === routerStore.ROUTES.files}
+                        active={routerStore.currentRoute.startsWith(routerStore.ROUTES.files)}
                         showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
                         onClick={this.toFiles} />
 
                     <AppNavButton tooltip={t('title_contacts')} icon="people"
-                        active={routerStore.currentRoute === routerStore.ROUTES.contacts}
+                        active={routerStore.currentRoute.startsWith(routerStore.ROUTES.contacts)}
                         onClick={this.toContacts} />
 
                     <div className="usage">

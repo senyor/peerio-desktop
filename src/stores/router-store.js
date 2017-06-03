@@ -23,6 +23,8 @@ class RouterStore {
             mail: '/app/mail',
             files: 'app/files',
             contacts: 'app/contacts',
+            invitedContacts: 'app/contacts/invited',
+            newContact: 'app/contacts/new-contact',
             profile: '/app/settings/profile',
             security: '/app/settings/security',
             prefs: '/app/settings/preferences',

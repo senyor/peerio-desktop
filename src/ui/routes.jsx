@@ -5,7 +5,7 @@ const Root = require('./Root');
 const Login = require('./login/Login');
 const Signup = require('./signup/Signup');
 const Chat = require('./chat/Chat');
-const NewMessage = require('./chat/NewMessage');
+const NewChat = require('./chat/NewChat');
 const Files = require('./files/Files');
 const ShareFiles = require('./files/ShareFiles');
 const Mail = require('./mail/Mail');
@@ -22,7 +22,9 @@ const KegEditor = require('./dev-tools/KegEditor');
 const NewDevice = require('./login/NewDevice');
 const AutoLogin = require('~/ui/login/AutoLogin');
 const Contacts = require('./contact/Contacts');
-const ContactInvite = require('./contact/ContactInvite');
+const InvitedContacts = require('./contact/InvitedContacts');
+const ContactList = require('./contact/ContactList');
+const NewContact = require('./contact/NewContact');
 
 module.exports = (
     <Route path="/" component={Root}>
@@ -32,11 +34,14 @@ module.exports = (
         <Route path="autologin" component={AutoLogin} />
         <Route path="/app" component={App} >
             <IndexRoute component={Chat} />
-            <Route path="new-message" component={NewMessage} />
+            <Route path="new-chat" component={NewChat} />
             <Route path="files" component={Files} />
             <Route path="sharefiles" component={ShareFiles} />
-            <Route path="contacts" component={Contacts} />
-            <Route path="contact-invite" component={ContactInvite} />
+            <Route path="contacts" component={Contacts} >
+                <IndexRoute component={ContactList} />
+                <Route path="invited" component={InvitedContacts} />
+                <Route path="new-contact" component={NewContact} />
+            </Route>
             <Route path="mail" component={Mail} />
             <Route path="settings" component={Settings}>
                 <Route path="profile" component={Profile} />

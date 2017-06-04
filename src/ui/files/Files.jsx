@@ -6,7 +6,7 @@ const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
 const ZeroScreen = require('./components/ZeroScreen');
-const { pickSystemFiles } = require('~/helpers/file');
+const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const urls = require('~/config').translator.urlMap;
@@ -28,7 +28,7 @@ const { getListOfFiles } = require('~/helpers/file');
     }
 
     handleUpload() {
-        pickSystemFiles().then(paths => {
+        pickLocalFiles().then(paths => {
             if (!paths || !paths.length) return;
             const list = getListOfFiles(paths);
             if (!list.success.length) return;

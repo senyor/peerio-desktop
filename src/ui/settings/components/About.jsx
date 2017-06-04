@@ -5,6 +5,7 @@ const { Button, Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
+const { socket } = require('~/icebear');
 
 @observer
 class About extends React.Component {
@@ -28,6 +29,9 @@ class About extends React.Component {
                     <img alt="" className="logo" src="static/img/logo-blue.png" />
                     <p>
                         {t('title_version')} <strong>{version}</strong>
+                    </p>
+                    <p>
+                        {t('title_networkLatency')} <strong>{socket.latency}ms</strong>
                     </p>
 
                 </section>

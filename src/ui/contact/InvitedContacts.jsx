@@ -6,17 +6,25 @@ const Avatar = require('~/ui/shared-components/Avatar');
 const { contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const moment = require('moment');
+const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class InvitedContacts extends React.Component {
-
-    contactActions() {
-        return (<div>
-            <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} tooltipPosition="left" />
-            {this.added
-                ? <TooltipIconButton icon="delete" tooltip={t('button_delete')} tooltipPosition="left" />
-                : <TooltipIconButton icon="person_add" tooltip={t('button_addToYourContacts')} tooltipPosition="left" />}
-        </div>
+    removeInvite(ev) {
+        const email = getAttributeInParentChain(ev.target, 'data-id');
+        // constctStore.removeInvite(email);
+        console.error('Removie invite not implemented yet');
+    }
+    resendInvite(ev) {
+        const email = getAttributeInParentChain(ev.target, 'data-id');
+        contactStore.invite(email);
+    }
+    contactActions(c) {
+        return (
+            <div data-id={c.email}>
+                <TooltipIconButton icon="email" tooltip={t('button_resendInvite')} tooltipPosition="left" onClick={this.resendInvite} />
+                <TooltipIconButton icon="delete" tooltip={t('button_delete')} tooltipPosition="left" onClick={this.removeInvite} />
+            </div>
         );
     }
 
@@ -28,14 +36,15 @@ class InvitedContacts extends React.Component {
                 <div className="list-sort" />
 
                 <div className="contact-list">
-                    <List selectable ripple className="contact-list-section-content">
+                    <List className="contact-list-section-content">
                         {contactStore.invitedContacts.map(c =>
-                            (<ListItem key={c.email}
+                            (<ListItem ripple={false} key={c.email}
+                            leftIcon={<div className="avatar-invited material-icons">person</div>}
                                 caption={c.email}
-                                legend={moment(c.added).fromNow()}
-                                rightIcon={this.contactActions()}
+                                legend={`${t('title_invited')} ${moment(c.added).fromNow()}`}
+                                rightIcon={this.contactActions(c)}
                             />)
-                        )}
+                            )}
                     </List>
                 </div>
             </div>

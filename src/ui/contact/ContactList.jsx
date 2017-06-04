@@ -73,10 +73,10 @@ class ContactList extends React.Component {
                                 <div className="contact-list-section-marker">
                                     {section.letter}
                                 </div>
-                                <List selectable ripple className="contact-list-section-content">
+                                <List className="contact-list-section-content">
                                     {section.items.map(c =>
                                         (
-                                            <ListItem key={c.username}
+                                            <ListItem key={c.username} ripple={false}
                                                 leftActions={[<Avatar key="a" contact={c} />]}
                                                 caption={c.username}
                                                 legend={`${c.firstName} ${c.lastName}`}

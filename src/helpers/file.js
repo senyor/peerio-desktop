@@ -37,7 +37,7 @@ function downloadFile(file) {
         .then(() => file.cached && electron.getCurrentWindow().previewFile(finalPath));
 }
 
-function pickSystemFiles() {
+function pickLocalFiles() {
     return new Promise(resolve => {
         const win = electron.getCurrentWindow();
         electron.dialog.showOpenDialog(win, {
@@ -99,4 +99,4 @@ function getListOfFiles(paths) {
     return ret;
 }
 
-module.exports = { downloadFile, pickSystemFiles, getListOfFiles };
+module.exports = { downloadFile, pickLocalFiles, getListOfFiles };

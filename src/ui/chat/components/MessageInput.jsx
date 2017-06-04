@@ -5,7 +5,7 @@ const { observe } = require('mobx');
 const { observer } = require('mobx-react');
 const { fileStore, chatStore } = require('~/icebear');
 const ComposeInput = require('../../shared-components/ComposeInput');
-const { pickSystemFiles } = require('~/helpers/file');
+const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const Snackbar = require('~/ui/shared-components/Snackbar');
 const uiStore = require('~/stores/ui-store');
@@ -22,7 +22,7 @@ class MessageInput extends ComposeInput {
     }
 
     handleUpload = () => {
-        pickSystemFiles().then(paths => {
+        pickLocalFiles().then(paths => {
             if (!paths || !paths.length) return;
             chatStore.activeChat.uploadAndShareFile(paths[0]);
         });

@@ -114,8 +114,8 @@
     .contact-list-section {
       @extend %flex-row;
       border-bottom: 1px solid $divider-dark;
-      padding: 24px 0 32px;
       flex-shrink: 0;
+      padding: 24px 0 32px;
 
       .contact-list-section-marker {
         @extend %flex-row;
@@ -132,6 +132,10 @@
         @extend %flex-col;
         width: 600px;
       }
+    }
+
+    .rt-list-itemText {
+      user-select: text;
     }
   }
 
@@ -157,5 +161,15 @@
         width: 24px;
       }
     }
+  }
+
+  .avatar-invited {
+    background: $color-dark-06;
+    border-radius: 40px;
+    color: $text-dark-secondary;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    width: 40px;
   }
 }

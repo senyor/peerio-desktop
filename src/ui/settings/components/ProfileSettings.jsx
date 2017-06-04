@@ -1,17 +1,20 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Input, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
+const { Button, Input, List, ListItem, TooltipIconButton, IconButton } = require('~/react-toolbox');
 const { User, contactStore, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const css = require('classnames');
+const electron = require('electron').remote;
+const AvatarEditor = require('./AvatarEditor');
 
 @observer
 class Profile extends React.Component {
     @observable addMode = false;
     @observable newEmail = '';
     @observable newEmailValid = false;
+    @observable showAvatarEditor = false;
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
@@ -32,6 +35,26 @@ class Profile extends React.Component {
             User.current.lastName = prev;
         });
     }
+    // avatar ------
+    handleAddAvatar = () => {
+        const win = electron.getCurrentWindow();
+        electron.dialog.showOpenDialog(win, {
+            properties: ['openFile'],
+            filters: [{ name: t('title_images'), extensions: ['jpg', 'jpeg', 'png', 'gif', 'bmp'] }]
+        }, files => {
+            if (!files || !files.length) return;
+            this.newAvatarFile = files[0];
+            this.showAvatarEditor = true;
+        });
+    }
+    closeAvatarEditor = () => {
+        this.showAvatarEditor = false;
+    }
+    saveAvatar = (blobs) => {
+        console.debug(blobs);
+        this.showAvatarEditor = false;
+    };
+
     // ----- Emails -----
     switchToAddMode = () => {
         this.newEmail = '';
@@ -96,6 +119,12 @@ class Profile extends React.Component {
     render() {
         const f = this.contact.fingerprint.split('-');
         const user = User.current;
+        if (this.showAvatarEditor) {
+            return (<section className="flex-row">
+                <AvatarEditor file={this.newAvatarFile} onClose={this.closeAvatarEditor}
+                    onSave={this.saveAvatar} />
+            </section>);
+        }
         return (
             <section className="flex-row">
                 <div>
@@ -186,11 +215,11 @@ class Profile extends React.Component {
                         {this.contact.letter}
                     </div>
                     <div className="card-footer">
-                        {/* <IconButton icon="delete"
-                                    className={css({ banish: !this.avatarImage })}
-                                    onClick={this.handleDeleteAvatar} />
+                        <IconButton icon="delete"
+                            className={css({ banish: false })}
+                            onClick={this.handleDeleteAvatar} />
                         <IconButton icon="add_a_photo"
-                                    onClick={this.handleAddAvatar} /> */}
+                            onClick={this.handleAddAvatar} />
                     </div>
                 </div>
             </section>

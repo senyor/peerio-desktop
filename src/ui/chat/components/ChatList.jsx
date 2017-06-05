@@ -73,7 +73,7 @@ class ChatList extends React.Component {
                                                 : null}
                                         leftActions={[
                                             c.participants && c.participants.length === 1
-                                                ? <Avatar key="a" contact={c.participants[0]} />
+                                                ? <Avatar key="a" contact={c.participants[0]} size="small" />
                                                 : null
                                         ]}
 

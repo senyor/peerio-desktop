@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Input, List, ListItem, TooltipIconButton, IconButton } = require('~/react-toolbox');
+const { Button, Input, List, ListItem, TooltipIconButton, IconButton, ProgressBar } = require('~/react-toolbox');
 const { User, contactStore, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -47,12 +47,27 @@ class Profile extends React.Component {
             this.showAvatarEditor = true;
         });
     }
+    handleDeleteAvatar = () => {
+        User.current.deleteAvatar();
+    }
     closeAvatarEditor = () => {
         this.showAvatarEditor = false;
     }
     saveAvatar = (blobs) => {
-        console.debug(blobs);
+        const buffers = [];
         this.showAvatarEditor = false;
+        let c = 0;
+        const reader = new FileReader();
+        reader.onload = function() {
+            buffers.push(reader.result);
+            if (c === 1) {
+                User.current.saveAvatar(buffers);
+                return;
+            }
+            c++;
+            reader.readAsArrayBuffer(blobs[c]);
+        };
+        reader.readAsArrayBuffer(blobs[c]);
     };
 
     // ----- Emails -----
@@ -199,8 +214,8 @@ class Profile extends React.Component {
                 </div>
                 <div className="avatar-card"
                     style={{
-                        backgroundColor: this.contact.color
-                        // backgroundImage: this.avatarImage
+                        backgroundColor: this.contact.color,
+                        backgroundImage: this.contact.hasAvatar ? `url(${this.contact.largeAvatarUrl})` : 'none'
                     }}>
                     <div className="avatar-card-user">
                         <div className="avatar-card-display-name">
@@ -211,16 +226,18 @@ class Profile extends React.Component {
                         </div>
                     </div>
                     <div className="avatar-card-initial">
-                        {/* {this.avatarImage ? '' : this.contact.letter} */}
-                        {this.contact.letter}
+                        {this.contact.hasAvatar ? null : this.contact.letter}
                     </div>
                     <div className="card-footer">
                         <IconButton icon="delete"
-                            className={css({ banish: false })}
+                            className={css({ banish: !this.contact.hasAvatar })}
                             onClick={this.handleDeleteAvatar} />
                         <IconButton icon="add_a_photo"
                             onClick={this.handleAddAvatar} />
                     </div>
+                    {User.current.savingAvatar ? <div className="save-progress-overlay flex-row flex-justify-center flex-align-center">
+                        <ProgressBar type="circular" mode="indeterminate" />
+                    </div> : null}
                 </div>
             </section>
         );

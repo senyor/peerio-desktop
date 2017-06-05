@@ -181,7 +181,7 @@ class MessageList extends React.Component {
         return (
             <div className="messages-start">
                 <div className="avatars">
-                    {chatStore.activeChat.participants.map(c => <Avatar key={c.username} contact={c} />)}
+                    {chatStore.activeChat.participants.map(c => <Avatar size="large" key={c.username} contact={c} />)}
                 </div>
                 <div className="title">
                     {t('title_chatBeginning')}

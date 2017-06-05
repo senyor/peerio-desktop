@@ -4,7 +4,7 @@ const RTAvatar = require('~/react-toolbox').Avatar;
 const { FontIcon } = require('~/react-toolbox');
 const uiStore = require('~/stores/ui-store');
 const { contactStore } = require('~/icebear');
-// todo: cache avatar component for every contact?
+
 @observer
 class Avatar extends React.Component {
     openContactDialog = (ev) => {
@@ -12,23 +12,16 @@ class Avatar extends React.Component {
         uiStore.contactDialogUsername = this.props.contact ? this.props.contact.username : this.props.username;
     };
     render() {
-        const contact = this.props.contact || contactStore.getContact(this.props.username);
-        const style = { backgroundColor: contact.color };
-        if (this.props.size) {
-            switch (this.props.size) {
-                case 'tiny': style.zoom = '0.5'; break;
-                default: break;
-            }
-        }
+        const c = this.props.contact || contactStore.getContact(this.props.username);
+        const style = { backgroundColor: c.color };
+        if (c.hasAvatar) style.backgroundImage = `url(${c.mediumAvatarUrl})`;
+        const className = `clickable-avatar ${this.props.size || 'medium'}`;
         return (
             <div className="avatar-wrapper">
-                <RTAvatar style={style}
-                    onClick={this.openContactDialog} className="clickable-avatar">
-                    <div>{contact.letter}</div>
+                <RTAvatar style={style} onClick={this.openContactDialog} className={className}>
+                    <div>{c.hasAvatar ? null : c.letter}</div>
                 </RTAvatar>
-                {contact.tofuError ?
-                    <FontIcon value="error" />
-                    : null}
+                {c.tofuError ? <FontIcon value="error" /> : null}
             </div>
         );
     }

@@ -61,7 +61,9 @@
   .email-row {
     margin-top: $margin-small;
 
-    .rt-list-itemText:not(.rt-list-primary) { @extend %hint-error-label; }
+    .rt-list-itemText:not(.rt-list-primary) {
+      @extend %hint-error-label;
+    }
 
     &.unconfirmed {
       .rt-list-itemText:not(.rt-list-primary) {
@@ -95,6 +97,7 @@
     border-radius: 8px;
     height: 224px;
     margin-left: 64px;
+    position: relative;
     width: 224px;
 
     &-user {
@@ -142,6 +145,15 @@
         color: $icon-light-active;
       }
     }
+
+    .save-progress-overlay {
+      background: rgba(255, 255, 255, .65);
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
 
   .settings-terms {
@@ -169,7 +181,6 @@
     }
   }
 }
-
 
 .backup-row {
   @extend %flex-row;

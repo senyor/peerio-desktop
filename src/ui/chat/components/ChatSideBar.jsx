@@ -37,7 +37,7 @@ class ChatSideBar extends React.Component {
                         {chatStore.activeChat && chatStore.activeChat.participants ?
                             chatStore.activeChat.participants.map(c =>
                                 (<ListItem key={c.username}
-                                    leftActions={[<Avatar key="a" contact={c} />]}
+                                    leftActions={[<Avatar key="a" contact={c} size="small" />]}
                                     caption={c.username}
                                     legend={c.fullName}
                                     onClick={() => chatStore.startChat([c])} />)

@@ -44,6 +44,8 @@ class ContactProfile extends React.Component {
             );
         }
         const f = c.fingerprint.split('-');
+        const style = { backgroundColor: c.color, backgroundSize: 'contain' };
+        if (c.hasAvatar) style.backgroundImage = `url(${c.mediumAvatarUrl})`;
         return (
             <div className="contact-profile">
                 {c.tofuError
@@ -53,7 +55,7 @@ class ContactProfile extends React.Component {
                     : null}
                 <div className="flex-row flex-align-center flex-grow-1">
                     {/* TODO: use our Avatar component instead, and strip it of mouse events */}
-                    <RTAvatar style={{ backgroundColor: c.color }} >{c.letter}</RTAvatar>
+                    <RTAvatar style={style} >{c.hasAvatar ? null : c.letter}</RTAvatar>
                     <div style={{ marginLeft: '8px' }} className="flex-col">
                         <div className="title">{c.username}</div>
                         <div >{c.firstName} {c.lastName}</div>

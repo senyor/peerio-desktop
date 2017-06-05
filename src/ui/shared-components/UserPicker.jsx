@@ -148,7 +148,7 @@ class UserPicker extends React.Component {
                             <div className="user-list">
                                 {this.options.map(c =>
                                     (<ListItem key={c.username}
-                                        leftActions={[<Avatar key="a" contact={c} />]}
+                                        leftActions={[<Avatar key="a" contact={c} size="medium" />]}
                                         caption={c.username}
                                         legend={`${c.firstName} ${c.lastName}`}
                                         onClick={() => {

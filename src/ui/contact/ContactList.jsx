@@ -77,7 +77,7 @@ class ContactList extends React.Component {
                                     {section.items.map(c =>
                                         (
                                             <ListItem key={c.username} ripple={false}
-                                                leftActions={[<Avatar key="a" contact={c} />]}
+                                                leftActions={[<Avatar key="a" contact={c} size="medium" />]}
                                                 caption={c.username}
                                                 legend={`${c.firstName} ${c.lastName}`}
                                                 rightIcon={this.contactActions(c)}

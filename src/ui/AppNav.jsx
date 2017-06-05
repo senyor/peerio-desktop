@@ -70,11 +70,11 @@ class AppNav extends React.Component {
     constructor() {
         super();
         ['mail', 'chat', 'files', 'contacts', 'profile', 'security', 'prefs', 'account', 'about', 'help']
-        .forEach(route => {
-            this[`to${route[0].toUpperCase()}${route.slice(1)}`] = function() {
-                routerStore.navigateTo(routerStore.ROUTES[route]);
-            };
-        });
+            .forEach(route => {
+                this[`to${route[0].toUpperCase()}${route.slice(1)}`] = function() {
+                    routerStore.navigateTo(routerStore.ROUTES[route]);
+                };
+            });
     }
 
     componentWillMount() {
@@ -122,7 +122,7 @@ class AppNav extends React.Component {
                         <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
                             onClick={this.signout} />
                     </IconMenu>
-                    <Avatar contact={contact} />
+                    <Avatar contact={contact} size="medium" />
                 </div>
                 <div className="app-menu">
                     <AppNavButton tooltip={t('title_chats')} icon="forum"

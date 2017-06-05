@@ -12,7 +12,7 @@ class AvatarEditor extends React.Component {
         this.croppie = new Croppie(el, {
             url: this.props.file,
             boundary: { width: 420, height: 420 },
-            viewport: { width: 350, height: 350, type: 'square' },
+            viewport: { width: 224, height: 224, type: 'square' },
             enableOrientation: true
         });
     }
@@ -28,22 +28,12 @@ class AvatarEditor extends React.Component {
         // 64x64
         // 40x40
         // 20x20
-        const opts = { type: 'blob', size: { width: 350, height: 350 }, format: 'png', quality: 1, circle: false };
+        const opts = { type: 'blob', size: { width: 224, height: 224 }, format: 'png', quality: 1, circle: false };
         const blobs = [];
         this.croppie.result(opts)
             .then(blob => {
                 blobs.push(blob);
                 opts.size = { width: 64, height: 64 };
-                return this.croppie.result(opts);
-            })
-            .then(blob => {
-                blobs.push(blob);
-                opts.size = { width: 40, height: 40 };
-                return this.croppie.result(opts);
-            })
-            .then(blob => {
-                blobs.push(blob);
-                opts.size = { width: 20, height: 20 };
                 return this.croppie.result(opts);
             })
             .then(blob => {

@@ -10,7 +10,6 @@ module.exports = {
     keychainService: 'PeerioMessenger',
 
     socketServerUrl: 'wss://icebear.peerio.com',
-    avatarBaseUrl: 'https://iceblobvirginia.peerio.com',
     ghostFrontendUrl: 'https://mail.peerio.com',
 
     contacts: {

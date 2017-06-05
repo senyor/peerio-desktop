@@ -212,7 +212,7 @@ class Profile extends React.Component {
                     {/* <Button label={t('button_save')}
                             style={{ marginTop: '40px' }} primary raised /> */}
                 </div>
-                <div className="avatar-card"
+                <div className={css('avatar-card', { 'has-avatar': this.contact.hasAvatar })}
                     style={{
                         backgroundColor: this.contact.color,
                         backgroundImage: this.contact.hasAvatar ? `url(${this.contact.largeAvatarUrl})` : 'none'

@@ -45,7 +45,7 @@ class ContactProfile extends React.Component {
         }
         const f = c.fingerprint.split('-');
         const style = { backgroundColor: c.color, backgroundSize: 'contain' };
-        if (c.hasAvatar) style.backgroundImage = `url(${c.mediumAvatarUrl})`;
+        if (c.hasAvatar) style.backgroundImage = `url(${c.largeAvatarUrl})`;
         return (
             <div className="contact-profile">
                 {c.tofuError

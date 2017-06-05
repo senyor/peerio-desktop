@@ -53,12 +53,17 @@ class ContactProfile extends React.Component {
                         {t('error_contactFingerprintChangedDetail')}
                     </div>
                     : null}
-                <div className="flex-row flex-align-center flex-grow-1">
+                <div className="flex-row flex-align-start flex-grow-1">
                     {/* TODO: use our Avatar component instead, and strip it of mouse events */}
                     <RTAvatar style={style} >{c.hasAvatar ? null : c.letter}</RTAvatar>
-                    <div style={{ marginLeft: '8px' }} className="flex-col">
-                        <div className="title">{c.username}</div>
-                        <div >{c.firstName} {c.lastName}</div>
+                    <div className="flex-col">
+                        <div className="title">{c.firstName} {c.lastName}</div>
+                        <div>{c.username}</div>
+                        <div className="row">
+                            <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>
+                            <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
+                            <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
+                        </div>
                     </div>
                 </div>
                 <div className="row flex-row flex-align-center">
@@ -77,11 +82,6 @@ class ContactProfile extends React.Component {
                             tooltipDelay={500}
                             icon="delete" /> */}
                     </div>
-                </div>
-                <div className="row">
-                    <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>
-                    <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
-                    <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
                 </div>
             </div>
         );

@@ -34,10 +34,10 @@ class ContactList extends React.Component {
 
     contactActions(c) {
         return (<div data-id={c.username}>
-            <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} tooltipPosition="left" onClick={this.startChat} />
+            <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />
             {c.isAdded
-                ? <TooltipIconButton icon="delete" tooltip={t('button_delete')} tooltipPosition="left" onClick={this.removeContact} />
-                : <TooltipIconButton icon="person_add" tooltip={t('button_addToYourContacts')} tooltipPosition="left" onClick={this.addContact} />}
+                ? <TooltipIconButton icon="delete" tooltip={t('button_delete')} onClick={this.removeContact} />
+                : <TooltipIconButton icon="person_add" tooltip={t('button_addToYourContacts')} onClick={this.addContact} />}
         </div>
         );
     }

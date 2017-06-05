@@ -26,7 +26,7 @@ module.exports = {
             mpDetail: 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
             tfaDetail: 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-',
             msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
-            socialShareUrl: 'https://peerio.com',
+            socialShareUrl: 'https://www.peerio.com/preview',
             socialShareImage: 'https://www.peerio.com/img/favicons/icon300.png',
             upgrade: 'https://www.peerio.com/pricing.html',
             proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',

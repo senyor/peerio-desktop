@@ -2,7 +2,6 @@ const React = require('react');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon, Input, List, ListItem, TooltipIconButton, Dropdown } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
 const { contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const moment = require('moment');
@@ -12,8 +11,7 @@ const { getAttributeInParentChain } = require('~/helpers/dom');
 class InvitedContacts extends React.Component {
     removeInvite(ev) {
         const email = getAttributeInParentChain(ev.target, 'data-id');
-        // constctStore.removeInvite(email);
-        console.error('Removie invite not implemented yet');
+        contactStore.removeInvite(email);
     }
     resendInvite(ev) {
         const email = getAttributeInParentChain(ev.target, 'data-id');
@@ -39,12 +37,12 @@ class InvitedContacts extends React.Component {
                     <List className="contact-list-section-content">
                         {contactStore.invitedContacts.map(c =>
                             (<ListItem ripple={false} key={c.email}
-                            leftIcon={<div className="avatar-invited material-icons">person</div>}
+                                leftIcon={<div className="avatar-invited material-icons">person</div>}
                                 caption={c.email}
                                 legend={`${t('title_invited')} ${moment(c.added).fromNow()}`}
                                 rightIcon={this.contactActions(c)}
                             />)
-                            )}
+                        )}
                     </List>
                 </div>
             </div>

@@ -257,7 +257,7 @@
   "title_settingsSecurity": "Security",
   "title_autologinSetting": "Sign in automatically on this device",
   "title_touchID": "Touch ID",
-  "dialog_enableTouchID": "Protect your account with Touch ID?",
+  "dialog_enableTouchID": "Require Touch ID to open account",
   "title_2FA": "Two Factor Authentication (2FA)",
   "title_2FADetail": "Peerio can pair with an app on your mobile device to provide additional account security. <a-tfaDetail>Find out more</>.",
   "title_2FASetupDesktop": "Set up your mobile device",

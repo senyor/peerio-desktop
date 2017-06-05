@@ -1,7 +1,7 @@
 {
   "name": "peerio-messenger",
   "description": "Peerio Messenger",
-  "version": "2.16.0",
+  "version": "2.16.1",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",

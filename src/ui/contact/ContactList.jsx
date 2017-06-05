@@ -36,8 +36,8 @@ class ContactList extends React.Component {
         return (<div data-id={c.username}>
             <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />
             {c.isAdded
-                ? <TooltipIconButton icon="delete" tooltip={t('button_delete')} onClick={this.removeContact} />
-                : <TooltipIconButton icon="person_add" tooltip={t('button_addToYourContacts')} onClick={this.addContact} />}
+                ? <TooltipIconButton icon="star" tooltip={t('button_removeFavourite')} onClick={this.removeContact} />
+                : <TooltipIconButton icon="star_outline" tooltip={t('button_addFavourite')} onClick={this.addContact} />}
         </div>
         );
     }
@@ -54,7 +54,7 @@ class ContactList extends React.Component {
             <div className="contacts-view">
                 <div className="toolbar">
                     <FontIcon value="search" />
-                    <Input placeholder={t('title_findInYourContacts')} value={contactStore.uiViewSearchQuery}
+                    <Input placeholder={t('title_findAContact')} value={contactStore.uiViewSearchQuery}
                         onChange={this.handleSearchQueryChange} />
                 </div>
 

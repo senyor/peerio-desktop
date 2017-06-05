@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.16.0"></a>
+# [2.16.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.15.0...v2.16.0) (2017-06-05)
+
+
+### Bug Fixes
+
+* **avatar:** disable click event propagation on avatar to make it work as expected in lists ([9df6aa2](https://github.com/PeerioTechnologies/peerio-desktop/commit/9df6aa2))
+* **chat:** aligns archive link correctly. ([df4fe51](https://github.com/PeerioTechnologies/peerio-desktop/commit/df4fe51))
+* **chat:** improve url recognition ([745a760](https://github.com/PeerioTechnologies/peerio-desktop/commit/745a760))
+* **chat:** pasting RTF into message input triggered upload ([2722ba8](https://github.com/PeerioTechnologies/peerio-desktop/commit/2722ba8))
+* **contact:** updates broken variable ([c771f06](https://github.com/PeerioTechnologies/peerio-desktop/commit/c771f06))
+* **contacts:** contacts shrinking too eagerly in the list + tooltip position ([c1f6a75](https://github.com/PeerioTechnologies/peerio-desktop/commit/c1f6a75))
+* **files:** enable multi-select in file open dialog ([27ac1db](https://github.com/PeerioTechnologies/peerio-desktop/commit/27ac1db))
+* **files:** positions processing animation properly ([bf4678c](https://github.com/PeerioTechnologies/peerio-desktop/commit/bf4678c))
+* **profile:** if start chat was clicked from profile page in files tab, it didn't navigate to chats ([836af4a](https://github.com/PeerioTechnologies/peerio-desktop/commit/836af4a))
+* **social:** makes styling more consistent ([2725a3a](https://github.com/PeerioTechnologies/peerio-desktop/commit/2725a3a))
+* **uiStore:** prefs inherit defaults ([7a0e824](https://github.com/PeerioTechnologies/peerio-desktop/commit/7a0e824))
+
+
+### Features
+
+* **avatars:** avatar upload and crop ([8549f78](https://github.com/PeerioTechnologies/peerio-desktop/commit/8549f78))
+* **avatars:** avatars ([5d34d18](https://github.com/PeerioTechnologies/peerio-desktop/commit/5d34d18))
+* **contact:** start chat from contact profile and chat sidebar ([8acfe50](https://github.com/PeerioTechnologies/peerio-desktop/commit/8acfe50))
+* **contacts:**  invited contacts improvements ([5b9fe4c](https://github.com/PeerioTechnologies/peerio-desktop/commit/5b9fe4c))
+* **contacts:** contacts ([0660892](https://github.com/PeerioTechnologies/peerio-desktop/commit/0660892))
+* **contacts:** delete invite ([275fa0d](https://github.com/PeerioTechnologies/peerio-desktop/commit/275fa0d))
+* **core:** advanced reconnect bar ([251843b](https://github.com/PeerioTechnologies/peerio-desktop/commit/251843b))
+* **files:** file drop and upload improvement, folder and multiple files select support, filter restricted ([24d9e30](https://github.com/PeerioTechnologies/peerio-desktop/commit/24d9e30))
+
+
+
 <a name="2.15.0"></a>
 # [2.15.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.14.3...v2.15.0) (2017-05-25)
 

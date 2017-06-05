@@ -144,7 +144,7 @@ class UserPicker extends React.Component {
                             </div>
                             : null}
                         <List selectable ripple >
-                            <ListSubHeader caption="Your contacts" />
+                            <ListSubHeader caption={t('title_allContacts')} />
                             <div className="user-list">
                                 {this.options.map(c =>
                                     (<ListItem key={c.username}

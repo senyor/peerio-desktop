@@ -5,7 +5,7 @@ const { Button, IconButton, Input, TooltipIconButton, FontIcon, ProgressBar } = 
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
-const { contactStore, config } = require('~/icebear');
+const { contactStore, config, User } = require('~/icebear');
 const urls = require('~/icebear').config.translator.urlMap;
 
 @observer
@@ -54,13 +54,19 @@ class NewContact extends React.Component {
         const link = encodeURIComponent(urls.socialShareUrl);
         const image = encodeURIComponent(urls.socialShareImage);
         const title = encodeURIComponent(t('title_socialShareInvite'));
-        const content = encodeURIComponent(t('title_socialShareInviteContent'));
+        const content = encodeURIComponent(t('title_socialShareInviteContent', {
+            socialShareUrl: urls.socialShareUrl,
+            username: User.current.username
+        }));
         const url = `https://www.facebook.com/dialog/feed?app_id=184683071273&link=${link}&picture=${image}`
             + `&name=${title}&caption=%20&description=${content}&redirect_uri=https%3A%2F%2Fwww.facebook.com`;
         return url;
     }
     getTwitterUrl() {
-        const message = encodeURIComponent(`${t('title_socialShareInviteContent')} ${urls.socialShareUrl}`);
+        const message = encodeURIComponent(t('title_socialShareInviteContent', {
+            socialShareUrl: urls.socialShareUrl,
+            username: User.current.username
+        }));
         return `https://twitter.com/intent/tweet?text=${message}`;
     }
     render() {

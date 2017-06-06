@@ -222,7 +222,7 @@ class Profile extends React.Component {
                             {user.fullName}
                         </div>
                         <div className="avatar-card-username">
-                            {user.username}
+                            @{user.username}
                         </div>
                     </div>
                     <div className="avatar-card-initial">

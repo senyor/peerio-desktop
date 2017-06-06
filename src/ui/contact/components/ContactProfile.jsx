@@ -58,7 +58,7 @@ class ContactProfile extends React.Component {
                     <RTAvatar style={style} >{c.hasAvatar ? null : c.letter}</RTAvatar>
                     <div className="flex-col">
                         <div className="title">{c.firstName} {c.lastName}</div>
-                        <div>{c.username}</div>
+                        <div>@{c.username}</div>
                         <div className="row">
                             <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>
                             <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>

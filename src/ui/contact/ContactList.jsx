@@ -78,8 +78,8 @@ class ContactList extends React.Component {
                                         (
                                             <ListItem key={c.username} ripple={false}
                                                 leftActions={[<Avatar key="a" contact={c} size="medium" />]}
-                                                caption={c.username}
-                                                legend={`${c.firstName} ${c.lastName}`}
+                                                legend={`@${c.username}`}
+                                                caption={`${c.firstName} ${c.lastName}`}
                                                 rightIcon={this.contactActions(c)}
                                             />
                                         )

@@ -139,7 +139,9 @@
       }
     }
 
-    .rt-list-itemText {
+    .rt-list-itemText,
+    .rt-list-primary {
+      font-size: 14px;
       user-select: text;
     }
   }

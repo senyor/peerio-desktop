@@ -7,12 +7,6 @@ if ! git diff-index --quiet HEAD --; then
     exit 1
 fi
 
-echo "[•              ] getting locales"
-npm run get-locales
-if git diff-index --quiet HEAD --; then
-    echo "*** Locales changed, committing."
-    git commit -a -m "chore: update locales"
-fi
 echo "[•••            ] setting flags"
 
 set -e

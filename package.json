@@ -1,6 +1,6 @@
 {
-  "name": "peerio-messenger",
-  "description": "Peerio Messenger",
+  "name": "peerio-2",
+  "description": "Peerio 2",
   "version": "2.16.3",
   "scripts": {
     "precommit": "npm run validate",
@@ -143,7 +143,7 @@
   },
   "build": {
     "appId": "com.peerio.desktop",
-    "productName": "Peerio Messenger",
+    "productName": "Peerio 2",
     "artifactName": "${productName}-${arch}-${version}.${ext}",
     "npmSkipBuildFromSource": true,
     "directories": {

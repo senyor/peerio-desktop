@@ -1,8 +1,8 @@
 {
   "name": "peerio-messenger",
-  "productName": "Peerio Messenger",
+  "productName": "Peerio 2",
   "version": "2.16.3",
-  "description": "Peerio desktop client (codename Icebear)",
+  "description": "Peerio desktop client",
   "main": "build/main.js",
   "repository": {
     "type": "git",

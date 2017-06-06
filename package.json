@@ -7,7 +7,6 @@
     "postmerge": "npm update",
     "postcommit": "git fetch --prune origin '+refs/tags/*:refs/tags/*'",
     "commitmsg": "validate-commit-msg",
-    "postinstall": "install-app-deps",
     "start": "npm-run-all -l -n compile -p code:watch icebear:watch style:watch devstyle:watch electron:run",
     "start-latest": "git pull && npm install && npm update && npm start",
     "compile": "npm-run-all -l -n cleanup -p static:copy code:compile icebear:compile style:compile devstyle:compile react-toolbox",

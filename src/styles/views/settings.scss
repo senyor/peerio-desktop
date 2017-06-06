@@ -107,15 +107,15 @@
       }
 
       .avatar-card-display-name {
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+        text-shadow: 0 0 4px rgba(0, 0, 0, .8);
       }
 
       .avatar-card-username {
-        text-shadow: 0 0 1px rgba(0, 0, 0, .7);
+        text-shadow: 0 0 4px rgba(0, 0, 0, .8), 1px 1px 1px rgba(0, 0, 0, .5);
       }
 
       .card-footer {
-        background-image: linear-gradient(to top, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0));
+        background-image: linear-gradient(to top, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0));
       }
     }
 
@@ -123,18 +123,16 @@
       @extend %flex-col;
       @extend %flex-shrink-0;
       @extend %flex-align-start;
+      color: $text-light-primary;
       height: 64px;
     }
 
     &-display-name {
-      color: $text-light-primary;
       font-weight: $font-weight-bold;
       margin: $margin-default 0 0 $margin-default;
     }
 
     &-username {
-      color: $text-light-secondary;
-      font-size: 12px;
       margin: 0 0 0 $margin-default;
     }
 

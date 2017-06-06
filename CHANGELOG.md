@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.16.2"></a>
+## [2.16.2](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.1...v2.16.2) (2017-06-06)
+
+
+### Bug Fixes
+
+* **avatar:** adds styling for avatars with images ([2afda42](https://github.com/PeerioTechnologies/peerio-desktop/commit/2afda42))
+
+
+
 <a name="2.16.1"></a>
 ## [2.16.1](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.0...v2.16.1) (2017-06-05)
 

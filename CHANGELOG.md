@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.16.5"></a>
+## [2.16.5](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.4...v2.16.5) (2017-06-06)
+
+
+
 <a name="2.16.4"></a>
 ## [2.16.4](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.3...v2.16.4) (2017-06-06)
 

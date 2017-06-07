@@ -132,7 +132,7 @@ const SaveNow = require('~/ui/signup/SaveNow');
         return (
             <div className={css('signup', 'rt-light-theme', { show: this.show })}>
                 <div className="signup-content">
-                    <img alt="" className="logo" src="static/img/logo-white.png" />
+                    <img alt="" className="logo" src="static/img/logo-with-tag.png" />
                     <div className="signup-form">
 
                         {

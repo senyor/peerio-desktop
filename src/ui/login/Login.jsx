@@ -150,7 +150,7 @@ class LoginStore extends OrderedFormStore {
             <div className="flex-row app-root">
                 <FullCoverLoader show={this.loginStore.busy} />
                 <div className="login rt-light-theme">
-                    <img alt="Peerio logo" className="logo" src="static/img/logo-white.png" />
+                    <img alt="Peerio logo" className="logo" src="static/img/logo-with-tag.png" />
                     {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
                     <div className="login-form">
                         <div className={css('headline', { banish: this.loginStore.lastAuthenticatedUser })}>

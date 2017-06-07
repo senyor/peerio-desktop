@@ -41,11 +41,11 @@ class Contacts extends React.Component {
                     <List selectable ripple>
                         <ListItem leftIcon="star" caption={`${t('title_favoriteContacts')} (${contactStore.addedContacts.length})`}
                         className={css({ active: isAddedActive })} onClick={this.toAdded} />
-                        <ListItem leftIcon="person_add" caption={`${t('title_invitedContacts')} (${contactStore.invitedContacts.length})`}
-                            className={css({ active: isInvitedActive })} onClick={this.toInvited} />
-                        <ListDivider />
                         <ListItem leftIcon="people" caption={`${t('title_allContacts')} (${contactStore.contacts.length})`}
                             className={css({ active: isAllActive })} onClick={this.toAll} />
+                        <ListDivider />
+                        <ListItem leftIcon="person_add" caption={`${t('title_invitedContacts')} (${contactStore.invitedContacts.length})`}
+                            className={css({ active: isInvitedActive })} onClick={this.toInvited} />
                     </List>
                 </div>
                 {this.props.children}

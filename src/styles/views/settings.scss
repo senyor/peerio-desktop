@@ -40,6 +40,10 @@
       border-bottom: 1px solid $divider-dark;
     }
 
+    .title + label {
+      margin-top: 14px; // for instances where there is not details paragraph. - paul
+    }
+
     &.section-account-key {
       background: $color-dark-03;
       padding-left: $padding-default;

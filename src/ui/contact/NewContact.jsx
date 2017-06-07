@@ -27,7 +27,7 @@ class NewContact extends React.Component {
         if (!input) return;
         input.focus();
     }
-    tryAdd =() => {
+    tryAdd = () => {
         if (this.waiting) return;
         this.waiting = true;
         this.suggestInviteEmail = '';
@@ -62,6 +62,17 @@ class NewContact extends React.Component {
             + `&name=${title}&caption=%20&description=${content}&redirect_uri=https%3A%2F%2Fwww.facebook.com`;
         return url;
     }
+
+    getEmailUrl() {
+        const link = encodeURIComponent(urls.socialShareUrl);
+        const title = encodeURIComponent(t('title_socialShareInvite'));
+        const content = encodeURIComponent(t('title_socialShareInviteContent', {
+            socialShareUrl: urls.socialShareUrl,
+            username: User.current.username
+        }));
+        const url = `mailto:?subject=${title}&body=${content}`;
+        return url;
+    }
     getTwitterUrl() {
         const message = encodeURIComponent(t('title_socialShareInviteContent', {
             socialShareUrl: urls.socialShareUrl,
@@ -93,12 +104,12 @@ class NewContact extends React.Component {
                                     <div className="email-invite">{this.suggestInviteEmail}</div>
                                     <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
                                 </div>
-                            : null}
+                                : null}
                         </div>
                         <div className="flex-row flex-align-center flex-justify-center">
                             <T k="title_shareSocial" tag="strong" />
                             <div className="flex-row flex-shrink-0" style={{ marginLeft: '32px' }} >
-                                <IconButton icon="content_copy" /><IconButton icon="email" />
+                                <IconButton icon="email" href={this.getEmailUrl()} />
                                 <a className="twitter-share-button"
                                     href={this.getTwitterUrl()} data-size="large">
                                     <img src="./static/img/twitter.png" alt="twitter" />

@@ -200,5 +200,7 @@ $status-bar-height: 36px;
   @extend %flex-align-center;
   @extend %flex-justify-center;
 
-  .headline { margin: 0 48px; }
+  .headline {
+    margin: 0 48px;
+  }
 }

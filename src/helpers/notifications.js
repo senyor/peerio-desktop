@@ -18,7 +18,6 @@ class MessageNotification {
     }
 
     send() {
-        console.log('condition', this.userDesktopNotificationCondition);
         if (this.userDesktopNotificationCondition) this.showDesktopNotification();
         if (this.userSoundsCondition) this.playSound();
     }

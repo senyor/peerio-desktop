@@ -153,7 +153,7 @@ class LoginStore extends OrderedFormStore {
                     <img alt="Peerio logo" className="logo" src="static/img/logo-with-tag.png" />
                     {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
                     <div className="login-form">
-                        <div className={css('headline', { banish: this.loginStore.lastAuthenticatedUser })}>
+                        <div className={css('title', { banish: this.loginStore.lastAuthenticatedUser })}>
                             {t('title_login')}
                         </div>
                         <ValidatedInput label={t('title_username')}

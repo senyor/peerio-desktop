@@ -133,7 +133,7 @@ const css = require('classnames');
 
     render() {
         return (
-            <div className={css({ focused: this.props.store[this.fFocused] })}>
+            <div className={css('validated-input', { focused: this.props.store[this.fFocused] })}>
                 <Input type={this.props.type || 'text'}
                     value={this.props.store[this.props.name] || ''}
                     label={this.props.label}

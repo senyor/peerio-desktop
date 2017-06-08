@@ -12,10 +12,11 @@
   }
 
   .login-form {
+    margin-top: 24px;
     width: 275px;
   }
 
-  .headline + .rt-input-input {
+  .title + .validated-input .rt-input-input {
     margin-top: $margin-default;
   }
 

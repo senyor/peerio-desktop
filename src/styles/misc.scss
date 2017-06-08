@@ -80,7 +80,7 @@
     margin-right: $margin-default;
   }
 }
-$status-bar-height: 32px;
+$status-bar-height: 36px;
 
 .status-bar {
   @extend %flex-row;
@@ -106,7 +106,8 @@ $status-bar-height: 32px;
   font-weight: $font-weight-semibold;
   height: $status-bar-height;
   left: 0;
-  margin: $margin-default $margin-small;
+  margin: $margin-default auto;
+  max-width: 80vw;
   position: fixed;
   right: 0;
   text-align: center;

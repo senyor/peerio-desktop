@@ -68,7 +68,7 @@ class AppNav extends React.Component {
 
     constructor() {
         super();
-        ['mail', 'chat', 'files', 'contacts', 'profile', 'security', 'prefs', 'account', 'about', 'help']
+        ['mail', 'chats', 'files', 'contacts', 'profile', 'security', 'prefs', 'account', 'about', 'help']
             .forEach(route => {
                 this[`to${route[0].toUpperCase()}${route.slice(1)}`] = function() {
                     routerStore.navigateTo(routerStore.ROUTES[route]);
@@ -127,7 +127,7 @@ class AppNav extends React.Component {
                     <AppNavButton tooltip={t('title_chats')} icon="forum"
                         active={routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)}
                         showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
-                        onClick={this.toChat} />
+                        onClick={this.toChats} />
 
                     <AppNavButton tooltip={t('title_files')} icon="folder"
                         active={routerStore.currentRoute.startsWith(routerStore.ROUTES.files)}

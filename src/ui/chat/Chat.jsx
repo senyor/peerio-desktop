@@ -19,7 +19,7 @@ const ChatNameEditor = require('./components/ChatNameEditor');
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 
 const messages = ['title_randomMessage1', 'title_randomMessage2', 'title_randomMessage3', 'title_randomMessage4'];
-let randomNumber;
+const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
 
 @observer
 class Chat extends React.Component {
@@ -37,8 +37,6 @@ class Chat extends React.Component {
                 TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
             }, { delay: 1000 });
         }
-
-        randomNumber = crypto.cryptoUtil.getRandomNumber(0, messages.length);
     }
 
     componentWillUnmount() {
@@ -80,9 +78,6 @@ class Chat extends React.Component {
         if (ref) ref.nameInput.focus();
     };
 
-    generateRandomMessage() {
-        return (<T k={messages[randomNumber]} />);
-    }
     // assumes active chat exists, don't render if it doesn't
     renderHeader() {
         const chat = chatStore.activeChat;
@@ -134,12 +129,12 @@ class Chat extends React.Component {
             <div className="messages">
                 <ChatList />
                 <div className="message-view">
-                    <div className={
-                      css('flex-col flex-grow-1 flex-align-center flex-justify-center',
-                      { banish: !chatStore.loading })}
-                         style={{ height: '100%', width: '100%' }} >
-                        <div className="headline">{this.generateRandomMessage()}</div>
-                    </div>
+                    {chatStore.loading ?
+                        <div className="flex-col flex-grow-1 flex-align-center flex-justify-center"
+                            style={{ height: '100%', width: '100%' }} >
+                            <div className="headline"><T k={randomMessage} /></div>
+                        </div>
+                        : null}
                     {chat ? this.renderHeader() : null}
                     <div className="flex-row flex-grow-1">
                         <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>

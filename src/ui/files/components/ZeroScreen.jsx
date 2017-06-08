@@ -13,23 +13,19 @@ function ZeroScreen(props) {
                     </div>
                     <div className="flex-row flex-align-start" style={{ width: '100%' }}>
                         <div className="flex-col flex-align-start">
-                            <p className="heading"
-                                   style={{
-                                       marginBottom: '48px',
-                                       lineHeight: '1.4'
-                                   }}>
+                            <p style={{
+                                marginBottom: '48px',
+                                lineHeight: '1.4',
+                                width: '200px'
+                            }}>
                                 {t('title_filesNull2')}
-                                <br />
-                                {t('title_filesNull3')}
-                                <br />
-                                {t('title_filesNull4')}
                             </p>
                             <Button onClick={props.onUpload} primary label={t('button_upload')} />
                         </div>
                         <img src="static/img/file-upload.png"
                                  style={{ maxWidth: '280px', minWidth: '40%' }} alt="" />
                     </div>
-                    <p className="upgrade">{t('title_upgradeCTA')}</p>
+                    {/* <p className="upgrade">{t('title_upgradeCTA')}</p> */}
                 </div>
                 <div className="flex-col flex-grow-1" />
             </div>

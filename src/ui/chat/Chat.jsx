@@ -130,7 +130,7 @@ class Chat extends React.Component {
                 <ChatList />
                 <div className="message-view">
                     {chatStore.loading ?
-                        <div className="flex-col flex-grow-1 flex-align-center flex-justify-center">
+                        <div className="random-messages">
                             <div className="headline"><T k={randomMessage} /></div>
                         </div>
                         : null}

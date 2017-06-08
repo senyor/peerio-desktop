@@ -192,3 +192,13 @@ $status-bar-height: 36px;
     border: 1px solid $color-light-100;
   }
 }
+
+// RANDOM MESSAGES
+.random-messages {
+  @extend %flex-col;
+  @extend %flex-grow-1;
+  @extend %flex-align-center;
+  @extend %flex-justify-center;
+
+  .headline { margin: 0 48px; }
+}

@@ -6,7 +6,7 @@ const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
 const NoChatSelected = require('./components/NoChatSelected');
-const { chatStore, TinyDb, clientApp } = require('~/icebear');
+const { chatStore, TinyDb, clientApp, crypto } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
@@ -16,11 +16,20 @@ const ChatSideBar = require('./components/ChatSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
 
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
+
+const messages = [
+    'Peerio is always encrypted, pretty cool, eh?',
+    'Got any big files today? I could use the workout.',
+    'Want to make Peerio even better? Let us know how, message @feedback.',
+    'It\'s okay to pick favorites. Mark the ⭐ in a chat to keep it in sight.'];
+let randomNumber;
+
 @observer
 class Chat extends React.Component {
     @observable static sidebarOpen = true; // static, so it acts like lazy internal store
     @observable chatNameEditorVisible = false;
     static sidebarStateSaver;
+
     componentWillMount() {
         clientApp.isInChatsView = true;
         TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
@@ -31,6 +40,8 @@ class Chat extends React.Component {
                 TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
             }, { delay: 1000 });
         }
+
+        randomNumber = crypto.cryptoUtil.getRandomNumber(0, messages.length);
     }
 
     componentWillUnmount() {
@@ -71,6 +82,10 @@ class Chat extends React.Component {
     chatNameEditorRef = ref => {
         if (ref) ref.nameInput.focus();
     };
+
+    generateRandomMessage() {
+        return messages[randomNumber];
+    }
     // assumes active chat exists, don't render if it doesn't
     renderHeader() {
         const chat = chatStore.activeChat;
@@ -122,6 +137,12 @@ class Chat extends React.Component {
             <div className="messages">
                 <ChatList />
                 <div className="message-view">
+                    <div className={
+                      css('flex-col flex-grow-1 flex-align-center flex-justify-center',
+                      { banish: !chatStore.loading })}
+                         style={{ height: '100%', width: '100%' }} >
+                        <div className="headline">{this.generateRandomMessage()}</div>
+                    </div>
                     {chat ? this.renderHeader() : null}
                     <div className="flex-row flex-grow-1">
                         <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>

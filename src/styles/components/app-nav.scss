@@ -35,10 +35,14 @@
       top: 20px !important;
     }
 
-    li.avatar-notify::before {
-      right: 200px;
-    }
+    li {
+      min-width: 248px;
 
+      &.avatar-notify::before {
+        right: 200px;
+      }
+    }
+    
     .rt-menu-iconMenu {
       position: absolute;
       z-index: 2;

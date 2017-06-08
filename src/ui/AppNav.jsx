@@ -60,9 +60,6 @@ function startDesktopNotifications() {
     chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, notificationFactory.send);
 }
 
-// todo: Paul, move this to stylesheets
-const menuItemStyle = { minWidth: '250px' };
-
 @observer
 class AppNav extends React.Component {
 
@@ -102,18 +99,18 @@ class AppNav extends React.Component {
                     <div className={css({ 'avatar-notify': !primaryAddressConfirmed })} />
                     <IconMenu icon="">
                         <MenuItem value="profile" icon="person" caption={t('title_settingsProfile')}
-                            onClick={this.toProfile} style={menuItemStyle}
+                            onClick={this.toProfile}
                             className={css({ 'avatar-notify': !primaryAddressConfirmed })} />
                         <MenuItem value="security" icon="security" caption={t('title_settingsSecurity')}
-                            onClick={this.toSecurity} style={menuItemStyle} />
+                            onClick={this.toSecurity} />
                         <MenuItem value="preferences" icon="settings" caption={t('title_settingsPreferences')}
-                            onClick={this.toPrefs} style={menuItemStyle} />
+                            onClick={this.toPrefs} />
                         <MenuItem value="account" icon="account_circle" caption={t('title_settingsAccount')}
-                            onClick={this.toAccount} style={menuItemStyle} />
+                            onClick={this.toAccount} />
                         <MenuItem value="about" icon="info" caption="About"
-                            onClick={this.toAbout} style={menuItemStyle} />
+                            onClick={this.toAbout} />
                         <MenuItem value="help" icon="help" caption="Help"
-                            onClick={this.toHelp} style={menuItemStyle} />
+                            onClick={this.toHelp} />
                         {/* <MenuDivider />
                         <MenuItem value="upgrade" icon="open_in_browser" caption={t('title_upgrade')}
                             onClick={this.toUpgrade} /> */}

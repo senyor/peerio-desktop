@@ -7,22 +7,20 @@ const { app } = require('electron').remote;
 const config = require('~/config');
 
 const notifications = {};
-
 class MessageNotification {
     constructor(props) {
         this.chat = props.chat;
         this.lastMessageText = props.lastMessageText;
         this.counter = props.unreadCount;
         this.translationKeyword = 'Messages';
-        this.userCondition = uiStore.prefs.messageDesktopNotificationsEnabled;
+        this.userDesktopNotificationCondition = uiStore.prefs.messageDesktopNotificationsEnabled;
+        this.userSoundsCondition = uiStore.prefs.messageSoundsEnabled;
     }
 
     send() {
-        console.log('condition', this.userCondition);
-        if (this.userCondition) {
-            this.playSound();
-            this.showDesktopNotification();
-        }
+        console.log('condition', this.userDesktopNotificationCondition);
+        if (this.userDesktopNotificationCondition) this.showDesktopNotification();
+        if (this.userSoundsCondition) this.playSound();
     }
 
     showDesktopNotification() {
@@ -51,15 +49,17 @@ class MessageNotification {
         if (notifications[this.chat.id]) {
             notifications[this.chat.id].close();
         }
+        const props = {
+            body,
+            silent: true
+        };
+
+        // icon needed for Windows, looks weird on Mac
+        if (config.os !== 'Darwin') props.icon = path.join(app.getAppPath(), 'build/static/img/notification-icon.png');
+
         notifications[this.chat.id] = new Notification(
             title,
-            {
-                body,
-                icon: path.join(app.getAppPath(), 'build/static/img/notification-icon.png'),
-                image: path.join(app.getAppPath(), 'build/static/img/notification-icon.png'),
-                badge: path.join(app.getAppPath(), 'build/static/img/notification-icon.png'),
-                silent: true
-            }
+            props
         );
     }
 }
@@ -67,7 +67,8 @@ class MessageNotification {
 class MentionNotification extends MessageNotification {
     constructor(props) {
         super(props);
-        this.userCondition = uiStore.prefs.mentionDesktopNotificationsEnabled;
+        this.userDesktopNotificationCondition = uiStore.prefs.mentionDesktopNotificationsEnabled;
+        this.userSoundsCondition = uiStore.prefs.mentionSoundsEnabled;
         this.translationKeyword = 'Mentions';
         this.counter = this.unreadCount > config.chat.pageSize ? this.unreadCount : this.freshBatchMentionCount;
     }
@@ -76,7 +77,8 @@ class MentionNotification extends MessageNotification {
 class DMNotification extends MessageNotification {
     constructor(props) {
         super(props);
-        this.userCondition = uiStore.prefs.mentionDesktopNotificationsEnabled;
+        this.userDesktopNotificationCondition = uiStore.prefs.mentionDesktopNotificationsEnabled;
+        this.userSoundsCondition = uiStore.prefs.mentionSoundsEnabled;
         this.translationKeyword = 'DMs';
         this.counter = this.unreadCount > config.chat.pageSize ? this.unreadCount : this.freshBatchMentionCount;
     }

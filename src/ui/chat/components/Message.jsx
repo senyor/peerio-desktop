@@ -58,7 +58,7 @@ const autolinker = new Autolinker({
             let url = match.getUrl();
             url = htmlEncoder.decode(url);
             if (!isUrlAllowed(url)) return false;
-            processUrl(url);
+            // processUrl(url); TODO: consent
             return true;
         }
 

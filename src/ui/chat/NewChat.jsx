@@ -8,11 +8,11 @@ const { t } = require('peerio-translator');
 class NewChat extends React.Component {
     handleAccept = (selected) => {
         chatStore.startChat(selected);
-        window.router.push('/app');
+        window.router.push('/app/chats');
     };
 
     handleClose = () => {
-        window.router.push('/app');
+        window.router.push('/app/chats');
     };
 
     render() {

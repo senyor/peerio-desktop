@@ -23,7 +23,7 @@ const appState = require('~/stores/app-state');
 class Root extends React.Component {
 
     @computed get snackbarVisible() {
-        return !(routerStore.currentRoute === routerStore.ROUTES.chat && chatStore.activeChat);
+        return !(routerStore.currentRoute === routerStore.ROUTES.chats && chatStore.activeChat);
     }
 
     @observable showOfflineNotification = false;
@@ -99,7 +99,8 @@ class Root extends React.Component {
                         {this.showOfflineNotification ? <ProgressBar type="circular" mode="indeterminate" /> : null}
                         #{socket.reconnectAttempt}&nbsp;{t('error_connecting')}&nbsp;
                         {socket.reconnectTimer.counter}&nbsp;
-                        {<Button className="reconnect" flat inverse label={t('button_retry')} onClick={socket.resetReconnectTimer} />}
+                        {<Button className="reconnect" flat inverse label={t('button_retry')}
+                            onClick={socket.resetReconnectTimer} />}
                     </div>
                     {this.props.children}
 

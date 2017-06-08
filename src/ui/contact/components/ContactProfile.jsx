@@ -3,7 +3,6 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const RTAvatar = require('~/react-toolbox').Avatar;
 const { ProgressBar, TooltipIconButton } = require('~/react-toolbox');
-const cfg = require('~/config.js');
 const { contactStore, chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
@@ -18,8 +17,8 @@ class ContactProfile extends React.Component {
         this.contact = contactStore.getContact(next.username);
     }
     startChat = () => {
-        routerStore.navigateTo(routerStore.ROUTES.chat);
         chatStore.startChat([this.contact]);
+        routerStore.navigateTo(routerStore.ROUTES.chats);
         if (this.props.onClose) this.props.onClose();
     };
     render() {

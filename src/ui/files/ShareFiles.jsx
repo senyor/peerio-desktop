@@ -1,14 +1,21 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { fileStore } = require('~/icebear');
+const { fileStore, chatStore } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
+const routerStore = require('~/stores/router-store');
 
 @observer
 class ShareFiles extends React.Component {
 
     handleFileShareAccept = (users) => {
-        fileStore.shareSelectedFiles(users);
+        const files = fileStore.getSelectedFiles();
+        fileStore.clearSelection();
+        const count = files.length;
+        if (!count || !users.length) return;
+        chatStore.startChatAndShareFiles(users, files).then(() => {
+            routerStore.navigateTo(routerStore.ROUTES.chats);
+        });
         this.closeUserPicker();
     };
 

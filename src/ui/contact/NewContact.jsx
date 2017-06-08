@@ -1,11 +1,11 @@
 const React = require('react');
-const { observable, computed, action } = require('mobx');
+const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, IconButton, Input, TooltipIconButton, FontIcon, ProgressBar } = require('~/react-toolbox');
+const { Button, IconButton, Input, FontIcon } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
-const { contactStore, config, User } = require('~/icebear');
+const { contactStore, User } = require('~/icebear');
 const urls = require('~/icebear').config.translator.urlMap;
 
 @observer
@@ -64,7 +64,6 @@ class NewContact extends React.Component {
     }
 
     getEmailUrl() {
-        const link = encodeURIComponent(urls.socialShareUrl);
         const title = encodeURIComponent(t('title_socialShareInvite'));
         const content = encodeURIComponent(t('title_socialShareInviteContent', {
             socialShareUrl: urls.socialShareUrl,
@@ -91,8 +90,9 @@ class NewContact extends React.Component {
                             <div className="new-chat-search">
                                 <FontIcon value="search" />
                                 <div className="chip-wrapper">
-                                    <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')} value={this.query}
-                                        onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
+                                    <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')}
+                                        value={this.query} onChange={this.handleTextChange}
+                                        onKeyDown={this.handleKeyDown} />
                                 </div>
                                 <Button className={css('confirm', { hide: !this.query.length || this.waiting })}
                                     label={t('button_add')}

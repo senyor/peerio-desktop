@@ -13,18 +13,18 @@ const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
 const { isUrlAllowed } = require('~/helpers/url');
 const urls = require('~/config').translator.urlMap;
 const { User, systemMessages, contactStore } = require('~/icebear');
-const { getHeaders } = require('~/helpers/http');
+// const { getHeaders } = require('~/helpers/http');
 const uiStore = require('~/stores/ui-store');
 const htmlEncoder = require('html-entities').AllHtmlEntities;
 
 
 // TODO: move somewhere?
-const URL_STATE = { WAITING: 1, FAILED: 2, GOOD: 3, SKIP: 4 }; // don't make this start from 0
-const urlMap = {}; // key - url, value - URL_STATE
-const MAX_IMG_SIZE = 1024 * 1024 * 1024 * 5;
+// const URL_STATE = { WAITING: 1, FAILED: 2, GOOD: 3, SKIP: 4 }; // don't make this start from 0
+// const urlMap = {}; // key - url, value - URL_STATE
+// const MAX_IMG_SIZE = 1024 * 1024 * 1024 * 5;
 // ugly, but works. autolinker has only one global replacer fn, and we need to get message object in there somehow
-let currentProcessingMessage;
-
+// let currentProcessingMessage;
+/*
 function processUrl(url) {
     const msg = currentProcessingMessage;
     if (urlMap[url]) {
@@ -46,7 +46,7 @@ function processUrl(url) {
         urlMap[url] = URL_STATE.FAILED;
     });
 }
-
+*/
 const autolinker = new Autolinker({
     urls: {
         schemeMatches: true,
@@ -100,7 +100,7 @@ function formatPre(str) {
 function processMessage(msg) {
     if (msg.lastProcessedVersion !== msg.version) msg.processedText = null;
     if (msg.processedText != null) return msg.processedText;
-    currentProcessingMessage = msg;
+    // currentProcessingMessage = msg;
     // we don't expect any html in original text,
     // if there are any tags - user entered them, we consider them plaintext and encode
     let str = htmlEncoder.encode(msg.text);
@@ -151,7 +151,10 @@ class Message extends React.Component {
                                 ? null
                                 : <div className="meta-data">
                                     <div className="user selectable">
-                                        {m.sender.fullName} <span className="username selectable">{m.sender.username}</span>
+                                        {m.sender.fullName}&nbsp;
+                                        <span className="username selectable">
+                                            {m.sender.username}
+                                        </span>
                                     </div>
                                     <div className="timestamp selectable">{time.format(m.timestamp)}</div>
                                 </div>
@@ -164,12 +167,12 @@ class Message extends React.Component {
                             }
                             {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
                             {
-                                /* SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML */
+                                /* SECURITY: sanitize if you change this to  render in dangerouslySetInnerHTML */
                                 this.renderSystemData(m)
                             }
                         </div>
-                        {m.inlineImages.map(url => (
-                            <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />))}
+                        {/* m.inlineImages.map(url => (
+                            <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />))*/}
                         {m.sendError ?
                             <div className="flex-row flex-align-center">
                                 <div className="send-error-menu">

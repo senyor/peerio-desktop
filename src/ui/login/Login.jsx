@@ -2,7 +2,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { Button, TooltipIconButton } = require('~/react-toolbox');
-const { config, socket, User, validation, TinyDb } = require('~/icebear');
+const { config, socket, User, validation } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -104,11 +104,11 @@ class LoginStore extends OrderedFormStore {
             if (!User.current.autologinEnabled) {
                 return autologin.shouldSuggestEnabling()
                     .then(suggest => {
-                        window.router.push(suggest ? '/autologin' : '/app');
+                        window.router.push(suggest ? '/autologin' : '/app/chats');
                     });
             }
-            return window.router.push('/app');
-        }).catch((e) => {
+            return window.router.push('/app/chats');
+        }).catch(() => {
             this.loginStore.busy = false;
             // show error inline
             this.loginStore.passcodeOrPassphraseValidationMessageText = t('error_loginFailed');

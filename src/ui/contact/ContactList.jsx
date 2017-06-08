@@ -1,5 +1,4 @@
 const React = require('react');
-const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon, Input, List, ListItem, TooltipIconButton, Dropdown } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
@@ -19,7 +18,7 @@ class ContactList extends React.Component {
     startChat(ev) {
         const username = getAttributeInParentChain(ev.target, 'data-id');
         chatStore.startChat([contactStore.getContact(username)]);
-        window.router.push('/app');
+        window.router.push('/app/chats');
     }
 
     removeContact(ev) {
@@ -36,8 +35,10 @@ class ContactList extends React.Component {
         return (<div data-id={c.username}>
             <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />
             {c.isAdded
-                ? <TooltipIconButton icon="star" tooltip={t('button_removeFavourite')} onClick={this.removeContact} />
-                : <TooltipIconButton icon="star_outline" tooltip={t('button_addFavourite')} onClick={this.addContact} />}
+                ? <TooltipIconButton icon="star" tooltip={t('button_removeFavourite')}
+                    onClick={this.removeContact} />
+                : <TooltipIconButton icon="star_outline" tooltip={t('button_addFavourite')}
+                    onClick={this.addContact} />}
         </div>
         );
     }

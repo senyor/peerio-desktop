@@ -1,5 +1,5 @@
 const React = require('react');
-const { Route, IndexRoute } = require('react-router');
+const { Route, IndexRoute, IndexRedirect } = require('react-router');
 const App = require('./App');
 const Root = require('./Root');
 const Login = require('./login/Login');
@@ -33,7 +33,8 @@ module.exports = (
         <Route path="/new-device" component={NewDevice} />
         <Route path="autologin" component={AutoLogin} />
         <Route path="/app" component={App} >
-            <IndexRoute component={Chat} />
+            <IndexRedirect to="/app/chats" />
+            <Route path="chats" component={Chat} />
             <Route path="new-chat" component={NewChat} />
             <Route path="files" component={Files} />
             <Route path="sharefiles" component={ShareFiles} />

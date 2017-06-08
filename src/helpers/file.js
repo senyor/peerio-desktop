@@ -1,6 +1,5 @@
 const electron = require('electron').remote;
 const fs = require('fs');
-const { warnings } = require('~/icebear');
 const _ = require('lodash');
 const path = require('path');
 
@@ -20,7 +19,7 @@ function requestDownloadPath(fileName) {
             { defaultPath: p },
             fileSavePath => {
                 if (fileSavePath) resolve(fileSavePath);
-                else reject();
+                else reject(new Error('User cancelled save dialog.'));
             });
     });
 }

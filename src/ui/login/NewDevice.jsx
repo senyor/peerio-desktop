@@ -43,7 +43,7 @@ const T = require('~/ui/shared-components/T');
             .then(() => {
                 this.busy = false;
                 warnings.add('warning_passcodeAdded');
-                window.router.push('/app');
+                window.router.push('/app/chats');
             });
     }
 
@@ -55,7 +55,7 @@ const T = require('~/ui/shared-components/T');
         User.current.disablePasscode()
             .then(() => {
                 this.busy = false;
-                window.router.push('/app');
+                window.router.push('/app/chats');
             });
     }
 

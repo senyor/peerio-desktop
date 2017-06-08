@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Input, List, ListItem, TooltipIconButton, IconButton, ProgressBar } = require('~/react-toolbox');
+const { Button, List, ListItem, TooltipIconButton, IconButton, ProgressBar } = require('~/react-toolbox');
 const { User, contactStore, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -235,9 +235,11 @@ class Profile extends React.Component {
                         <IconButton icon="add_a_photo"
                             onClick={this.handleAddAvatar} />
                     </div>
-                    {User.current.savingAvatar ? <div className="save-progress-overlay flex-row flex-justify-center flex-align-center">
-                        <ProgressBar type="circular" mode="indeterminate" />
-                    </div> : null}
+                    {User.current.savingAvatar
+                        ? <div className="save-progress-overlay flex-row flex-justify-center flex-align-center">
+                            <ProgressBar type="circular" mode="indeterminate" />
+                        </div>
+                        : null}
                 </div>
             </section>
         );

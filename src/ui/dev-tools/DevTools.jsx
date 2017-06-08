@@ -15,7 +15,7 @@ class DevTools extends React.Component {
     };
     quit() {
         if (User.current) {
-            window.router.push('/app');
+            window.router.push('/app/chats');
         } else {
             window.router.push('/');
         }

@@ -19,7 +19,7 @@ class RouterStore {
 
     get ROUTES() {
         return {
-            chat: '/app',
+            chats: '/app/chats',
             mail: '/app/mail',
             files: 'app/files',
             contacts: 'app/contacts',

@@ -1,5 +1,5 @@
 const React = require('react');
-const { observable, when } = require('mobx');
+const { when } = require('mobx');
 const { observer } = require('mobx-react');
 const { TooltipIconButton } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
@@ -16,7 +16,7 @@ class Help extends React.Component {
         const feedback = contactStore.getContact(config.contacts.feedbackUser);
         when(() => !feedback.loading, () => {
             chatStore.startChat([feedback]);
-            window.router.push('/app');
+            window.router.push('/app/chats');
         });
     }
 
@@ -24,7 +24,7 @@ class Help extends React.Component {
         const support = contactStore.getContact(config.contacts.supportUser);
         when(() => !support.loading, () => {
             chatStore.startChat([support]);
-            window.router.push('/app');
+            window.router.push('/app/chats');
         });
     }
 
@@ -44,15 +44,18 @@ class Help extends React.Component {
                     </p>
                     <p className="flex-row flex-align-center">
                         <T k="title_supportIntro" />
-                        <TooltipIconButton icon="chat" onClick={this.support} primary tooltip={t('button_supportChat')} />
-                        <TooltipIconButton icon="email" href={urls.contactSupport} tooltip={t('button_supportEmail')} primary />
+                        <TooltipIconButton icon="chat" onClick={this.support} primary
+                            tooltip={t('button_supportChat')} />
+                        <TooltipIconButton icon="email" href={urls.contactSupport} primary
+                            tooltip={t('button_supportEmail')} />
                     </p>
                 </section>
                 <section className="section-divider">
                     <div className="title">{t('title_feedback')}</div>
                     <p className="flex-row flex-align-center">
                         <T k="title_feedbackIntro" />
-                        <TooltipIconButton icon="chat" onClick={this.feedback} primary tooltip={t('button_feedbackChat')} />
+                        <TooltipIconButton icon="chat" onClick={this.feedback} primary
+                            tooltip={t('button_feedbackChat')} />
                     </p>
                 </section>
                 <section>

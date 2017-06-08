@@ -1,6 +1,5 @@
 const React = require('react');
 const { Button } = require('~/react-toolbox');
-const { TinyDb } = require('~/icebear');
 const { observer } = require('mobx-react');
 const autologin = require('~/helpers/autologin');
 const { t } = require('peerio-translator');
@@ -10,12 +9,12 @@ const T = require('~/ui/shared-components/T');
     enable() {
         autologin.enable();
         autologin.dontSuggestEnablingAgain();
-        window.router.push('/app');
+        window.router.push('/app/chats');
     }
     disable() {
         autologin.disable();
         autologin.dontSuggestEnablingAgain();
-        window.router.push('/app');
+        window.router.push('/app/chats');
     }
     render() {
         return (
@@ -25,7 +24,8 @@ const T = require('~/ui/shared-components/T');
                     <div className="display-2">{t('title_enableAutomatic')}</div>
                     <div className="options">
                         <div className="option">
-                            <Button label={t('button_enable')} value="enable" className="button-gradient" onClick={this.enable} />
+                            <Button label={t('button_enable')} value="enable" className="button-gradient"
+                                onClick={this.enable} />
                             <p>
                                 <T k="title_enableAutomatic1" />
                             </p>

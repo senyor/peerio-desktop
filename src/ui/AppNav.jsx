@@ -1,12 +1,11 @@
 const React = require('react');
-const { observable, autorunAsync } = require('mobx');
+const { autorunAsync } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconMenu, MenuItem, MenuDivider, TooltipIconButton } = require('~/react-toolbox');
 const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
 const remote = require('electron').remote;
-const { ipcRenderer } = require('electron');
 const notificationFactory = require('~/helpers/notifications');
 const appControl = require('~/helpers/app-control');
 const AppNavButton = require('./AppNavButton');
@@ -126,7 +125,7 @@ class AppNav extends React.Component {
                 </div>
                 <div className="app-menu">
                     <AppNavButton tooltip={t('title_chats')} icon="forum"
-                        active={routerStore.currentRoute.startsWith(routerStore.ROUTES.chat)}
+                        active={routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)}
                         showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
                         onClick={this.toChat} />
 

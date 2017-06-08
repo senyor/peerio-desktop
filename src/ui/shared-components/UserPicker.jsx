@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
     ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { fileStore, contactStore, User } = require('~/icebear');
+const { fileStore, contactStore } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
@@ -19,11 +19,15 @@ class UserPicker extends React.Component {
     @observable showNotFoundError;
 
     @computed get options() {
-        return contactStore.filter(this.query);
+        return contactStore.filter(this.query).filter(this.isNotSelected);
     }
 
     @computed get isValid() {
         return !!this.selected.find(s => !s.loading && !s.notFound);
+    }
+
+    isNotSelected =(item) => {
+        return !this.selected.find(s => s.username === item.username);
     }
 
     handleTextChange = newVal => {
@@ -122,19 +126,25 @@ class UserPicker extends React.Component {
                                 <FontIcon value="search" />
                                 <div className="chip-wrapper">
                                     {this.selected.map(c =>
-                                        (<Chip key={c.username} className={css('chip-label', { 'not-found': c.notFound })}
+                                        (<Chip key={c.username}
+                                            className={css('chip-label', { 'not-found': c.notFound })}
                                             onDeleteClick={() => this.selected.remove(c)} deletable>
-                                            {c.loading ? <ProgressBar type="linear" mode="indeterminate" /> : c.username}
+                                            {c.loading
+                                                ? <ProgressBar type="linear" mode="indeterminate" />
+                                                : c.username}
                                         </Chip>)
                                     )}
-                                    <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')} value={this.query}
-                                        onChange={this.handleTextChange} onKeyDown={this.handleKeyDown} />
+                                    <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')}
+                                        value={this.query} onChange={this.handleTextChange}
+                                        onKeyDown={this.handleKeyDown} />
                                 </div>
                                 <Button className={css('confirm', { hide: !this.selected.length })}
                                     label={this.props.button || t('button_go')}
                                     onClick={this.accept} disabled={!this.isValid} />
                             </div>
-                            {this.showNotFoundError ? <T k="error_userNotFound" tag="div" className="error-search" /> : null}
+                            {this.showNotFoundError
+                                ? <T k="error_userNotFound" tag="div" className="error-search" />
+                                : null}
 
                         </div>
                         {this.suggestInviteEmail ?

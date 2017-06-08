@@ -5,6 +5,7 @@ const { observer } = require('mobx-react');
 const { FontIcon, Dialog } = require('~/react-toolbox');
 const { fileStore, chatStore, util } = require('~/icebear');
 const { t } = require('peerio-translator');
+const routerStore = require('~/stores/router-store');
 
 @observer
 class DropTarget extends React.Component {
@@ -23,7 +24,7 @@ class DropTarget extends React.Component {
     upload = (list) => {
         if (this.dialogActive || list.success.length === 0) return;
         this._files = list;
-        if (window.router.getCurrentLocation().pathname === '/app' && chatStore.activeChat) {
+        if (routerStore.currentRoute === routerStore.ROUTES.chats && chatStore.activeChat) {
             this.dialogActive = true;
             return;
         }

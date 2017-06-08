@@ -11,17 +11,14 @@ const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T');
 const css = require('classnames');
 const ChatSideBar = require('./components/ChatSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
 
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 
-const messages = [
-    'Peerio is always encrypted, pretty cool, eh?',
-    'Got any big files today? I could use the workout.',
-    'Want to make Peerio even better? Let us know how, message @feedback.',
-    'It\'s okay to pick favorites. Mark the ⭐ in a chat to keep it in sight.'];
+const messages = ['title_randomMessage1', 'title_randomMessage2', 'title_randomMessage3', 'title_randomMessage4'];
 let randomNumber;
 
 @observer
@@ -84,7 +81,7 @@ class Chat extends React.Component {
     };
 
     generateRandomMessage() {
-        return messages[randomNumber];
+        return (<T k={messages[randomNumber]} />);
     }
     // assumes active chat exists, don't render if it doesn't
     renderHeader() {

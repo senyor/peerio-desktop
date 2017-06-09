@@ -3,10 +3,15 @@
 
 <head>
   <style>
+    body {
+      user-select: none;
+    }
+
     .account-key {
+      border: 4px dotted rgba(0,0,0,.38);
+      font-weight: 800;
       height: 2in;
-      width: 3.5in;
-      border: 1px dotted rgba(0,0,0,.38);
+      padding: .125in;
     }
 
     .label {
@@ -30,6 +35,10 @@
       height: .25in;
       margin: 0;
       padding: 0;
+    }
+
+    .selectable {
+      user-select: auto;
     }
   </style>
 </head>
@@ -61,19 +70,17 @@
 
         <p style="line-height: 1.5; margin-bottom: .5in;"> You will need this information if you wish to sign in to <em>Peerio Messenger</em> on a new device, if your application
             is uninstalled, or your device is reset.</p>
-        <div>
-            <div style="margin-bottom: .5in; display: inline-block; width: 3.5in; margin-right: .5in">
-                <div class="label">Username</div>
-                <div style="font-size: 16pt" id="username"></div>
-            </div>
-            <div style="margin-bottom: .5in; display: inline-block; width: 3.5in;">
-                <div class="label">Email address</div>
-                <div style="font-size: 16pt" id="email"></div>
-            </div>
+        <div style="margin-bottom: .5in; margin-right: .5in">
+            <div class="label">Username</div>
+            <div style="font-size: 16pt" id="username" class="selectable"> a_user_name</div>
         </div>
+        <div style="margin-bottom: .5in;">
+            <div class="label">Email address</div>
+            <div style="font-size: 16pt" id="email">areallyreallyreallylongemail@ddresswithaweirddomainname.com</div>
+        </div>
+        <div class="label">Account Key</div>
         <div style="margin-bottom: .5in" class="account-key">
-            <div class="label">Account Key</div>
-            <div style="font-size: 16pt" id="key"></div>
+            <div style="font-size: 16pt" id="key" class="selectable">This is your selectable account key</div>
         </div>
         <div style="margin:0 auto" class="pro-tip">
             <p><strong>Pro tip:</strong> Once a day, try to remember a bit more of your passphrase.</p>

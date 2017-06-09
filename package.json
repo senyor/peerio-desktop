@@ -3,6 +3,7 @@
   "description": "Peerio 2",
   "version": "2.16.7",
   "scripts": {
+    "preinstall": "npm config set package-lock false",
     "precommit": "npm run validate",
     "postmerge": "npm update",
     "postcommit": "git fetch --prune origin '+refs/tags/*:refs/tags/*'",

@@ -4,6 +4,9 @@
   "version": "2.16.7",
   "description": "Peerio desktop client",
   "main": "build/main.js",
+  "scripts": {
+    "preinstall": "npm config set package-lock false"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PeerioTechnologies/peerio-desktop.git"

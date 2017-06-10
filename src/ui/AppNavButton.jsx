@@ -1,5 +1,5 @@
 const React = require('react');
-const { IconButton, Tooltip, TooltipIconButton } = require('~/react-toolbox');
+const { TooltipIconButton } = require('~/react-toolbox');
 const css = require('classnames');
 const { observer } = require('mobx-react');
 

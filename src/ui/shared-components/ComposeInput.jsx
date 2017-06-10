@@ -5,16 +5,14 @@ const { observer } = require('mobx-react');
 const EmojiPicker = require('~/ui/emoji/Picker');
 const emojione = require('~/static/emoji/emojione.js');
 const Quill = require('quill/dist/quill.core');
-const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const FilePicker = require('~/ui/files/components/FilePicker');
-const { t } = require('peerio-translator');
 const htmlDecoder = require('html-entities').AllHtmlEntities;
 const { chatStore, contactStore } = require('~/icebear');
 
 // todo: this file is messy as hell, refactor it
 
 const Embed = Quill.import('blots/embed');
-const Inline = Quill.import('blots/inline');
+// const Inline = Quill.import('blots/inline');
 const Keyboard = Quill.import('modules/keyboard');
 
 const pngFolder = './static/emoji/png/';
@@ -232,7 +230,7 @@ class ComposeInput extends React.Component {
         this.quill.keyboard.addBinding({
             key: 37, // left
             shortKey: false
-        }, (range, context) => {
+        }, () => {
             this.suggests = null;
             return true;
         });
@@ -240,7 +238,7 @@ class ComposeInput extends React.Component {
         this.quill.keyboard.addBinding({
             key: 39, // right
             shortKey: false
-        }, (range, context) => {
+        }, () => {
             this.suggests = null;
             return true;
         });
@@ -248,7 +246,7 @@ class ComposeInput extends React.Component {
         this.quill.keyboard.addBinding({
             key: 27, // esc
             shortKey: false
-        }, (range, context) => {
+        }, () => {
             this.suggests = null;
             return true;
         });
@@ -256,7 +254,7 @@ class ComposeInput extends React.Component {
         this.quill.keyboard.addBinding({
             key: 38, // up
             shortKey: false
-        }, (range, context) => {
+        }, () => {
             if (!this.suggests || !this.suggests.length) {
                 return true;
             }
@@ -269,7 +267,7 @@ class ComposeInput extends React.Component {
         this.quill.keyboard.addBinding({
             key: 40, // down
             shortKey: false
-        }, (range, context) => {
+        }, () => {
             if (!this.suggests || !this.suggests.length) {
                 return true;
             }

@@ -18,7 +18,7 @@
     "icebear:compile": "babel -q node_modules/peerio-icebear/src -d app/build/icebear",
     "code:watch": "npm run code:compile -- -w --skip-initial-build",
     "icebear:watch": "npm run icebear:compile -- -w --skip-initial-build",
-    "code:lint": "eslint . --fix --ext .js,.jsx",
+    "code:lint": "eslint ./src --fix --ext .js,.jsx",
     "devstyle:compile": "node-sass src/ui/dev-tools/dev-tools-style.scss app/build/dev-tools-style.css",
     "devstyle:watch": "npm run devstyle:compile -- -w",
     "style:compile": "node-sass src/styles/main.scss app/build/style.css",

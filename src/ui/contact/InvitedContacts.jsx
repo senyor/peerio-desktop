@@ -1,7 +1,6 @@
 const React = require('react');
-const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, Input, List, ListItem, TooltipIconButton, Dropdown } = require('~/react-toolbox');
+const { List, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const { contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const moment = require('moment');
@@ -20,8 +19,10 @@ class InvitedContacts extends React.Component {
     contactActions(c) {
         return (
             <div data-id={c.email}>
-                <TooltipIconButton icon="email" tooltip={t('button_resendInvite')} tooltipPosition="left" onClick={this.resendInvite} />
-                <TooltipIconButton icon="delete" tooltip={t('button_delete')} tooltipPosition="left" onClick={this.removeInvite} />
+                <TooltipIconButton icon="email" tooltip={t('button_resendInvite')}
+                    tooltipPosition="left" onClick={this.resendInvite} />
+                <TooltipIconButton icon="delete" tooltip={t('button_delete')}
+                    tooltipPosition="left" onClick={this.removeInvite} />
             </div>
         );
     }

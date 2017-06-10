@@ -1,15 +1,13 @@
 const React = require('react');
-const { Button, Checkbox } = require('~/react-toolbox');
+const { Checkbox } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
-const { fileStore, clientApp, Clock } = require('~/icebear');
+const { fileStore, clientApp } = require('~/icebear');
 const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
 const FileLine = require('./components/FileLine');
 const ZeroScreen = require('./components/ZeroScreen');
 const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
-const css = require('classnames');
-const urls = require('~/config').translator.urlMap;
 const { getListOfFiles } = require('~/helpers/file');
 
 @observer class Files extends React.Component {

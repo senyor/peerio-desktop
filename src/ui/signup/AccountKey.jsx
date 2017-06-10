@@ -1,14 +1,9 @@
 const React = require('react');
 const { Component } = require('react');
-const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { socket, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
-const languageStore = require('~/stores/language-store');
-const { Button } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 
-const { validators } = validation; // use common validation from core
 
 @observer class AccountKey extends Component {
 

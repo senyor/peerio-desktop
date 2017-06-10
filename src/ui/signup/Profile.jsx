@@ -2,11 +2,9 @@ const React = require('react');
 const { Component } = require('react');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Dropdown } = require('~/react-toolbox');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const { socket, validation, PhraseDictionary } = require('~/icebear');
 const { t } = require('peerio-translator');
-const languageStore = require('~/stores/language-store');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 
 const { validators } = validation; // use common validation from core

@@ -2,7 +2,6 @@
 const { app, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');
 
-let appReady = false;
 let mainWindow;
 
 process.on('uncaughtException', (error) => {
@@ -55,7 +54,6 @@ app.on('ready', () => {
             }
 
             mainWindow = new BrowserWindow(winConfig);
-            appReady = true;
             mainWindow.loadURL(`file://${__dirname}/index.html`);
 
             mainWindow.once('ready-to-show', () => {

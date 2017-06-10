@@ -51,7 +51,7 @@ function buildContextMenu(mainWindow) {
     mainWindow.webContents.on('context-menu', (e, props) => {
         rightClickPos.x = props.x;
         rightClickPos.y = props.y;
-        const { selectionText, isEditable } = props;
+        const { isEditable } = props;
         if (isEditable) {
             inputMenu.popup(mainWindow);
         } else {

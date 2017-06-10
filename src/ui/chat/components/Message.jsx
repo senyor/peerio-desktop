@@ -82,7 +82,7 @@ function highlightMentions(str) {
     );
 }
 // HACK: make this as a proper react component
-window.openContact = function(username) {
+window.openContact = (username) => {
     uiStore.contactDialogUsername = username;
 };
 const mentionRegex = /(\s*|^)@([a-zA-Z0-9_]{1,32})/gm;
@@ -193,7 +193,9 @@ class Message extends React.Component {
                     {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null}
                     {m.receipts ?
                         <div key={`${m.tempId || m.id}receipts`} className="receipt-wrapper">
-                            {m.receipts.map(u => u.signatureError ? null : <Avatar key={u} username={u} size="tiny" />)}
+                            {m.receipts.map(u => {
+                                return u.signatureError ? null : <Avatar key={u} username={u} size="tiny" />;
+                            })}
                         </div> : null}
 
                 </div>

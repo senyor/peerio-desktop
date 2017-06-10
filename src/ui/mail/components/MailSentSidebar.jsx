@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button, IconButton, Tooltip, TooltipIconButton } = require('~/react-toolbox');
+const { Button, TooltipIconButton } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');

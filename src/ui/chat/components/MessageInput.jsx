@@ -86,7 +86,7 @@ class MessageInput extends ComposeInput {
             // eslint-disable-next-line
             reader.onloadend = () => {
                 const buffer = new Buffer(reader.result);
-                fs.writeFile(tmpPath, buffer, {}, (err, res) => {
+                fs.writeFile(tmpPath, buffer, {}, (err) => {
                     if (err) {
                         console.error(err);
                         return;

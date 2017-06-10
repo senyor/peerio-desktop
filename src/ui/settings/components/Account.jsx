@@ -1,10 +1,8 @@
 const React = require('react');
-const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Switch } = require('~/react-toolbox');
+const { Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
-const uiStore = require('~/stores/ui-store');
 
 @observer
 class Account extends React.Component {

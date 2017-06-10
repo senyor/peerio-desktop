@@ -2,17 +2,11 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Switch, TooltipIconButton } = require('~/react-toolbox');
-const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
-const { User, validation } = require('~/icebear');
+const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
-const PasscodeLock = require('~/ui/shared-components/PasscodeLock');
-const T = require('~/ui/shared-components/T');
-const cfg = require('~/config.js');
 const autologin = require('~/helpers/autologin');
 const fs = require('fs');
 const electron = require('electron').remote;
-
-const { validators } = validation; // use common validation from core
 
 @observer
 class SecuritySettings extends React.Component {
@@ -93,9 +87,9 @@ class SecuritySettings extends React.Component {
 
 
     renderShowPassphraseSection() {
-        const passphraseDialogActions = [
-            { label: t('button_close'), onClick: this.hidePassphraseDialog }
-        ];
+        // const passphraseDialogActions = [
+        //     { label: t('button_close'), onClick: this.hidePassphraseDialog }
+        // ];
 
         return (
             <div>
@@ -108,9 +102,7 @@ class SecuritySettings extends React.Component {
                 <div className="account-key-toggle">
                     {this.passphraseVisible
                         ? <span className="selectable">{User.current.passphrase}</span>
-                        : <span style={{ fontSize: '300%', lineHeight: '90%' }}>
-                            &middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;&middot;
-                        </span>}
+                        : <span>••••••••••••••••••••••••••••••••••••••••••</span>}
                     <TooltipIconButton icon={this.passphraseVisible ? 'visibility_off' : 'visibility'}
                         tooltip={this.passphraseVisible ?
                             t('title_hideAccountKey') : t('title_showAccountKey')}

@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button, Dialog } = require('~/react-toolbox');
-const { PhraseDictionary, User, errors, warnings } = require('~/icebear');
+const { User, errors } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -12,7 +12,6 @@ const { Profile, ProfileStore } = require('./Profile');
 // const { Passcode, PasscodeStore } = require('./Passcode');
 const AccountKey = require('./AccountKey');
 const T = require('~/ui/shared-components/T');
-const uiStore = require('~/stores/ui-store');
 const SaveNow = require('~/ui/signup/SaveNow');
 
 @observer class Signup extends React.Component {

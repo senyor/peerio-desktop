@@ -1,15 +1,10 @@
 const React = require('react');
 const { Component } = require('react');
-const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button } = require('~/react-toolbox');
-const { socket, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
-const languageStore = require('~/stores/language-store');
 const fs = require('fs');
 const electron = require('electron').remote;
-
-const { validators } = validation; // use common validation from core
 
 @observer class SaveNow extends Component {
 

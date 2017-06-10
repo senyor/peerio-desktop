@@ -1,5 +1,5 @@
 const React = require('react');
-const { User, fileStore } = require('~/icebear');
+const { fileStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const { Dialog, ProgressBar, List, ListItem } = require('~/react-toolbox');
 const Search = require('~/ui/shared-components/Search');

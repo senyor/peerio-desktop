@@ -30,7 +30,8 @@ const { getListOfFiles } = require('~/helpers/file');
             if (!paths || !paths.length) return;
             const list = getListOfFiles(paths);
             if (!list.success.length) return;
-            list.success.forEach(fileStore.upload);
+            // don't refactor argument to file.upload forEach has index arg that is interpreted as a file name
+            list.success.forEach((path) => fileStore.upload(path));
         });
     }
 

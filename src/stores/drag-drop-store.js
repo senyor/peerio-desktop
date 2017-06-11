@@ -14,7 +14,7 @@ class DragDropStore {
         return dropFile.path;
     }
     @action.bound _onEnter(ev) {
-        console.log('enter', this._counter, ev.dataTransfer.files.length);
+        // console.log('enter', this._counter, ev.dataTransfer.files.length);
 
         ev.preventDefault();
         if (!User.current || !ev.dataTransfer.files.length) return;
@@ -22,7 +22,7 @@ class DragDropStore {
         if (this._counter === 1) {
             let list = Array.prototype.slice.call(ev.dataTransfer.files);
             list = getListOfFiles(list.map(this._extractPath));
-            console.debug(`Hovering ${list.success.length} files of ${list.successBytes} bytes`);
+            // console.debug(`Hovering ${list.success.length} files of ${list.successBytes} bytes`);
             this.hovering = true;
             this.hoveringFileCount = list.success.length;
             this.hoveringFileSize = list.successBytes;
@@ -31,7 +31,7 @@ class DragDropStore {
     }
 
     _onLeave = (ev) => {
-        console.log('leave', this._counter, ev.dataTransfer.files.length);
+        //  console.log('leave', this._counter, ev.dataTransfer.files.length);
         ev.preventDefault();
         if (!User.current || !ev.dataTransfer.files.length) return;
         if (this._counter > 0) this._counter--;
@@ -43,7 +43,7 @@ class DragDropStore {
     };
 
     _onDrop = (ev) => {
-        console.log('drop', this._counter, ev.dataTransfer.files.length);
+        // console.log('drop', this._counter, ev.dataTransfer.files.length);
         ev.preventDefault();
         if (!User.current) return;
         this._counter = 0;
@@ -56,7 +56,7 @@ class DragDropStore {
     };
 
     _onOver = (ev) => {
-        console.log('over', this._counter, ev.dataTransfer.files.length);
+        // console.log('over', this._counter, ev.dataTransfer.files.length);
         ev.preventDefault();
         if (!User.current || !ev.dataTransfer.files.length) {
             ev.dataTransfer.dropEffect = 'none';

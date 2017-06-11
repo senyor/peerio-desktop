@@ -24,11 +24,16 @@ class ChatNameEditor extends React.Component {
             <BetterInput label={this.props.showLabel ? t('title_title') : null}
                 hint={t('title_chatNameHint')}
                 className={this.props.className}
+                onFocus={this.onFocus}
                 onBlur={this.props.onBlur}
                 onReject={this.cancelNameEdit}
                 onAccept={this.acceptNameEdit}
                 ref={this.setNameInputRef}
-                value={chatStore.activeChat ? chatStore.activeChat._chatName : ''}
+                value={
+                    (chatStore.activeChat && chatStore.activeChat.chatHead)
+                        ? chatStore.activeChat.chatHead.chatName : ''
+                }
+                displayValue={chatStore.activeChat ? chatStore.activeChat.name : ''}
                 tabIndex={this.props.tabIndex} />
         );
     }

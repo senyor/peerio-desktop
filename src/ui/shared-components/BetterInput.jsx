@@ -11,7 +11,7 @@ class BetterInput extends React.Component {
     @observable isValid = true;
     accepted = false;
     rejected = false;
-    focused = false;
+    @observable focused = false;
 
     componentWillMount() {
         this.value = this.props.value || '';
@@ -90,13 +90,13 @@ class BetterInput extends React.Component {
 
     render() {
         const { onFocus, onBlur, onChange, onKeyDown, onAccept, onReject,
-            value, acceptOnBlur, validator, error, ...props } = this.props;
+            value, acceptOnBlur, validator, error, displayValue, ...props } = this.props;
         props.onFocus = this.onFocus;
         props.onBlur = this.onBlur;
         props.onChange = this.onChange;
         props.onKeyDown = this.onKeyDown;
         props.innerRef = this.setRef;
-        props.value = this.value;
+        props.value = this.focused ? this.value : displayValue;
         props.type = 'text';
         props.error = this.isValid ? '' : t(error);
         return React.createElement(Input, props);

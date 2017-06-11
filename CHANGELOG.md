@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.16.8"></a>
+## [2.16.8](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.7...v2.16.8) (2017-06-11)
+
+
+### Bug Fixes
+
+* **chat:** don't show receipts with broken signature ([a61b4fe](https://github.com/PeerioTechnologies/peerio-desktop/commit/a61b4fe))
+* **chat:** start chat from chat sidebar ([a26b2ae](https://github.com/PeerioTechnologies/peerio-desktop/commit/a26b2ae))
+* **contacts:** social share email button working ([b29229b](https://github.com/PeerioTechnologies/peerio-desktop/commit/b29229b))
+* **files:** corrects overflow of filenames in chats ([f133de1](https://github.com/PeerioTechnologies/peerio-desktop/commit/f133de1))
+* **notifications:** sound settings & macOS double icon ([01fbab0](https://github.com/PeerioTechnologies/peerio-desktop/commit/01fbab0))
+* navigator ([26bdff6](https://github.com/PeerioTechnologies/peerio-desktop/commit/26bdff6))
+* **settings:** corrects class name ([734d58a](https://github.com/PeerioTechnologies/peerio-desktop/commit/734d58a))
+* **settings:** makes text on lighter images more legible. ([9455f83](https://github.com/PeerioTechnologies/peerio-desktop/commit/9455f83))
+* changed file share flow, router fixes, chats get their own route, lint ([bcd2489](https://github.com/PeerioTechnologies/peerio-desktop/commit/bcd2489))
+* file upload ([8d6bb68](https://github.com/PeerioTechnologies/peerio-desktop/commit/8d6bb68))
+* receipt verification and user.current init ([6aefd7b](https://github.com/PeerioTechnologies/peerio-desktop/commit/6aefd7b))
+
+
+
 <a name="2.16.7"></a>
 ## [2.16.7](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.6...v2.16.7) (2017-06-06)
 

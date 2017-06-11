@@ -99,8 +99,8 @@ class LoginStore extends OrderedFormStore {
         user.username = this.loginStore.username || this.loginStore.lastAuthenticatedUser.username;
         user.passphrase = this.loginStore.passcodeOrPassphrase;
         user.autologinEnabled = isAutologin;
+        User.current = user;
         user.login().then(() => {
-            User.current = user;
             if (!User.current.autologinEnabled) {
                 return autologin.shouldSuggestEnabling()
                     .then(suggest => {
@@ -109,6 +109,7 @@ class LoginStore extends OrderedFormStore {
             }
             return window.router.push('/app/chats');
         }).catch(() => {
+            User.current = null;
             this.loginStore.busy = false;
             // show error inline
             this.loginStore.passcodeOrPassphraseValidationMessageText = t('error_loginFailed');

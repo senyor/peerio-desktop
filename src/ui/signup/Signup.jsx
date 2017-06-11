@@ -48,9 +48,9 @@ const SaveNow = require('~/ui/signup/SaveNow');
         u.locale = languageStore.language;
         u.passphrase = this.profileStore.passphrase;
 
+        User.current = u;
         return u.createAccountAndLogin()
             .then(() => {
-                User.current = u;
                 this.busy = false;
                 // User.current.setPasscode(this.passcodeStore.passcode)
                 //    .catch(() => {
@@ -59,6 +59,7 @@ const SaveNow = require('~/ui/signup/SaveNow');
                 window.router.push('/autologin');
             })
             .catch(err => {
+                User.current = null;
                 this.busy = false;
                 this.errorVisible = true;
                 // todo: error message will not be localized, maybe don't use it at all

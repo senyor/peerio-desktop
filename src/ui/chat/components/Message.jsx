@@ -193,8 +193,9 @@ class Message extends React.Component {
                     {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null}
                     {m.receipts ?
                         <div key={`${m.tempId || m.id}receipts`} className="receipt-wrapper">
-                            {m.receipts.map(u => {
-                                return u.signatureError ? null : <Avatar key={u} username={u} size="tiny" />;
+                            {m.receipts.map(r => {
+                                return r.receipt.signatureError ? null
+                                    : <Avatar key={r.username} username={r.username} size="tiny" />;
                             })}
                         </div> : null}
 

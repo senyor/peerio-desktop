@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.16.9"></a>
+## [2.16.9](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.8...v2.16.9) (2017-06-11)
+
+
+### Bug Fixes
+
+* chat name edit ([6638b13](https://github.com/PeerioTechnologies/peerio-desktop/commit/6638b13))
+
+
+
 <a name="2.16.8"></a>
 ## [2.16.8](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.7...v2.16.8) (2017-06-11)
 

@@ -4,7 +4,8 @@
   padding-left: $padding-small;
   width: calc(100% - 100px); // reduce reflow from read receipts
 
-  .shared-file {
+  .shared-file,
+  .invalid-file {
     @extend %flex-col;
     @extend %flex-justify-center;
     background: $color-dark-03;
@@ -13,9 +14,12 @@
     border-radius: 2px;
     cursor: pointer;
     height: 48px;
+    margin-left: $margin-small;
     padding-left: $padding-tiny;
     transition: 250ms;
+  }
 
+  .shared-file {
     .material-icons {
       padding: 0 12px;
     }
@@ -40,7 +44,7 @@
   }
 
   .invalid-file {
-    color: $color-error;
+    color: $text-dark-hint;
     cursor: auto;
     margin-left: $margin-small;
   }

@@ -780,6 +780,16 @@ $suggests-max-height: 200px;
     margin-top: 0;
   }
 
+  .rt-list-large {
+    overflow: hidden;
+  }
+
+  .rt-list-itemText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .rt-input-input {
     border-bottom: 1px solid $divider-dark;
     height: 56px;

@@ -806,7 +806,8 @@ $suggests-max-height: 200px;
     }
   }
 
-  &.open {
+  &.open,
+  .rt-list-item {
     width: 272px;
   }
 }

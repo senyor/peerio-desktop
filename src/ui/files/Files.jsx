@@ -42,15 +42,18 @@ const { getListOfFiles } = require('~/helpers/file');
             fileStore.clearSelection();
         }
     };
-
+    // todo: move to icebear
     handleBulkDelete = () => {
         const selected = fileStore.getSelectedFiles();
         const hasSharedFiles = selected.some((f) => f.shared);
 
         let msg = t('title_confirmRemoveFiles', { count: selected.length });
         if (hasSharedFiles) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
+
         if (confirm(msg)) {
-            selected.forEach(f => f.remove());
+            Promise.map(selected, f => f.remove().then(() => {
+                return new Promise(resolve => setTimeout(1000, resolve));
+            }));
         }
     };
 

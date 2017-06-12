@@ -40,7 +40,7 @@ function pickLocalFiles() {
     return new Promise(resolve => {
         const win = electron.getCurrentWindow();
         electron.dialog.showOpenDialog(win, {
-            properties: ['openFile', 'openDirectory', 'multiSelections', 'showHiddenFiles']
+            properties: ['openFile', 'multiSelections']
         }, resolve);
     });
 }

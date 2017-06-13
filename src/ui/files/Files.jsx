@@ -51,9 +51,7 @@ const { getListOfFiles } = require('~/helpers/file');
         if (hasSharedFiles) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
 
         if (confirm(msg)) {
-            Promise.map(selected, f => f.remove().then(() => {
-                return new Promise(resolve => setTimeout(1000, resolve));
-            }));
+            Promise.map(selected, f => f.remove().delay(300));
         }
     };
 

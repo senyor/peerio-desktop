@@ -46,12 +46,21 @@ const { getListOfFiles } = require('~/helpers/file');
     handleBulkDelete = () => {
         const selected = fileStore.getSelectedFiles();
         const hasSharedFiles = selected.some((f) => f.shared);
+        if (!selected.length) return;
 
         let msg = t('title_confirmRemoveFiles', { count: selected.length });
         if (hasSharedFiles) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
 
         if (confirm(msg)) {
-            Promise.map(selected, f => f.remove().delay(300));
+            let i = 0;
+            const removeOne = () => {
+                const f = selected[i];
+                f.remove().then(() => {
+                    if (++i >= selected.length) return;
+                    setTimeout(removeOne, 250);
+                });
+            };
+            removeOne();
         }
     };
 

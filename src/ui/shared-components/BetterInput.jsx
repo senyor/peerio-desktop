@@ -96,7 +96,7 @@ class BetterInput extends React.Component {
         props.onChange = this.onChange;
         props.onKeyDown = this.onKeyDown;
         props.innerRef = this.setRef;
-        props.value = this.focused ? this.value : displayValue;
+        props.value = this.focused ? this.value : (displayValue || this.value);
         props.type = 'text';
         props.error = this.isValid ? '' : t(error);
         return React.createElement(Input, props);

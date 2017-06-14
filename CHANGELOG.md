@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.17.0"></a>
+# [2.17.0](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.12...v2.17.0) (2017-06-14)
+
+
+### Bug Fixes
+
+* batch keg removal doesn't spam server anymore ([78c83e1](https://github.com/PeerioTechnologies/peerio-desktop/commit/78c83e1))
+* profile inputs ([8e38e9c](https://github.com/PeerioTechnologies/peerio-desktop/commit/8e38e9c))
+* **avatar:** makes better tofu/delete styling better ([2ba37ba](https://github.com/PeerioTechnologies/peerio-desktop/commit/2ba37ba))
+* **avatar:** positions tofu error ([4a3fdc7](https://github.com/PeerioTechnologies/peerio-desktop/commit/4a3fdc7))
+* **avatar:** who knows anymore? this might be fixed. ([ed40f03](https://github.com/PeerioTechnologies/peerio-desktop/commit/ed40f03))
+* **l18n:** match key to copy ([3a15e1b](https://github.com/PeerioTechnologies/peerio-desktop/commit/3a15e1b))
+* too many last minute things ([4e851e3](https://github.com/PeerioTechnologies/peerio-desktop/commit/4e851e3))
+
+
+### Features
+
+* **account:** full account delete flow ([2e5cc84](https://github.com/PeerioTechnologies/peerio-desktop/commit/2e5cc84))
+
+
+
 <a name="2.16.12"></a>
 ## [2.16.12](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.16.11...v2.16.12) (2017-06-12)
 

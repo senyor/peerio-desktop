@@ -59,7 +59,7 @@ class Help extends React.Component {
                     </p>
                 </section>
                 <section>
-                    <div className="title">{t('title_debugging')}</div>
+                    <div className="title">{t('title_logs')}</div>
                     <p className="flex-row flex-align-center">
                         <T k="title_logsIntro" />
                         <TooltipIconButton icon="content_copy" onClick={this.copyLogs}

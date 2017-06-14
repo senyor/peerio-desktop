@@ -181,7 +181,7 @@
       "installerIcon": "dist-assets/win-installer.ico"
     },
     "mac": {
-      "artifactName": "${name}-${version}.${ext}",
+      "artifactName": "${name}-${version}-mac.${ext}",
       "category": "public.app-category.productivity",
       "target": [
         "zip",

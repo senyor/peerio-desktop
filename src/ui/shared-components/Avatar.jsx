@@ -14,6 +14,14 @@ class Avatar extends React.Component {
     render() {
         const c = this.props.contact || contactStore.getContact(this.props.username);
         const style = { backgroundColor: c.color };
+        let icon;
+        if (this.props.size !== 'tiny') {
+            if (c.isDeleted) {
+                icon = <FontIcon value="remove_circle" />;
+            } else if (c.tofuError) {
+                icon = <FontIcon value="error" />;
+            }
+        }
         if (c.hasAvatar) style.backgroundImage = `url(${c.mediumAvatarUrl})`;
         const className = `clickable-avatar ${this.props.size || 'medium'}`;
         return (
@@ -21,7 +29,7 @@ class Avatar extends React.Component {
                 <RTAvatar style={style} onClick={this.openContactDialog} className={className}>
                     <div>{c.hasAvatar ? null : c.letter}</div>
                 </RTAvatar>
-                {c.tofuError ? <FontIcon value="error" /> : null}
+                {icon}
             </div>
         );
     }

@@ -101,6 +101,13 @@ section {
     background-size: contain;
     height: 64px;
     width: 64px;
+
+    + .material-icons {
+      border-radius: 32px;
+      font-size: 32px;
+      height: 32px;
+      width: 32px;
+    }
   }
 
   .medium {
@@ -113,6 +120,12 @@ section {
     background-size: contain;
     height: 32px;
     width: 32px;
+
+    + .material-icons {
+      font-size: 20px;
+      height: 20px;
+      width: 20px;
+    }
   }
 
   .tiny {

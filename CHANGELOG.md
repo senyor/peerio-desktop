@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.17.4"></a>
+## [2.17.4](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.17.2...v2.17.4) (2017-06-14)
+
+
+### Bug Fixes
+
+* **copy:** add final line to delete confirmation dialog ([8c16bed](https://github.com/PeerioTechnologies/peerio-desktop/commit/8c16bed))
+
+
+
 <a name="2.17.3"></a>
 ## [2.17.3](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.17.2...v2.17.3) (2017-06-14)
 

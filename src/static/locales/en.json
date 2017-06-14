@@ -301,6 +301,7 @@
   "title_dataDetail": "Help us improve your experience and fix bugs faster by sharing data with us automatically",
   "title_errorTrackingMessage": "Share crash & error reports",
   "title_dataCollectionMessage": "Share anonymous usage data",
+  "button_accountDelete": "Delete account",
   "title_accountDelete": "Do you want to delete your account?",
   "title_accountDeleted": "Account deleted",
   "title_accountDeleteDescription1": "If you choose to delete your account it's gone. Forever. We can't recover it for you.",

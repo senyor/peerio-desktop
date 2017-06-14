@@ -65,7 +65,7 @@ class Account extends React.Component {
                         onChange={this.onDataCollectionChanged} />
                 </section>
                 <section className="delete-account">
-                    <Button label={t('title_accountDelete')} onClick={this.showConfirmDelete} />
+                    <Button label={t('button_accountDelete')} onClick={this.showConfirmDelete} />
                 </section>
                 <Dialog active={this.deleteAccountDialogActive} actions={dialogActions}
                     onEscKeyDown={this.hideConfirmDelete}

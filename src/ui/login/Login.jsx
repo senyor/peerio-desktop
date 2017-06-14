@@ -112,7 +112,8 @@ class LoginStore extends OrderedFormStore {
             User.current = null;
             this.loginStore.busy = false;
             // show error inline
-            this.loginStore.passcodeOrPassphraseValidationMessageText = t('error_loginFailed');
+            this.loginStore.passcodeOrPassphraseValidationMessageText =
+                t(user.blacklisted ? 'error_accountSuspended' : 'error_loginFailed');
         });
     };
 

@@ -33,7 +33,9 @@ class ContactList extends React.Component {
 
     contactActions(c) {
         return (<div data-id={c.username}>
-            <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />
+            {c.isDeleted
+                ? null
+                : <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />}
             {c.isAdded
                 ? <TooltipIconButton icon="star" tooltip={t('button_removeFavourite')}
                     onClick={this.removeContact} />

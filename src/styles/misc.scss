@@ -199,8 +199,18 @@ $status-bar-height: 36px;
   @extend %flex-grow-1;
   @extend %flex-align-center;
   @extend %flex-justify-center;
+  height: 100%;
 
   .headline {
-    margin: 0 48px;
+    margin: 0 48px 60%;
   }
+}
+
+.backdrop {
+  background-color: rgba(255, 255, 255, .58);
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }

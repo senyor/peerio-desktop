@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp, no-cond-assign */
 const React = require('react');
 const { IconMenu, MenuItem, IconButton } = require('~/react-toolbox');
-const { observe } = require('mobx');
+const { observe, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { fileStore, chatStore } = require('~/icebear');
 const ComposeInput = require('../../shared-components/ComposeInput');
@@ -102,6 +102,11 @@ class MessageInput extends ComposeInput {
         setTimeout(() => { this.suggests = null; });
     }
 
+    onBackdropClick = (ev) => {
+        ev.preventDefault();
+        ev.stopPropagation();
+    }
+
     renderSuggests() {
         if (!this.suggests || !this.suggests.length) return null;
         let c = 0;
@@ -131,9 +136,9 @@ class MessageInput extends ComposeInput {
     }
 
     render() {
-        if (!this.props.show) return null;
+        const chat = chatStore.activeChat;
         return (
-            <div className="message-input-wrapper">
+            <div className="message-input-wrapper" >
                 <Snackbar className="snackbar-chat" />
                 {this.renderSuggests()}
                 <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
@@ -141,19 +146,24 @@ class MessageInput extends ComposeInput {
                         <MenuItem value="share" caption={t('title_shareFromFiles')} onClick={this.showFilePicker} />
                         <MenuItem value="upload" caption={t('title_uploadAndShare')} onClick={this.handleUpload} />
                     </IconMenu>
-                    <div id="messageEditor" onBlur={this.onInputBlur}
-                        ref={this.activateQuill}
-                        className="full-width" />
+                    {this.props.readonly
+                        ? <div className="full-width" >&nbsp;</div>
+                        : <div id="messageEditor" onBlur={this.onInputBlur}
+                            ref={this.activateQuill}
+                            className="full-width" />
+                    }
                     <IconButton icon="mood" disabled={this.emojiPickerVisible} onClick={this.showEmojiPicker} />
 
                     {this.text === ''
-                        ? <IconButton disabled={!chatStore.activeChat.canSendAck} icon="thumb_up"
+                        ? <IconButton disabled={!chat || !chat.canSendAck} icon="thumb_up"
                             onClick={this.props.onAck} className="color-brand" />
                         : null}
 
                     {this.emojiPickerVisible ? this.cachedPicker : null}
                     {this.renderFilePicker()}
                 </div>
+                {this.props.readonly ? <div className="backdrop" /> : null}
+
             </div>
         );
     }

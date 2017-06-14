@@ -198,7 +198,7 @@ class ComposeInput extends React.Component {
 
         // const quill =
         this.quill = new Quill(el, opts);
-        setTimeout(() => this.quill.focus(), 1500);
+        setTimeout(() => this.quill.focus(), 500);
 
         const usernameRegex = /(^|\s+)@([a-zA-Z0-9_]{0,32})$/;
 

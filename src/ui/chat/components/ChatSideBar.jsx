@@ -46,7 +46,7 @@ class ChatSideBar extends React.Component {
                                     leftActions={[<Avatar key="a" contact={c} size="small" />]}
                                     caption={c.username}
                                     legend={c.fullName}
-                                    rightIcon={<TooltipIconButton data-id={c.username} icon="forum"
+                                    rightIcon={c.isDeleted ? null : <TooltipIconButton data-id={c.username} icon="forum"
                                         tooltip={t('title_haveAChat')} onClick={this.startChat} />}
                                     onClick={() => chatStore.startChat([c])} />)
                             ) : null}

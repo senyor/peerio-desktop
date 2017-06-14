@@ -1,6 +1,6 @@
 // global UI store
 const { observable, reaction } = require('mobx');
-const { TinyDb, Clock, User } = require('~/icebear');
+const { TinyDb, Clock, User, warnings } = require('~/icebear');
 const autologin = require('~/helpers/autologin');
 const appControl = require('~/helpers/app-control');
 
@@ -39,6 +39,15 @@ class UIStore {
                 await autologin.disable();
                 await User.current.clearFromTinyDb();
                 appControl.relaunch();
+            }
+        });
+
+        reaction(() => User.current.blacklisted, async (blacklisted) => {
+            if (blacklisted) {
+                warnings.addSevere('error_accountSuspended');
+                await autologin.disable();
+                await User.current.clearFromTinyDb();
+                setTimeout(() => appControl.relaunch(), 3000);
             }
         });
     }

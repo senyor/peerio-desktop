@@ -6,6 +6,7 @@ const { ProgressBar, TooltipIconButton } = require('~/react-toolbox');
 const { contactStore, chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class ContactProfile extends React.Component {
@@ -21,6 +22,15 @@ class ContactProfile extends React.Component {
         routerStore.navigateTo(routerStore.ROUTES.chats);
         if (this.props.onClose) this.props.onClose();
     };
+
+    removeContact = () => {
+        contactStore.removeContact(this.contact);
+    };
+
+    addContact = () => {
+        contactStore.addContact(this.contact);
+    };
+
     render() {
         const c = this.contact;
         if (!c) return null;
@@ -56,6 +66,7 @@ class ContactProfile extends React.Component {
                     {/* TODO: use our Avatar component instead, and strip it of mouse events */}
                     <RTAvatar style={style} >{c.hasAvatar ? null : c.letter}</RTAvatar>
                     <div className="flex-col">
+                        {c.isDeleted ? <T k="title_accountDeleted" className="deleted-account" tag="div" /> : null}
                         <div className="title">{c.firstName} {c.lastName}</div>
                         <div>{c.usernameTag}</div>
                         <div className="row">
@@ -67,19 +78,19 @@ class ContactProfile extends React.Component {
                 </div>
                 <div className="row flex-row flex-align-center">
                     <div className="profile-actions">
-                        <TooltipIconButton
-                            tooltip={t('title_haveAChat')}
-                            tooltipDelay={500}
-                            icon="forum"
-                            onClick={this.startChat} />
-                        {/* TODO:
-                            button should be for adding and removing contact once
-                            contacts are implemented.
-                        */}
-                        {/* <TooltipIconButton
-                            tooltip={t('title_removeContact')}
-                            tooltipDelay={500}
-                            icon="delete" /> */}
+                        {c.isDeleted
+                            ? null
+                            : <TooltipIconButton
+                                tooltip={t('title_haveAChat')}
+                                tooltipDelay={500}
+                                icon="forum"
+                                onClick={this.startChat} />
+                        }
+                        {c.isAdded
+                            ? <TooltipIconButton icon="star" tooltip={t('button_removeFavourite')}
+                                onClick={this.removeContact} />
+                            : <TooltipIconButton icon="star_outline" tooltip={t('button_addFavourite')}
+                                onClick={this.addContact} />}
                     </div>
                 </div>
             </div>

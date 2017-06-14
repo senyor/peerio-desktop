@@ -23,7 +23,7 @@ const appState = require('~/stores/app-state');
 class Root extends React.Component {
 
     @computed get snackbarVisible() {
-        return !(routerStore.currentRoute === routerStore.ROUTES.chats && chatStore.activeChat);
+        return !routerStore.currentRoute.startsWith(routerStore.ROUTES.chats);
     }
 
     @observable showOfflineNotification = false;

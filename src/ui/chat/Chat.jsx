@@ -139,9 +139,9 @@ class Chat extends React.Component {
                         <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
                             {chatStore.chats.length === 0 && !chatStore.loading ? <NoChatSelected /> : <MessageList />}
                             {chat && chat.uploadQueue.length ? <UploadInChatProgress queue={chat.uploadQueue} /> : null}
-                            <MessageInput show={!!chat && chat.metaLoaded}
+                            <MessageInput readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
                                 placeholder={
-                                    chatStore.activeChat ?
+                                    chat ?
                                         t('title_messageInputPlaceholder', { chatName: chatStore.activeChat.name })
                                         : null
                                 }

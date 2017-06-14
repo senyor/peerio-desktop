@@ -8,6 +8,7 @@ const { fileStore, contactStore } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
+const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class UserPicker extends React.Component {
@@ -19,16 +20,28 @@ class UserPicker extends React.Component {
     @observable showNotFoundError;
 
     @computed get options() {
-        return contactStore.filter(this.query).filter(this.isNotSelected);
+        const ret = contactStore.filter(this.query).filter(this.filterOptions);
+        for (let i = 0; i < ret.length; i++) {
+            if (!ret[i].isAdded) {
+                if (i === 0 || i === (ret.length - 1)) break;
+                ret.splice(i, 0, true); // separator
+                break;
+            }
+        }
+        return ret;
     }
 
     @computed get isValid() {
         return !!this.selected.find(s => !s.loading && !s.notFound);
     }
 
-    isNotSelected =(item) => {
-        return !this.selected.find(s => s.username === item.username);
+    filterOptions = (item) => {
+        if (this.selected.find(s => s.username === item.username)) return false;
+        if (this.props.noDeleted && item.isDeleted) return false;
+        if (item.isMe) return false;
+        return true;
     }
+
 
     handleTextChange = newVal => {
         const newValLower = newVal.toLocaleLowerCase();
@@ -86,12 +99,22 @@ class UserPicker extends React.Component {
         input.focus();
     }
 
+    onContactClick = (ev) => {
+        const username = getAttributeInParentChain(ev.target, 'data-id');
+        // avoiding incorrect setState bcs of computed options
+        setTimeout(() => {
+            this.selected.push(contactStore.getContact(username));
+            this.query = '';
+        });
+    };
+
     invite = () => {
         contactStore.invite(this.suggestInviteEmail);
         this.suggestInviteEmail = '';
     }
 
     render() {
+        const separatorInserted = false;
         return (
             <div className="user-picker">
                 <div className={css('flex-col selected-items', { banish: !this.props.sharing })} >
@@ -156,18 +179,20 @@ class UserPicker extends React.Component {
                         <List selectable ripple >
                             <ListSubHeader caption={t('title_allContacts')} />
                             <div className="user-list">
-                                {this.options.map(c =>
-                                    (<ListItem key={c.username}
-                                        leftActions={[<Avatar key="a" contact={c} size="medium" />]}
-                                        caption={c.username}
-                                        legend={`${c.firstName} ${c.lastName}`}
-                                        onClick={() => {
-                                            this.selected.push(c);
-                                            this.query = '';
-                                        }
-                                        }
-                                        className={css({ warning: this.noGood })} />)
-                                )}
+                                {this.options.map(c => {
+                                    if (c === true) {
+                                        return <hr key="separator" />;
+                                    }
+                                    return (<span key={c.username} data-id={c.username}>
+                                        <ListItem
+                                            leftActions={[<Avatar key="a" contact={c} size="medium" />]}
+                                            caption={c.username}
+                                            legend={`${c.firstName} ${c.lastName}`}
+                                            onClick={this.onContactClick}
+                                            className={css({ warning: this.noGood })} />
+                                    </span>);
+                                })
+                                }
                             </div>
                         </List>
                     </div>

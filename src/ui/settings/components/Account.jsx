@@ -72,7 +72,7 @@ class Account extends React.Component {
                     onOverlayClick={this.hideConfirmDelete} title={t('title_accountDelete')} type="normal" >
                     <T k="title_accountDeleteDescription1" tag="p" /><br />
                     <T k="title_accountDeleteDescription2" tag="p" /><br />
-                    {/* <T k="title_accountDeleteDescription3" tag="p" />*/}
+                    <T k="title_accountDeleteDescription3" tag="p" />
                 </Dialog>
             </div>
         );

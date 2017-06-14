@@ -35,16 +35,19 @@ class InvitedContacts extends React.Component {
                 <div className="list-sort" />
 
                 <div className="contact-list">
-                    <List className="contact-list-section-content">
-                        {contactStore.invitedContacts.map(c =>
-                            (<ListItem ripple={false} key={c.email}
-                                leftIcon={<div className="avatar-invited material-icons">person</div>}
-                                caption={c.email}
-                                legend={`${t('title_invited')} ${moment(c.added).fromNow()}`}
-                                rightIcon={this.contactActions(c)}
-                            />)
-                        )}
-                    </List>
+                    <div className="contact-list-section">
+                        <div className="contact-list-section-marker" />
+                        <List className="contact-list-section-content">
+                            {contactStore.invitedContacts.map(c =>
+                                (<ListItem ripple={false} key={c.email}
+                                    leftIcon={<div className="avatar-invited material-icons">person</div>}
+                                    caption={c.email}
+                                    legend={`${t('title_invited')} ${moment(c.added).fromNow()}`}
+                                    rightIcon={this.contactActions(c)}
+                                />)
+                            )}
+                        </List>
+                    </div>
                 </div>
             </div>
 

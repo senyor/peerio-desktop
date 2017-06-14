@@ -38,7 +38,7 @@ class ChatSideBar extends React.Component {
                   </List>
                 */}
                 <div className={`rt-list-subheader ${banishHeader}`}>{t('title_Members')} </div>
-                <div style={{ overflow: 'auto' }}>
+                <div style={{ overflowY: 'auto', overflowX: 'hidden' }}>
                     <List>
                         {chatStore.activeChat && chatStore.activeChat.participants ?
                             chatStore.activeChat.participants.map(c =>

@@ -1,6 +1,8 @@
 // global UI store
 const { observable, reaction } = require('mobx');
-const { TinyDb, Clock } = require('~/icebear');
+const { TinyDb, Clock, User } = require('~/icebear');
+const autologin = require('~/helpers/autologin');
+const appControl = require('~/helpers/app-control');
 
 class UIStore {
     @observable contactDialogUsername;
@@ -22,14 +24,22 @@ class UIStore {
         Object.keys(this.prefs).forEach((key) => {
             const prefKey = `pref_${key}`;
             TinyDb.user.getValue(prefKey)
-            .then((loadedValue) => {
-                if (loadedValue || loadedValue === false) {
-                    this.prefs[key] = loadedValue;
-                }
-                reaction(() => this.prefs[key], () => {
-                    TinyDb.user.setValue(prefKey, this.prefs[key]);
+                .then((loadedValue) => {
+                    if (loadedValue || loadedValue === false) {
+                        this.prefs[key] = loadedValue;
+                    }
+                    reaction(() => this.prefs[key], () => {
+                        TinyDb.user.setValue(prefKey, this.prefs[key]);
+                    });
                 });
-            });
+        });
+
+        reaction(() => User.current.deleted, async (deleted) => {
+            if (deleted) {
+                await autologin.disable();
+                await User.current.clearFromTinyDb();
+                appControl.relaunch();
+            }
         });
     }
 }

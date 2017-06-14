@@ -108,7 +108,7 @@ class LoginStore extends OrderedFormStore {
                     });
             }
             return window.router.push('/app/chats');
-        }).catch(() => {
+        }).catch((e) => {
             User.current = null;
             this.loginStore.busy = false;
             // show error inline

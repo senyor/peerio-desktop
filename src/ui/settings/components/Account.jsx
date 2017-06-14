@@ -1,11 +1,14 @@
 const React = require('react');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Switch } = require('~/react-toolbox');
+const { Switch, Button, Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class Account extends React.Component {
+    @observable deleteAccountDialogActive = false;
 
     onPromoSubscriptionChanged = (value) => {
         User.current.settings.subscribeToPromoEmails = value;
@@ -22,7 +25,25 @@ class Account extends React.Component {
         User.current.saveSettings();
     }
 
+    showConfirmDelete = () => {
+        this.deleteAccountDialogActive = true;
+    }
+
+    hideConfirmDelete = () => {
+        this.deleteAccountDialogActive = false;
+    }
+
+
+    onDeleteConfirmed = () => {
+        User.current.deleteAccount(User.current.username);
+        this.deleteAccountDialogActive = false;
+    }
+
     render() {
+        const dialogActions = [
+            { label: t('button_cancel'), onClick: this.hideConfirmDelete },
+            { label: t('button_confirm'), onClick: this.onDeleteConfirmed }
+        ];
         return (
             <div className="flex-col flex-grow-1">
                 <section className="section-divider">
@@ -44,24 +65,18 @@ class Account extends React.Component {
                         onChange={this.onDataCollectionChanged} />
                 </section>
                 <section className="delete-account">
-                    {/* TODO: This button should trigger a dialog that will actually start the delete process.
-                      <Button label="button_deleteAccount" /> */}
+                    <Button label={t('title_accountDelete')} onClick={this.showConfirmDelete} />
                 </section>
+                <Dialog active={this.deleteAccountDialogActive} actions={dialogActions}
+                    onEscKeyDown={this.hideConfirmDelete}
+                    onOverlayClick={this.hideConfirmDelete} title={t('title_accountDelete')} type="normal" >
+                    <T k="title_accountDeleteDescription1" tag="p" /><br />
+                    <T k="title_accountDeleteDescription2" tag="p" /><br />
+                    {/* <T k="title_accountDeleteDescription3" tag="p" />*/}
+                </Dialog>
             </div>
         );
     }
 }
-/*
- <section>
-     <div className="title">{t('title_privacy')}</div>
-     <p>
-         {t('title_privacyDetail')}
-                         </p>
-     <Switch checked="true" label={t('title_never')} />
-     <Switch checked="false" label={t('title_yourName')} />
-     <Switch checked="false" label={t('title_yourUsername')} />
-     <Switch checked="false" label={t('title_yourEmail')} />
- </section>
-*/
 
 module.exports = Account;

@@ -1,7 +1,7 @@
 {
   "name": "peerio-2",
   "description": "Peerio 2",
-  "version": "2.17.0",
+  "version": "2.17.1",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",

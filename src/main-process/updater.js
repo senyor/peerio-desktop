@@ -16,7 +16,7 @@ function sendStatusToWindow(text) {
 function start(mainWindow) {
     try {
         window = mainWindow;
-        autoUpdater.setFeedURL(config.updateFeedUrl);
+        if (config.updateFeedUrl) autoUpdater.setFeedURL(config.updateFeedUrl);
         ipcMain.on('install-update', () => {
             console.log('Client approved update installation.');
             autoUpdater.quitAndInstall();

@@ -19,8 +19,7 @@
                 "useBuiltIns": true
             }
         ],
-        "transform-react-jsx",
-        "console-kungfu"
+        "transform-react-jsx"
     ],
     "env": {
         "production": {
@@ -29,8 +28,8 @@
             "plugins": [
                 "transform-react-constant-elements",
                 "transform-react-inline-elements",
-                "transform-remove-debugger"
-                // "transform-remove-console"
+                "transform-remove-debugger",
+                "console-kungfu"
             ]
         },
         "development": {

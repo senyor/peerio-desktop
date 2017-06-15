@@ -113,14 +113,19 @@ class Profile extends React.Component {
 
     renderButton(a) {
         return (
-            !a.confirmed && !a.primary
-                ? <div>
-                    <TooltipIconButton tooltip={t('button_resend')} icon="mail"
+            <div>
+                {a.confirmed
+                    ? null
+                    : <TooltipIconButton tooltip={t('button_resend')} icon="mail"
                         onClick={() => { this.resendConfirmation(a.address); }} />
-                    <TooltipIconButton tooltip={t('button_delete')} icon="delete"
+                }
+                {a.primary
+                    ? null
+                    : <TooltipIconButton tooltip={t('button_delete')} icon="delete"
                         onClick={() => { this.removeEmail(a.address); }} />
-                </div>
-                : null);
+                }
+            </div>
+        );
     }
 
     renderPrimaryEmail(a) {
@@ -209,8 +214,7 @@ class Profile extends React.Component {
                         <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
                         <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
                     </div>
-                    {/* <Button label={t('button_save')}
-                            style={{ marginTop: '40px' }} primary raised /> */}
+
                 </div>
                 <div className={css('avatar-card', { 'has-avatar': this.contact.hasAvatar })}
                     style={{

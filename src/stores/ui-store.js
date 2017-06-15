@@ -42,12 +42,13 @@ class UIStore {
             }
         });
 
-        reaction(() => User.current.blacklisted, async (blacklisted) => {
+        reaction(() => User.current.blacklisted, (blacklisted) => {
             if (blacklisted) {
-                warnings.addSevere('error_accountSuspended');
-                await autologin.disable();
-                await User.current.clearFromTinyDb();
-                setTimeout(() => appControl.relaunch(), 3000);
+                warnings.addSevere('error_accountSuspended', '', null, async () => {
+                    await autologin.disable();
+                    await User.current.clearFromTinyDb();
+                    appControl.relaunch();
+                });
             }
         });
     }

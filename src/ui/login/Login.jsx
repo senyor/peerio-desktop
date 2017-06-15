@@ -2,7 +2,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { Button, TooltipIconButton } = require('~/react-toolbox');
-const { config, socket, User, validation } = require('~/icebear');
+const { config, socket, User, validation, warnings } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -113,8 +113,10 @@ class LoginStore extends OrderedFormStore {
             User.current = null;
             this.loginStore.busy = false;
             // show error inline
-            this.loginStore.passcodeOrPassphraseValidationMessageText =
-                t(user.blacklisted ? 'error_accountSuspended' : 'error_loginFailed');
+            this.loginStore.passcodeOrPassphraseValidationMessageText = t('error_loginFailed');
+            if (user.blacklisted) {
+                warnings.addSevere('error_accountSuspendedText', 'error_accountSuspendedTitle');
+            }
         });
     };
 

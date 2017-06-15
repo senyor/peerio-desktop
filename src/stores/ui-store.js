@@ -44,7 +44,7 @@ class UIStore {
 
         reaction(() => User.current.blacklisted, (blacklisted) => {
             if (blacklisted) {
-                warnings.addSevere('error_accountSuspended', '', null, async () => {
+                warnings.addSevere('error_accountSuspendedText', 'error_accountSuspendedTitle', null, async () => {
                     await autologin.disable();
                     await User.current.clearFromTinyDb();
                     appControl.relaunch();

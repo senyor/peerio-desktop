@@ -74,6 +74,7 @@ class LoginStore extends OrderedFormStore {
 
     togglePasswordVisibility = () => {
         this.loginStore.passwordVisible = !this.loginStore.passwordVisible;
+        if (this.akRef) this.akRef.inputRef.focus();
     };
 
     unsetLastUser = () => {
@@ -122,6 +123,10 @@ class LoginStore extends OrderedFormStore {
             this.login();
         }
     };
+
+    onAKRef = ref => {
+        this.akRef = ref;
+    }
 
     getWelcomeBlock = () => {
         return (
@@ -173,13 +178,15 @@ class LoginStore extends OrderedFormStore {
                                 store={this.loginStore}
                                 validator={validators.stringExists}
                                 name="passcodeOrPassphrase"
-                                onKeyPress={this.handleKeyPress} />
+                                onKeyPress={this.handleKeyPress}
+                                ref={this.onAKRef} />
                             <TooltipIconButton icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
                                 tooltip={this.loginStore.passwordVisible ?
                                     t('title_hideAccountKey') : t('title_showAccountKey')}
                                 tooltipPosition="right"
                                 tooltipDelay={500}
-                                onClick={this.togglePasswordVisibility} />
+                                onClick={this.togglePasswordVisibility}
+                            />
                         </div>
                         {/* <Dropdown value={languageStore.language}
                                   source={languageStore.translationLangsDataSource}

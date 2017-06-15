@@ -131,6 +131,10 @@ const css = require('classnames');
         this.props.store[this.fDirty] = true;
     }
 
+    onRef = ref => {
+        this.inputRef = ref;
+    }
+
     render() {
         return (
             <div className={css('validated-input', { focused: this.props.store[this.fFocused] })}>
@@ -145,6 +149,7 @@ const css = require('classnames');
                     className={this.props.className}
                     maxLength={this.props.maxLength}
                     disabled={this.props.disabled}
+                    innerRef={this.onRef}
                 />
                 <div className="text-light-helper">{this.props.hint}</div>
             </div>

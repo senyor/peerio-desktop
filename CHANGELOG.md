@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.17.7"></a>
+## [2.17.7](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.17.6...v2.17.7) (2017-06-15)
+
+
+### Bug Fixes
+
+* account suspend dialogs ([13d27e1](https://github.com/PeerioTechnologies/peerio-desktop/commit/13d27e1))
+
+
+
 <a name="2.17.6"></a>
 ## [2.17.6](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.17.5...v2.17.6) (2017-06-15)
 

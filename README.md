@@ -2,7 +2,7 @@
 
 ## SDK
 
-The Icebear SDK lives in here: [https://github.com/PeerioTechnologies/peerio-icebear](peerio-icebear).
+The Icebear SDK lives in here: https://github.com/PeerioTechnologies/peerio-icebear.
 
 ## Development
 

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.17.6"></a>
+## [2.17.6](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.17.5...v2.17.6) (2017-06-15)
+
+
+### Bug Fixes
+
+* **contacts:** clear query after suggesting invite ([49b86ea](https://github.com/PeerioTechnologies/peerio-desktop/commit/49b86ea))
+* relaunch app only after user closes blacklist warning dialog ([5cb6f2e](https://github.com/PeerioTechnologies/peerio-desktop/commit/5cb6f2e))
+* **login:** keep focus on passphrase visibility toggle ([10a4eac](https://github.com/PeerioTechnologies/peerio-desktop/commit/10a4eac))
+* **profile:** bring back resend button ([92f9e28](https://github.com/PeerioTechnologies/peerio-desktop/commit/92f9e28))
+
+
+
 <a name="2.17.5"></a>
 ## [2.17.5](https://github.com/PeerioTechnologies/peerio-desktop/compare/v2.17.4...v2.17.5) (2017-06-14)
 

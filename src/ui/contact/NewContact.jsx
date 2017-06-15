@@ -40,7 +40,10 @@ class NewContact extends React.Component {
                     this.notFound = true;
                     const atInd = this.query.indexOf('@');
                     const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
-                    if (isEmail) this.suggestInviteEmail = this.query;
+                    if (isEmail) {
+                        this.suggestInviteEmail = this.query;
+                        this.query = '';
+                    }
                 }
             })
             .finally(() => { this.waiting = false; });

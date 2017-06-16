@@ -171,14 +171,19 @@ class Profile extends React.Component {
                                 return (<ListItem key={a.address}
                                     className={css('email-row', { unconfirmed: !a.confirmed })}
                                     caption={a.address}
-                                    legend={a.confirmed
-                                        ? this.renderPrimaryEmail(a)
-                                        : t('error_unconfirmedEmail')}
-                                    leftIcon={a.primary && user.addresses.length > 1
-                                        ? 'radio_button_checked'
-                                        : <TooltipIconButton
-                                            tooltip={t('button_makePrimary')} icon="radio_button_unchecked"
-                                            onClick={() => { this.makePrimary(a.address); }} />}
+                                    legend={
+                                        a.confirmed
+                                            ? (a.primary ? t('title_primaryEmail') : null)
+                                            : t('error_unconfirmedEmail')
+                                    }
+                                    leftIcon={
+                                        a.primary
+                                            ? 'radio_button_checked'
+                                            : <TooltipIconButton className={a.confirmed ? '' : 'hide'} disabled={!a.confirmed}
+                                                tooltip={t('button_makePrimary')} icon="radio_button_unchecked"
+                                                onClick={() => { this.makePrimary(a.address); }} />
+
+                                    }
                                     rightIcon={
                                         a.confirmed && !a.primary
                                             ? <TooltipIconButton tooltip={t('button_delete')} icon="delete"

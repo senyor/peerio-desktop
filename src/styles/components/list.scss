@@ -1,0 +1,31 @@
+.list {
+  @extend %flex-col;
+  background: $background-root;
+}
+
+.list-item {
+  @extend %flex-align-center;
+  @extend %flex-row;
+
+  height: 48px;
+  padding: 0 $padding-default;
+  width: 100%;
+
+  &:hover {
+    background: rgba(0, 0, 0, .06) // TODO: make a variable for hovers - paul
+  }
+
+  .content {
+    font-size: 14px;
+    padding: 0 $padding-default;
+  }
+
+  .left-icon,
+  .right-icon {
+    width: 48px;
+  }
+
+  &.large {
+    height: 64px; // might be larger 80px?
+  }
+}

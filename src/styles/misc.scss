@@ -97,7 +97,6 @@ $status-bar-height: 36px;
       background-position: 100% 50%;
     }
   }
-  animation: 4s infinite gradient;
   background-image: $background-gradient;
   background-size: 400%;
   border-radius: 4px;
@@ -117,6 +116,7 @@ $status-bar-height: 36px;
   z-index: 2;
 
   &.visible {
+    animation: 4s infinite gradient;
     top: 0;
   }
 

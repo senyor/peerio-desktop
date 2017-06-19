@@ -93,7 +93,7 @@ class Root extends React.Component {
         return (
             <ThemeProvider theme={theme}>
                 <div>
-                    <div className={`status-bar ${!this.showOfflineNotification ? '' : 'visible'}`}>
+                    <div className={`status-bar ${this.showOfflineNotification ? 'visible' : ''}`}>
 
                         {/* don't let invisible svg to always run */}
                         {this.showOfflineNotification ? <ProgressBar type="circular" mode="indeterminate" /> : null}

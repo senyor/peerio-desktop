@@ -6,7 +6,7 @@ To create issues, [see our centralized issues repo](https://github.com/PeerioTec
 
 ## SDK
 
-The Icebear SDK lives in here: https://github.com/PeerioTechnologies/peerio-icebear.
+The Icebear SDK (aka the crypto and other guts) lives here: https://github.com/PeerioTechnologies/peerio-icebear.
 
 ## Development
 

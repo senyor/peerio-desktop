@@ -62,10 +62,13 @@ a {
   box-sizing: inherit;
 }
 
+body {
+  background-image: $background-gradient;
+}
+
 body,
 #root,
 .app-root {
-  background-image: $background-gradient;
   color: $text-dark-primary;
   font: 14px/1.45 $font-stack;
   height: 100vh;

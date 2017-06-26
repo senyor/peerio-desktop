@@ -2,6 +2,8 @@ const isDevEnv = require('~/helpers/is-dev-env');
 if (!isDevEnv) require('~/helpers/console-history');
 const { ipcRenderer, webFrame } = require('electron');
 
+// apply desktop config values to icebear
+require('~/config');
 
 if (isDevEnv) {
     // to allow require of development modules in dev environment

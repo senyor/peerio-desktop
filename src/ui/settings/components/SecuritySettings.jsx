@@ -61,9 +61,9 @@ class SecuritySettings extends React.Component {
     wwref = (ref) => {
         this.webviewref = ref;
     }
-    // TODO: this is duplicated with Security settings, FIX IT
+    // TODO: this is duplicated with SaveNow, FIX IT
     save = () => {
-        this.replaceTemplateVars(User.current.username, User.current.primaryAddress, User.current.passphrase, () => {
+        this.replaceTemplateVars(User.current.username, User.current.email, User.current.passphrase, () => {
             const win = electron.getCurrentWindow();
             electron.dialog.showSaveDialog(win, { defaultPath: `${User.current.username}.pdf` }, this.printToPdf);
         });

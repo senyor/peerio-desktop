@@ -20,3 +20,4 @@ peerio-desktop-release --shared ~/Win \
                        --repository PeerioTechnologies/peerio-desktop \
                        --overrides PeerioTechnologies/peerio-desktop-staging \
                        --publish
+                       --prerelease

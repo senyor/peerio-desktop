@@ -5,6 +5,7 @@ const { ipcMain } = require('electron');
 const config = require('~/config-base');
 
 // autoUpdater.logger = L;
+autoUpdater.allowPrerelease = true;
 
 let window;
 

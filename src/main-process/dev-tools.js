@@ -1,6 +1,7 @@
 const { MenuItem } = require('electron');
 const isDevEnv = require('~/helpers/is-dev-env');
 const path = require('path');
+const appControl = require('~/helpers/app-control');
 
 const appRootPath = path.resolve(`${__dirname}/../`);
 const repoRootPath = path.resolve(`${__dirname}/../../../`);
@@ -45,6 +46,13 @@ function installExtensions(forceReinstall) {
 
 function extendContextMenu(menu, mainWindow, rightClickPos) {
     console.log('Extending context menu with dev tools.');
+    menu.append(new MenuItem({ type: 'separator' }));
+    menu.append(new MenuItem({
+        label: 'Restart',
+        click() {
+            appControl.relaunch();
+        }
+    }));
     menu.append(new MenuItem({ type: 'separator' }));
     menu.append(new MenuItem({
         label: '🔧 Dev tools',

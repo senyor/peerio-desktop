@@ -1,5 +1,4 @@
 const { Menu, MenuItem, globalShortcut } = require('electron');
-const appControl = require('~/helpers/app-control');
 const devtools = require('~/main-process/dev-tools');
 const isDevEnv = require('~/helpers/is-dev-env');
 
@@ -18,13 +17,6 @@ const inputMenu = Menu.buildFromTemplate([
 ]);
 
 const menu = new Menu();
-
-menu.append(new MenuItem({
-    label: 'Restart',
-    click() {
-        appControl.relaunch();
-    }
-}));
 
 Menu.buildFromTemplate([
     { type: 'separator' },

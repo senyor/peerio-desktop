@@ -22,4 +22,5 @@ echo '** NOTE: on Windows, run: peerio-desktop-signer --shared Y:\ --certificate
 echo '**'
 peerio-desktop-release --shared ~/Win \
                        --repository PeerioTechnologies/peerio-desktop \
-                       --publish
+                       --publish \
+                       --prerelease

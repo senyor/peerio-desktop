@@ -10,7 +10,7 @@ function getSavedWindowState() {
         height: 728
     };
     return TinyDb.system.getValue('windowState')
-                .then(savedState => Object.assign(defaultState, savedState || {}));
+        .then(savedState => Object.assign(defaultState, savedState || {}));
 }
 
 module.exports = { saveWindowState, getSavedWindowState };

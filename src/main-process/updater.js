@@ -3,9 +3,16 @@ const { autoUpdater } = require('electron-updater');
 const isDevEnv = require('~/helpers/is-dev-env');
 const { ipcMain } = require('electron');
 const config = require('~/config-base');
+const { TinyDb } = require('~/icebear');
 
 // autoUpdater.logger = L;
-autoUpdater.allowPrerelease = true;
+TinyDb.system.getValue('pref_prereleaseUpdatesEnabled')
+    .then(enabled => {
+        autoUpdater.allowPrerelease = !!enabled;
+        console.log(`Prerelease updates are ${autoUpdater.allowPrerelease ? 'enabled' : 'disabled'}`);
+    }).catch(err => {
+        console.error('Failed to retrieve prerelease update setting from TinyDb', err);
+    });
 
 let window;
 

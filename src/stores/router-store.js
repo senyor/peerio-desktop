@@ -30,7 +30,8 @@ class RouterStore {
             prefs: '/app/settings/preferences',
             account: '/app/settings/account',
             about: '/app/settings/about',
-            help: '/app/settings/help'
+            help: '/app/settings/help',
+            devSettings: '/app/settings/dev'
         };
     }
 

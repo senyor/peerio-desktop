@@ -3,6 +3,7 @@ const electron = require('electron').remote;
 
 class AppState {
     @observable isFocused = false;
+    @observable devModeEnabled = false;
 
     constructor() {
         const win = electron.getCurrentWindow();

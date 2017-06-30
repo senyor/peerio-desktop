@@ -17,21 +17,32 @@ class UIStore {
         mentionDesktopNotificationsEnabled: false
     };
 
+    @observable sharedPrefs = {
+        prereleaseUpdatesEnabled: false // this key is used in updater.js main process, mind when renaming
+    }
+
     // key: chat id, value: text
     unsentMessages = {};
 
+    observePreference(key, dbName, localStore) {
+        const prefKey = `pref_${key}`;
+        TinyDb[dbName].getValue(prefKey)
+            .then((loadedValue) => {
+                if (loadedValue || loadedValue === false) {
+                    localStore[key] = loadedValue;
+                }
+                reaction(() => localStore[key], () => {
+                    TinyDb[dbName].setValue(prefKey, localStore[key]);
+                });
+            });
+    }
+
     init() {
         Object.keys(this.prefs).forEach((key) => {
-            const prefKey = `pref_${key}`;
-            TinyDb.user.getValue(prefKey)
-                .then((loadedValue) => {
-                    if (loadedValue || loadedValue === false) {
-                        this.prefs[key] = loadedValue;
-                    }
-                    reaction(() => this.prefs[key], () => {
-                        TinyDb.user.setValue(prefKey, this.prefs[key]);
-                    });
-                });
+            this.observePreference(key, 'user', this.prefs);
+        });
+        Object.keys(this.sharedPrefs).forEach((key) => {
+            this.observePreference(key, 'system', this.sharedPrefs);
         });
 
         reaction(() => User.current.deleted, async (deleted) => {

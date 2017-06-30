@@ -30,6 +30,9 @@ class Root extends React.Component {
 
     constructor() {
         super();
+        if (isDevEnv) {
+            appState.devModeEnabled = true;
+        }
 
         // replace config-specific strings
         config.translator.stringReplacements.forEach((replacementObject) => {
@@ -50,7 +53,9 @@ class Root extends React.Component {
             ipcRenderer.send('install-update');
         });
         ipcRenderer.on('console_log', (ev, arg) => console.log(arg));
-
+        ipcRenderer.on('activate_dev_mode', () => {
+            appState.devModeEnabled = true;
+        });
         reaction(() => socket.connected, (connected) => {
             if (connected) {
                 this.showOfflineNotification = false;

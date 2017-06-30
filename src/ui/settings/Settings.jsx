@@ -5,6 +5,7 @@ const { Tab, Tabs } = require('~/react-toolbox');
 const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const css = require('classnames');
+const appState = require('~/stores/app-state');
 
 const ROUTES = [
     '/app/settings/profile',
@@ -12,7 +13,8 @@ const ROUTES = [
     '/app/settings/preferences',
     '/app/settings/account',
     '/app/settings/about',
-    '/app/settings/help'
+    '/app/settings/help',
+    '/app/settings/dev'
 ];
 
 const ROUTES_MAP = ROUTES.reduce((map, route, ind) => { map[route] = ind; return map; }, {});
@@ -57,6 +59,7 @@ class Settings extends React.Component {
                         <Tab label={t('title_settingsAccount')} />
                         <Tab label={t('title_About')} />
                         <Tab label={t('title_help')} />
+                        {appState.devModeEnabled ? <Tab label="dev settings" /> : null}
                     </Tabs>
                     {this.props.children}
                 </div>

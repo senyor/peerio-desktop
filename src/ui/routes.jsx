@@ -25,6 +25,7 @@ const Contacts = require('./contact/Contacts');
 const InvitedContacts = require('./contact/InvitedContacts');
 const ContactList = require('./contact/ContactList');
 const NewContact = require('./contact/NewContact');
+const DevSettings = require('./settings/components/Dev');
 
 module.exports = (
     <Route path="/" component={Root}>
@@ -51,6 +52,7 @@ module.exports = (
                 <Route path="account" component={Account} />
                 <Route path="about" component={About} />
                 <Route path="help" component={Help} />
+                <Route path="dev" component={DevSettings} />
             </Route>
         </Route>
         <Route path="/dev-tools" component={DevTools} >

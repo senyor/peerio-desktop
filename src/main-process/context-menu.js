@@ -43,6 +43,7 @@ function buildContextMenu(mainWindow) {
         globalShortcut.register('CommandOrControl+Alt+P+O', () => {
             if (devToolsMenuCreated) return;
             devtools.extendContextMenu(menu, mainWindow, rightClickPos);
+            mainWindow.webContents.send('activate_dev_mode');
             devToolsMenuCreated = true;
         });
     }

@@ -76,7 +76,7 @@ class FileLine extends React.Component {
                 <td className="clickable-username" onClick={this.openContactDialog}>
                     {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
                 </td>
-                <td>{file.canShare ? t('button_yes') : ''} </td>
+                {/* <td>{file.canShare ? t('button_yes') : ''} </td> */}
                 <td className="text-right" title={file.uploadedAt ? file.uploadedAt.toLocaleString() : ''}>
                     {this.formatDate(file.uploadedAt)}
                 </td>

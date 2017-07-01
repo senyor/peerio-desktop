@@ -18,6 +18,7 @@ class UserPicker extends React.Component {
     accepted = false;
     @observable suggestInviteEmail = '';
     @observable showNotFoundError;
+    legacyContactError = false; // not observable bcs changes only with showNotFoundError
 
     @computed get options() {
         const ret = contactStore.filter(this.query).filter(this.filterOptions);
@@ -63,6 +64,7 @@ class UserPicker extends React.Component {
     };
 
     tryAcceptUsername() {
+        this.legacyContactError = false;
         this.showNotFoundError = false;
         if (this.selected.find(s => s.username === this.query)) {
             return;
@@ -75,6 +77,7 @@ class UserPicker extends React.Component {
         when(() => !c.loading, () => {
             setTimeout(() => c.notFound && this.selected.remove(c), 3000);
             this.suggestInviteEmail = (c.notFound && isEmail) ? q : '';
+            this.legacyContactError = c.isLegacy;
             this.showNotFoundError = c.notFound;
         });
         this.query = '';
@@ -166,7 +169,8 @@ class UserPicker extends React.Component {
                                     onClick={this.accept} disabled={!this.isValid} />
                             </div>
                             {this.showNotFoundError
-                                ? <T k="error_userNotFound" tag="div" className="error-search" />
+                                ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div"
+                                    className="error-search" />
                                 : null}
 
                         </div>

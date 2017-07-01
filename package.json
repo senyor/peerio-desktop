@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "devDependencies": {
-    "@peerio/peerio-icebear": "1.*",
+    "@peerio/peerio-icebear": "1.2.0",
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
     "babel-plugin-console-kungfu": "git+https://github.com/PeerioTechnologies/babel-plugin-console-kungfu.git",
@@ -78,10 +78,10 @@
     "electron-devtools-installer": "2.2.0",
     "electron-rebuild": "1.5.11",
     "electron-reload": "1.2.1",
-    "emojione": "3.0.3",
-    "emojione-assets": "3.0.0",
+    "emojione": "3.1.0",
+    "emojione-assets": "3.1.0",
     "eslint-config-peerio": "1.19.9",
-    "husky": "0.14.1",
+    "husky": "0.14.2",
     "mobx-react-devtools": "4.2.15",
     "mocha": "3.4.2",
     "node-sass": "4.5.3",
@@ -90,7 +90,7 @@
     "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
     "react-addons-perf": "15.4.2",
     "react-toolbox-themr": "git+https://github.com/react-toolbox/react-toolbox-themr.git",
-    "spectron": "3.7.1",
+    "spectron": "3.7.2",
     "standard-version": "git+https://github.com/PeerioTechnologies/standard-version.git",
     "stylefmt": "6.0.0",
     "stylelint": "7.12.0",
@@ -221,5 +221,6 @@
     "skip": {
       "changelog": true
     }
-  }
+  },
+  "dependencies": {}
 }

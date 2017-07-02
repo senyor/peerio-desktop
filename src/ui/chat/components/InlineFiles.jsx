@@ -41,6 +41,10 @@ class InlineFiles extends React.Component {
                             this.startTimer();
                             return (<div className="invalid-file" key={f}>
                                 {t(this.giveUp ? 'error_fileRemoved' : 'title_processing')}
+                                {this.giveUp
+                                    ? null
+                                    : <ProgressBar type="linear" mode="indeterminate" />
+                                }
                             </div>);
                         }
                         return (<div className="shared-file" key={f} data-id={f} onClick={this.download}>

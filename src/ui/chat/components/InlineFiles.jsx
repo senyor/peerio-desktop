@@ -6,6 +6,9 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 
+// this is temporary, until we rework files
+const gaveUpMap = {};
+
 @observer
 class InlineFiles extends React.Component {
     // give up waiting for file object to appear in store
@@ -15,6 +18,10 @@ class InlineFiles extends React.Component {
         if (this.timer) return;
         this.timer = setTimeout(() => {
             this.giveUp = true;
+            this.props.files.forEach(f => {
+                if (gaveUpMap[f]) return;
+                if (!fileStore.getById(f)) gaveUpMap[f] = true;
+            });
         }, 10000);
     }
 
@@ -38,10 +45,10 @@ class InlineFiles extends React.Component {
                     this.props.files.map(f => {
                         const file = fileStore.getById(f);
                         if (!file) {
-                            this.startTimer();
+                            if (!gaveUpMap[f]) this.startTimer();
                             return (<div className="invalid-file" key={f}>
-                                {t(this.giveUp ? 'error_fileRemoved' : 'title_processing')}
-                                {this.giveUp
+                                {t((this.giveUp || gaveUpMap[f]) ? 'error_fileRemoved' : 'title_processing')}
+                                {this.giveUp || gaveUpMap[f]
                                     ? null
                                     : <ProgressBar type="linear" mode="indeterminate" />
                                 }

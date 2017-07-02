@@ -5,6 +5,7 @@ const Avatar = require('~/ui/shared-components/Avatar');
 const { contactStore, chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const routerStore = require('~/stores/router-store');
 
 @observer
 class ContactList extends React.Component {
@@ -14,6 +15,19 @@ class ContactList extends React.Component {
         { value: 'lastName', label: t('title_lastName') },
         { value: 'username', label: t('title_username') }
     ];
+
+    componentWillMount() {
+        this.rerouteIfZero();
+    }
+
+    componentWillUpdate() {
+        this.rerouteIfZero();
+    }
+
+    rerouteIfZero = () => {
+        if (contactStore.uiView.length) return;
+        routerStore.navigateTo(routerStore.ROUTES.newContact);
+    };
 
     startChat(ev) {
         const username = getAttributeInParentChain(ev.target, 'data-id');
@@ -48,6 +62,7 @@ class ContactList extends React.Component {
     handleSortChange(val) {
         contactStore.uiViewSortBy = val;
     }
+
     handleSearchQueryChange(val) {
         contactStore.uiViewSearchQuery = val;
     }

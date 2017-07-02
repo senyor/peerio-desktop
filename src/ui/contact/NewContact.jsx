@@ -7,6 +7,7 @@ const { t } = require('peerio-translator');
 const css = require('classnames');
 const { contactStore, User } = require('~/icebear');
 const urls = require('~/icebear').config.translator.urlMap;
+const routerStore = require('~/stores/router-store');
 
 @observer
 class NewContact extends React.Component {
@@ -14,19 +15,36 @@ class NewContact extends React.Component {
     @observable notFound = false;
     @observable suggestInviteEmail = '';
     @observable waiting = false;
+    @observable isInviteView = false;
 
+    // same component is used for add and invite,
+    // when on invited zero state view - we want to render it slightly different
+    isInviteView = false;
+
+    componentWillMount() {
+        this.isInviteView = routerStore.currentRoute === routerStore.ROUTES.newInvite;
+    }
+    componentWillUpdate() {
+        this.isInviteView = routerStore.currentRoute === routerStore.ROUTES.newInvite;
+    }
     // Don't use onKeyUp - text change fires earlier
     handleKeyDown = e => {
-        if (e.key === 'Enter' && this.query !== '') this.tryAdd();
+        if (e.key === 'Enter' && this.query !== '') {
+            if (this.isInviteView) this.invite();
+            else this.tryAdd();
+        }
     };
+
     @action.bound handleTextChange(newVal) {
         this.notFound = false;
         this.query = newVal.toLocaleLowerCase().trim();
     }
+
     onInputMount(input) {
         if (!input) return;
         input.focus();
     }
+
     tryAdd = () => {
         if (this.waiting) return;
         this.waiting = true;
@@ -47,10 +65,12 @@ class NewContact extends React.Component {
                 }
             })
             .finally(() => { this.waiting = false; });
-    }
+    };
+
     invite = () => {
-        contactStore.invite(this.suggestInviteEmail);
+        contactStore.invite(this.isInviteView ? this.query : this.suggestInviteEmail);
         this.suggestInviteEmail = '';
+        if (this.isInviteView) this.query = '';
     };
 
     getFacebookUrl() {
@@ -75,6 +95,7 @@ class NewContact extends React.Component {
         const url = `mailto:?subject=${title}&body=${content}`;
         return url;
     }
+
     getTwitterUrl() {
         const message = encodeURIComponent(t('title_socialShareInviteContent', {
             socialShareUrl: urls.socialShareUrl,
@@ -82,24 +103,34 @@ class NewContact extends React.Component {
         }));
         return `https://twitter.com/intent/tweet?text=${message}`;
     }
+
     render() {
         return (
             <div className="contacts">
                 <div className="contacts-view flex-align-center flex-justify-center create-new-chat user-picker">
+
                     <div className="invite-form">
-                        <T k="title_addAContact" className="display-1" tag="div" />
+                        {this.isInviteView ? <T k="title_contactZeroState" className="headline" tag="div" /> : null}
+
+                        <T k={this.isInviteView ? 'button_inviteEmailContact' : 'title_addAContact'}
+                            className="display-1" tag="div" />
 
                         <div className="message-search-wrapper">
                             <div className="new-chat-search">
                                 <FontIcon value="search" />
                                 <div className="chip-wrapper">
-                                    <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')}
+                                    <Input innerRef={this.onInputMount}
+                                        placeholder={t(this.isInviteView ? 'title_enterEmail' : 'title_userSearch')}
                                         value={this.query} onChange={this.handleTextChange}
                                         onKeyDown={this.handleKeyDown} />
                                 </div>
-                                <Button className={css('confirm', { hide: !this.query.length || this.waiting })}
-                                    label={t('button_add')}
-                                    onClick={this.tryAdd} />
+                                <Button className={css('confirm',
+                                    {
+                                        hide: !this.query.length || this.waiting ||
+                                        (this.isInviteView && this.query.indexOf('@') < 0)
+                                    })}
+                                    label={t(this.isInviteView ? 'button_invite' : 'button_add')}
+                                    onClick={this.isInviteView ? this.invite : this.tryAdd} />
                             </div>
                             {this.notFound ? <T k="error_userNotFound" tag="div" className="error-search" /> : null}
                             {this.suggestInviteEmail ?

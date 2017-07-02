@@ -5,9 +5,23 @@ const { contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const moment = require('moment');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const routerStore = require('~/stores/router-store');
 
 @observer
 class InvitedContacts extends React.Component {
+    componentWillMount() {
+        this.rerouteIfZero();
+    }
+
+    componentWillUpdate() {
+        this.rerouteIfZero();
+    }
+
+    rerouteIfZero = () => {
+        if (contactStore.invitedContacts.length) return;
+        routerStore.navigateTo(routerStore.ROUTES.newInvite);
+    };
+
     removeInvite(ev) {
         const email = getAttributeInParentChain(ev.target, 'data-id');
         contactStore.removeInvite(email);

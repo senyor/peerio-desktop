@@ -25,6 +25,7 @@ class RouterStore {
             contacts: 'app/contacts',
             invitedContacts: 'app/contacts/invited',
             newContact: 'app/contacts/new-contact',
+            newInvite: 'app/contacts/new-invite',
             profile: '/app/settings/profile',
             security: '/app/settings/security',
             prefs: '/app/settings/preferences',

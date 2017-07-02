@@ -1,6 +1,7 @@
 const React = require('react');
 const { t } = require('peerio-translator');
 const { FontIcon, List, ListItem, ListDivider } = require('~/react-toolbox');
+const { action } = require('mobx');
 const { observer } = require('mobx-react');
 const routerStore = require('~/stores/router-store');
 const { contactStore } = require('~/icebear');
@@ -8,28 +9,28 @@ const css = require('classnames');
 
 @observer
 class Contacts extends React.Component {
-    toAddNew() {
+    @action toAddNew() {
         routerStore.navigateTo(routerStore.ROUTES.newContact);
     }
 
-    toAdded() {
-        routerStore.navigateTo(routerStore.ROUTES.contacts);
+    @action toAdded() {
         contactStore.uiViewFilter = 'added';
+        routerStore.navigateTo(routerStore.ROUTES.contacts);
     }
-    toInvited() {
+    @action toInvited() {
         routerStore.navigateTo(routerStore.ROUTES.invitedContacts);
     }
 
-    toAll() {
-        routerStore.navigateTo(routerStore.ROUTES.contacts);
+    @action toAll() {
         contactStore.uiViewFilter = 'all';
+        routerStore.navigateTo(routerStore.ROUTES.contacts);
     }
 
     render() {
         const isAddedActive = routerStore.currentRoute === routerStore.ROUTES.contacts
-                && contactStore.uiViewFilter === 'added';
+            && contactStore.uiViewFilter === 'added';
         const isAllActive = routerStore.currentRoute === routerStore.ROUTES.contacts
-                && contactStore.uiViewFilter === 'all';
+            && contactStore.uiViewFilter === 'all';
         const isInvitedActive = routerStore.currentRoute === routerStore.ROUTES.invitedContacts;
         return (
             <div className="contacts">

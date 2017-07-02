@@ -43,6 +43,7 @@ module.exports = (
                 <IndexRoute component={ContactList} />
                 <Route path="invited" component={InvitedContacts} />
                 <Route path="new-contact" component={NewContact} />
+                <Route path="new-invite" component={NewContact} />
             </Route>
             <Route path="mail" component={Mail} />
             <Route path="settings" component={Settings}>

@@ -34,12 +34,12 @@ class Contacts extends React.Component {
         const isInvitedActive = routerStore.currentRoute === routerStore.ROUTES.invitedContacts;
         return (
             <div className="contacts">
-                <div className="contact-groups">
-                    <div className="wrapper-button-add-chat" onClick={this.toAddNew}>
+                <div className="feature-navigation-list">
+                    <div className="feature-action" onClick={this.toAddNew}>
                         <FontIcon value="add" />
                         <div>{t('button_addAContact')}</div>
                     </div>
-                    <List selectable ripple>
+                    <List selectable ripple className="list">
                         <ListItem leftIcon="star"
                             caption={`${t('title_favoriteContacts')} (${contactStore.addedContacts.length})`}
                             className={css({ active: isAddedActive })}

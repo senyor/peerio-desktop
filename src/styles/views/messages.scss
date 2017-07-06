@@ -571,42 +571,9 @@ $suggests-max-height: 200px;
 }
 
 // message navigation
-.chat-list {
-  @extend %flex-shrink-0;
-  background: $color-dark-03;
-  border-right: 1px solid $divider-dark;
-  cursor: pointer;
-  height: 100vh;
-  position: relative;
-  width: $chat-list-width;
-
+.list {
   .starred {
     margin-right: $margin-tiny;
-  }
-
-  .wrapper-button-add-chat {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    background-color: $color-dark-06;
-    border-bottom: 1px solid $divider-dark;
-    cursor: pointer;
-    height: 80px;
-    padding: 0 12px;
-
-    &:hover {
-      background-color: $color-dark-03;
-    }
-
-    .material-icons {
-      background: $color-accent;
-      border-radius: 40px;
-      color: $text-light-primary;
-      height: 40px;
-      line-height: 40px;
-      margin-right: $margin-large;
-      text-align: center;
-      width: 40px;
-    }
   }
 
   .avatar-wrapper > .material-icons {
@@ -635,10 +602,10 @@ $suggests-max-height: 200px;
   }
 
   .rt-list-list {
-    height: calc(100vh - 80px);
+    @extend %flex-shrink-0;
+
     overflow-x: hidden;
     overflow-y: auto;
-    padding-top: 0;
 
     .item-content {
       @extend %flex-grow-1;
@@ -661,7 +628,7 @@ $suggests-max-height: 200px;
     overflow: hidden;
   }
 
-  .rt-list-item {
+  .dm-item {
     background: $background-chat-list-item; // background colour for Anri. - Paul
     border-bottom: 1px solid $divider-dark;
     font-size: 14px;
@@ -670,6 +637,10 @@ $suggests-max-height: 200px;
 
     &:hover:not(.active) {
       background-color: $background-hover-message;
+    }
+
+    .rt-list-item {
+      height: 64px;
     }
   }
 
@@ -784,8 +755,8 @@ $suggests-max-height: 200px;
   }
 
   .rt-list-subheader {
-    // border-bottom: 1px solid $divider-dark;
-    margin-top: 0;
+    background: transparent;
+    border-bottom: 1px solid $divider-dark;
   }
 
   .rt-list-large {

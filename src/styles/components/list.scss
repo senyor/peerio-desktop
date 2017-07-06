@@ -69,4 +69,25 @@
     height: calc(100% - 80px);
     overflow: auto;
   }
+
+  .rt-list-list {
+    @extend %flex-shrink-0;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .item-content {
+      @extend %flex-grow-1;
+      overflow: hidden;
+    }
+
+    .rt-list-itemText {
+      font-size: 12px;
+    }
+
+    .rt-list-subheader {
+      background: transparent;
+      border-bottom: 1px solid $divider-dark;
+    }
+  }
 }

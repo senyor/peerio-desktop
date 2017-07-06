@@ -66,7 +66,19 @@ class ChatList extends React.Component {
                         <div className="list">
                             <List selectable ripple>
                                 <ListSubHeader caption="Channels" />
-                                <ListItem caption="#my-channel" />
+                                <ListItem
+                                    className="channel-item"
+                                    caption="#a-channel"
+                                    // unread counter
+                                    // rightIcon={
+                                    //     ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
+                                    //         ? this.getNotificationIcon(c)
+                                    //         : null
+                                    // }
+                                />
+                                <ListItem className="channel-item" caption="#b-channel" />
+                                <ListItem className="channel-item" caption="#c-channel" />
+                                <ListItem className="channel-item" caption="#d-channel" />
                             </List>
                             <List selectable ripple>
                                 <ListSubHeader caption="Direct messages" />

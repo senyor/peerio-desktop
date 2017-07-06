@@ -612,18 +612,14 @@ $suggests-max-height: 200px;
     overflow: hidden;
   }
 
-  .channel-item {
+  .channel-item,
+  .channel-invites {
     background: $background-chat-list-item;
     font-weight: $font-weight-semibold;
 
     &:last-of-type {
       border-bottom: 1px solid $divider-dark;
     }
-  }
-
-  .channel-invites {
-    background: $background-chat-list-item;
-    font-weight: $font-weight-semibold;
   }
 
   .dm-item {

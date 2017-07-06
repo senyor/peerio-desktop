@@ -79,12 +79,16 @@ class ChatList extends React.Component {
                                 <ListItem className="channel-item" caption="#b-channel" />
                                 <ListItem className="channel-item" caption="#c-channel" />
                                 <ListItem className="channel-item" caption="#d-channel" />
+                                <ListItem className="channel-invites"
+                                    caption="Invites"
+                                    rightIcon={<div className="notification">10</div>} />
                             </List>
                             <List selectable ripple>
                                 <ListSubHeader caption="Direct messages" />
-                                <FlipMove duration={300} easing="ease-in-out">
+                                <FlipMove duration={200} easing="ease-in-out">
                                     {chatStore.chats.map(c =>
-                                        (<ListItem key={c.id || c.tempId} className={css('dm-item', { active: c.active })}
+                                        (<ListItem key={c.id || c.tempId}
+                                            className={css('dm-item', { active: c.active })}
                                             leftIcon={
                                                 !c.participants || c.participants.length !== 1
                                                     ? <div className="avatar-group-chat material-icons">people</div>

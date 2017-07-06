@@ -75,6 +75,7 @@
 
     overflow-x: hidden;
     overflow-y: auto;
+    padding-bottom: 0;
 
     .item-content {
       @extend %flex-grow-1;

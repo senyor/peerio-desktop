@@ -60,6 +60,12 @@ class ChatSideBar extends React.Component {
                                         tooltip={t('title_haveAChat')} onClick={this.startChat} />}
                                     onClick={() => chatStore.startChat([c])} />)
                             ) : null}
+                        { isChannel && userIsAdmin ?
+                            <ListItem className="admin-controls"
+                              leftIcon="add_circle_outline"
+                              caption="button_addToChannel" />
+                            : null
+                        }
                     </List>
                 </div>
             </div>

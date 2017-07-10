@@ -21,6 +21,10 @@ class ChatList extends React.Component {
         window.router.push('/app/new-chat');
     };
 
+    goToChannelInvite = () => {
+        window.router.push('/app/channel-invites');
+    };
+
     getProgressBar = loading => {
         return loading ? <ProgressBar type="linear" mode="indeterminate" /> : null;
     };
@@ -48,6 +52,7 @@ class ChatList extends React.Component {
     }
 
     render() {
+        const hasChannels = true;
         const hasInvites = true;
         const newChatInvites = 3;
         return (
@@ -66,27 +71,30 @@ class ChatList extends React.Component {
                         ? null
                         :
                         <div className="list">
-                            <List selectable ripple>
-                                <ListSubHeader caption="Channels" />
-                                <ListItem
-                                    className="channel-item"
-                                    caption="#a-channel"
-                                    // unread counter
-                                    // rightIcon={
-                                    //     ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
-                                    //         ? this.getNotificationIcon(c)
-                                    //         : null
-                                    // }
-                                />
-                                <ListItem className="channel-item" caption="#b-channel" />
-                                <ListItem className="channel-item" caption="#c-channel" />
-                                <ListItem className="channel-item" caption="#d-channel" />
-                                { hasInvites ?
-                                    <ListItem className="channel-invites"
-                                        caption="Invites"
-                                        rightIcon={<div className="notification">{newChatInvites}</div>} />
-                                  : null }
-                            </List>
+                            { hasChannels ?
+                                <List selectable ripple>
+                                    <ListSubHeader caption="Channels" />
+                                    <ListItem
+                                        className="channel-item"
+                                        caption="#a-channel"
+                                        // unread counter
+                                        // rightIcon={
+                                        //     ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
+                                        //         ? this.getNotificationIcon(c)
+                                        //         : null
+                                        // }
+                                    />
+                                    <ListItem className="channel-item" caption="#b-channel" />
+                                    <ListItem className="channel-item" caption="#c-channel" />
+                                    <ListItem className="channel-item" caption="#d-channel" />
+                                    { hasInvites ?
+                                        <ListItem className="channel-invites"
+                                            onClick={this.goToChannelInvite}
+                                            caption="Channel invites"
+                                            rightIcon={<div className="notification">{newChatInvites}</div>} />
+                                      : null }
+                                </List>
+                                : null }
                             <List selectable ripple>
                                 <ListSubHeader caption="Direct messages" />
                                 <FlipMove duration={200} easing="ease-in-out">

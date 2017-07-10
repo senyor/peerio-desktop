@@ -622,10 +622,14 @@ $suggests-max-height: 200px;
     }
   }
 
+  .channel-invites {
+    background: $color-dark-12;
+    border-top: 1px solid $divider-dark;
+  }
+
   .dm-item {
     background: $background-chat-list-item; // background colour for Anri. - Paul
     border-bottom: 1px solid $divider-dark;
-    font-size: 14px;
     height: 64px;
     transition: 150ms;
 
@@ -688,6 +692,26 @@ $suggests-max-height: 200px;
   }
 }
 
+// channel invites list
+.channel-invites-list {
+  .rt-list-subheader {
+    background: $color-dark-06;
+  }
+
+  .rt-list-listItem {
+    border-bottom: 1px solid $divider-dark;
+    height: 64px;
+
+    &:hover:not(.active) {
+      background-color: $background-hover-message;
+    }
+  }
+
+  .rt-list-item {
+    height: 64px;
+  }
+}
+
 // zero state
 .zero-message {
   @extend %flex-row;
@@ -720,6 +744,7 @@ $suggests-max-height: 200px;
     margin-left: $margin-default;
     top: 28px;
   }
+
   // TODO: combine with chat list avatar styles.
   .rt-avatar-avatar {
     font-size: 20px;

@@ -1,6 +1,7 @@
 const React = require('react');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { List, ListItem, ListSubHeader, TooltipIconButton } = require('~/react-toolbox');
+const { FontIcon, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
@@ -10,14 +11,21 @@ const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class ChatSideBar extends React.Component {
+    @observable listClosed = false;
     startChat(ev) {
         const username = getAttributeInParentChain(ev.target, 'data-id');
         chatStore.startChat([contactStore.getContact(username)]);
     }
 
+    toggleList = () => {
+        console.log(this.listClosed);
+        this.listClosed = !this.listClosed;
+    }
+
     render() {
         const isChannel = true;
         const userIsAdmin = true;
+
         const banishHeader = chatStore.activeChat.participants && chatStore.activeChat.participants.length
             ? '' : 'banish';
         return (
@@ -49,9 +57,13 @@ class ChatSideBar extends React.Component {
                     </div>
                   : null
                 }
-                <div className="section-list">
+                <div className={css('section-list', { closed: this.listClosed })}>
                     <List>
-                        <ListSubHeader className={`rt-list-subheader ${banishHeader}`} caption={t('title_Members')} />
+                        <div className={`rt-list-subheader ${banishHeader}`} onClick={this.toggleList}>
+                            {t('title_Members')}
+                            <FontIcon
+                                value={this.listClosed ? 'arrow_drop_down' : 'arrow_drop_up'} />
+                        </div>
                         {chatStore.activeChat && chatStore.activeChat.participants ?
                             chatStore.activeChat.participants.map(c =>
                                 (<ListItem key={c.username}

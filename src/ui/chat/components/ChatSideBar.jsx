@@ -16,6 +16,8 @@ class ChatSideBar extends React.Component {
     }
 
     render() {
+        const isChannel = false;
+        const userIsAdmin = false;
         const banishHeader = chatStore.activeChat.participants && chatStore.activeChat.participants.length
             ? '' : 'banish';
         return (
@@ -24,19 +26,27 @@ class ChatSideBar extends React.Component {
                 <div className="flex-row flex-shrink-0">
                     <ChatNameEditor showLabel tabIndex="-1" />
                 </div>
-                {/* Commenting out for now. Current state of functionality is confusing users.
-                  <List selectable>
-                    <ListItem
-                        disabled={chatStore.hidingChat}
-                        leftIcon="remove_circle_outline"
-                        caption={t('button_hideChat')}
-                        onClick={chatStore.activeChat.hide}
-                    />
-                    <ListItem
-                      leftIcon="notifications_none"
-                      caption="button_muteChat" />
-                  </List>
-                */}
+                { isChannel ?
+                    <List selectable>
+                        <ListItem
+                            disabled={chatStore.hidingChat}
+                            leftIcon="remove_circle_outline"
+                            caption={t('button_leaveChannel')}
+                            onClick={chatStore.activeChat.hide}
+                        />
+                        <ListItem
+                          leftIcon="notifications_none"
+                          caption="button_muteChannel" />
+
+                        { userIsAdmin ?
+                            <ListItem className="admin-controls"
+                              leftIcon="delete"
+                              caption="button_deleteChannel" />
+                            : null
+                        }
+                    </List>
+                  : null
+                }
                 <div className={`rt-list-subheader ${banishHeader}`}>{t('title_Members')} </div>
                 <div style={{ overflowY: 'auto', overflowX: 'hidden' }}>
                     <List>

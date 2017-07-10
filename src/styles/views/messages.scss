@@ -745,6 +745,11 @@ $suggests-max-height: 200px;
     top: 28px;
   }
 
+  .admin-controls {
+    border-bottom: 1px solid $divider-dark;
+    border-top: 1px solid $divider-dark;
+  }
+
   // TODO: combine with chat list avatar styles.
   .rt-avatar-avatar {
     font-size: 20px;

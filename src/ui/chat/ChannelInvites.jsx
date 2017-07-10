@@ -22,19 +22,20 @@ class ChannelInvites extends React.Component {
         );
     }
 
-    acceptInvite() {
+    acceptInvite = () => {
         console.log('Invite accepted');
     }
 
-    declineInvite() {
+    declineInvite = () => {
         console.log('Invite declined');
     }
 
-    handleUpgrade() {
+    handleUpgrade = () => {
         console.log('Handling upgrade!');
     }
 
-    toggleDialog() {
+    toggleDialog = () => {
+        console.log(this.showDialog);
         this.showDialog = !this.showDialog;
     }
 

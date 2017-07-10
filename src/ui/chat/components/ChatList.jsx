@@ -48,6 +48,8 @@ class ChatList extends React.Component {
     }
 
     render() {
+        const hasInvites = true;
+        const newChatInvites = 3;
         return (
             <div className="feature-navigation-list">
                 {this.getProgressBar(chatStore.loading)}
@@ -79,9 +81,11 @@ class ChatList extends React.Component {
                                 <ListItem className="channel-item" caption="#b-channel" />
                                 <ListItem className="channel-item" caption="#c-channel" />
                                 <ListItem className="channel-item" caption="#d-channel" />
-                                <ListItem className="channel-invites"
-                                    caption="Invites"
-                                    rightIcon={<div className="notification">10</div>} />
+                                { hasInvites ?
+                                    <ListItem className="channel-invites"
+                                        caption="Invites"
+                                        rightIcon={<div className="notification">{newChatInvites}</div>} />
+                                  : null }
                             </List>
                             <List selectable ripple>
                                 <ListSubHeader caption="Direct messages" />

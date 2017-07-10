@@ -1,12 +1,14 @@
 const React = require('react');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, FontIcon, List, ListSubHeader, ListItem, TooltipIconButton } = require('~/react-toolbox');
+const { Button, Dialog, List, ListSubHeader, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const ChatList = require('./components/ChatList');
 const ChatSideBar = require('./components/ChatSideBar');
 const { t } = require('peerio-translator');
 
 @observer
 class ChannelInvites extends React.Component {
+    @observable showDialog = false;
 
     inviteOptions() {
         return (<div>
@@ -20,8 +22,36 @@ class ChannelInvites extends React.Component {
         );
     }
 
+    acceptInvite() {
+        console.log('Invite accepted');
+    }
+
+    declineInvite() {
+        console.log('Invite declined');
+    }
+
+    handleUpgrade() {
+        console.log('Handling upgrade!');
+    }
+
+    toggleDialog() {
+        this.showDialog = !this.showDialog;
+    }
+
     render() {
-        const limitReached = false;
+        const limitReached = true;
+
+        const dialogActions = [
+            { label: t('button_cancel'), onClick: () => { this.toggleDialog(); } },
+            {
+                label: t('button_upgrade'),
+                onClick: () => {
+                    this.handleUpgrade();
+                    this.toggleDialog();
+                }
+            }
+        ];
+
         return (
             <div className="messages">
                 <ChatList />
@@ -40,46 +70,22 @@ class ChannelInvites extends React.Component {
                             <div className="channel-invites-list">
                                 <List selectable>
                                     <ListSubHeader caption="Recent invites" />
-                                    <ListItem caption="#channel name" legend="Invited by someone at this time"
+                                    <ListItem caption="#channel name" legend="Invited by PeerioUserName at time"
                                     rightIcon={
                                       limitReached
-                                        ? <TooltipIconButton icon="info_cirle" tooltip={t('button_channelLimit')}
-                                          onClick={this.limitDialog} />
+                                        ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
+                                          onClick={this.toggleDialog} />
                                         : this.inviteOptions()
                                     } />
                                 </List>
                                 <List selectable>
                                     <ListSubHeader caption="Pending invites" />
                                     <ListItem caption="#channel name"
-                                      legend="Invited by someone at this time"
+                                      legend="Invited by PeerioUserName at time"
                                       rightIcon={
                                         limitReached
-                                          ? <TooltipIconButton icon="info_cirle" tooltip={t('button_channelLimit')}
-                                            onClick={this.limitDialog} />
-                                          : this.inviteOptions()
-                                      } />
-                                    <ListItem caption="#channel name"
-                                      legend="Invited by someone at this time"
-                                      rightIcon={
-                                        limitReached
-                                          ? <TooltipIconButton icon="info_cirle" tooltip={t('button_channelLimit')}
-                                            onClick={this.limitDialog} />
-                                          : this.inviteOptions()
-                                      } />
-                                    <ListItem caption="#channel name"
-                                      legend="Invited by someone at this time"
-                                      rightIcon={
-                                        limitReached
-                                          ? <TooltipIconButton icon="info_cirle" tooltip={t('button_channelLimit')}
-                                            onClick={this.limitDialog} />
-                                          : this.inviteOptions()
-                                      } />
-                                    <ListItem caption="#channel name"
-                                      legend="Invited by someone at this time"
-                                      rightIcon={
-                                        limitReached
-                                          ? <TooltipIconButton icon="info_cirle" tooltip={t('button_channelLimit')}
-                                            onClick={this.limitDialog} />
+                                          ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
+                                            onClick={this.toggleDialog} />
                                           : this.inviteOptions()
                                       } />
                                 </List>
@@ -88,6 +94,14 @@ class ChannelInvites extends React.Component {
                         <ChatSideBar open="true" />
                     </div>
                 </div>
+                <Dialog active={this.showDialog}
+                    actions={dialogActions}
+                    onOverlayClick={this.toggleDialog}
+                    onEscKeyDown={this.toggleDialog}
+                    title={t('title_limitDialog')}>
+                    <p>Limit content p1</p>
+                    <p>Limit content p2</p>
+                </Dialog>
             </div>
         );
     }

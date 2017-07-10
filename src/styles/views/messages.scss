@@ -738,6 +738,12 @@ $suggests-max-height: 200px;
   transition: width 300ms $transition-easing-ease-in;
   width: 0;
 
+  .section-list {
+    border-bottom: 1px solid $divider-dark;
+    overflow-x: 'hidden';
+    overflow-y: 'auto';
+  }
+
   .rt-input-hint {
     font-size: 12px;
     line-height: 14px;

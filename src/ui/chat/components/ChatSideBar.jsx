@@ -16,8 +16,8 @@ class ChatSideBar extends React.Component {
     }
 
     render() {
-        const isChannel = false;
-        const userIsAdmin = false;
+        const isChannel = true;
+        const userIsAdmin = true;
         const banishHeader = chatStore.activeChat.participants && chatStore.activeChat.participants.length
             ? '' : 'banish';
         return (
@@ -48,7 +48,7 @@ class ChatSideBar extends React.Component {
                   : null
                 }
                 <div className={`rt-list-subheader ${banishHeader}`}>{t('title_Members')} </div>
-                <div style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+                <div className="section-list">
                     <List>
                         {chatStore.activeChat && chatStore.activeChat.participants ?
                             chatStore.activeChat.participants.map(c =>
@@ -61,9 +61,9 @@ class ChatSideBar extends React.Component {
                                     onClick={() => chatStore.startChat([c])} />)
                             ) : null}
                         { isChannel && userIsAdmin ?
-                            <ListItem className="admin-controls"
+                            <ListItem
                               leftIcon="add_circle_outline"
-                              caption="button_addToChannel" />
+                              caption="button_inviteToChannel" />
                             : null
                         }
                     </List>

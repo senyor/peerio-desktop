@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { List, ListItem, TooltipIconButton } = require('~/react-toolbox');
+const { List, ListItem, ListSubHeader, TooltipIconButton } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore, contactStore } = require('~/icebear');
 const { t } = require('peerio-translator');
@@ -27,29 +27,31 @@ class ChatSideBar extends React.Component {
                     <ChatNameEditor showLabel tabIndex="-1" />
                 </div>
                 { isChannel ?
-                    <List selectable>
-                        <ListItem
-                            disabled={chatStore.hidingChat}
-                            leftIcon="remove_circle_outline"
-                            caption={t('button_leaveChannel')}
-                            onClick={chatStore.activeChat.hide}
-                        />
-                        <ListItem
-                          leftIcon="notifications_none"
-                          caption="button_muteChannel" />
+                    <div className="section-list">
+                        <List selectable>
+                            <ListItem
+                                disabled={chatStore.hidingChat}
+                                leftIcon="remove_circle_outline"
+                                caption={t('button_leaveChannel')}
+                                onClick={chatStore.activeChat.hide}
+                            />
+                            <ListItem
+                              leftIcon="notifications_none"
+                              caption="button_muteChannel" />
 
-                        { userIsAdmin ?
-                            <ListItem className="admin-controls"
-                              leftIcon="delete"
-                              caption="button_deleteChannel" />
-                            : null
-                        }
-                    </List>
+                            { userIsAdmin ?
+                                <ListItem className="admin-controls"
+                                  leftIcon="delete"
+                                  caption="button_deleteChannel" />
+                                : null
+                            }
+                        </List>
+                    </div>
                   : null
                 }
-                <div className={`rt-list-subheader ${banishHeader}`}>{t('title_Members')} </div>
                 <div className="section-list">
                     <List>
+                        <ListSubHeader className={`rt-list-subheader ${banishHeader}`} caption={t('title_Members')} />
                         {chatStore.activeChat && chatStore.activeChat.participants ?
                             chatStore.activeChat.participants.map(c =>
                                 (<ListItem key={c.username}
@@ -62,7 +64,7 @@ class ChatSideBar extends React.Component {
                             ) : null}
                         { isChannel && userIsAdmin ?
                             <ListItem
-                              leftIcon="add_circle_outline"
+                              className="admin-controls"
                               caption="button_inviteToChannel" />
                             : null
                         }

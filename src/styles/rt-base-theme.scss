@@ -318,6 +318,12 @@
   font-size: 14px;
 }
 
+.rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,
+.rt-list-listItem {
+  &:hover:not(.active) {
+    background-color: $background-hover-message;
+  }
+}
 // USER AGENT OVERWRITES
 ul {
   margin: 0;

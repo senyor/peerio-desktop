@@ -701,10 +701,6 @@ $suggests-max-height: 200px;
   .rt-list-listItem {
     border-bottom: 1px solid $divider-dark;
     height: 64px;
-
-    &:hover:not(.active) {
-      background-color: $background-hover-message;
-    }
   }
 
   .rt-list-item {
@@ -740,8 +736,8 @@ $suggests-max-height: 200px;
 
   .section-list {
     border-bottom: 1px solid $divider-dark;
-    overflow-x: 'hidden';
-    overflow-y: 'auto';
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .rt-input-hint {
@@ -752,7 +748,6 @@ $suggests-max-height: 200px;
   }
 
   .admin-controls {
-    border-bottom: 1px solid $divider-dark;
     border-top: 1px solid $divider-dark;
   }
 

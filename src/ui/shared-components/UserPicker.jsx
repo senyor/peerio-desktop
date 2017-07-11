@@ -18,6 +18,7 @@ class UserPicker extends React.Component {
     accepted = false;
     @observable suggestInviteEmail = '';
     @observable showNotFoundError;
+    @observable inChannel = true;
     legacyContactError = false; // not observable bcs changes only with showNotFoundError
 
     @computed get options() {
@@ -190,7 +191,9 @@ class UserPicker extends React.Component {
                                     return (<span key={c.username} data-id={c.username}>
                                         <ListItem
                                             leftActions={[<Avatar key="a" contact={c} size="medium" />]}
-                                            caption={c.username}
+                                            caption={`${c.username}
+                                              ${!this.isInChannel ? 'In channel' : null}`}
+                                              // Should be something like <span class="tag"> In channel</span>
                                             legend={`${c.firstName} ${c.lastName}`}
                                             onClick={this.onContactClick}
                                             className={css({ warning: this.noGood })} />

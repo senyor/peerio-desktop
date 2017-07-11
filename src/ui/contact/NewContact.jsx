@@ -110,7 +110,7 @@ class NewContact extends React.Component {
                 <div className="contacts-view flex-align-center flex-justify-center create-new-chat user-picker">
 
                     <div className="invite-form">
-                        {this.isInviteView ? <T k="title_contactZeroState" className="headline" tag="div" /> : null}
+                        {this.isInviteView ? <T k="title_contactZeroState" className="title" tag="div" /> : null}
 
                         <T k={this.isInviteView ? 'button_inviteEmailContact' : 'title_addAContact'}
                             className="display-1" tag="div" />

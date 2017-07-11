@@ -173,7 +173,10 @@
     "win": {
       "publisherName": "Peerio Technologies Inc.",
       "target": [
-        "nsis"
+        {
+          "target": "nsis",
+          "arch": [ "ia32", "x64" ]
+        }
       ]
     },
     "nsis": {
@@ -184,8 +187,14 @@
       "artifactName": "${name}-${version}-mac.${ext}",
       "category": "public.app-category.productivity",
       "target": [
-        "zip",
-        "dmg"
+        {
+          "target": "zip",
+          "arch": [ "x64" ]
+        },
+        {
+          "target": "dmg",
+          "arch": [ "x64" ]
+        }
       ]
     },
     "dmg": {
@@ -211,9 +220,12 @@
       ]
     },
     "linux": {
-      "artifactName": "${name}-${arch}-${version}.${ext}",
+      "artifactName": "${name}-${os}-${arch}.${ext}",
       "target": [
-        "AppImage"
+        {
+          "target": "AppImage",
+          "arch": [ "x64" ]
+        }
       ]
     }
   },

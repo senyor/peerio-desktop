@@ -42,7 +42,6 @@ const electron = require('electron').remote;
                 <div className="warning-line">
                     <div className="flex-col flex-justify-center" style={{ width: '275px', whiteSpace: 'nowrap' }}>
                         <span className="display-1">{t('title_saveNow1')}</span>
-                        <strong className="display-2">{t('title_saveNow2')}</strong>
                     </div>
                 </div>
                 <p>{t('title_saveNow3')}</p>

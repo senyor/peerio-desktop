@@ -18,8 +18,7 @@ const T = require('~/ui/shared-components/T');
             <div className="flex-col profile">
                 <div className="warning-line">
                     <div className="flex-col flex-justify-center" style={{ width: '275px' }}>
-                        <span className="display-1">{t('title_AKwarn1')}</span>
-                        <strong className="display-2">{t('title_AKwarn2')}</strong>
+                        <span className="display-1" style={{ whiteSpace: 'nowrap' }}>{t('title_AKwarn1')}</span>
                     </div>
                 </div>
                 <T k="title_AKwarn3" tag="p" />

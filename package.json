@@ -1,7 +1,7 @@
 {
   "name": "peerio-2",
   "description": "Peerio 2",
-  "version": "2.19.1",
+  "version": "2.20.0",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -175,7 +175,10 @@
       "target": [
         {
           "target": "nsis",
-          "arch": [ "ia32", "x64" ]
+          "arch": [
+            "ia32",
+            "x64"
+          ]
         }
       ]
     },
@@ -189,11 +192,15 @@
       "target": [
         {
           "target": "zip",
-          "arch": [ "x64" ]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "dmg",
-          "arch": [ "x64" ]
+          "arch": [
+            "x64"
+          ]
         }
       ]
     },
@@ -224,7 +231,9 @@
       "target": [
         {
           "target": "AppImage",
-          "arch": [ "x64" ]
+          "arch": [
+            "x64"
+          ]
         }
       ]
     }

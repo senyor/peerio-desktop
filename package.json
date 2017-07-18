@@ -78,7 +78,7 @@
     "electron-devtools-installer": "2.2.0",
     "electron-rebuild": "1.5.11",
     "electron-reload": "1.2.1",
-    "emojione": "3.1.0",
+    "emojione": "3.1.1",
     "emojione-assets": "3.1.0",
     "eslint-config-peerio": "1.19.9",
     "husky": "0.14.2",

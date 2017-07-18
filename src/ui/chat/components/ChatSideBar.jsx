@@ -59,7 +59,7 @@ class ChatSideBar extends React.Component {
                 }
                 <div className={css('section-list', { closed: this.listClosed })}>
                     <List>
-                        <div className={`rt-list-subheader ${banishHeader}`} onClick={this.toggleList}>
+                        <div className={`rt-list-subheader clickable ${banishHeader}`} onClick={this.toggleList}>
                             {t('title_Members')}
                             <FontIcon
                                 value={this.listClosed ? 'arrow_drop_down' : 'arrow_drop_up'} />
@@ -70,9 +70,10 @@ class ChatSideBar extends React.Component {
                                     leftActions={[<Avatar key="a" contact={c} size="small" />]}
                                     caption={c.username}
                                     legend={c.fullName}
-                                    rightIcon={c.isDeleted ? null : <TooltipIconButton data-id={c.username} icon="forum"
-                                        tooltip={t('title_haveAChat')} onClick={this.startChat} />}
-                                    onClick={() => chatStore.startChat([c])} />)
+                                    // rightIcon={c.isDeleted ? null : <TooltipIconButton data-id={c.username} icon="forum"
+                                    //     tooltip={t('title_haveAChat')} onClick={this.startChat} />}
+                                    // onClick={() => chatStore.startChat([c])}
+                                  />)
                             ) : null}
                         { isChannel && userIsAdmin ?
                             <ListItem

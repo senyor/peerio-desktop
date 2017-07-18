@@ -80,6 +80,13 @@
   }
 }
 
+.rt-link-link {
+  display: inline-flex;
+  font-family: $font-stack;
+  opacity: 1 !important;
+  text-decoration: underline;
+}
+
 // INPUTS
 .rt-input-bar {
   display: none;

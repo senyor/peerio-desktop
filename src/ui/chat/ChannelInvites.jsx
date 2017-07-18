@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog, List, ListSubHeader, ListItem, TooltipIconButton } = require('~/react-toolbox');
+const { Button, Dialog, Link, List, ListSubHeader, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const ChatList = require('./components/ChatList');
 const ChatSideBar = require('./components/ChatSideBar');
 const { t } = require('peerio-translator');
@@ -40,7 +40,7 @@ class ChannelInvites extends React.Component {
     }
 
     render() {
-        const limitReached = true;
+        const limitReached = false;
 
         const dialogActions = [
             { label: t('button_cancel'), onClick: () => { this.toggleDialog(); } },
@@ -69,6 +69,10 @@ class ChannelInvites extends React.Component {
                     <div className="flex-row flex-grow-1">
                         <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
                             <div className="channel-invites-list">
+                                <div className="upgrade-channels">
+                                    <div><span role="img" aria-label="waving hand">👋</span>Hello! Your account can access <strong>2 channels</strong> at a time. <Link to="/upgrade">Upgrade</Link> for access to unlimited channels.</div>
+                                    {/* <Button flat primary label={t('button_upgrade')} /> */}
+                                </div>
                                 <List selectable>
                                     <ListSubHeader caption="Recent invites" />
                                     <ListItem caption="#channel name" legend="Invited by PeerioUserName at time"
@@ -99,9 +103,13 @@ class ChannelInvites extends React.Component {
                     actions={dialogActions}
                     onOverlayClick={this.toggleDialog}
                     onEscKeyDown={this.toggleDialog}
-                    title={t('title_limitDialog')}>
-                    <p>Limit content p1</p>
-                    <p>Limit content p2</p>
+                    title={t('title_limitDialog')}
+                    className="dialog-warning">
+                    <p>{t('title_limitDialogText1')}</p>
+                    {/* Your account can access 2 channels at a time. */}
+                    <br />
+                    <p>{t('title_limitDialogText2')}</p>
+                    {/* If you would like to join or create another channel, please leave an existing channel or upgrade your account. */}
                 </Dialog>
             </div>
         );

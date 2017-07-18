@@ -250,10 +250,6 @@ $suggests-max-height: 200px;
       .title {
         margin-bottom: $margin-small;
       }
-
-      .archive-link {
-        .rt-link-link { display: inline-flex; }
-      }
     }
 
     .message-content-wrapper {
@@ -694,8 +690,20 @@ $suggests-max-height: 200px;
 
 // channel invites list
 .channel-invites-list {
+  .upgrade-channels {
+    align-items: center;
+    background-color: rgba($color-brand-secondary, .15);
+    display: flex;
+    height: 48px;
+    padding: 0 $padding-default;
+
+    .rt-button-button {
+      margin-left: auto;
+    }
+  }
+
   .rt-list-subheader {
-    background: $color-dark-06;
+    background: $color-dark-03;
   }
 
   .rt-list-listItem {

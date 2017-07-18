@@ -193,6 +193,10 @@ $status-bar-height: 36px;
   }
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 // RANDOM MESSAGES
 .random-messages {
   @extend %flex-col;

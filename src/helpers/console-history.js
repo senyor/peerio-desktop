@@ -32,22 +32,22 @@ console.history = {
 
 const h = console.history;
 
-console.log = function (...args) {
+console.log = function(...args) {
     const t = new Date().toISOString();
     originals.log.call(console, t, ...args);
     h.write(t, args);
 };
-console.warn = function (...args) {
+console.warn = function(...args) {
     const t = new Date().toISOString();
     originals.warn.call(console, t, ...args);
     h.write(t, args);
 };
-console.error = function (...args) {
+console.error = function(...args) {
     const t = new Date().toISOString();
     originals.error.call(console, t, ...args);
     h.write(t, args);
 };
-console.debug = function (...args) {
+console.debug = function(...args) {
     const t = new Date().toISOString();
     originals.debug.call(console, t, ...args);
     h.write(t, args);

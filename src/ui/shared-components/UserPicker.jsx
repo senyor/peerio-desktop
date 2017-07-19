@@ -136,10 +136,7 @@ class UserPicker extends React.Component {
                     style={{ width: '100%' }}>
                     <div className="flex-col flex-grow-1"
                         style={{
-                            maxWidth: '600px',
-                            marginLeft: '64px',
-                            marginRight: '64px',
-                            marginTop: '168px'
+                            maxWidth: '600px'
                         }}>
                         <div className="chat-creation-header">
                             <div className="title">
@@ -183,10 +180,12 @@ class UserPicker extends React.Component {
                             : null}
                         <List selectable ripple >
                             <ListSubHeader caption={t('title_allContacts')} />
+                            {/* TODO: change text to Invites on zero state messages screen */}
+                            {/* TODO: change text to Favourites when favs exist */}
                             <div className="user-list">
                                 {this.options.map(c => {
                                     if (c === true) {
-                                        return <hr key="separator" />;
+                                        return <ListSubHeader caption={t('title_allContacts')} />;
                                     }
                                     return (<span key={c.username} data-id={c.username}>
                                         <ListItem

@@ -127,7 +127,7 @@ class Chat extends React.Component {
 
         return (
             <div className="messages">
-                <ChatList />
+                { chatStore.chats.length === 0 ? null : <ChatList /> }
                 <div className="message-view">
                     {chatStore.loading ?
                         <div className="random-messages">

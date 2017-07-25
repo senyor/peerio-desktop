@@ -1,9 +1,15 @@
 
-const { autoUpdater } = require('electron-updater');
 const isDevEnv = require('~/helpers/is-dev-env');
 const { ipcMain } = require('electron');
 const config = require('~/config-base');
 const { TinyDb } = require('~/icebear');
+
+let autoUpdater;
+if (process.platform === 'linux') {
+    autoUpdater = require('peerio-updater')();
+} else {
+    autoUpdater = require('electron-updater').autoUpdater;
+}
 
 // autoUpdater.logger = L;
 TinyDb.system.getValue('pref_prereleaseUpdatesEnabled')
@@ -24,7 +30,9 @@ function sendStatusToWindow(text) {
 function start(mainWindow) {
     try {
         window = mainWindow;
-        if (config.updateFeedUrl) autoUpdater.setFeedURL(config.updateFeedUrl);
+        if (process.platform !== 'linux' && config.updateFeedUrl) {
+            autoUpdater.setFeedURL(config.updateFeedUrl);
+        }
         ipcMain.on('install-update', () => {
             console.log('Client approved update installation.');
             autoUpdater.quitAndInstall();

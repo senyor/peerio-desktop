@@ -97,7 +97,7 @@
     "stylelint-config-standard": "17.0.0",
     "stylelint-order": "0.6.0",
     "stylelint-scss": "1.5.1",
-    "validate-commit-msg": "2.12.2",
+    "validate-commit-msg": "2.13.1",
     "writefile": "0.2.8"
   },
   "reactToolbox": {
@@ -176,7 +176,10 @@
       "target": [
         {
           "target": "nsis",
-          "arch": [ "ia32", "x64" ]
+          "arch": [
+            "ia32",
+            "x64"
+          ]
         }
       ]
     },
@@ -190,11 +193,15 @@
       "target": [
         {
           "target": "zip",
-          "arch": [ "x64" ]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "dmg",
-          "arch": [ "x64" ]
+          "arch": [
+            "x64"
+          ]
         }
       ]
     },
@@ -225,7 +232,9 @@
       "target": [
         {
           "target": "AppImage",
-          "arch": [ "x64" ]
+          "arch": [
+            "x64"
+          ]
         }
       ]
     }

@@ -23,6 +23,7 @@
     ]
   },
   "dependencies": {
+    "@peerio/updater": "0.0.2",
     "airbrake-js": "0.9.3",
     "autolinker": "1.4.3",
     "blake2s-js": "1.2.2",
@@ -43,7 +44,6 @@
     "moment": "2.18.1",
     "normalize.css": "7.0.0",
     "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
-    "peerio-updater": "git+https://github.com/PeerioTechnologies/peerio-updater.git",
     "quill": "1.2.6",
     "react": "15.6.1",
     "react-addons-css-transition-group": "15.6.0",

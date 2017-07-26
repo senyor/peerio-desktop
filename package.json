@@ -49,6 +49,7 @@
   },
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "devDependencies": {
+    "@peerio/desktop-release-builder": "3.1.2",
     "@peerio/peerio-icebear": "1.4.0",
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
@@ -71,7 +72,6 @@
     "chai": "4.0.2",
     "chai-as-promised": "7.0.0",
     "cz-conventional-changelog": "2.0.0",
-    "desktop-release-builder": "git+https://github.com/PeerioTechnologies/desktop-release-builder.git",
     "devtron": "1.4.0",
     "diff2html-cli": "2.5.0",
     "electron": "1.6.11",

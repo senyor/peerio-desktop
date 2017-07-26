@@ -118,12 +118,11 @@ class UserPicker extends React.Component {
     }
 
     render() {
-        const separatorInserted = false;
         return (
             <div className="user-picker">
                 <div className={css('flex-col selected-items', { banish: !this.props.sharing })} >
-                    <List >
-                        <ListSubHeader caption={t('title_selectedFiles')} />
+                    <List>
+                        <ListSubHeader key="header" caption={t('title_selectedFiles')} />
                         {fileStore.getSelectedFiles().map(f => (<ListItem
                             key={f.id}
                             leftIcon="insert_drive_file"
@@ -184,15 +183,14 @@ class UserPicker extends React.Component {
                             {/* TODO: change text to Favourites when favs exist */}
                             <div className="user-list">
                                 {this.options.map(c => {
-                                    if (c === true) {
-                                        return <ListSubHeader caption={t('title_allContacts')} />;
-                                    }
+                                    // return <ListSubHeader caption={t('title_allContacts')} />;
+
                                     return (<span key={c.username} data-id={c.username}>
                                         <ListItem
                                             leftActions={[<Avatar key="a" contact={c} size="medium" />]}
                                             caption={`${c.username}
                                               ${!this.isInChannel ? 'In channel' : null}`}
-                                              // Should be something like <span class="tag"> In channel</span>
+                                            // Should be something like <span class="tag"> In channel</span>
                                             legend={`${c.firstName} ${c.lastName}`}
                                             onClick={this.onContactClick}
                                             className={css({ warning: this.noGood })} />

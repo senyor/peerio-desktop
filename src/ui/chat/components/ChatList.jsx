@@ -9,9 +9,6 @@ const FlipMove = require('react-flip-move');
 
 @observer
 class ChatList extends React.Component {
-    componentWillMount() {
-        chatStore.loadAllChats();
-    }
 
     activateChat(id) {
         chatStore.activate(id);
@@ -71,30 +68,30 @@ class ChatList extends React.Component {
                         ? null
                         :
                         <div className="list">
-                            { hasChannels ?
+                            {hasChannels ?
                                 <List selectable ripple>
                                     <ListSubHeader caption="Channels" />
                                     <ListItem
                                         className="channel-item"
                                         caption="#a-channel"
-                                        // unread counter
-                                        // rightIcon={
-                                        //     ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
-                                        //         ? this.getNotificationIcon(c)
-                                        //         : null
-                                        // }
+                                    // unread counter
+                                    // rightIcon={
+                                    //     ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
+                                    //         ? this.getNotificationIcon(c)
+                                    //         : null
+                                    // }
                                     />
                                     <ListItem className="channel-item" caption="#b-channel" />
                                     <ListItem className="channel-item" caption="#c-channel" />
                                     <ListItem className="channel-item" caption="#d-channel" />
-                                    { hasInvites ?
+                                    {hasInvites ?
                                         <ListItem className="channel-invites"
                                             onClick={this.goToChannelInvite}
                                             caption="Channel invites"
                                             rightIcon={<div className="notification">{newChatInvites}</div>} />
-                                      : null }
+                                        : null}
                                 </List>
-                                : null }
+                                : null}
                             <List selectable ripple>
                                 <ListSubHeader caption="Direct messages" />
                                 <FlipMove duration={200} easing="ease-in-out">

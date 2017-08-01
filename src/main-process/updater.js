@@ -6,7 +6,7 @@ const { TinyDb } = require('~/icebear');
 
 let autoUpdater;
 if (process.platform === 'linux') {
-    autoUpdater = require('peerio-updater')();
+    autoUpdater = require('@peerio/updater')();
 } else {
     autoUpdater = require('electron-updater').autoUpdater;
 }

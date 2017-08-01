@@ -30,12 +30,12 @@ class GlobalActions extends React.Component {
                         icon="cloud_upload"
                         className="active"
                         onClick={this.props.onUpload} />
-                    {/* <TooltipIconButton*/}
-                    {/* tooltip="Download"*/}
-                    {/* tooltipDelay={delay}*/}
-                    {/* tooltipPosition="top"*/}
-                    {/* icon="file_download"*/}
-                    {/* className={css({ active: true, disabled: true })} />*/}
+                    {/* <TooltipIconButton */}
+                    {/* tooltip="Download" */}
+                    {/* tooltipDelay={delay} */}
+                    {/* tooltipPosition="top" */}
+                    {/* icon="file_download" */}
+                    {/* className={css({ active: true, disabled: true })} /> */}
                     <TooltipIconButton
                         tooltip={t('button_share')}
                         tooltipDelay={delay}
@@ -53,12 +53,12 @@ class GlobalActions extends React.Component {
                         className={css('active', { disabled: !fileStore.hasSelectedShareableFiles })}
                         onClick={this.props.onShare}
                     /> */}
-                    {/* <TooltipIconButton*/}
-                    {/* tooltip="Add to folder"*/}
-                    {/* tooltipDelay={delay}*/}
-                    {/* tooltipPosition="top"*/}
-                    {/* icon="create_new_folder"*/}
-                    {/* className={css({ active: false, disabled: true })} />*/}
+                    {/* <TooltipIconButton */}
+                    {/* tooltip="Add to folder" */}
+                    {/* tooltipDelay={delay} */}
+                    {/* tooltipPosition="top" */}
+                    {/* icon="create_new_folder" */}
+                    {/* className={css({ active: false, disabled: true })} /> */}
                     <TooltipIconButton
                         tooltip={t('button_delete')}
                         tooltipDelay={delay}

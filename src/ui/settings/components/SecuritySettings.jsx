@@ -160,7 +160,7 @@ class SecuritySettings extends React.Component {
                     </div>
                     <p style={{ marginBottom: '40px' }}>
                         {t('title_QRcodeDetail')}
-                    </p>*/}
+                    </p> */}
                     {this.renderShowPassphraseSection()}
                 </section>
                 <section>
@@ -209,7 +209,7 @@ class SecuritySettings extends React.Component {
                     <p>
                         {t('title_accountActivityDetail')}
                     </p>
-                </section>*/}
+                </section> */}
                 {/* Technically speaking: do we want 2 dialogs or 1 dialog with steps? */}
                 {/* <Dialog active={this.setupTwoFactorDialogOpen} actions={twoFactorDialogActions}
                         onOverlayClick={this.hideTwoFactorDialog} onEscKeyDown={this.hideTwoFactorDialog}

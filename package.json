@@ -1,7 +1,7 @@
 {
   "name": "peerio-2",
   "description": "Peerio 2",
-  "version": "2.20.1",
+  "version": "2.20.0",
   "scripts": {
     "precommit": "npm run validate",
     "postmerge": "npm update",
@@ -69,7 +69,7 @@
     "chai": "4.0.2",
     "chai-as-promised": "7.0.0",
     "cz-conventional-changelog": "2.0.0",
-    "desktop-release-builder": "@peerio/desktop-release-builder",
+    "@peerio/desktop-release-builder": "3.2.1",
     "devtron": "1.4.0",
     "diff2html-cli": "2.5.0",
     "electron": "1.6.11",

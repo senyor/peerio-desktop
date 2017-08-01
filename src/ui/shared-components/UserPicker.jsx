@@ -18,7 +18,6 @@ class UserPicker extends React.Component {
     accepted = false;
     @observable suggestInviteEmail = '';
     @observable showNotFoundError;
-    @observable inChannel = true;
     legacyContactError = false; // not observable bcs changes only with showNotFoundError
 
     @computed get options() {
@@ -86,7 +85,7 @@ class UserPicker extends React.Component {
 
 
     accept = () => {
-        if (this.accepted || !this.isValid) return;
+        if (this.props.onlyPick || this.accepted || !this.isValid) return;
         this.accepted = true;
         this.selected.forEach(s => {
             if (s.notFound) this.selected.remove(s);
@@ -123,20 +122,19 @@ class UserPicker extends React.Component {
                 <div className={css('flex-col selected-items', { banish: !this.props.sharing })} >
                     <List>
                         <ListSubHeader key="header" caption={t('title_selectedFiles')} />
-                        {fileStore.getSelectedFiles().map(f => (<ListItem
-                            key={f.id}
-                            leftIcon="insert_drive_file"
-                            caption={f.name}
-                            rightIcon="remove_circle_outline" />))}
+                        {
+                            fileStore.getSelectedFiles().map(f => (<ListItem
+                                key={f.id}
+                                leftIcon="insert_drive_file"
+                                caption={f.name}
+                                rightIcon="remove_circle_outline" />))
+                        }
 
                     </List>
                 </div>
-                <div className="flex-row flex-justify-center"
-                    style={{ width: '100%' }}>
-                    <div className="flex-col flex-grow-1"
-                        style={{
-                            maxWidth: '600px'
-                        }}>
+                <div className="flex-row flex-justify-center" style={{ width: '100%' }}>
+                    <div className="flex-col flex-grow-1" style={{ maxWidth: '600px' }}>
+                        {this.props.noHeader ? null :
                         <div className="chat-creation-header">
                             <div className="title">
                                 {this.props.title}
@@ -144,6 +142,7 @@ class UserPicker extends React.Component {
                             </div>
                             <IconButton icon="close" onClick={this.handleClose} />
                         </div>
+                        }
                         <div className="message-search-wrapper">
                             <div className="new-chat-search">
                                 <FontIcon value="search" />
@@ -161,7 +160,7 @@ class UserPicker extends React.Component {
                                         value={this.query} onChange={this.handleTextChange}
                                         onKeyDown={this.handleKeyDown} />
                                 </div>
-                                <Button className={css('confirm', { hide: !this.selected.length })}
+                                <Button className={css('confirm', { banish: this.props.onlyPick || !this.selected.length })}
                                     label={this.props.button || t('button_go')}
                                     onClick={this.accept} disabled={!this.isValid} />
                             </div>
@@ -178,18 +177,17 @@ class UserPicker extends React.Component {
                             </div>
                             : null}
                         <List selectable ripple >
-                            <ListSubHeader caption={t('title_allContacts')} />
+                            <ListSubHeader key="header" caption={t('title_allContacts')} />
                             {/* TODO: change text to Invites on zero state messages screen */}
-                            {/* TODO: change text to Favourites when favs exist */}
-                            <div className="user-list">
+                            {/* TODO: change text to Favorites when favs exist */}
+                            <div key="list" className="user-list">
                                 {this.options.map(c => {
-                                    // return <ListSubHeader caption={t('title_allContacts')} />;
+                                    if (c === true) return <ListSubHeader key="separator" caption={t('title_allContacts')} />;
 
                                     return (<span key={c.username} data-id={c.username}>
                                         <ListItem
                                             leftActions={[<Avatar key="a" contact={c} size="medium" />]}
-                                            caption={`${c.username}
-                                              ${!this.isInChannel ? 'In channel' : null}`}
+                                            caption={c.username}
                                             // Should be something like <span class="tag"> In channel</span>
                                             legend={`${c.firstName} ${c.lastName}`}
                                             onClick={this.onContactClick}

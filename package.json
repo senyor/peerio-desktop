@@ -83,7 +83,7 @@
     "eslint-config-peerio": "1.19.9",
     "husky": "0.14.3",
     "mobx-react-devtools": "4.2.15",
-    "mocha": "3.4.2",
+    "mocha": "3.5.0",
     "node-sass": "4.5.3",
     "nodemon": "1.11.0",
     "npm-run-all": "4.0.2",
@@ -96,8 +96,8 @@
     "stylelint": "8.0.0",
     "stylelint-config-standard": "17.0.0",
     "stylelint-order": "0.6.0",
-    "stylelint-scss": "1.5.1",
-    "validate-commit-msg": "2.13.1",
+    "stylelint-scss": "2.0.0",
+    "validate-commit-msg": "2.14.0",
     "writefile": "0.2.8"
   },
   "reactToolbox": {

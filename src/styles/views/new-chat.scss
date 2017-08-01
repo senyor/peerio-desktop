@@ -5,8 +5,13 @@
 .create-new-chat {
   @extend %flex-col;
   @extend %flex-align-center;
+  background: white;
   height: 100vh;
   width: 100vw;
+
+  .chat-channel-switch {
+    margin-bottom: 30px;
+  }
 
   .chat-creation-header {
     @extend %flex-row;

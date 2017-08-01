@@ -1,12 +1,16 @@
 # Peerio Desktop
 
-Electron applications for macOS, Windows, Linux. For support, visit our [support centre](https://support.peerio.com), or [contact us](https://www.peerio.com/contact-us.html). 
+Electron applications for macOS, Windows, Linux. For support, visit our [support centre](https://support.peerio.com), or [contact us](https://www.peerio.com/contact-us.html).
 
-To create issues, [see our centralized issues repo](https://github.com/PeerioTechnologies/peerio). 
+To create issues, [see our centralized issues repo](https://github.com/PeerioTechnologies/peerio).
 
 ## Authenticity
 
 Want to verify a download? Check out our [support centre doc](https://peerio.zendesk.com/hc/en-us/articles/203331999-How-can-I-ensure-my-Peerio-download-is-authentic-).
+
+## Building from sources
+
+To build Peerio from sources, see [Building from sources](./docs/build.md).
 
 ## SDK
 

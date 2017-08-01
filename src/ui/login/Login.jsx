@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions*/
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 const React = require('react');
 const { Component } = require('react');
 const { Button, TooltipIconButton } = require('~/react-toolbox');

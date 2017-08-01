@@ -25,13 +25,13 @@ function FileActions(props) {
                         icon="email"
                         onClick={props.onShare}
                         className={css({ disabled: props.shareDisabled })} /> */}
-                {/* <TooltipDiv*/}
-                {/* tooltip="Add to folder"*/}
-                {/* tooltipDelay={delay}*/}
-                {/* tooltipPosition="top"*/}
-                {/* icon="create_new_folder"*/}
-                {/* onClick={noop}*/}
-                {/* className={css({ disabled: props.newFolderDisabled })} />*/}
+                {/* <TooltipDiv */}
+                {/* tooltip="Add to folder" */}
+                {/* tooltipDelay={delay} */}
+                {/* tooltipPosition="top" */}
+                {/* icon="create_new_folder" */}
+                {/* onClick={noop} */}
+                {/* className={css({ disabled: props.newFolderDisabled })} /> */}
                 <MenuDivider />
                 <MenuItem caption={t('button_delete')}
                         icon="delete"

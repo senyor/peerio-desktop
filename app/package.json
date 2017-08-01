@@ -1,7 +1,7 @@
 {
   "name": "peerio-2",
   "productName": "Peerio 2",
-  "version": "2.19.1",
+  "version": "2.20.1",
   "description": "Peerio desktop client",
   "main": "build/main.js",
   "repository": {
@@ -16,13 +16,15 @@
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "updater": {
     "publicKeys": [
-      "RWQ00KRVaZ64gk1Q6bkiPBxxjYL624eBd1vuCo79JJPbYmzBntIwxYrn"
+      "RWRwKJ91Y/oYjLgp1BhDX0OShp6PHCqXiJUAYm3TsDJSsVtNWE07lOMv",
+      "RWQVE9QS3ACqEVxGrn/JIlDfjhMwsUOUPDhTwUg0rcCiLJTLwIMTgPOL"
     ],
     "manifests": [
       "github:PeerioTechnologies/peerio-desktop"
     ]
   },
   "dependencies": {
+    "@peerio/updater": "0.0.2",
     "autolinker": "1.4.3",
     "blake2s-js": "1.2.2",
     "bluebird": "3.5.0",
@@ -42,7 +44,6 @@
     "moment": "2.18.1",
     "normalize.css": "7.0.0",
     "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
-    "peerio-updater": "git+https://github.com/PeerioTechnologies/peerio-updater.git",
     "quill": "1.3.0",
     "react": "15.6.1",
     "react-addons-css-transition-group": "15.6.0",

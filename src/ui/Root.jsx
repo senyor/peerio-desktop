@@ -109,7 +109,7 @@ class Root extends React.Component {
                     </div>
                     {this.props.children}
 
-                    {/* <AutoUpdateDialog />*/}
+                    {/* <AutoUpdateDialog /> */}
                     {this.devtools}
                     {this.snackbarVisible ? <Snackbar /> : null}
                     <SystemWarningDialog />

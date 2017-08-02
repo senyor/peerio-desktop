@@ -228,7 +228,6 @@
       ]
     },
     "linux": {
-      "artifactName": "${name}-${os}-${arch}.${ext}",
       "target": [
         {
           "target": "AppImage",
@@ -237,6 +236,9 @@
           ]
         }
       ]
+    },
+    "appImage": {
+      "artifactName": "${name}-${os}-x86_64.${ext}"
     }
   },
   "standard-version": {

@@ -24,7 +24,7 @@
     ]
   },
   "dependencies": {
-    "@peerio/updater": "0.0.2",
+    "@peerio/updater": "0.1.0",
     "airbrake-js": "0.9.3",
     "autolinker": "1.4.3",
     "blake2s-js": "1.2.2",

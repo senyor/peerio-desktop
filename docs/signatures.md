@@ -11,8 +11,8 @@ You can use OpenBSD [signify](https://man.openbsd.org/signify) utility
 [macOS](https://github.com/jpouellet/signify-osx)) or [minisign](https://jedisct1.github.io/minisign/) to verify signature. The
 manifest is signed for one of the following public keys:
 
-* [signify1.pub](https://www.peerio.com/peerio-static-assets/signify1.pub)
-* [signify2.pub](https://www.peerio.com/peerio-static-assets/signify2.pub)
+* [peerio_signify1.pub](https://www.peerio.com/peerio-static-assets/peerio_signify1.pub)
+* [peerio_signify2.pub](https://www.peerio.com/peerio-static-assets/peerio_signify2.pub)
 
 You can download `manifest.txt` for the binary from the corresponding [GitHub release](https://github.com/peeriotechnologies/peerio-desktop/releases).
 

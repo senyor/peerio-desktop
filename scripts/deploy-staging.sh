@@ -16,7 +16,8 @@ echo "[••••••••       ] tagging release"
 git push && git push --follow-tags origin master
 
 echo "[•••••••••••••••] building and publishing"
-peerio-desktop-release --shared ~/Win \
+peerio-desktop-release --key ~/.peerio-updater/secret.key \
+                       --shared ~/Win \
                        --repository PeerioTechnologies/peerio-desktop \
                        --overrides PeerioTechnologies/peerio-desktop-staging \
                        --publish \

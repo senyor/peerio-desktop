@@ -144,10 +144,9 @@ const SaveNow = require('~/ui/signup/SaveNow');
                             this.step === 2
                                 ? (
                                     <div className="passcode">
-                                        <div className="signup-title">{t('title_signupStep2')}</div>
-                                        <div className="signup-subtitle">{t('title_AccountKey')}</div>
-                                        <AccountKey profileStore={this.profileStore}
-                                            returnHandler={this.advance} />
+                                        <T k="title_signupStep2" className="signup-title" tag="div" />
+                                        <T k="title_AccountKey" className="signup-subtitle" tag="div" />
+                                        <AccountKey profileStore={this.profileStore} returnHandler={this.advance} />
                                     </div>
                                 ) : null
                         }

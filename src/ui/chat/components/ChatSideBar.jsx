@@ -18,13 +18,15 @@ class ChatSideBar extends React.Component {
     }
 
     toggleList = () => {
-        console.log(this.listClosed);
         this.listClosed = !this.listClosed;
     }
 
+    deleteChannel() {
+        chatStore.activeChat.delete();
+    }
+
     render() {
-        const isChannel = true;
-        const userIsAdmin = true;
+        const { isChannel, canIAdmin } = chatStore.activeChat;
 
         const banishHeader = chatStore.activeChat.participants && chatStore.activeChat.participants.length
             ? '' : 'banish';
@@ -34,7 +36,7 @@ class ChatSideBar extends React.Component {
                 <div className="flex-row flex-shrink-0">
                     <ChatNameEditor showLabel tabIndex="-1" />
                 </div>
-                { isChannel ?
+                {isChannel ?
                     <div className="section-list">
                         <List selectable>
                             <ListItem
@@ -43,19 +45,17 @@ class ChatSideBar extends React.Component {
                                 caption={t('button_leaveChannel')}
                                 onClick={chatStore.activeChat.hide}
                             />
-                            <ListItem
-                              leftIcon="notifications_none"
-                              caption="button_muteChannel" />
 
-                            { userIsAdmin ?
+                            {canIAdmin ?
                                 <ListItem className="admin-controls"
-                                  leftIcon="delete"
-                                  caption="button_deleteChannel" />
+                                    leftIcon="delete"
+                                    caption="button_deleteChannel"
+                                    onClick={this.deleteChannel} />
                                 : null
                             }
                         </List>
                     </div>
-                  : null
+                    : null
                 }
                 <div className={css('section-list', { closed: this.listClosed })}>
                     <List>
@@ -70,15 +70,15 @@ class ChatSideBar extends React.Component {
                                     leftActions={[<Avatar key="a" contact={c} size="small" />]}
                                     caption={c.username}
                                     legend={c.fullName}
-                                    // rightIcon={c.isDeleted ? null : <TooltipIconButton data-id={c.username} icon="forum"
-                                    //     tooltip={t('title_haveAChat')} onClick={this.startChat} />}
-                                    // onClick={() => chatStore.startChat([c])}
-                                  />)
+                                // rightIcon={c.isDeleted ? null : <TooltipIconButton data-id={c.username} icon="forum"
+                                //     tooltip={t('title_haveAChat')} onClick={this.startChat} />}
+                                // onClick={() => chatStore.startChat([c])}
+                                />)
                             ) : null}
-                        { isChannel && userIsAdmin ?
+                        {isChannel && canIAdmin ?
                             <ListItem
-                              className="admin-controls"
-                              caption="button_inviteToChannel" />
+                                className="admin-controls"
+                                caption="button_inviteToChannel" />
                             : null
                         }
                     </List>

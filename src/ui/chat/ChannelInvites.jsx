@@ -5,19 +5,24 @@ const { Button, Dialog, Link, List, ListSubHeader, ListItem, TooltipIconButton }
 const ChatList = require('./components/ChatList');
 const ChatSideBar = require('./components/ChatSideBar');
 const { t } = require('peerio-translator');
+const { chatInviteStore, clientApp } = require('~/icebear');
 
 @observer
 class ChannelInvites extends React.Component {
     @observable showDialog = false;
 
+    componentWillMount() {
+        clientApp.isInChatsView = false;
+    }
+
     inviteOptions() {
         return (<div>
             <Button label={t('button_Accept')}
-                    onClick={this.acceptInvite}
-                    flat primary />
+                onClick={this.acceptInvite}
+                flat primary />
             <Button label={t('button_Decline')}
-                    onClick={this.declineInvite}
-                    flat />
+                onClick={this.declineInvite}
+                flat />
         </div>
         );
     }
@@ -76,23 +81,23 @@ class ChannelInvites extends React.Component {
                                 <List selectable>
                                     <ListSubHeader caption="Recent invites" />
                                     <ListItem caption="#channel name" legend="Invited by PeerioUserName at time"
-                                    rightIcon={
-                                      limitReached
-                                        ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
-                                          onClick={this.toggleDialog} />
-                                        : this.inviteOptions()
-                                    } />
+                                        rightIcon={
+                                            limitReached
+                                                ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
+                                                    onClick={this.toggleDialog} />
+                                                : this.inviteOptions()
+                                        } />
                                 </List>
                                 <List selectable>
                                     <ListSubHeader caption="Pending invites" />
                                     <ListItem caption="#channel name"
-                                      legend="Invited by PeerioUserName at time"
-                                      rightIcon={
-                                        limitReached
-                                          ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
-                                            onClick={this.toggleDialog} />
-                                          : this.inviteOptions()
-                                      } />
+                                        legend="Invited by PeerioUserName at time"
+                                        rightIcon={
+                                            limitReached
+                                                ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
+                                                    onClick={this.toggleDialog} />
+                                                : this.inviteOptions()
+                                        } />
                                 </List>
                             </div>
                         </div>

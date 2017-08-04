@@ -2,15 +2,19 @@ const React = require('react');
 const { t } = require('peerio-translator');
 const { FontIcon, List, ListItem, ListSubHeader, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
-const { chatStore, User, systemMessages } = require('~/icebear');
+const { chatStore, User, systemMessages, clientApp } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
+const routerStore = require('~/stores/router-store');
 
 @observer
 class ChatList extends React.Component {
 
     activateChat(id) {
+        // need this bcs of weirdly composed channel invites
+        routerStore.navigateTo(routerStore.ROUTES.chats);
+        clientApp.isInChatsView = true;
         chatStore.activate(id);
     }
 
@@ -49,7 +53,6 @@ class ChatList extends React.Component {
     }
 
     render() {
-        const hasChannels = true;
         const hasInvites = true;
         const newChatInvites = 3;
         return (
@@ -68,34 +71,35 @@ class ChatList extends React.Component {
                         ? null
                         :
                         <div className="list">
-                            {hasChannels ?
+                            {chatStore.hasChannels ?
                                 <List selectable ripple>
                                     <ListSubHeader caption="Channels" />
-                                    <ListItem
-                                        className="channel-item"
-                                        caption="#a-channel"
-                                    // unread counter
-                                    // rightIcon={
-                                    //     ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
-                                    //         ? this.getNotificationIcon(c)
-                                    //         : null
-                                    // }
-                                    />
-                                    <ListItem className="channel-item" caption="#b-channel" />
-                                    <ListItem className="channel-item" caption="#c-channel" />
-                                    <ListItem className="channel-item" caption="#d-channel" />
                                     {hasInvites ?
-                                        <ListItem className="channel-invites"
+                                        <ListItem key="channel-invites" className="channel-invites"
                                             onClick={this.goToChannelInvite}
                                             caption="Channel invites"
                                             rightIcon={<div className="notification">{newChatInvites}</div>} />
                                         : null}
+                                    <FlipMove duration={200} easing="ease-in-out" >
+                                        {chatStore.channels.map(c =>
+                                            (<ListItem key={c.id || c.tempId}
+                                                className={css('channel-item', { active: c.active })}
+                                                caption={`#${c.name}`}
+                                                onClick={() => this.activateChat(c.id)}
+                                                rightIcon={
+                                                    ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
+                                                        ? this.getNotificationIcon(c)
+                                                        : null
+                                                } />
+                                            )
+                                        )}
+                                    </FlipMove>
                                 </List>
                                 : null}
                             <List selectable ripple>
                                 <ListSubHeader caption="Direct messages" />
                                 <FlipMove duration={200} easing="ease-in-out">
-                                    {chatStore.chats.map(c =>
+                                    {chatStore.directMessages.map(c =>
                                         (<ListItem key={c.id || c.tempId}
                                             className={css('dm-item', { active: c.active })}
                                             leftIcon={

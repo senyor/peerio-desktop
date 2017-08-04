@@ -27,6 +27,12 @@ class ChatSideBar extends React.Component {
         }
     }
 
+    leaveChannel() {
+        if (confirm(t('title_confirmChannelLeave'))) {
+            chatStore.activeChat.leave();
+        }
+    }
+
     render() {
         const { isChannel, canIAdmin } = chatStore.activeChat;
 
@@ -45,7 +51,7 @@ class ChatSideBar extends React.Component {
                                 disabled={chatStore.hidingChat}
                                 leftIcon="remove_circle_outline"
                                 caption={t('button_leaveChannel')}
-                                onClick={chatStore.activeChat.hide}
+                                onClick={this.leaveChannel}
                             />
 
                             {canIAdmin ?

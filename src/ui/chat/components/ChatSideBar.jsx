@@ -45,7 +45,7 @@ class ChatSideBar extends React.Component {
                     <ChatNameEditor showLabel tabIndex="-1" />
                 </div>
                 {isChannel ?
-                    <div className="section-list">
+                    <div className="section-list flex-shrink-0">
                         <List selectable>
                             <ListItem
                                 disabled={chatStore.hidingChat}
@@ -65,13 +65,13 @@ class ChatSideBar extends React.Component {
                     </div>
                     : null
                 }
+                <div className={`list-header clickable ${banishHeader}`} onClick={this.toggleList}>
+                    <div style={{ marginRight: 'auto' }}>{t('title_Members')}</div>
+                    <FontIcon
+                        value={this.listClosed ? 'arrow_drop_down' : 'arrow_drop_up'} />
+                </div>
                 <div className={css('section-list', { closed: this.listClosed })}>
                     <List>
-                        <div className={`rt-list-subheader clickable ${banishHeader}`} onClick={this.toggleList}>
-                            {t('title_Members')}
-                            <FontIcon
-                                value={this.listClosed ? 'arrow_drop_down' : 'arrow_drop_up'} />
-                        </div>
                         {chatStore.activeChat && chatStore.activeChat.participants ?
                             chatStore.activeChat.participants.map(c =>
                                 (<ListItem key={c.username}

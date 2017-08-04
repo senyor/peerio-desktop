@@ -728,13 +728,14 @@ $suggests-max-height: 200px;
   background: $color-dark-03;
   border-left: 1px solid $divider-dark;
   height: calc(100vh - 80px);
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   transition: width 300ms $transition-easing-ease-in;
   width: 0;
 
   .section-list {
     border-bottom: 1px solid $divider-dark;
+    overflow: hidden;
+    overflow-y: scroll;
 
     // collaspabled list styling
     .rt-list-subheader {
@@ -748,7 +749,7 @@ $suggests-max-height: 200px;
     }
 
     &.closed {
-      height: 48px;
+      height: 0;
       overflow: hidden;
     }
   }

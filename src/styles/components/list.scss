@@ -3,6 +3,16 @@
   background: $background-root;
 }
 
+.list-header {
+  @extend %flex-row;
+  @extend %flex-align-center;
+  @extend %flex-shrink-0;
+  font-size: 12px;
+  font-weight: $font-weight-semibold;
+  height: 48px;
+  padding: 0 $padding-default;
+}
+
 .list-item {
   @extend %flex-align-center;
   @extend %flex-row;

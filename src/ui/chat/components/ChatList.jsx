@@ -74,12 +74,6 @@ class ChatList extends React.Component {
                             {chatStore.hasChannels ?
                                 <List selectable ripple>
                                     <ListSubHeader caption="Channels" />
-                                    {hasInvites ?
-                                        <ListItem key="channel-invites" className="channel-invites"
-                                            onClick={this.goToChannelInvite}
-                                            caption="Channel invites"
-                                            rightIcon={<div className="notification">{newChatInvites}</div>} />
-                                        : null}
                                     <FlipMove duration={200} easing="ease-in-out" >
                                         {chatStore.channels.map(c =>
                                             (<ListItem key={c.id || c.tempId}
@@ -94,6 +88,12 @@ class ChatList extends React.Component {
                                             )
                                         )}
                                     </FlipMove>
+                                    {hasInvites ?
+                                        <ListItem key="channel-invites" className="channel-invites"
+                                            onClick={this.goToChannelInvite}
+                                            caption="Channel invites"
+                                            rightIcon={<div className="notification">{newChatInvites}</div>} />
+                                        : null}
                                 </List>
                                 : null}
                             <List selectable ripple>

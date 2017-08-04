@@ -109,6 +109,19 @@
 }
 
 .create-new-chat {
+  .new-chat-search {
+    max-width: 600px;
+
+    + .new-chat-search {
+      margin-top: 32px;
+    }
+
+    + .user-picker {
+      margin-top: 32px;
+      padding-top: 0;
+    }
+  }
+
   .user-picker {
     padding-top: 168px;
   }

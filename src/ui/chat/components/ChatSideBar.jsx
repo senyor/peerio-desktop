@@ -22,7 +22,9 @@ class ChatSideBar extends React.Component {
     }
 
     deleteChannel() {
-        chatStore.activeChat.delete();
+        if (confirm(t('title_confirmChannelDelete'))) {
+            chatStore.activeChat.delete();
+        }
     }
 
     render() {

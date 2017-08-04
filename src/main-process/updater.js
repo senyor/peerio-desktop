@@ -4,8 +4,13 @@ const { ipcMain } = require('electron');
 const config = require('~/config-base');
 const { TinyDb } = require('~/icebear');
 
+const usePeerioUpdater = (
+    process.platform === 'linux'
+    // || process.platform === 'win32' // TODO: enable once we have some testing on Linux
+);
+
 let autoUpdater;
-if (process.platform === 'linux') {
+if (usePeerioUpdater) {
     autoUpdater = require('@peerio/updater')();
 } else {
     autoUpdater = require('electron-updater').autoUpdater;
@@ -30,7 +35,7 @@ function sendStatusToWindow(text) {
 function start(mainWindow) {
     try {
         window = mainWindow;
-        if (process.platform !== 'linux' && config.updateFeedUrl) {
+        if (!usePeerioUpdater && config.updateFeedUrl) {
             autoUpdater.setFeedURL(config.updateFeedUrl);
         }
         ipcMain.on('install-update', () => {

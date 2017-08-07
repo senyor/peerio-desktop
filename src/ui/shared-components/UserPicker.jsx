@@ -1,5 +1,5 @@
 const React = require('react');
-const { observable, computed, when } = require('mobx');
+const { observable, computed, when, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
     ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
@@ -20,6 +20,10 @@ class UserPicker extends React.Component {
     @observable showNotFoundError;
     legacyContactError = false; // not observable bcs changes only with showNotFoundError
 
+    componentDidMount() {
+        this.selected.observe(() => this.props.onChange(this.selected));
+    }
+
     @computed get options() {
         const ret = contactStore.filter(this.query).filter(this.filterOptions);
         for (let i = 0; i < ret.length; i++) {
@@ -33,7 +37,7 @@ class UserPicker extends React.Component {
     }
 
     @computed get isValid() {
-        return !!this.selected.find(s => !s.loading && !s.notFound);
+        return !!this.selected.find(s => !s.loading && !s.notFound) && !this.isLimitReached;
     }
 
     filterOptions = (item) => {
@@ -116,6 +120,10 @@ class UserPicker extends React.Component {
         this.suggestInviteEmail = '';
     }
 
+    get isLimitReached() {
+        return this.props.limit && this.selected.length >= this.props.limit;
+    }
+
     render() {
         return (
             <div className="user-picker">
@@ -160,10 +168,16 @@ class UserPicker extends React.Component {
                                         value={this.query} onChange={this.handleTextChange}
                                         onKeyDown={this.handleKeyDown} />
                                 </div>
-                                <Button className={css('confirm', { banish: this.props.onlyPick || !this.selected.length })}
+                                <Button className={css('confirm', { banish: this.isLimitReached || this.props.onlyPick || !this.selected.length })}
                                     label={this.props.button || t('button_go')}
                                     onClick={this.accept} disabled={!this.isValid} />
                             </div>
+                            {this.props.limit &&
+                                <div className={css('text-right', 'dark-label', this.isLimitReached && 'error-search')}>
+                                    <T k="title_addedPeopleLimit">
+                                        {{ added: this.selected.length, limit: this.props.limit }}
+                                    </T>
+                                </div>}
                             {this.showNotFoundError
                                 ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div"
                                     className="error-search" />
@@ -176,8 +190,9 @@ class UserPicker extends React.Component {
                                 <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
                             </div>
                             : null}
-                        <List selectable ripple >
-                            <ListSubHeader key="header" caption={t('title_allContacts')} />
+                        {this.isLimitReached && this.props.limitUpgradeOffer}
+                        {!this.isLimitReached && <ListSubHeader key="header" caption={t('title_allContacts')} />}
+                        {!this.isLimitReached && <List selectable ripple >
                             {/* TODO: change text to Invites on zero state messages screen */}
                             {/* TODO: change text to Favorites when favs exist */}
                             <div key="list" className="user-list">
@@ -196,7 +211,7 @@ class UserPicker extends React.Component {
                                 })
                                 }
                             </div>
-                        </List>
+                        </List>}
                     </div>
                 </div>
             </div>

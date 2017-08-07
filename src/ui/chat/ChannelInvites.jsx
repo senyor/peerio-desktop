@@ -6,6 +6,7 @@ const ChatList = require('./components/ChatList');
 const ChatSideBar = require('./components/ChatSideBar');
 const { t } = require('peerio-translator');
 const { chatInviteStore, clientApp, chatStore } = require('~/icebear');
+const ChannelUpgradeOffer = require('./components/ChannelUpgradeOffer');
 
 @observer
 class ChannelInvites extends React.Component {
@@ -18,10 +19,10 @@ class ChannelInvites extends React.Component {
 
     inviteOptions() {
         return (<div>
-            <Button label={t('button_Accept')}
+            <Button label={t('button_accept')}
                 onClick={this.acceptInvite}
                 flat primary />
-            <Button label={t('button_Decline')}
+            <Button label={t('button_decline')}
                 onClick={this.declineInvite}
                 flat />
         </div>
@@ -75,10 +76,7 @@ class ChannelInvites extends React.Component {
                     <div className="flex-row flex-grow-1">
                         <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
                             <div className="channel-invites-list">
-                                <div className="upgrade-channels">
-                                    <div><span role="img" aria-label="waving hand">👋</span>Hello! Your account can access <strong>2 channels</strong> at a time. <Link to="/upgrade">Upgrade</Link> for access to unlimited channels.</div>
-                                    {/* <Button flat primary label={t('button_upgrade')} /> */}
-                                </div>
+                                <ChannelUpgradeOffer />
                                 <List selectable>
                                     <ListSubHeader caption="Recent invites" />
                                     <ListItem caption="#channel name" legend="Invited by PeerioUserName at time"

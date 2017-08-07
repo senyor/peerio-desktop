@@ -1,5 +1,5 @@
 const React = require('react');
-const { observable, action } = require('mobx');
+const { observable, action, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, IconButton, Input, FontIcon } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
@@ -13,6 +13,7 @@ const routerStore = require('~/stores/router-store');
 class NewContact extends React.Component {
     @observable query = '';
     @observable notFound = false;
+    @observable legacyContactError = false;
     @observable suggestInviteEmail = '';
     @observable waiting = false;
     @observable isInviteView = false;
@@ -37,6 +38,7 @@ class NewContact extends React.Component {
 
     @action.bound handleTextChange(newVal) {
         this.notFound = false;
+        this.legacyContactError = false;
         this.query = newVal.toLocaleLowerCase().trim();
     }
 
@@ -50,21 +52,24 @@ class NewContact extends React.Component {
         this.waiting = true;
         this.suggestInviteEmail = '';
         this.notFound = false;
-        contactStore.addContact(this.query)
-            .then(found => {
-                if (found) {
+        this.legacyContactError = false;
+        const c = contactStore.getContact(this.query);
+        when(() => !c.loading, () => {
+            if (c.notFound) {
+                this.notFound = true;
+                this.legacyContactError = c.isLegacy;
+                const atInd = this.query.indexOf('@');
+                const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
+                if (isEmail) {
+                    this.suggestInviteEmail = this.query;
                     this.query = '';
-                } else {
-                    this.notFound = true;
-                    const atInd = this.query.indexOf('@');
-                    const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
-                    if (isEmail) {
-                        this.suggestInviteEmail = this.query;
-                        this.query = '';
-                    }
                 }
-            })
-            .finally(() => { this.waiting = false; });
+            } else {
+                this.query = '';
+                contactStore.addContact(c);
+            }
+            this.waiting = false;
+        });
     };
 
     invite = () => {
@@ -132,7 +137,7 @@ class NewContact extends React.Component {
                                     label={t(this.isInviteView ? 'button_invite' : 'button_add')}
                                     onClick={this.isInviteView ? this.invite : this.tryAdd} />
                             </div>
-                            {this.notFound ? <T k="error_userNotFound" tag="div" className="error-search" /> : null}
+                            {this.notFound ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div" className="error-search" /> : null}
                             {this.suggestInviteEmail ?
                                 <div className="flex-row flex-align-center flex-justify-between flex-shrink-0">
                                     <div className="email-invite">{this.suggestInviteEmail}</div>

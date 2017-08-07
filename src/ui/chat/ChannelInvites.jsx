@@ -5,7 +5,7 @@ const { Button, Dialog, Link, List, ListSubHeader, ListItem, TooltipIconButton }
 const ChatList = require('./components/ChatList');
 const ChatSideBar = require('./components/ChatSideBar');
 const { t } = require('peerio-translator');
-const { chatInviteStore, clientApp } = require('~/icebear');
+const { chatInviteStore, clientApp, chatStore } = require('~/icebear');
 
 @observer
 class ChannelInvites extends React.Component {
@@ -13,6 +13,7 @@ class ChannelInvites extends React.Component {
 
     componentWillMount() {
         clientApp.isInChatsView = false;
+        chatStore.deactivateCurrentChat();
     }
 
     inviteOptions() {

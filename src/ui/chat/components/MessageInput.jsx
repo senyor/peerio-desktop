@@ -22,9 +22,11 @@ class MessageInput extends ComposeInput {
     }
 
     handleUpload = () => {
+        const chat = chatStore.activeChat;
+        if (!chat) return;
         pickLocalFiles().then(paths => {
             if (!paths || !paths.length) return;
-            chatStore.activeChat.uploadAndShareFile(paths[0]);
+            chat.uploadAndShareFile(paths[0]);
         });
     };
 
@@ -72,6 +74,8 @@ class MessageInput extends ComposeInput {
     }
 
     onPaste = (ev) => {
+        const chat = chatStore.activeChat;
+        if (!chat) return;
         const items = ev.clipboardData.items;
         for (let i = 0; i < items.length; i++) {
             if (!items[i].type.startsWith('image/')) continue;
@@ -91,7 +95,7 @@ class MessageInput extends ComposeInput {
                         console.error(err);
                         return;
                     }
-                    chatStore.activeChat.uploadAndShareFile(tmpPath, '', true);
+                    chat.uploadAndShareFile(tmpPath, '', true);
                 });
             };
             reader.readAsArrayBuffer(blob);

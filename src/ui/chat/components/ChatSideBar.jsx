@@ -22,22 +22,36 @@ class ChatSideBar extends React.Component {
     }
 
     deleteChannel() {
+        const chat = chatStore.activeChat;
+        if (!chat) return;
         if (confirm(t('title_confirmChannelDelete'))) {
-            chatStore.activeChat.delete();
+            try {
+                chat.delete();
+            } catch (err) {
+                console.error(err);
+            }
         }
     }
 
     leaveChannel() {
+        const chat = chatStore.activeChat;
+        if (!chat) return;
         if (confirm(t('title_confirmChannelLeave'))) {
-            chatStore.activeChat.leave();
+            try {
+                chat.leave();
+            } catch (err) {
+                console.error(err);
+            }
         }
     }
 
     render() {
-        const { isChannel, canIAdmin } = chatStore.activeChat;
+        const chat = chatStore.activeChat;
+        if (!chat) return null;
+        const { isChannel, canIAdmin } = chat;
 
-        const banishHeader = chatStore.activeChat.participants && chatStore.activeChat.participants.length
-            ? '' : 'banish';
+        const banishHeader = chat.participants && chat.participants.length ? '' : 'banish';
+
         return (
             <div className={css('chat-sidebar', { open: this.props.open })}>
                 <div className="title">{t('title_About')}</div>
@@ -72,8 +86,8 @@ class ChatSideBar extends React.Component {
                 </div>
                 <div className={css('section-list', { closed: this.listClosed })}>
                     <List>
-                        {chatStore.activeChat && chatStore.activeChat.participants ?
-                            chatStore.activeChat.participants.map(c =>
+                        {chat.participants ?
+                            chat.participants.map(c =>
                                 (<ListItem key={c.username}
                                     leftActions={[<Avatar key="a" contact={c} size="small" />]}
                                     caption={c.username}

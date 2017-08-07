@@ -45,18 +45,30 @@ class Chat extends React.Component {
     }
 
     sendMessage(m) {
-        chatStore.activeChat.sendMessage(m)
-            .catch(() => Chat.playErrorSound());
+        try {
+            chatStore.activeChat.sendMessage(m)
+                .catch(() => Chat.playErrorSound());
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     sendAck() {
-        chatStore.activeChat.sendAck()
-            .catch(() => Chat.playErrorSound());
+        try {
+            chatStore.activeChat.sendAck()
+                .catch(() => Chat.playErrorSound());
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     shareFiles = (files) => {
-        chatStore.activeChat.shareFiles(files)
-            .catch(() => Chat.playErrorSound());
+        try {
+            chatStore.activeChat.shareFiles(files)
+                .catch(() => Chat.playErrorSound());
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     static playErrorSound() {
@@ -147,7 +159,7 @@ class Chat extends React.Component {
                             <MessageInput readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
                                 placeholder={
                                     chat ?
-                                        t('title_messageInputPlaceholder', { chatName: chatStore.activeChat.name })
+                                        t('title_messageInputPlaceholder', { chatName: chat.name })
                                         : null
                                 }
                                 onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />

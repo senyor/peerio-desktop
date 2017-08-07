@@ -11,8 +11,12 @@ class ChatNameEditor extends React.Component {
     };
 
     acceptNameEdit = (val) => {
-        console.log('new chat name:', val);
-        chatStore.activeChat.rename(val);
+        try {
+            console.log('new chat name:', val);
+            chatStore.activeChat.rename(val);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     setNameInputRef = (ref) => {
@@ -20,6 +24,9 @@ class ChatNameEditor extends React.Component {
     };
 
     render() {
+        const chat = chatStore.activeChat;
+        if (!chat || !chat.chatHead) return null;
+
         return (
             <BetterInput label={this.props.showLabel ? t('title_title') : null}
                 hint={t('title_chatNameHint')}
@@ -29,11 +36,8 @@ class ChatNameEditor extends React.Component {
                 onReject={this.cancelNameEdit}
                 onAccept={this.acceptNameEdit}
                 ref={this.setNameInputRef}
-                value={
-                    (chatStore.activeChat && chatStore.activeChat.chatHead)
-                        ? chatStore.activeChat.chatHead.chatName : ''
-                }
-                displayValue={chatStore.activeChat ? chatStore.activeChat.name : ''}
+                value={chat.chatHead.chatName}
+                displayValue={chat.name}
                 tabIndex={this.props.tabIndex} />
         );
     }

@@ -214,7 +214,8 @@ class ComposeInput extends React.Component {
         };
         this.quill.on('text-change', (delta, oldDelta, source) => {
             if (source === Quill.sources.USER) {
-                if (!chatStore.activeChat.participants.length) return;
+                const chat = chatStore.activeChat;
+                if (!chat || !chat.participants.length) return;
                 let token = getUsernameToken();
                 if (token === null) {
                     this.suggests = null;
@@ -222,7 +223,7 @@ class ComposeInput extends React.Component {
                 }
                 token = token.toLocaleLowerCase();
                 this.currentSuggestToken = token;
-                this.suggests = contactStore.filter(token, chatStore.activeChat.participants);
+                this.suggests = contactStore.filter(token, chat.participants);
                 this.selectedSuggestIndex = this.suggests.length ? 0 : -1;
                 // console.log(delta, oldDelta);
                 //                this.tryShowEmojiSuggestions();

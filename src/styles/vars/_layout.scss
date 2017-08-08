@@ -15,7 +15,7 @@ $padding-large: #{$spacing-default * 2.5}; // 20px
 // COMPONENT MEASUREMENTS
 // TODO: consider moving component specific vars into their component style sheets
 $app-nav-width: 80px;
-$chat-list-width: 272px; // TODO more generic name
+$width-feature-navigation-list: 272px; // TODO more generic name
 
 // MEDIA QUERIES
 $minimum-screen-height: 768px;

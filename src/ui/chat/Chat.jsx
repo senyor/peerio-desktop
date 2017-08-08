@@ -5,7 +5,6 @@ const { FontIcon, IconButton, TooltipIconButton, ProgressBar } = require('~/reac
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
-const NoChatSelected = require('./components/NoChatSelected');
 const { chatStore, TinyDb, clientApp, crypto } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
@@ -15,6 +14,7 @@ const T = require('~/ui/shared-components/T');
 const css = require('classnames');
 const ChatSideBar = require('./components/ChatSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
+const routerStore = require('~/stores/router-store');
 
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 
@@ -28,6 +28,7 @@ class Chat extends React.Component {
     static sidebarStateSaver;
 
     componentWillMount() {
+        chatStore.loadAllChats();
         clientApp.isInChatsView = true;
         TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
             Chat.sidebarOpen = isOpen == null ? Chat.sidebarOpen : isOpen;
@@ -44,18 +45,30 @@ class Chat extends React.Component {
     }
 
     sendMessage(m) {
-        chatStore.activeChat.sendMessage(m)
-            .catch(() => Chat.playErrorSound());
+        try {
+            chatStore.activeChat.sendMessage(m)
+                .catch(() => Chat.playErrorSound());
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     sendAck() {
-        chatStore.activeChat.sendAck()
-            .catch(() => Chat.playErrorSound());
+        try {
+            chatStore.activeChat.sendAck()
+                .catch(() => Chat.playErrorSound());
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     shareFiles = (files) => {
-        chatStore.activeChat.shareFiles(files)
-            .catch(() => Chat.playErrorSound());
+        try {
+            chatStore.activeChat.shareFiles(files)
+                .catch(() => Chat.playErrorSound());
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     static playErrorSound() {
@@ -124,10 +137,14 @@ class Chat extends React.Component {
     }
     render() {
         const chat = chatStore.activeChat;
+        if (chatStore.chats.length === 0 && !chatStore.loading) {
+            routerStore.navigateToAsync(routerStore.ROUTES.newChat);
+            return null;
+        }
 
         return (
             <div className="messages">
-                <ChatList />
+                {chatStore.chats.length > 0 ? <ChatList /> : (chatStore.loading ? <div className="feature-navigation-list" /> : null)}
                 <div className="message-view">
                     {chatStore.loading ?
                         <div className="random-messages">
@@ -137,12 +154,12 @@ class Chat extends React.Component {
                     {chat ? this.renderHeader() : null}
                     <div className="flex-row flex-grow-1">
                         <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
-                            {chatStore.chats.length === 0 && !chatStore.loading ? <NoChatSelected /> : <MessageList />}
+                            {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}
                             {chat && chat.uploadQueue.length ? <UploadInChatProgress queue={chat.uploadQueue} /> : null}
                             <MessageInput readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
                                 placeholder={
                                     chat ?
-                                        t('title_messageInputPlaceholder', { chatName: chatStore.activeChat.name })
+                                        t('title_messageInputPlaceholder', { chatName: chat.name })
                                         : null
                                 }
                                 onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />

@@ -1,5 +1,5 @@
 const React = require('react');
-const { observable, computed, when } = require('mobx');
+const { observable, computed, when, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
     ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
@@ -20,6 +20,10 @@ class UserPicker extends React.Component {
     @observable showNotFoundError;
     legacyContactError = false; // not observable bcs changes only with showNotFoundError
 
+    componentDidMount() {
+        this.selected.observe(() => this.props.onChange(this.selected));
+    }
+
     @computed get options() {
         const ret = contactStore.filter(this.query).filter(this.filterOptions);
         for (let i = 0; i < ret.length; i++) {
@@ -33,7 +37,7 @@ class UserPicker extends React.Component {
     }
 
     @computed get isValid() {
-        return !!this.selected.find(s => !s.loading && !s.notFound);
+        return !!this.selected.find(s => !s.loading && !s.notFound) && !this.isLimitReached;
     }
 
     filterOptions = (item) => {
@@ -85,7 +89,7 @@ class UserPicker extends React.Component {
 
 
     accept = () => {
-        if (this.accepted || !this.isValid) return;
+        if (this.props.onlyPick || this.accepted || !this.isValid) return;
         this.accepted = true;
         this.selected.forEach(s => {
             if (s.notFound) this.selected.remove(s);
@@ -116,30 +120,29 @@ class UserPicker extends React.Component {
         this.suggestInviteEmail = '';
     }
 
+    get isLimitReached() {
+        return this.props.limit && this.selected.length >= this.props.limit;
+    }
+
     render() {
-        const separatorInserted = false;
         return (
             <div className="user-picker">
                 <div className={css('flex-col selected-items', { banish: !this.props.sharing })} >
-                    <List >
-                        <ListSubHeader caption={t('title_selectedFiles')} />
-                        {fileStore.getSelectedFiles().map(f => (<ListItem
-                            key={f.id}
-                            leftIcon="insert_drive_file"
-                            caption={f.name}
-                            rightIcon="remove_circle_outline" />))}
+                    <List>
+                        <ListSubHeader key="header" caption={t('title_selectedFiles')} />
+                        {
+                            fileStore.getSelectedFiles().map(f => (<ListItem
+                                key={f.id}
+                                leftIcon="insert_drive_file"
+                                caption={f.name}
+                                rightIcon="remove_circle_outline" />))
+                        }
 
                     </List>
                 </div>
-                <div className="flex-row flex-justify-center"
-                    style={{ width: '100%' }}>
-                    <div className="flex-col flex-grow-1"
-                        style={{
-                            maxWidth: '600px',
-                            marginLeft: '64px',
-                            marginRight: '64px',
-                            marginTop: '168px'
-                        }}>
+                <div className="flex-row flex-justify-center" style={{ width: '100%' }}>
+                    <div className="flex-col flex-grow-1" style={{ maxWidth: '600px' }}>
+                        {this.props.noHeader ? null :
                         <div className="chat-creation-header">
                             <div className="title">
                                 {this.props.title}
@@ -147,6 +150,7 @@ class UserPicker extends React.Component {
                             </div>
                             <IconButton icon="close" onClick={this.handleClose} />
                         </div>
+                        }
                         <div className="message-search-wrapper">
                             <div className="new-chat-search">
                                 <FontIcon value="search" />
@@ -164,10 +168,16 @@ class UserPicker extends React.Component {
                                         value={this.query} onChange={this.handleTextChange}
                                         onKeyDown={this.handleKeyDown} />
                                 </div>
-                                <Button className={css('confirm', { hide: !this.selected.length })}
+                                <Button className={css('confirm', { banish: this.isLimitReached || this.props.onlyPick || !this.selected.length })}
                                     label={this.props.button || t('button_go')}
                                     onClick={this.accept} disabled={!this.isValid} />
                             </div>
+                            {this.props.limit &&
+                                <div className={css('text-right', 'dark-label', this.isLimitReached && 'error-search')}>
+                                    <T k="title_addedPeopleLimit">
+                                        {{ added: this.selected.length, limit: this.props.limit }}
+                                    </T>
+                                </div>}
                             {this.showNotFoundError
                                 ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div"
                                     className="error-search" />
@@ -180,17 +190,20 @@ class UserPicker extends React.Component {
                                 <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
                             </div>
                             : null}
-                        <List selectable ripple >
-                            <ListSubHeader caption={t('title_allContacts')} />
-                            <div className="user-list">
+                        {this.isLimitReached && this.props.limitUpgradeOffer}
+                        {!this.isLimitReached && <ListSubHeader key="header" caption={t('title_allContacts')} />}
+                        {!this.isLimitReached && <List selectable ripple >
+                            {/* TODO: change text to Invites on zero state messages screen */}
+                            {/* TODO: change text to Favorites when favs exist */}
+                            <div key="list" className="user-list">
                                 {this.options.map(c => {
-                                    if (c === true) {
-                                        return <hr key="separator" />;
-                                    }
+                                    if (c === true) return <ListSubHeader key="separator" caption={t('title_allContacts')} />;
+
                                     return (<span key={c.username} data-id={c.username}>
                                         <ListItem
                                             leftActions={[<Avatar key="a" contact={c} size="medium" />]}
                                             caption={c.username}
+                                            // Should be something like <span class="tag"> In channel</span>
                                             legend={`${c.firstName} ${c.lastName}`}
                                             onClick={this.onContactClick}
                                             className={css({ warning: this.noGood })} />
@@ -198,7 +211,7 @@ class UserPicker extends React.Component {
                                 })
                                 }
                             </div>
-                        </List>
+                        </List>}
                     </div>
                 </div>
             </div>

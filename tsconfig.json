@@ -10,6 +10,7 @@
     "icons",
     "scripts",
     "dist",
-    "test"
+    "test",
+    "app"
   ]
 }

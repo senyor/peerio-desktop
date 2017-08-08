@@ -5,6 +5,7 @@ const { Button } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const fs = require('fs');
 const electron = require('electron').remote;
+const T = require('~/ui/shared-components/T');
 
 @observer class SaveNow extends Component {
 
@@ -41,11 +42,11 @@ const electron = require('electron').remote;
             <div className="flex-col profile">
                 <div className="warning-line">
                     <div className="flex-col flex-justify-center" style={{ width: '275px', whiteSpace: 'nowrap' }}>
-                        <span className="display-1">{t('title_saveNow1')}</span>
+                        <T k="title_saveNow1" className="display-1" />
                     </div>
                 </div>
-                <p>{t('title_saveNow3')}</p>
-                <p>{t('title_saveNow4')}</p>
+                <T k="title_saveNow3" tag="p" />
+                <T k="title_saveNow4" tag="p" />
                 {/* <div>
                     <p>{t('title_yourAccountKey')}</p>
                     <div className="passphrase">{this.props.store.passphrase}</div>

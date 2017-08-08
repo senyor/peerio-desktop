@@ -10,8 +10,8 @@ const originals = {
 
 console.history = {
     cache: [],
-    write(args) {
-        let line = '';
+    write(timestamp, args) {
+        let line = timestamp;
         for (let i = 0; i < args.length; i++) {
             if (typeof args[i] === 'object') {
                 line += `${safeJsonStringify(args[i])} `;
@@ -33,18 +33,22 @@ console.history = {
 const h = console.history;
 
 console.log = function(...args) {
-    originals.log.apply(console, args);
-    h.write(args);
+    const t = new Date().toISOString();
+    originals.log.call(console, t, ...args);
+    h.write(t, args);
 };
 console.warn = function(...args) {
-    originals.warn.apply(console, args);
-    h.write(args);
+    const t = new Date().toISOString();
+    originals.warn.call(console, t, ...args);
+    h.write(t, args);
 };
 console.error = function(...args) {
-    originals.error.apply(console, args);
-    h.write(args);
+    const t = new Date().toISOString();
+    originals.error.call(console, t, ...args);
+    h.write(t, args);
 };
 console.debug = function(...args) {
-    originals.debug.apply(console, args);
-    h.write(args);
+    const t = new Date().toISOString();
+    originals.debug.call(console, t, ...args);
+    h.write(t, args);
 };

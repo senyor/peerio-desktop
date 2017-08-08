@@ -18,14 +18,13 @@ const T = require('~/ui/shared-components/T');
             <div className="flex-col profile">
                 <div className="warning-line">
                     <div className="flex-col flex-justify-center" style={{ width: '275px' }}>
-                        <span className="display-1" style={{ whiteSpace: 'nowrap' }}>{t('title_AKwarn1')}</span>
+                        <T k="title_AKwarn1" className="display-1" style={{ whiteSpace: 'nowrap' }} />
                     </div>
                 </div>
                 <T k="title_AKwarn3" tag="p" />
                 <div>
                     <T k="title_yourAccountKey" tag="p" />
                     <div className="passphrase selectable">{this.props.profileStore.passphrase}</div>
-
                 </div>
                 <T k="title_AKwarn4" tag="p" />
             </div>

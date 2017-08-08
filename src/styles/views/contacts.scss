@@ -2,61 +2,6 @@
   @extend %flex-row;
   background: $background-root;
 
-  // TODO: this is pretty much the same as chat-list. Make a more generic style that both can use.
-  // the same styling will probably be used for file folders UI as well.
-  .contact-groups {
-    @extend %flex-shrink-0;
-    background: $color-dark-03;
-    border-right: 1px solid $divider-dark;
-    cursor: pointer;
-    height: 100vh;
-    position: relative;
-    width: $chat-list-width;
-
-    .active {
-      background: $color-dark-12;
-      font-weight: $font-weight-bold;
-    }
-
-    .rt-list-list {
-      padding-top: 0;
-
-      .rt-list-itemText {
-        font-size: 14px;
-      }
-
-      .rt-list-itemAction {
-        margin-right: 10px;
-        padding-left: 6px;
-      }
-    }
-
-    .wrapper-button-add-chat {
-      @extend %flex-row;
-      @extend %flex-align-center;
-      background-color: $color-dark-06;
-      border-bottom: 1px solid $divider-dark;
-      cursor: pointer;
-      height: 80px;
-      padding: 0 12px;
-
-      &:hover {
-        background-color: $color-dark-03;
-      }
-
-      .material-icons {
-        background: $color-accent;
-        border-radius: 40px;
-        color: $text-light-primary;
-        height: 40px;
-        line-height: 40px;
-        margin-right: $margin-large;
-        text-align: center;
-        width: 40px;
-      }
-    }
-  }
-
   .contacts-view {
     @extend %flex-col;
     @extend %flex-grow-1;

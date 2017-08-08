@@ -31,7 +31,7 @@
 
 // affects layout.
 .banish {
-  display: none;
+  display: none !important;
 }
 
 .full-width {
@@ -191,6 +191,10 @@ $status-bar-height: 36px;
     background-image: $background-gradient !important;
     border: 1px solid $color-light-100;
   }
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 // RANDOM MESSAGES

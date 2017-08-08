@@ -81,6 +81,8 @@
 
     .list-item {
       cursor: pointer;
+      flex-shrink: 0;
+      height: auto;
       padding: 0 5px;
 
       &:hover {

@@ -13,6 +13,7 @@ const { Profile, ProfileStore } = require('./Profile');
 const AccountKey = require('./AccountKey');
 const T = require('~/ui/shared-components/T');
 const SaveNow = require('~/ui/signup/SaveNow');
+const config = require('~/config');
 
 @observer class Signup extends React.Component {
     @observable busy = false;
@@ -47,6 +48,11 @@ const SaveNow = require('~/ui/signup/SaveNow');
         u.lastName = this.profileStore.lastName;
         u.locale = languageStore.language;
         u.passphrase = this.profileStore.passphrase;
+
+        // DEV MODE ONLY
+        if (config.devAutologin && config.devAutologin.signupPassphraseOverride) {
+            u.passphrase = config.devAutologin.signupPassphraseOverride;
+        }
 
         User.current = u;
         return u.createAccountAndLogin()
@@ -144,10 +150,9 @@ const SaveNow = require('~/ui/signup/SaveNow');
                             this.step === 2
                                 ? (
                                     <div className="passcode">
-                                        <div className="signup-title">{t('title_signupStep2')}</div>
-                                        <div className="signup-subtitle">{t('title_AccountKey')}</div>
-                                        <AccountKey profileStore={this.profileStore}
-                                            returnHandler={this.advance} />
+                                        <T k="title_signupStep2" className="signup-title" tag="div" />
+                                        <T k="title_AccountKey" className="signup-subtitle" tag="div" />
+                                        <AccountKey profileStore={this.profileStore} returnHandler={this.advance} />
                                     </div>
                                 ) : null
                         }

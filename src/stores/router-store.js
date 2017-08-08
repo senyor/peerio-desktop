@@ -17,9 +17,18 @@ class RouterStore {
         window.router.push(path);
     }
 
+    navigateToAsync(path) {
+        setTimeout(() => {
+            if (this.currentRoute === path) return;
+            window.router.push(path);
+        });
+    }
+
     get ROUTES() {
         return {
             chats: '/app/chats',
+            newChat: '/app/new-chat',
+            channelInvites: 'app/channel-invites',
             mail: '/app/mail',
             files: 'app/files',
             contacts: 'app/contacts',

@@ -94,7 +94,7 @@ class MessageList extends React.Component {
         if (this.stickToBottom && !chatStore.activeChat.canGoDown) this.scrollToBottom();
     }
 
-    // todo: investigate why throttlig causes lags when scrolling with trackpad at big velocity
+    // todo: investigate why throttling causes lags when scrolling with trackpad at big velocity
     handleScroll = // _.throttle(
     () => {
         // console.log('SCROLL');
@@ -129,16 +129,16 @@ class MessageList extends React.Component {
      * 2. No OTHER type of items to have the same class name at the first position
      */
     renderMessages() {
+        const chat = chatStore.activeChat;
         const ret = [];
-        if (chatStore.activeChat.canGoUp) {
+        if (chat.canGoUp) {
             ret.push(<div key="top-progress-bar" className="progress-wrapper">
-                {chatStore.activeChat.loadingTopPage
+                {chat.loadingTopPage
                     ? <ProgressBar type="circular" mode="indeterminate" multicolor
                         className="messages-inline-progress-bar" />
                     : null}
             </div>);
         }
-        const chat = chatStore.activeChat;
         const msgs = chat.messages;
         const limboMsgs = chat.limboMessages;
         const totalLength = msgs.length + limboMsgs.length;
@@ -166,9 +166,9 @@ class MessageList extends React.Component {
             }
         }
 
-        if (chatStore.activeChat.canGoDown) {
+        if (chat.canGoDown) {
             ret.push(<div key="bot-progress-bar" className="progress-wrapper">
-                {chatStore.activeChat.loadingBottomPage
+                {chat.loadingBottomPage
                     ? <ProgressBar type="circular" mode="indeterminate" multicolor
                         className="messages-inline-progress-bar" />
                     : null}
@@ -179,15 +179,16 @@ class MessageList extends React.Component {
     }
 
     renderChatStart() {
-        if (chatStore.activeChat.canGoUp || !chatStore.activeChat.initialPageLoaded) return null;
+        const chat = chatStore.activeChat;
+        if (chat.canGoUp || !chat.initialPageLoaded) return null;
         return (
             <div className="messages-start">
                 <div className="avatars">
-                    {chatStore.activeChat.participants.map(c => <Avatar size="large" key={c.username} contact={c} />)}
+                    {chat.participants.map(c => <Avatar size="large" key={c.username} contact={c} />)}
                 </div>
                 <div className="title">
                     {t('title_chatBeginning')}
-                    &nbsp;<strong>{chatStore.activeChat.name}</strong>.
+                    &nbsp;<strong>{chat.name}</strong>.
                 </div>
                 <div className="archive-link">
                     {t('title_chatArchive')}

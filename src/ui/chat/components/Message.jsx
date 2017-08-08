@@ -103,12 +103,13 @@ function processMessage(msg) {
     // currentProcessingMessage = msg;
     // we don't expect any html in original text,
     // if there are any tags - user entered them, we consider them plaintext and encode
-    let str = htmlEncoder.encode(msg.text);
+    let str = emojione.toShort(msg.text);
+    str = htmlEncoder.encode(str);
     // in case some tags magically sneak in - remove all html except whitelisted
     str = sanitizeChatMessage(str);
     // now we start producing our own html
     str = autolinker.link(str);
-    str = emojione.unicodeToImage(str);
+    str = emojione.shortnameToImage(str);
     str = highlightMentions(str);
     str = linkifyMentions(str);
     str = formatPre(str);

@@ -15,7 +15,12 @@
     }
   }
 
+  .user-list {
+    overflow-y: auto;
+  }
+
   .rt-list-list {
+    max-height: 50vh;
     padding-bottom: 0;
   }
 

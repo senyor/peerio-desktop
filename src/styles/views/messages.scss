@@ -250,10 +250,6 @@ $suggests-max-height: 200px;
       .title {
         margin-bottom: $margin-small;
       }
-
-      .archive-link {
-        .rt-link-link { display: inline-flex; }
-      }
     }
 
     .message-content-wrapper {
@@ -571,42 +567,9 @@ $suggests-max-height: 200px;
 }
 
 // message navigation
-.chat-list {
-  @extend %flex-shrink-0;
-  background: $color-dark-03;
-  border-right: 1px solid $divider-dark;
-  cursor: pointer;
-  height: 100vh;
-  position: relative;
-  width: $chat-list-width;
-
+.list {
   .starred {
     margin-right: $margin-tiny;
-  }
-
-  .wrapper-button-add-chat {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    background-color: $color-dark-06;
-    border-bottom: 1px solid $divider-dark;
-    cursor: pointer;
-    height: 80px;
-    padding: 0 12px;
-
-    &:hover {
-      background-color: $color-dark-03;
-    }
-
-    .material-icons {
-      background: $color-accent;
-      border-radius: 40px;
-      color: $text-light-primary;
-      height: 40px;
-      line-height: 40px;
-      margin-right: $margin-large;
-      text-align: center;
-      width: 40px;
-    }
   }
 
   .avatar-wrapper > .material-icons {
@@ -634,22 +597,6 @@ $suggests-max-height: 200px;
     width: 32px;
   }
 
-  .rt-list-list {
-    height: calc(100vh - 80px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding-top: 0;
-
-    .item-content {
-      @extend %flex-grow-1;
-      overflow: hidden;
-    }
-
-    .rt-list-itemText {
-      font-size: 12px;
-    }
-  }
-
   // shown when when loading chats in the chat list.
   .rt-progress_bar-linear {
     left: 0;
@@ -661,15 +608,33 @@ $suggests-max-height: 200px;
     overflow: hidden;
   }
 
-  .rt-list-item {
+  .channel-item,
+  .channel-invites {
+    background: $background-chat-list-item;
+    font-weight: $font-weight-semibold;
+
+    &:last-of-type {
+      border-bottom: 1px solid $divider-dark;
+    }
+  }
+
+  .channel-invites {
+    background: $color-dark-12;
+    border-top: 1px solid $divider-dark;
+  }
+
+  .dm-item {
     background: $background-chat-list-item; // background colour for Anri. - Paul
     border-bottom: 1px solid $divider-dark;
-    font-size: 14px;
     height: 64px;
     transition: 150ms;
 
     &:hover:not(.active) {
       background-color: $background-hover-message;
+    }
+
+    .rt-list-item {
+      height: 64px;
     }
   }
 
@@ -723,15 +688,36 @@ $suggests-max-height: 200px;
   }
 }
 
-// zero state
-.zero-message {
-  @extend %flex-row;
-  @extend %flex-justify-center;
-  height: 100vh;
+.upgrade-channels {
+  align-items: center;
+  background-color: rgba($color-brand-secondary, .15);
+  display: flex;
+  height: 48px;
+  padding: 0 $padding-default;
 
-  .display-3 {
-    color: $text-dark-secondary;
-    margin-top: 80px;
+  .rt-button-button {
+    margin-left: auto;
+  }
+}
+
+.create-new-chat .upgrade-channels {
+  border-bottom: 1px solid $divider-dark;
+  border-top: 1px solid $divider-dark;
+}
+
+// channel invites list
+.channel-invites-list {
+  .rt-list-subheader {
+    background: $color-dark-03;
+  }
+
+  .rt-list-listItem {
+    border-bottom: 1px solid $divider-dark;
+    height: 64px;
+  }
+
+  .rt-list-item {
+    height: 64px;
   }
 }
 
@@ -746,8 +732,32 @@ $suggests-max-height: 200px;
   @extend %flex-shrink-0;
   background: $color-dark-03;
   border-left: 1px solid $divider-dark;
+  height: calc(100vh - 80px);
+  overflow: hidden;
   transition: width 300ms $transition-easing-ease-in;
   width: 0;
+
+  .section-list {
+    border-bottom: 1px solid $divider-dark;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    // collaspabled list styling
+    .rt-list-subheader {
+      @extend %flex-row;
+      @extend %flex-align-center;
+
+      .material-icons {
+        margin-left: auto;
+        margin-right: $margin-small;
+      }
+    }
+
+    &.closed {
+      height: 0;
+      overflow: hidden;
+    }
+  }
 
   .rt-input-hint {
     font-size: 12px;
@@ -755,6 +765,11 @@ $suggests-max-height: 200px;
     margin-left: $margin-default;
     top: 28px;
   }
+
+  .admin-controls {
+    border-top: 1px solid $divider-dark;
+  }
+
   // TODO: combine with chat list avatar styles.
   .rt-avatar-avatar {
     font-size: 20px;
@@ -773,19 +788,8 @@ $suggests-max-height: 200px;
     margin: $margin-tiny $margin-default 0;
   }
 
-  .chat-actions {
-    .rt-list-item {
-      cursor: pointer;
-    }
-  }
-
   .rt-list-itemContentRoot {
     cursor: pointer;
-  }
-
-  .rt-list-subheader {
-    // border-bottom: 1px solid $divider-dark;
-    margin-top: 0;
   }
 
   .rt-list-large {

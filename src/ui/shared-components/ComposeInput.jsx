@@ -19,9 +19,10 @@ const pngFolder = './static/emoji/png/';
 const codeUrlRegex = /([A-Za-z0-9-]+)\.png/i;
 
 class EmojiBlot extends Embed {
-    static create(unicode) {
+    static create(emoji) {
         const node = super.create();
-        node.setAttribute('src', `${pngFolder}${unicode}.png`);
+        node.setAttribute('src', `${pngFolder}${emoji.unicode}.png`);
+        node.setAttribute('alt', emoji.shortname);
         return node;
     }
 
@@ -109,11 +110,11 @@ class ComposeInput extends React.Component {
         data = data.replace(/<\/p>/gim, '\n');
         data = data.replace(/<p>/gim, '');
 
-        const imgRegex = /<img src=".*?\/([A-Za-z0-9-]+)\.png"\/?>/gim;
+        const imgRegex = /<img .*? alt="(:.*?:)"\/?>/gim;
         let match;
         const replacements = [];
         while ((match = imgRegex.exec(data)) !== null) {
-            replacements.push({ img: match[0], unicode: emojione.convert(match[1]) });
+            replacements.push({ img: match[0], unicode: emojione.shortnameToUnicode(match[1]) });
         }
         replacements.forEach(r => {
             data = data.replace(r.img, r.unicode);
@@ -149,8 +150,9 @@ class ComposeInput extends React.Component {
 
     insertEmoji = (emoji) => {
         const ind = this.quill.getSelection(true).index;
-        this.quill.insertEmbed(ind, 'emoji', emoji.unicode, Quill.sources.USER);
+        this.quill.insertEmbed(ind, 'emoji', { unicode: emoji.unicode, shortname: emoji.shortname }, Quill.sources.USER);
         this.quill.insertText(ind + 1, ' ', Quill.sources.USER);
+        this.quill.setSelection(ind + 2, 0);
     };
 
     acceptSuggestedString = () => {
@@ -212,7 +214,8 @@ class ComposeInput extends React.Component {
         };
         this.quill.on('text-change', (delta, oldDelta, source) => {
             if (source === Quill.sources.USER) {
-                if (!chatStore.activeChat.participants.length) return;
+                const chat = chatStore.activeChat;
+                if (!chat || !chat.participants.length) return;
                 let token = getUsernameToken();
                 if (token === null) {
                     this.suggests = null;
@@ -220,7 +223,7 @@ class ComposeInput extends React.Component {
                 }
                 token = token.toLocaleLowerCase();
                 this.currentSuggestToken = token;
-                this.suggests = contactStore.filter(token, chatStore.activeChat.participants);
+                this.suggests = contactStore.filter(token, chat.participants);
                 this.selectedSuggestIndex = this.suggests.length ? 0 : -1;
                 // console.log(delta, oldDelta);
                 //                this.tryShowEmojiSuggestions();

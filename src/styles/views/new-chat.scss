@@ -1,8 +1,17 @@
+// TODO refactor user-picker styling.
+// Move .new-chat-search styles into user-picker component styling - paul
+
+.zero-message,
 .create-new-chat {
   @extend %flex-col;
   @extend %flex-align-center;
+  background: white;
   height: 100vh;
   width: 100vw;
+
+  .chat-channel-switch {
+    margin-bottom: 30px;
+  }
 
   .chat-creation-header {
     @extend %flex-row;
@@ -96,5 +105,48 @@
     .rt-avatar-avatar {
       margin-right: 24px;
     }
+  }
+}
+
+.create-new-chat {
+  .new-chat-search {
+    max-width: 600px;
+
+    + .new-chat-search {
+      margin-top: 32px;
+    }
+
+    + .user-picker {
+      margin-top: 32px;
+      padding-top: 0;
+    }
+  }
+
+  .user-picker {
+    padding-top: 168px;
+  }
+}
+
+// zero state
+.zero-message {
+  @extend %flex-row;
+  background: $background-root;
+  height: 100vh;
+
+  .display-2 {
+    color: $color-brand-primary;
+    margin-bottom: 0;
+  }
+
+  .title {
+    margin-bottom: $margin-large;
+  }
+
+  .chat-creation-header {
+    display: none;
+  }
+
+  + .message-input-wrapper {
+    display: none;
   }
 }

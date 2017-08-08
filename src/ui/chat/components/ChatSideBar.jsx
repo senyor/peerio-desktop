@@ -1,9 +1,9 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
+const { FontIcon, List, ListItem, TooltipIconButton, ListSubHeader } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
-const { chatStore, contactStore } = require('~/icebear');
+const { chatStore, contactStore, chatInviteStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const ChatNameEditor = require('./ChatNameEditor');
@@ -49,6 +49,8 @@ class ChatSideBar extends React.Component {
         const chat = chatStore.activeChat;
         if (!chat) return null;
         const { isChannel, canIAdmin } = chat;
+
+        const invited = chatInviteStore.sent.get(chat.id);
 
         const banishHeader = chat.participants && chat.participants.length ? '' : 'banish';
 
@@ -97,6 +99,8 @@ class ChatSideBar extends React.Component {
                                 // onClick={() => chatStore.startChat([c])}
                                 />)
                             ) : null}
+                        {invited && invited.length ? <ListSubHeader caption={t('title_invited')} /> : null}
+                        {invited ? invited.map(i => <ListItem key={`invited--${i.username}`} caption={i.username} />) : null}
                         {isChannel && canIAdmin ?
                             <ListItem
                                 className="admin-controls"

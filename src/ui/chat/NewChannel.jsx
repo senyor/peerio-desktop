@@ -1,18 +1,28 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore } = require('~/icebear');
+const { chatStore, User } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { ProgressBar, Button, Input } = require('~/react-toolbox');
 const css = require('classnames');
+const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 
 @observer
 class NewChannel extends React.Component {
     @observable waiting = false;
     @observable channelName = '';
     @observable purpose = '';
+
+    componentDidMount() {
+        if (this.isLimitReached) this.upgradeDialog.show();
+    }
+
+    get isLimitReached() {
+        const channelLimit = User.current ? User.current.channelLimit : 0;
+        return chatStore.channels.length >= channelLimit;
+    }
 
     handleAccept = () => {
         this.waiting = true;
@@ -58,9 +68,9 @@ class NewChannel extends React.Component {
                         <Input placeholder={t('title_channelName')}
                             value={this.channelName} onChange={this.handleNameChange} />
                     </div>
-                    <Button className={css('confirm', { banish: !this.channelName.length })}
+                    {!this.isLimitReached && <Button className={css('confirm', { banish: !this.channelName.length })}
                         label={t('button_go')}
-                        onClick={this.handleAccept} />
+                        onClick={this.handleAccept} />}
                 </div>
                 <div className="new-chat-search">
                     <div className="chip-wrapper">
@@ -73,6 +83,7 @@ class NewChannel extends React.Component {
                     <T k="title_goCreateChat" />
                     <Button label={t('button_createChat')} flat primary onClick={this.gotoNewChat} />
                 </div>
+                <ChannelUpgradeDialog ref={ref => (this.upgradeDialog = ref)} />
             </div>
         );
     }

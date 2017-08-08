@@ -37,8 +37,7 @@ class NewChat extends React.Component {
                 <div className="user-picker flex-justify-center"><ProgressBar type="circular" /></div>
             </div>);
         }
-        const channelLimit = (User.current && User.current.channelLimit) || config.maxFreeChannels;
-        const limitUpgradeOffer = chatStore.channels.length < channelLimit ? <ChannelCreateOffer /> : <ChannelUpgradeOffer />;
+        const limitUpgradeOffer = <ChannelCreateOffer />;
         return (
             <div className="create-new-chat">
                 <UserPicker

@@ -5,8 +5,10 @@ const { Button, Dialog, Link, List, ListSubHeader, ListItem, TooltipIconButton }
 const ChatList = require('./components/ChatList');
 const ChatSideBar = require('./components/ChatSideBar');
 const { t } = require('peerio-translator');
-const { chatInviteStore, clientApp, chatStore } = require('~/icebear');
+const { chatInviteStore, clientApp, chatStore, User } = require('~/icebear');
+const config = require('../../config');
 const ChannelUpgradeOffer = require('./components/ChannelUpgradeOffer');
+const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 
 @observer
 class ChannelInvites extends React.Component {
@@ -30,6 +32,7 @@ class ChannelInvites extends React.Component {
     }
 
     acceptInvite = () => {
+        this.dialog.show();
         console.log('Invite accepted');
     }
 
@@ -37,28 +40,8 @@ class ChannelInvites extends React.Component {
         console.log('Invite declined');
     }
 
-    handleUpgrade = () => {
-        console.log('Handling upgrade!');
-    }
-
-    toggleDialog = () => {
-        console.log(this.showDialog);
-        this.showDialog = !this.showDialog;
-    }
-
     render() {
         const limitReached = false;
-
-        const dialogActions = [
-            { label: t('button_cancel'), onClick: () => { this.toggleDialog(); } },
-            {
-                label: t('button_upgrade'),
-                onClick: () => {
-                    this.handleUpgrade();
-                    this.toggleDialog();
-                }
-            }
-        ];
 
         return (
             <div className="messages">
@@ -103,18 +86,7 @@ class ChannelInvites extends React.Component {
                         <ChatSideBar open="true" />
                     </div>
                 </div>
-                <Dialog active={this.showDialog}
-                    actions={dialogActions}
-                    onOverlayClick={this.toggleDialog}
-                    onEscKeyDown={this.toggleDialog}
-                    title={t('title_limitDialog')}
-                    className="dialog-warning">
-                    <p>{t('title_limitDialogText1')}</p>
-                    {/* Your account can access 2 channels at a time. */}
-                    <br />
-                    <p>{t('title_limitDialogText2')}</p>
-                    {/* If you would like to join or create another channel, please leave an existing channel or upgrade your account. */}
-                </Dialog>
+                <ChannelUpgradeDialog active={this.showDialog} ref={ref => (this.dialog = ref)} />
             </div>
         );
     }

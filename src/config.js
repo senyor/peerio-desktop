@@ -35,7 +35,6 @@ cfg.upload.uploadBufferSize = 1024 * 1024 * 3;
 
 // --- CHANNEL/DM LIMITS
 cfg.maxDMParticipants = 8;
-cfg.maxFreeChannels = 2;
 
 // --- PERFORMANCE
 cfg.chat.maxInitialChats = 50;

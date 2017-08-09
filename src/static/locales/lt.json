@@ -71,7 +71,7 @@
   "error_fieldRequired": "Būtina",
   "error_usernameBadFormat": "Yra leidžiamos tik raidės, skaičiai ar pabraukimai.",
   "error_usernameNotAvailable": "Naudotojo vardas yra neprieinamas.",
-  "error_invalidName": "Name is not allowed.",
+  "error_invalidName": "Vardas nėra leidžiamas.",
   "error_invalidEmail": "Įveskite teisingą el. paštą.",
   "error_invalidEmailOrUsername": "Įveskite teisingą el. paštą ar naudotojo vardą",
   "error_addressNotAvailable": "El. pašto adresas yra neprieinamas.",

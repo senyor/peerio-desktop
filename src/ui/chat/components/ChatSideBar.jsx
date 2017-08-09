@@ -1,24 +1,42 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, List, ListItem, TooltipIconButton, ListSubHeader } = require('~/react-toolbox');
+const { FontIcon, List, ListItem, TooltipIconButton, ListSubHeader, IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore, contactStore, chatInviteStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const ChatNameEditor = require('./ChatNameEditor');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const uiStore = require('~/stores/ui-store');
 
 @observer
 class ChatSideBar extends React.Component {
     @observable listClosed = false;
-    startChat(ev) {
-        const username = getAttributeInParentChain(ev.target, 'data-id');
-        chatStore.startChat([contactStore.getContact(username)]);
-    }
+    // startChat(ev) {
+    //     const username = getAttributeInParentChain(ev.target, 'data-id');
+    //     chatStore.startChat([contactStore.getContact(username)]);
+    // }
 
     toggleList = () => {
         this.listClosed = !this.listClosed;
+    }
+
+    openContact(ev) {
+        const username = getAttributeInParentChain(ev.target, 'data-username');
+        uiStore.contactDialogUsername = username;
+    }
+
+    deleteInvite(ev) {
+        ev.stopPropagation();
+        const username = getAttributeInParentChain(ev.target, 'data-username');
+        chatInviteStore.revokeInvite(chatStore.activeChat.id, username);
+    }
+
+    deleteParticipant(ev) {
+        ev.stopPropagation();
+        const username = getAttributeInParentChain(ev.target, 'data-username');
+        chatStore.activeChat.removeParticipant(username);
     }
 
     deleteChannel() {
@@ -45,14 +63,29 @@ class ChatSideBar extends React.Component {
         }
     }
 
+    stopPropagation(ev) {
+        ev.stopPropagation();
+    }
+
     render() {
         const chat = chatStore.activeChat;
         if (!chat) return null;
-        const { isChannel, canIAdmin } = chat;
+        const { isChannel, canIAdmin, canILeave } = chat;
 
         const invited = chatInviteStore.sent.get(chat.id);
 
         const banishHeader = chat.participants && chat.participants.length ? '' : 'banish';
+
+        const userMenu = [], inviteMenu = [];
+        if (isChannel && canIAdmin) {
+            userMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
+                <MenuItem value="delete" icon="delete" caption={t('button_delete')} onClick={this.deleteParticipant} />
+            </IconMenu>);
+
+            inviteMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
+                <MenuItem value="delete" icon="delete" caption={t('button_delete')} onClick={this.deleteInvite} />
+            </IconMenu>);
+        }
 
         return (
             <div className={css('chat-sidebar', { open: this.props.open })}>
@@ -63,12 +96,14 @@ class ChatSideBar extends React.Component {
                 {isChannel ?
                     <div className="section-list flex-shrink-0">
                         <List selectable>
-                            <ListItem
-                                disabled={chatStore.hidingChat}
-                                leftIcon="remove_circle_outline"
-                                caption={t('button_leaveChannel')}
-                                onClick={this.leaveChannel}
-                            />
+                            {canILeave ?
+                                <ListItem
+                                    disabled={chatStore.hidingChat}
+                                    leftIcon="remove_circle_outline"
+                                    caption={t('button_leaveChannel')}
+                                    onClick={this.leaveChannel}
+                                /> : null
+                            }
 
                             {canIAdmin ?
                                 <ListItem className="admin-controls"
@@ -90,21 +125,31 @@ class ChatSideBar extends React.Component {
                     <List>
                         {chat.participants ?
                             chat.participants.map(c =>
-                                (<ListItem key={c.username}
-                                    leftActions={[<Avatar key="a" contact={c} size="small" />]}
-                                    caption={c.username}
-                                    legend={c.fullName}
-                                // rightIcon={c.isDeleted ? null : <TooltipIconButton data-id={c.username} icon="forum"
-                                //     tooltip={t('title_haveAChat')} onClick={this.startChat} />}
-                                // onClick={() => chatStore.startChat([c])}
-                                />)
+                                (<span data-username={c.username} key={c.username}>
+                                    <ListItem className={c.username}
+                                        leftActions={[<Avatar key="a" contact={c} size="small" />]}
+                                        caption={c.username}
+                                        legend={c.fullName}
+                                        rightActions={userMenu}
+                                        onClick={this.openContact}
+                                    />
+                                </span>)
                             ) : null}
                         {invited && invited.length ? <ListSubHeader caption={t('title_invited')} /> : null}
-                        {invited ? invited.map(i => <ListItem key={`invited--${i.username}`} caption={i.username} />) : null}
+                        {invited ? invited.map(i =>
+                            (<span data-username={i.username} key={`invited--${i.username}`}>
+                                <ListItem
+                                    caption={i.username}
+                                    rightActions={inviteMenu}
+                                    onClick={this.openContact}
+                                />
+                            </span>))
+                            : null}
                         {isChannel && canIAdmin ?
                             <ListItem
                                 className="admin-controls"
-                                caption="button_inviteToChannel" />
+                                caption="button_inviteToChannel"
+                                onClick={this.props.onAddParticipants} />
                             : null
                         }
                     </List>

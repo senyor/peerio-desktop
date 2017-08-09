@@ -21,7 +21,9 @@ class UserPicker extends React.Component {
     legacyContactError = false; // not observable bcs changes only with showNotFoundError
 
     componentDidMount() {
-        this.selected.observe(() => this.props.onChange(this.selected));
+        if (this.props.onChange) {
+            this.selected.observe(() => this.props.onChange(this.selected));
+        }
     }
 
     @computed get options() {

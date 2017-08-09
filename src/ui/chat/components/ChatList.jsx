@@ -2,7 +2,7 @@ const React = require('react');
 const { t } = require('peerio-translator');
 const { FontIcon, List, ListItem, ListSubHeader, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
-const { chatStore, User, systemMessages, clientApp } = require('~/icebear');
+const { chatStore, User, systemMessages, clientApp, chatInviteStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
@@ -53,8 +53,7 @@ class ChatList extends React.Component {
     }
 
     render() {
-        const hasInvites = true;
-        const newChatInvites = 3;
+        const newChatInvites = chatInviteStore.received.length;
         return (
             <div className="feature-navigation-list">
                 {this.getProgressBar(chatStore.loading)}
@@ -71,7 +70,7 @@ class ChatList extends React.Component {
                         ? null
                         :
                         <div className="list">
-                            {chatStore.hasChannels ?
+                            {chatStore.hasChannels || newChatInvites > 0 ?
                                 <List selectable ripple>
                                     <ListSubHeader caption="Channels" />
                                     <FlipMove duration={200} easing="ease-in-out" >
@@ -88,7 +87,7 @@ class ChatList extends React.Component {
                                             )
                                         )}
                                     </FlipMove>
-                                    {hasInvites ?
+                                    {newChatInvites > 0 ?
                                         <ListItem key="channel-invites" className="channel-invites"
                                             onClick={this.goToChannelInvite}
                                             caption="Channel invites"

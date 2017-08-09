@@ -14,6 +14,7 @@ const T = require('~/ui/shared-components/T');
 const css = require('classnames');
 const ChatSideBar = require('./components/ChatSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
+const UserPicker = require('~/ui/shared-components/UserPicker');
 const routerStore = require('~/stores/router-store');
 
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
@@ -25,6 +26,8 @@ const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.len
 class Chat extends React.Component {
     @observable static sidebarOpen = true; // static, so it acts like lazy internal store
     @observable chatNameEditorVisible = false;
+    @observable showUserPicker = false;
+
     static sidebarStateSaver;
 
     componentWillMount() {
@@ -38,10 +41,14 @@ class Chat extends React.Component {
                 TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
             }, { delay: 1000 });
         }
+        this.reactionsToDispose = [
+            reaction(() => this.showUserPicker, show => { clientApp.isInChatsView = !show; })
+        ];
     }
 
     componentWillUnmount() {
         clientApp.isInChatsView = false;
+        this.reactionsToDispose.forEach(dispose => dispose());
     }
 
     sendMessage(m) {
@@ -71,9 +78,22 @@ class Chat extends React.Component {
         }
     };
 
+    addParticipants = (contacts) => {
+        chatStore.activeChat.addParticipants(contacts);
+        this.closeUserPicker();
+    };
+
     static playErrorSound() {
         if (uiStore.prefs.errorSoundsEnabled) sounds.destroy.play();
     }
+
+    openUserPicker = () => {
+        this.showUserPicker = true;
+    };
+
+    closeUserPicker = () => {
+        this.showUserPicker = false;
+    };
 
     toggleSidebar = () => {
         Chat.sidebarOpen = !Chat.sidebarOpen;
@@ -153,18 +173,24 @@ class Chat extends React.Component {
                         : null}
                     {chat ? this.renderHeader() : null}
                     <div className="flex-row flex-grow-1">
-                        <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
-                            {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}
-                            {chat && chat.uploadQueue.length ? <UploadInChatProgress queue={chat.uploadQueue} /> : null}
-                            <MessageInput readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
-                                placeholder={
-                                    chat ?
-                                        t('title_messageInputPlaceholder', { chatName: chat.name })
-                                        : null
-                                }
-                                onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
-                        </div>
-                        {chat ? <ChatSideBar open={Chat.sidebarOpen} /> : null}
+                        {
+                            this.showUserPicker
+                                ? <div className="flex-col flex-grow-1 create-new-chat" style={{ position: 'relative', padding: '0 20px' }}>
+                                    <UserPicker onClose={this.closeUserPicker} onAccept={this.addParticipants} title={t('title_addParticipants')} noDeleted />
+                                </div>
+                                : <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
+                                    {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}
+                                    {chat && chat.uploadQueue.length ? <UploadInChatProgress queue={chat.uploadQueue} /> : null}
+                                    <MessageInput readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
+                                        placeholder={
+                                            chat ?
+                                                t('title_messageInputPlaceholder', { chatName: chat.name })
+                                                : null
+                                        }
+                                        onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
+                                </div>
+                        }
+                        {chat ? <ChatSideBar open={Chat.sidebarOpen} onAddParticipants={this.openUserPicker} /> : null}
                     </div>
                 </div>
             </div>

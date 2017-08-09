@@ -9,35 +9,37 @@ const { chatInviteStore, clientApp, chatStore, User } = require('~/icebear');
 const config = require('../../config');
 const ChannelUpgradeOffer = require('./components/ChannelUpgradeOffer');
 const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
+const moment = require('moment');
+const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class ChannelInvites extends React.Component {
-    @observable showDialog = false;
 
     componentWillMount() {
         clientApp.isInChatsView = false;
         chatStore.deactivateCurrentChat();
     }
 
-    inviteOptions() {
-        return (<div>
+    inviteOptions(kegDbId) {
+        return (<div data-kegDbId={kegDbId}>
             <Button label={t('button_accept')}
                 onClick={this.acceptInvite}
                 flat primary />
             <Button label={t('button_decline')}
-                onClick={this.declineInvite}
+                onClick={this.rejectInvite}
                 flat />
         </div>
         );
     }
 
-    acceptInvite = () => {
-        this.dialog.show();
-        console.log('Invite accepted');
+    acceptInvite = (ev) => {
+        const id = getAttributeInParentChain(ev.target, 'data-kegDbId');
+        chatInviteStore.acceptInvite(id);
     }
 
-    declineInvite = () => {
-        console.log('Invite declined');
+    rejectInvite = (ev) => {
+        const id = getAttributeInParentChain(ev.target, 'data-kegDbId');
+        chatInviteStore.rejectInvite(id);
     }
 
     render() {
@@ -61,32 +63,26 @@ class ChannelInvites extends React.Component {
                             <div className="channel-invites-list">
                                 <ChannelUpgradeOffer />
                                 <List selectable>
-                                    <ListSubHeader caption="Recent invites" />
-                                    <ListItem caption="#channel name" legend="Invited by PeerioUserName at time"
-                                        rightIcon={
-                                            limitReached
-                                                ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
-                                                    onClick={this.toggleDialog} />
-                                                : this.inviteOptions()
-                                        } />
-                                </List>
-                                <List selectable>
                                     <ListSubHeader caption="Pending invites" />
-                                    <ListItem caption="#channel name"
-                                        legend="Invited by PeerioUserName at time"
-                                        rightIcon={
-                                            limitReached
-                                                ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
-                                                    onClick={this.toggleDialog} />
-                                                : this.inviteOptions()
-                                        } />
+                                    {chatInviteStore.received.map(i =>
+                                        (<ListItem
+                                            key={`${i.kegDbId}${i.username}${i.timestamp}`}
+                                            caption={t('title_invitedBy', { username: i.username, timestamp: moment(i.timestamp).format('llll') })}
+                                            legend={i.kegDbId}
+                                            rightIcon={
+                                                limitReached
+                                                    ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
+                                                        onClick={this.toggleDialog} />
+                                                    : this.inviteOptions(i.kegDbId)
+                                            } />)
+                                    )}
                                 </List>
                             </div>
                         </div>
                         <ChatSideBar open="true" />
                     </div>
                 </div>
-                <ChannelUpgradeDialog active={this.showDialog} ref={ref => (this.dialog = ref)} />
+                <ChannelUpgradeDialog ref={ref => (this.dialog = ref)} />
             </div>
         );
     }

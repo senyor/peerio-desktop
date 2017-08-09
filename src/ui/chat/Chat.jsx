@@ -5,7 +5,7 @@ const { FontIcon, IconButton, TooltipIconButton, ProgressBar } = require('~/reac
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
-const { chatStore, TinyDb, clientApp, crypto } = require('~/icebear');
+const { chatStore, TinyDb, clientApp, crypto, chatInviteStore } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
@@ -133,7 +133,7 @@ class Chat extends React.Component {
                     <div className="flex-row meta-nav">
                         {chat.changingFavState ? <ProgressBar type="circular" mode="indeterminate" /> :
 
-                        <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
+                            <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
                                 onClick={chat.toggleFavoriteState}
                                 className={css({ starred: chat.isFavorite })}
                                 tooltip={t('title_starChat')}
@@ -157,7 +157,7 @@ class Chat extends React.Component {
     }
     render() {
         const chat = chatStore.activeChat;
-        if (chatStore.chats.length === 0 && !chatStore.loading) {
+        if (chatStore.chats.length === 0 && !chatStore.loading && chatInviteStore.received.length) {
             routerStore.navigateToAsync(routerStore.ROUTES.newChat);
             return null;
         }

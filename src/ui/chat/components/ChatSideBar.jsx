@@ -9,6 +9,7 @@ const css = require('classnames');
 const ChatNameEditor = require('./ChatNameEditor');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const uiStore = require('~/stores/ui-store');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class ChatSideBar extends React.Component {
@@ -37,6 +38,18 @@ class ChatSideBar extends React.Component {
         ev.stopPropagation();
         const username = getAttributeInParentChain(ev.target, 'data-username');
         chatStore.activeChat.removeParticipant(username);
+    }
+
+    makeAdmin(ev) {
+        ev.stopPropagation();
+        const username = getAttributeInParentChain(ev.target, 'data-username');
+        chatStore.activeChat.promoteToAdmin(contactStore.getContact(username));
+    }
+
+    demoteAdmin(ev) {
+        ev.stopPropagation();
+        const username = getAttributeInParentChain(ev.target, 'data-username');
+        chatStore.activeChat.demoteAdmin(contactStore.getContact(username));
     }
 
     deleteChannel() {
@@ -76,13 +89,20 @@ class ChatSideBar extends React.Component {
 
         const banishHeader = chat.participants && chat.participants.length ? '' : 'banish';
 
-        const userMenu = [], inviteMenu = [];
+        const userMenu = [], adminMenu = [], inviteMenu = [];
         if (isChannel && canIAdmin) {
             userMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
+                <MenuItem value="make_admin" icon="account_balance" caption={t('button_makeAdmin')} onClick={this.makeAdmin} />
+                <MenuItem value="delete" icon="delete" caption={t('button_delete')} onClick={this.deleteParticipant} />
+            </IconMenu>);
+
+            adminMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
+                <MenuItem value="demote_admin" icon="cancel" caption={t('button_demoteAdmin')} onClick={this.demoteAdmin} />
                 <MenuItem value="delete" icon="delete" caption={t('button_delete')} onClick={this.deleteParticipant} />
             </IconMenu>);
 
             inviteMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
+                <MenuItem value="delete" icon="delete" caption={t('button_delete')} onClick={this.deleteParticipant} />
                 <MenuItem value="delete" icon="delete" caption={t('button_delete')} onClick={this.deleteInvite} />
             </IconMenu>);
         }
@@ -128,9 +148,9 @@ class ChatSideBar extends React.Component {
                                 (<span data-username={c.username} key={c.username}>
                                     <ListItem className={c.username}
                                         leftActions={[<Avatar key="a" contact={c} size="small" />]}
-                                        caption={c.username}
+                                        caption={<span>{c.username}{chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}</span>}
                                         legend={c.fullName}
-                                        rightActions={userMenu}
+                                        rightActions={chat.isAdmin(c) ? adminMenu : userMenu}
                                         onClick={this.openContact}
                                     />
                                 </span>)

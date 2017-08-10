@@ -133,7 +133,7 @@ class Chat extends React.Component {
                     <div className="flex-row meta-nav">
                         {chat.changingFavState ? <ProgressBar type="circular" mode="indeterminate" /> :
 
-                            <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
+                        <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
                                 onClick={chat.toggleFavoriteState}
                                 className={css({ starred: chat.isFavorite })}
                                 tooltip={t('title_starChat')}
@@ -157,14 +157,15 @@ class Chat extends React.Component {
     }
     render() {
         const chat = chatStore.activeChat;
-        if (chatStore.chats.length === 0 && !chatStore.loading && chatInviteStore.received.length) {
+        if (chatStore.chats.length === 0 && !chatStore.loading && !chatInviteStore.received.length) {
             routerStore.navigateToAsync(routerStore.ROUTES.newChat);
             return null;
         }
 
         return (
             <div className="messages">
-                {chatStore.chats.length > 0 ? <ChatList /> : (chatStore.loading ? <div className="feature-navigation-list" /> : null)}
+                {chatStore.chats.length + chatInviteStore.received.length > 0 ? <ChatList /> : (
+                    chatStore.loading ? <div className="feature-navigation-list" /> : null)}
                 <div className="message-view">
                     {chatStore.loading ?
                         <div className="random-messages">

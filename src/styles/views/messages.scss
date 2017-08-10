@@ -822,4 +822,14 @@ $suggests-max-height: 200px;
   .rt-list-item {
     width: 272px;
   }
+
+  .tag {
+    background-color: #757575;
+    border-radius: 5px;
+    color: white;
+    display: inline-block;
+    font-size: 11px;
+    margin-left: 10px;
+    padding: 0 4px 2px;
+  }
 }

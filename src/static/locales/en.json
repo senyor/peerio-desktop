@@ -309,6 +309,7 @@
   "title_limitDialogText1": "Your account allows for only {limit} channels at a time",
   "title_limitDialogText2": "If you wish to join or create another channel, please delete an existing one or upgrade your account",
   "button_createChannel": "Create Channel",
+  "button_deleteChannel": "Delete Channel",
   "button_createChat": "Create Chat",
   "button_leaveChannel": "Leave channel",
   "button_channelLimit": "Channel limit",
@@ -316,7 +317,7 @@
   "title_channelInviteRevoked": "Invite to channel revoked.",
   "title_createChannel": "Create channel",
   "title_createChannelDetails": "Channels have unlimited participants. They work best when organized by topic. Free accounts are limited to 2 channels. <a-upgrade>Upgrade for unlimited channels</>.",
-  "title_channelName": "Name", 
+  "title_channelName": "Name",
   "title_channelPurpose": "Purpose (optional)",
   "title_confirmChannelDelete": "Are you sure you want to delete this channel?",
   "title_confirmChannelLeave": "Are you sure you want to leave this channel?",
@@ -327,5 +328,8 @@
   "error_addParticipants": "Unable to add participant(s).",
   "error_promoteToAdmin": "Unable to promote to admin.",
   "error_removeParticipant": "Unable to remove member.",
-"title_invitedBy": "Invited by {username} at {timestamp}"
+  "title_invitedBy": "Invited by {username} at {timestamp}",
+  "title_admin": "admin",
+  "button_makeAdmin": "Make admin",
+  "button_demoteAdmin": "Demote admin"
 }

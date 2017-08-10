@@ -41,9 +41,9 @@ class NewChat extends React.Component {
         return (
             <div className="create-new-chat">
                 <UserPicker
-                    limit={config.maxDMParticipants} limitUpgradeOffer={limitUpgradeOffer}
+                    limit={config.chat.maxDMParticipants} limitUpgradeOffer={limitUpgradeOffer}
                     title={t('title_chatWith')}
-                    onChange={contacts => (this.isLimitReached = contacts.length >= config.maxDMParticipants)}
+                    onChange={contacts => (this.isLimitReached = contacts.length >= config.chat.maxDMParticipants)}
                     onAccept={this.handleAccept} onClose={this.handleClose} />
                 {!this.isLimitReached && <div className="chat-channel-switch">
                     <T k="title_goCreateChannel" />

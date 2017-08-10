@@ -36,7 +36,7 @@
     "electron-updater": "git+https://github.com/dchest/electron-updater.git",
     "eventemitter3": "2.0.3",
     "html-entities": "1.2.1",
-    "keytar": "github:dchest/node-keytar#v4.5.3",
+    "keytar": "github:dchest/node-keytar#v14.0.4",
     "lodash": "4.17.4",
     "material-design-icons": "3.0.1",
     "mobx": "3.2.2",

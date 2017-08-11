@@ -1,7 +1,7 @@
 const React = require('react');
-const { autorunAsync } = require('mobx');
+const { autorunAsync, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconMenu, MenuItem, MenuDivider, TooltipIconButton } = require('~/react-toolbox');
+const { IconMenu, MenuItem, MenuDivider, TooltipIconButton, Dialog } = require('~/react-toolbox');
 const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const css = require('classnames');
@@ -62,6 +62,7 @@ function startDesktopNotifications() {
 
 @observer
 class AppNav extends React.Component {
+    @observable isConfirmSignOutVisible = false;
 
     constructor() {
         super();
@@ -80,9 +81,30 @@ class AppNav extends React.Component {
         startTaskbarOverlay();
     }
 
-    async signout() {
+    _doSignout = async () => {
         await autologin.disable();
         appControl.relaunch();
+    }
+
+    signout = async () => {
+        if (!User.current.autologinEnabled) {
+            this._doSignout();
+            return;
+        }
+        this.isConfirmSignOutVisible = true;
+    }
+
+    get signOutDialog() {
+        const hide = () => (this.isConfirmSignOutVisible = false);
+        const actions = [
+            { label: t('button_cancel'), onClick: hide },
+            { label: t('button_logout'), onClick: this._doSignout }
+        ];
+        return (
+            <Dialog actions={actions} active={this.isConfirmSignOutVisible}
+                onEscKeyDown={hide} onOverlayClick={hide}
+                title={t('button_logout')}>{t('title_signOutConfirmKeys')}</Dialog>
+        );
     }
 
     toUpgrade() {
@@ -147,6 +169,7 @@ class AppNav extends React.Component {
                         <div>{User.current.fileQuotaUsedPercent}%</div>
                     </div>
                 </div>
+                {this.signOutDialog}
             </div>
         );
     }

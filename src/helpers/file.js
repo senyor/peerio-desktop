@@ -2,10 +2,11 @@ const electron = require('electron').remote;
 const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
+const sanitize = require('sanitize-filename');
 
 function requestDownloadPath(fileName) {
     return new Promise((resolve, reject) => {
-        let p = fileName;
+        let p = sanitize(fileName, { replacement: '_' });
         try {
             const downloadsDir = electron.app.getPath('downloads');
             p = `${downloadsDir}/${p}`;

@@ -4,6 +4,7 @@ const { observer } = require('mobx-react');
 const { Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
+const urls = require('~/config').translator.urlMap;
 
 @observer
 class ChannelUpgradeDialog extends React.Component {
@@ -20,7 +21,7 @@ class ChannelUpgradeDialog extends React.Component {
             {
                 label: t('button_upgrade'),
                 onClick: () => {
-                    console.log('Upgrade clicked');
+                    window.open(urls.upgrade);
                     hide();
                 }
             }

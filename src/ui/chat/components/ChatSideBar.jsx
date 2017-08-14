@@ -148,8 +148,16 @@ class ChatSideBar extends React.Component {
                                 (<span data-username={c.username} key={c.username}>
                                     <ListItem className={c.username}
                                         leftActions={[<Avatar key="a" contact={c} size="small" />]}
-                                        caption={<span>{c.username}{chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}</span>}
-                                        legend={c.fullName}
+                                        itemContent={
+                                            <span className="rt-list-itemContentRoot rt-list-large">
+                                                <span className="rt-list-itemText rt-list-primary">
+                                                    {c.username}{chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}
+                                                </span>
+                                                <span className="rt-list-itemText">
+                                                    {c.fullName}
+                                                </span>
+                                            </span>
+                                        }
                                         rightActions={chat.isAdmin(c) ? adminMenu : userMenu}
                                         onClick={this.openContact}
                                     />

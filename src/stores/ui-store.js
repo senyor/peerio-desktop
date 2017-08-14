@@ -6,6 +6,13 @@ const appControl = require('~/helpers/app-control');
 
 class UIStore {
     @observable contactDialogUsername;
+
+    // show dialog about signature error
+    @observable isFileSignatureErrorDialogActive = false;
+
+    hideFileSignatureErrorDialog = () => { this.isFileSignatureErrorDialogActive = false; };
+    showFileSignatureErrorDialog = () => { this.isFileSignatureErrorDialogActive = true; };
+
     minuteClock = new Clock(60);
 
     // stored with 'pref_' prefix in tinydb

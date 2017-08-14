@@ -20,6 +20,7 @@ $color-dark-03: rgba(0, 0, 0, .03);
 $color-error: rgb(208, 2, 27);
 $color-affirmative: rgb(44, 207, 132);
 $color-warning: rgb(244, 203, 66);
+$color-error-opacity-6: rgba($color-error, 0.6);
 
 // BACKGROUNDS
 $background-active-message: rgba($color-brand-primary, .7);

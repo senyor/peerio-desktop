@@ -5,6 +5,7 @@ const { downloadFile } = require('~/helpers/file');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
+const uiStore = require('~/stores/ui-store');
 
 // this is temporary, until we rework files
 const gaveUpMap = {};
@@ -46,7 +47,7 @@ class InlineFiles extends React.Component {
                         const file = fileStore.getById(f);
                         if (!file) {
                             if (!gaveUpMap[f]) this.startTimer();
-                            return (<div className="invalid-file" key={f}>
+                            return (<div className="unknown-file" key={f}>
                                 {t((this.giveUp || gaveUpMap[f]) ? 'error_fileRemoved' : 'title_processing')}
                                 {this.giveUp || gaveUpMap[f]
                                     ? null
@@ -54,12 +55,21 @@ class InlineFiles extends React.Component {
                                 }
                             </div>);
                         }
+                        if (file.signatureError) {
+                            return (
+                                <div className="invalid-file" key={f} data-id={f} onClick={uiStore.showFileSignatureErrorDialog}>
+                                    <div className="flex-row flex-align-center">
+                                        <FontIcon value="info_outline" />
+                                        <div className="file-name">{t('error_invalidFileSignature')}</div>
+                                    </div>
+                                </div>
+                            );
+                        }
                         return (<div className="shared-file" key={f} data-id={f} onClick={this.download}>
-                            <div className="flex-row flex-align-center">
+                            <div className="flex-row flex-align-center flex-justify-between">
                                 <div className="file-name"> {file ? file.name : f}</div>
                                 <FontIcon value="file_download" />
                             </div>
-
                             {file.downloading
                                 ? <ProgressBar type="linear" mode="determinate" value={file.progress}
                                     max={file.progressMax} />

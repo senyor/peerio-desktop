@@ -21,6 +21,24 @@ class App extends React.Component {
         }, 500);
     };
 
+    get signatureErrorDialog() {
+        const hide = uiStore.hideFileSignatureErrorDialog;
+        const dialogActions = [
+            { label: t('button_dismiss'), onClick: hide }
+        ];
+        return (
+            <Dialog
+                active={uiStore.isFileSignatureErrorDialogActive}
+                actions={dialogActions}
+                onOverlayClick={hide}
+                onEscKeyDown={hide}
+                title={t('title_invalidFileSignature')}
+                className="dialog-warning">
+                <p>{t('error_invalidFileSignatureLong')}</p>
+            </Dialog>
+        );
+    }
+
     componentWillMount() {
         uiStore.init();
     }
@@ -45,6 +63,7 @@ class App extends React.Component {
                             : null
                     }
                 </Dialog>
+                {this.signatureErrorDialog}
             </div>
         );
     }

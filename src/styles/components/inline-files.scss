@@ -6,7 +6,8 @@
   width: calc(100% - 100px); // reduce reflow from read receipts
 
   .shared-file,
-  .invalid-file {
+  .invalid-file,
+  .unknown-file {
     @extend %flex-col;
     @extend %flex-justify-center;
     background: $color-dark-03;
@@ -17,6 +18,7 @@
     height: 48px;
     margin-left: $margin-small;
     padding-left: $padding-tiny;
+    padding-right: $padding-tiny;
     transition: 250ms;
   }
 
@@ -44,10 +46,19 @@
     }
   }
 
-  .invalid-file {
+  .unknown-file {
     color: $text-dark-hint;
     cursor: auto;
     margin-left: $margin-small;
+  }
+
+  .invalid-file {
+    border-color: currentColor;
+    color: $color-error-opacity-6;
+    .material-icons {
+      color: $color-error-opacity-6;
+      margin-right: $padding-tiny;
+    }
   }
 
   .rt-progress_bar-linear.rt-progress_bar-indeterminate {

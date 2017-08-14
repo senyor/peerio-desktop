@@ -49,7 +49,7 @@
   },
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "devDependencies": {
-    "@peerio/desktop-release-builder": "3.2.3",
+    "@peerio/desktop-release-builder": "3.2.4",
     "@peerio/peerio-icebear": "2.1.0",
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
@@ -75,7 +75,7 @@
     "devtron": "1.4.0",
     "diff2html-cli": "2.5.0",
     "electron": "1.7.5",
-    "electron-builder": "19.19.1",
+    "electron-builder": "19.22.2",
     "electron-devtools-installer": "2.2.0",
     "electron-reload": "1.2.1",
     "emojione": "3.1.2",
@@ -229,6 +229,8 @@
       ]
     },
     "linux": {
+      "category": "public.app-category.productivity",
+      "artifactName": "${name}-${os}-x86_64.${ext}",
       "target": [
         {
           "target": "AppImage",

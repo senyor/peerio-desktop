@@ -10,7 +10,7 @@ Want to verify a download?
 
 * Windows, macOS: see [support centre doc](https://peerio.zendesk.com/hc/en-us/articles/203331999-How-can-I-ensure-my-Peerio-download-is-authentic-).
 
-* Linux: see [How to verify file hashes and signatures](./docs/signatures.md)
+* Linux: see [How to verify file hashes and signatures](./docs/signatures.md).
 
 ## Building from sources
 

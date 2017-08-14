@@ -23,7 +23,7 @@ variable. `os` should be set to `linux-x64` for Linux, `mac` for macOS, or
 `win` for Windows.
 
 ```
-( pubkey=signify1.pub; \
+( pubkey=peerio_signify1.pub; \
   manifest=manifest.txt; \
   os=linux-x64; \
   cmd=$(which signify-openbsd || which signify || echo signify not found); \

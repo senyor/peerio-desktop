@@ -68,7 +68,7 @@ class ChannelInvites extends React.Component {
                                         (<ListItem
                                             key={`${i.kegDbId}${i.username}${i.timestamp}`}
                                             caption={t('title_invitedBy', { username: i.username, timestamp: moment(i.timestamp).format('llll') })}
-                                            legend={i.kegDbId}
+                                            legend={i.channelName}
                                             rightIcon={
                                                 limitReached
                                                     ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}

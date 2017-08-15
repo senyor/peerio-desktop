@@ -50,7 +50,7 @@
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "devDependencies": {
     "@peerio/desktop-release-builder": "3.2.4",
-    "@peerio/peerio-icebear": "2.1.0",
+    "@peerio/peerio-icebear": "2.2.0",
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
     "babel-plugin-console-kungfu": "git+https://github.com/PeerioTechnologies/babel-plugin-console-kungfu.git",

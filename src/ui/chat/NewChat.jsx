@@ -17,7 +17,10 @@ class NewChat extends React.Component {
     handleAccept = (selected) => {
         this.waiting = true;
         const chat = chatStore.startChat(selected);
-
+        if (!chat) {
+            this.waiting = false;
+            return;
+        }
         when(() => chat.added === true, () => {
             window.router.push('/app/chats');
         });

@@ -20,14 +20,16 @@ class NewChannel extends React.Component {
     }
 
     get isLimitReached() {
-        const channelLimit = User.current ? User.current.channelLimit : 0;
-        return chatStore.channels.length >= channelLimit;
+        return User.current.channelsLeft === 0;
     }
 
     handleAccept = () => {
         this.waiting = true;
         const chat = chatStore.startChat(this.userPicker.selected, true, this.channelName, this.purpose);
-
+        if (!chat) {
+            this.waiting = false;
+            return;
+        }
         when(() => chat.added === true, () => {
             window.router.push('/app/chats');
         });
@@ -62,13 +64,13 @@ class NewChannel extends React.Component {
         return (
             <div className="create-new-chat">
                 <T k="title_createChannel" tag="h1" />
-                <T k="title_createChannelDetails" tag="div" />
+                <T k="title_createChannelDetails" tag="div" style={{ marginBottom: '20px', maxWidth: '560px' }} />
                 <div className="new-chat-search">
                     <div className="chip-wrapper">
                         <Input placeholder={t('title_channelName')}
                             value={this.channelName} onChange={this.handleNameChange} />
                     </div>
-                    {!this.isLimitReached && <Button className={css('confirm', { banish: !this.channelName.length })}
+                    {<Button className={css('confirm', { banish: !this.channelName.length })}
                         label={t('button_go')}
                         onClick={this.handleAccept} />}
                 </div>

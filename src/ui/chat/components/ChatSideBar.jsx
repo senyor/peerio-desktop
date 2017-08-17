@@ -142,8 +142,8 @@ class ChatSideBar extends React.Component {
                 </div>
                 <div className={css('section-list', { closed: this.listClosed })}>
                     <List>
-                        {chat.participants ?
-                            chat.participants.map(c =>
+                        {chat.joinedParticipants ?
+                            chat.joinedParticipants.map(c =>
                                 (<span data-username={c.username} key={c.username}>
                                     <ListItem className={c.username}
                                         leftActions={[<Avatar key="a" contact={c} size="small" />]}

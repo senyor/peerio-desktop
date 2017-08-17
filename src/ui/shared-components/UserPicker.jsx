@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
     ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { fileStore, contactStore } = require('~/icebear');
+const { fileStore, contactStore, User } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
@@ -42,6 +42,10 @@ class UserPicker extends React.Component {
         return !!this.selected.find(s => !s.loading && !s.notFound) && !this.isLimitReached;
     }
 
+    @computed get selectedSelfless() {
+        return this.selected.filter(this.selfFilter);
+    }
+
     filterOptions = (item) => {
         if (this.selected.find(s => s.username === item.username)) return false;
         if (this.props.noDeleted && item.isDeleted) return false;
@@ -49,6 +53,9 @@ class UserPicker extends React.Component {
         return true;
     }
 
+    selfFilter(contact) {
+        return contact.username !== User.current.username;
+    }
 
     handleTextChange = newVal => {
         const newValLower = newVal.toLocaleLowerCase();
@@ -81,7 +88,7 @@ class UserPicker extends React.Component {
         const isEmail = atInd > -1 && atInd === q.lastIndexOf('@');
         this.selected.push(c);
         when(() => !c.loading, () => {
-            setTimeout(() => c.notFound && this.selected.remove(c), 3000);
+            setTimeout(() => c.notFound && this.selected.remove(c), 1000);
             this.suggestInviteEmail = (c.notFound && isEmail) ? q : '';
             this.legacyContactError = c.isLegacy;
             this.showNotFoundError = c.notFound;
@@ -123,7 +130,7 @@ class UserPicker extends React.Component {
     }
 
     get isLimitReached() {
-        return this.props.limit && this.selected.length >= this.props.limit;
+        return this.props.limit && this.selectedSelfless.length >= this.props.limit;
     }
 
     render() {
@@ -170,14 +177,14 @@ class UserPicker extends React.Component {
                                         value={this.query} onChange={this.handleTextChange}
                                         onKeyDown={this.handleKeyDown} />
                                 </div>
-                                <Button className={css('confirm', { banish: this.isLimitReached || this.props.onlyPick || !this.selected.length })}
+                                <Button className={css('confirm', { banish: this.props.onlyPick || !this.selected.length })}
                                     label={this.props.button || t('button_go')}
                                     onClick={this.accept} disabled={!this.isValid} />
                             </div>
                             {this.props.limit &&
-                                <div className={css('text-right', 'dark-label', this.isLimitReached && 'error-search')}>
+                                <div className={css('text-right', 'dark-label', { 'error-search': this.isLimitReached })}>
                                     <T k="title_addedPeopleLimit">
-                                        {{ added: this.selected.length, limit: this.props.limit }}
+                                        {{ added: this.selectedSelfless.length + 1, limit: this.props.limit }}
                                     </T>
                                 </div>}
                             {this.showNotFoundError
@@ -192,11 +199,8 @@ class UserPicker extends React.Component {
                                 <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
                             </div>
                             : null}
-                        {this.isLimitReached && this.props.limitUpgradeOffer}
                         {!this.isLimitReached && <ListSubHeader key="header" caption={t('title_allContacts')} />}
                         {!this.isLimitReached && <List selectable ripple >
-                            {/* TODO: change text to Invites on zero state messages screen */}
-                            {/* TODO: change text to Favorites when favs exist */}
                             <div key="list" className="user-list">
                                 {this.options.map(c => {
                                     if (c === true) return <ListSubHeader key="separator" caption={t('title_allContacts')} />;

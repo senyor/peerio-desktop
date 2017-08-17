@@ -7,6 +7,9 @@ if ! git diff-index --quiet HEAD --; then
     exit 1
 fi
 
+# this is important for locales, we need to pull latest en.json
+npm update
+
 echo "[•              ] getting locales"
 npm run get-locales
 if git diff-index HEAD --; then

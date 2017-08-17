@@ -6,6 +6,8 @@ if ! git diff-index --quiet HEAD --; then
     echo "*** There are uncommited changes, please commit or stash them"
     exit 1
 fi
+# this is important for locales, we need to pull latest en.json
+npm update
 
 echo "[•              ] getting locales"
 npm run get-locales

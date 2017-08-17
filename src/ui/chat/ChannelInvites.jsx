@@ -11,6 +11,8 @@ const ChannelUpgradeOffer = require('./components/ChannelUpgradeOffer');
 const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 const moment = require('moment');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const routerStore = require('~/stores/router-store');
+const T = require('~/ui//shared-components/T');
 
 @observer
 class ChannelInvites extends React.Component {
@@ -32,9 +34,14 @@ class ChannelInvites extends React.Component {
         );
     }
 
+    gotoChats() {
+        routerStore.navigateTo(routerStore.ROUTES.chats);
+        clientApp.isInChatsView = true;
+    }
+
     acceptInvite = (ev) => {
         const id = getAttributeInParentChain(ev.target, 'data-kegDbId');
-        chatInviteStore.acceptInvite(id);
+        chatInviteStore.acceptInvite(id).then(this.gotoChats);
     }
 
     rejectInvite = (ev) => {
@@ -52,7 +59,7 @@ class ChannelInvites extends React.Component {
                     <div className="message-toolbar flex-justify-between">
                         <div className="flex-col">
                             <div className="title" onClick={this.showChatNameEditor}>
-                                Channel invites
+                                <T k="title_channelInvites" />
                             </div>
                             {/* here for layout */}
                             <div className="flex-row meta-nav" />

@@ -9,12 +9,12 @@ const T = require('~/ui/shared-components/T');
 @observer
 class ChannelUpgradeOffer extends React.Component {
     render() {
-        const limit = User.current ? User.current.channelLimit : config.maxFreeChannels;
+        if (User.current.channelLimit === Number.MAX_SAFE_INTEGER) return null;
         return (
             <div className="upgrade-channels">
                 <div>
-                    <span role="img" aria-label="waving hand">👋 </span>
-                    <T k="title_channelUpgradeOffer">{{ limit }}</T>
+                    <span>👋 </span>
+                    <T k="title_channelUpgradeOffer">{{ limit: User.current.channelLimit }}</T>
                 </div>
                 <Button flat primary label={t('button_upgrade')} />
             </div>

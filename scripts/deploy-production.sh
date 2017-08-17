@@ -9,7 +9,7 @@ fi
 
 echo "[•              ] getting locales"
 npm run get-locales
-if git diff-index --quiet HEAD --; then
+if git diff-index HEAD --; then
     echo "*** Locales changed, committing."
     git commit -a -m "chore: update locales"
 fi

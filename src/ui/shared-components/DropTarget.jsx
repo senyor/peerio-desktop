@@ -67,8 +67,8 @@ class DropTarget extends React.Component {
                 <div className="drop-content">
                     <FontIcon value="cloud_upload" />
                     <div className="display-2">
-                        {t('title_dropToUpload', { count: ''/* dragStore.hoveringFileCount*/ })}
-                        <div className="display-1">{/* util.formatBytes(dragStore.hoveringFileSize)*/}</div>
+                        {t('title_dropToUpload', { count: ''/* dragStore.hoveringFileCount */ })}
+                        <div className="display-1">{/* util.formatBytes(dragStore.hoveringFileSize) */}</div>
                     </div>
                 </div>
             </div>

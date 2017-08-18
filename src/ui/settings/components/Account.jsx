@@ -5,6 +5,7 @@ const { Switch, Button, Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
 const T = require('~/ui/shared-components/T');
+const urls = require('~/config').translator.urlMap;
 
 @observer
 class Account extends React.Component {
@@ -39,6 +40,10 @@ class Account extends React.Component {
         this.deleteAccountDialogActive = false;
     }
 
+    toUpgrade() {
+        return window.open(urls.upgrade);
+    }
+
     render() {
         const dialogActions = [
             { label: t('button_cancel'), onClick: this.hideConfirmDelete },
@@ -46,6 +51,14 @@ class Account extends React.Component {
         ];
         return (
             <div className="flex-col flex-grow-1">
+                { true ?
+                    <section className="flex-row flex-shrink-0 flex-align-center"
+                      style={{ background: 'rgba(50, 206, 195, .15)', borderRadius: '4px', marginTop: '4px', padding: '8px 16px' }}>
+                        <div style={{ fontSize: '16px', fontWeight: '600' }}>{t('title_upgradeMessage')}</div>
+                        <Button primary flat label={t('button_upgrade')}
+                            onClick={this.toUpgrade} />
+                    </section> : null
+                }
                 <section className="section-divider">
                     <div className="title">{t('title_promoConsentRequestTitle')}</div>
                     <Switch checked={User.current.settings.subscribeToPromoEmails}

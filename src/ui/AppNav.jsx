@@ -133,9 +133,9 @@ class AppNav extends React.Component {
                             onClick={this.toAbout} />
                         <MenuItem value="help" icon="help" caption="Help"
                             onClick={this.toHelp} />
-                        {/* <MenuDivider />
-                        <MenuItem value="upgrade" icon="open_in_browser" caption={t('title_upgrade')}
-                            onClick={this.toUpgrade} /> */}
+                        <MenuDivider />
+                        <MenuItem value="upgrade" icon="open_in_browser" caption={t('button_upgrade')}
+                            onClick={this.toUpgrade} />
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
                             onClick={this.signout} />

@@ -38,8 +38,13 @@
   &.large {
     height: 64px; // might be larger 80px?
   }
+
+  .invited {
+    opacity: .5;
+  }
 }
 
+// left sidebar for navigation inside of a feature. Chat list/ Contact list/ maybe file list eventually. - paul
 .feature-navigation-list {
   @extend %flex-col;
   @extend %flex-shrink-0;

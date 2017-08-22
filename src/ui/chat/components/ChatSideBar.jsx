@@ -135,12 +135,12 @@ class ChatSideBar extends React.Component {
                     </div>
                     : null
                 }
-                <div className={`list-header clickable ${banishHeader}`} onClick={this.toggleList}>
-                    <div style={{ marginRight: 'auto' }}>{t('title_Members')}</div>
-                    <FontIcon
-                        value={this.listClosed ? 'arrow_drop_down' : 'arrow_drop_up'} />
-                </div>
                 <div className={css('section-list', { closed: this.listClosed })}>
+                    <div className={`list-header clickable ${banishHeader}`} onClick={this.toggleList}>
+                        <div style={{ marginRight: 'auto' }}>{t('title_Members')}</div>
+                        <FontIcon
+                            value={this.listClosed ? 'arrow_drop_down' : 'arrow_drop_up'} />
+                    </div>
                     <List>
                         {chat.joinedParticipants ?
                             chat.joinedParticipants.map(c =>

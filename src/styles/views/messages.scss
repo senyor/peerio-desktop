@@ -754,7 +754,7 @@ $suggests-max-height: 200px;
     }
 
     &.closed {
-      height: 0;
+      height: 48px;
       overflow: hidden;
     }
   }

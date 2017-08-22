@@ -102,7 +102,7 @@ class ChatSideBar extends React.Component {
             </IconMenu>);
 
             inviteMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
-                <MenuItem value="delete" icon="delete" caption={t('button_delete')} onClick={this.deleteInvite} />
+                <MenuItem value="delete" icon="delete" caption={t('button_remove')} onClick={this.deleteInvite} />
             </IconMenu>);
         }
 

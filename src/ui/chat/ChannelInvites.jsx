@@ -49,9 +49,11 @@ class ChannelInvites extends React.Component {
         chatInviteStore.rejectInvite(id);
     }
 
-    render() {
-        const limitReached = false;
+    get isLimitReached() {
+        return User.current.channelsLeft === 0;
+    }
 
+    render() {
         return (
             <div className="messages">
                 <ChatList />
@@ -77,7 +79,7 @@ class ChannelInvites extends React.Component {
                                             caption={t('title_invitedBy', { username: i.username, timestamp: moment(i.timestamp).format('llll') })}
                                             legend={i.channelName}
                                             rightIcon={
-                                                limitReached
+                                                this.isLimitReached
                                                     ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
                                                         onClick={this.toggleDialog} />
                                                     : this.inviteOptions(i.kegDbId)
@@ -89,7 +91,7 @@ class ChannelInvites extends React.Component {
                         <ChatSideBar open="true" />
                     </div>
                 </div>
-                <ChannelUpgradeDialog ref={ref => (this.dialog = ref)} />
+                <ChannelUpgradeDialog />
             </div>
         );
     }

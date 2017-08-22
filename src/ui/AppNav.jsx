@@ -95,7 +95,7 @@ class AppNav extends React.Component {
     }
 
     get signOutDialog() {
-        const hide = () => (this.isConfirmSignOutVisible = false);
+        const hide = () => { this.isConfirmSignOutVisible = false; };
         const actions = [
             { label: t('button_cancel'), onClick: hide },
             { label: t('button_logout'), onClick: this._doSignout }

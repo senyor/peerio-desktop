@@ -15,7 +15,7 @@ class ChannelUpgradeDialog extends React.Component {
     }
 
     render() {
-        const hide = () => (this.showDialog = false);
+        const hide = () => { this.showDialog = false; };
         const dialogActions = [
             { label: t('button_cancel'), onClick: hide },
             {

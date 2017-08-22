@@ -55,6 +55,10 @@ class NewChannel extends React.Component {
         this.userPicker = ref;
     };
 
+    setUpgradeDialogRef = ref => {
+        this.upgradeDialog = ref;
+    };
+
     render() {
         if (this.waiting) {
             return (<div className="create-new-chat">
@@ -85,7 +89,7 @@ class NewChannel extends React.Component {
                     <T k="title_goCreateChat" />
                     <Button label={t('button_createChat')} flat primary onClick={this.gotoNewChat} />
                 </div>
-                <ChannelUpgradeDialog ref={ref => (this.upgradeDialog = ref)} />
+                <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} />
             </div>
         );
     }

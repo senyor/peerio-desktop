@@ -11,7 +11,7 @@ module.exports = {
 
     socketServerUrl: 'wss://icebear.peerio.com',
     ghostFrontendUrl: 'https://mail.peerio.com',
-    //  updateFeedUrl: 'https://privaterelease.peerio.com',
+    usePeerioUpdater: false, // TODO: enable after some testing on staging
 
     contacts: {
         supportUser: 'support',

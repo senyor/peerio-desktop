@@ -8,10 +8,10 @@ class MailFormatActions extends React.Component {
             <div className="mail-actions">
                 <div className="counter">
                     <IconButton icon="attach_file"
-                                onClick={this.props.onFileAttach}
-                                style={{ marginLeft: '10px', marginRight: '10px' }} />
+                        onClick={this.props.onFileAttach}
+                        style={{ marginLeft: '10px', marginRight: '10px' }} />
                     {this.props.fileCounter === 0 ?
-                         null : <div className="count">{this.props.fileCounter}</div>}
+                        null : <div className="count">{this.props.fileCounter}</div>}
                 </div>
                 <div className="mail-format">
                     <IconButton icon="format_bold" />
@@ -20,7 +20,7 @@ class MailFormatActions extends React.Component {
                     <IconButton icon="strikethrough_s" />
                 </div>
                 <IconButton icon="delete"
-                            style={{ marginLeft: '10px', marginRight: '10px' }} />
+                    style={{ marginLeft: '10px', marginRight: '10px' }} />
 
             </div>
         );

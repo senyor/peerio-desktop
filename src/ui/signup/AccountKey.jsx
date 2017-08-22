@@ -6,7 +6,6 @@ const T = require('~/ui/shared-components/T');
 
 
 @observer class AccountKey extends Component {
-
     handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             this.props.returnHandler();

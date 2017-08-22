@@ -6,7 +6,6 @@ const { t } = require('peerio-translator');
 
 @observer
 class BetterInput extends React.Component {
-
     @observable value = '';
     @observable isValid = true;
     accepted = false;
@@ -101,7 +100,6 @@ class BetterInput extends React.Component {
         props.error = this.isValid ? '' : t(error);
         return React.createElement(Input, props);
     }
-
 }
 
 module.exports = BetterInput;

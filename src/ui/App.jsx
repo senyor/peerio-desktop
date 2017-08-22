@@ -9,7 +9,6 @@ const { observable } = require('mobx');
 
 @observer
 class App extends React.Component {
-
     // for smooth dialog hiding, without this it will render empty dialog while hiding it
     @observable contactDialogHiding = false;
     hideContactDialog = () => {

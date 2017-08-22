@@ -24,7 +24,6 @@ class SystemWarningDialog extends WarningDisplayBase {
             </Dialog>
         );
     }
-
 }
 
 module.exports = SystemWarningDialog;

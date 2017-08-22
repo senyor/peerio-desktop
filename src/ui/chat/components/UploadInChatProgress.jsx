@@ -21,12 +21,12 @@ class UploadInChatProgress extends React.Component {
                     <FontIcon value="cloud_upload" />
                     <div className="progress-title">
                         {queued ? t('title_queuedFiles', { name: file.name, remaining: queued })
-                                : t('title_uploading', { name: file.name })}
+                            : t('title_uploading', { name: file.name })}
                     </div>
                     <IconButton icon="cancel" onClick={this.cancelUpload} />
                 </div>
                 <ProgressBar type="linear" mode="determinate" value={file.progress}
-                                               max={file.progressMax} />
+                    max={file.progressMax} />
             </div>
         );
     }

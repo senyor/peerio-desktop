@@ -17,7 +17,7 @@ class MailItem extends React.Component {
                 alive: this.props.alive,
                 attachments: this.props.attachments
             })}
-                 onClick={this.handleSelect}>
+            onClick={this.handleSelect}>
                 <div className="flex-col flex-grow-1 flex-justify-between">
                     <div className="flex-row">
 

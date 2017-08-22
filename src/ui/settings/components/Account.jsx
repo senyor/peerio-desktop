@@ -53,7 +53,7 @@ class Account extends React.Component {
             <div className="flex-col flex-grow-1">
                 { true ?
                     <section className="flex-row flex-shrink-0 flex-align-center"
-                      style={{ background: 'rgba(50, 206, 195, .15)', borderRadius: '4px', marginTop: '4px', padding: '8px 16px' }}>
+                        style={{ background: 'rgba(50, 206, 195, .15)', borderRadius: '4px', marginTop: '4px', padding: '8px 16px' }}>
                         <div style={{ fontSize: '16px', fontWeight: '600' }}>{t('title_upgradeMessage')}</div>
                         <Button primary flat label={t('button_upgrade')}
                             onClick={this.toUpgrade} />

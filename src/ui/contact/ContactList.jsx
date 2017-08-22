@@ -9,7 +9,6 @@ const routerStore = require('~/stores/router-store');
 
 @observer
 class ContactList extends React.Component {
-
     sortOptions = [
         { value: 'firstName', label: t('title_firstName') },
         { value: 'lastName', label: t('title_lastName') },

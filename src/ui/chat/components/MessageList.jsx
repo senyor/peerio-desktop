@@ -10,7 +10,6 @@ const urls = require('~/config').translator.urlMap;
 
 @observer
 class MessageList extends React.Component {
-
     loadTriggerDistance = 20;
     stickDistance = 250;
 

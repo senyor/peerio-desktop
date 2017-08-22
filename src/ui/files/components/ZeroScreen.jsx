@@ -23,7 +23,7 @@ function ZeroScreen(props) {
                             <Button onClick={props.onUpload} primary label={t('button_upload')} />
                         </div>
                         <img src="static/img/file-upload.png"
-                                 style={{ maxWidth: '280px', minWidth: '40%' }} alt="" />
+                            style={{ maxWidth: '280px', minWidth: '40%' }} alt="" />
                     </div>
                     {/* <p className="upgrade">{t('title_upgradeCTA')}</p> */}
                 </div>

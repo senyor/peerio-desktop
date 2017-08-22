@@ -43,7 +43,7 @@ template.push(
         role: 'help',
         submenu: [
             {
-                label: 'Support',  // don't use https: url due to weird redirect issues
+                label: 'Support', // don't use https: url due to weird redirect issues
                 click() { require('electron').shell.openExternal(config.translator.urlMap.helpCenter); }
             }
         ]

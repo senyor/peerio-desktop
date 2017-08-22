@@ -10,7 +10,6 @@ const routerStore = require('~/stores/router-store');
 
 @observer
 class ChatList extends React.Component {
-
     activateChat(id) {
         // need this bcs of weirdly composed channel invites
         routerStore.navigateTo(routerStore.ROUTES.chats);

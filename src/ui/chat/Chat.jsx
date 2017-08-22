@@ -131,9 +131,9 @@ class Chat extends React.Component {
                         }
                     </div>
                     <div className="flex-row meta-nav">
-                        {chat.changingFavState ? <ProgressBar type="circular" mode="indeterminate" /> :
-
-                        <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
+                        {chat.changingFavState
+                            ? <ProgressBar type="circular" mode="indeterminate" />
+                            : <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
                                 onClick={chat.toggleFavoriteState}
                                 className={css({ starred: chat.isFavorite })}
                                 tooltip={t('title_starChat')}

@@ -5,7 +5,6 @@ const { t } = require('peerio-translator');
 
 
 @observer class MailPassphrase extends React.Component {
-
     copyPassphrase = () => {
         const range = document.createRange();
         const selection = document.getSelection();

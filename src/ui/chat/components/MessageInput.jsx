@@ -15,7 +15,6 @@ const path = require('path');
 
 @observer
 class MessageInput extends ComposeInput {
-
     constructor() {
         super();
         this.returnToSend = true;

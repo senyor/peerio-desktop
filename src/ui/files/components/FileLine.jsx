@@ -64,7 +64,7 @@ class FileLine extends React.Component {
                 'selected-row': file.selected,
                 'waiting-3rd-party': !file.uploading && !file.readyForDownload
             })}
-                onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
+            onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
                 <td>
                     {(file.downloading || file.uploading)
                         ? <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}

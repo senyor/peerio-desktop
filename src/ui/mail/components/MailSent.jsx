@@ -10,7 +10,6 @@ const { fileStore, warnings, ghostStore } = require('~/icebear');
 
 @observer
 class MailSent extends React.Component {
-
     @observable deleteDialogActive = false;
 
     handleClose = () => {

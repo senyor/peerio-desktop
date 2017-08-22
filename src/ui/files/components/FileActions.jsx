@@ -9,17 +9,17 @@ function FileActions(props) {
         <td className="item-actions" onClick={props.onRowClick}>
             <IconMenu icon="more_vert">
                 {props.downloadDisabled
-                  ? <ProgressBar type="linear" mode="indeterminate" multicolor className="processing-file" />
-                  : null }
+                    ? <ProgressBar type="linear" mode="indeterminate" multicolor className="processing-file" />
+                    : null }
                 <MenuItem caption={t('title_download')}
-                  icon="file_download"
-                  onClick={props.onDownload}
-                  className={css({ disabled: props.downloadDisabled })} />
+                    icon="file_download"
+                    onClick={props.onDownload}
+                    className={css({ disabled: props.downloadDisabled })} />
 
                 <MenuItem caption={t('button_share')}
-                        icon="reply"
-                        onClick={props.onShare}
-                        className={css('reverse-icon', { disabled: props.shareDisabled })} />
+                    icon="reply"
+                    onClick={props.onShare}
+                    className={css('reverse-icon', { disabled: props.shareDisabled })} />
                 {/* SHARE VIA MAIL ACTION no mail so it's commented out. */}
                 {/* <MenuItem caption={t('button_shareViaMail')}
                         icon="email"
@@ -34,9 +34,9 @@ function FileActions(props) {
                 {/* className={css({ disabled: props.newFolderDisabled })} /> */}
                 <MenuDivider />
                 <MenuItem caption={t('button_delete')}
-                        icon="delete"
-                        onClick={props.onDelete}
-                        className={css({ disabled: props.deleteDisabled })} />
+                    icon="delete"
+                    onClick={props.onDelete}
+                    className={css({ disabled: props.deleteDisabled })} />
             </IconMenu>
         </td>
     );

@@ -21,7 +21,6 @@ const appState = require('~/stores/app-state');
 
 @observer
 class Root extends React.Component {
-
     @computed get snackbarVisible() {
         return !routerStore.currentRoute.startsWith(routerStore.ROUTES.chats);
     }

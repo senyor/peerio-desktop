@@ -8,7 +8,6 @@ const electron = require('electron').remote;
 const T = require('~/ui/shared-components/T');
 
 @observer class SaveNow extends Component {
-
     wwref = (ref) => {
         this.ref = ref;
     }

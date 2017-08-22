@@ -134,8 +134,8 @@ class NewContact extends React.Component {
                                         hide: !this.query.length || this.waiting ||
                                         (this.isInviteView && this.query.indexOf('@') < 0)
                                     })}
-                                    label={t(this.isInviteView ? 'button_invite' : 'button_add')}
-                                    onClick={this.isInviteView ? this.invite : this.tryAdd} />
+                                label={t(this.isInviteView ? 'button_invite' : 'button_add')}
+                                onClick={this.isInviteView ? this.invite : this.tryAdd} />
                             </div>
                             {this.notFound ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div" className="error-search" /> : null}
                             {this.suggestInviteEmail ?

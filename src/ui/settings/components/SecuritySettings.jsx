@@ -10,7 +10,6 @@ const electron = require('electron').remote;
 
 @observer
 class SecuritySettings extends React.Component {
-
     @observable passphraseVisible = false;
 
     togglePassphraseVisibility = () => {

@@ -151,14 +151,15 @@ class UserPicker extends React.Component {
                 </div>
                 <div className="flex-row flex-justify-center" style={{ width: '100%' }}>
                     <div className="flex-col flex-grow-1" style={{ maxWidth: '600px' }}>
-                        {this.props.noHeader ? null :
-                        <div className="chat-creation-header">
-                            <div className="title">
-                                {this.props.title}
-                                {this.props.subtitle ? <span>{this.props.subtitle}</span> : ''}
+                        {this.props.noHeader
+                            ? null
+                            : <div className="chat-creation-header">
+                                <div className="title">
+                                    {this.props.title}
+                                    {this.props.subtitle ? <span>{this.props.subtitle}</span> : ''}
+                                </div>
+                                <IconButton icon="close" onClick={this.handleClose} />
                             </div>
-                            <IconButton icon="close" onClick={this.handleClose} />
-                        </div>
                         }
                         <div className="message-search-wrapper">
                             <div className="new-chat-search">

@@ -16,7 +16,6 @@ const T = require('~/ui//shared-components/T');
 
 @observer
 class ChannelInvites extends React.Component {
-
     componentWillMount() {
         clientApp.isInChatsView = false;
         chatStore.deactivateCurrentChat();

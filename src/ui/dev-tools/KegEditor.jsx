@@ -124,7 +124,6 @@ class KegEditor extends React.Component {
             </div>
         );
     }
-
 }
 
 function KegList(props) {

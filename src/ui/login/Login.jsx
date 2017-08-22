@@ -31,7 +31,7 @@ class LoginStore extends OrderedFormStore {
 
     @computed get hasErrors() {
         return !(
-            this.initialized &&  // store has its input properties
+            this.initialized && // store has its input properties
             this.usernameValid && this.passcodeOrPassphraseValid && // fields ok
             socket.connected // server is available
         );
@@ -39,7 +39,6 @@ class LoginStore extends OrderedFormStore {
 }
 
 @observer class Login extends Component {
-
     constructor() {
         super();
         this.loginStore = new LoginStore();

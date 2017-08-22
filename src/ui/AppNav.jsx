@@ -81,12 +81,12 @@ class AppNav extends React.Component {
         startTaskbarOverlay();
     }
 
-    _doSignout = async () => {
+    _doSignout = async() => {
         await autologin.disable();
         appControl.relaunch();
     }
 
-    signout = async () => {
+    signout = async() => {
         if (!User.current.autologinEnabled) {
             this._doSignout();
             return;

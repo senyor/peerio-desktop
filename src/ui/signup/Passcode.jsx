@@ -17,7 +17,6 @@ const MIN_PASSWORD_LENGTH = 8;
 const GLOBAL_BAN_LIST = ['peerio'];
 
 class PasscodeStore extends OrderedFormStore {
-
     @observable fieldsExpected = 2;
     @observable passcode = '';
     @observable passcodeRepeat = '';

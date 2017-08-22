@@ -7,7 +7,6 @@ const { t } = require('peerio-translator');
 
 @observer
 class FilePicker extends React.Component {
-
     handleClose = () => {
         fileStore.clearSelection();
         this.props.onClose();

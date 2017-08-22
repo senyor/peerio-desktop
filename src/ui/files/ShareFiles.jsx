@@ -7,7 +7,6 @@ const routerStore = require('~/stores/router-store');
 
 @observer
 class ShareFiles extends React.Component {
-
     handleFileShareAccept = (users) => {
         const files = fileStore.getSelectedFiles();
         fileStore.clearSelection();

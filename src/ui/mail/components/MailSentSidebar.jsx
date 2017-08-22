@@ -9,7 +9,6 @@ const MailPassphrase = require('./MailPassphrase');
 
 @observer
 class MailSentSidebar extends React.Component {
-
     @observable revokeDialogActive = false;
     @observable ghostActive = true;
 

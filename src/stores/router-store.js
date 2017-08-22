@@ -44,8 +44,6 @@ class RouterStore {
             devSettings: '/app/settings/dev'
         };
     }
-
-
 }
 
 module.exports = new RouterStore();

@@ -3,7 +3,7 @@ const React = require('react');
 const { Component } = require('react');
 const { Button, TooltipIconButton } = require('~/react-toolbox');
 const { config, socket, User, validation, warnings } = require('~/icebear');
-const { observable, computed } = require('mobx');
+const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Link } = require('react-router');
@@ -13,6 +13,7 @@ const T = require('~/ui/shared-components/T');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
 const autologin = require('~/helpers/autologin');
+const routerStore = require('~/stores/router-store');
 
 const { validators } = validation; // use common validation from core
 
@@ -47,10 +48,16 @@ class LoginStore extends OrderedFormStore {
     componentDidMount() {
         User.getLastAuthenticated()
             .then((lastUserObject) => {
-                if (config.devAutologin) {
-                    this.loginStore.username = config.devAutologin.username;
-                    this.loginStore.passcodeOrPassphrase = config.devAutologin.passphrase;
+                const dev = config.devAutologin;
+                if (dev) {
+                    this.loginStore.username = dev.username;
+                    this.loginStore.passcodeOrPassphrase = dev.passphrase;
                     this.loginStore.busy = false;
+                    if (dev.autologin) this.login(true);
+                    if (dev.navigateTo) {
+                        when(() => routerStore.currentRoute && routerStore.currentRoute.startsWith('/app'),
+                            () => routerStore.navigateTo(dev.navigateTo));
+                    }
                     return;
                 }
                 if (lastUserObject) {

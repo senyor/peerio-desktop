@@ -15,6 +15,7 @@ const { computed, reaction, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const SystemWarningDialog = require('~/ui/shared-components/SystemWarningDialog');
+const TwoFADialog = require('~/ui/shared-components/TwoFADialog');
 const Snackbar = require('~/ui/shared-components/Snackbar');
 const routerStore = require('~/stores/router-store');
 const appState = require('~/stores/app-state');
@@ -112,6 +113,7 @@ class Root extends React.Component {
                     {this.devtools}
                     {this.snackbarVisible ? <Snackbar /> : null}
                     <SystemWarningDialog />
+                    <TwoFADialog />
                     <DropTarget />
                 </div>
             </ThemeProvider>

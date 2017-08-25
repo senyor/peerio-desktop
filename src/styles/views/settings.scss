@@ -44,16 +44,36 @@
       margin-top: 14px; // for instances where there is not details paragraph. - paul
     }
 
-    &.section-account-key {
+    &.with-bg {
       background: $color-dark-03;
-      padding-left: $padding-default;
-      padding-right: $padding-default;
+      margin-top: 20px;
+      padding: $padding-default;
 
       .title {
-        @extend %display-2;
-        color: $color-brand-primary;
-        font-weight: $font-weight-semibold;
+        color: $color-dark-87;
+        font-weight: $font-weight-regular;
       }
+
+      a {
+        color: $color-dark-87;
+        cursor: pointer;
+        font-weight: $font-weight-semibold;
+        text-decoration: underline;
+      }
+    }
+
+    .material-icons {
+      vertical-align: middle;
+    }
+
+    .qr-code {
+      margin-right: 140px;
+    }
+
+    .large-inline-icon {
+      border: 1px solid $color-dark-87;
+      border-radius: 50px;
+      padding: 5px;
     }
   }
 
@@ -209,3 +229,17 @@
   height: 48px;
   line-height: 48px;
 }
+
+.totp-input {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 22px;
+  font-weight: 200;
+  padding: 2px 3px;
+  width: 130px;
+
+  &:focus {
+    outline: none;
+  }
+}
+

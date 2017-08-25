@@ -12,7 +12,7 @@ const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 const moment = require('moment');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const routerStore = require('~/stores/router-store');
-const T = require('~/ui//shared-components/T');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class ChannelInvites extends React.Component {

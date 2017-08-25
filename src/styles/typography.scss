@@ -40,6 +40,10 @@
   text-align: right !important;
 }
 
+.semibold {
+  font-weight: $font-weight-semibold;
+}
+
 .bold {
   font-weight: $font-weight-bold;
 }
@@ -54,6 +58,10 @@
 
 .text-center {
   text-align: center;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .passphrase {

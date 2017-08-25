@@ -21,7 +21,8 @@ class UIStore {
         mentionSoundsEnabled: false,
         errorSoundsEnabled: true,
         messageDesktopNotificationsEnabled: true,
-        mentionDesktopNotificationsEnabled: false
+        mentionDesktopNotificationsEnabled: false,
+        last2FATrustDeviceSetting: false
     };
 
     @observable sharedPrefs = {

@@ -127,7 +127,7 @@ class ChatSideBar extends React.Component {
                             {canIAdmin ?
                                 <ListItem className="admin-controls"
                                     leftIcon="delete"
-                                    caption="button_deleteChannel"
+                                    caption={t('button_deleteChannel')}
                                     onClick={this.deleteChannel} />
                                 : null
                             }
@@ -175,7 +175,7 @@ class ChatSideBar extends React.Component {
                         {isChannel && canIAdmin ?
                             <ListItem
                                 className="admin-controls"
-                                caption="button_inviteToChannel"
+                                caption={t('button_inviteToChannel')}
                                 onClick={this.props.onAddParticipants} />
                             : null
                         }

@@ -59,28 +59,28 @@ autoUpdater.on('checking-for-update', () => {
     sendStatusToWindow('Checking for update...');
 });
 
-autoUpdater.on('update-available', (ev, info) => {
+autoUpdater.on('update-available', info => {
     sendStatusToWindow('Update available.');
     sendStatusToWindow(JSON.stringify(info));
     window.webContents.send('warning', 'title_updateDownloading');
 });
 
-autoUpdater.on('update-not-available', (ev, info) => {
+autoUpdater.on('update-not-available', info => {
     sendStatusToWindow('Update not available.');
     sendStatusToWindow(JSON.stringify(info));
 });
 
-autoUpdater.on('error', (ev, err) => {
+autoUpdater.on('error', err => {
     sendStatusToWindow('Error in auto-updater.');
-    sendStatusToWindow(JSON.stringify(err));
+    sendStatusToWindow(err instanceof Error ? err.toString() : JSON.stringify(err));
 });
 
-autoUpdater.on('download-progress', (ev, progressObj) => {
+autoUpdater.on('download-progress', progressObj => {
     sendStatusToWindow('Download progress...');
     sendStatusToWindow(JSON.stringify(progressObj));
 });
 
-autoUpdater.on('update-downloaded', (ev, info) => {
+autoUpdater.on('update-downloaded', info => {
     sendStatusToWindow('Update downloaded.');
     sendStatusToWindow(JSON.stringify(info));
     window.webContents.send('update-will-restart');

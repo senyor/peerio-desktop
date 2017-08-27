@@ -75,6 +75,14 @@
       border-radius: 50px;
       padding: 5px;
     }
+
+    .totp-code {
+      .totp-progress {
+        height: 1.3em;
+        margin-left: -1.6em;
+        width: 1.3em;
+      }
+    }
   }
 
   .account-key-toggle {

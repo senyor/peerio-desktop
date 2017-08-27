@@ -5,7 +5,6 @@ const { Button, Switch, TooltipIconButton, ProgressBar, FontIcon, Dialog } = req
 const { User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const autologin = require('~/helpers/autologin');
-const fs = require('fs');
 const electron = require('electron').remote;
 const T = require('~/ui/shared-components/T');
 const QR = require('qrcode');
@@ -22,8 +21,7 @@ class SecuritySettings extends React.Component {
     @observable authAppsDialogActive = false;
 
     componentWillMount() {
-        // todo: refresh in 5 min
-        // todo: generate if 2fa is disabled while this component is mounted
+        // todo: refresh in 2 hours?
         if (!User.current.twoFAEnabled) {
             this.requestSetup();
         }
@@ -207,7 +205,7 @@ class SecuritySettings extends React.Component {
                                             <a onClick={this.toggleQRCode}><T k="button_2FAShowQRCode" tag="div" className="text-center" /></a>
                                         </div>
                                 )
-                                : <ProgressBar type="circular" />
+                                : <ProgressBar type="circular" className="block" />
                         }
                     </div>
                     <div className="totp-code">
@@ -218,7 +216,7 @@ class SecuritySettings extends React.Component {
                         <input type="text" className="totp-input" disabled={!this.twoFASecret || this.totpCodeValidating}
                             value={this.totpCode} onChange={this.onTOTPCodeChange}
                             style={{ backgroundColor: this.totpCodeError ? '#ffaaaa' : 'initial' }} />
-                        {this.totpCodeValidating ? <ProgressBar type="circular" /> : null}
+                        {this.totpCodeValidating ? <ProgressBar type="circular" className="totp-progress" /> : null}
                     </div>
                 </div>
             </section>
@@ -238,6 +236,7 @@ class SecuritySettings extends React.Component {
     }
 
     render() {
+        window.c = this;
         return (
             <div>
                 {this.renderAccountKeySection()}

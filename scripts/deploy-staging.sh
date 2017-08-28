@@ -20,8 +20,9 @@ echo "[•••            ] setting flags"
 set -e
 export NODE_ENV=production
 
-echo "[••••••••       ] tagging release"
+echo "[••••••••       ] updating version number"
 ./node_modules/.bin/standard-version
+git tag -d `git describe --tags` # Remove latest tag created by standard-version
 git push && git push --follow-tags origin master
 
 echo "[•••••••••••••••] building and publishing"
@@ -30,4 +31,5 @@ peerio-desktop-release --key ~/.peerio-updater/secret.key \
                        --repository PeerioTechnologies/peerio-desktop \
                        --overrides PeerioTechnologies/peerio-desktop-staging \
                        --publish \
+                       --tag dev \
                        --prerelease

@@ -7,7 +7,7 @@ const { t } = require('peerio-translator');
 class ChannelCreateOffer extends React.Component {
     render() {
         return (
-            <div className="upgrade-channels">
+            <div className="upgrade-rooms">
                 <div>
                     <span role="img" aria-label="waving hand">👋 </span>
                     {t('title_channelCreateOffer')}

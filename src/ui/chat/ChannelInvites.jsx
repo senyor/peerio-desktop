@@ -68,7 +68,7 @@ class ChannelInvites extends React.Component {
                     </div>
                     <div className="flex-row flex-grow-1">
                         <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
-                            <div className="channel-invites-list">
+                            <div className="room-invites-list">
                                 <ChannelUpgradeOffer />
                                 <List selectable>
                                     <ListSubHeader caption="Pending invites" />

@@ -610,8 +610,8 @@ $suggests-max-height: 200px;
     overflow: hidden;
   }
 
-  .channel-item,
-  .channel-invites {
+  .room-item,
+  .room-invites {
     background: $background-chat-list-item;
     cursor: pointer;
     font-weight: $font-weight-semibold;
@@ -683,7 +683,7 @@ $suggests-max-height: 200px;
   }
 }
 
-.upgrade-channels {
+.upgrade-rooms {
   align-items: center;
   background-color: rgba($color-brand-secondary, .15);
   display: flex;
@@ -695,13 +695,13 @@ $suggests-max-height: 200px;
   }
 }
 
-.create-new-chat .upgrade-channels {
+.create-new-chat .upgrade-rooms {
   border-bottom: 1px solid $divider-dark;
   border-top: 1px solid $divider-dark;
 }
 
 // channel invites list
-.channel-invites-list {
+.room-invites-list {
   .rt-list-subheader {
     background: $color-dark-03;
   }

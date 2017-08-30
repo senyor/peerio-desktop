@@ -11,7 +11,7 @@ class ChannelUpgradeOffer extends React.Component {
     render() {
         if (User.current.channelLimit === Number.MAX_SAFE_INTEGER) return null;
         return (
-            <div className="upgrade-channels">
+            <div className="upgrade-rooms">
                 <div>
                     <span>👋 </span>
                     <T k="title_channelUpgradeOffer">{{ limit: User.current.channelLimit }}</T>

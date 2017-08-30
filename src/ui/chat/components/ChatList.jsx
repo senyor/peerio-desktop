@@ -26,7 +26,7 @@ class ChatList extends React.Component {
     }
 
     goToChannelInvite = () => {
-        window.router.push('/app/channel-invites');
+        window.router.push('/app/room-invites');
     };
 
     getProgressBar = loading => {
@@ -67,21 +67,21 @@ class ChatList extends React.Component {
                         :
                         <div className="list">
                             {newChatInvites > 0 ?
-                                <ListItem key="channel-invites" className="channel-invites"
+                                <ListItem key="room-invites" className="room-invites"
                                     onClick={this.goToChannelInvite}
-                                    caption="Channel invites"
+                                    caption="Room invites"
                                     rightIcon={<div className="notification">{newChatInvites}</div>} />
                                 : null}
                             {chatStore.hasChannels || newChatInvites > 0 ?
                                 <List selectable ripple>
                                     <div className="chat-item-add" onClick={this.newChannel}>
-                                        <div className="chat-item-title">Rooms</div>
+                                        <div className="chat-item-title">{t('title_channels')}</div>
                                         <div className="chat-item-add-icon" />
                                     </div>
                                     <FlipMove duration={200} easing="ease-in-out" >
                                         {chatStore.channels.map(c =>
                                             (<ListItem key={c.id || c.tempId}
-                                                className={css('channel-item', { active: c.active })}
+                                                className={css('room-item', { active: c.active })}
                                                 caption={`#${c.name}`}
                                                 onClick={() => this.activateChat(c.id)}
                                                 rightIcon={
@@ -96,7 +96,7 @@ class ChatList extends React.Component {
                                 : null}
                             <List selectable ripple>
                                 <div className="chat-item-add" onClick={this.newMessage}>
-                                    <div className="chat-item-title">Direct messages</div>
+                                    <div className="chat-item-title">{t('title_directMessages')}</div>
                                     <div className="chat-item-add-icon" />
                                 </div>
                                 <FlipMove duration={200} easing="ease-in-out">

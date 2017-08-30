@@ -56,14 +56,6 @@ class NewChat extends React.Component {
                         title={t('title_chatWith')}
                         onAccept={this.handleAccept} onClose={this.handleClose} />
                 </div>
-                {
-                    this.picker && this.picker.isLimitReached
-                        ? <ChannelCreateOffer />
-                        : <div className="chat-channel-switch">
-                            <T k="title_goCreateChannel" />
-                            <Button label={t('button_createChannel')} flat primary onClick={this.gotoNewChannel} />
-                        </div>
-                }
             </div>
         );
     }

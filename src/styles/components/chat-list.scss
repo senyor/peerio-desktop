@@ -1,0 +1,25 @@
+.chat-item-add {
+  @extend %flex-row;
+  @extend %flex-align-center;
+
+  cursor: pointer;
+  height: 48px;
+  padding: 0 $padding-default;
+
+  .chat-item-title {
+    border-top: 1px solid $divider-dark;
+    font-size: 16px; // 18px in Figma - Paul
+    font-weight: $font-weight-semibold;
+    padding-top: $padding-small;
+  }
+
+  .chat-item-add-icon {
+    background-image: url('./static/img/chat-add-icon.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 24px;
+    margin-left: auto;
+    width: 24px;
+  }
+}

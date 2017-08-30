@@ -580,9 +580,11 @@ $suggests-max-height: 200px;
     width: 32px;
   }
 
+  // TODO: Remove when channels go live - paul
   .avatar-group-chat {
+    background: #979797;
     border-radius: 40px;
-    color: $text-dark-secondary;
+    color: $text-light-primary;
     height: 32px;
     line-height: 32px;
     text-align: center;
@@ -611,30 +613,23 @@ $suggests-max-height: 200px;
   .channel-item,
   .channel-invites {
     background: $background-chat-list-item;
+    cursor: pointer;
     font-weight: $font-weight-semibold;
 
-    &:last-of-type {
-      border-bottom: 1px solid $divider-dark;
+    .rt-list-item { // This should be 32px - Paul
+      height: 32px;
+      max-height: 32px;
+      min-height: 32px;
     }
-  }
-
-  .channel-invites {
-    background: $color-dark-12;
-    border-top: 1px solid $divider-dark;
   }
 
   .dm-item {
     background: $background-chat-list-item; // background colour for Anri. - Paul
-    border-bottom: 1px solid $divider-dark;
-    height: 64px;
+    cursor: pointer;
     transition: 150ms;
 
     &:hover:not(.active) {
       background-color: $background-hover-message;
-    }
-
-    .rt-list-item {
-      height: 64px;
     }
   }
 

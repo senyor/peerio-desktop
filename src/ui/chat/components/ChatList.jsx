@@ -21,6 +21,10 @@ class ChatList extends React.Component {
         window.router.push('/app/new-chat');
     };
 
+    newChannel() {
+        window.router.push('/app/new-channel');
+    }
+
     goToChannelInvite = () => {
         window.router.push('/app/channel-invites');
     };
@@ -55,23 +59,25 @@ class ChatList extends React.Component {
         const newChatInvites = chatInviteStore.received.length;
         return (
             <div className="feature-navigation-list">
+                {/* TODO: use a general full width progress bar instead of this one. */}
                 {this.getProgressBar(chatStore.loading)}
-                {
-                    !chatStore.loaded
-                        ? null
-                        : <div className="feature-action" onClick={this.newMessage}>
-                            <FontIcon value="add" />
-                            <div>{t('title_haveAChat')}</div>
-                        </div>
-                }
                 {
                     !chatStore.loaded
                         ? null
                         :
                         <div className="list">
+                            {newChatInvites > 0 ?
+                                <ListItem key="channel-invites" className="channel-invites"
+                                    onClick={this.goToChannelInvite}
+                                    caption="Channel invites"
+                                    rightIcon={<div className="notification">{newChatInvites}</div>} />
+                                : null}
                             {chatStore.hasChannels || newChatInvites > 0 ?
                                 <List selectable ripple>
-                                    <ListSubHeader caption="Channels" />
+                                    <div className="chat-item-add" onClick={this.newChannel}>
+                                        <div className="chat-item-title">Rooms</div>
+                                        <div className="chat-item-add-icon" />
+                                    </div>
                                     <FlipMove duration={200} easing="ease-in-out" >
                                         {chatStore.channels.map(c =>
                                             (<ListItem key={c.id || c.tempId}
@@ -86,16 +92,13 @@ class ChatList extends React.Component {
                                             )
                                         )}
                                     </FlipMove>
-                                    {newChatInvites > 0 ?
-                                        <ListItem key="channel-invites" className="channel-invites"
-                                            onClick={this.goToChannelInvite}
-                                            caption="Channel invites"
-                                            rightIcon={<div className="notification">{newChatInvites}</div>} />
-                                        : null}
                                 </List>
                                 : null}
                             <List selectable ripple>
-                                <ListSubHeader caption="Direct messages" />
+                                <div className="chat-item-add" onClick={this.newMessage}>
+                                    <div className="chat-item-title">Direct messages</div>
+                                    <div className="chat-item-add-icon" />
+                                </div>
                                 <FlipMove duration={200} easing="ease-in-out">
                                     {chatStore.directMessages.map(c =>
                                         (<ListItem key={c.id || c.tempId}
@@ -125,9 +128,9 @@ class ChatList extends React.Component {
                                                         {c.isFavorite ? <span className="starred">&#x2605;</span> : null}
                                                         {c.name}
                                                     </span>
-                                                    <span className="rt-list-itemText">
+                                                    {/* <span className="rt-list-itemText">
                                                         {this.renderMostRecentMessage(c)}
-                                                    </span>
+                                                    </span> */}
                                                 </TooltipDiv>
                                             } />)
                                     )}

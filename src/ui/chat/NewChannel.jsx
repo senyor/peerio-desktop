@@ -85,10 +85,6 @@ class NewChannel extends React.Component {
                     </div>
                 </div>
                 <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')} noHeader onlyPick />
-                <div className="chat-channel-switch">
-                    <T k="title_goCreateChat" />
-                    <Button label={t('button_createChat')} flat primary onClick={this.gotoNewChat} />
-                </div>
                 <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} />
             </div>
         );

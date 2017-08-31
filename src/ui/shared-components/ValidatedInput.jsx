@@ -31,7 +31,7 @@ const css = require('classnames');
         if (this.props.store[this.fDirty] === true && this.props.store[this.fMsgText]) {
             return t(this.props.store[this.fMsgText]);
         }
-        return '';
+        return null;
     }
 
     constructor(props) {
@@ -151,7 +151,7 @@ const css = require('classnames');
                     disabled={this.props.disabled}
                     innerRef={this.onRef}
                 />
-                <div className="text-dark-helper">{this.props.hint}</div>
+                {!this.validationMessage && <div className="text-dark-helper">{this.props.hint}</div>}
             </div>
         );
     }

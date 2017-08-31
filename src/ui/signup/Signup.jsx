@@ -11,8 +11,9 @@ const Terms = require('~/ui/shared-components/Terms');
 const { Profile, ProfileStore } = require('./Profile');
 // const { Passcode, PasscodeStore } = require('./Passcode');
 const AccountKey = require('./AccountKey');
+const Welcome = require('./Welcome');
 const T = require('~/ui/shared-components/T');
-const SaveNow = require('~/ui/signup/SaveNow');
+const ConfirmKey = require('~/ui/signup/ConfirmKey');
 const config = require('~/config');
 
 @observer class Signup extends React.Component {
@@ -126,6 +127,20 @@ const config = require('~/config');
         this.errorVisible = false;
     };
 
+    signupNav = () => {
+        return (
+            <div className="signup-nav">
+                <Button flat
+                    label={this.step === 2 ? t('button_cancel') : t('button_back')}
+                    onClick={this.retreat} />
+                <Button flat primary
+                    label={this.step === 2 || this.step === 3 ? t('button_next') : t('button_finish')}
+                    onClick={this.advance}
+                    disabled={this.hasErrors} />
+            </div>
+        );
+    }
+
     render() {
         const termsDialogActions = [
             { label: t('button_ok'), onClick: this.hideTermsDialog }
@@ -136,49 +151,56 @@ const config = require('~/config');
         ];
 
         return (
-            <div className={css('signup', 'rt-light-theme', { show: this.show })}>
-                <div className="signup-content">
-                    <img alt="" className="logo" src="static/img/logo-with-tag.png" />
-                    <div className="signup-form">
-
-                        {
-                            this.step === 1
-                                ? <Profile store={this.profileStore} returnHandler={this.advance} />
-                                : null
-                        }
-                        {
-                            this.step === 2
-                                ? (
-                                    <div className="passcode">
-                                        <T k="title_signupStep2" className="signup-title" tag="div" />
-                                        <T k="title_AccountKey" className="signup-subtitle" tag="div" />
-                                        <AccountKey profileStore={this.profileStore} returnHandler={this.advance} />
-                                    </div>
-                                ) : null
-                        }
-                        {
-                            this.step === 3
-                                ? <SaveNow store={this.profileStore} />
-                                : null
-                        }
-
-                        <T k="title_TOSRequestText" className="terms">
-                            {{
-                                tosButton: text => (<Button onClick={this.showTermsDialog}
-                                    label={text}
-                                    className="button-link" />)
-                            }}
-                        </T>
+            <div className={css('signup', { show: this.show })}>
+                {/* {
+                    weclomeScreen ? null : */}
+                <div className="signup-step-header">
+                    <div className="signup-step-title">Current step</div>
+                    <div className="signup-step-indicator">
+                        <div className="signup-step">
+                            <div className="current-step" />
+                        </div>
+                        <div className="signup-step-divider" />
+                        <div className="signup-step" />
+                        <div className="signup-step-divider" />
+                        <div className="signup-step" />
                     </div>
-                    <div className="signup-nav">
-                        <Button flat
-                            label={this.step === 1 ? t('button_cancel') : t('button_back')}
-                            onClick={this.retreat} />
-                        <Button flat
-                            label={this.step === 1 || this.step === 2 ? t('button_next') : t('button_finish')}
-                            onClick={this.advance}
-                            disabled={this.hasErrors} />
-                    </div>
+                </div>
+                {/* } */}
+                <div className={this.step === 1 ? 'signup-welcome' : 'signup-content'} >
+                    {
+                        this.step === 4
+                            ? <Welcome returnHandler={this.advance} />
+                            : null
+                    }
+
+                    {
+                        this.step === 2
+                            ? <Profile store={this.profileStore} returnHandler={this.advance} />
+                            : null
+                    }
+                    {
+                        this.step === 3
+                            ? <AccountKey profileStore={this.profileStore} returnHandler={this.advance} />
+                            : null
+                    }
+                    {
+                        this.step === 1
+                            ? <ConfirmKey store={this.profileStore} />
+                            : null
+                    }
+
+                    {/* <T k="title_TOSRequestText" className="terms">
+                        {{
+                            tosButton: text => (<Button onClick={this.showTermsDialog}
+                                label={text}
+                                className="button-link" />)
+                        }}
+                    </T> */}
+                    {this.step === 1 ?
+                        <Button label={t('button_getStarted')} onClick={this.advance} primary />
+                        : this.signupNav
+                    }
                     {/* <div className="progress">
                         <div className={css('indicator', { active: this.step === 1 })} />
                         <div className={css('indicator', { active: this.step === 2 })} />

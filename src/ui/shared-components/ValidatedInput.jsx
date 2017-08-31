@@ -151,7 +151,7 @@ const css = require('classnames');
                     disabled={this.props.disabled}
                     innerRef={this.onRef}
                 />
-                <div className="text-light-helper">{this.props.hint}</div>
+                <div className="text-dark-helper">{this.props.hint}</div>
             </div>
         );
     }

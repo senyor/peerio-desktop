@@ -4,6 +4,7 @@
 
 .display-2 {
   @extend %display-2;
+  color: $color-brand-primary;
 }
 
 .display-3 {
@@ -30,6 +31,11 @@
 .text-light-helper {
   @extend %hint-error-label;
   color: $text-light-secondary;
+}
+
+.text-dark-helper {
+  @extend %hint-error-label;
+  color: $text-dark-secondary;
 }
 
 .text-brand-primary {
@@ -64,9 +70,14 @@
   text-align: right;
 }
 
-.passphrase {
+.passphrase,
+.account-key {
   font-size: 24px;
   font-weight: $font-weight-bold;
   line-height: 1;
   user-select: text;
+}
+
+.account-key {
+  font-family: monospace;
 }

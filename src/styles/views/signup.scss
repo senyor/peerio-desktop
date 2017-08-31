@@ -11,25 +11,96 @@
     }
   }
 
+  .signup-content,
+  .signup-welcome {
+    @extend %flex-col;
+    @extend %flex-align-center;
+    background: #eaf8f9; //TODO: create var - Paul
+    border-radius: 4px;
+    width: calc(100% - 260px);
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .signup-content {
+    margin-top: 112px;
+  }
+
+  .signup-welcome {
+    @extend %flex-justify-around;
+
+    height: 100%;
+    margin: 48px auto;
+    text-align: center;
+  }
+
   @extend %background-pattern;
   align-items: center;
-  color: $text-light-primary;
+  height: 100vh;
   opacity: 0;
   transition: 350ms opcaity $transition-easing-default;
   width: 100vw;
 
-  p {
-    margin: 32px 0 0;
-    width: 304px;
+  .private,
+  .safe,
+  .fast {
+    @extend %flex-col;
+    @extend %flex-align-center;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 160px;
+    min-height: 160px;
+    padding-top: 172px;
+    width: 208px;
+
+    @media (max-width: 1023px) {
+      background-size: 140px;
+      width: 168px;
+
+      p {
+        font-size: 14px;
+      }
+    }
   }
 
-  .text-light-helper {
-    line-height: 20px;
-    position: absolute;
+  .private {
+    background-image: url('./static/img/welcome-private.png');
   }
 
-  .rt-input-errored + .text-light-helper {
-    display: none;
+  .safe {
+    background-image: url('./static/img/welcome-safe.png');
+    margin: 0 48px;
+
+    @media (max-width: 1023px) { margin: 0 16px; }
+  }
+
+  .fast {
+    background-image: url('./static/img/welcome-fast.png');
+  }
+
+  .avatar-input {
+    @extend %flex-col;
+    @extend %flex-align-center;
+    @extend %flex-justify-center;
+
+    background: #eaf8f9; //TODO: create var - Paul
+    border: 1px solid $color-brand-primary;
+    border-radius: 128px;
+    cursor: pointer;
+    height: 128px;
+    margin-top: -64px;
+    transition: 150ms;
+    width: 128px;
+
+    &:hover {
+      background: #fff;
+    }
+  }
+
+  .avatar-instructions {
+    text-align: center;
   }
 
   .help,
@@ -54,7 +125,6 @@
   }
 
   a {
-    color: $text-light-primary;
     font-weight: $font-weight-semibold;
     text-decoration: underline;
   }
@@ -63,45 +133,31 @@
     opacity: 1;
   }
 
-  .signup-content {
-    @extend %flex-col;
-    @extend %flex-align-center;
-    height: 100vh;
-
-    @media (max-width: #{$minimum-screen-width}) {
-      .passcode-hints {
-        margin-left: 48px;
-
-        .heading::before {
-          left: -40px;
-          width: 32px;
-        }
-      }
-    }
-  }
-  // For Account Key screen.
-  .warning-line {
-    @extend %flex-row;
-    align-self: center;
-    background: rgba(0, 0, 0, .25);
-    border-bottom: 1px solid $color-light-100;
-    border-top: 1px solid $color-light-100;
-    height: 104px;
-    justify-content: center;
-    line-height: 1;
-    margin-top: 32px;
-    width: 100vw;
-  }
-
   .signup-form {
     justify-content: flex-start;
-    padding: 0 $padding-default;
-    width: 307px;
+    width: 320px;
   }
 
-  .signup-title,
-  .signup-subtitle {
-    color: $text-light-primary;
+  .confirm-key {
+    @extend %flex-col;
+
+    text-align: left;
+    width: 432px;
+
+    .safe {
+      margin: 0 auto;
+    }
+  }
+
+  .profile {
+    @extend %flex-col;
+    @extend %flex-align-center;
+
+    width: 375px;
+
+    input {
+      width: 100%;
+    }
   }
 
   .signup-subtitle {

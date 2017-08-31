@@ -11,7 +11,7 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
 const { validators } = validation; // use common validation from core
 
 class ProfileStore extends OrderedFormStore {
-    @observable fieldsExpected = 2;
+    @observable fieldsExpected = 4;
 
     @observable username = ''; // also has observables usernameValid, usernameDirty
     @observable email = ''; // also has emailValid, emailDirty
@@ -49,21 +49,21 @@ class ProfileStore extends OrderedFormStore {
                     </div>
                     <div className="test-first">
                         <ValidatedInput label={t('title_firstName')}
-                            position="2"
+                            position={1}
                             validator={validators.firstName}
                             name="firstName"
                             store={this.props.store} />
                     </div>
                     <div className="test-second">
                         <ValidatedInput label={t('title_lastName')}
-                            position="3"
+                            position={2}
                             validator={validators.lastName}
                             name="lastName"
                             onKeyPress={this.handleKeyPress}
                             store={this.props.store} />
                     </div>
                     <ValidatedInput label={t('title_username')}
-                        position="0"
+                        position={3}
                         lowercase="true"
                         validator={validators.username}
                         maxLength={16}
@@ -73,7 +73,7 @@ class ProfileStore extends OrderedFormStore {
                     {/* a-Z, 0-9, and _ only. */}
 
                     <ValidatedInput label={t('title_email')}
-                        position="1"
+                        position={4}
                         lowercase="true"
                         validator={validators.email}
                         name="email"

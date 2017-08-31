@@ -19,16 +19,22 @@ const config = require('~/config');
 @observer class Signup extends React.Component {
     @observable busy = false;
     @observable show = false; // starts show animation
-    @observable step = 1; // 1 -profile, 2- passcode
+    @observable step = 0; // 1 -profile, 2- passcode
     @observable errorVisible = false;
     @observable errorMessage = undefined;
     @observable termsDialogOpen = false;
 
-    // passcodeStore = new PasscodeStore();
-    profileStore = new ProfileStore();
+    steps = [
+        () => <Welcome returnHandler={this.advance} />,
+        () => <Profile store={this.profileStore} returnHandler={this.advance} />,
+        () => <AccountKey profileStore={this.profileStore} returnHandler={this.advance} />,
+        () => <ConfirmKey store={this.profileStore} />
+    ];
+
+    @observable profileStore = new ProfileStore();
 
     @computed get hasErrors() {
-        return this.step === 1 ? this.profileStore.hasErrors : false;// this.passcodeStore.hasErrors;
+        return this.step === 1 ? this.profileStore.hasErrors : false;
     }
 
     componentWillMount() {
@@ -59,10 +65,6 @@ const config = require('~/config');
         return u.createAccountAndLogin()
             .then(() => {
                 this.busy = false;
-                // User.current.setPasscode(this.passcodeStore.passcode)
-                //    .catch(() => {
-                //        warnings.addSevere('error_passcodeSetFailed');
-                //    });
                 window.router.push('/autologin');
             })
             .catch(err => {
@@ -80,11 +82,6 @@ const config = require('~/config');
 
     navigateToAccountKey = () => {
         if (this.profileStore.hasErrors || this.busy) return;
-        // this.passcodeStore.addToBanList([
-        //     this.profileStore.username,
-        //     this.profileStore.firstName,
-        //     this.profileStore.lastName
-        // ]);
         this.step = 2;
         this.busy = false;
     };
@@ -96,7 +93,9 @@ const config = require('~/config');
     };
 
     advance = () => {
-        if (this.step === 1) {
+        if (this.step === 0) {
+            this.step = 1;
+        } else if (this.step === 1) {
             this.navigateToAccountKey();
         } else if (this.step === 2) {
             this.step = 3;
@@ -127,14 +126,14 @@ const config = require('~/config');
         this.errorVisible = false;
     };
 
-    signupNav = () => {
+    get signupNav() {
         return (
             <div className="signup-nav">
                 <Button flat
-                    label={this.step === 2 ? t('button_cancel') : t('button_back')}
+                    label={this.step === 1 ? t('button_cancel') : t('button_back')}
                     onClick={this.retreat} />
                 <Button flat primary
-                    label={this.step === 2 || this.step === 3 ? t('button_next') : t('button_finish')}
+                    label={this.step === 1 || this.step === 2 ? t('button_next') : t('button_finish')}
                     onClick={this.advance}
                     disabled={this.hasErrors} />
             </div>
@@ -152,8 +151,6 @@ const config = require('~/config');
 
         return (
             <div className={css('signup', { show: this.show })}>
-                {/* {
-                    weclomeScreen ? null : */}
                 <div className="signup-step-header">
                     <div className="signup-step-title">Current step</div>
                     <div className="signup-step-indicator">
@@ -167,45 +164,12 @@ const config = require('~/config');
                     </div>
                 </div>
                 {/* } */}
-                <div className={this.step === 1 ? 'signup-welcome' : 'signup-content'} >
-                    {
-                        this.step === 4
-                            ? <Welcome returnHandler={this.advance} />
-                            : null
-                    }
-
-                    {
-                        this.step === 2
-                            ? <Profile store={this.profileStore} returnHandler={this.advance} />
-                            : null
-                    }
-                    {
-                        this.step === 3
-                            ? <AccountKey profileStore={this.profileStore} returnHandler={this.advance} />
-                            : null
-                    }
-                    {
-                        this.step === 1
-                            ? <ConfirmKey store={this.profileStore} />
-                            : null
-                    }
-
-                    {/* <T k="title_TOSRequestText" className="terms">
-                        {{
-                            tosButton: text => (<Button onClick={this.showTermsDialog}
-                                label={text}
-                                className="button-link" />)
-                        }}
-                    </T> */}
-                    {this.step === 1 ?
+                <div className={this.step === 0 ? 'signup-welcome' : 'signup-content'} >
+                    {this.steps[this.step]()}
+                    {this.step === 0 ?
                         <Button label={t('button_getStarted')} onClick={this.advance} primary />
                         : this.signupNav
                     }
-                    {/* <div className="progress">
-                        <div className={css('indicator', { active: this.step === 1 })} />
-                        <div className={css('indicator', { active: this.step === 2 })} />
-                    </div> */}
-
                     <Dialog actions={errorActions} active={this.errorVisible}
                         onEscKeyDown={this.hideError} onOverlayClick={this.hideError}
                         title={t('title_error')}>{this.errorMessage}</Dialog>

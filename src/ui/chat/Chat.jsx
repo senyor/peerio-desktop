@@ -100,6 +100,7 @@ class Chat extends React.Component {
     };
 
     showChatNameEditor = () => {
+        if (!chatStore.activeChat.canIAdmin) return;
         this.chatNameEditorVisible = true;
     };
 
@@ -121,9 +122,10 @@ class Chat extends React.Component {
                         {
                             this.chatNameEditorVisible
                                 ? <ChatNameEditor showLabel={false} className="name-editor"
+                                    readOnly={!chat.canIAdmin}
                                     onBlur={this.hideChatNameEditor} ref={this.chatNameEditorRef} />
                                 : <div style={{ overflow: 'hidden' }}>
-                                    <FontIcon value="edit" />
+                                    {chat.canIAdmin ? <FontIcon value="edit" /> : null}
                                     <div className="title-content">
                                         {chat.name}
                                     </div>

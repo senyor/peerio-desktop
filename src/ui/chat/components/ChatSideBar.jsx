@@ -109,8 +109,9 @@ class ChatSideBar extends React.Component {
         return (
             <div className={css('chat-sidebar', { open: this.props.open })}>
                 <div className="title">{t('title_About')}</div>
-                <div className="flex-row flex-shrink-0">
-                    <ChatNameEditor showLabel tabIndex="-1" />
+                <div>
+                    <ChatNameEditor showLabel tabIndex="-1" readOnly={!canIAdmin} />
+                    {isChannel ? <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin} /> : null}
                 </div>
                 {isChannel ?
                     <div className="section-list flex-shrink-0">

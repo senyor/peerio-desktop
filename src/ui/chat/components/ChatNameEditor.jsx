@@ -7,13 +7,16 @@ const { t } = require('peerio-translator');
 @observer
 class ChatNameEditor extends React.Component {
     cancelNameEdit = () => {
-        console.log('Cancel name edit');
+        console.log('Cancel name/purpose edit');
     };
 
     acceptNameEdit = (val) => {
         try {
-            console.log('new chat name:', val);
-            chatStore.activeChat.rename(val);
+            if (this.props.purpose) {
+                chatStore.activeChat.changePurpose(val);
+            } else {
+                chatStore.activeChat.rename(val);
+            }
         } catch (err) {
             console.error(err);
         }
@@ -27,18 +30,25 @@ class ChatNameEditor extends React.Component {
         const chat = chatStore.activeChat;
         if (!chat || !chat.chatHead) return null;
 
+        const hint = this.props.purpose ? 'title_chatPurposeHint' : 'title_chatNameHint';
+        const label = this.props.purpose ? 'title_purpose' : 'title_title';
+        const value = this.props.purpose ? chat.chatHead.purpose : chat.chatHead.chatName;
+        const displayValue = this.props.purpose ? chat.purpose : chat.name;
         return (
-            <BetterInput label={this.props.showLabel ? t('title_title') : null}
-                hint={t('title_chatNameHint')}
+            <BetterInput label={this.props.showLabel ? t(label) : null}
+                hint={t(hint)}
                 className={this.props.className}
                 onFocus={this.onFocus}
                 onBlur={this.props.onBlur}
                 onReject={this.cancelNameEdit}
                 onAccept={this.acceptNameEdit}
                 ref={this.setNameInputRef}
-                value={chat.chatHead.chatName}
-                displayValue={chat.name}
-                tabIndex={this.props.tabIndex} />
+                value={value}
+                displayValue={displayValue}
+                tabIndex={this.props.tabIndex}
+                readOnly={this.props.readOnly}
+            />
+
         );
     }
 }

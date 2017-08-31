@@ -3,6 +3,8 @@ const { Button, Dialog } = require('~/react-toolbox');
 const { User, errors } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
+const fs = require('fs');
+const temp = require('temp').track();
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const languageStore = require('~/stores/language-store');
@@ -11,6 +13,8 @@ const { Profile, ProfileStore } = require('./Profile');
 const SignupProgress = require('./SignupProgress');
 const AccountKey = require('./AccountKey');
 const Welcome = require('./Welcome');
+const AvatarDialog = require('./AvatarDialog');
+const autologin = require('~/helpers/autologin');
 const T = require('~/ui/shared-components/T');
 const ConfirmKey = require('~/ui/signup/ConfirmKey');
 const config = require('~/config');
@@ -30,6 +34,17 @@ const config = require('~/config');
     ];
 
     @observable profileStore = new ProfileStore();
+
+    handleSaveAvatar = buffers => {
+        this.profileStore.avatarBuffers = buffers;
+        const [buffer] = buffers;
+        temp.open({ prefix: 'tmp-avatar', suffix: '.jpg' }, (err, info) => {
+            if (!err) {
+                fs.writeFileSync(info.fd, new Buffer(buffer));
+                this.profileStore.temporaryAvatarFileName = info.path;
+            }
+        });
+    }
 
     @computed get hasErrors() {
         return this.step === 1 ? this.profileStore.hasErrors : false;
@@ -68,7 +83,10 @@ const config = require('~/config');
         return u.createAccountAndLogin()
             .then(() => {
                 this.busy = false;
-                window.router.push('/autologin');
+                autologin.enable();
+                autologin.dontSuggestEnablingAgain();
+                window.router.push('/app/chats');
+                temp.cleanupSync();
             })
             .catch(err => {
                 User.current = null;
@@ -76,6 +94,11 @@ const config = require('~/config');
                 this.errorVisible = true;
                 // todo: error message will not be localized, maybe don't use it at all
                 this.errorMessage = `${t('error_signupServerError')} ${errors.normalize(err).message}`;
+            })
+            .then(async() => {
+                const { avatarBuffers, keyBackedUp } = this.profileStore;
+                keyBackedUp && await User.current.setAccountKeyBackedUp();
+                avatarBuffers && await User.current.saveAvatar(avatarBuffers);
             });
     }
 
@@ -160,6 +183,7 @@ const config = require('~/config');
                     {this.signupNav}
                     {this.errorDialog}
                 </div>
+                <AvatarDialog onSave={this.handleSaveAvatar} />
                 <FullCoverLoader show={this.busy} />
             </div>
         );

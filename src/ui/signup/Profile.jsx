@@ -2,11 +2,11 @@ const React = require('react');
 const { Component } = require('react');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon } = require('~/react-toolbox');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const { socket, validation, PhraseDictionary } = require('~/icebear');
 const { t } = require('peerio-translator');
 const OrderedFormStore = require('~/stores/ordered-form-store');
+const AvatarControl = require('./AvatarControl');
 
 const { validators } = validation; // use common validation from core
 
@@ -18,7 +18,10 @@ class ProfileStore extends OrderedFormStore {
     @observable firstName = ''; // etc
     @observable lastName = ''; // etc
     @observable passphrase = '';
+    @observable keyBackedUp = false;
     @observable confirmedKeyBackup = false;
+    @observable temporaryAvatarFileName = false;
+    avatarBuffers = null;
 
     rerollPassphrase() {
         this.passphrase = PhraseDictionary.current.getPassphrase(8);
@@ -41,13 +44,7 @@ class ProfileStore extends OrderedFormStore {
         return (
             <div className="signup-form">
                 <div className="profile">
-                    <div className="avatar-input">
-                        <FontIcon value="add" />
-                        <div className="avatar-instructions">
-                            Add photo
-                        </div>
-                        <div className="caption">(optional)</div>
-                    </div>
+                    <AvatarControl fileName={this.props.store.temporaryAvatarFileName} />
                     <div className="test-first">
                         <ValidatedInput label={t('title_firstName')}
                             position={1}
@@ -72,7 +69,6 @@ class ProfileStore extends OrderedFormStore {
                         store={this.props.store}
                         hint={t('title_hintUsername')} />
                     {/* a-Z, 0-9, and _ only. */}
-
                     <ValidatedInput label={t('title_email')}
                         position={4}
                         lowercase="true"

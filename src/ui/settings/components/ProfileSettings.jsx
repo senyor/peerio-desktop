@@ -14,7 +14,6 @@ class Profile extends React.Component {
     @observable addMode = false;
     @observable newEmail = '';
     @observable newEmailValid = false;
-    @observable showAvatarEditor = false;
 
     componentWillMount() {
         this.contact = contactStore.getContact(User.current.username);
@@ -35,39 +34,15 @@ class Profile extends React.Component {
             User.current.lastName = prev;
         });
     }
+
     // avatar ------
-    handleAddAvatar = () => {
-        const win = electron.getCurrentWindow();
-        electron.dialog.showOpenDialog(win, {
-            properties: ['openFile'],
-            filters: [{ name: t('title_images'), extensions: ['jpg', 'jpeg', 'png', 'gif', 'bmp'] }]
-        }, files => {
-            if (!files || !files.length) return;
-            this.newAvatarFile = files[0];
-            this.showAvatarEditor = true;
-        });
-    }
     handleDeleteAvatar = () => {
         User.current.deleteAvatar();
-    }
-    closeAvatarEditor = () => {
-        this.showAvatarEditor = false;
-    }
-    saveAvatar = (blobs) => {
-        const buffers = [];
-        this.showAvatarEditor = false;
-        let c = 0;
-        const reader = new FileReader();
-        reader.onload = function() {
-            buffers.push(reader.result);
-            if (c === 1) {
-                User.current.saveAvatar(buffers);
-                return;
-            }
-            c++;
-            reader.readAsArrayBuffer(blobs[c]);
-        };
-        reader.readAsArrayBuffer(blobs[c]);
+    };
+
+    saveAvatar = async(blobs) => {
+        const buffers = await AvatarEditor.closeAndReturnBuffers(blobs);
+        await User.current.saveAvatar(buffers);
     };
 
     // ----- Emails -----
@@ -139,10 +114,9 @@ class Profile extends React.Component {
     render() {
         const f = this.contact.fingerprint.split('-');
         const user = User.current;
-        if (this.showAvatarEditor) {
+        if (AvatarEditor.state.showEditor) {
             return (<section className="flex-row">
-                <AvatarEditor file={this.newAvatarFile} onClose={this.closeAvatarEditor}
-                    onSave={this.saveAvatar} />
+                <AvatarEditor onSave={this.saveAvatar} />
             </section>);
         }
         return (
@@ -242,7 +216,7 @@ class Profile extends React.Component {
                             className={css({ banish: !this.contact.hasAvatar })}
                             onClick={this.handleDeleteAvatar} />
                         <IconButton icon="add_a_photo"
-                            onClick={this.handleAddAvatar} />
+                            onClick={AvatarEditor.selectFile} />
                     </div>
                     {User.current.savingAvatar
                         ? <div className="save-progress-overlay flex-row flex-justify-center flex-align-center">

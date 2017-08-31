@@ -6,6 +6,7 @@
     @extend %flex-col;
     @extend %flex-grow-1;
     @extend %flex-shrink-1;
+    border-left: 1px solid $divider-dark;
     position: relative;
     // FIXME remove calc?
     width: calc(100vw - 352px);

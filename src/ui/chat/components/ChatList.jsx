@@ -66,18 +66,18 @@ class ChatList extends React.Component {
                         ? null
                         :
                         <div className="list">
-                            {newChatInvites > 0 ?
-                                <ListItem key="room-invites" className="room-invites"
-                                    onClick={this.goToChannelInvite}
-                                    caption="Room invites"
-                                    rightIcon={<div className="notification">{newChatInvites}</div>} />
-                                : null}
                             {chatStore.hasChannels || newChatInvites > 0 ?
                                 <List selectable ripple>
                                     <div className="chat-item-add" onClick={this.newChannel}>
                                         <div className="chat-item-title">{t('title_channels')}</div>
                                         <div className="chat-item-add-icon" />
                                     </div>
+                                    {newChatInvites > 0 ?
+                                        <ListItem key="room-invites" className="room-invites"
+                                            onClick={this.goToChannelInvite}
+                                            caption="Room invites"
+                                            rightIcon={<div className="notification">{newChatInvites}</div>} />
+                                        : null}
                                     <FlipMove duration={200} easing="ease-in-out" >
                                         {chatStore.channels.map(c =>
                                             (<ListItem key={c.id || c.tempId}

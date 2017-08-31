@@ -17,6 +17,8 @@
     @extend %flex-align-center;
     background: #eaf8f9; //TODO: create var - Paul
     border-radius: 4px;
+    height: 100%;
+    margin: 48px auto;
     width: calc(100% - 260px);
 
     p {
@@ -135,7 +137,6 @@
 
   .signup-form {
     justify-content: flex-start;
-    width: 320px;
   }
 
   .confirm-key {

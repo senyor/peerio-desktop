@@ -20,13 +20,6 @@ const T = require('~/ui/shared-components/T');
                 <div style={{ marginBottom: '32px' }} >
                     <div className="display-2">Welcome to Peerio!</div>
                     <div className="headline">Your private and secure collaboration platform</div>
-                    <T k="title_TOSRequestText" className="terms">
-                        {{
-                            tosButton: text => (<Button onClick={TermsDialog.showDialog}
-                                label={text}
-                                className="button-link" />)
-                        }}
-                    </T>
                 </div>
                 <div className="flex-row">
                     <div className="private">
@@ -43,6 +36,14 @@ const T = require('~/ui/shared-components/T');
                         <p>So fast, you’ll forget that everything is always encrypted.</p>
                     </div>
                 </div>
+
+                <T k="title_TOSRequestText" className="terms">
+                    {{
+                        tosButton: text => (<Button onClick={TermsDialog.showDialog}
+                            label={text}
+                            className="button-link" />)
+                    }}
+                </T>
                 <TermsDialog />
                 {/* <Dropdown value={languageStore.language}
                     source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} /> */}

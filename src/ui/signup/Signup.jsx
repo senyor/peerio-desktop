@@ -178,7 +178,7 @@ const config = require('~/config');
         return (
             <div className={css('signup', { show: this.show })}>
                 <SignupProgress step={step} count={steps.length - 1} />
-                <div className={step === 0 ? 'signup-welcome' : 'signup-content'} >
+                <div className={step === 0 || step === 3 ? 'signup-welcome' : 'signup-content'} >
                     {steps[this.step]()}
                     {this.signupNav}
                     {this.errorDialog}

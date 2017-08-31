@@ -18,6 +18,7 @@ class ProfileStore extends OrderedFormStore {
     @observable firstName = ''; // etc
     @observable lastName = ''; // etc
     @observable passphrase = '';
+    @observable confirmedKeyBackup = false;
 
     rerollPassphrase() {
         this.passphrase = PhraseDictionary.current.getPassphrase(8);

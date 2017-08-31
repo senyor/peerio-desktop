@@ -7,9 +7,8 @@ const { t } = require('peerio-translator');
 const css = require('classnames');
 const languageStore = require('~/stores/language-store');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
-const Terms = require('~/ui/shared-components/Terms');
 const { Profile, ProfileStore } = require('./Profile');
-// const { Passcode, PasscodeStore } = require('./Passcode');
+const SignupProgress = require('./SignupProgress');
 const AccountKey = require('./AccountKey');
 const Welcome = require('./Welcome');
 const T = require('~/ui/shared-components/T');
@@ -19,16 +18,15 @@ const config = require('~/config');
 @observer class Signup extends React.Component {
     @observable busy = false;
     @observable show = false; // starts show animation
-    @observable step = 0; // 1 -profile, 2- passcode
+    @observable step = 0;
     @observable errorVisible = false;
     @observable errorMessage = undefined;
-    @observable termsDialogOpen = false;
 
     steps = [
         () => <Welcome returnHandler={this.advance} />,
         () => <Profile store={this.profileStore} returnHandler={this.advance} />,
-        () => <AccountKey profileStore={this.profileStore} returnHandler={this.advance} />,
-        () => <ConfirmKey store={this.profileStore} />
+        () => <AccountKey store={this.profileStore} returnHandler={this.advance} />,
+        () => <ConfirmKey store={this.profileStore} returnHandler={this.advance} />
     ];
 
     @observable profileStore = new ProfileStore();
@@ -37,9 +35,14 @@ const config = require('~/config');
         return this.step === 1 ? this.profileStore.hasErrors : false;
     }
 
+    @computed get readyToSignup() {
+        return !this.profileStore.hasErrors && this.profileStore.confirmedKeyBackup;
+    }
+
     componentWillMount() {
         this.profileStore.rerollPassphrase();
     }
+
     componentDidMount() {
         this.show = true;
     }
@@ -100,7 +103,7 @@ const config = require('~/config');
         } else if (this.step === 2) {
             this.step = 3;
         } else {
-            this.createAccount();
+            this.readyToSignup && this.createAccount();
         }
     };
 
@@ -114,80 +117,53 @@ const config = require('~/config');
         }
     };
 
-    hideTermsDialog = () => {
-        this.termsDialogOpen = false;
-    };
-
-    showTermsDialog = () => {
-        this.termsDialogOpen = true;
-    };
-
     hideError = () => {
         this.errorVisible = false;
     };
 
     get signupNav() {
+        const { step, steps } = this;
+        const isLastStep = step === steps.length - 1;
+        if (this.step === 0) return <Button label={t('button_getStarted')} onClick={this.advance} primary />;
         return (
             <div className="signup-nav">
                 <Button flat
                     label={this.step === 1 ? t('button_cancel') : t('button_back')}
                     onClick={this.retreat} />
                 <Button flat primary
-                    label={this.step === 1 || this.step === 2 ? t('button_next') : t('button_finish')}
+                    label={isLastStep ? t('button_finish') : t('button_next')}
                     onClick={this.advance}
-                    disabled={this.hasErrors} />
+                    disabled={isLastStep ? !this.readyToSignup : this.hasErrors} />
             </div>
         );
     }
 
-    render() {
-        const termsDialogActions = [
-            { label: t('button_ok'), onClick: this.hideTermsDialog }
-        ];
+    get errorDialog() {
         const errorActions = [
             { label: t('button_cancel'), onClick: this.hideError },
             { label: t('button_retry'), onClick: this.createAccount }
         ];
+        return (
+            <Dialog actions={errorActions} active={this.errorVisible}
+                onEscKeyDown={this.hideError} onOverlayClick={this.hideError}
+                title={t('title_error')}>{this.errorMessage}</Dialog>
+        );
+    }
 
+    render() {
+        const { step, steps } = this;
         return (
             <div className={css('signup', { show: this.show })}>
-                <div className="signup-step-header">
-                    <div className="signup-step-title">Current step</div>
-                    <div className="signup-step-indicator">
-                        <div className="signup-step">
-                            <div className="current-step" />
-                        </div>
-                        <div className="signup-step-divider" />
-                        <div className="signup-step" />
-                        <div className="signup-step-divider" />
-                        <div className="signup-step" />
-                    </div>
-                </div>
-                {/* } */}
-                <div className={this.step === 0 ? 'signup-welcome' : 'signup-content'} >
-                    {this.steps[this.step]()}
-                    {this.step === 0 ?
-                        <Button label={t('button_getStarted')} onClick={this.advance} primary />
-                        : this.signupNav
-                    }
-                    <Dialog actions={errorActions} active={this.errorVisible}
-                        onEscKeyDown={this.hideError} onOverlayClick={this.hideError}
-                        title={t('title_error')}>{this.errorMessage}</Dialog>
-
-                    <Dialog active={this.termsDialogOpen}
-                        actions={termsDialogActions}
-                        onOverlayClick={this.hideTermsDialog}
-                        onEscKeyDown={this.hideTermsDialog}
-                        className="terms">
-                        <Terms />
-                    </Dialog>
-
+                <SignupProgress step={step} count={steps.length - 1} />
+                <div className={step === 0 ? 'signup-welcome' : 'signup-content'} >
+                    {steps[this.step]()}
+                    {this.signupNav}
+                    {this.errorDialog}
                 </div>
                 <FullCoverLoader show={this.busy} />
             </div>
         );
     }
 }
-
 
 module.exports = Signup;

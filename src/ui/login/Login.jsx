@@ -50,10 +50,14 @@ class LoginStore extends OrderedFormStore {
             .then((lastUserObject) => {
                 const dev = config.devAutologin;
                 if (dev) {
-                    this.loginStore.username = dev.username;
-                    this.loginStore.passcodeOrPassphrase = dev.passphrase;
-                    this.loginStore.busy = false;
-                    if (dev.autologin) this.login(true);
+                    setTimeout(() => {
+                        this.loginStore.username = dev.username;
+                        this.loginStore.passcodeOrPassphrase = dev.passphrase;
+                        this.loginStore.busy = false;
+                    }, 500);
+                    if (dev.autologin) {
+                        setTimeout(() => this.login(true), 1000);
+                    }
                     if (dev.navigateTo) {
                         when(() => routerStore.currentRoute && routerStore.currentRoute.startsWith('/app'),
                             () => routerStore.navigateTo(dev.navigateTo));

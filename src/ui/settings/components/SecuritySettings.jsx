@@ -45,7 +45,7 @@ class SecuritySettings extends React.Component {
         this.accountKeyPDFRef = ref;
     };
 
-    backupAccountKey = () => {
+    backupAccountKey = async() => {
         const tplVars = {
             username: User.current.username,
             email: User.current.email,
@@ -53,6 +53,7 @@ class SecuritySettings extends React.Component {
         };
 
         this.accountKeyPDFRef.save(tplVars, `${User.current.username}.pdf`);
+        await User.current.setAccountKeyBackedUp();
     };
 
     setTwoFABackupPDFRef = ref => {

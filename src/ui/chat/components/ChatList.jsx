@@ -26,7 +26,7 @@ class ChatList extends React.Component {
     }
 
     goToChannelInvite = () => {
-        window.router.push('/app/room-invites');
+        window.router.push('/app/channel-invites');
     };
 
     getProgressBar = loading => {

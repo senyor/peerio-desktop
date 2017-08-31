@@ -36,7 +36,8 @@
     "get-locales": "./scripts/get-locales.sh",
     "dist": "npm-run-all compile",
     "react-toolbox": "react-toolbox-themr",
-    "make-icons": "sh ./icons/make.sh"
+    "make-icons": "sh ./icons/make.sh",
+    "check-symlinks": "ls -la node_modules/@peerio/"
   },
   "repository": {
     "type": "git",

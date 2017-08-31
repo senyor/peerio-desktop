@@ -200,11 +200,11 @@ class UserPicker extends React.Component {
                                 <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
                             </div>
                             : null}
-                        {!this.isLimitReached && <ListSubHeader key="header" caption={t('title_allContacts')} />}
                         {!this.isLimitReached && <List selectable ripple >
                             <div key="list" className="user-list">
+                                <ListSubHeader key="fav-header" caption={t('title_favoriteContacts')} />
                                 {this.options.map(c => {
-                                    if (c === true) return <ListSubHeader key="separator" caption={t('title_allContacts')} />;
+                                    if (c === true) return <ListSubHeader key="all-header" caption={t('title_allContacts')} />;
 
                                     return (<span key={c.username} data-id={c.username}>
                                         <ListItem

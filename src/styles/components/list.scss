@@ -47,35 +47,6 @@
 
 // left sidebar for navigation inside of a feature. Chat list/ Contact list/ maybe file list eventually. - paul
 .feature-navigation-list {
-  .feature-action {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    background-color: $color-dark-06;
-    border-bottom: 1px solid $divider-dark;
-    cursor: pointer;
-    height: 80px;
-    padding: 0 12px;
-
-    + .list {
-      height: calc(100% - 80px);
-    }
-
-    &:hover {
-      background-color: $color-dark-03;
-    }
-
-    .material-icons {
-      background: $color-accent;
-      border-radius: 40px;
-      color: $text-light-primary;
-      height: 40px;
-      line-height: 40px;
-      margin-right: $margin-large;
-      text-align: center;
-      width: 40px;
-    }
-  }
-
   @extend %flex-col;
   @extend %flex-shrink-0;
   height: 100vh;
@@ -84,6 +55,7 @@
 
   .list {
     background: #eee;
+    height: 100%;
     overflow: auto;
     padding-top: 12px; // padding is 20px this + the 8px from rtb list padding.
   }

@@ -35,25 +35,27 @@ class Contacts extends React.Component {
         return (
             <div className="contacts">
                 <div className="feature-navigation-list">
-                    <div className="feature-action" onClick={this.toAddNew}>
-                        <FontIcon value="add" />
-                        <div>{t('button_addAContact')}</div>
+                    <div className="list">
+                        <List selectable ripple>
+                            <div className="chat-item-add" onClick={this.toAddNew}>
+                                <div className="chat-item-title">{t('title_contacts')}</div>
+                                <div className="chat-item-add-icon" />
+                            </div>
+                            <ListItem leftIcon="star"
+                                caption={`${t('title_favoriteContacts')} (${contactStore.addedContacts.length})`}
+                                className={css({ active: isAddedActive })}
+                                onClick={this.toAdded} />
+                            <ListItem leftIcon="people"
+                                caption={`${t('title_allContacts')} (${contactStore.contacts.length})`}
+                                className={css({ active: isAllActive })}
+                                onClick={this.toAll} />
+                            <ListDivider />
+                            <ListItem leftIcon="person_add"
+                                caption={`${t('title_invitedContacts')} (${contactStore.invitedContacts.length})`}
+                                className={css({ active: isInvitedActive })}
+                                onClick={this.toInvited} />
+                        </List>
                     </div>
-                    <List selectable ripple className="list">
-                        <ListItem leftIcon="star"
-                            caption={`${t('title_favoriteContacts')} (${contactStore.addedContacts.length})`}
-                            className={css({ active: isAddedActive })}
-                            onClick={this.toAdded} />
-                        <ListItem leftIcon="people"
-                            caption={`${t('title_allContacts')} (${contactStore.contacts.length})`}
-                            className={css({ active: isAllActive })}
-                            onClick={this.toAll} />
-                        <ListDivider />
-                        <ListItem leftIcon="person_add"
-                            caption={`${t('title_invitedContacts')} (${contactStore.invitedContacts.length})`}
-                            className={css({ active: isInvitedActive })}
-                            onClick={this.toInvited} />
-                    </List>
                 </div>
                 {this.props.children}
             </div>

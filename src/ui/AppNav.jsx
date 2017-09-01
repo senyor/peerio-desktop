@@ -66,7 +66,7 @@ class AppNav extends React.Component {
 
     constructor() {
         super();
-        ['mail', 'chats', 'files', 'contacts', 'profile', 'security', 'prefs', 'account', 'about', 'help']
+        ['mail', 'chats', 'files', 'contacts', 'profile', 'security', 'prefs', 'account', 'about', 'help', 'onboarding']
             .forEach(route => {
                 this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
                     routerStore.navigateTo(routerStore.ROUTES[route]);
@@ -164,6 +164,7 @@ class AppNav extends React.Component {
                             clipPath: `polygon(0 0, ${cloudFillPercent}% 0, ${cloudFillPercent}% 100%, 0% 100%)`
                         }} icon="cloud" />
                         <TooltipIconButton
+                            onClick={this.toOnboarding}
                             tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
                             tooltipPosition="right"
                             icon="cloud_queue" />

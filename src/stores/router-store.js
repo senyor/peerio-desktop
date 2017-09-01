@@ -29,6 +29,7 @@ class RouterStore {
             chats: '/app/chats',
             newChat: '/app/new-chat',
             channelInvites: 'app/channel-invites',
+            onboarding: '/app/onboarding',
             mail: '/app/mail',
             files: 'app/files',
             contacts: 'app/contacts',

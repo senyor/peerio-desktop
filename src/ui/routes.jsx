@@ -2,6 +2,7 @@ const React = require('react');
 const { Route, IndexRoute, IndexRedirect } = require('react-router');
 const App = require('./App');
 const Root = require('./Root');
+const Onboarding = require('./Onboarding');
 const Login = require('./login/Login');
 const Signup = require('./signup/Signup');
 const Chat = require('./chat/Chat');
@@ -42,6 +43,7 @@ module.exports = (
             <Route path="new-channel" component={NewChannel} />
             <Route path="channel-invites" component={ChannelInvites} />
             <Route path="files" component={Files} />
+            <Route path="onboarding" component={Onboarding} />
             <Route path="sharefiles" component={ShareFiles} />
             <Route path="contacts" component={Contacts} >
                 <IndexRoute component={ContactList} />

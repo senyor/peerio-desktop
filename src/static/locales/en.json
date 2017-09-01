@@ -422,5 +422,6 @@
   "title_2FABackupCodeAuthPreText": "Enter code from your authenticator app to get 2fa backup codes.",
   "title_2FABackupCodeAuthPostText": "After you enter 2fa code, backup codes will get reissued and previous ones invalidated.",
   "title_2FADisableAuthPreText": "Enter code from your authenticator app to disable two step verification.",
-  "title_2FADisableAuthPostText": "By disabling two step verification, you are removing a layer of security from your account"
+  "title_2FADisableAuthPostText": "By disabling two step verification, you are removing a layer of security from your account",
+  "title_kickedFromChannel": "You have been removed from room '{name}'"
 }

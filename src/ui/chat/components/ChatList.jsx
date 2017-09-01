@@ -68,12 +68,12 @@ class ChatList extends React.Component {
                         <div className="list">
                             {chatStore.hasChannels || newChatInvites > 0 ?
                                 <List selectable ripple>
-                                    <TooltipDiv className="chat-item-add"
-                                        onClick={this.newChannel}
-                                        tooltip="Add a room"
+                                    <TooltipDiv tooltip="Add a room"
                                         tooltipPosition="right">
-                                        <div className="chat-item-title">{t('title_channels')}</div>
-                                        <div className="chat-item-add-icon" />
+                                        <div className="chat-item-add" onClick={this.newChannel} >
+                                            <div className="chat-item-title">{t('title_channels')}</div>
+                                            <div className="chat-item-add-icon" />
+                                        </div>
                                     </TooltipDiv>
                                     {newChatInvites > 0 ?
                                         <ListItem key="room-invites" className="room-invites"
@@ -98,12 +98,12 @@ class ChatList extends React.Component {
                                 </List>
                                 : null}
                             <List selectable ripple>
-                                <TooltipDiv className="chat-item-add"
-                                    onClick={this.newMessage}
-                                    tooltip="Add direct message"
+                                <TooltipDiv tooltip="Add direct message"
                                     tooltipPosition="right">
-                                    <div className="chat-item-title">{t('title_directMessages')}</div>
-                                    <div className="chat-item-add-icon" />
+                                    <div className="chat-item-add" onClick={this.newMessage}>
+                                        <div className="chat-item-title">{t('title_directMessages')}</div>
+                                        <div className="chat-item-add-icon" />
+                                    </div>
                                 </TooltipDiv>
                                 <FlipMove duration={200} easing="ease-in-out">
                                     {chatStore.directMessages.map(c =>

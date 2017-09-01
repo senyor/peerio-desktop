@@ -16,6 +16,7 @@ const ChatSideBar = require('./components/ChatSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const routerStore = require('~/stores/router-store');
+const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 
@@ -195,6 +196,7 @@ class Chat extends React.Component {
                         }
                         {chat ? <ChatSideBar open={Chat.sidebarOpen} onAddParticipants={this.openUserPicker} /> : null}
                     </div>
+                    {chat && chat.leaving ? <FullCoverLoader show /> : null}
                 </div>
             </div>
         );

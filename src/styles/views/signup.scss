@@ -107,19 +107,6 @@
 
   .help,
   .terms {
-    display: block;
-    // TODO: line-height variables?
-    line-height: 1.25;
-    margin-top: 48px;
-
-    @media (max-height: $minimum-screen-height) {
-      margin-top: 24px;
-    }
-
-    + .help {
-      margin-top: $margin-large;
-    }
-
     .button-link {
       height: 20px;
       line-height: 20px;
@@ -137,6 +124,27 @@
 
   .signup-form {
     justify-content: flex-start;
+
+    .validated-input {
+      width: 375px;
+    }
+  }
+
+  .pdf-download {
+    background-color: $color-brand-primary !important;
+    border-radius: 4px;
+    box-shadow: none;
+    color: $text-light-primary !important;
+    margin-top: 48px;
+    transition: 150ms;
+
+    &:hover {
+      box-shadow: $shadow-5;
+    }
+
+    .material-icons {
+      color: $text-light-primary;
+    }
   }
 
   .confirm-key {

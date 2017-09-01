@@ -29,11 +29,15 @@ const T = require('~/ui/shared-components/T');
             <div className="flex-col">
                 <div className="confirm-key">
                     <div className="safe" />
-                    <div className="headline">Remember, we can’t access your data.</div>
-                    <p>Only you have a copy of your Account Key.</p>
-                    <p>If you lose it, we cannot help you access your account.</p>
+                    <div className="headline">{t('title_confirmHeadline')}</div>
+                    {/* Remember, we can’t access your data. */}
+                    <p>{t('title_confirmContent1')}</p>
+                    {/* Only you have a copy of your Account Key. */}
+                    <p>{t('title_confirmContent2')}</p>
+                    {/* If you lose it, we cannot help you access your account. */}
                     <p>Confirm that you’ve saved your key by entering  “{this.confirmTextSample}” in the input below. </p>
-                    <Input value={this.confirmText} onChange={text => { this.confirmText = text; }} />
+                    {/* Hey Samvel, I'm not sure how to create a key for this. */}
+                    <Input value={this.confirmText} label="confirm you got your key label" onChange={text => { this.confirmText = text; }} />
                 </div>
             </div>
         );

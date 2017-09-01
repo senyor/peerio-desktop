@@ -1,7 +1,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
-const { Button, IconButton } = require('~/react-toolbox');
+const { Button, TooltipIconButton } = require('~/react-toolbox');
 const { clipboard } = require('electron').remote;
 const PDFSaver = require('~/ui/shared-components/PDFSaver');
 const AvatarControl = require('./AvatarControl');
@@ -37,19 +37,20 @@ const T = require('~/ui/shared-components/T');
                 <div className="profile">
                     {/* FIXME: This should be switch for uploaded Avatar or First/Last Avatar */}
                     <AvatarControl fileName={temporaryAvatarFileName} />
-                    <p>Passwords are way stronger when computers make them. This Account Key was generated just for you. Beep boop.
-                    </p>
+                    <p>{t('title_accountKey1')}</p>
+                    {/* Passwords are way stronger when computers make them. This Account Key was generated just for you. Beep boop. */}
                     <div className="account-key-wrapper">
-                        <div className="label">Your Account Key</div>
+                        <div className="label">{t('title_yourAccountKey')}</div>
                         <div className="flex-row flex-align-center">
                             <div className="account-key">{passphrase}</div>
-                            <IconButton icon="content_copy"
+                            <TooltipIconButton icon="content_copy"
+                                tooltip={t('title_copy')}
                                 onClick={() => clipboard.writeText(passphrase)} />
                         </div>
                     </div>
-                    <p>Since Peerio cannot access any of your data, including this Account Key, saving a backup may help you in the future.
-                    </p>
-                    <Button label="save account key pdf" icon="file_download" raised onClick={this.backupAccountKey} />
+                    <p>{t('title_accountKey2')}</p>
+                    {/* Since Peerio cannot access any of your data, including this Account Key, saving a backup may help you in the future. */}
+                    <Button label={t('button_saveAccountKey')} icon="file_download" className="pdf-download" onClick={this.backupAccountKey} />
                     <PDFSaver ref={ref => { this.pdfSaver = ref; }} template="./AccountKeyBackup.html" />
                 </div>
             </div>

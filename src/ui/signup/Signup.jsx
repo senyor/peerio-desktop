@@ -17,6 +17,7 @@ const AvatarDialog = require('./AvatarDialog');
 const autologin = require('~/helpers/autologin');
 const T = require('~/ui/shared-components/T');
 const ConfirmKey = require('~/ui/signup/ConfirmKey');
+const TermsDialog = require('./TermsDialog');
 const config = require('~/config');
 
 @observer class Signup extends React.Component {
@@ -182,7 +183,18 @@ const config = require('~/config');
                     {steps[this.step]()}
                     {this.signupNav}
                     {this.errorDialog}
+                    {step === 0 ?
+                        <T k="title_TOSRequestText" className="terms">
+                            {{
+                                tosButton: text => (<Button onClick={TermsDialog.showDialog}
+                                    label={text}
+                                    className="button-link" />)
+                            }}
+                        </T>
+                        : null
+                    }
                 </div>
+                <TermsDialog />
                 <AvatarDialog onSave={this.handleSaveAvatar} />
                 <FullCoverLoader show={this.busy} />
             </div>

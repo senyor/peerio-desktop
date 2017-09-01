@@ -10,7 +10,8 @@
     border-top: 1px solid $divider-dark;
     font-size: 16px; // 18px in Figma - Paul
     font-weight: $font-weight-semibold;
-    padding-top: $padding-small;
+    margin-top: -$margin-tiny;
+    padding-top: $padding-tiny;
   }
 
   .chat-item-add-icon {

@@ -1,16 +1,30 @@
 .onboarding {
   @extend %flex-col;
   @extend %flex-align-center;
+  @extend %flex-justify-center;
   background: white;
   height: 100vh;
+  overflow: auto;
   width: 100vw;
 
+  .onboarding-content {
+    @extend %flex-col;
+
+    height: 100%;
+    margin-top: 64px;
+
+    .display-1 {
+      color: $color-brand-primary;
+    }
+  }
+
   .onboarding-to-dos {
-    margin-top: 32px;
+    margin: 32px auto 0;
   }
 
   .onboarding-to-do {
-    margin-bottom: 16px;
+    margin-bottom: $margin-default;
+    padding-left: $padding-default;
 
     .title {
       color: $color-brand-primary;
@@ -21,7 +35,7 @@
     }
 
     p {
-      margin-top: 0;
+      margin: 0;
     }
 
     &.done {
@@ -42,5 +56,9 @@
         color: currentColor;
       }
     }
+  }
+
+  .onboarding-info {
+    margin: auto auto 48px;
   }
 }

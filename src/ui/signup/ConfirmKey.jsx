@@ -30,14 +30,14 @@ const T = require('~/ui/shared-components/T');
                 <div className="confirm-key">
                     <div className="safe" />
                     <div className="headline">{t('title_confirmHeadline')}</div>
-                    {/* Remember, we can’t access your data. */}
+                    {/* Got your keys? */}
                     <p>{t('title_confirmContent1')}</p>
                     {/* Only you have a copy of your Account Key. */}
                     <p>{t('title_confirmContent2')}</p>
                     {/* If you lose it, we cannot help you access your account. */}
                     <p>Confirm that you’ve saved your key by entering  “{this.confirmTextSample}” in the input below. </p>
                     {/* Hey Samvel, I'm not sure how to create a key for this. */}
-                    <Input value={this.confirmText} label="confirm you got your key label" onChange={text => { this.confirmText = text; }} />
+                    <Input value={this.confirmText} label="Have you saved your account key?" onChange={text => { this.confirmText = text; }} />
                 </div>
             </div>
         );

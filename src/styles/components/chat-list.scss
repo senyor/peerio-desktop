@@ -6,8 +6,13 @@
   height: 48px;
   padding: 0 $padding-default;
 
+  &:hover .chat-item-title {
+    color: $text-dark-primary;
+  }
+
   .chat-item-title {
     border-top: 1px solid $divider-dark;
+    color: $text-dark-secondary;
     font-size: 16px; // 18px in Figma - Paul
     font-weight: $font-weight-semibold;
     margin-top: -$margin-tiny;

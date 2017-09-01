@@ -1,6 +1,6 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { FontIcon, List, ListItem, ListSubHeader, ProgressBar, TooltipDiv } = require('~/react-toolbox');
+const { List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore, User, systemMessages, clientApp, chatInviteStore } = require('~/icebear');
 const { observer } = require('mobx-react');
@@ -68,10 +68,13 @@ class ChatList extends React.Component {
                         <div className="list">
                             {chatStore.hasChannels || newChatInvites > 0 ?
                                 <List selectable ripple>
-                                    <div className="chat-item-add" onClick={this.newChannel}>
+                                    <TooltipDiv className="chat-item-add"
+                                        onClick={this.newChannel}
+                                        tooltip="Add a room"
+                                        tooltipPosition="right">
                                         <div className="chat-item-title">{t('title_channels')}</div>
                                         <div className="chat-item-add-icon" />
-                                    </div>
+                                    </TooltipDiv>
                                     {newChatInvites > 0 ?
                                         <ListItem key="room-invites" className="room-invites"
                                             onClick={this.goToChannelInvite}
@@ -95,10 +98,13 @@ class ChatList extends React.Component {
                                 </List>
                                 : null}
                             <List selectable ripple>
-                                <div className="chat-item-add" onClick={this.newMessage}>
+                                <TooltipDiv className="chat-item-add"
+                                    onClick={this.newMessage}
+                                    tooltip="Add direct message"
+                                    tooltipPosition="right">
                                     <div className="chat-item-title">{t('title_directMessages')}</div>
                                     <div className="chat-item-add-icon" />
-                                </div>
+                                </TooltipDiv>
                                 <FlipMove duration={200} easing="ease-in-out">
                                     {chatStore.directMessages.map(c =>
                                         (<ListItem key={c.id || c.tempId}

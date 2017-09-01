@@ -68,7 +68,7 @@ class AppNav extends React.Component {
         super();
         ['mail', 'chats', 'files', 'contacts', 'profile', 'security', 'prefs', 'account', 'about', 'help']
             .forEach(route => {
-                this[`to${route[0].toUpperCase()}${route.slice(1)}`] = function() {
+                this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
                     routerStore.navigateTo(routerStore.ROUTES[route]);
                 };
             });
@@ -83,6 +83,7 @@ class AppNav extends React.Component {
 
     _doSignout = async() => {
         await autologin.disable();
+        await User.current.signout();
         appControl.relaunch();
     }
 

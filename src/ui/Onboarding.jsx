@@ -43,7 +43,7 @@ class Onboarding extends React.Component {
             'Install mobile app. (<a href="ios app">iOS</a> , <a href="android app">Android</a>)',
             'Earn 100MB storage and access to Peerio while on the go.',
             () => User.current.hasInstallBonus
-        ),
+        )
     ];
 
     renderItem = item => {

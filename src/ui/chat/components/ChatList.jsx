@@ -2,7 +2,7 @@ const React = require('react');
 const { t } = require('peerio-translator');
 const { List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
-const { chatStore, User, systemMessages, clientApp, chatInviteStore } = require('~/icebear');
+const { chatStore, User, systemMessages, clientApp, chatInviteStore, contactStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
@@ -57,8 +57,6 @@ class ChatList extends React.Component {
 
     render() {
         const newChatInvites = chatInviteStore.received.length;
-        // TODO: remove
-        const forceShowChannels = true;
         return (
             <div className="feature-navigation-list">
                 {/* TODO: use a general full width progress bar instead of this one. */}
@@ -68,37 +66,35 @@ class ChatList extends React.Component {
                         ? null
                         :
                         <div className="list">
-                            {forceShowChannels || chatStore.hasChannels || newChatInvites > 0 ?
-                                <List selectable ripple>
-                                    <TooltipDiv tooltip="Add a room"
-                                        tooltipPosition="right">
-                                        <div className="chat-item-add" onClick={this.newChannel} >
-                                            <div className="chat-item-title">{t('title_channels')}</div>
-                                            <div className="chat-item-add-icon" />
-                                        </div>
-                                    </TooltipDiv>
-                                    {newChatInvites > 0 ?
-                                        <ListItem key="room-invites" className="room-invites"
-                                            onClick={this.goToChannelInvite}
-                                            caption="Room invites"
-                                            rightIcon={<div className="notification">{newChatInvites}</div>} />
-                                        : null}
-                                    <FlipMove duration={200} easing="ease-in-out" >
-                                        {chatStore.channels.map(c =>
-                                            (<ListItem key={c.id || c.tempId}
-                                                className={css('room-item', { active: c.active })}
-                                                caption={`#${c.name}`}
-                                                onClick={() => this.activateChat(c.id)}
-                                                rightIcon={
-                                                    ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
-                                                        ? this.getNotificationIcon(c)
-                                                        : null
-                                                } />
-                                            )
-                                        )}
-                                    </FlipMove>
-                                </List>
-                                : null}
+                            <List selectable ripple>
+                                <TooltipDiv tooltip="Add a room"
+                                    tooltipPosition="right">
+                                    <div className="chat-item-add" onClick={this.newChannel} >
+                                        <div className="chat-item-title">{t('title_channels')}</div>
+                                        <div className="chat-item-add-icon" />
+                                    </div>
+                                </TooltipDiv>
+                                {newChatInvites > 0 || contactStore.hasChannelInvites ?
+                                    <ListItem key="room-invites" className="room-invites"
+                                        onClick={this.goToChannelInvite}
+                                        caption="Room invites"
+                                        rightIcon={<div className="notification">{newChatInvites}</div>} />
+                                    : null}
+                                <FlipMove duration={200} easing="ease-in-out" >
+                                    {chatStore.channels.map(c =>
+                                        (<ListItem key={c.id || c.tempId}
+                                            className={css('room-item', { active: c.active })}
+                                            caption={`#${c.name}`}
+                                            onClick={() => this.activateChat(c.id)}
+                                            rightIcon={
+                                                ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
+                                                    ? this.getNotificationIcon(c)
+                                                    : null
+                                            } />
+                                        )
+                                    )}
+                                </FlipMove>
+                            </List>
                             <List selectable ripple>
                                 <TooltipDiv tooltip="Add direct message"
                                     tooltipPosition="right">

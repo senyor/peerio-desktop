@@ -1,10 +1,10 @@
 const React = require('react');
-const { observable, computed, when, reaction } = require('mobx');
+const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
     ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { fileStore, contactStore, User, channelInviteStore } = require('~/icebear');
+const { fileStore, contactStore, User } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
@@ -39,7 +39,7 @@ class UserPicker extends React.Component {
     }
 
     @computed get isValid() {
-        return !!this.selected.find(s => !s.loading && !s.notFound) && !this.isLimitReached;
+        return !this.selected.find(s => s.loading || s.notFound) && !this.isLimitReached;
     }
 
     @computed get selectedSelfless() {
@@ -191,9 +191,10 @@ class UserPicker extends React.Component {
                                         value={this.query} onChange={this.handleTextChange}
                                         onKeyDown={this.handleKeyDown} />
                                 </div>
-                                <Button className={css('confirm', { banish: this.props.onlyPick || !this.selected.length })}
-                                    label={this.props.button || t('button_go')}
-                                    onClick={this.accept} disabled={!this.isValid} />
+                                <Button className={css('confirm', {
+                                    banish: this.props.onlyPick
+                                    || (!this.selected.length && (!this.props.extraChips || !this.props.extraChips.length))
+                                })} label={this.props.button || t('button_go')} onClick={this.accept} disabled={!this.isValid} />
                             </div>
                             {this.props.limit &&
                                 <div className={css('text-right', 'dark-label', { 'error-search': this.isLimitReached })}>

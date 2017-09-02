@@ -5,7 +5,7 @@ const { FontIcon, IconButton, TooltipIconButton, ProgressBar } = require('~/reac
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
-const { chatStore, TinyDb, clientApp, crypto, chatInviteStore } = require('~/icebear');
+const { chatStore, TinyDb, clientApp, crypto, chatInviteStore, contactStore } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
@@ -170,15 +170,10 @@ class Chat extends React.Component {
     };
     render() {
         const chat = chatStore.activeChat;
-        if (chatStore.chats.length === 0 && !chatStore.loading && !chatInviteStore.received.length) {
-            routerStore.navigateToAsync(routerStore.ROUTES.newChat);
-            return null;
-        }
 
         return (
             <div className="messages">
-                {chatStore.chats.length + chatInviteStore.received.length > 0 ? <ChatList /> : (
-                    chatStore.loading ? <div className="feature-navigation-list" /> : null)}
+                <ChatList />
                 <div className="message-view">
                     {chatStore.loading ?
                         <div className="random-messages">

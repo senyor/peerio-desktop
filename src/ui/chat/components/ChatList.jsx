@@ -57,6 +57,8 @@ class ChatList extends React.Component {
 
     render() {
         const newChatInvites = chatInviteStore.received.length;
+        // TODO: remove
+        const forceShowChannels = true;
         return (
             <div className="feature-navigation-list">
                 {/* TODO: use a general full width progress bar instead of this one. */}
@@ -66,7 +68,7 @@ class ChatList extends React.Component {
                         ? null
                         :
                         <div className="list">
-                            {chatStore.hasChannels || newChatInvites > 0 ?
+                            {forceShowChannels || chatStore.hasChannels || newChatInvites > 0 ?
                                 <List selectable ripple>
                                     <TooltipDiv tooltip="Add a room"
                                         tooltipPosition="right">

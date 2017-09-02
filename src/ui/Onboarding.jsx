@@ -1,13 +1,65 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
+const css = require('classnames');
 const { FontIcon } = require('~/react-toolbox');
+const { User } = require('~/icebear');
 
+function createOnboardingItem(icon, title, description, valueFn) {
+    return { icon, title, description, valueFn };
+}
 
 @observer
 class Onboarding extends React.Component {
     @observable waiting = false;
 
+    items = [
+        createOnboardingItem(
+            'mail',
+            'Confirm your email',
+            'Get new copy for this and encourage users to do this task',
+            () => User.current.hasConfirmedEmailBonus
+        ),
+        createOnboardingItem(
+            'forum',
+            'Create a room',
+            'How much is this worth? This needs new copy.',
+            () => User.current.hasCreatedRoomBonus
+        ),
+        createOnboardingItem(
+            'person_add',
+            'Invite friends to join Peerio',
+            'Earn 50MB storage per friend. Up to 5 friends.',
+            () => User.current.hasInvitedFriendsBonus
+        ),
+        createOnboardingItem(
+            'phonelink_setup',
+            'Enable Two-Step Verification',
+            'Earn 100MB storage while increasing your security.',
+            () => User.current.hasTwoFABonus
+        ),
+        createOnboardingItem(
+            'phonelink_setup',
+            'Install mobile app. (<a href="ios app">iOS</a> , <a href="android app">Android</a>)',
+            'Earn 100MB storage and access to Peerio while on the go.',
+            () => User.current.hasInstallBonus
+        ),
+    ];
+
+    renderItem = item => {
+        const { icon, title, description, valueFn } = item;
+        return (
+            <div className={css('onboarding-to-do', { done: valueFn() })}>
+                <div className="flex-row">
+                    <FontIcon value={icon} />
+                    <div className="flex-col">
+                        <div className="title">{title}</div>
+                        <p>{description}</p>
+                    </div>
+                </div>
+            </div>
+        );
+    };
 
     render() {
         return (
@@ -18,65 +70,8 @@ class Onboarding extends React.Component {
                     <p>200mb of 1000mb earned</p>
 
                     <div className="onboarding-to-dos">
-                        <div className="onboarding-to-do">
-                            <div className="flex-row">
-                                <FontIcon value="mail" />
-                                <div className="flex-col">
-                                    <div className="title">Confirm your email</div>
-                                    <p>Get new copy for this and encourage users to do this task</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="onboarding-to-do">
-                            <div className="flex-row">
-                                <FontIcon value="forum" />
-                                <div className="flex-col">
-                                    <div className="title">Create a room <div className="chat-item-add-icon" /></div>
-                                    <p>How much is this worth? This needs new copy.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="onboarding-to-do">
-                            <div className="flex-row">
-                                <FontIcon value="person_add" />
-                                <div className="flex-col">
-                                    <div className="title">Inviite friends to join Peerio</div>
-                                    <p>Earn 50MB storage per friend. Up to 5 friends.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="onboarding-to-do">
-                            <div className="flex-row">
-                                <FontIcon value="phonelink_setup" />
-                                <div className="flex-col">
-                                    <div className="title">Enable Two-Step Verification</div>
-                                    <p>Earn 100MB storage while increasing your security.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="onboarding-to-do">
-                            <div className="flex-row">
-                                <FontIcon value="phonelink_setup" />
-                                <div className="flex-col">
-                                    <div className="title">Install mobile app. (<a href="ios app">iOS</a> , <a href="android app">Android</a>)</div>
-                                    <p>Earn 100MB storage and access to Peerio while on the go.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="onboarding-to-do done">
-                            <div className="flex-row">
-                                <FontIcon value="check" />
-                                <div className="flex-col">
-                                    <div className="title">Install mobile app. (<a href="ios app">iOS</a> , <a href="android app">Android</a>)</div>
-                                    <p>Earn 100MB storage and access to Peerio while on the go.</p>
-                                </div>
-                            </div>
-                        </div>
+                        {this.items.filter(item => !item.valueFn()).map(this.renderItem)}
+                        {this.items.filter(item => item.valueFn()).map(this.renderItem)}
                     </div>
                     {/* TODO Add cloud icon with meter and usage info */}
                     <div className="onboarding-info">Click the cloud icon in the lower left to return to this list.</div>

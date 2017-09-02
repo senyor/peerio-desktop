@@ -28,6 +28,7 @@ class Chat extends React.Component {
     @observable static sidebarOpen = true; // static, so it acts like lazy internal store
     @observable chatNameEditorVisible = false;
     @observable showUserPicker = false;
+    @observable emailsToInvite = [];
 
     static sidebarStateSaver;
 
@@ -81,6 +82,7 @@ class Chat extends React.Component {
 
     addParticipants = (contacts) => {
         chatStore.activeChat.addParticipants(contacts);
+        this.emailsToInvite.forEach(email => chatInviteStore.sendEmailInvite(chatStore.activeChat.id, email));
         this.closeUserPicker();
     };
 
@@ -158,6 +160,14 @@ class Chat extends React.Component {
             </div>
         );
     }
+
+    addEmailInvite = (email) => {
+        this.emailsToInvite.push(email);
+    };
+
+    removeEmailInvite = (email) => {
+        this.emailsToInvite.remove(email);
+    };
     render() {
         const chat = chatStore.activeChat;
         if (chatStore.chats.length === 0 && !chatStore.loading && !chatInviteStore.received.length) {
@@ -180,7 +190,11 @@ class Chat extends React.Component {
                         {
                             this.showUserPicker
                                 ? <div className="flex-col flex-grow-1 create-new-chat" style={{ position: 'relative', padding: '0 20px' }}>
-                                    <UserPicker onClose={this.closeUserPicker} onAccept={this.addParticipants} title={t('title_addParticipants')} noDeleted />
+                                    <UserPicker onClose={this.closeUserPicker} onAccept={this.addParticipants}
+                                        title={t('title_addParticipants')} noDeleted
+                                        customInviteFn={this.addEmailInvite} extraChips={this.emailsToInvite}
+                                        onExtraChipRemove={this.removeEmailInvite}
+                                    />
                                 </div>
                                 : <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
                                     {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}

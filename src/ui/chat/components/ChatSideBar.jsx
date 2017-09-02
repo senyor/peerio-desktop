@@ -31,7 +31,12 @@ class ChatSideBar extends React.Component {
     deleteInvite(ev) {
         ev.stopPropagation();
         const username = getAttributeInParentChain(ev.target, 'data-username');
-        chatInviteStore.revokeInvite(chatStore.activeChat.id, username);
+        const email = getAttributeInParentChain(ev.target, 'data-email');
+        if (username) {
+            chatInviteStore.revokeInvite(chatStore.activeChat.id, username);
+        } else {
+            chatInviteStore.revokeEmailInvite(chatStore.activeChat.id, email);
+        }
     }
 
     deleteParticipant(ev) {
@@ -86,6 +91,7 @@ class ChatSideBar extends React.Component {
         const { isChannel, canIAdmin, canILeave } = chat;
 
         const invited = chatInviteStore.sent.get(chat.id);
+        const invitedEmails = chatInviteStore.sentEmails.get(chat.id);
 
         const banishHeader = chat.participants && chat.participants.length ? '' : 'banish';
 
@@ -170,6 +176,14 @@ class ChatSideBar extends React.Component {
                                     caption={i.username}
                                     rightActions={inviteMenu}
                                     onClick={this.openContact}
+                                />
+                            </span>))
+                            : null}
+                        {invitedEmails ? invitedEmails.map(i =>
+                            (<span data-email={i.email} key={`invited--${i.email}`}>
+                                <ListItem
+                                    caption={i.email}
+                                    rightActions={inviteMenu}
                                 />
                             </span>))
                             : null}

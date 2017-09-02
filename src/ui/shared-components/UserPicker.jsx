@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { Button, Chip, FontIcon, IconButton, Input, List,
     ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { fileStore, contactStore, User } = require('~/icebear');
+const { fileStore, contactStore, User, channelInviteStore } = require('~/icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
@@ -125,7 +125,11 @@ class UserPicker extends React.Component {
     };
 
     invite = () => {
-        contactStore.invite(this.suggestInviteEmail);
+        if (this.props.customInviteFn) {
+            this.props.customInviteFn(this.suggestInviteEmail);
+        } else {
+            contactStore.invite(this.suggestInviteEmail);
+        }
         this.suggestInviteEmail = '';
     }
 
@@ -165,6 +169,15 @@ class UserPicker extends React.Component {
                             <div className="new-chat-search">
                                 <FontIcon value="search" />
                                 <div className="chip-wrapper">
+                                    {this.props.extraChips ?
+                                        this.props.extraChips.map(c => (
+                                            <Chip key={c}
+                                                className="chip-label"
+                                                onDeleteClick={() => this.props.onExtraChipRemove(c)} deletable >
+                                                {c}
+                                            </Chip>
+                                        ))
+                                        : null}
                                     {this.selected.map(c =>
                                         (<Chip key={c.username}
                                             className={css('chip-label', { 'not-found': c.notFound })}

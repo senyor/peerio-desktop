@@ -35,7 +35,9 @@ module.exports = {
             contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new',
             errorServerUrl: 'https://errors.peerio.com',
             errorServerProjectKey: 'a356be460e68de68b1d336e3bb4c06ed',
-            mailSupport: 'mailto:help@support.peerio.com'
+            mailSupport: 'mailto:help@support.peerio.com',
+            iosApp: 'https://itunes.apple.com/app/peerio-2/id1245026608',
+            androidApp: 'https://play.google.com/store/apps/details?id=com.peerio.app'
         }
     }
 };

@@ -1,9 +1,10 @@
 const React = require('react');
 const { autorunAsync, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconMenu, MenuItem, MenuDivider, TooltipIconButton, Dialog } = require('~/react-toolbox');
+const { IconMenu, MenuItem, MenuDivider, Dialog } = require('~/react-toolbox');
 const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
+const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const css = require('classnames');
 const remote = require('electron').remote;
 const notificationFactory = require('~/helpers/notifications');
@@ -157,19 +158,7 @@ class AppNav extends React.Component {
                     <AppNavButton tooltip={t('title_contacts')} icon="people"
                         active={routerStore.currentRoute.startsWith(routerStore.ROUTES.contacts)}
                         onClick={this.toContacts} />
-
-                    <div className="usage">
-                        <TooltipIconButton style={{
-                            position: 'absolute',
-                            clipPath: `polygon(0 0, ${cloudFillPercent}% 0, ${cloudFillPercent}% 100%, 0% 100%)`
-                        }} icon="cloud" />
-                        <TooltipIconButton
-                            onClick={this.toOnboarding}
-                            tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
-                            tooltipPosition="right"
-                            icon="cloud_queue" />
-                        <div>{User.current.fileQuotaUsedPercent}%</div>
-                    </div>
+                    <UsageCloud onClick={this.toOnboarding} />
                 </div>
                 {this.signOutDialog}
             </div>

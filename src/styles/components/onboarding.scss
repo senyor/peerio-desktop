@@ -16,6 +16,18 @@
     .display-1 {
       color: $color-brand-primary;
     }
+
+    .rt-button-toggle, .rt-button-toggle * {
+      cursor: default;
+    }
+
+    .rt-button-toggle {
+      width: 100px;
+    }
+
+    .rt-button-button .material-icons {
+      font-size: 40pt !important;
+    }
   }
 
   .onboarding-to-dos {
@@ -36,6 +48,14 @@
 
     p {
       margin: 0;
+    }
+
+    &.clickable {
+      cursor: pointer;
+    }
+
+    &.clickable:hover .title {
+      text-decoration: underline;
     }
 
     &.done {

@@ -17,15 +17,14 @@ class NewChat extends React.Component {
     }
 
     handleAccept = async(selected) => {
-        this.waiting = true;
         // don't start chats if user types quickly non-existent username
-        // should be on SDK level
+        // we don't turn this.waiting on, because it dismounts UserPicker and resets its state
+        // should've written UserPicker or loading indicator differently
         await Contact.ensureAllLoaded(selected);
         if (!selected.length || selected.filter(c => c.notFound).length) {
-            this.waiting = false;
             return;
         }
-        console.log(JSON.stringify(selected));
+        this.waiting = true;
         const chat = chatStore.startChat(selected);
         if (!chat) {
             this.waiting = false;

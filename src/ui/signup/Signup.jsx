@@ -49,7 +49,7 @@ const config = require('~/config');
     }
 
     @computed get readyToSignup() {
-        return !this.profileStore.hasErrors && this.profileStore.confirmedKeyBackup;
+        return !this.profileStore.hasErrors && (this.profileStore.keyBackedUp || this.profileStore.confirmedKeyBackup);
     }
 
     componentWillMount() {
@@ -120,7 +120,7 @@ const config = require('~/config');
             this.step = 1;
         } else if (this.step === 1) {
             this.navigateToAccountKey();
-        } else if (this.step === 2) {
+        } else if (this.step === 2 && !this.profileStore.keyBackedUp) {
             this.step = 3;
         } else {
             this.readyToSignup && this.createAccount();

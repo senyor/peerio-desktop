@@ -48,7 +48,7 @@ class NewChat extends React.Component {
 
     render() {
         return (
-            <div className="create-new-chat">
+            <div className="create-new-chat" style={{ position: 'relative' }}>
                 <div style={this.pickerStyle}>
                     <UserPicker
                         ref={this.setRef}

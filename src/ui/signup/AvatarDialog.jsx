@@ -29,7 +29,7 @@ const { t } = require('peerio-translator');
             <Dialog active={show}
                 onOverlayClick={hideDialog}
                 onEscKeyDown={hideDialog}
-                className="terms">
+                className="avatar-editor">
                 <section className="flex-row">
                     <AvatarEditor onSave={this.saveAvatar} />
                 </section>

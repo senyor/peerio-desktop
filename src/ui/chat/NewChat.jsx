@@ -14,8 +14,27 @@ class NewChat extends React.Component {
     @observable waiting = false;
     @observable picker;
 
-    handleAccept = (selected) => {
+    handleChange = (selected) => {
+        if (selected && selected.length) this.handleAccept(selected);
+    }
+
+    // TODO: SDK should be doing this
+    waitForLoad(contacts) {
+        return Promise.all(contacts.map(
+            c => new Promise(resolve => when(() => !c.loading, resolve))
+        ));
+    }
+
+    handleAccept = async(selected) => {
         this.waiting = true;
+        // don't start chats if user types quickly non-existent username
+        // should be on SDK level
+        await this.waitForLoad(selected);
+        if (!selected.length || selected.filter(c => c.notFound).length) {
+            this.waiting = false;
+            return;
+        }
+        console.log(JSON.stringify(selected));
         const chat = chatStore.startChat(selected);
         if (!chat) {
             this.waiting = false;
@@ -52,9 +71,10 @@ class NewChat extends React.Component {
                 <div style={this.pickerStyle}>
                     <UserPicker
                         ref={this.setRef}
-                        limit={config.chat.maxDMParticipants}
                         title={t('title_chatWith')}
-                        onAccept={this.handleAccept} onClose={this.handleClose} />
+                        onChange={this.handleChange}
+                        onAccept={this.handleAccept}
+                        onClose={this.handleClose} />
                 </div>
             </div>
         );

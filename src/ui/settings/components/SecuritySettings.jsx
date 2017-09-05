@@ -9,6 +9,7 @@ const electron = require('electron').remote;
 const T = require('~/ui/shared-components/T');
 const QR = require('qrcode');
 const PDFSaver = require('~/ui/shared-components/PDFSaver');
+const fs = require('fs');
 
 @observer
 class SecuritySettings extends React.Component {
@@ -56,10 +57,6 @@ class SecuritySettings extends React.Component {
         await User.current.setAccountKeyBackedUp();
     };
 
-    setTwoFABackupPDFRef = ref => {
-        this.twoFABackupPDFRef = ref;
-    };
-
     onToggleAutologin(enable) {
         enable ? autologin.enable() : autologin.disable();
     }
@@ -88,19 +85,23 @@ class SecuritySettings extends React.Component {
         }
     };
 
-    downloadBackupCodesPDF = () => {
+    downloadBackupCodes = () => {
         if (!this.backupCodes) {
             User.current.reissueBackupCodes().then((codes) => {
                 this.backupCodes = codes;
-                this.downloadBackupCodesPDF();
+                this.downloadBackupCodes();
             });
             return;
         }
-        const tplVars = {
-            codes: this.backupCodes.join('<br/>')
-        };
-
-        this.twoFABackupPDFRef.save(tplVars, `${User.current.username}_2fa.pdf`);
+        const txtContents = this.backupCodes.join('\n\r');
+        const win = electron.getCurrentWindow();
+        electron.dialog.showSaveDialog(
+            win, { defaultPath: `${User.current.username}_2fa_backup.txt` },
+            fileSavePath => {
+                if (fileSavePath) {
+                    fs.writeFileSync(fileSavePath, txtContents);
+                }
+            });
     };
 
     disable2fa = () => {
@@ -223,15 +224,15 @@ class SecuritySettings extends React.Component {
             </section>
         );
     }
+
     render2faEnabledSection() {
         return (
             <section className="with-bg">
                 <T k="title_2FA" className="title" tag="div" />
                 <p><FontIcon value="thumb_up" className="large-inline-icon" />&nbsp;&nbsp;<T k="title_2FAEnabledThanks" /></p>
                 <T k="title_2FABackupDetail" tag="p" />
-                <Button icon="file_download" label={t('button_2FABackupDownload')} onClick={this.downloadBackupCodesPDF} flat />
+                <Button icon="file_download" label={t('button_2FABackupDownload')} onClick={this.downloadBackupCodes} flat />
                 <div className="text-right"><Button label={t('button_disable')} flat primary onClick={this.disable2fa} /></div>
-                <PDFSaver ref={this.setTwoFABackupPDFRef} template="./TwoFABackupCodes.html" />
             </section>
         );
     }

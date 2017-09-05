@@ -1,13 +1,11 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, User } = require('~/icebear');
+const { chatStore, Contact } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { ProgressBar, Button, Link } = require('~/react-toolbox');
-const config = require('../../config');
-const ChannelCreateOffer = require('./components/ChannelCreateOffer');
+const { ProgressBar } = require('~/react-toolbox');
 
 @observer
 class NewChat extends React.Component {
@@ -18,18 +16,11 @@ class NewChat extends React.Component {
         if (selected && selected.length) this.handleAccept(selected);
     }
 
-    // TODO: SDK should be doing this
-    waitForLoad(contacts) {
-        return Promise.all(contacts.map(
-            c => new Promise(resolve => when(() => !c.loading, resolve))
-        ));
-    }
-
     handleAccept = async(selected) => {
         this.waiting = true;
         // don't start chats if user types quickly non-existent username
         // should be on SDK level
-        await this.waitForLoad(selected);
+        await Contact.ensureAllLoaded(selected);
         if (!selected.length || selected.filter(c => c.notFound).length) {
             this.waiting = false;
             return;

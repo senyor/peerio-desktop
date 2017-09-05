@@ -129,13 +129,13 @@ class Onboarding extends React.Component {
         ];
     }
 
-    renderItem = item => {
+    renderItem = (item, index) => {
         const { icon, title, description, valueFn, action, extraClass, buttonItem } = item;
         const done = valueFn();
         return (
             <div key={title}
                 onClick={done ? null : action}
-                className={css('onboarding-to-do', { done, clickable: !done && !!action })}>
+                className={css('onboarding-to-do', { 'done-first': done && index === 0, done, clickable: !done && !!action })}>
                 <div className="flex-row">
                     <FontIcon value={done ? 'check' : icon} />
                     <div className="flex-col">

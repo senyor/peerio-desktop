@@ -8,8 +8,8 @@ const { User } = require('~/icebear');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 
-function createOnboardingItem(icon, title, description, valueFn, action) {
-    return { icon, title, description, valueFn, action };
+function createOnboardingItem(icon, title, description, valueFn, action, extraClass, buttonItem) {
+    return { icon, title, description, valueFn, action, extraClass, buttonItem };
 }
 
 // TODO: move to icebear
@@ -44,11 +44,27 @@ class Onboarding extends React.Component {
                 () => window.router.push('/app/settings/profile')
             ),
             createOnboardingItem(
+                'settings',
+                'Upload your avatar',
+                '100MB storage added',
+                () => User.current.hasAvatarUploadedBonus,
+                () => window.router.push('/app/settings/profile')
+            ),
+            createOnboardingItem(
+                'file_download',
+                'Save your Account Key PDF document',
+                '100MB storage added',
+                () => User.current.hasAccountKeyBackedUpBonus,
+                () => window.router.push('/app/settings/security')
+            ),
+            createOnboardingItem(
                 'forum',
                 t('title_onboardingCreateARoom'),
                 t('title_onboardingCreateARoomContent'),
                 () => User.current.hasCreatedRoomBonus,
-                () => window.router.push('/app/new-channel')
+                () => window.router.push('/app/new-channel'),
+                'chat-item-add',
+                <div className="chat-item-add-icon" />
             ),
             createOnboardingItem(
                 'person_add',
@@ -74,7 +90,7 @@ class Onboarding extends React.Component {
     }
 
     renderItem = item => {
-        const { icon, title, description, valueFn, action } = item;
+        const { icon, title, description, valueFn, action, extraClass, buttonItem } = item;
         const done = valueFn();
         return (
             <div key={title}
@@ -83,7 +99,10 @@ class Onboarding extends React.Component {
                 <div className="flex-row">
                     <FontIcon value={icon} />
                     <div className="flex-col">
-                        <div className="title">{title}</div>
+                        <div className={`title ${extraClass}`}>
+                            {title}
+                            {buttonItem}
+                        </div>
                         <p>{description}</p>
                     </div>
                 </div>

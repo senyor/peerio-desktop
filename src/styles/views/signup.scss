@@ -84,6 +84,7 @@
 
   .avatar-input {
     @extend %flex-col;
+    @extend %flex-shrink-0;
     @extend %flex-align-center;
     @extend %flex-justify-center;
 
@@ -135,7 +136,8 @@
     border-radius: 4px;
     box-shadow: none;
     color: $text-light-primary !important;
-    margin-top: 48px;
+    margin-bottom: auto;
+    margin-top: auto;
     transition: 150ms;
 
     &:hover {
@@ -162,6 +164,7 @@
     @extend %flex-col;
     @extend %flex-align-center;
 
+    height: 100%;
     width: 375px;
 
     input {

@@ -33,7 +33,7 @@ const T = require('~/ui/shared-components/T');
     render() {
         const { store: { passphrase, temporaryAvatarDataUrl } } = this.props;
         return (
-            <div className="flex-col">
+            <div className="flex-col" style={{ height: '100%' }}>
                 <div className="profile">
                     {/* FIXME: This should be switch for uploaded Avatar or First/Last Avatar */}
                     <AvatarControl url={temporaryAvatarDataUrl} />

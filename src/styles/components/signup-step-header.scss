@@ -2,8 +2,12 @@
   @extend %flex-col;
   @extend %flex-align-center;
   @extend %flex-justify-center;
-  margin-top: 36px;
+  margin-top: 64px;
   width: 368px;
+
+  @media (max-height: $minimum-screen-height) {
+    margin-top: 32px;
+  }
 }
 
 .signup-step-title {

@@ -27,7 +27,7 @@ class ProfileStore extends OrderedFormStore {
         this.passphrase = PhraseDictionary.current.getPassphrase(8);
     }
 
-    @computed get hasErrors() {
+    get hasErrors() {
         return !(this.initialized && this.usernameValid && this.emailValid &&
             this.firstNameValid && this.lastNameValid && socket.connected);
     }

@@ -4,8 +4,7 @@ const { observer } = require('mobx-react');
 const { chatStore, Contact } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
-const { ProgressBar } = require('~/react-toolbox');
+const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 
 @observer
 class NewChat extends React.Component {
@@ -17,14 +16,12 @@ class NewChat extends React.Component {
     }
 
     handleAccept = async(selected) => {
-        // don't start chats if user types quickly non-existent username
-        // we don't turn this.waiting on, because it dismounts UserPicker and resets its state
-        // should've written UserPicker or loading indicator differently
+        this.waiting = true;
         await Contact.ensureAllLoaded(selected);
         if (!selected.length || selected.filter(c => c.notFound).length) {
+            this.waiting = false;
             return;
         }
-        this.waiting = true;
         const chat = chatStore.startChat(selected);
         if (!chat) {
             this.waiting = false;
@@ -50,12 +47,6 @@ class NewChat extends React.Component {
     pickerStyle = { height: 'auto', width: '100%' };
 
     render() {
-        if (this.waiting) {
-            return (<div className="create-new-chat">
-                <div className="user-picker flex-justify-center"><ProgressBar type="circular" /></div>
-            </div>);
-        }
-
         return (
             <div className="create-new-chat">
                 <div style={this.pickerStyle}>
@@ -66,6 +57,7 @@ class NewChat extends React.Component {
                         onAccept={this.handleAccept}
                         onClose={this.handleClose} />
                 </div>
+                <FullCoverLoader show={this.waiting} style={{ left: 0 }} />
             </div>
         );
     }

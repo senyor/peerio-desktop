@@ -18,7 +18,7 @@ const { t } = require('peerio-translator');
                 <div className="avatar-instructions">
                     Add photo
                 </div>
-                {url && <img src={url} alt="avatar" />}
+                {url && <img src={url} style={{ width: '128px', height: '128px' }} alt="avatar" />}
                 <div className="caption">(optional)</div>
             </div>
         );

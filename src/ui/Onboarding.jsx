@@ -44,13 +44,6 @@ class Onboarding extends React.Component {
                 () => window.router.push('/app/settings/profile')
             ),
             createOnboardingItem(
-                'mail',
-                t('title_onboardingConfirmEmail'),
-                t('title_onboardingConfirmEmailContent'),
-                () => User.current.hasConfirmedEmailBonus,
-                () => window.router.push('/app/settings/profile')
-            ),
-            createOnboardingItem(
                 'forum',
                 t('title_onboardingCreateARoom'),
                 t('title_onboardingCreateARoomContent'),

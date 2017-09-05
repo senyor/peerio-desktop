@@ -19,7 +19,7 @@ function getMaxInvitedPeople() { return 5; }
 function getCurrentInvitedPeople() {
     try {
         const { limit } = User.current.quota.quotas.userInviteOnboardingBonus.bonus.file;
-        const bonusPerUser = 100 * 1024 * 1024 - 1;
+        const bonusPerUser = 50 * 1024 * 1024 - 1;
         return Math.floor(limit / bonusPerUser);
     } catch (e) {
         console.error(e);

@@ -68,12 +68,15 @@
       cursor: pointer;
     }
 
-    &.clickable:hover .title {
+    &.clickable:not(.done):hover .title {
       text-decoration: underline;
     }
 
-    &.done {
+    &.done-first {
       border-top: 1px solid $divider-dark;
+    }
+
+    &.done {
       color: $text-dark-hint;
       padding-top: $padding-default;
 

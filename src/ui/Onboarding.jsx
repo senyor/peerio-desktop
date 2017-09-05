@@ -22,9 +22,49 @@ function getCurrentInvitedPeople() {
         const bonusPerUser = 50 * 1024 * 1024 - 1;
         return Math.floor(limit / bonusPerUser);
     } catch (e) {
-        console.error(e);
+        // console.error(e);
     }
     return 0;
+}
+
+// TODO: move to icebear
+function getMaximumOnboardingBonus() {
+    const avatarBonus = 100;
+    const emailConfirmedBonus = 100;
+    const invitedUserBonus = 5 * 50;
+    const roomBonus = 100;
+    const backupBonus = 100;
+    const installBonus = 100;
+    const twoFABonus = 100;
+    return avatarBonus + emailConfirmedBonus + invitedUserBonus
+        + roomBonus + backupBonus + installBonus + twoFABonus;
+}
+
+// TODO: move to icebear
+function getCurrentOnboardingBonus() {
+    if (!User.current.quota) return 0;
+    const {
+        createRoomOnboardingBonus,
+        avatarOnboardingBonus,
+        twofaOnboardingBonus,
+        installsOnboardingBonus,
+        backupOnboardingBonus,
+        confirmedEmailBonus,
+        userInviteOnboardingBonus
+    } = User.current.quota.quotas;
+    try {
+        return [
+            createRoomOnboardingBonus,
+            avatarOnboardingBonus,
+            twofaOnboardingBonus,
+            installsOnboardingBonus,
+            backupOnboardingBonus,
+            confirmedEmailBonus,
+            userInviteOnboardingBonus
+        ].reduce((sum, value) => (sum + Math.ceil(value.bonus.file.limit / 1024 / 1024)), 0);
+    } catch (e) {
+        return 0;
+    }
 }
 
 @observer
@@ -97,7 +137,7 @@ class Onboarding extends React.Component {
                 onClick={done ? null : action}
                 className={css('onboarding-to-do', { done, clickable: !done && !!action })}>
                 <div className="flex-row">
-                    <FontIcon value={icon} />
+                    <FontIcon value={done ? 'check' : icon} />
                     <div className="flex-col">
                         <div className={`title ${extraClass}`}>
                             {title}
@@ -116,8 +156,7 @@ class Onboarding extends React.Component {
                 <div className="onboarding-content">
                     <div className="display-1">{t('title_onboarding1')}</div>
                     <div className="title">{t('title_onboarding2')}</div>
-                    {/* I am hiding this because confirming email does not give a bonus right now */}
-                    {/* <p>200mb of 1000mb earned</p> */}
+                    <p>{getCurrentOnboardingBonus()}MB of {getMaximumOnboardingBonus()}MB earned</p>
                     <div className="onboarding-to-dos">
                         {this.items.filter(item => !item.valueFn()).map(this.renderItem)}
                         {this.items.filter(item => item.valueFn()).map(this.renderItem)}

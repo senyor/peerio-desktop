@@ -3,8 +3,6 @@ const { Button, Dialog } = require('~/react-toolbox');
 const { User, errors } = require('~/icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const fs = require('fs');
-const temp = require('temp').track();
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const languageStore = require('~/stores/language-store');
@@ -36,15 +34,14 @@ const config = require('~/config');
 
     @observable profileStore = new ProfileStore();
 
-    handleSaveAvatar = buffers => {
+    handleSaveAvatar = (buffers, blobs) => {
         this.profileStore.avatarBuffers = buffers;
-        const [buffer] = buffers;
-        temp.open({ prefix: 'tmp-avatar', suffix: '.jpg' }, (err, info) => {
-            if (!err) {
-                fs.writeFileSync(info.fd, new Buffer(buffer));
-                this.profileStore.temporaryAvatarFileName = info.path;
-            }
-        });
+        const [blob] = blobs;
+        const reader = new FileReader();
+        reader.onload = () => {
+            this.profileStore.temporaryAvatarDataUrl = reader.result;
+        };
+        reader.readAsDataURL(blob);
     }
 
     @computed get hasErrors() {
@@ -87,7 +84,6 @@ const config = require('~/config');
                 autologin.enable();
                 autologin.dontSuggestEnablingAgain();
                 window.router.push('/app/chats');
-                temp.cleanupSync();
             })
             .catch(err => {
                 User.current = null;

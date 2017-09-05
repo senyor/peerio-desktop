@@ -31,12 +31,12 @@ const T = require('~/ui/shared-components/T');
     };
 
     render() {
-        const { store: { passphrase, temporaryAvatarFileName } } = this.props;
+        const { store: { passphrase, temporaryAvatarDataUrl } } = this.props;
         return (
             <div className="flex-col">
                 <div className="profile">
                     {/* FIXME: This should be switch for uploaded Avatar or First/Last Avatar */}
-                    <AvatarControl fileName={temporaryAvatarFileName} />
+                    <AvatarControl url={temporaryAvatarDataUrl} />
                     <p>{t('title_accountKey1')}</p>
                     {/* Passwords are way stronger when computers make them. This Account Key was generated just for you. Beep boop. */}
                     <div className="account-key-wrapper">

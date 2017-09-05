@@ -20,7 +20,7 @@ class ProfileStore extends OrderedFormStore {
     @observable passphrase = '';
     @observable keyBackedUp = false;
     @observable confirmedKeyBackup = false;
-    @observable temporaryAvatarFileName = false;
+    @observable temporaryAvatarDataUrl = false;
     avatarBuffers = null;
 
     rerollPassphrase() {
@@ -44,7 +44,7 @@ class ProfileStore extends OrderedFormStore {
         return (
             <div className="signup-form">
                 <div className="profile">
-                    <AvatarControl fileName={this.props.store.temporaryAvatarFileName} />
+                    <AvatarControl url={this.props.store.temporaryAvatarDataUrl} />
                     <div className="test-first">
                         <ValidatedInput label={t('title_firstName')}
                             position={1}

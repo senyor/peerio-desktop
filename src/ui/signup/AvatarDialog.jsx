@@ -20,7 +20,7 @@ const { t } = require('peerio-translator');
     }
 
     saveAvatar = async(blobs) => {
-        this.props.onSave(await AvatarEditor.closeAndReturnBuffers(blobs));
+        this.props.onSave(await AvatarEditor.closeAndReturnBuffers(blobs), blobs);
     };
 
     render() {

@@ -11,14 +11,14 @@ const { t } = require('peerio-translator');
         const s = {
             overflow: 'hidden'
         };
-        const { fileName } = this.props;
+        const { url } = this.props;
         return (
             <div className="avatar-input" style={s} onClick={AvatarDialog.showDialog}>
                 <FontIcon value="add" />
                 <div className="avatar-instructions">
                     Add photo
                 </div>
-                {fileName && <img src={`file://${fileName}`} alt="avatar" />}
+                {url && <img src={url} alt="avatar" />}
                 <div className="caption">(optional)</div>
             </div>
         );

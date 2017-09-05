@@ -83,7 +83,7 @@ const config = require('~/config');
                 this.busy = false;
                 autologin.enable();
                 autologin.dontSuggestEnablingAgain();
-                window.router.push('/app/chats');
+                window.router.push('/app/onboarding');
             })
             .catch(err => {
                 User.current = null;

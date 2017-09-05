@@ -38,6 +38,20 @@
     margin-bottom: $margin-default;
     padding-left: $padding-default;
 
+    .material-icons {
+      height: 29px;
+      margin-top: 3px;
+    }
+
+    .chat-item-add {
+      height: 29px;
+      padding-left: 0;
+
+      .chat-item-add-icon {
+        margin-left: $margin-small;
+      }
+    }
+
     .title {
       color: $color-brand-primary;
     }

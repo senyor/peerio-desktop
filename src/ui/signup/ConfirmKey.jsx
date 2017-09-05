@@ -9,7 +9,7 @@ const T = require('~/ui/shared-components/T');
 
 @observer class ConfirmKey extends Component {
     @observable confirmText = '';
-    confirmTextSample = 'I have saved my account key';
+    confirmTextSample = t('title_confirmTextSample');
 
     componentDidMount() {
         reaction(() => this.confirmText.toLocaleLowerCase() === this.confirmTextSample.toLocaleLowerCase(), v => {
@@ -35,11 +35,10 @@ const T = require('~/ui/shared-components/T');
                     {/* Only you have a copy of your Account Key. */}
                     <p>{t('title_confirmContent2')}</p>
                     {/* If you lose it, we cannot help you access your account. */}
-                    <p>Confirm that you’ve saved your key by entering  “{this.confirmTextSample}” in the input below. </p>
-                    {/* Hey Samvel, I'm not sure how to create a key for this. */}
+                    <p>{t('title_confirmTextInput', { sample: this.confirmTextSample })}</p>
                     <Input
                         onKeyPress={this.handleKeyPress}
-                        value={this.confirmText} label="Have you saved your account key?" onChange={text => { this.confirmText = text; }} />
+                        value={this.confirmText} label={t('title_confirmTextInputLabel')} onChange={text => { this.confirmText = text; }} />
                 </div>
             </div>
         );

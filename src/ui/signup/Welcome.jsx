@@ -35,7 +35,6 @@ const T = require('~/ui/shared-components/T');
                         <p>{t('title_welcomeSafeContent')}</p>
                         {/* Only you can access your account. Your data is safe and secure 24/7. */}
                     </div>
-
                     <div className="fast">
                         <div className="headline">{t('title_welcomeFast')}</div>
                         {/* Fast */}
@@ -43,8 +42,6 @@ const T = require('~/ui/shared-components/T');
                         {/* So fast, you’ll forget that everything is always encrypted. */}
                     </div>
                 </div>
-
-
                 {/* <Dropdown value={languageStore.language}
                     source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} /> */}
             </div>

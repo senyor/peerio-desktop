@@ -37,7 +37,10 @@ module.exports = {
             errorServerProjectKey: 'a356be460e68de68b1d336e3bb4c06ed',
             mailSupport: 'mailto:help@support.peerio.com',
             iosApp: 'https://itunes.apple.com/app/peerio-2/id1245026608',
-            androidApp: 'https://play.google.com/store/apps/details?id=com.peerio.app'
+            androidApp: 'https://play.google.com/store/apps/details?id=com.peerio.app',
+            googleAuthA: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en',
+            googleAuthI: 'https://itunes.apple.com/app/google-authenticator/id388497605',
+            authy: 'https://authy.com'
         }
     }
 };

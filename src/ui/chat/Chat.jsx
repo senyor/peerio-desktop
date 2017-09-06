@@ -33,7 +33,6 @@ class Chat extends React.Component {
     static sidebarStateSaver;
 
     componentWillMount() {
-        chatStore.loadAllChats();
         clientApp.isInChatsView = true;
         TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
             Chat.sidebarOpen = isOpen == null ? Chat.sidebarOpen : isOpen;

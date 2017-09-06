@@ -6,6 +6,7 @@ const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { clientApp, User } = require('~/icebear');
 const uiStore = require('~/stores/ui-store');
+const { validateCode } = require('~/helpers/2fa');
 
 @observer
 class TwoFADialog extends React.Component {
@@ -57,7 +58,8 @@ class TwoFADialog extends React.Component {
     onTOTPCodeChange = ev => {
         this.totpCode = ev.target.value;
         this.totpCodeError = false;
-        if (this.totpCode.replace(/\s+/g, '').length >= 6) {
+        const res = validateCode(this.totpCode);
+        if (res.readyToSubmit) {
             this.totpCodeValidating = true;
             clientApp.active2FARequest.submit(this.totpCode, uiStore.prefs.last2FATrustDeviceSetting);
             this.totpCode = '';

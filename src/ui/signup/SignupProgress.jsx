@@ -15,7 +15,7 @@ const T = require('~/ui/shared-components/T');
         }
         return (
             <div className="signup-step-header">
-                <div className="signup-step-title">Current step</div>
+                <div className="signup-step-title">{this.props.title}</div>
                 <div className="signup-step-indicator">
                     {items}
                 </div>

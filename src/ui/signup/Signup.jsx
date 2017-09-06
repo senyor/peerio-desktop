@@ -32,6 +32,15 @@ const config = require('~/config');
         () => <ConfirmKey store={this.profileStore} returnHandler={this.advance} />
     ];
 
+    titles = [
+        t('title_hello'),
+        t('title_signup'),
+        t('title_AccountKey'),
+        t('title_AccountKey')
+    ];
+
+    get title() { return this.titles[this.step]; }
+
     @observable profileStore = new ProfileStore();
 
     handleSaveAvatar = (buffers, blobs) => {
@@ -174,7 +183,7 @@ const config = require('~/config');
         const { step, steps } = this;
         return (
             <div className={css('signup', { show: this.show })}>
-                <SignupProgress step={step} count={steps.length - 1} />
+                <SignupProgress step={step} count={steps.length - 1} title={this.title} />
                 <div className={step === 0 || step === 3 ? 'signup-welcome' : 'signup-content'} >
                     {steps[this.step]()}
                     {this.signupNav}

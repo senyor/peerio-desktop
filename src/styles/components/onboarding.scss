@@ -74,6 +74,7 @@
 
     &.done-first {
       border-top: 1px solid $divider-dark;
+      padding-top: $padding-default;
     }
 
     &.done {

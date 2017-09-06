@@ -43,7 +43,7 @@ class TwoFADialog extends React.Component {
     getPostText(request) {
         if (!request) return '';
         switch (request.type) {
-            case 'login': return t('title_2FALoginAuthPostText');
+            case 'login': return '';
             case 'backupCodes': return t('title_2FABackupCodeAuthPostText');
             case 'disable': return t('title_2FADisableAuthPostText');
             default: return '';

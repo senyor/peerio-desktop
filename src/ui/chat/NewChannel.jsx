@@ -84,7 +84,7 @@ class NewChannel extends React.Component {
                             value={this.purpose} onChange={this.handlePurposeChange} />
                     </div>
                 </div>
-                <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')} noHeader onlyPick />
+                <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')} noHeader onlyPick noInvite />
                 <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} />
             </div>
         );

@@ -70,11 +70,6 @@ class ChannelInvites extends React.Component {
                         <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
                             <div className="room-invites-list">
                                 <ChannelUpgradeOffer />
-                                {contactStore.hasChannelInvites
-                                    ? <div>
-                                        <FontIcon value="info" /> <T k="title_pendingEmailChannelInvites" />
-                                    </div>
-                                    : null}
                                 <List selectable>
                                     <ListSubHeader caption="Pending invites" />
                                     {chatInviteStore.received.map(i =>

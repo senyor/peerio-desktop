@@ -89,7 +89,7 @@ class UserPicker extends React.Component {
         this.selected.push(c);
         when(() => !c.loading, () => {
             setTimeout(() => c.notFound && this.selected.remove(c), 1000);
-            this.suggestInviteEmail = (c.notFound && isEmail) ? q : '';
+            this.suggestInviteEmail = (c.notFound && isEmail && !this.props.noInvite) ? q : '';
             this.legacyContactError = c.isLegacy;
             this.showNotFoundError = c.notFound;
         });

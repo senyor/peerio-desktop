@@ -156,7 +156,7 @@ class Onboarding extends React.Component {
                 <div className="onboarding-content">
                     <div className="display-1">{t('title_onboarding1')}</div>
                     <div className="title">{t('title_onboarding2')}</div>
-                    <p>{getCurrentOnboardingBonus()}MB of {getMaximumOnboardingBonus()}MB earned</p>
+                    <p>{t('title_earned', { current: getCurrentOnboardingBonus(), max: getMaximumOnboardingBonus() })}</p>
                     <div className="onboarding-to-dos">
                         {this.items.filter(item => !item.valueFn()).map(this.renderItem)}
                         {this.items.filter(item => item.valueFn()).map(this.renderItem)}

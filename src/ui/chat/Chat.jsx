@@ -95,7 +95,6 @@ class Chat extends React.Component {
 
     closeUserPicker = () => {
         this.showUserPicker = false;
-        this.emailsToInvite = [];
     };
 
     toggleSidebar = () => {

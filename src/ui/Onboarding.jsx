@@ -12,69 +12,12 @@ function createOnboardingItem(icon, title, description, valueFn, action, extraCl
     return { icon, title, description, valueFn, action, extraClass, buttonItem };
 }
 
-// TODO: move to icebear
-function getMaxInvitedPeople() { return 5; }
-
-// TODO: move to icebear
-function getCurrentInvitedPeople() {
-    try {
-        const { limit } = User.current.quota.quotas.userInviteOnboardingBonus.bonus.file;
-        const bonusPerUser = 50 * 1024 * 1024 - 1;
-        return Math.floor(limit / bonusPerUser);
-    } catch (e) {
-        // console.error(e);
-    }
-    return 0;
-}
-
-// TODO: move to icebear
-function getMaximumOnboardingBonus() {
-    const avatarBonus = 100;
-    const emailConfirmedBonus = 100;
-    const invitedUserBonus = 5 * 50;
-    const roomBonus = 100;
-    const backupBonus = 100;
-    const installBonus = 100;
-    const twoFABonus = 100;
-    return avatarBonus + emailConfirmedBonus + invitedUserBonus
-        + roomBonus + backupBonus + installBonus + twoFABonus;
-}
-
-// TODO: move to icebear
-function getCurrentOnboardingBonus() {
-    if (!User.current.quota) return 0;
-    const {
-        createRoomOnboardingBonus,
-        avatarOnboardingBonus,
-        twofaOnboardingBonus,
-        installsOnboardingBonus,
-        backupOnboardingBonus,
-        confirmedEmailBonus,
-        userInviteOnboardingBonus
-    } = User.current.quota.quotas;
-    try {
-        return [
-            createRoomOnboardingBonus,
-            avatarOnboardingBonus,
-            twofaOnboardingBonus,
-            installsOnboardingBonus,
-            backupOnboardingBonus,
-            confirmedEmailBonus,
-            userInviteOnboardingBonus
-        ].reduce((sum, value) => (sum + Math.ceil(value.bonus.file.limit / 1024 / 1024)), 0);
-    } catch (e) {
-        return 0;
-    }
-}
-
 @observer
 class Onboarding extends React.Component {
     @observable waiting = false;
 
     get items() {
-        const current = getCurrentInvitedPeople();
-        const max = getMaxInvitedPeople();
-
+        const { currentInvitedPeopleBonus, maxInvitedPeopleBonus } = User.current;
         return [
             createOnboardingItem(
                 'mail',
@@ -108,9 +51,9 @@ class Onboarding extends React.Component {
             ),
             createOnboardingItem(
                 'person_add',
-                t('title_onboardingInvitePeople', { current, max }),
+                t('title_onboardingInvitePeople', { current: currentInvitedPeopleBonus, max: maxInvitedPeopleBonus }),
                 t('title_onboardingInvitePeopleContent'),
-                () => current >= max,
+                () => currentInvitedPeopleBonus >= maxInvitedPeopleBonus,
                 () => window.router.push('/app/contacts')
             ),
             createOnboardingItem(
@@ -151,12 +94,13 @@ class Onboarding extends React.Component {
     };
 
     render() {
+        const { currentOnboardingBonus, maximumOnboardingBonus } = User.current;
         return (
             <div className="onboarding">
                 <div className="onboarding-content">
                     <div className="display-1">{t('title_onboarding1')}</div>
                     <div className="title">{t('title_onboarding2')}</div>
-                    <p>{t('title_earned', { current: getCurrentOnboardingBonus(), max: getMaximumOnboardingBonus() })}</p>
+                    <p>{t('title_earned', { current: currentOnboardingBonus, max: maximumOnboardingBonus })}</p>
                     <div className="onboarding-to-dos">
                         {this.items.filter(item => !item.valueFn()).map(this.renderItem)}
                         {this.items.filter(item => item.valueFn()).map(this.renderItem)}

@@ -125,11 +125,7 @@ class UserPicker extends React.Component {
     };
 
     invite = () => {
-        if (this.props.customInviteFn) {
-            this.props.customInviteFn(this.suggestInviteEmail);
-        } else {
-            contactStore.invite(this.suggestInviteEmail);
-        }
+        contactStore.invite(this.suggestInviteEmail);
         this.suggestInviteEmail = '';
     }
 
@@ -169,15 +165,6 @@ class UserPicker extends React.Component {
                             <div className="new-chat-search">
                                 <FontIcon value="search" />
                                 <div className="chip-wrapper">
-                                    {this.props.extraChips ?
-                                        this.props.extraChips.map(c => (
-                                            <Chip key={c}
-                                                className="chip-label"
-                                                onDeleteClick={() => this.props.onExtraChipRemove(c)} deletable >
-                                                {c}
-                                            </Chip>
-                                        ))
-                                        : null}
                                     {this.selected.map(c =>
                                         (<Chip key={c.username}
                                             className={css('chip-label', { 'not-found': c.notFound })}

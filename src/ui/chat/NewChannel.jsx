@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, User, chatInviteStore } = require('~/icebear');
+const { chatStore, User } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -14,7 +14,6 @@ class NewChannel extends React.Component {
     @observable waiting = false;
     @observable channelName = '';
     @observable purpose = '';
-    @observable emailsToInvite = [];
 
     componentDidMount() {
         if (this.isLimitReached) this.upgradeDialog.show();
@@ -32,7 +31,6 @@ class NewChannel extends React.Component {
             return;
         }
         when(() => chat.added === true, () => {
-            this.emailsToInvite.forEach(email => chatInviteStore.sendEmailInvite(chat.id, email));
             window.router.push('/app/chats');
         });
     };
@@ -61,14 +59,6 @@ class NewChannel extends React.Component {
         this.upgradeDialog = ref;
     };
 
-    addEmailInvite = (email) => {
-        this.emailsToInvite.push(email);
-    };
-
-    removeEmailInvite = (email) => {
-        this.emailsToInvite.remove(email);
-    };
-
     render() {
         if (this.waiting) {
             return (<div className="create-new-chat">
@@ -94,9 +84,7 @@ class NewChannel extends React.Component {
                             value={this.purpose} onChange={this.handlePurposeChange} />
                     </div>
                 </div>
-                <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')} noHeader onlyPick
-                    customInviteFn={this.addEmailInvite} extraChips={this.emailsToInvite}
-                    onExtraChipRemove={this.removeEmailInvite} />
+                <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')} noHeader onlyPick />
                 <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} />
             </div>
         );

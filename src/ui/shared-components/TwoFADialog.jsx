@@ -4,9 +4,10 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { clientApp, User } = require('~/icebear');
+const { clientApp } = require('~/icebear');
 const uiStore = require('~/stores/ui-store');
 const { validateCode } = require('~/helpers/2fa');
+const appControl = require('~/helpers/app-control');
 
 @observer
 class TwoFADialog extends React.Component {
@@ -17,6 +18,9 @@ class TwoFADialog extends React.Component {
     };
 
     cancel() {
+        if (clientApp.active2FARequest.type === 'login') {
+            appControl.signout();
+        }
         clientApp.active2FARequest.cancel();
     }
 
@@ -72,9 +76,9 @@ class TwoFADialog extends React.Component {
 
     render() {
         const req = clientApp.active2FARequest;
-        const actions = [];
-        if (req && req.cancelable) {
-            actions.push({ label: t('button_cancel'), onClick: this.cancel });
+        let actions;
+        if (req) {
+            actions = [{ label: t('button_cancel'), onClick: this.cancel }];
         }
         return (
             <Dialog

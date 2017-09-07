@@ -1,4 +1,6 @@
 const electron = require('electron');
+const autologin = require('~/helpers/autologin');
+const { User } = require('~/icebear');
 
 const app = electron.app || electron.remote.app;
 
@@ -12,4 +14,10 @@ function relaunch(force = false) {
     force ? app.exit(0) : app.quit();
 }
 
-module.exports = { relaunch };
+async function signout() {
+    await autologin.disable();
+    await User.current.signout();
+    relaunch();
+}
+
+module.exports = { relaunch, signout };

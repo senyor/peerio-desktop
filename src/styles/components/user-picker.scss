@@ -1,7 +1,7 @@
 .user-picker {
   @extend %flex-row;
   background: $background-root;
-  max-height: 100vh;
+  height: 100vh;
   width: 100%;
 
   .selected-items {

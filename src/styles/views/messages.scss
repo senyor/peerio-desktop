@@ -160,10 +160,13 @@ $suggests-max-height: 200px;
         font-size: 16px;
       }
 
+      .starred + .member-count {
+        border-left: 1px solid $divider-dark;
+      }
+
       .member-count {
         @extend %flex-row;
         @extend %flex-align-center;
-        border-left: 1px solid $divider-dark;
         height: 20px;
       }
     }

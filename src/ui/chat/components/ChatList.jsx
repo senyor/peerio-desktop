@@ -84,7 +84,7 @@ class ChatList extends React.Component {
                                     {chatStore.channels.map(c =>
                                         (<ListItem key={c.id || c.tempId}
                                             className={css('room-item', { active: c.active })}
-                                            caption={`#${c.name}`}
+                                            caption={`# ${c.name}`}
                                             onClick={() => this.activateChat(c.id)}
                                             rightIcon={
                                                 ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)

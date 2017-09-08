@@ -115,7 +115,11 @@ class LoginStore extends OrderedFormStore {
             if (!User.current.autologinEnabled) {
                 return autologin.shouldSuggestEnabling()
                     .then(suggest => {
-                        window.router.push(suggest ? '/autologin' : '/app/chats');
+                        if (suggest) {
+                            autologin.enable();
+                            autologin.dontSuggestEnablingAgain();
+                        }
+                        // window.router.push(suggest ? '/autologin' : '/app/chats');
                     });
             }
             return window.router.push('/app/chats');

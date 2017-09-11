@@ -8,12 +8,12 @@
       box-shadow: $shadow-2;
 
       &:hover {
-        background: $color-light-100;
+        background: $white;
         box-shadow: $shadow-8;
       }
 
       &:focus {
-        background: $color-light-100;
+        background: $white;
       }
     }
   }

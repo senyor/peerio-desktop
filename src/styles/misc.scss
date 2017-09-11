@@ -124,7 +124,7 @@ $status-bar-height: 36px;
   }
 
   .rt-progress_bar-path {
-    stroke: $color-light-100;
+    stroke: $white;
   }
 
   .reconnect {
@@ -197,7 +197,7 @@ $status-bar-height: 36px;
 
   &:hover {
     background-image: $background-gradient !important;
-    border: 1px solid $color-light-100;
+    border: 1px solid $white;
   }
 }
 

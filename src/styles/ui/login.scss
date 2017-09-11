@@ -29,7 +29,7 @@
 
     &:not([disabled]),
     &:hover:not([disabled]) {
-      background-color: $color-light-100 !important; // so important
+      background-color: $white !important; // so important
       color: $color-brand-primary !important; // :( - Paul
     }
   }
@@ -148,7 +148,7 @@
         width: 168px;
 
         &:hover {
-          border-color: $color-light-100;
+          border-color: $white;
         }
       }
     }

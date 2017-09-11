@@ -1,0 +1,107 @@
+.chat-sidebar {
+  @extend %flex-col;
+  @extend %flex-shrink-0;
+  background: $color-dark-03;
+  border-left: 1px solid $divider-dark;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+  transition: width 300ms $transition-easing-ease-in;
+  width: 0;
+
+  .section-list {
+    @extend %flex-shrink-0;
+    border-bottom: 1px solid $divider-dark;
+    overflow: hidden;
+    overflow-y: scroll;
+
+    // collaspabled list styling
+    .rt-list-subheader {
+      @extend %flex-row;
+      @extend %flex-align-center;
+
+      .material-icons {
+        margin-left: auto;
+        margin-right: $margin-small;
+      }
+    }
+
+    &.closed {
+      height: 48px;
+      overflow: hidden;
+    }
+  }
+
+  .rt-input-hint {
+    font-size: 12px;
+    line-height: 14px;
+    margin-left: $margin-default;
+    top: 28px;
+  }
+
+  .admin-controls {
+    border-top: 1px solid $divider-dark;
+  }
+
+  // TODO: combine with chat list avatar styles.
+  .rt-avatar-avatar {
+    font-size: 20px;
+    height: 32px;
+    line-height: 32px;
+    width: 32px;
+  }
+
+  .avatar-wrapper > .material-icons {
+    margin-right: 0;
+  }
+
+  .title {
+    height: 48px;
+    line-height: 48px;
+    margin: $margin-tiny $margin-default 0;
+  }
+
+  .rt-list-itemContentRoot {
+    cursor: pointer;
+  }
+
+  .rt-list-large {
+    overflow: hidden;
+  }
+
+  .rt-list-itemText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rt-input-input {
+    border-bottom: 1px solid $divider-dark;
+    height: 56px;
+    margin-top: 0;
+    padding-bottom: $padding-small;
+    padding-left: $padding-small;
+
+    .rt-input-label {
+      padding-left: $padding-default;
+    }
+
+    input {
+      border: 0;
+    }
+  }
+
+  &.open,
+  .rt-list-item {
+    width: 272px;
+  }
+
+  .tag {
+    background-color: #757575;
+    border-radius: 5px;
+    color: white;
+    display: inline-block;
+    font-size: 11px;
+    margin-left: 10px;
+    padding: 0 4px 2px;
+  }
+}

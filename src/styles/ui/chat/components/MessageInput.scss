@@ -1,0 +1,153 @@
+$suggests-max-height: 200px;
+
+.message-view {
+  .suggests-wrapper {
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-bottom: none;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    bottom: 100%;
+    box-shadow: 0 4px 13px -6px;
+    height: $suggests-max-height; // keep it like this until staged hide animation is implemented
+    left: 20px;
+    max-height: $suggests-max-height;
+    min-height: $suggests-max-height;
+    overflow: hidden;
+    position: absolute;
+    right: 20px;
+
+    //transition: 350ms cubic-bezier(.4, 0, .2, 1);
+
+    //&.show {
+    //  bottom: 100%;
+    // }
+    .suggests {
+      bottom: 10px;
+      left: 0;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      position: absolute;
+      right: 0;
+      top: 10px;
+    }
+
+    .suggest-item {
+      cursor: pointer;
+      padding: 3px 10px;
+    }
+
+    .selected {
+      background-color: $color-brand-primary;
+      color: white;
+    }
+  }
+
+  .message-input-wrapper {
+    position: relative;
+  }
+
+  .message-input {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    background-color: $background-root;
+    border-top: 1px solid $divider-dark;
+    //flex-grow: 1; FIXME: only grow when textarea grows.
+    flex-shrink: 0;
+    margin-top: auto;
+    max-height: 112px;
+    min-height: 64px;
+    padding: 0 $padding-small 0 26px;
+    position: relative;
+
+    .color-brand:not([disabled]) > .material-icons {
+      color: $color-brand-primary;
+    }
+
+    .color-affirmative > .material-icons {
+      color: $color-affirmative;
+    }
+
+    .ql-container {
+      font-family: inherit;
+      font-size: inherit;
+      margin-left: 18px;
+      padding: $padding-small 0;
+      width: 100%;
+    }
+
+    .ql-editor {
+      line-height: 1.45;
+      max-height: 96px;
+      padding: 0;
+
+      &.ql-blank::before {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+      }
+
+      p {
+        word-break: break-all;
+      }
+
+      img {
+        vertical-align: middle;
+        width: 1.5em;
+      }
+    }
+  }
+}
+
+//// SNACKBAR
+// Should adhere to specs found at https://material.google.com/components/snackbars-toasts.html#snackbars-toasts-usage
+$snackbar-max-width: 568px;
+$snackbar-min-width: 288px;
+
+.snackbar-wrapper {
+  @extend %flex-row;
+  bottom: -50px;
+  flex-shrink: 0;
+  height: 48px;
+  justify-content: center;
+  overflow: hidden;
+  position: absolute;
+  transition: 250ms $transition-easing-ease-in;
+  width: 100%;
+
+  &.show {
+    bottom: 0;
+  }
+}
+
+.snackbar-chat {
+  bottom: 0;
+  position: absolute;
+
+  &.show {
+    bottom: 100%;
+  }
+}
+
+.snackbar {
+  @extend %flex-row;
+  align-items: center;
+  background: $background-snackbar;
+  border-radius: 2px;
+  color: $text-light-primary;
+  height: 48px;
+  justify-content: space-between;
+  max-width: $snackbar-max-width;
+  min-width: $snackbar-min-width;
+  padding: 0 $padding-default 0 24px;
+  position: absolute;
+  top: 0;
+
+  .rt-button-button:not([disabled]) {
+    color: $button-primary;
+    margin-left: 40px;
+    min-width: 64px;
+    padding: 0 8px;
+  }
+}

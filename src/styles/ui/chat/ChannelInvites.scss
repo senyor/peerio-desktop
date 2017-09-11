@@ -1,0 +1,14 @@
+.room-invites-list {
+  .rt-list-subheader {
+    background: $color-dark-03;
+  }
+
+  .rt-list-listItem {
+    border-bottom: 1px solid $divider-dark;
+    height: 64px;
+  }
+
+  .rt-list-item {
+    height: 64px;
+  }
+}

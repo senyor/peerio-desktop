@@ -1,0 +1,8 @@
+.message-view {
+  .receipt-wrapper {
+    @extend %flex-row;
+    @extend %flex-align-end;
+    @extend %flex-justify-end;
+    margin-left: auto;
+  }
+}

@@ -1,0 +1,33 @@
+.chat-upload-progress {
+  @extend %flex-col;
+  background: $color-light-100;
+  color: $text-dark-primary;
+  height: 48px;
+  left: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  .progress-content {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    background-color: $color-dark-06;
+    height: 48px;
+    padding: 0 24px;
+    width: 100%;
+
+    .material-icons {
+      color: $text-dark-secondary;
+    }
+  }
+
+  .progress-title {
+    line-height: 44px;
+    margin-left: $margin-small;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

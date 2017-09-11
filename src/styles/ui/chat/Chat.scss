@@ -1,0 +1,389 @@
+// view wrapper
+.messages {
+  @extend %flex-row;
+  background: $background-root;
+
+  .rt-progress_bar-linear {
+    position: absolute;
+    width: 100vw;
+  }
+
+  .starred,
+  .starred .material-icons {
+    color: gold;
+  }
+}
+
+// message content, input, toolbar
+.message-view {
+  @extend %flex-col;
+  @extend %flex-grow-1;
+  @extend %flex-shrink-1;
+  position: relative;
+  // FIXME remove calc?
+  width: calc(100vw - 352px);
+
+  .message-toolbar {
+    @extend %flex-justify-between;
+    align-items: center;
+    border-bottom: 1px solid $divider-dark;
+    display: flex;
+    flex: 0 0 80px;
+    padding: 0 $padding-default 0 24px;
+
+    .message-toolbar-inner {
+      @extend %flex-col;
+      width: '90%';
+    }
+
+    .title {
+      @extend %flex-row;
+      color: $text-dark-primary;
+      font-size: 20px;
+      font-weight: $font-weight-bold;
+      height: 24px;
+      margin: $margin-default $margin-default $margin-tiny 0;
+      overflow: hidden;
+
+      .name-editor {
+        height: 24px;
+        margin: 0;
+        padding: 0;
+
+        input {
+          border: 1px solid rgba($color-brand-primary, .54);
+          border-radius: 4px;
+          color: $text-dark-secondary;
+          font-weight: $font-weight-bold;
+          height: 24px;
+          line-height: 20px;
+          margin: 0;
+          padding: $padding-tiny $padding-small;
+        }
+      }
+
+      .title-content {
+        height: 24px;
+        line-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      // styling for edit icon in title bar thing.
+      .material-icons {
+        color: $color-dark-38;
+        display: none;
+        font-size: 18px;
+        left: 2px;
+        position: absolute; // FIXME: rewrite to remove absolute positioning - Paul
+      }
+
+      &:hover {
+        .material-icons {
+          display: block;
+        }
+      }
+    }
+
+    .meta-nav {
+      @extend %flex-row;
+      @extend %flex-align-center;
+      height: 20px;
+      margin: 2px 0;
+      margin-left: -$margin-small;
+
+      .rt-progress_bar-circular {
+        height: 20px;
+        margin: 4px 9px 0 7px;
+        width: 20px;
+      }
+
+      .material-icons {
+        font-size: 16px;
+      }
+
+      .starred + .member-count {
+        border-left: 1px solid $divider-dark;
+      }
+
+      .member-count {
+        @extend %flex-row;
+        @extend %flex-align-center;
+        height: 20px;
+      }
+    }
+
+    .search {
+      margin-right: 12px;
+    }
+  }
+
+  .corrupt-message { // This is never used??
+    @extend %flex-row;
+    @extend %flex-align-center;
+    background: $color-dark-06;
+    border-bottom: 2px solid $color-error;
+    border-radius: 2px 2px 0 0;
+    height: 48px;
+    margin-top: 32px;
+    padding: $padding-small;
+    width: 100%;
+  }
+
+  // both for text input and chat content
+  img.emojione {
+    display: inline-block;
+    height: 3ex;
+    margin: -.2ex .15em .2ex;
+    min-height: 20px;
+    min-width: 20px;
+    transition: transform 50ms ease;
+    -webkit-user-select: initial;
+    vertical-align: middle;
+    //  width: auto;
+
+    &:hover {
+      transform: scale(1.4);
+    }
+  }
+}
+
+// message navigation
+.list {
+  .starred {
+    margin-right: $margin-tiny;
+  }
+
+  .avatar-wrapper > .material-icons {
+    width: 20px !important; // :( - paul
+  }
+
+  .rt-list-left .rt-list-itemAction span {
+    width: 32px;
+  }
+
+  // TODO: Remove when channels go live - paul
+  .avatar-group-chat {
+    background: #979797;
+    border-radius: 40px;
+    color: $text-light-primary;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    width: 32px;
+  }
+
+  .rt-avatar-avatar {
+    font-size: 20px;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 24px 0 0;
+    width: 32px;
+  }
+
+  // shown when when loading chats in the chat list.
+  .rt-progress_bar-linear {
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .rt-list-itemContentRoot {
+    overflow: hidden;
+  }
+
+  .room-item,
+  .room-invites {
+    background: $background-chat-list-item;
+    cursor: pointer;
+    font-weight: $font-weight-semibold;
+
+    .rt-list-item { // This should be 32px - Paul
+      height: 32px;
+      max-height: 32px;
+      min-height: 32px;
+    }
+  }
+
+  .dm-item {
+    background: $background-chat-list-item; // background colour for Anri. - Paul
+    cursor: pointer;
+    transition: 150ms;
+
+    &:hover:not(.active) {
+      background-color: $background-hover-message;
+    }
+  }
+
+  .rt-list-primary,
+  .rt-list-itemText {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,
+  .rt-list-item.selectable:not(.disabled):hover {
+    background-color: $background-hover-message;
+  }
+
+  .rt-list-listItem.active .rt-list-item {
+    background: $background-active-message;
+
+    .rt-list-itemText {
+      color: $text-light-secondary;
+    }
+
+    .avatar-group-chat,
+    .rt-list-primary {
+      color: $text-light-primary;
+      font-weight: $font-weight-bold;
+    }
+
+    &:hover {
+      background: $background-active-message;
+    }
+  }
+
+  .rt-ripple-ripple {
+    background-color: $color-brand-primary;
+  }
+
+  .rt-list-itemAction {
+    margin: 0;
+  }
+
+  // contact status indicator
+  // status should be applied to list item parent.
+  .online .rt-list-left .avatar {
+    border-color: $status-online;
+  }
+
+  .busy .rt-list-left .material-icons {
+    border-color: $status-busy;
+  }
+}
+
+.create-new-chat .upgrade-rooms {
+  border-bottom: 1px solid $divider-dark;
+  border-top: 1px solid $divider-dark;
+}
+
+//// NEW CHAT
+
+// TODO refactor user-picker styling.
+// Move .new-chat-search styles into user-picker component styling - paul
+
+.zero-message,
+.create-new-chat {
+  @extend %flex-col;
+  @extend %flex-align-center;
+  background: white;
+  height: 100vh;
+  width: 100vw;
+
+  .message-search-wrapper {
+    margin-bottom: 48px;
+  }
+
+  .new-chat-search {
+    @extend %flex-align-center;
+    border: 1px solid $input-dark-border;
+    border-radius: 24px;
+    display: flex;
+    flex-shrink: 0;
+    overflow: hidden;
+    padding: 0 $padding-small 0 $padding-default;
+    width: 100%;
+
+    .chip-wrapper {
+      max-width: 544px;
+      min-height: 46px;
+      padding: 0 $padding-small;
+    }
+
+    .rt-input-input {
+      flex-grow: 1;
+      margin: 0;
+      max-width: 100%;
+      padding: 0;
+      width: inherit;
+
+      input {
+        border-width: 0;
+        padding: 0;
+      }
+    }
+
+    .rt-button-button {
+      background-color: $button-affirmative;
+      border-radius: 24px;
+      color: $text-light-primary;
+      transition: 250ms;
+
+      &:hover {
+        background-color: $button-affirmative;
+        color: $color-light-100;
+
+        .rt-rippleWrapper {
+          border-radius: 0 24px 24px 0;
+        }
+      }
+    }
+
+    .rt-button-button[disabled] {
+      background-color: #f0f0f0;
+    }
+  }
+
+  .rt-list-list {
+    @extend %flex-col;
+    overflow: hidden;
+
+    .user-list {
+      cursor: pointer;
+      // Temporary fix. We'll want to add sticky headers to lists once multiple
+      // lists are shown.
+      overflow-y: auto;
+    }
+  }
+
+  .rt-list-subheader {
+    @extend %flex-shrink-0;
+    border-bottom: $divider-dark solid 1px;
+    cursor: default;
+  }
+
+  .rt-list-listItem {
+    &:not(:first-of-type) {
+      border-top: $divider-dark solid 1px;
+    }
+
+    .rt-avatar-avatar {
+      margin-right: 24px;
+    }
+  }
+}
+
+.create-new-chat {
+  @extend %flex-grow-1;
+  @extend %flex-col;
+
+  padding: 0 20px;
+  position: relative;
+
+  .new-chat-search {
+    max-width: 600px;
+
+    + .new-chat-search {
+      margin-top: 32px;
+    }
+
+    + .user-picker {
+      margin-top: 32px;
+      padding-top: 0;
+    }
+  }
+}

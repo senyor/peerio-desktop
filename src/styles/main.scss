@@ -22,10 +22,8 @@
 @import './components/onboarding';
 @import './components/search';
 @import './components/notifications';
-@import './components/snackbar';
 @import './components/emoji-picker';
 @import './components/file-picker';
-@import './components/inline-files';
 @import './components/list';
 @import './components/signup-step-header';
 @import './components/user-picker';
@@ -33,7 +31,8 @@
 @import './ui/signup';
 @import './ui/mail';
 @import './ui/contacts';
-@import './ui/chat';
+@import './ui/chat/_all';
+@import './ui/shared-components/_all';
 @import './ui/settings';
 @import './ui/files';
 @import './misc';

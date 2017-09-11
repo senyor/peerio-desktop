@@ -1,0 +1,305 @@
+.message-view {
+  .progress-wrapper {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-justify-center;
+    min-height: 50px;
+    width: 100%;
+  }
+
+  .marker-wrapper {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-justify-center;
+    margin: $margin-default 0;
+    width: 100%;
+
+    .marker {
+      @extend %flex-grow-1;
+      background: $divider-dark;
+      height: 1px;
+      margin: $margin-default 0;
+    }
+
+    .content {
+      padding: 0 $padding-small;
+
+      .material-icons {
+        color: $color-error;
+        font-size: 8px;
+        height: 8px;
+        left: 16px;
+        width: 8px;
+      }
+
+      .rt-avatar-avatar {
+        margin: 0 $margin-tiny;
+      }
+    }
+  }
+
+  .marker-wrapper.new-messages {
+    margin: 0;
+
+    .marker {
+      background: $background-new-messages;
+    }
+
+    .content {
+      color: $text-new-messages;
+      font-size: 12px;
+      padding-right: $padding-default;
+    }
+  }
+
+  .messages-container {
+    @extend %flex-col;
+    @extend %flex-align-start;
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 24px;
+
+    .messages-progress-bar {
+      align-self: center;
+      margin-bottom: auto;
+      margin-top: auto;
+    }
+
+    .invalid-sign-warning {
+      @extend %flex-row;
+      @extend %hint-error-label;
+      @extend %flex-align-center;
+      @extend %flex-justify-between;
+      background-color: $color-dark-06;
+      border-radius: 2px;
+      color: $text-dark-hint;
+      height: 52px;
+      margin-left: -8px;
+      margin-top: 24px;
+      padding: 0 $padding-small 0 $padding-default;
+    }
+
+    .send-error {
+      &-menu {
+        .material-icons {
+          color: $color-error;
+        }
+      }
+
+      &-message {
+        @extend %hint-error-label;
+        color: $color-error;
+      }
+    }
+
+    .message-content-wrapper {
+      @extend %flex-col;
+      @extend %flex-shrink-0;
+      border-radius: 2px;
+      margin: 12px 0 0;
+      padding: $padding-tiny 24px;
+      position: relative;
+
+      &:not(.invalid-sign) {
+        width: 100%;
+      }
+
+      &:hover {
+        background-color: $color-dark-03;
+        border-radius: 2px;
+      }
+
+      .message-content-wrapper-inner {
+        @extend %flex-row;
+      }
+
+      .marker-wrapper {
+        margin-left: -$margin-tiny;
+      }
+
+      &.light {
+        margin-top: 0;
+
+        .timestamp {
+          @extend %flex-shrink-0;
+          @extend %hint-error-label;
+          color: rgba($text-dark-hint, 0);
+          overflow: hidden;
+          padding-top: 2px; // To align the timestamp with the first row of text.
+          text-align: right;
+          white-space: nowrap;
+          width: 40px;
+        }
+
+        &:hover {
+          .timestamp {
+            color: $text-dark-hint;
+          }
+        }
+      }
+
+      &.invalid-sign {
+        background-color: rgba($color-error, .06);
+        border-radius: 18px;
+        margin: 0 32px 0 28px;
+        min-width: 320px;
+        overflow: hidden;
+        padding: $padding-tiny 0 0 $padding-tiny;
+
+        .warning-icon {
+          @extend %flex-shrink-0;
+          color: $color-error;
+          margin: 0 12px 0 auto;
+          width: 24px;
+
+          + .receipt-wrapper {
+            @extend %flex-align-center;
+            margin-left: 0;
+          }
+        }
+      }
+
+      .sending-overlay {
+        background-color: rgba(255, 255, 255, .7);
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+      }
+    }
+
+    .message-content {
+      @extend %flex-col;
+      flex-grow: 1;
+
+      a {
+        @extend %selectable;
+        word-break: break-word;
+      }
+
+      .mention {
+        color: $text-dark-primary;
+        cursor: pointer;
+        font-weight: $font-weight-semibold;
+
+        &.self {
+          background-color: rgba($color-brand-secondary, .5);
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .pre {
+        @extend %selectable;
+        background-color: $color-dark-03;
+        border-radius: 4px;
+        font-family: monospace;
+        margin-right: $margin-tiny;
+        padding: $padding-tiny 6px;
+      }
+
+      .meta-data {
+        @extend %flex-row;
+        align-items: center;
+        margin-bottom: $margin-tiny;
+
+        .timestamp {
+          @extend %hint-error-label;
+          color: $text-dark-secondary;
+        }
+
+        .user {
+          font-weight: $font-weight-bold;
+          margin: 0 $padding-small 0 $padding-default;
+
+          .username {
+            color: $text-dark-secondary;
+            font-style: italic;
+            font-weight: $font-weight-regular;
+          }
+        }
+      }
+
+      .message-body {
+        @extend %flex-row;
+        @extend %flex-align-center;
+      }
+
+      .system-message {
+        color: $text-dark-secondary;
+        font-style: italic;
+      }
+
+      p {
+        flex-grow: 1;
+        line-height: 1.4;
+        margin: 0 0 0 $margin-default;
+        max-width: calc(100% - 100px);
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      p + p {
+        margin-top: $margin-tiny;
+      }
+
+      b,
+      strong {
+        font-weight: 600;
+      }
+
+      a {
+        color: $color-brand-primary;
+      }
+    }
+
+    .inline-image {
+      margin: $margin-small auto $margin-small $margin-default;
+      max-height: 500px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .messages-start {
+      margin-bottom: $margin-small;
+      margin-top: auto;
+      padding: 0 24px;
+      width: 100%;
+
+      .avatars {
+        @extend %flex-row;
+        @extend %flex-wrap;
+        margin-bottom: $margin-small;
+        margin-top: 64px;
+
+        .avatar-wrapper:not(:last-of-type) {
+          margin: 0 $margin-small $margin-small 0;
+        }
+
+        .rt-avatar-avatar {
+          height: 64px;
+          width: 64px;
+
+          .rt-avatar-letter {
+            line-height: 64px;
+          }
+        }
+      }
+
+      .title {
+        margin-bottom: $margin-small;
+      }
+    }
+  }
+}
+
+.messages-inline-progress-bar {
+  align-self: center;
+  width: 35px;
+}

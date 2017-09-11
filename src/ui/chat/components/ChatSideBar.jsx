@@ -93,12 +93,12 @@ class ChatSideBar extends React.Component {
         if (isChannel && canIAdmin) {
             userMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
                 <MenuItem value="make_admin" icon="account_balance" caption={t('button_makeAdmin')} onClick={this.makeAdmin} />
-                <MenuItem value="delete" icon="delete" caption={t('button_delete')} onClick={this.deleteParticipant} />
+                <MenuItem value="delete" icon="delete" caption={t('button_remove')} onClick={this.deleteParticipant} />
             </IconMenu>);
 
             adminMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
                 <MenuItem value="demote_admin" icon="cancel" caption={t('button_demoteAdmin')} onClick={this.demoteAdmin} />
-                <MenuItem value="delete" icon="delete" caption={t('button_delete')} onClick={this.deleteParticipant} />
+                <MenuItem value="delete" icon="delete" caption={t('button_remove')} onClick={this.deleteParticipant} />
             </IconMenu>);
 
             inviteMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>

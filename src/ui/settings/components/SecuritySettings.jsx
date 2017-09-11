@@ -217,7 +217,7 @@ class SecuritySettings extends React.Component {
                         <T k="title_enterTOTPCodeFromApp" tag="div" className="dark-label" />
                         <input type="text" className="totp-input" disabled={!this.twoFASecret || this.totpCodeValidating}
                             value={this.totpCode} onChange={this.onTOTPCodeChange}
-                            style={{ backgroundColor: this.totpCodeError ? '#ffaaaa' : 'initial' }} />
+                            style={{ backgroundColor: this.totpCodeError ? '#ffaaaa' : '#ffffff' }} />
                         {this.totpCodeValidating ? <ProgressBar type="circular" className="totp-progress" /> : null}
                     </div>
                 </div>

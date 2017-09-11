@@ -72,6 +72,7 @@
   "title_firstName": "First name",
   "title_lastName": "Last name",
   "title_email": "Email",
+  "title_enterEmail": "Enter an email address",  
   "title_hintUsername": "a-Z, 0-9, and _ only.",
   "title_hintEmail": "ex. info@example.com",
   "title_language": "Language",

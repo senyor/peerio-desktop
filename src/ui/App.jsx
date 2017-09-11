@@ -48,7 +48,7 @@ class App extends React.Component {
         ];
 
         return (
-            <div className="flex-row app-root">
+            <div className="app-root">
                 <AppNav />
                 {this.props.children}
                 <Dialog active={!this.contactDialogHiding && !!uiStore.contactDialogUsername}

@@ -170,7 +170,7 @@ class LoginStore extends OrderedFormStore {
     };
     render() {
         return (
-            <div className="flex-row app-root">
+            <div className="app-root">
                 <FullCoverLoader show={this.loginStore.busy} />
                 <div className="login rt-light-theme">
                     <img alt="Peerio logo" className="logo" src="static/img/logo-with-tag.png" />

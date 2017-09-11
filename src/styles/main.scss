@@ -33,11 +33,9 @@
 @import './views/signup';
 @import './views/mail';
 @import './views/contacts';
-@import './views/messages';
-@import './views/new-chat';
+@import './views/chat';
 @import './views/settings';
 @import './views/files';
-@import './views/auto-sign-in';
 @import './misc';
 @import './typography';
 
@@ -80,6 +78,10 @@ body,
   overflow: hidden;
   padding: 0;
   width: 100vw;
+}
+
+.app-root {
+  @extend %flex-row;
 }
 
 section {

@@ -556,7 +556,7 @@ $suggests-max-height: 200px;
 
   .chat-upload-progress {
     @extend %flex-col;
-    background: $white;
+    background: $color-light-100;
     color: $text-dark-primary;
     height: 48px;
     left: 0;
@@ -923,7 +923,7 @@ $suggests-max-height: 200px;
 
       &:hover {
         background-color: $button-affirmative;
-        color: $white;
+        color: $color-light-100;
 
         .rt-rippleWrapper {
           border-radius: 0 24px 24px 0;

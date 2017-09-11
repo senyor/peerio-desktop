@@ -54,9 +54,9 @@
 
   .invalid-file {
     border-color: currentColor;
-    color: rgba($color-error, .6);
+    color: $color-error-opacity-6;
     .material-icons {
-      color: rgba($color-error, .6);
+      color: $color-error-opacity-6;
       margin-right: $padding-tiny;
     }
   }

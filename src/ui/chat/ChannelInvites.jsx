@@ -25,10 +25,14 @@ class ChannelInvites extends React.Component {
         return (<div data-kegDbId={kegDbId}>
             <Button label={t('button_accept')}
                 onClick={this.acceptInvite}
-                flat primary />
+                flat primary disabled={this.isLimitReached} />
             <Button label={t('button_decline')}
                 onClick={this.rejectInvite}
                 flat />
+            {this.isLimitReached
+                ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
+                    onClick={this.toggleDialog} />
+                : null}
         </div>
         );
     }
@@ -77,12 +81,8 @@ class ChannelInvites extends React.Component {
                                             key={`${i.kegDbId}${i.username}${i.timestamp}`}
                                             caption={t('title_invitedBy', { username: i.username, timestamp: moment(i.timestamp).format('llll') })}
                                             legend={i.channelName}
-                                            rightIcon={
-                                                this.isLimitReached
-                                                    ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
-                                                        onClick={this.toggleDialog} />
-                                                    : this.inviteOptions(i.kegDbId)
-                                            } />)
+                                            rightIcon={this.inviteOptions(i.kegDbId)}
+                                        />)
                                     )}
                                 </List>
                             </div>

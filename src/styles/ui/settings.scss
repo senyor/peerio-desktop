@@ -1,4 +1,7 @@
 .settings {
+  @extend %flex-row;
+  @extend %flex-justify-center;
+
   background: $background-root;
   overflow: auto;
   padding-top: 32px;

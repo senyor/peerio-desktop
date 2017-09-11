@@ -141,7 +141,7 @@ class Message extends React.Component {
                 css('message-content-wrapper', {
                     'invalid-sign': invalidSign, 'send-error': m.sendError, light: this.props.light
                 })}>
-                <div className="flex-row">
+                <div className="message-content-wrapper-inner">
                     {this.props.light ? null : <Avatar contact={m.sender} size="medium" />}
                     {this.props.light ?
                         <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div> : null
@@ -160,7 +160,7 @@ class Message extends React.Component {
                                     <div className="timestamp selectable">{time.format(m.timestamp)}</div>
                                 </div>
                         }
-                        <div className="flex-row flex-align-center">
+                        <div className="message-body">
                             {
                                 m.systemData || m.files
                                     ? null

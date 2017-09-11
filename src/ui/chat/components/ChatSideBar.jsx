@@ -114,7 +114,7 @@ class ChatSideBar extends React.Component {
                     {isChannel ? <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin} /> : null}
                 </div>
                 {isChannel ?
-                    <div className="section-list flex-shrink-0">
+                    <div className="section-list">
                         <List selectable>
                             {canILeave ?
                                 <ListItem

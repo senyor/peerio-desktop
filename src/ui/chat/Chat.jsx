@@ -116,8 +116,8 @@ class Chat extends React.Component {
     renderHeader() {
         const chat = chatStore.activeChat;
         return (
-            <div className="message-toolbar flex-justify-between">
-                <div className="flex-col" style={{ width: '90%' }}>
+            <div className="message-toolbar">
+                <div className="message-toolbar-inner" >
                     <div className="title" onClick={this.showChatNameEditor}>
                         {
                             this.chatNameEditorVisible
@@ -132,7 +132,7 @@ class Chat extends React.Component {
                                 </div>
                         }
                     </div>
-                    <div className="flex-row meta-nav">
+                    <div className="meta-nav">
                         {chat.isChannel
                             ? null
                             : (chat.changingFavState

@@ -43,7 +43,7 @@ class Settings extends React.Component {
         const primaryAddressConfirmed = User.current.primaryAddressConfirmed;
 
         return (
-            <div className="flex-row flex-justify-center settings">
+            <div className="settings">
                 <div className="tab-wrapper">
                     <div className="headline">
                         {t('title_settings')}

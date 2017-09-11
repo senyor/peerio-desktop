@@ -57,7 +57,7 @@ class ChannelInvites extends React.Component {
             <div className="messages">
                 <ChatList />
                 <div className="message-view">
-                    <div className="message-toolbar flex-justify-between">
+                    <div className="message-toolbar">
                         <div className="flex-col">
                             <div className="title" onClick={this.showChatNameEditor}>
                                 <T k="title_channelInvites" />

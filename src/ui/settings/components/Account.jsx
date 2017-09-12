@@ -53,7 +53,7 @@ class Account extends React.Component {
         const hasActivePlans = User.current.activePlans && User.current.activePlans.length;
         return (
             <div className="flex-col flex-grow-1">
-                {config.paymentsDisabled || hasActivePlans ? null
+                {config.disablePayments || hasActivePlans ? null
                     : <section className="flex-row flex-shrink-0 flex-align-center"
                         style={{ background: 'rgba(50, 206, 195, .15)', borderRadius: '4px', marginTop: '4px', padding: '8px 16px' }}>
                         <div style={{ fontSize: '16px', fontWeight: '600' }}>{t('title_upgradeMessage')}</div>

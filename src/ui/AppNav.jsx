@@ -139,8 +139,8 @@ class AppNav extends React.Component {
                         {
                             config.disablePayments || hasActivePlans ? null
                                 : <span><MenuDivider />
-                         <MenuItem value="upgrade" icon="open_in_browser" caption={t('button_upgrade')}
-                            onClick={this.toUpgrade} />
+                                    <MenuItem value="upgrade" icon="open_in_browser" caption={t('button_upgrade')}
+                                        onClick={this.toUpgrade} />
                                 </span>
                         }
                         <MenuDivider />

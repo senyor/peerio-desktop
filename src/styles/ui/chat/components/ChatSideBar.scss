@@ -33,6 +33,10 @@
 
   .member-list {
     flex: 1;
+
+    &.closed {
+      flex: initial;
+    }
   }
 
   .rt-input-hint {

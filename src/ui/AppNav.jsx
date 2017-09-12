@@ -15,6 +15,7 @@ const routerStore = require('~/stores/router-store');
 const urls = require('~/config').translator.urlMap;
 const autologin = require('~/helpers/autologin');
 const path = require('path');
+const config = require('~/config');
 
 const { app, nativeImage } = remote;
 
@@ -135,9 +136,13 @@ class AppNav extends React.Component {
                             onClick={this.toAbout} />
                         <MenuItem value="help" icon="help" caption="Help"
                             onClick={this.toHelp} />
-                        <MenuDivider />
-                        {!hasActivePlans && <MenuItem value="upgrade" icon="open_in_browser" caption={t('button_upgrade')}
-                            onClick={this.toUpgrade} />}
+                        {
+                            config.disablePayments || hasActivePlans ? null
+                                : <span><MenuDivider />
+                         <MenuItem value="upgrade" icon="open_in_browser" caption={t('button_upgrade')}
+                            onClick={this.toUpgrade} />
+                                </span>
+                        }
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
                             onClick={this.signout} />

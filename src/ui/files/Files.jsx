@@ -74,10 +74,6 @@ const { getListOfFiles } = require('~/helpers/file');
         if (!fileStore.files.length && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
         return (
             <div className="files">
-                {/* <div className={css('notice-upgrade', { show: noMoreStorage })}>
-                    <div className="notice-content">{t('title_upgradeStorage')}</div>
-                    <Button label={t('button_upgrade')} href={urls.upgrade} icon="open_in_browser" primary flat />
-                </div> */}
                 <div className="file-wrapper">
                     <Filter />
                     <GlobalActions onUpload={this.handleUpload} onDelete={this.handleBulkDelete}

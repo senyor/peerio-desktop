@@ -9,6 +9,7 @@ const T = require('~/ui/shared-components/T');
 @observer
 class ChannelUpgradeOffer extends React.Component {
     render() {
+        if (config.disablePayments) return null;
         if (User.current.channelLimit === Number.MAX_SAFE_INTEGER) return null;
         return (
             <div className="upgrade-rooms">

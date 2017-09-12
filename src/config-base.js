@@ -13,6 +13,8 @@ module.exports = {
     ghostFrontendUrl: 'https://mail.peerio.com',
     usePeerioUpdater: false, // TODO: enable after some testing on staging
 
+    disablePayments: false,
+
     contacts: {
         supportUser: 'support',
         supportEmail: 'support@peerio.com',

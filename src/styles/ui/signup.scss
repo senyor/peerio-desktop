@@ -89,13 +89,13 @@
     @extend %flex-justify-center;
 
     background: #eaf8f9; //TODO: create var - Paul
-    border: 1px solid $color-brand-primary;
     border-radius: 128px;
     cursor: pointer;
     height: 128px;
     margin-top: -64px;
     transition: 150ms;
     width: 128px;
+    box-shadow: 0 0 1px 0px grey;
 
     &:hover {
       background: #fff;

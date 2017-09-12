@@ -8,6 +8,7 @@ const T = require('~/ui/shared-components/T');
 const { ProgressBar, Button, Input } = require('~/react-toolbox');
 const css = require('classnames');
 const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
+const config = require('~/config');
 
 @observer
 class NewChannel extends React.Component {
@@ -68,7 +69,7 @@ class NewChannel extends React.Component {
         return (
             <div className="create-new-chat">
                 <T k="title_createChannel" tag="h1" />
-                <T k="title_createChannelDetails" tag="div" style={{ marginBottom: '20px', maxWidth: '560px' }} />
+                <T k={`title_createChannelDetails${config.paymentsDisabled ? '_noPayments' : ''}`} tag="div" style={{ marginBottom: '20px', maxWidth: '560px' }} />
                 <div className="new-chat-search">
                     <div className="chip-wrapper">
                         <Input placeholder={t('title_channelName')}

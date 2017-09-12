@@ -12,7 +12,7 @@
     @extend %flex-shrink-0;
     border-bottom: 1px solid $divider-dark;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     // collaspabled list styling
     .rt-list-subheader {
@@ -29,6 +29,10 @@
       height: 48px;
       overflow: hidden;
     }
+  }
+
+  .member-list {
+    flex: 1;
   }
 
   .rt-input-hint {

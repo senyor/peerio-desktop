@@ -116,7 +116,7 @@ class AppNav extends React.Component {
     render() {
         const contact = contactStore.getContact(User.current.username);
         const primaryAddressConfirmed = User.current.primaryAddressConfirmed;
-        const cloudFillPercent = 22 + (79 - 22) * (User.current.fileQuotaUsedPercent / 100);
+        const hasActivePlans = User.current.activePlans && User.current.activePlans.length;
         return (
             <div className="app-nav">
                 <div className="avatar-menu-wrapper">
@@ -136,8 +136,8 @@ class AppNav extends React.Component {
                         <MenuItem value="help" icon="help" caption="Help"
                             onClick={this.toHelp} />
                         <MenuDivider />
-                        <MenuItem value="upgrade" icon="open_in_browser" caption={t('button_upgrade')}
-                            onClick={this.toUpgrade} />
+                        {!hasActivePlans && <MenuItem value="upgrade" icon="open_in_browser" caption={t('button_upgrade')}
+                            onClick={this.toUpgrade} />}
                         <MenuDivider />
                         <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
                             onClick={this.signout} />

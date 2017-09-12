@@ -7,6 +7,7 @@ const Message = require('./Message');
 const { chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const urls = require('~/config').translator.urlMap;
+const config = require('~/config');
 
 @observer
 class MessageList extends React.Component {
@@ -189,10 +190,12 @@ class MessageList extends React.Component {
                     {t('title_chatBeginning')}
                     &nbsp;<strong>{chat.name}</strong>.
                 </div>
-                <div className="archive-link">
-                    {t('title_chatArchive')}
-                    &nbsp;<Link href={urls.upgrade} label={t('button_upgradeForArchive')} />
-                </div>
+                {config.disablePayments ? null
+                    : <div className="archive-link">
+                        {t('title_chatArchive')}
+                        &nbsp;<Link href={urls.upgrade} label={t('button_upgradeForArchive')} />
+                    </div>
+                }
             </div>
         );
     }

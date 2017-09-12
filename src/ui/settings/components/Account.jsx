@@ -6,6 +6,7 @@ const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
 const T = require('~/ui/shared-components/T');
 const urls = require('~/config').translator.urlMap;
+const config = require('~/config');
 
 @observer
 class Account extends React.Component {
@@ -52,13 +53,13 @@ class Account extends React.Component {
         const hasActivePlans = User.current.activePlans && User.current.activePlans.length;
         return (
             <div className="flex-col flex-grow-1">
-                { !hasActivePlans ?
-                    <section className="flex-row flex-shrink-0 flex-align-center"
+                {config.paymentsDisabled || hasActivePlans ? null
+                    : <section className="flex-row flex-shrink-0 flex-align-center"
                         style={{ background: 'rgba(50, 206, 195, .15)', borderRadius: '4px', marginTop: '4px', padding: '8px 16px' }}>
                         <div style={{ fontSize: '16px', fontWeight: '600' }}>{t('title_upgradeMessage')}</div>
                         <Button primary flat label={t('button_upgrade')}
                             onClick={this.toUpgrade} />
-                    </section> : null
+                    </section>
                 }
                 <section className="section-divider">
                     <div className="title">{t('title_promoConsentRequestTitle')}</div>

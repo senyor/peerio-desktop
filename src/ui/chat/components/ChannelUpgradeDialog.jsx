@@ -5,6 +5,7 @@ const { Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
 const urls = require('~/config').translator.urlMap;
+const config = require('~/config');
 
 @observer
 class ChannelUpgradeDialog extends React.Component {
@@ -15,6 +16,7 @@ class ChannelUpgradeDialog extends React.Component {
     }
 
     render() {
+        if (config.disablePayments) return null;
         const hide = () => { this.showDialog = false; };
         const dialogActions = [
             { label: t('button_cancel'), onClick: hide },

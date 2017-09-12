@@ -25,7 +25,6 @@ function ZeroScreen(props) {
                         <img src="static/img/file-upload.png"
                             style={{ maxWidth: '280px', minWidth: '40%' }} alt="" />
                     </div>
-                    {/* <p className="upgrade">{t('title_upgradeCTA')}</p> */}
                 </div>
                 <div className="flex-col flex-grow-1" />
             </div>

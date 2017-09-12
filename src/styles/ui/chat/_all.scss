@@ -1,3 +1,14 @@
+// view wrapper
+.messages {
+  @extend %flex-row;
+  background: $background-root;
+
+  .starred,
+  .starred .material-icons {
+    color: gold;
+  }
+}
+
 @import './components/ChannelsCreateOffer';
 @import './components/ChannelUpgradeDialog';
 @import './components/ChatNameEditor';

@@ -1,0 +1,19 @@
+.files {
+  .zero-file {
+    background-color: white;
+    height: 100vh;
+    width: 100vw;
+
+    .display-3 {
+      color: $text-dark-secondary;
+      margin-bottom: 48px;
+      margin-top: 80px;
+    }
+
+    .upgrade {
+      color: $text-dark-secondary;
+      margin-top: 48px;
+      text-align: center;
+    }
+  }
+}

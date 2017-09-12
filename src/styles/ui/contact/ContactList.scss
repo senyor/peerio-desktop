@@ -1,0 +1,39 @@
+.contacts {
+  .contact-list {
+    @extend %flex-col;
+    overflow: auto;
+    padding-top: 8px;
+
+    .avatar-wrapper > .material-icons {
+      margin-right: 0;
+    }
+
+    .contact-list-section {
+      @extend %flex-row;
+      border-bottom: 1px solid $divider-dark;
+      flex-shrink: 0;
+      padding: 24px 0 32px;
+
+      .contact-list-section-marker {
+        @extend %flex-row;
+        @extend %flex-grow-1;
+        @extend %flex-justify-center;
+        color: $color-brand-primary;
+        font-size: 24px;
+        max-width: 224px;
+        min-width: 120px;
+        padding-top: $padding-large;
+      }
+
+      .contact-list-section-content {
+        @extend %flex-col;
+        width: 600px;
+      }
+    }
+
+    .rt-list-itemText,
+    .rt-list-primary {
+      user-select: text;
+    }
+  }
+}

@@ -1,0 +1,54 @@
+.files {
+  .file-wrapper {
+    .table-action-bar {
+      @extend %flex-row;
+      align-items: center;
+      background: $background-table-actions;
+      border-radius: 2px;
+      flex-shrink: 0;
+      height: 64px;
+      padding: 0 $padding-default 0 24px;
+      white-space: nowrap;
+      width: 100%;
+
+      .search {
+        margin-left: auto;
+      }
+    }
+
+    .table-actions {
+      margin-left: 56px;
+
+      .rt-button-button {
+        margin: 0 $margin-small;
+      }
+
+      .material-icons {
+        color: rgba($color-brand-primary, .5);
+        transition: 250ms;
+      }
+
+      .rt-button-button:hover .material-icons {
+        color: $color-brand-primary;
+      }
+
+      .disabled,
+      .disabled:hover {
+        // breaks file item logic, passes click event to the row
+        pointer-events: none;
+
+        .material-icons {
+          color: $icon-dark-inactive;
+        }
+      }
+
+      .rt-ripple-ripple {
+        background-color: $color-brand-primary;
+      }
+
+      .reverse-icon .material-icons {
+        @extend %reverse-icon;
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+.contacts {
+  @extend %flex-row;
+  background: $background-root;
+
+  .contacts-view {
+    @extend %flex-col;
+    @extend %flex-grow-1;
+    @extend %flex-shrink-1;
+    position: relative;
+    // FIXME remove calc?
+    width: calc(100vw - 352px);
+  }
+
+  .toolbar {
+    @extend %flex-row;
+    @extend %flex-shrink-0;
+    @extend %flex-align-center;
+    border-bottom: 1px solid $divider-dark;
+    height: 80px;
+
+    .material-icons {
+      font-size: 48px;
+      margin-left: 32px;
+    }
+
+    .rt-input-input {
+      margin-left: $margin-small;
+      margin-top: 0;
+
+      input {
+        border: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .list-sort {
+    @extend %flex-row;
+    @extend %flex-shrink-0;
+    @extend %flex-align-center;
+    background: $color-dark-06;
+    height: 48px;
+    padding-left: 32px;
+    width: 100%;
+
+    .sort-filter {
+      .rt-dropdown-value {
+        margin: 0;
+      }
+
+      .rt-input-inputElement {
+        border: 0;
+        font-weight: 600;
+        padding: 0 0 0 10px;
+      }
+    }
+  }
+}

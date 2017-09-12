@@ -1,0 +1,11 @@
+.files {
+  .processing-file {
+    height: 48px;
+    margin: 0;
+    opacity: .5;
+    padding: $padding-default;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+  }
+}

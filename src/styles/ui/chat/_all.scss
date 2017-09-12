@@ -9,8 +9,10 @@
   }
 }
 
-@import './components/ChannelsCreateOffer';
+@import './Chat';
+@import './ChannelInvites';
 @import './components/ChannelUpgradeDialog';
+@import './components/ChannelUpgradeOffer';
 @import './components/ChatNameEditor';
 @import './components/ChatSideBar';
 @import './components/InlineFiles';
@@ -18,5 +20,3 @@
 @import './components/MessageList';
 @import './components/NoChatSelected';
 @import './components/UploadInChatProgress';
-@import './Chat';
-@import './ChannelInvites';

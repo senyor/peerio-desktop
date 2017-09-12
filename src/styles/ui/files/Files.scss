@@ -1,0 +1,142 @@
+.files {
+  @extend %flex-col;
+  @extend %flex-align-center;
+  background: $background-root;
+  height: 100vh;
+  padding: 0 24px;
+  width: 100vw;
+
+  // 36px added to ensure that the file actions button never over flows.
+  @media (max-width: #{$minimum-screen-width + 36}) {
+    padding: 0;
+
+    // hides size column at minimum-screen-width
+    .text-right + .text-right {
+      display: none;
+    }
+  }
+
+  .file-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+
+    .file-table-wrapper {
+      @extend %flex-col;
+      @extend %flex-grow-1;
+      @extend %flex-shrink-0;
+      height: calc(100vh - 144px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding-bottom: $padding-default;
+    }
+
+    .item-actions {
+      padding-right: 0 !important;
+      text-align: center;
+      width: 48px;
+
+      .reverse-icon .material-icons {
+        @extend %reverse-icon;
+      }
+    }
+
+    .table-paging { // appears unused
+      @extend %flex-row;
+      @extend %hint-error-label;
+      align-items: center;
+      background: $background-table;
+      border-top: 1px solid $divider-dark;
+      color: $text-dark-secondary;
+      height: 56px;
+      justify-content: flex-end;
+      padding-right: $padding-small;
+
+      .rt-button-button {
+        margin-left: 24px;
+
+        + .rt-button-button {
+          margin-left: 12px;
+        }
+      }
+    }
+
+    table {
+      background: $background-table;
+      border-spacing: 0;
+      position: relative;
+      width: 100%;
+
+      thead th {
+        color: $text-dark-secondary;
+        font-size: 12px;
+        font-weight: $font-weight-semibold;
+        text-align: left;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid $divider-dark;
+        padding-right: 24px;
+        white-space: nowrap;
+
+        &:first-of-type {
+          padding: 0 24px;
+          width: 18px;
+        }
+      }
+
+      tbody tr {
+        position: relative;
+
+        &.selected-row {
+          background: rgba($color-brand-primary, .12);
+        }
+
+        &:hover {
+          background: rgba($color-brand-primary, .12);
+
+          .rt-menu-iconMenu {
+            background: rgba($color-brand-primary, .38);
+            border-radius: 4px;
+          }
+        }
+
+        &.new-file {
+          background-color: $background-new-file;
+        }
+
+        &:last-of-type td {
+          border: 0;
+        }
+      }
+
+      label {
+        display: inline-block;
+        margin-bottom: 0;
+        max-width: 18px;
+        width: 18px;
+
+        &:not(.rt-checkbox-disabled) .rt-checkbox-check:not(.rt-checkbox-checked) {
+          background: $color-light-100;
+          border-color: $icon-dark-active;
+
+          &.rt-checkbox-checked {
+            border-color: transparent;
+          }
+        }
+      }
+
+      th {
+        height: 56px;
+      }
+
+      td {
+        height: 48px;
+      }
+    }
+  }
+
+  .waiting-3rd-party {
+    background-color: $color-dark-03;
+  }
+}

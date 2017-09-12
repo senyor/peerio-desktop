@@ -1,0 +1,25 @@
+.contacts {
+  .invite-form {
+    width: 480px;
+
+    .invite-form-actions {
+      @extend %flex-row;
+      @extend %flex-justify-end;
+      margin-top: $margin-large;
+    }
+
+    .facebook-share-button,
+    .twitter-share-button {
+      @extend %flex-row;
+      @extend %flex-align-center;
+      @extend %flex-justify-center;
+      height: 36px;
+      width: 36px;
+
+      img {
+        padding: 2px;
+        width: 24px;
+      }
+    }
+  }
+}

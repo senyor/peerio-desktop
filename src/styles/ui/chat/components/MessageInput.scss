@@ -86,6 +86,8 @@ $suggests-max-height: 200px;
         text-overflow: ellipsis;
         white-space: nowrap;
         width: 100%;
+        right: auto;
+        left: 0;
       }
 
       p {

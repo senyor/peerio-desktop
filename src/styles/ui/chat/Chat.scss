@@ -3,11 +3,6 @@
   @extend %flex-row;
   background: $background-root;
 
-  .rt-progress_bar-linear {
-    position: absolute;
-    width: 100vw;
-  }
-
   .starred,
   .starred .material-icons {
     color: gold;

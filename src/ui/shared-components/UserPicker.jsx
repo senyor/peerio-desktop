@@ -50,7 +50,14 @@ class UserPicker extends React.Component {
         if (this.selected.find(s => s.username === item.username)) return false;
         if (this.props.noDeleted && item.isDeleted) return false;
         if (item.isMe) return false;
+        if (this.isExcluded(item)) return false;
+
         return true;
+    }
+
+    isExcluded(contact) {
+        if (this.props.exceptContacts && this.props.exceptContacts.includes(contact)) return true;
+        return false;
     }
 
     selfFilter(contact) {
@@ -84,11 +91,17 @@ class UserPicker extends React.Component {
         }
         const q = this.query;
         const c = contactStore.getContact(q);
+        if (this.isExcluded(c)) {
+            this.query = '';
+            return;
+        }
         const atInd = q.indexOf('@');
         const isEmail = atInd > -1 && atInd === q.lastIndexOf('@');
         this.selected.push(c);
         when(() => !c.loading, () => {
-            setTimeout(() => c.notFound && this.selected.remove(c), 1000);
+            setTimeout(() => {
+                if (c.notFound) this.selected.remove(c);
+            }, 1000);
             this.suggestInviteEmail = (c.notFound && isEmail && !this.props.noInvite) ? q : '';
             this.legacyContactError = c.isLegacy;
             this.showNotFoundError = c.notFound;

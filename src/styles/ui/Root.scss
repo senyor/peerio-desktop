@@ -1,0 +1,45 @@
+$status-bar-height: 36px;
+
+.status-bar {
+  @extend %flex-row;
+  @extend %flex-align-center;
+  @extend %flex-justify-center;
+  background-image: $background-gradient;
+  background-size: 400%;
+  border-radius: 4px;
+  box-shadow: $shadow-8;
+  color: $text-light-primary;
+  font-weight: $font-weight-semibold;
+  height: $status-bar-height;
+  left: 0;
+  margin: $margin-default auto;
+  max-width: 80vw;
+  position: fixed;
+  right: 0;
+  text-align: center;
+  top: -$status-bar-height - 36;
+  transition: all 400ms $transition-easing-bounce-in-out;
+  user-select: none;
+  z-index: 2;
+
+  &.visible {
+    animation: 4s infinite gradient;
+    top: 0;
+  }
+
+  .rt-progress_bar-circular {
+    height: 20px;
+    margin-right: $margin-default;
+    width: 20px;
+  }
+
+  .rt-progress_bar-path {
+    stroke: $color-light-100;
+  }
+
+  .reconnect {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}

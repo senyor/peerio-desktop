@@ -349,3 +349,16 @@
     }
   }
 }
+
+.random-messages {
+  @extend %flex-col;
+  @extend %flex-grow-1;
+  @extend %flex-shrink-0;
+  @extend %flex-align-center;
+  @extend %flex-justify-start;
+  height: 100vh;
+
+  .headline {
+    margin: 160px 48px 0;
+  }
+}

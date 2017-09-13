@@ -56,67 +56,6 @@
     }
   }
 
-  .menu-item {
-    align-items: center;
-    color: $icon-light-active;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: $margin-large;
-    position: relative;
-
-    .look-at-me {
-      @extend %hint-error-label;
-      background: $color-error;
-      border: 2px solid $color-brand-primary;
-      border-radius: 12px;
-      display: block;
-      height: 24px;
-      line-height: 20px;
-      position: absolute;
-      right: 2px;
-      text-align: center;
-      top: 2px;
-      width: 24px;
-    }
-
-    .rt-button-button {
-      height: 48px;
-      width: 48px;
-
-      &:hover {
-        background: transparent;
-      }
-    }
-    // TODO transition variables
-    .rt-button-icon {
-      color: $icon-light-inactive;
-      transition: color 150ms;
-    }
-
-    &[disabled] {
-      pointer-events: none;
-
-      .rt-button-icon {
-        color: $text-light-disabled;
-
-        &:hover {
-          .rt-button-icon {
-            color: $text-light-disabled;
-          }
-        }
-      }
-    }
-
-    &.active,
-    &:hover {
-      .rt-button-icon {
-        background: tranparent;
-        color: $icon-light-active;
-      }
-    }
-  }
   // turns off ripple for menu icon buttons
   .rt-ripple-ripple {
     background-color: transparent;

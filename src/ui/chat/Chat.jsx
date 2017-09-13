@@ -186,7 +186,7 @@ class Chat extends React.Component {
                                     <MessageInput readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
                                         placeholder={
                                             chat ?
-                                                t('title_messageInputPlaceholder', { chatName: chat.name })
+                                                t('title_messageInputPlaceholder', { chatName: `${chat.isChannel ? '# ' : ''}${chat.name}` })
                                                 : null
                                         }
                                         onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />

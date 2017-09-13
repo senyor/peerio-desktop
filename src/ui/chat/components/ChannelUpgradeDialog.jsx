@@ -11,22 +11,24 @@ const config = require('~/config');
 class ChannelUpgradeDialog extends React.Component {
     @observable showDialog = false;
 
-    show() {
+    show = () => {
         this.showDialog = true;
-    }
+    };
+
+    hide = () => {
+        this.showDialog = false;
+    };
+
+    toUpgrade = () => {
+        window.open(urls.upgrade);
+        this.hide();
+    };
 
     render() {
         if (config.disablePayments) return null;
-        const hide = () => { this.showDialog = false; };
         const dialogActions = [
-            { label: t('button_cancel'), onClick: hide },
-            {
-                label: t('button_upgrade'),
-                onClick: () => {
-                    window.open(urls.upgrade);
-                    hide();
-                }
-            }
+            { label: t('button_cancel'), onClick: this.hide },
+            { label: t('button_upgrade'), onClick: this.toUpgrade }
         ];
         const limit = User.current ? User.current.channelLimit : 0;
 
@@ -34,8 +36,8 @@ class ChannelUpgradeDialog extends React.Component {
             <Dialog
                 active={this.showDialog}
                 actions={dialogActions}
-                onOverlayClick={hide}
-                onEscKeyDown={hide}
+                onOverlayClick={this.hide}
+                onEscKeyDown={this.hide}
                 title={t('title_limitDialog')}
                 className="dialog-warning">
                 <p>{t('title_limitDialogText1', { limit })}</p>

@@ -5,9 +5,14 @@ const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
 const config = require('../../../config');
 const T = require('~/ui/shared-components/T');
+const urls = require('~/config').translator.urlMap;
 
 @observer
 class ChannelUpgradeOffer extends React.Component {
+    toUpgrade() {
+        return window.open(urls.upgrade);
+    }
+
     render() {
         if (config.disablePayments) return null;
         if (User.current.channelLimit === Number.MAX_SAFE_INTEGER) return null;
@@ -17,7 +22,7 @@ class ChannelUpgradeOffer extends React.Component {
                     <span>👋 </span>
                     <T k="title_channelUpgradeOffer">{{ limit: User.current.channelLimit }}</T>
                 </div>
-                <Button flat primary label={t('button_upgrade')} />
+                <Button flat primary onClick={this.toUpgrade} label={t('button_upgrade')} />
             </div>
         );
     }

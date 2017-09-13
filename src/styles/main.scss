@@ -22,9 +22,7 @@
 @import './components/app-nav';
 @import './components/chip-wrapper';
 @import './components/chat-list';
-@import './components/full-screen-progress';
 @import './components/onboarding';
-@import './components/search';
 @import './components/notifications';
 @import './components/list';
 @import './components/signup-step-header';
@@ -33,11 +31,11 @@
 // View-specific styles
 @import './ui/contact/_all';
 @import './ui/chat/_all';
-@import './ui/emoji/Picker';
+@import './ui/emoji/_all';
 @import './ui/files/_all';
 @import './ui/login/_all';
-@import './ui/mail';
-@import './ui/settings';
+@import './ui/mail/_all';
+@import './ui/settings/_all';
 @import './ui/shared-components/_all';
 @import './ui/signup';
 

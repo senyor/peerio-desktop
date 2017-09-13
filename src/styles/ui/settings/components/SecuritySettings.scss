@@ -1,0 +1,29 @@
+.settings {
+  .account-key-toggle {
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+}
+
+// This was probably intended to be a recurring element but so far only appears in Security Settings
+.dialog-illustration {
+  background-color: #eee;
+  border-radius: 100px;
+  font-size: 55px;
+  margin: 15px 0;
+  padding: 23px;
+}
+
+// This *is* used in /src/ui/shared-components/TwoFADialog.jsx
+.totp-input {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 22px;
+  font-weight: 200;
+  padding: 2px 3px;
+  width: 130px;
+
+  &:focus {
+    outline: none;
+  }
+}

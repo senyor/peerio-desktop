@@ -1,0 +1,13 @@
+.app-nav {
+  .usage {
+    @extend %flex-col;
+    @extend %hint-error-label;
+    color: $text-light-secondary;
+    margin: auto 0 32px;
+    text-align: center;
+
+    .material-icons {
+      color: $icon-light-active;
+    }
+  }
+}

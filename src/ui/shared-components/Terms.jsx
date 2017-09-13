@@ -7,7 +7,7 @@ class Terms extends React.Component {
             <div>
                 <h1>Peerio Terms of Use</h1>
 
-                <div className="hint-error-label">Last updated 18 November 2015</div>
+                <div className="last-updated">Last updated 18 November 2015</div>
 
 
                 <h3>Preface</h3>
@@ -20,13 +20,11 @@ class Terms extends React.Component {
                 </p>
 
                 <p>If you are primarily interested in what data is available to
-                  Peerio and how your data is handled, please view our
-                    <a href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Privacy_Policy.md">Privacy Policy</a>.
+                  Peerio and how your data is handled, please view our <a href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Privacy_Policy.md">Privacy Policy</a>.
                 </p>
 
                 <p>If you are primarily interested in how Peerio responds to law
-                  enforcement, please view our
-                    <a href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Law_Enforcement_Guidelines.md">Law Enforcement Guidelines</a>.
+                  enforcement, please view our <a href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Law_Enforcement_Guidelines.md">Law Enforcement Guidelines</a>.
                 </p>
 
                 <h3>1. Acceptance of Terms</h3>

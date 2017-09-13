@@ -90,12 +90,12 @@
 
     background: #eaf8f9; //TODO: create var - Paul
     border-radius: 128px;
+    box-shadow: 0 0 1px 0 grey;
     cursor: pointer;
     height: 128px;
     margin-top: -64px;
     transition: 150ms;
     width: 128px;
-    box-shadow: 0 0 1px 0px grey;
 
     &:hover {
       background: #fff;
@@ -125,10 +125,6 @@
 
   .signup-form {
     justify-content: flex-start;
-
-    .validated-input {
-      width: 375px;
-    }
   }
 
   .pdf-download {

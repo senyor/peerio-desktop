@@ -57,37 +57,6 @@
   }
 }
 
-.global-drop-target {
-  @extend %flex-col;
-  @extend %flex-align-center;
-  @extend %flex-justify-center;
-  background-color: $background-overlay;
-  bottom: 0;
-  color: $text-light-primary;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-
-  .drop-content {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    animation: pulse-scale;
-    animation-duration: 1000ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-
-    .display-2 {
-      color: $text-light-primary;
-    }
-  }
-
-  .material-icons {
-    @extend %display-4;
-    color: $text-light-primary;
-    margin-right: $margin-default;
-  }
-}
 $status-bar-height: 36px;
 
 .status-bar {
@@ -226,12 +195,4 @@ $status-bar-height: 36px;
   position: absolute;
   right: 0;
   top: 0;
-}
-
-.dialog-illustration {
-  background-color: #eee;
-  border-radius: 100px;
-  font-size: 55px;
-  margin: 15px 0;
-  padding: 23px;
 }

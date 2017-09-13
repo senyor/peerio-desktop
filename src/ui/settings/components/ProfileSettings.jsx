@@ -219,7 +219,7 @@ class Profile extends React.Component {
                             onClick={AvatarEditor.selectFile} />
                     </div>
                     {User.current.savingAvatar
-                        ? <div className="save-progress-overlay flex-row flex-justify-center flex-align-center">
+                        ? <div className="save-progress-overlay">
                             <ProgressBar type="circular" mode="indeterminate" />
                         </div>
                         : null}

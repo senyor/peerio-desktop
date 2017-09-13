@@ -1,0 +1,13 @@
+.settings {
+  .delete-account {
+    margin-top: auto;
+
+    .rt-button-button {
+      color: $color-error;
+    }
+
+    .rt-ripple-ripple {
+      background-color: $color-error;
+    }
+  }
+}

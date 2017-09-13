@@ -1,8 +1,11 @@
+// Libraries
 @import '../node_modules/normalize.css/normalize.css';
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
 @import '../node_modules/quill/dist/quill.core.css';
 @import '../node_modules/croppie/croppie.css';
 @import './static/emoji/sprites/emojione.css';
+
+// Variables
 @import './vars/_brand';
 @import './whitelabel';
 @import './vars/_colors';
@@ -13,6 +16,8 @@
 @import './vars/_typography';
 @import './rt-base-theme'; // Imports variables. Always first, after lib imports.
 @import './rt-light-theme';
+
+// Components that get reused between views
 @import './components/grid';
 @import './components/app-nav';
 @import './components/chip-wrapper';
@@ -24,15 +29,19 @@
 @import './components/list';
 @import './components/signup-step-header';
 @import './components/user-picker';
-@import './ui/login';
-@import './ui/signup';
-@import './ui/mail';
+
+// View-specific styles
 @import './ui/contact/_all';
 @import './ui/chat/_all';
 @import './ui/emoji/Picker';
 @import './ui/files/_all';
-@import './ui/shared-components/_all';
+@import './ui/login/_all';
+@import './ui/mail';
 @import './ui/settings';
+@import './ui/shared-components/_all';
+@import './ui/signup';
+
+// General styles and overrides
 @import './misc';
 @import './typography';
 

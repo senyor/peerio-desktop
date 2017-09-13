@@ -117,7 +117,6 @@ class AppNav extends React.Component {
     render() {
         const contact = contactStore.getContact(User.current.username);
         const primaryAddressConfirmed = User.current.primaryAddressConfirmed;
-        const hasActivePlans = User.current.activePlans && User.current.activePlans.length;
         return (
             <div className="app-nav">
                 <div className="avatar-menu-wrapper">
@@ -137,7 +136,7 @@ class AppNav extends React.Component {
                         <MenuItem value="help" icon="help" caption="Help"
                             onClick={this.toHelp} />
                         {
-                            config.disablePayments || hasActivePlans ? null
+                            config.disablePayments || User.current.hasActivePlans ? null
                                 : <span><MenuDivider />
                                     <MenuItem value="upgrade" icon="open_in_browser" caption={t('button_upgrade')}
                                         onClick={this.toUpgrade} />

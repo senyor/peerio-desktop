@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { Link, ProgressBar } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const Message = require('./Message');
-const { chatStore } = require('~/icebear');
+const { chatStore, User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const urls = require('~/config').translator.urlMap;
 const config = require('~/config');
@@ -190,7 +190,7 @@ class MessageList extends React.Component {
                     {t('title_chatBeginning')}
                     &nbsp;<strong>{chat.name}</strong>.
                 </div>
-                {config.disablePayments ? null
+                {config.disablePayments || User.current.hasActivePlans ? null
                     : <div className="archive-link">
                         {t('title_chatArchive')}
                         &nbsp;<Link href={urls.upgrade} label={t('button_upgradeForArchive')} />

@@ -50,10 +50,9 @@ class Account extends React.Component {
             { label: t('button_cancel'), onClick: this.hideConfirmDelete },
             { label: t('button_confirm'), onClick: this.onDeleteConfirmed }
         ];
-        const hasActivePlans = User.current.activePlans && User.current.activePlans.length;
         return (
             <div className="flex-col flex-grow-1">
-                {config.disablePayments || hasActivePlans ? null
+                {config.disablePayments || User.current.hasActivePlans ? null
                     : <section className="flex-row flex-shrink-0 flex-align-center"
                         style={{ background: 'rgba(50, 206, 195, .15)', borderRadius: '4px', marginTop: '4px', padding: '8px 16px' }}>
                         <div style={{ fontSize: '16px', fontWeight: '600' }}>{t('title_upgradeMessage')}</div>

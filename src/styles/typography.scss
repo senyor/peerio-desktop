@@ -70,14 +70,9 @@
   text-align: right;
 }
 
-.passphrase,
-.account-key {
+.passphrase {
   font-size: 24px;
   font-weight: $font-weight-bold;
   line-height: 1;
   user-select: text;
-}
-
-.account-key {
-  font-family: monospace;
 }

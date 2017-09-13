@@ -1,0 +1,27 @@
+.account-key {
+  font-family: monospace;
+  font-size: 24px;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+  user-select: text;
+}
+
+.signup {
+  .pdf-download {
+    background-color: $color-brand-primary !important;
+    border-radius: 4px;
+    box-shadow: none;
+    color: $text-light-primary !important;
+    margin-bottom: auto;
+    margin-top: auto;
+    transition: 150ms;
+
+    &:hover {
+      box-shadow: $shadow-5;
+    }
+
+    .material-icons {
+      color: $text-light-primary;
+    }
+  }
+}

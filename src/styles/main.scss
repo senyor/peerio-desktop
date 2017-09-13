@@ -25,7 +25,6 @@
 @import './components/onboarding';
 @import './components/notifications';
 @import './components/list';
-@import './components/signup-step-header';
 @import './components/user-picker';
 
 // View-specific styles
@@ -37,7 +36,7 @@
 @import './ui/mail/_all';
 @import './ui/settings/_all';
 @import './ui/shared-components/_all';
-@import './ui/signup';
+@import './ui/signup/_all';
 
 // General styles and overrides
 @import './misc';

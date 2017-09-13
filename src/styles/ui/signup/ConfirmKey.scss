@@ -1,0 +1,12 @@
+.signup {
+  .confirm-key {
+    @extend %flex-col;
+
+    text-align: left;
+    width: 432px;
+
+    .safe {
+      margin: 0 auto;
+    }
+  }
+}

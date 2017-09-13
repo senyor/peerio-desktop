@@ -82,30 +82,6 @@
     background-image: url('./static/img/welcome-fast.png');
   }
 
-  .avatar-input {
-    @extend %flex-col;
-    @extend %flex-shrink-0;
-    @extend %flex-align-center;
-    @extend %flex-justify-center;
-
-    background: #eaf8f9; //TODO: create var - Paul
-    border-radius: 128px;
-    box-shadow: 0 0 1px 0 grey;
-    cursor: pointer;
-    height: 128px;
-    margin-top: -64px;
-    transition: 150ms;
-    width: 128px;
-
-    &:hover {
-      background: #fff;
-    }
-  }
-
-  .avatar-instructions {
-    text-align: center;
-  }
-
   .help,
   .terms {
     .button-link {
@@ -125,35 +101,6 @@
 
   .signup-form {
     justify-content: flex-start;
-  }
-
-  .pdf-download {
-    background-color: $color-brand-primary !important;
-    border-radius: 4px;
-    box-shadow: none;
-    color: $text-light-primary !important;
-    margin-bottom: auto;
-    margin-top: auto;
-    transition: 150ms;
-
-    &:hover {
-      box-shadow: $shadow-5;
-    }
-
-    .material-icons {
-      color: $text-light-primary;
-    }
-  }
-
-  .confirm-key {
-    @extend %flex-col;
-
-    text-align: left;
-    width: 432px;
-
-    .safe {
-      margin: 0 auto;
-    }
   }
 
   .profile {
@@ -186,8 +133,4 @@
   .rt-input-error {
     white-space: normal;
   }
-}
-
-.avatar-editor {
-  width: auto;
 }

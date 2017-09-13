@@ -28,6 +28,7 @@
 @import './components/user-picker';
 
 // View-specific styles
+@import './ui/shared-components/_all';
 @import './ui/contact/_all';
 @import './ui/chat/_all';
 @import './ui/emoji/_all';
@@ -35,7 +36,6 @@
 @import './ui/login/_all';
 @import './ui/mail/_all';
 @import './ui/settings/_all';
-@import './ui/shared-components/_all';
 @import './ui/signup/_all';
 
 // General styles and overrides

@@ -173,10 +173,10 @@ class Chat extends React.Component {
                         </div>
                         : null}
                     {chat ? this.renderHeader() : null}
-                    <div className="flex-row flex-grow-1">
+                    <div className="add-members-container flex-row flex-grow-1">
                         {
                             this.showUserPicker
-                                ? <div className="flex-col flex-grow-1 create-new-chat" style={{ position: 'relative', padding: '0 20px' }}>
+                                ? <div className="create-new-chat" style={{ position: 'relative', padding: '0 20px' }}>
                                     <UserPicker onClose={this.closeUserPicker} onAccept={this.addParticipants}
                                         title={t('title_addParticipants')} noDeleted noInvite />
                                 </div>

@@ -103,7 +103,19 @@
     }
   }
 
-  .corrupt-message { // This is never used??
+  .add-members-container {
+    @extend %flex-row;
+    @extend %flex-grow-1;
+
+    .create-new-chat {
+      @extend %flex-col;
+      @extend %flex-grow-1;
+      height: calc(100vh - 80px);
+    }
+  }
+
+  // This is never used??
+  .corrupt-message {
     @extend %flex-row;
     @extend %flex-align-center;
     background: $color-dark-06;

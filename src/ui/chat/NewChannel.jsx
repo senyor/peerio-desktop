@@ -66,10 +66,13 @@ class NewChannel extends React.Component {
                 <div className="user-picker flex-justify-center"><ProgressBar type="circular" /></div>
             </div>);
         }
+        const detailsKey = config.disablePayments || User.current.hasActivePlans
+            ? 'title_createChannelDetails_noPayments' : 'title_createChannelDetails';
         return (
             <div className="create-new-chat">
                 <T k="title_createChannel" tag="h1" />
-                <T k={`title_createChannelDetails${config.disablePayments ? '_noPayments' : ''}`} tag="div" style={{ marginBottom: '20px', maxWidth: '560px' }} />
+                <T k={detailsKey} tag="div" s
+                    tyle={{ marginBottom: '20px', maxWidth: '560px' }} />
                 <div className="new-chat-search">
                     <div className="chip-wrapper">
                         <Input placeholder={t('title_channelName')}

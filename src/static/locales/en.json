@@ -374,6 +374,7 @@
   "title_channelInviteRevoked": "Invite to room revoked.",
   "title_createChannel": "Create room",
   "title_createChannelDetails": "Rooms have unlimited participants. They work best when organized by topic. Free accounts are limited to 3 rooms. <a-upgrade>Upgrade for unlimited rooms</>.",
+  "title_createChannelDetails_noPayments": "Rooms have unlimited participants. They work best when organized by topic.",
   "title_channelName": "Name",
   "title_channelNamePlaceholder": "# Name",
   "title_channelPurpose": "Purpose (optional)",

@@ -124,7 +124,7 @@ class Chat extends React.Component {
                                 ? <ChatNameEditor showLabel={false} className="name-editor"
                                     readOnly={!chat.canIAdmin}
                                     onBlur={this.hideChatNameEditor} ref={this.chatNameEditorRef} />
-                                : <div style={{ overflow: 'hidden' }}>
+                                : <div className="name-editor-inner">
                                     {chat.canIAdmin ? <FontIcon value="edit" /> : null}
                                     <div className="title-content">
                                         {chat.name}
@@ -173,15 +173,15 @@ class Chat extends React.Component {
                         </div>
                         : null}
                     {chat ? this.renderHeader() : null}
-                    <div className="add-members-container flex-row flex-grow-1">
+                    <div className="messages-and-sidebar-container">
                         {
                             this.showUserPicker
-                                ? <div className="create-new-chat" style={{ position: 'relative', padding: '0 20px' }}>
+                                ? <div className="create-new-chat">
                                     <UserPicker onClose={this.closeUserPicker} onAccept={this.addParticipants}
                                         exceptContacts={chat ? chat.participants : null}
                                         title={t('title_addParticipants')} noDeleted noInvite />
                                 </div>
-                                : <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
+                                : <div className="messages-container">
                                     {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}
                                     {chat && chat.uploadQueue.length ? <UploadInChatProgress queue={chat.uploadQueue} /> : null}
                                     <MessageInput readonly={!chat || !chat.metaLoaded || chat.isReadOnly}

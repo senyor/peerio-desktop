@@ -61,7 +61,7 @@ class ChannelInvites extends React.Component {
 
     render() {
         return (
-            <div className="messages">
+            <div className="messages channel-invites">
                 <ChatList />
                 <div className="message-view">
                     <div className="message-toolbar">

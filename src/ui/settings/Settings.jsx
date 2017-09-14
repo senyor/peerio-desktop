@@ -50,7 +50,6 @@ class Settings extends React.Component {
                     </div>
                     <Tabs index={this.index}
                         onChange={this.handleTabChange}
-                        style={{ width: '1024px' }}
                         className="tabs">
                         <Tab label={t('title_settingsProfile')}
                             className={css({ 'tab-notify': !primaryAddressConfirmed })} />

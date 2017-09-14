@@ -1,13 +1,31 @@
 .settings {
-  .delete-account {
-    margin-top: auto;
+  .settings-container-account {
+    .upgrade-message-container {
+      @extend %flex-row;
+      @extend %flex-shrink-0;
+      @extend %flex-align-center;
 
-    .rt-button-button {
-      color: $color-error;
+      background: rgba(50, 206, 195, .15);
+      border-radius: 4px;
+      margin-top: 4px;
+      padding: 8px 16px;
+
+      .message {
+        font-size: 16px;
+        font-weight: 600;
+      }
     }
 
-    .rt-ripple-ripple {
-      background-color: $color-error;
+    .delete-account {
+      margin-top: auto;
+
+      .rt-button-button {
+        color: $color-error;
+      }
+
+      .rt-ripple-ripple {
+        background-color: $color-error;
+      }
     }
   }
 }

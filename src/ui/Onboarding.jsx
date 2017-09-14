@@ -105,7 +105,7 @@ class Onboarding extends React.Component {
                         {this.items.filter(item => !item.valueFn()).map(this.renderItem)}
                         {this.items.filter(item => item.valueFn()).map(this.renderItem)}
                     </div>
-                    <div style={{ textAlign: 'center', margin: 'auto' }}>
+                    <div className="usage-cloud-container">
                         <UsageCloud />
                     </div>
                     <div className="onboarding-info">{t('title_onboardingLink')}</div>

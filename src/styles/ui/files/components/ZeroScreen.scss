@@ -1,13 +1,52 @@
 .files {
   .zero-file {
+    @extend %flex-row;
     background-color: white;
     height: 100vh;
-    width: 100vw;
+    width: calc(100vw - #{$app-nav-width});
 
-    .display-3 {
-      color: $text-dark-secondary;
-      margin-bottom: 48px;
-      margin-top: 80px;
+    .spacer {
+      @extend %flex-col;
+      @extend %flex-grow-1;
+    }
+
+    .content {
+      @extend %flex-col;
+      @extend %flex-grow-0;
+      @extend %flex-shrink-0;
+    }
+
+    .heading {
+      @extend %flex-row;
+      margin-top: 64px;
+
+      .display-3 {
+        color: $text-dark-secondary;
+        margin-bottom: 48px;
+        margin-top: 80px;
+      }
+    }
+
+    .instructions-container {
+      @extend %flex-row;
+      @extend %flex-align-start;
+      width: 100%;
+
+      .text-container {
+        @extend %flex-col;
+        @extend %flex-align-start;
+
+        p {
+          line-height: 1.4;
+          margin-bottom: 48px;
+          width: 200px;
+        }
+      }
+
+      img {
+        max-width: 280px;
+        min-width: 40%;
+      }
     }
 
     .upgrade {

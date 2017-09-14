@@ -34,6 +34,10 @@
         margin: 0;
         padding: 0;
 
+        .name-editor-inner {
+          overflow: hidden;
+        }
+
         input {
           border: 1px solid rgba($color-brand-primary, .54);
           border-radius: 4px;
@@ -103,7 +107,7 @@
     }
   }
 
-  .add-members-container {
+  .messages-and-sidebar-container {
     @extend %flex-row;
     @extend %flex-grow-1;
 
@@ -111,6 +115,14 @@
       @extend %flex-col;
       @extend %flex-grow-1;
       height: calc(100vh - 80px);
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .messages-container {
+      @extend %flex-col;
+      @extend %flex-grow-1;
+      position: relative;
     }
   }
 

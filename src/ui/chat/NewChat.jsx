@@ -44,12 +44,10 @@ class NewChat extends React.Component {
         this.picker = ref;
     }
 
-    pickerStyle = { height: 'auto', width: '100%' };
-
     render() {
         return (
-            <div className="create-new-chat" style={{ position: 'relative' }}>
-                <div style={this.pickerStyle}>
+            <div className="create-new-chat new-dm">
+                <div className="userpicker-container">
                     <UserPicker
                         ref={this.setRef}
                         title={t('title_chatWith')}
@@ -57,7 +55,7 @@ class NewChat extends React.Component {
                         onAccept={this.handleAccept}
                         onClose={this.handleClose} />
                 </div>
-                <FullCoverLoader show={this.waiting} style={{ left: 0 }} />
+                <FullCoverLoader show={this.waiting} />
             </div>
         );
     }

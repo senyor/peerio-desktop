@@ -145,9 +145,9 @@ class NewContact extends React.Component {
                                 </div>
                                 : null}
                         </div>
-                        <div className="flex-row flex-align-center flex-justify-center">
+                        <div className="invite-elsewhere">
                             <T k="title_shareSocial" tag="strong" />
-                            <div className="flex-row flex-shrink-0" style={{ marginLeft: '32px' }} >
+                            <div className="icons">
                                 <IconButton icon="email" href={this.getEmailUrl()} />
                                 <a className="twitter-share-button"
                                     href={this.getTwitterUrl()} data-size="large">

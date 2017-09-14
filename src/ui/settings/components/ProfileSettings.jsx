@@ -120,7 +120,7 @@ class Profile extends React.Component {
             </section>);
         }
         return (
-            <section className="flex-row">
+            <section className="settings-container-profile">
                 <div>
                     <div className="input-row">
                         <BetterInput onAccept={this.saveFirstName}
@@ -130,13 +130,7 @@ class Profile extends React.Component {
                             label={t('title_lastName')}
                             value={user.lastName} />
                     </div>
-                    <div className="dark-label"
-                        style={{
-                            height: '24px',
-                            lineHeight: '48px',
-                            paddingLeft: '12px',
-                            marginBottom: '-8px'
-                        }}>
+                    <div className="dark-label label-email">
                         {t('title_email')}
                     </div>
                     <List>
@@ -188,8 +182,8 @@ class Profile extends React.Component {
                             : <Button label={t('button_addEmail')} onClick={this.switchToAddMode} primary />
                     }
 
-                    <div className="row" style={{ marginTop: '40px' }} >
-                        <div className="list-title" style={{ marginBottom: '8px' }}> {t('title_publicKey')}</div>
+                    <div className="row peerio-id-container">
+                        <div className="list-title"> {t('title_publicKey')}</div>
                         <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
                         <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
                     </div>

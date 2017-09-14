@@ -189,7 +189,7 @@ const config = require('~/config');
                     {this.signupNav}
                     {this.errorDialog}
                     {step === 0 ?
-                        <T k="title_TOSRequestText" className="terms">
+                        <T k="title_TOSRequestText" className="terms-smallprint">
                             {{
                                 tosButton: text => (<Button onClick={TermsDialog.showDialog}
                                     label={text}

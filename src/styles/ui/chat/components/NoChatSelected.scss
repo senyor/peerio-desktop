@@ -3,6 +3,11 @@
   background: $background-root;
   height: 100vh;
 
+  .content {
+    margin-top: 168px;
+    max-width: 600px;
+  }
+
   .display-2 {
     margin-bottom: 0;
   }

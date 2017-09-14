@@ -203,7 +203,7 @@ class Message extends React.Component {
                 </div>
                 {invalidSign ?
                     <div className="invalid-sign-warning">
-                        <div style={{ marginRight: 'auto' }}>{t('error_invalidMessageSignature')}</div>
+                        <div className="content">{t('error_invalidMessageSignature')}</div>
                         <Button href={urls.msgSignature} label={t('title_readMore')} flat primary />
                     </div>
                     : null

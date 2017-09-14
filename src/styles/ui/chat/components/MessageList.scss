@@ -52,7 +52,7 @@
     }
   }
 
-  .messages-container {
+  .messages-current {
     @extend %flex-col;
     @extend %flex-align-start;
     flex: 1 1 auto;
@@ -64,20 +64,6 @@
       align-self: center;
       margin-bottom: auto;
       margin-top: auto;
-    }
-
-    .invalid-sign-warning {
-      @extend %flex-row;
-      @extend %hint-error-label;
-      @extend %flex-align-center;
-      @extend %flex-justify-between;
-      background-color: $color-dark-06;
-      border-radius: 2px;
-      color: $text-dark-hint;
-      height: 52px;
-      margin-left: -8px;
-      margin-top: 24px;
-      padding: 0 $padding-small 0 $padding-default;
     }
 
     .send-error {

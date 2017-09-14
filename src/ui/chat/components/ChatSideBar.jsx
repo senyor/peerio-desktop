@@ -126,7 +126,7 @@ class ChatSideBar extends React.Component {
                             }
 
                             {canIAdmin ?
-                                <ListItem className="admin-controls"
+                                <ListItem className="admin-controls delete-room"
                                     leftIcon="delete"
                                     caption={t('button_deleteChannel')}
                                     onClick={this.deleteChannel} />
@@ -138,7 +138,7 @@ class ChatSideBar extends React.Component {
                 }
                 <div className={css('section-list', 'member-list', { closed: this.listClosed })}>
                     <div className={`list-header clickable ${banishHeader}`} onClick={this.toggleList}>
-                        <div style={{ marginRight: 'auto' }}>{t('title_Members')}</div>
+                        <div className="list-header-text">{t('title_Members')}</div>
                         <FontIcon
                             value={this.listClosed ? 'arrow_drop_down' : 'arrow_drop_up'} />
                     </div>

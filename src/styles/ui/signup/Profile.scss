@@ -1,0 +1,13 @@
+.signup {
+  .profile {
+    @extend %flex-col;
+    @extend %flex-align-center;
+
+    height: 100%;
+    width: 375px;
+
+    input {
+      width: 100%;
+    }
+  }
+}

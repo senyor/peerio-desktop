@@ -22,4 +22,17 @@
       }
     }
   }
+
+  .invite-elsewhere {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-justify-center;
+
+    .icons {
+      @extend %flex-row;
+      @extend %flex-shrink-0;
+
+      margin-left: 32px;
+    }
+  }
 }

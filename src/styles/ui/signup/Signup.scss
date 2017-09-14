@@ -103,18 +103,6 @@
     justify-content: flex-start;
   }
 
-  .profile {
-    @extend %flex-col;
-    @extend %flex-align-center;
-
-    height: 100%;
-    width: 375px;
-
-    input {
-      width: 100%;
-    }
-  }
-
   .signup-subtitle {
     @extend %headline;
     margin-top: $margin-tiny;

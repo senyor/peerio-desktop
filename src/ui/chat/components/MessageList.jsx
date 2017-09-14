@@ -205,7 +205,7 @@ class MessageList extends React.Component {
 
         setTimeout(this.scrollToBottomIfSticky, 400);
         return (
-            <div className="messages-container" onScroll={this.handleScroll} ref={this.setContainerRef}>
+            <div className="messages-current" onScroll={this.handleScroll} ref={this.setContainerRef}>
                 {this.renderChatStart()}
                 {chatStore.activeChat.loadingInitialPage
                     ? <ProgressBar type="circular" mode="indeterminate"

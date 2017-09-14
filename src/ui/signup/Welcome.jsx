@@ -15,8 +15,8 @@ const T = require('~/ui/shared-components/T');
 
     render() {
         return (
-            <div className="flex-col flex-justify-around">
-                <div style={{ marginBottom: '32px' }} >
+            <div className="welcome-content">
+                <div className="welcome-heading">
                     <div className="display-2">{t('title_welcomeHeading')}</div>
                     {/* Welcome to Peerio! */}
                     <div className="headline">{t('title_welcomeSubHeading')}</div>

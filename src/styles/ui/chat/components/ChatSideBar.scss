@@ -2,7 +2,7 @@
   @extend %flex-col;
   @extend %flex-shrink-0;
   background: $color-dark-03;
-  border-left: 1px solid $divider-dark;
+  // border-left: 1px solid $divider-dark;
   height: calc(100vh - 80px);
   overflow: hidden;
   transition: width 300ms $transition-easing-ease-in;
@@ -13,6 +13,10 @@
     border-bottom: 1px solid $divider-dark;
     overflow: hidden;
     overflow-y: auto;
+
+    .list-header-text {
+      margin-right: auto;
+    }
 
     // collaspabled list styling
     .rt-list-subheader {
@@ -48,6 +52,10 @@
 
   .admin-controls {
     border-top: 1px solid $divider-dark;
+
+    &.delete-room {
+      border-top: 0;
+    }
   }
 
   // TODO: combine with chat list avatar styles.

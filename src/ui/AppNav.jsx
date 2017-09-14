@@ -2,7 +2,7 @@ const React = require('react');
 const { autorunAsync, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconMenu, MenuItem, MenuDivider, Dialog } = require('~/react-toolbox');
-const { User, contactStore, chatStore, fileStore } = require('~/icebear');
+const { User, contactStore, chatStore, fileStore, mailStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const css = require('classnames');
@@ -162,6 +162,7 @@ class AppNav extends React.Component {
                     <AppNavButton tooltip={t('title_contacts')} icon="people"
                         active={routerStore.currentRoute.startsWith(routerStore.ROUTES.contacts)}
                         onClick={this.toContacts} />
+
                     <UsageCloud onClick={this.toOnboarding} />
                 </div>
                 {this.signOutDialog}

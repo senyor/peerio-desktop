@@ -19,6 +19,7 @@ class Mail extends React.Component {
 
     constructor() {
         super();
+        ghostStore.selectedSort = 'date'; // kegID default sort isn't very human
         this.handleCompose = this.handleCompose.bind(this);
         this.handleSend = this.handleSend.bind(this);
         this.handleAttach = this.handleAttach.bind(this);

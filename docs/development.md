@@ -9,6 +9,12 @@ Assuming you have nodejs and npm installed.
 - Run `npm install` -- if it fails maybe run `npm install` in `app/` first
 - Run `npm start` to run a development build.
 
+## Linking the SDK
+
+If you want to use a local development version of `peerio-icebear`, run `npm link` inside that project, then `npm link @peerio/peerio-icebear`.
+
+**Beware:** Don't ever use a development SDK with production servers, especially not with your own account (you could break it permanently). 
+
 ## Dependency management
 
 Due to the 2-package.json structure, as well as other idiosyncracies, the following gotchas must be observed when adding dependencies to peerio-desktop:

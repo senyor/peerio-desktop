@@ -49,6 +49,10 @@ class ChannelInvites extends React.Component {
     rejectInvite = (ev) => {
         const id = getAttributeInParentChain(ev.target, 'data-kegDbId');
         chatInviteStore.rejectInvite(id);
+        if (chatInviteStore.received.length === 0 ||
+            (chatInviteStore.received.length === 1 && chatInviteStore.received[0].kegDbId === id)) {
+            this.gotoChats();
+        }
     }
 
     get isLimitReached() {

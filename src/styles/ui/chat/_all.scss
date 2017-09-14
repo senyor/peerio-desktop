@@ -11,11 +11,15 @@
 
 @import './Chat';
 @import './ChannelInvites';
+@import './NewChannel';
+@import './NewChat';
 @import './components/ChannelUpgradeDialog';
 @import './components/ChannelUpgradeOffer';
+@import './components/ChatList';
 @import './components/ChatNameEditor';
 @import './components/ChatSideBar';
 @import './components/InlineFiles';
+@import './components/Message';
 @import './components/MessageInput';
 @import './components/MessageList';
 @import './components/NoChatSelected';

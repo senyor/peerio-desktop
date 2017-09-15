@@ -85,11 +85,11 @@ class AvatarEditor extends React.Component {
     };
 
     render() {
-        return (<div className="flex-row flex-align-center flex-jusify-between">
+        return (<div className="avatar-editor-container">
             <div ref={this.initCroppie} />
-            <div style={{ width: '100%' }}>
-                <IconButton style={{ zoom: 1.6 }} icon="rotate_left" onClick={this.rotateLeft} accent />
-                <IconButton style={{ zoom: 1.6 }} icon="rotate_right" onClick={this.rotateRight} accent />
+            <div className="buttons-container">
+                <IconButton className="rotate-button" icon="rotate_left" onClick={this.rotateLeft} accent />
+                <IconButton className="rotate-button" icon="rotate_right" onClick={this.rotateRight} accent />
                 <br />
                 <br />
                 <Button icon="save" label={t('button_save')} flat onClick={this.handleSave} />

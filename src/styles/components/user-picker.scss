@@ -5,6 +5,7 @@
   width: 100%;
 
   .selected-items {
+    @extend %flex-col;
     @extend %flex-grow-0;
     @extend %flex-shrink-0;
     background-color: $background-chat-list;
@@ -12,6 +13,18 @@
 
     ul {
       overflow-y: auto;
+    }
+  }
+
+  .inputs-container {
+    @extend %flex-row;
+    @extend %flex-justify-center;
+    width: 100%;
+
+    .inputs-container-inner {
+      @extend %flex-col;
+      @extend %flex-grow-1;
+      max-width: 600px;
     }
   }
 

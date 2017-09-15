@@ -11,11 +11,19 @@
     cursor: pointer;
     height: 128px;
     margin-top: -64px;
+    overflow: hidden;
+    position: relative;
     transition: 150ms;
     width: 128px;
 
     &:hover {
       background: #fff;
+    }
+
+    img {
+      height: 128px;
+      position: absolute;
+      width: 128px;
     }
   }
 

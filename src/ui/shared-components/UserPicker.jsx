@@ -149,7 +149,7 @@ class UserPicker extends React.Component {
     render() {
         return (
             <div className="user-picker">
-                <div className={css('flex-col selected-items', { banish: !this.props.sharing })} >
+                <div className={css('selected-items', { banish: !this.props.sharing })} >
                     <List>
                         <ListSubHeader key="header" caption={t('title_selectedFiles')} />
                         {
@@ -162,8 +162,8 @@ class UserPicker extends React.Component {
 
                     </List>
                 </div>
-                <div className="flex-row flex-justify-center" style={{ width: '100%' }}>
-                    <div className="flex-col flex-grow-1" style={{ maxWidth: '600px' }}>
+                <div className="inputs-container">
+                    <div className="inputs-container-inner">
                         {this.props.noHeader
                             ? null
                             : <div className="chat-creation-header">

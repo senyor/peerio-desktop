@@ -2,6 +2,10 @@
   .account-key-toggle {
     @extend %flex-row;
     @extend %flex-align-center;
+
+    .save-button {
+      margin-left: 32px;
+    }
   }
 }
 

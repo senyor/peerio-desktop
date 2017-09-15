@@ -137,8 +137,8 @@ class SecuritySettings extends React.Component {
                         onClick={this.togglePassphraseVisibility} />
 
                     <Button icon="file_download"
+                        className="save-button"
                         label={t('button_saveAccountKey')}
-                        style={{ marginLeft: '32px' }}
                         onClick={this.backupAccountKey}
                         primary />
                 </div>

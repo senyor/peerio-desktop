@@ -95,6 +95,13 @@ section {
   outline: 0;
 }
 
+.global-update-progress {
+  .rt-progress_bar-linear {
+    height: 2px;
+    position: fixed;
+  }
+}
+
 .avatar-wrapper {
   position: relative;
 

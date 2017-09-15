@@ -187,8 +187,9 @@ class MessageList extends React.Component {
                     {chat.participants.map(c => <Avatar size="large" key={c.username} contact={c} />)}
                 </div>
                 <div className="title">
-                    {t(chat.isChannel ? 'title_chatBeginningRoom' : 'title_chatBeginning')}
-                    &nbsp;<strong>{chat.isChannel ? '# ' : ''}{chat.name}</strong>.
+                    {t(chat.isChannel ? 'title_chatBeginningRoom' : 'title_chatBeginning', {
+                        chatName: `${chat.isChannel ? '# ' : ''}${chat.name}`
+                    })}
                 </div>
                 {config.disablePayments || User.current.hasActivePlans ? null
                     : <div className="archive-link">

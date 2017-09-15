@@ -34,7 +34,7 @@ cfg.upload.encryptBufferSize = 1024 * 1024 * 3;
 cfg.upload.uploadBufferSize = 1024 * 1024 * 3;
 
 // --- PERFORMANCE
-cfg.chat.maxInitialChats = 30;
+cfg.chat.maxInitialChats = 20;
 
 // --- DEBUG
 cfg.nodeLogFolder = path.join(app.getPath('userData'), 'logs');

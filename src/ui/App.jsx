@@ -1,11 +1,12 @@
 const React = require('react');
 const AppNav = require('~/ui/AppNav');
 const uiStore = require('~/stores/ui-store');
-const { Dialog } = require('~/react-toolbox');
+const { Dialog, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { observer } = require('mobx-react');
 const { observable } = require('mobx');
+const { clientApp } = require('~/icebear');
 
 @observer
 class App extends React.Component {
@@ -50,6 +51,10 @@ class App extends React.Component {
         return (
             <div className="app-root">
                 <AppNav />
+                {clientApp.updatingAfterReconnect
+                    ? <div className="global-update-progress"><ProgressBar type="linear" mode="indeterminate" /></div>
+                    : null}
+
                 {this.props.children}
                 <Dialog active={!this.contactDialogHiding && !!uiStore.contactDialogUsername}
                     actions={contactDialogActions} onOverlayClick={this.hideContactDialog}

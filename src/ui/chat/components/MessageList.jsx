@@ -3,6 +3,7 @@ const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Link, ProgressBar } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
+const T = require('~/ui/shared-components/T');
 const Message = require('./Message');
 const { chatStore, User } = require('~/icebear');
 const { t } = require('peerio-translator');
@@ -186,11 +187,11 @@ class MessageList extends React.Component {
                 <div className="avatars">
                     {chat.participants.map(c => <Avatar size="large" key={c.username} contact={c} />)}
                 </div>
-                <div className="title">
-                    {t(chat.isChannel ? 'title_chatBeginningRoom' : 'title_chatBeginning', {
+                <T k={chat.isChannel ? 'title_chatBeginningRoom' : 'title_chatBeginning'} tag="div" className="title">
+                    {{
                         chatName: chat.name
-                    })}
-                </div>
+                    }}
+                </T>
                 {config.disablePayments || User.current.hasActivePlans ? null
                     : <div className="archive-link">
                         {t('title_chatArchive')}

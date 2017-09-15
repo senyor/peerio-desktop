@@ -149,7 +149,7 @@ class AppNav extends React.Component {
                     <Avatar contact={contact} size="medium" />
                 </div>
                 <div className="app-menu">
-                <AppNavButton tooltip={t('title_mail')} icon="mail" active={this.currentRoute === routerStore.ROUTES.mail}
+                    <AppNavButton tooltip={t('title_mail')} icon="mail" active={this.currentRoute === routerStore.ROUTES.mail}
                         showBadge={mailStore.unreadMail > 0} badge={mailStore.unreadMail}
                         onClick={this.toMail} />
                     <AppNavButton tooltip={t('title_chats')} icon="forum"

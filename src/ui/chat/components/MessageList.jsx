@@ -188,7 +188,7 @@ class MessageList extends React.Component {
                 </div>
                 <div className="title">
                     {t(chat.isChannel ? 'title_chatBeginningRoom' : 'title_chatBeginning', {
-                        chatName: `${chat.isChannel ? '# ' : ''}${chat.name}`
+                        chatName: chat.name
                     })}
                 </div>
                 {config.disablePayments || User.current.hasActivePlans ? null

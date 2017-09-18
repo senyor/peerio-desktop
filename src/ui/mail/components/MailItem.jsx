@@ -18,15 +18,14 @@ class MailItem extends React.Component {
                 attachments: this.props.attachments
             })}
             onClick={this.handleSelect}>
-                <div className="flex-col flex-grow-1 flex-justify-between">
-                    <div className="flex-row">
-
+                <div className="mail-item-content">
+                    <div className="subject-container">
                         <strong className="item-subject">{this.props.subject}</strong>
                         {this.props.date}
                     </div>
                     <div>{this.props.recipient}</div>
-                    <div className="flex-row flex-align-center">
-                        <div style={{ marginRight: 'auto' }}>
+                    <div className="firstline-container">
+                        <div className="item-firstline">
                             {this.props.firstLine}
                         </div>
                     </div>

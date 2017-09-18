@@ -66,14 +66,14 @@ const css = require('classnames');
         ];
 
         return (
-            <div className="flex-row flex-grow-1">
+            <div className="compose-container">
                 <div className="compose-view">
-                    <div className="compose-meta flex-row flex-shrink-0">
-                        <div className="dark-label flex-col flex-justify-between">
+                    <div className="compose-meta">
+                        <div className="meta-labels">
                             <div className="meta-input">{t('title_to')}</div>
                             <div className="meta-input">{t('title_subject')}</div>
                         </div>
-                        <div className="flex-grow-1">
+                        <div className="meta-inputs-container">
                             <div className="meta-input">
                                 <EmailPicker ghost={this.props.ghost} />
                                 <Button label={t('button_send')}

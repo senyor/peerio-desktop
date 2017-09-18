@@ -49,7 +49,7 @@ class MailSentSidebar extends React.Component {
             { label: t('button_mailRevoke'), onClick: () => { this.revokeGhost(); } }
         ];
         return (
-            <div className="mail-sidebar">
+            <div className="mail-sent-sidebar">
                 <MailPassphrase ghost={this.props.ghost} />
                 <div className="sent-info">
                     <div className="read-recipt">
@@ -64,15 +64,14 @@ class MailSentSidebar extends React.Component {
                                 onClick={this.copyLink} />
                         </div>
                     </div>
-                    <div className="expire-info flex-col">
+                    <div className="expire-info">
                         {
                             this.ghostActive ?
-                                <div className="flex-col">
+                                <div className="content">
                                     <div className="dark-label">{t('title_mailExpires')}</div>
                                     <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
-                                    <Button label={t('button_mailRevoke')}
+                                    <Button className="mail-revoke" label={t('button_mailRevoke')}
                                         onClick={this.showRevokeDialog}
-                                        style={{ marginLeft: 'auto', marginTop: '8px' }}
                                         primary />
                                 </div>
                                 :

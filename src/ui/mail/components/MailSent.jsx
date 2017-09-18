@@ -40,11 +40,10 @@ class MailSent extends React.Component {
         ];
 
         return (
-            <div className="flex-row flex-grow-1">
+            <div className="mail-sent-container">
                 <div className="compose-view">
                     <div className="compose-meta sent">
-                        <div className="flex-row flex-align-center flex-justify-between"
-                            style={{ height: '36px' }}>
+                        <div className="meta-container">
                             <div className="subject">{this.props.ghost.subject}</div>
                             <TooltipIconButton
                                 tooltip={t('button_delete')}

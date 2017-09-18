@@ -17,7 +17,7 @@ const { t } = require('peerio-translator');
 
     render() {
         return (
-            <div>
+            <div className="mail-passphrase-sidebar">
                 <p>{t('title_passphraseExplanation')}</p>
                 <div className="dark-label">{t('title_passphrase')}</div>
                 <div className="passphrase">

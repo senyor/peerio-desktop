@@ -1,4 +1,9 @@
 .message-view {
+  .send-error-container {
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+
   .receipt-wrapper {
     @extend %flex-row;
     @extend %flex-align-end;
@@ -6,23 +11,21 @@
     margin-left: auto;
   }
 
-  .messages-current {
-    .invalid-sign-warning {
-      @extend %flex-row;
-      @extend %hint-error-label;
-      @extend %flex-align-center;
-      @extend %flex-justify-between;
-      background-color: $color-dark-06;
-      border-radius: 2px;
-      color: $text-dark-hint;
-      height: 52px;
-      margin-left: -8px;
-      margin-top: 24px;
-      padding: 0 $padding-small 0 $padding-default;
+  .invalid-sign-warning {
+    @extend %flex-row;
+    @extend %hint-error-label;
+    @extend %flex-align-center;
+    @extend %flex-justify-between;
+    background-color: $color-dark-06;
+    border-radius: 2px;
+    color: $text-dark-hint;
+    height: 52px;
+    margin-left: -8px;
+    margin-top: 24px;
+    padding: 0 $padding-small 0 $padding-default;
 
-      .content {
-        margin-right: auto;
-      }
+    .content {
+      margin-right: auto;
     }
   }
 }

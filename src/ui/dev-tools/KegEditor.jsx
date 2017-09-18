@@ -85,7 +85,7 @@ class KegEditor extends React.Component {
 
     render() {
         if (!User.current) {
-            return <div style={{ textAlign: 'center' }}>Authenticate first, buddy.</div>;
+            return <div className="authenticate-first-warning" >Authenticate first, buddy.</div>;
         }
         return (
             <div className="keg-edit-container">

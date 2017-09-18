@@ -58,7 +58,7 @@ class InlineFiles extends React.Component {
                         if (file.signatureError) {
                             return (
                                 <div className="invalid-file" key={f} data-id={f} onClick={uiStore.showFileSignatureErrorDialog}>
-                                    <div className="flex-row flex-align-center">
+                                    <div className="container">
                                         <FontIcon value="info_outline" />
                                         <div className="file-name">{t('error_invalidFileSignature')}</div>
                                     </div>
@@ -66,7 +66,7 @@ class InlineFiles extends React.Component {
                             );
                         }
                         return (<div className="shared-file" key={f} data-id={f} onClick={this.download}>
-                            <div className="flex-row flex-align-center flex-justify-between">
+                            <div className="container">
                                 <div className="file-name"> {file ? file.name : f}</div>
                                 <FontIcon value="file_download" />
                             </div>

@@ -23,6 +23,12 @@
   }
 
   .shared-file {
+    .container {
+      @extend %flex-row;
+      @extend %flex-align-center;
+      @extend %flex-justify-between;
+    }
+
     .material-icons {
       padding: 0 12px;
     }
@@ -55,6 +61,11 @@
   .invalid-file {
     border-color: currentColor;
     color: $color-error-opacity-6;
+
+    .container {
+      @extend %flex-row;
+      @extend %flex-align-center;
+    }
 
     .material-icons {
       color: $color-error-opacity-6;

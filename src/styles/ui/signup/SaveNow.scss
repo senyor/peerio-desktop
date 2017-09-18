@@ -1,0 +1,21 @@
+.savenow {
+  @extend %flex-col;
+
+  .title-container {
+    @extend %flex-col;
+    @extend %flex-justify-center;
+    white-space: nowrap;
+    width: 275px;
+  }
+
+  .account-key-save {
+    margin-top: 32px;
+  }
+
+  .account-key-backup {
+    display: inline-flex;
+    flex: 0 1;
+    height: 0;
+    width: 0;
+  }
+}

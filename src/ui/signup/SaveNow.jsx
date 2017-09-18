@@ -38,9 +38,9 @@ const T = require('~/ui/shared-components/T');
 
     render() {
         return (
-            <div className="flex-col profile">
+            <div className="savenow profile">
                 <div className="warning-line">
-                    <div className="flex-col flex-justify-center" style={{ width: '275px', whiteSpace: 'nowrap' }}>
+                    <div className="title-container">
                         <T k="title_saveNow1" className="display-1" />
                     </div>
                 </div>
@@ -53,11 +53,9 @@ const T = require('~/ui/shared-components/T');
 
                 <Button icon="file_download"
                     label={t('button_saveAccountKey')}
-                    className="button-gradient"
-                    style={{ marginTop: '32px' }}
+                    className="button-gradient account-key-save"
                     onClick={this.save} />
-                <webview ref={this.wwref} src="./AccountKeyBackup.html"
-                    style={{ display: 'inline-flex', width: 0, height: 0, flex: '0 1' }} />
+                <webview className="account-key-backup" ref={this.wwref} src="./AccountKeyBackup.html" />
             </div>
         );
     }

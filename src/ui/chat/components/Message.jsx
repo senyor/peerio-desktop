@@ -175,7 +175,7 @@ class Message extends React.Component {
                         {/* m.inlineImages.map(url => (
                             <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />)) */}
                         {m.sendError ?
-                            <div className="flex-row flex-align-center">
+                            <div className="send-error-container">
                                 <div className="send-error-menu">
                                     <IconMenu icon="error" position="topLeft" menuRipple>
                                         <MenuItem value={t('button_retry')}

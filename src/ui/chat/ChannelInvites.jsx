@@ -65,16 +65,16 @@ class ChannelInvites extends React.Component {
                 <ChatList />
                 <div className="message-view">
                     <div className="message-toolbar">
-                        <div className="flex-col">
+                        <div className="title-container">
                             <div className="title" onClick={this.showChatNameEditor}>
                                 <T k="title_channelInvites" />
                             </div>
                             {/* here for layout */}
-                            <div className="flex-row meta-nav" />
+                            <div className="meta-nav" />
                         </div>
                     </div>
-                    <div className="flex-row flex-grow-1">
-                        <div className="flex-col flex-grow-1" style={{ position: 'relative' }}>
+                    <div className="room-invites-container">
+                        <div className="inner">
                             <div className="room-invites-list">
                                 <ChannelUpgradeOffer />
                                 <List selectable>

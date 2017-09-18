@@ -1,16 +1,39 @@
 // main message-view styling in Chat.scss
+.channel-invites {
+  .message-toolbar {
+    .title-container {
+      @extend %flex-col;
+    }
 
-.room-invites-list {
-  .rt-list-subheader {
-    background: $color-dark-03;
+    .meta-nav {
+      @extend %flex-row;
+    }
   }
 
-  .rt-list-listItem {
-    border-bottom: 1px solid $divider-dark;
-    height: 64px;
+  .room-invites-container {
+    @extend %flex-row;
+    @extend %flex-grow-1;
+
+    .inner {
+      @extend %flex-col;
+      @extend %flex-grow-1;
+
+      position: relative;
+    }
   }
 
-  .rt-list-item {
-    height: 64px;
+  .room-invites-list {
+    .rt-list-subheader {
+      background: $color-dark-03;
+    }
+
+    .rt-list-listItem {
+      border-bottom: 1px solid $divider-dark;
+      height: 64px;
+    }
+
+    .rt-list-item {
+      height: 64px;
+    }
   }
 }

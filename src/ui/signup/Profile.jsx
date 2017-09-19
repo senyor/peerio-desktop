@@ -3,10 +3,11 @@ const { Component } = require('react');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
-const { socket, validation, PhraseDictionary } = require('~/icebear');
+const { socket, validation, crypto } = require('~/icebear');
 const { t } = require('peerio-translator');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const AvatarControl = require('./AvatarControl');
+
 
 const { validators } = validation; // use common validation from core
 
@@ -24,7 +25,7 @@ class ProfileStore extends OrderedFormStore {
     avatarBuffers = null;
 
     rerollPassphrase() {
-        this.passphrase = PhraseDictionary.current.getPassphrase(8);
+        this.passphrase = crypto.keys.getRandomAccountKeyHex(); // PhraseDictionary.current.getPassphrase(8);
     }
 
     get hasErrors() {

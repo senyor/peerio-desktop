@@ -1,9 +1,10 @@
 .account-key {
+  cursor: pointer;
   font-family: monospace;
   font-size: 24px;
   font-weight: $font-weight-bold;
   line-height: 1;
-  user-select: text;
+  user-select: none;
 }
 
 .signup {

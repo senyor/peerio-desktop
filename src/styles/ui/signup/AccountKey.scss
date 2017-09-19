@@ -13,6 +13,13 @@
     @extend %flex-align-center;
     height: 100%;
     width: 375px;
+
+    .account-key-wrapper {
+      .inner {
+        @extend %flex-row;
+        @extend %flex-align-center;
+      }
+    }
   }
 
   .pdf-download {

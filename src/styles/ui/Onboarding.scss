@@ -44,6 +44,14 @@
     margin-bottom: $margin-default;
     padding-left: $padding-default;
 
+    .done-container {
+      @extend %flex-row;
+    }
+
+    .extraclass-container {
+      @extend %flex-col;
+    }
+
     .material-icons {
       height: 29px;
       margin-top: 3px;

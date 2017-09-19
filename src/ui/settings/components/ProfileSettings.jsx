@@ -115,7 +115,7 @@ class Profile extends React.Component {
         const f = this.contact.fingerprint.split('-');
         const user = User.current;
         if (AvatarEditor.state.showEditor) {
-            return (<section className="flex-row">
+            return (<section className="settings-avatar-editor">
                 <AvatarEditor onSave={this.saveAvatar} />
             </section>);
         }
@@ -164,7 +164,7 @@ class Profile extends React.Component {
                     </List>
                     {
                         this.addMode
-                            ? <div className="flex-row">
+                            ? <div className="addemail-container">
                                 <BetterInput type="email" label={t('title_email')} acceptOnBlur="false"
                                     validator={validation.validators.emailFormat.action}
                                     onChange={this.onNewEmailChange} value={this.newEmail} error="error_invalidEmail"

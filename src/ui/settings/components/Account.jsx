@@ -51,7 +51,7 @@ class Account extends React.Component {
             { label: t('button_confirm'), onClick: this.onDeleteConfirmed }
         ];
         return (
-            <div className="settings-container-account flex-col flex-grow-1">
+            <div className="settings-container-account">
                 {config.disablePayments || User.current.hasActivePlans ? null
                     : <section className="upgrade-message-container">
                         <div className="message">{t('title_upgradeMessage')}</div>

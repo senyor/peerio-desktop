@@ -45,7 +45,7 @@ const { warnings } = require('~/icebear');
                 <p>{t('title_accountKey1')}</p>
                 <div className="account-key-wrapper">
                     <div className="label">{t('title_yourAccountKey')}</div>
-                    <div className="flex-row flex-align-center">
+                    <div className="inner">
                         <div className="account-key" onClick={this.copyPassphrase}>{passphrase}</div>
                         <TooltipIconButton icon="content_copy"
                             tooltip={t('title_copy')}

@@ -79,9 +79,9 @@ class Onboarding extends React.Component {
             <div key={title}
                 onClick={done ? null : action}
                 className={css('onboarding-to-do', { 'done-first': done && index === 0, done, clickable: !done && !!action })}>
-                <div className="flex-row">
+                <div className="done-container">
                     <FontIcon value={done ? 'check' : icon} />
-                    <div className="flex-col">
+                    <div className="extraclass-container">
                         <div className={`title ${extraClass}`}>
                             {title}
                             {buttonItem}

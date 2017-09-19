@@ -126,19 +126,6 @@
     }
   }
 
-  // This is never used??
-  .corrupt-message {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    background: $color-dark-06;
-    border-bottom: 2px solid $color-error;
-    border-radius: 2px 2px 0 0;
-    height: 48px;
-    margin-top: 32px;
-    padding: $padding-small;
-    width: 100%;
-  }
-
   // both for text input and chat content
   img.emojione {
     display: inline-block;

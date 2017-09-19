@@ -209,7 +209,7 @@ class UserPicker extends React.Component {
 
                         </div>
                         {this.suggestInviteEmail ?
-                            <div className="flex-row flex-align-center flex-justify-between flex-shrink-0">
+                            <div className="email-invite-container">
                                 <div className="email-invite">{this.suggestInviteEmail}</div>
                                 <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
                             </div>

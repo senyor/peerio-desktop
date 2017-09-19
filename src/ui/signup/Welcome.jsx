@@ -22,7 +22,7 @@ const T = require('~/ui/shared-components/T');
                     <div className="headline">{t('title_welcomeSubHeading')}</div>
                     {/* Your private and secure collaboration platform */}
                 </div>
-                <div className="flex-row">
+                <div className="private-container">
                     <div className="private">
                         <div className="headline">{t('title_welcomePrivate')}</div>
                         {/* Private */}

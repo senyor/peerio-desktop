@@ -1,5 +1,8 @@
 .settings {
   .settings-container-account {
+    @extend %flex-col;
+    @extend %flex-grow-1;
+
     .upgrade-message-container {
       @extend %flex-row;
       @extend %flex-shrink-0;

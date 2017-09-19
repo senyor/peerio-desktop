@@ -1,11 +1,30 @@
-.contacts {
+.contacts.new-contact {
+  .contacts-view {
+    @extend %flex-align-center;
+    @extend %flex-justify-center;
+  }
+
   .invite-form {
     width: 480px;
+  }
 
-    .invite-form-actions {
+  .email-invite-container {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-justify-between;
+    @extend %flex-shrink-0;
+  }
+
+  .invite-elsewhere {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-justify-center;
+
+    .icons {
       @extend %flex-row;
-      @extend %flex-justify-end;
-      margin-top: $margin-large;
+      @extend %flex-shrink-0;
+
+      margin-left: 32px;
     }
 
     .facebook-share-button,
@@ -20,19 +39,6 @@
         padding: 2px;
         width: 24px;
       }
-    }
-  }
-
-  .invite-elsewhere {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    @extend %flex-justify-center;
-
-    .icons {
-      @extend %flex-row;
-      @extend %flex-shrink-0;
-
-      margin-left: 32px;
     }
   }
 }

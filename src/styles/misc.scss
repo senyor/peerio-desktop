@@ -79,29 +79,6 @@
   }
 }
 
-// Unused
-.notice-upgrade {
-  @extend %flex-row;
-  @extend %flex-align-center;
-  background: $color-dark-03;
-  border-radius: 4px;
-  height: 48px;
-  max-width: 480px;
-  min-width: 320px;
-  padding: 0 $padding-default;
-  position: absolute;
-  top: -48px;
-  transition: top 400ms $transition-easing-bounce-in-out;
-
-  &.show {
-    top: 0;
-  }
-
-  .notice-content {
-    margin-right: auto;
-  }
-}
-
 // All items are not selectable by default
 // use this class to make items selectable
 .selectable,

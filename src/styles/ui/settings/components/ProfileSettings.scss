@@ -1,4 +1,8 @@
 .settings {
+  .settings-avatar-editor {
+    @extend %flex-row;
+  }
+
   .settings-container-profile {
     @extend %flex-row;
 
@@ -121,5 +125,9 @@
         top: 0;
       }
     }
+  }
+
+  .addemail-container {
+    @extend %flex-row;
   }
 }

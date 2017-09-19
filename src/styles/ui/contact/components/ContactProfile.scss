@@ -1,4 +1,24 @@
 .contact-profile {
+  .row {
+    border-bottom: 1px solid $divider-dark;
+    margin-bottom: $margin-default;
+    padding: $padding-default 0;
+
+    &:last-of-type {
+      border-bottom-width: 0;
+    }
+  }
+
+  .loading {
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+
+  .notfound {
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+
   .rt-avatar-avatar {
     border-radius: 4px;
     height: 168px;
@@ -14,21 +34,26 @@
     padding: $padding-small;
   }
 
-  .row {
-    border-bottom: 1px solid $divider-dark;
-    margin-bottom: $margin-default;
-    padding: $padding-default 0;
+  .contact-avatar-info {
+    @extend %flex-row;
+    @extend %flex-align-start;
+    @extend %flex-grow-1;
 
-    &:last-of-type {
-      border-bottom-width: 0;
+    .deleted-account-container {
+      @extend %flex-col;
     }
+
+    .deleted-account {
+      color: $color-error;
+    }
+  }
+
+  .profile-actions-container {
+    @extend %flex-row;
+    @extend %flex-align-center;
   }
 
   .list-title {
     margin-bottom: 8px;
-  }
-
-  .deleted-account {
-    color: $color-error;
   }
 }

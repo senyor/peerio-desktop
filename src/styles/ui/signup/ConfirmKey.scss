@@ -1,4 +1,8 @@
 .signup {
+  .confirm-key-container {
+    @extend %flex-col;
+  }
+
   .confirm-key {
     @extend %flex-col;
 

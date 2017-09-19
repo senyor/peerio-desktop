@@ -180,7 +180,7 @@ class SecuritySettings extends React.Component {
                         <T k="title_authAppsDetails" tag="p" />
                     </Dialog>
                 </p>
-                <div className="flex-row">
+                <div className="twofa-container">
                     <div className="qr-code">
                         <T k="title_step1" className="bold" />
                         {

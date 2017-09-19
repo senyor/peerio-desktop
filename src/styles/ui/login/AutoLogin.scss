@@ -3,6 +3,11 @@
   color: $text-light-primary;
   height: 100vh;
 
+  .content {
+    @extend %flex-align-center;
+    @extend %flex-col;
+  }
+
   .display-1 {
     margin: 48px 0;
   }

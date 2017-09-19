@@ -37,7 +37,7 @@ class ContactProfile extends React.Component {
         if (c.loading) {
             return (
                 <div className="contact-profile">
-                    <div className="row flex-row flex-align-center">
+                    <div className="row loading">
                         <ProgressBar type="circular" mode="indeterminate" />
                     </div>
                 </div>
@@ -46,7 +46,7 @@ class ContactProfile extends React.Component {
         if (c.notFound) {
             return (
                 <div className="contact-profile">
-                    <div className="row flex-row flex-align-center">
+                    <div className="row notfound">
                         {t('error_usernameNotFound')}
                     </div>
                 </div>
@@ -62,10 +62,10 @@ class ContactProfile extends React.Component {
                         {t('error_contactFingerprintChangedDetail')}
                     </div>
                     : null}
-                <div className="flex-row flex-align-start flex-grow-1">
+                <div className="contact-avatar-info">
                     {/* TODO: use our Avatar component instead, and strip it of mouse events */}
                     <RTAvatar style={style} >{c.hasAvatar ? null : c.letter}</RTAvatar>
-                    <div className="flex-col">
+                    <div className="deleted-account-container">
                         {c.isDeleted ? <T k="title_accountDeleted" className="deleted-account" tag="div" /> : null}
                         <div className="title">{c.firstName} {c.lastName}</div>
                         <div>{c.usernameTag}</div>
@@ -76,7 +76,7 @@ class ContactProfile extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="row flex-row flex-align-center">
+                <div className="row profile-actions-container">
                     <div className="profile-actions">
                         {c.isDeleted
                             ? null

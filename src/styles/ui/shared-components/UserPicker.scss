@@ -1,17 +1,26 @@
-.create-new-chat {
-  .chat-creation-header {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    @extend %flex-shrink-0;
-    margin-bottom: $margin-large;
-    padding: $padding-default;
+.user-picker {
+  .create-new-chat {
+    .chat-creation-header {
+      @extend %flex-row;
+      @extend %flex-align-center;
+      @extend %flex-shrink-0;
+      margin-bottom: $margin-large;
+      padding: $padding-default;
 
-    .title {
-      margin-right: auto;
+      .title {
+        margin-right: auto;
 
-      span {
-        display: block;
+        span {
+          display: block;
+        }
       }
     }
+  }
+
+  .email-invite-container {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-justify-between;
+    @extend %flex-shrink-0;
   }
 }

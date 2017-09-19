@@ -1,0 +1,21 @@
+.help-container {
+  .live-help-text {
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+
+  .support-text {
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+
+  .feedback-text {
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+
+  .logs-text {
+    @extend %flex-row;
+    @extend %flex-align-center;
+  }
+}

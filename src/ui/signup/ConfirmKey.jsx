@@ -26,7 +26,7 @@ const T = require('~/ui/shared-components/T');
 
     render() {
         return (
-            <div className="flex-col">
+            <div className="confirm-key-container">
                 <div className="confirm-key">
                     <div className="safe" />
                     <div className="headline">{t('title_confirmHeadline')}</div>

@@ -111,8 +111,8 @@ class NewContact extends React.Component {
 
     render() {
         return (
-            <div className="contacts">
-                <div className="contacts-view flex-align-center flex-justify-center create-new-chat user-picker">
+            <div className="contacts new-contact">
+                <div className="contacts-view create-new-chat user-picker">
 
                     <div className="invite-form">
                         {this.isInviteView ? <T k="title_contactZeroState" className="title" tag="div" /> : null}
@@ -139,7 +139,7 @@ class NewContact extends React.Component {
                             </div>
                             {this.notFound ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div" className="error-search" /> : null}
                             {this.suggestInviteEmail ?
-                                <div className="flex-row flex-align-center flex-justify-between flex-shrink-0">
+                                <div className="email-invite-container">
                                     <div className="email-invite">{this.suggestInviteEmail}</div>
                                     <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
                                 </div>

@@ -7,6 +7,10 @@
       margin-left: 32px;
     }
   }
+
+  .twofa-container {
+    @extend %flex-row;
+  }
 }
 
 // This was probably intended to be a recurring element but so far only appears in Security Settings

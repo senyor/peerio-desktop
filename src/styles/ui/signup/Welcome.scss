@@ -14,20 +14,12 @@
     margin: 0 0 $margin-large;
     text-align: center;
   }
+
+  .private-container {
+    @extend %flex-row;
+  }
 }
 
 .welcome-heading {
-  margin-bottom: 16px;
-}
-
-// Not used
-.welcome-title {
-  @extend %display-3;
-  color: $color-brand-primary;
-  font-weight: $font-weight-bold;
-  text-align: center;
-}
-
-.terms-smallprint {
   margin-bottom: 16px;
 }

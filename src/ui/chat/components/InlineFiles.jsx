@@ -23,7 +23,7 @@ class InlineFiles extends React.Component {
                 if (gaveUpMap[f]) return;
                 if (!fileStore.getById(f)) gaveUpMap[f] = true;
             });
-        }, 30000);
+        }, 60000);
     }
 
     componentWillUnmount() {

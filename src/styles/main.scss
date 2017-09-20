@@ -26,21 +26,21 @@
 @import './components/user-picker';
 
 // Meta views
-@import './ui/AppNav';
-@import './ui/AppNavButton';
-@import './ui/Onboarding';
-@import './ui/Root';
+@import '../ui/AppNav';
+@import '../ui/AppNavButton';
+@import '../ui/Onboarding';
+@import '../ui/Root';
 
 // View-specific styles;
-@import './ui/shared-components/_all';
-@import './ui/contact/_all';
-@import './ui/chat/_all';
-@import './ui/emoji/_all';
-@import './ui/files/_all';
-@import './ui/login/_all';
-@import './ui/mail/_all';
-@import './ui/settings/_all';
-@import './ui/signup/_all';
+@import '../ui/shared-components/_all';
+@import '../ui/contact/_all';
+@import '../ui/chat/_all';
+@import '../ui/emoji/_all';
+@import '../ui/files/_all';
+@import '../ui/login/_all';
+@import '../ui/mail/_all';
+@import '../ui/settings/_all';
+@import '../ui/signup/_all';
 
 // General styles and overrides
 @import './misc';

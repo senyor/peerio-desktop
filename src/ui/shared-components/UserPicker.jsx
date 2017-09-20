@@ -46,6 +46,10 @@ class UserPicker extends React.Component {
         return this.selected.filter(this.selfFilter);
     }
 
+    @computed get queryIsEmpty() {
+        return !this.query.trim().length;
+    }
+
     filterOptions = (item) => {
         if (this.selected.find(s => s.username === item.username)) return false;
         if (this.props.noDeleted && item.isDeleted) return false;

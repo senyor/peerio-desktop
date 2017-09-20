@@ -71,16 +71,18 @@ class NewChannel extends React.Component {
         return (
             <div className="create-new-chat">
                 <T k="title_createChannel" tag="h1" />
-                <T k={detailsKey} tag="div" s
-                    tyle={{ marginBottom: '20px', maxWidth: '560px' }} />
+                <T k={detailsKey} tag="div" style={{ marginBottom: '20px', maxWidth: '560px' }} />
                 <div className="new-chat-search">
                     <div className="chip-wrapper">
                         <Input placeholder={t('title_channelName')}
                             value={this.channelName} onChange={this.handleNameChange} />
                     </div>
-                    {<Button className={css('confirm', { banish: !this.channelName.length })}
-                        label={t('button_go')}
-                        onClick={this.handleAccept} />}
+                    {<Button className={css('confirm', {
+                        banish: !this.channelName.length
+                        || !this.upgradeDialog
+                        || !this.userPicker.isValid
+                        || !this.userPicker.queryIsEmpty
+                    })} label={t('button_go')} onClick={this.handleAccept} />}
                 </div>
                 <div className="new-chat-search">
                     <div className="chip-wrapper">

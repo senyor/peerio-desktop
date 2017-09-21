@@ -20,12 +20,25 @@
   }
 
   .chat-item-add-icon {
-    background-image: url('./static/img/chat-add-icon.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    border: 2px solid $color-brand-primary;
+    border-radius: 4px;
     height: 24px;
     margin-left: auto;
     width: 24px;
+
+    &::after {
+      color: $color-brand-primary;
+      content: "+";
+      display: block;
+      font-size: 24px;
+      font-weight: $font-weight-semibold;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      width: 20px;
+    }
   }
 }

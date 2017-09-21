@@ -5,6 +5,8 @@
 module.exports = {
     appId: 'com.peerio.desktop', // must the the same as in package.json
 
+    // for internal peerio whitelabel builds like staging - keep this 'false'
+    whiteLabelBuild: false,
     // App-unique name of keychain service for storing Account Key.
     // IMPORTANT: Changing this for the same app will invalidate autologin for all users.
     keychainService: 'PeerioMessenger',

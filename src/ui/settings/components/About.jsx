@@ -6,6 +6,8 @@ const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
 const { socket } = require('~/icebear');
+const config = require('~/config');
+
 
 @observer
 class About extends React.Component {
@@ -36,7 +38,10 @@ class About extends React.Component {
 
                 </section>
                 <section>
-                    &copy; 2017 Peerio Technologies, Inc. All rights reserved.
+                    {config.whiteLabelBuild
+                        ? null
+                        : <span>&copy; 2017 Peerio Technologies, Inc. All rights reserved.</span>
+                    }
                     <div className="settings-terms">
                         {t('title_appName')} <Button onClick={this.showTermsDialog} label={t('button_terms')} />
                     </div>

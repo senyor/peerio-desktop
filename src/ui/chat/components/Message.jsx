@@ -75,9 +75,12 @@ const autolinker = new Autolinker({
     stripTrailingSlash: false
 });
 
+let ownMentionRegex;
+
 function highlightMentions(str) {
+    //eslint-disable-next-line
     return str.replace(
-        contactStore.getContact(User.current.username).mentionRegex,
+        ownMentionRegex || (ownMentionRegex = contactStore.getContact(User.current.username).mentionRegex),
         '<span class="mention self">$&</span>'
     );
 }

@@ -5,7 +5,7 @@ const { chatStore, User } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { ProgressBar, Button, Input } = require('~/react-toolbox');
+const { ProgressBar, Button, Input, IconButton } = require('~/react-toolbox');
 const css = require('classnames');
 const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 const config = require('~/config');
@@ -69,8 +69,13 @@ class NewChannel extends React.Component {
         const detailsKey = config.disablePayments || User.current.hasActivePlans
             ? 'title_createChannelDetails_noPayments' : 'title_createChannelDetails';
         return (
-            <div className="create-new-chat">
-                <T k="title_createChannel" tag="h1" />
+            <div className="new-channel create-new-chat">
+                <div className="chat-creation-header">
+                    <div className="title">
+                        <T k="title_createChannel" tag="span" />
+                    </div>
+                    <IconButton icon="close" onClick={this.handleClose} />
+                </div>
                 <T k={detailsKey} tag="div" style={{ marginBottom: '20px', maxWidth: '560px' }} />
                 <div className="new-chat-search">
                     <div className="chip-wrapper">

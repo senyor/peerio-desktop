@@ -2,4 +2,22 @@
   .user-picker {
     @extend %flex-justify-center;
   }
+
+  .chat-creation-header {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-shrink-0;
+    margin-bottom: $margin-large;
+    max-width: 600px;
+    padding: $padding-default;
+    width: 100%;
+
+    .title {
+      margin-right: auto;
+
+      span {
+        display: block;
+      }
+    }
+  }
 }

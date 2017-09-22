@@ -13,17 +13,20 @@ Assuming you have nodejs and npm installed.
 
 If you want to use a local development version of `peerio-icebear`, run `npm link` inside that project, then `npm link @peerio/peerio-icebear`.
 
-**Beware:** Don't ever use a development SDK with production servers, especially not with your own account (you could break it permanently). 
+**Beware:** Don't ever use a development SDK with production servers, especially not with your own account (you could break it permanently).
 
 ## Dependency management
 
 Due to the 2-package.json structure, as well as other idiosyncracies, the following gotchas must be observed when adding dependencies to peerio-desktop:
 1. If you add a dependency to peerio-icebear, you should add it to both the dependencies and peerDependencies of that project.
-2. Only dependencies from `app/` will end up in a prod build, and they have to be added to `app/package.json` manually. 
+2. Only dependencies from `app/` will end up in a prod build, and they have to be added to `app/package.json` manually.
 
 ## Logging
 
-`console.log` and `console.err` will be removed from production builds by babel. 
+In production builds, calls to `console` functions like `console.log` and
+`console.err` will be transformed with our Babel plugin
+[console-kungfu](https://github.com/PeerioTechnologies/babel-plugin-console-kungfu)
+to add helpful information like filenames and line numbers.
 
 ## UI Tests
 
@@ -33,7 +36,7 @@ Tests run with Spectron.
 
 In development builds, there is a tool available for recording clicks and inputs. You can run `recordUI()`, and then `stopRecording()`, which will print the results. There are at least a few caveats and pitfalls, documented in the code -- src/helpers/test-recorder.js
 
-There are a few hooks available in test/helpers.js -- 
+There are a few hooks available in test/helpers.js --
 
 - `startApp` -- starts Spectron
 - `startAppAndConnect` -- starts spectron and waits until the socket is connected
@@ -43,13 +46,13 @@ There are a few hooks available in test/helpers.js --
 
 ### CI
 
-Tests run on circleCI. However, the CI is very slow, so we hack the `login` function to wipe the passcode (if it exists). 
+Tests run on circleCI. However, the CI is very slow, so we hack the `login` function to wipe the passcode (if it exists).
 
 On the CI, tests on the branch `staging` are configured to run with the staging server.
 
 ### Local tests / VSCode debugger
 
-To run and debug indvidual test files locally, make sure to compile sources first... and to set environment variables `PEERIO_DESKTOP_STAGING_TEST_USERNAME`, `PEERIO_DESKTOP_STAGING_TEST_PASSPHRASE`, `PEERIO_DESKTOP_PROD_TEST_USERNAME`, `PEERIO_DESKTOP_PROD_TEST_PASSPHRASE` in order to skip needing to create an account that will run the tests. 
+To run and debug indvidual test files locally, make sure to compile sources first... and to set environment variables `PEERIO_DESKTOP_STAGING_TEST_USERNAME`, `PEERIO_DESKTOP_STAGING_TEST_PASSPHRASE`, `PEERIO_DESKTOP_PROD_TEST_USERNAME`, `PEERIO_DESKTOP_PROD_TEST_PASSPHRASE` in order to skip needing to create an account that will run the tests.
 
 To configure VSCode to run each individual test in the debugger, add the following configuration:
 

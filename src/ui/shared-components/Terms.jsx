@@ -4,7 +4,7 @@ const React = require('react');
 class Terms extends React.Component {
     render() {
         return (
-            <div>
+            <div className="terms-of-use">
                 <h1>Peerio Terms of Use</h1>
 
                 <div className="last-updated">Last updated 18 November 2015</div>

@@ -84,7 +84,8 @@ class TwoFADialog extends React.Component {
             <Dialog
                 active={!!req}
                 title={t(this.getTitle(req))}
-                actions={actions} >
+                actions={actions}
+                className="twofa-dialog">
                 <p>{this.getPreText(req)}</p>
                 <br />
                 <div className="text-center">

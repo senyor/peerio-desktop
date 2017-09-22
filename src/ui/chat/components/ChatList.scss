@@ -3,12 +3,11 @@
   .room-invites {
     background: $background-chat-list-item;
     cursor: pointer;
-    font-weight: $font-weight-semibold;
 
     .rt-list-item { // This should be 32px - Paul
-      height: 32px;
-      max-height: 32px;
-      min-height: 32px;
+      height: 26px;
+      max-height: 26px;
+      min-height: 26px;
     }
   }
 
@@ -20,16 +19,30 @@
     &:hover:not(.active) {
       background-color: $background-hover-message;
     }
-  }
 
-  // TODO: Remove when channels go live - paul
-  .avatar-group-chat {
-    background: #979797;
-    border-radius: 40px;
-    color: $text-light-primary;
-    height: 32px;
-    line-height: 32px;
-    text-align: center;
-    width: 32px;
+    [data-react-toolbox=font-icon] {
+      margin-right: $margin-default;
+    }
+
+    .rt-list-item {
+      max-height: 44px;
+      min-height: 44px;
+    }
+
+    .rt-list-itemAction {
+      @extend %flex-align-center;
+      height: 32px;
+    }
   }
+}
+
+// TODO: Remove when channels go live? - paul
+.avatar-group-chat {
+  background: #979797;
+  border-radius: 40px;
+  color: $text-light-primary;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  width: 32px;
 }

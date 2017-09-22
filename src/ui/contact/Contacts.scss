@@ -8,7 +8,7 @@
     @extend %flex-shrink-1;
     position: relative;
     // FIXME remove calc?
-    width: calc(100vw - 352px);
+    width: calc(100vw - 336px);
   }
 
   .toolbar {

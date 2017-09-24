@@ -78,7 +78,10 @@ class MembersSection extends React.Component {
         if (!chat) return null;
         const invited = chatInviteStore.sent.get(chat.id);
         const { isChannel, canIAdmin } = chat;
-
+        if (!isChannel && !chat.participants.length) {
+            // this removes member section from DM chat with self
+            return null;
+        }
         const userMenu = [], adminMenu = [], inviteMenu = [];
         if (isChannel && canIAdmin) {
             userMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>

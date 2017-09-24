@@ -19,7 +19,7 @@ class ShareFiles extends React.Component {
     };
 
     closeUserPicker = () => {
-        window.router.push('/app/files');
+        window.router.back();
     };
 
     render() {

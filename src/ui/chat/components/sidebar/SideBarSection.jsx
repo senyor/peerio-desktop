@@ -19,7 +19,7 @@ class SideBarSection extends React.Component {
                     <div className="section-title">{this.props.title}</div>
                     <FontIcon value={this.closed ? 'arrow_drop_down' : 'arrow_drop_up'} />
                 </div>
-                {this.props.children}
+                {this.closed ? null : this.props.children}
             </div>
         );
     }

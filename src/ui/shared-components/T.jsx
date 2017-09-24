@@ -16,11 +16,15 @@ const React = require('react');
 const { t } = require('peerio-translator');
 
 function T(props) {
-    return React.createElement(
-        props.tag || 'span',
-        { className: props.className, style: props.style },
-        ...t(props.k, props.children)
-    );
+    const tag = props.tag || 'span';
+    const properties = { className: props.className, style: props.style };
+    const translation = t(props.k, props.children);
+
+    if (typeof translation === 'string') {
+        return React.createElement(tag, properties, translation);
+    }
+
+    return React.createElement(tag, properties, ...translation);
 }
 
 module.exports = T;

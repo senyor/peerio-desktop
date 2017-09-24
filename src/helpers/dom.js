@@ -1,3 +1,10 @@
+/**
+ * Looks for an attribute value in html element's parent chain.
+ * Starts checks from the element itself.
+ * @param {Object} element - html element
+ * @param {string} attribute - attribute name
+ * @returns {string|null} found attribute value or null
+ */
 function getAttributeInParentChain(element, attribute) {
     let el = element;
 

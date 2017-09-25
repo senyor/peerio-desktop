@@ -416,7 +416,7 @@
   "title_enterTOTPCodeFromApp": "Input code displayed in the app",
   "title_authApps": "Let's get you started",
   "title_trustThisDevice": "This is a trusted device",
-  "title_authAppsDetails": "To enable 2 Step Verification use an authenticator app such as Google Authenticator for <a-googleAuthA>Android</> or <a-googleAuthI>iOS</> or <a-authy>Authy</> on your desktop or mobile device, and follow the steps on the screen.",
+  "title_authAppsDetails": "To enable Two Step Verification use an authenticator app such as Google Authenticator for <a-googleAuthA>Android</> or <a-googleAuthI>iOS</> or <a-authy>Authy</> on your desktop or mobile device, and follow the steps on the screen.",
   "title_2FAEnabledThanks": "Thanks for adding another layer of security to your account.",
   "title_2FABackupDetail": "If you can't access your second verification method, save these backup codes to avoid getting locked out of Peerio.",
   "button_2FABackupDownload": "Save backup codes",
@@ -468,5 +468,6 @@
   "error_disable2fa": "Unable to disable two step verification",
   "error_reissue2faBackupCodes": "Unable to generate backup codes",
   "error_invalid2faCode": "Invalid two step verification code",
-  "title_earned": "{current}MB of {max}MB earned"
+  "title_earned": "{current}MB of {max}MB earned",
+  "title_recentFiles": "Recent files"
 }

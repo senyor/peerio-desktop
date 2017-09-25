@@ -51,7 +51,7 @@ class About extends React.Component {
                     actions={termsDialogActions}
                     onOverlayClick={this.hideTermsDialog}
                     onEscKeyDown={this.hideTermsDialog}
-                    className="terms">
+                    className="terms-container">
                     <Terms />
                 </Dialog>
             </div>

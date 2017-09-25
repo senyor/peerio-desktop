@@ -24,7 +24,7 @@ class ShareFiles extends React.Component {
 
     render() {
         return (
-            <div className="create-new-chat">
+            <div className="create-new-chat share-files-userpicker">
                 <UserPicker title={t('title_shareWith')} noDeleted
                     button={t('button_share')}
                     onAccept={this.handleFileShareAccept}

@@ -173,7 +173,7 @@ class PasscodeStore extends OrderedFormStore {
         );
 
         return (
-            <div>
+            <div className="passcode">
                 <div className={css('hint-wrapper', { focused: this.focusPasscode })}>
                     <div className="password-sentiment">
                         <ValidatedInput type="password"

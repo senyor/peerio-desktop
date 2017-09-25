@@ -46,17 +46,6 @@
   filter: blur(5px);
 }
 
-// TERMS
-.terms {
-  .rt-dialog-dialog {
-    overflow: hidden;
-  }
-
-  .rt-dialog-body {
-    overflow: auto;
-  }
-}
-
 @keyframes gradient {
   0%,
   100% {

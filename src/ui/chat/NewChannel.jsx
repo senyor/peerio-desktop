@@ -76,7 +76,7 @@ class NewChannel extends React.Component {
                     </div>
                     <IconButton icon="close" onClick={this.handleClose} />
                 </div>
-                <T k={detailsKey} tag="div" style={{ marginBottom: '20px', maxWidth: '560px' }} />
+                <T k={detailsKey} tag="div" className="create-room-info" />
                 <div className="new-chat-search">
                     <div className="chip-wrapper">
                         <Input placeholder={t('title_channelName')}

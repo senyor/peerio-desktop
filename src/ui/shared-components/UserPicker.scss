@@ -1,4 +1,100 @@
 .user-picker {
+  @extend %flex-row;
+  background: $background-root;
+  height: 100vh;
+  width: 100%;
+
+  .selected-items {
+    @extend %flex-col;
+    @extend %flex-grow-0;
+    @extend %flex-shrink-0;
+    background-color: $background-chat-list;
+    width: 256px;
+
+    ul {
+      overflow-y: auto;
+    }
+  }
+
+  .inputs-container {
+    @extend %flex-row;
+    @extend %flex-justify-center;
+    width: 100%;
+
+    .inputs-container-inner {
+      @extend %flex-col;
+      @extend %flex-grow-1;
+      max-width: 600px;
+    }
+  }
+
+  .user-list {
+    overflow-y: auto;
+  }
+
+  .rt-list-list {
+    //max-height: 50vh;
+    padding-bottom: 0;
+  }
+
+  .rt-list-subheader,
+  .rt-list-listItem {
+    border-radius: 4px;
+    border-width: 0 !important; // I did this :( - Paul
+    overflow: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+
+    &:not(.warning) {
+      .rt-list-right .material-icons {
+        cursor: pointer;
+        display: none;
+      }
+
+      &:hover {
+        .rt-list-right .material-icons {
+          display: block;
+        }
+      }
+    }
+
+    &.warning {
+      background-color: rgba($color-error, .25);
+
+      .rt-list-right .material-icons {
+        color: $color-error;
+      }
+    }
+  }
+
+  .rt-list-itemContentRoot {
+    overflow: hidden;
+  }
+
+  .rt-list-itemText {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .email-invite-container {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    @extend %flex-justify-between;
+    @extend %flex-shrink-0;
+  }
+
+  .email-invite {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .error-search {
+    @extend %hint-error-label;
+    color: $color-error;
+    margin-left: 48px;
+    margin-top: 6px;
+  }
+
   .chat-creation-header {
     @extend %flex-row;
     @extend %flex-align-center;
@@ -13,12 +109,5 @@
         display: block;
       }
     }
-  }
-
-  .email-invite-container {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    @extend %flex-justify-between;
-    @extend %flex-shrink-0;
   }
 }

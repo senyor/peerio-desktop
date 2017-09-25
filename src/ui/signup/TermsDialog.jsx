@@ -27,7 +27,7 @@ const { t } = require('peerio-translator');
                 actions={termsDialogActions}
                 onOverlayClick={hideDialog}
                 onEscKeyDown={hideDialog}
-                className="terms">
+                className="terms-container">
                 <Terms />
             </Dialog>
         );

@@ -43,7 +43,7 @@ class InvitedContacts extends React.Component {
 
     render() {
         return (
-            <div className="contacts-view">
+            <div className="invited-contacts contacts-view">
                 <div className="toolbar" />
 
                 <div className="list-sort" />

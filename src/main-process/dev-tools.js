@@ -10,7 +10,7 @@ const repoRootPath = path.resolve(`${__dirname}/../../../`);
 if (isDevEnv) {
     const PATH_APP_NODE_MODULES = path.join(repoRootPath, 'app', 'node_modules');
     require('module').globalPaths.push(PATH_APP_NODE_MODULES);
-    //eslint-disable-next-line
+    // eslint-disable-next-line
     require('electron-reload')(appRootPath, {
         electron: path.join(repoRootPath, 'node_modules', '.bin', 'electron')
     });

@@ -26,8 +26,11 @@ class DragDropStore {
 
         // if (!User.current || !ev.dataTransfer.files.length) return;
         // restore this line ^ after bug is fixed in electron
-        if (!User.current || !ev.dataTransfer.items.length) return;
-        // remove this line ^ after electron bug is fixed
+        if (!User.current || !ev.dataTransfer.items.length ||
+            Array.prototype.slice.call(ev.dataTransfer.items).filter(it => it.kind === 'file').length === 0) {
+            return;
+        }
+        // remove this condition ^ after electron bug is fixed
         this._counter++;
         if (this._counter === 1) {
             let list = Array.prototype.slice.call(ev.dataTransfer.files);
@@ -72,8 +75,9 @@ class DragDropStore {
         ev.preventDefault();
         // if (!User.current || !ev.dataTransfer.files.length) {
         // restore this line ^ after electron bug is fixed
-        if (!User.current || !ev.dataTransfer.items.length) {
-            // remove this line ^ after electron bug is fixed
+        if (!User.current || !ev.dataTransfer.items.length ||
+            Array.prototype.slice.call(ev.dataTransfer.items).filter(it => it.kind === 'file').length === 0) {
+            // remove these two lines ^ after electron bug is fixed
             ev.dataTransfer.dropEffect = 'none';
             ev.dataTransfer.effectAllowed = 'none';
         } else {

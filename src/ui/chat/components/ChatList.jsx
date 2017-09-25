@@ -83,7 +83,7 @@ class ChatList extends React.Component {
                                 <FlipMove duration={200} easing="ease-in-out" >
                                     {chatStore.channels.map(c =>
                                         (<ListItem key={c.id || c.tempId}
-                                            className={css('room-item', { active: c.active })}
+                                            className={css('room-item', { active: c.active, unread: c.unreadCount > 0 })}
                                             caption={`# ${c.name}`}
                                             onClick={() => this.activateChat(c.id)}
                                             rightIcon={
@@ -106,7 +106,7 @@ class ChatList extends React.Component {
                                 <FlipMove duration={200} easing="ease-in-out">
                                     {chatStore.directMessages.map(c =>
                                         (<ListItem key={c.id || c.tempId}
-                                            className={css('dm-item', { active: c.active })}
+                                            className={css('dm-item', { active: c.active, unread: c.unreadCount > 0 })}
                                             leftIcon={
                                                 !c.participants || c.participants.length !== 1
                                                     ? <div className="avatar-group-chat material-icons">people</div>

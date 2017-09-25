@@ -10,8 +10,13 @@
       min-height: 26px;
     }
   }
+  
+  .unread {
+    font-weight: bold;
+  }
 
   .dm-item {
+
     background: $background-chat-list-item; // background colour for Anri. - Paul
     cursor: pointer;
     transition: 150ms;
@@ -33,6 +38,8 @@
       @extend %flex-align-center;
       height: 32px;
     }
+
+
   }
 }
 

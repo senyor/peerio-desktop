@@ -150,10 +150,9 @@ class MessageInput extends ComposeInput {
                         <MenuItem value="upload" caption={t('title_uploadAndShare')} onClick={this.handleUpload} />
                     </IconMenu>
                     {this.props.readonly
-                        ? <div className="full-width" >&nbsp;</div>
+                        ? <div className="message-editor-empty" >&nbsp;</div>
                         : <div id="messageEditor" onBlur={this.onInputBlur}
-                            ref={this.activateQuill}
-                            className="full-width" />
+                            ref={this.activateQuill} />
                     }
                     <IconButton icon="mood" disabled={this.emojiPickerVisible} onClick={this.showEmojiPicker} />
 

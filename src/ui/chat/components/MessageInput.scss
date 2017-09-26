@@ -60,6 +60,11 @@ $suggests-max-height: 200px;
     padding: 0 $padding-small 0 26px;
     position: relative;
 
+    #messageEditor,
+    .message-editor-empty {
+      width: 100%;
+    }
+
     .color-brand:not([disabled]) > .material-icons {
       color: $blue;
     }
@@ -99,5 +104,15 @@ $suggests-max-height: 200px;
         width: 1.5em;
       }
     }
+  }
+
+  // RANDOM MESSAGES
+  .backdrop {
+    background-color: rgba(255, 255, 255, .58);
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 }

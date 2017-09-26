@@ -13,7 +13,9 @@
 @import './vars/_shadows';
 @import './vars/transitions';
 @import './vars/_typography';
-@import './rt-base-theme'; // Imports variables. Always first, after lib imports.
+
+// React Toolbox base themes
+@import './rt-base-theme';
 @import './rt-light-theme';
 
 // Components that get reused between views

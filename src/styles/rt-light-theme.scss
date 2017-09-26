@@ -2,18 +2,18 @@
   // INPUTS
   .rt-input-input {
     input {
-      background-color: $input-light-inactive;
+      background-color: $input-light;
       border-color: transparent;
       border-width: 0 0 4px;
       box-shadow: $shadow-2;
 
       &:hover {
-        background: $color-light-100;
+        background: $white;
         box-shadow: $shadow-8;
       }
 
       &:focus {
-        background: $color-light-100;
+        background: $white;
       }
     }
   }
@@ -55,7 +55,7 @@
   }
 
   .rt-dropdown-values > li.rt-dropdown-selected {
-    background-color: rgba($color-brand-primary, .7);
+    background-color: rgba($blue, .7);
     color: $text-light-primary;
     font-weight: $font-weight-semibold;
   }
@@ -71,7 +71,7 @@
     color: $text-light-primary;
 
     &:hover {
-      background-color: $background-light-button-hover;
+      background-color: $white-12;
     }
   }
 
@@ -81,11 +81,11 @@
 
   .rt-input-errored input {
     border: 0;
-    border-bottom: 4px solid $color-error;
+    border-bottom: 4px solid $red-error;
   }
 
   .rt-input-error {
-    color: $color-light-100;
+    color: $white;
     display: block;
     white-space: nowrap;
   }

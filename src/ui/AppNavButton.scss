@@ -11,8 +11,8 @@
 
     .look-at-me {
       @extend %hint-error-label;
-      background: $color-error;
-      border: 2px solid $color-brand-primary;
+      background: $red-error;
+      border: 2px solid $blue;
       border-radius: 12px;
       display: block;
       height: 24px;

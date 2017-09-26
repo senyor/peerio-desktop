@@ -65,7 +65,7 @@
 }
 
 .rt-ripple-ripple {
-  background-color: $color-brand-primary;
+  background-color: $blue;
 }
 
 .rt-button-rippleWrapper {
@@ -76,7 +76,7 @@
   min-width: 64px;
 
   .rt-dialog-navigation &:last-of-type {
-    color: $color-brand-primary;
+    color: $blue;
   }
 }
 
@@ -105,7 +105,7 @@
 
   input {
     // TODO border-radius variables
-    border: 1px solid $border-dark;
+    border: 1px solid $black-38;
     border-radius: 2px;
     height: 48px;
     margin-top: 0;
@@ -178,7 +178,7 @@
 }
 
 .rt-dropdown-values {
-  background: $color-light-100;
+  background: $white;
 }
 
 .rt-dropdown-values > *:hover {
@@ -190,7 +190,7 @@
 }
 
 .rt-input-errored > .rt-input-inputElement {
-  border: 1px solid $color-error;
+  border: 1px solid $red-error;
   margin-top: 2px;
 }
 
@@ -208,8 +208,8 @@
 .chip-label {
   @extend %flex-shrink-0;
   background: $background-root;
-  border: 1px solid $color-brand-primary;
-  color: $color-brand-primary;
+  border: 1px solid $blue;
+  color: $blue;
   margin-bottom: $margin-tiny;
   margin-right: 0;
   margin-top: $margin-tiny;
@@ -230,14 +230,14 @@
   }
 
   .rt-chip-delete {
-    border: 2px solid rgba($color-brand-primary, .35);
+    border: 2px solid rgba($blue, .35);
     border-radius: 24px;
 
     &:hover {
-      background: $color-brand-primary;
+      background: $blue;
 
       .rt-chip-deleteIcon {
-        background: $color-brand-primary;
+        background: $blue;
       }
 
       .rt-chip-deleteX {
@@ -253,13 +253,13 @@
     width: 20px;
 
     .rt-chip-deleteX {
-      stroke: rgba($color-brand-primary, .35);
+      stroke: rgba($blue, .35);
       stroke-width: 4px;
     }
   }
 
   &.not-found {
-    background: $color-error;
+    background: $red-error;
     color: transparent;
     margin: 0;
     min-width: 0;
@@ -294,12 +294,12 @@
   }
 
   .rt-switch-off {
-    background: $color-dark-12;
+    background: $black-12;
   }
 
   .rt-switch-on {
-    background: $color-brand-primary;
-    border-color: $color-brand-primary !important;
+    background: $blue;
+    border-color: $blue !important;
   }
 
   .rt-switch-thumb {
@@ -309,12 +309,12 @@
   }
 
   .rt-switch-off .rt-switch-thumb {
-    background: $color-dark-12;
+    background: $black-12;
     box-shadow: none;
   }
 
   .rt-switch-on .rt-switch-thumb {
-    background-color: $color-light-100;
+    background-color: $white;
     box-shadow: none;
     left: 24px;
   }
@@ -328,7 +328,7 @@
 .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,
 .rt-list-listItem {
   &:hover:not(.active) {
-    background-color: $background-hover-message;
+    background-color: $lightblue-hover;
   }
 }
 // USER AGENT OVERWRITES

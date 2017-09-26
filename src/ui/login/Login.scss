@@ -29,8 +29,8 @@
 
     &:not([disabled]),
     &:hover:not([disabled]) {
-      background-color: $color-light-100 !important; // so important
-      color: $color-brand-primary !important; // :( - Paul
+      background-color: $white !important; // so important
+      color: $blue !important; // :( - Paul
     }
   }
 
@@ -45,7 +45,7 @@
   }
 
   .welcome-back-wrapper {
-    background: $color-brand-gradient;
+    background: $gradient-to-right;
     border-radius: 4px;
     margin-top: $margin-large;
   }
@@ -55,7 +55,7 @@
     @extend %flex-align-center;
     @extend %flex-shrink-0;
     @extend %flex-justify-center;
-    background: $background-welcome-back;
+    background: $white-50;
     border-radius: 4px;
     color: $text-dark-secondary;
     cursor: pointer;
@@ -67,7 +67,7 @@
     transition: 250ms;
 
     &:hover {
-      background: $background-welcome-back-active;
+      background: $white;
     }
 
     .overflow {

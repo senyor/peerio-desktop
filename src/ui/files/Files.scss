@@ -41,7 +41,7 @@
     }
 
     table {
-      background: $background-table;
+      background: $white;
       border-spacing: 0;
       position: relative;
       width: 100%;
@@ -69,20 +69,20 @@
         position: relative;
 
         &.selected-row {
-          background: rgba($color-brand-primary, .12);
+          background: rgba($blue, .12);
         }
 
         &:hover {
-          background: rgba($color-brand-primary, .12);
+          background: rgba($blue, .12);
 
           .rt-menu-iconMenu {
-            background: rgba($color-brand-primary, .38);
+            background: rgba($blue, .38);
             border-radius: 4px;
           }
         }
 
         &.new-file {
-          background-color: $background-new-file;
+          background-color: rgba($green-affirmative, .12);
         }
 
         &:last-of-type td {
@@ -97,7 +97,7 @@
         width: 18px;
 
         &:not(.rt-checkbox-disabled) .rt-checkbox-check:not(.rt-checkbox-checked) {
-          background: $color-light-100;
+          background: $white;
           border-color: $icon-dark-active;
 
           &.rt-checkbox-checked {
@@ -117,6 +117,6 @@
   }
 
   .waiting-3rd-party {
-    background-color: $color-dark-03;
+    background-color: $black-03;
   }
 }

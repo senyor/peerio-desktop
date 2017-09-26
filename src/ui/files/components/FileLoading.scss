@@ -3,7 +3,7 @@
     // TODO: add pulse to imply activity.
     align-items: center;
     background-color: $background-root;
-    border: 2px solid $color-affirmative;
+    border: 2px solid $green-affirmative;
     border-radius: 20px;
     cursor: pointer;
     display: flex;
@@ -18,7 +18,7 @@
     }
 
     &:hover {
-      border-color: $color-error;
+      border-color: $red-error;
 
       > span:last-child {
         display: initial;
@@ -29,7 +29,7 @@
       }
 
       .material-icons {
-        color: $color-error;
+        color: $red-error;
       }
     }
   }

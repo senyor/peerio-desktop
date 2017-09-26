@@ -89,11 +89,11 @@
 
   .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,
   .rt-list-item.selectable:not(.disabled):hover {
-    background-color: $background-hover-message;
+    background-color: $lightblue-hover;
   }
 
   .rt-list-listItem.active .rt-list-item {
-    background: $background-active-message;
+    background: $lightblue;
 
     .rt-list-itemText {
       color: $text-light-secondary;
@@ -106,12 +106,12 @@
     }
 
     &:hover {
-      background: $background-active-message;
+      background: $lightblue;
     }
   }
 
   .rt-ripple-ripple {
-    background-color: $color-brand-primary;
+    background-color: $blue;
   }
 
   .rt-list-itemAction {
@@ -121,11 +121,11 @@
   // contact status indicator
   // status should be applied to list item parent.
   .online .rt-list-left .avatar {
-    border-color: $color-affirmative;
+    border-color: $green-affirmative;
   }
 
   .busy .rt-list-left .material-icons {
-    border-color: $color-error;
+    border-color: $red-error;
   }
 }
 

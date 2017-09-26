@@ -2,7 +2,7 @@
   @extend %flex-col;
   @extend %flex-shrink-0;
   align-items: center;
-  background-image: url($background-pattern), $background-gradient-bottom;
+  background-image: url($background-pattern), $gradient-to-bottom;
   background-position-x: 90px;
   background-size: 220px;
   height: 100vh;

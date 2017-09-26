@@ -3,7 +3,7 @@
     .table-action-bar {
       @extend %flex-row;
       align-items: center;
-      background: $background-table-actions;
+      background: $black-06;
       border-radius: 2px;
       flex-shrink: 0;
       height: 64px;
@@ -24,12 +24,12 @@
       }
 
       .material-icons {
-        color: rgba($color-brand-primary, .5);
+        color: rgba($blue, .5);
         transition: 250ms;
       }
 
       .rt-button-button:hover .material-icons {
-        color: $color-brand-primary;
+        color: $blue;
       }
 
       .disabled,
@@ -43,7 +43,7 @@
       }
 
       .rt-ripple-ripple {
-        background-color: $color-brand-primary;
+        background-color: $blue;
       }
 
       .reverse-icon .material-icons {

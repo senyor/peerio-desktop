@@ -2,7 +2,7 @@
   .mail-item {
     @extend %flex-row;
     @extend %hint-error-label;
-    background-color: $color-light-50;
+    background-color: $white-50;
     border-bottom: 1px solid $divider-dark;
     cursor: pointer;
     height: 80px;
@@ -35,12 +35,12 @@
     }
 
     &.active {
-      background-color: $background-active-message;
+      background-color: $lightblue;
       color: $text-light-primary;
     }
 
     &:hover:not(.active) {
-      background-color: $color-light-100;
+      background-color: $white;
     }
   }
 }

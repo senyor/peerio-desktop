@@ -61,7 +61,7 @@ textarea {
 }
 
 a {
-  color: $color-brand-primary;
+  color: $blue;
 }
 
 *,
@@ -71,7 +71,7 @@ a {
 }
 
 body {
-  background-image: $background-gradient;
+  background-image: $gradient-to-right;
 }
 
 body,
@@ -111,7 +111,7 @@ section {
   .material-icons {
     background-color: $background-root;
     border-radius: 12px;
-    color: $color-error;
+    color: $red-error;
     height: 24px;
     position: absolute;
     right: -8px;

@@ -48,17 +48,17 @@
     }
 
     &.with-bg {
-      background: $color-dark-03;
+      background: $black-03;
       margin-top: 20px;
       padding: $padding-default;
 
       .title {
-        color: $color-dark-87;
+        color: $black;
         font-weight: $font-weight-regular;
       }
 
       a {
-        color: $color-dark-87;
+        color: $black;
         cursor: pointer;
         font-weight: $font-weight-semibold;
         text-decoration: underline;
@@ -74,7 +74,7 @@
     }
 
     .large-inline-icon {
-      border: 1px solid $color-dark-87;
+      border: 1px solid $black;
       border-radius: 50px;
       padding: 5px;
     }
@@ -96,7 +96,7 @@
   }
 
   .error {
-    color: $color-error;
+    color: $red-error;
     font-size: 12px;
     margin-top: 4px;
   }

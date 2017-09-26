@@ -8,7 +8,7 @@
     @extend %flex-col;
     @extend %flex-grow-0;
     @extend %flex-shrink-0;
-    background-color: $background-chat-list;
+    background-color: $background-faintblue;
     width: 256px;
 
     ul {
@@ -58,10 +58,10 @@
     }
 
     &.warning {
-      background-color: rgba($color-error, .25);
+      background-color: rgba($red-error, .25);
 
       .rt-list-right .material-icons {
-        color: $color-error;
+        color: $red-error;
       }
     }
   }
@@ -90,7 +90,7 @@
 
   .error-search {
     @extend %hint-error-label;
-    color: $color-error;
+    color: $red-error;
     margin-left: 48px;
     margin-top: 6px;
   }

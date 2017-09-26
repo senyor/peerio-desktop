@@ -22,7 +22,7 @@
     transition: 150ms;
 
     &:hover:not(.active) {
-      background-color: $background-hover-message;
+      background-color: $lightblue-hover;
     }
 
     [data-react-toolbox=font-icon] {

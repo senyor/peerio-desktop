@@ -4,7 +4,7 @@ $status-bar-height: 36px;
   @extend %flex-row;
   @extend %flex-align-center;
   @extend %flex-justify-center;
-  background-image: $background-gradient;
+  background-image: $gradient-to-right;
   background-size: 400%;
   border-radius: 4px;
   box-shadow: $shadow-8;
@@ -34,7 +34,7 @@ $status-bar-height: 36px;
   }
 
   .rt-progress_bar-path {
-    stroke: $color-light-100;
+    stroke: $white;
   }
 
   .reconnect {

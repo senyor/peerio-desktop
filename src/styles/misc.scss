@@ -1,5 +1,5 @@
 %notify {
-  background: $color-error;
+  background: $red-error;
   border-radius: 10px;
   content: "";
   height: 10px;
@@ -79,15 +79,15 @@
 
 // BUTTONS
 .button-gradient {
-  background-image: linear-gradient(to right, rgba($color-brand-primary, .5), rgba($color-brand-secondary, .75));
-  border: 2px solid $color-light-70 !important;
-  border-color: $color-light-70;
+  background-image: linear-gradient(to right, rgba($blue, .5), rgba($green, .75));
+  border: 2px solid $white-70 !important;
+  border-color: $white-70;
   border-radius: 4px;
   line-height: 34px;
 
   &:hover {
-    background-image: $background-gradient !important;
-    border: 1px solid $color-light-100;
+    background-image: $gradient-to-right !important;
+    border: 1px solid $white;
   }
 }
 

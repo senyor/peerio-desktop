@@ -27,7 +27,7 @@
   }
 
   .contact-error {
-    background-color: $color-error;
+    background-color: $red-error;
     border-radius: 2px;
     color: $text-light-primary;
     font-weight: $font-weight-semibold;
@@ -44,7 +44,7 @@
     }
 
     .deleted-account {
-      color: $color-error;
+      color: $red-error;
     }
   }
 

@@ -38,7 +38,7 @@ $suggests-max-height: 200px;
     }
 
     .selected {
-      background-color: $color-brand-primary;
+      background-color: $blue;
       color: white;
     }
   }
@@ -61,11 +61,11 @@ $suggests-max-height: 200px;
     position: relative;
 
     .color-brand:not([disabled]) > .material-icons {
-      color: $color-brand-primary;
+      color: $blue;
     }
 
     .color-affirmative > .material-icons {
-      color: $color-affirmative;
+      color: $green-affirmative;
     }
 
     .ql-container {

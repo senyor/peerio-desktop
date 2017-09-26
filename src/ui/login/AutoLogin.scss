@@ -27,14 +27,14 @@
       }
 
       .rt-button-button {
-        background-color: $color-light-12;
-        border: 2px solid $color-light-12;
+        background-color: $white-12;
+        border: 2px solid $white-12;
         line-height: 32px;
         transition: 250ms;
         width: 168px;
 
         &:hover {
-          border-color: $color-light-100;
+          border-color: $white;
         }
       }
     }

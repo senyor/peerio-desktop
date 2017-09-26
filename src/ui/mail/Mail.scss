@@ -1,12 +1,12 @@
 .mail {
   @extend %flex-row;
-  background-color: $color-light-100;
+  background-color: $white;
   color: $text-dark-secondary;
   position: relative;
   width: 100%;
 
   .rt-button-floating {
-    background-color: $color-accent !important;
+    background-color: $orange !important;
     bottom: 32px;
     left: 198px;
     position: absolute;
@@ -20,7 +20,7 @@
     @extend %flex-grow-0;
     @extend %flex-shrink-0;
     @extend %flex-col;
-    background-color: $background-chat-list;
+    background-color: $background-faintblue;
     border-right: 1px solid $divider-dark;
     height: 100%;
     width: $width-mail-list;
@@ -65,7 +65,7 @@
       cursor: pointer;
 
       .material-icons {
-        color: $color-brand-primary;
+        color: $blue;
       }
     }
   }

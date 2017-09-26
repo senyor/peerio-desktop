@@ -26,7 +26,7 @@
 
   .new-chat-search {
     @extend %flex-align-center;
-    border: 1px solid $input-dark-border;
+    border: 1px solid $input-border;
     border-radius: 24px;
     display: flex;
     flex-shrink: 0;
@@ -64,14 +64,14 @@
     }
 
     .rt-button-button {
-      background-color: $color-affirmative;
+      background-color: $green-affirmative;
       border-radius: 24px;
       color: $text-light-primary;
       transition: 250ms;
 
       &:hover {
-        background-color: $color-affirmative;
-        color: $color-light-100;
+        background-color: $green-affirmative;
+        color: $white;
 
         .rt-rippleWrapper {
           border-radius: 0 24px 24px 0;
@@ -145,7 +145,7 @@
       }
 
       input {
-        border: 1px solid rgba($color-brand-primary, .54);
+        border: 1px solid rgba($blue, .54);
         border-radius: 4px;
         color: $text-dark-secondary;
         font-weight: $font-weight-bold;
@@ -166,7 +166,7 @@
 
     // styling for edit icon in title bar thing.
     .material-icons {
-      color: $color-dark-38;
+      color: $black-38;
       display: none;
       font-size: 18px;
       left: 2px;

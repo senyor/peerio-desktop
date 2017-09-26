@@ -1,6 +1,6 @@
 .chat-upload-progress {
   @extend %flex-col;
-  background: $color-light-100;
+  background: $white;
   color: $text-dark-primary;
   height: 48px;
   left: 0;
@@ -12,7 +12,7 @@
   .progress-content {
     @extend %flex-row;
     @extend %flex-align-center;
-    background-color: $color-dark-06;
+    background-color: $black-06;
     height: 48px;
     padding: 0 24px;
     width: 100%;

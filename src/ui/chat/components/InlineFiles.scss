@@ -10,7 +10,7 @@
   .unknown-file {
     @extend %flex-col;
     @extend %flex-justify-center;
-    background: $color-dark-03;
+    background: $black-03;
     border: 1px solid $divider-dark;
     border-left-width: 8px;
     border-radius: 2px;
@@ -36,10 +36,10 @@
     &:hover {
       border-color: currentColor;
       box-shadow: $shadow-8;
-      color: $color-brand-primary;
+      color: $blue;
 
       .material-icons {
-        color: $color-brand-primary;
+        color: $blue;
       }
     }
 
@@ -60,7 +60,7 @@
 
   .invalid-file {
     border-color: currentColor;
-    color: $color-error-opacity-6;
+    color: rgba($red-error, .6);
 
     .container {
       @extend %flex-row;
@@ -68,7 +68,7 @@
     }
 
     .material-icons {
-      color: $color-error-opacity-6;
+      color: rgba($red-error, .6);
       margin-right: $padding-tiny;
     }
   }

@@ -1,7 +1,7 @@
 .chat-sidebar {
   @extend %flex-col;
   @extend %flex-shrink-0;
-  background: $color-dark-03;
+  background: $black-03;
   // border-left: 1px solid $divider-dark;
   height: calc(100vh - 80px);
   overflow: auto;

@@ -22,7 +22,7 @@
 
       &.unconfirmed {
         .rt-list-itemText:not(.rt-list-primary) {
-          color: $color-error;
+          color: $red-error;
         }
       }
     }

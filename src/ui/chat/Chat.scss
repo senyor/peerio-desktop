@@ -121,11 +121,11 @@
   // contact status indicator
   // status should be applied to list item parent.
   .online .rt-list-left .avatar {
-    border-color: $status-online;
+    border-color: $color-affirmative;
   }
 
   .busy .rt-list-left .material-icons {
-    border-color: $status-busy;
+    border-color: $color-error;
   }
 }
 

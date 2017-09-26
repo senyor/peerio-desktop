@@ -30,7 +30,7 @@ $snackbar-min-width: 288px;
 .snackbar {
   @extend %flex-row;
   align-items: center;
-  background: $background-snackbar;
+  background: #555;
   border-radius: 2px;
   color: $text-light-primary;
   height: 48px;
@@ -42,7 +42,7 @@ $snackbar-min-width: 288px;
   top: 0;
 
   .rt-button-button:not([disabled]) {
-    color: $button-primary;
+    color: $color-brand-primary;
     margin-left: 40px;
     min-width: 64px;
     padding: 0 8px;

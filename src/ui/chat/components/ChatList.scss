@@ -1,7 +1,7 @@
 .list {
   .room-item,
   .room-invites {
-    background: $background-chat-list-item;
+    background: #eee;
     cursor: pointer;
 
     .rt-list-item { // This should be 32px - Paul
@@ -10,14 +10,14 @@
       min-height: 26px;
     }
   }
-  
+
   .unread {
     font-weight: bold;
   }
 
   .dm-item {
 
-    background: $background-chat-list-item; // background colour for Anri. - Paul
+    background: #eee;
     cursor: pointer;
     transition: 150ms;
 

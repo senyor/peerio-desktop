@@ -66,13 +66,13 @@
     }
 
     .rt-button-button {
-      background-color: $button-affirmative;
+      background-color: $color-affirmative;
       border-radius: 24px;
       color: $text-light-primary;
       transition: 250ms;
 
       &:hover {
-        background-color: $button-affirmative;
+        background-color: $color-affirmative;
         color: $color-light-100;
 
         .rt-rippleWrapper {

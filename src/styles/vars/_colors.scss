@@ -1,5 +1,23 @@
+// BRAND COLORS
+// These are
 
-// LOW LEVEL COLOR
+// Primary brand color
+$color-brand-primary: rgb(44, 149, 207);
+$color-brand-secondary: rgb(50, 206, 195);
+$color-accent: rgb(246, 146, 35);
+
+// Gradients - used with background-image property
+$color-brand-gradient: linear-gradient(to right, $color-brand-primary, $color-brand-secondary);
+$color-brand-gradient-bottom: linear-gradient(to bottom, $color-brand-primary 0, $color-brand-secondary 50%);
+
+// Background patterns
+$background-pattern: './static/img/bg-pattern.png';
+
+// fonts
+@import './static/fonts/OpenSans/opensans.css';
+$font-stack: 'Open Sans', sans-serif;
+
+// COLOR VARIABLES
 // for use with dark backgrounds
 $color-light-100: rgba(255, 255, 255, 1);
 $color-light-70: rgba(255, 255, 255, .7);
@@ -7,7 +25,6 @@ $color-light-50: rgba(255, 255, 255, .5);
 $color-light-38: rgba(255, 255, 255, .38);
 $color-light-12: rgba(255, 255, 255, .12);
 
-// LOW LEVEL COLOR
 // for use with light backgrounds
 $color-dark-87: rgba(0, 0, 0, .87);
 $color-dark-54: rgba(0, 0, 0, .54);
@@ -23,22 +40,17 @@ $color-warning: rgb(244, 203, 66);
 $color-error-opacity-6: rgba($color-error, .6);
 
 // BACKGROUNDS
-$color-lightblue: rgba(44, 149, 207, 0.12);
 $background-active-message: #32b0e3;
-$background-brand: $color-brand-primary;
 $background-gradient: $color-brand-gradient;
 $background-gradient-bottom: $color-brand-gradient-bottom;
-$background-cancel: $color-error;
 $background-hover-message: rgba($background-active-message, .38);
 $background-new-messages: rgba($color-error, .38);
 $background-chat-list: rgba($color-brand-primary, .12); // TODO: make this more generic
-$background-chat-list-item: #eee; // $color-dark-06 over white backgrond.
 $background-new-file: rgba($color-affirmative, .12);
 $background-light-button-hover: $color-light-12;
 $background-light-dropdown: $color-light-12;
 $background-overlay: rgba(0, 0, 0, .5);
 $background-root: $color-light-100;
-$background-snackbar: #555;
 $background-table: $color-light-100;
 $background-table-actions: $color-dark-06;
 $background-welcome-back: $color-light-50;
@@ -48,18 +60,13 @@ $background-welcome-back-active: $color-light-100;
 $text-dark-primary: $color-dark-87;
 $text-dark-secondary: $color-dark-54;
 $text-dark-hint: $color-dark-38;
-$text-dark-disabled: $color-dark-38;
 $text-light-primary: $color-light-100;
 $text-light-secondary: $color-light-70;
-$text-light-hint: $color-light-50;
 $text-light-disabled: $color-light-38;
 
 $text-new-messages: rgba($color-error, .7);
 
 // ERRORS
-$text-dark-error: $color-error;
-$text-light-error: $color-light-100;
-$border-error: $color-error;
 $border-dark: $color-dark-38; // for input borders
 
 // DIVIDERS
@@ -71,19 +78,9 @@ $input-light-active: $color-light-100;
 $input-light-inactive: $color-light-70;
 $input-dark-border: $color-dark-38;
 
-// BUTTONS
-$button-primary: $color-brand-primary;
-$button-dark-disabled: $color-dark-38;
-$button-light-disabled: $color-light-50;
-$button-affirmative: $color-affirmative;
-
 // ICONS
 // fonts
 $icon-dark-active: $color-dark-54;
 $icon-dark-inactive: $color-dark-38;
 $icon-light-active: $color-light-100;
 $icon-light-inactive: $color-light-70;
-
-//STATUS
-$status-online: $color-affirmative;
-$status-busy: $color-error;

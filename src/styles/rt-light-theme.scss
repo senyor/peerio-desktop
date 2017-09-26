@@ -81,11 +81,11 @@
 
   .rt-input-errored input {
     border: 0;
-    border-bottom: 4px solid $border-error;
+    border-bottom: 4px solid $color-error;
   }
 
   .rt-input-error {
-    color: $text-light-error;
+    color: $color-light-100;
     display: block;
     white-space: nowrap;
   }

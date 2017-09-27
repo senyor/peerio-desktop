@@ -47,7 +47,7 @@ class FilesSection extends React.Component {
                         const file = fileStore.getById(id);
                         if (!file) return null;
                         return (<span key={id} data-fileId={id}>
-                            <ListItem caption={file.name} rightActions={[menu]} />
+                            <ListItem caption={file.name} rightActions={[menu]} onClick={this.download} />
                         </span>);
                     })}
                 </List>

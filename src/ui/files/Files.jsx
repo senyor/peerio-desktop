@@ -95,7 +95,7 @@ const { getListOfFiles } = require('~/helpers/file');
                                 </tr>
                             </thead>
                             <tbody>
-                                {fileStore.files.map(f => <FileLine key={f.fileId} file={f} />)}
+                                {fileStore.visibleFiles.map(f => <FileLine key={f.fileId} file={f} />)}
                             </tbody>
                         </table>
                     </div>

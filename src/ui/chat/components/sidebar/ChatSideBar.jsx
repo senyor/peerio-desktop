@@ -40,14 +40,20 @@ class ChatSideBar extends React.Component {
         const chat = chatStore.activeChat;
         if (!chat) return null;
         const { isChannel, canIAdmin, canILeave } = chat;
+        if (!isChannel && !chat.recentFiles.length) return null;
 
         return (
             <div className={css('chat-sidebar', { open: this.props.open })}>
-                <div className="title">{t('title_About')}</div>
-                <div>
-                    <ChatNameEditor showLabel tabIndex="-1" readOnly={!canIAdmin} />
-                    {isChannel ? <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin} /> : null}
-                </div>
+                {isChannel ?
+                  <div>
+                    <div className="title">{t('title_About')}</div>
+                    <div>
+                        <ChatNameEditor showLabel tabIndex="-1" readOnly={!canIAdmin} />
+                        {isChannel ? <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin} /> : null}
+                    </div>
+                  </div>
+                  : null
+                }
                 {isChannel ?
                     <div className="sidebar-section">
                         <List selectable>
@@ -71,7 +77,7 @@ class ChatSideBar extends React.Component {
                     </div>
                     : null
                 }
-                <MembersSection onAddParticipants={this.props.onAddParticipants} />
+                {isChannel ? <MembersSection onAddParticipants={this.props.onAddParticipants} /> : null }
                 <FilesSection />
             </div>
         );

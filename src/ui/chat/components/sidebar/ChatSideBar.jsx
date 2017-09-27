@@ -49,7 +49,7 @@ class ChatSideBar extends React.Component {
                     <div className="title">{t('title_About')}</div>
                     <div>
                         <ChatNameEditor showLabel tabIndex="-1" readOnly={!canIAdmin} />
-                        {isChannel ? <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin} /> : null}
+                        <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin} />
                     </div>
                   </div>
                   : null

@@ -72,7 +72,7 @@ class ChatSideBar extends React.Component {
                     : null
                 }
                 <MembersSection onAddParticipants={this.props.onAddParticipants} />
-                <FilesSection />
+                {/* <FilesSection /> */}
             </div>
         );
     }

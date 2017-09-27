@@ -106,10 +106,10 @@
       "color-primary": "rgb(44, 149, 207)",
       "color-primary-dark": "var(--palette-indigo-700)",
       "color-primary-light": "var(--palette-indigo-500)",
-      "orange": "rgb(246, 146, 35)",
-      "orange-dark": "var(--palette-pink-700)",
+      "color-accent": "rgb(246, 146, 35)",
+      "color-accent-dark": "var(--palette-pink-700)",
       "color-primary-contrast": "var(--color-dark-contrast)",
-      "orange-contrast": "var(--color-dark-contrast)",
+      "color-contrast": "var(--color-dark-contrast)",
       "animation-duration": "0.3s"
     },
     "path": "app/node_modules/react-toolbox/lib",

@@ -206,16 +206,20 @@ class UserPicker extends React.Component {
                                         {{ added: this.selectedSelfless.length + 1, limit: this.props.limit }}
                                     </T>
                                 </div>}
-                            {this.showNotFoundError
-                                ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div"
-                                    className="error-search" />
-                                : null}
-
+                            {this.showNotFoundError && !this.suggestInviteEmail
+                                ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div" className="error-search" />
+                                : null
+                            }
                         </div>
                         {this.suggestInviteEmail ?
                             <div className="email-invite-container">
-                                <div className="email-invite">{this.suggestInviteEmail}</div>
-                                <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
+                                <div className="email-invite">
+                                    <img src="./static/img/questionmark-grey.png"/>
+                                    <div className="email-invite-text">
+                                        {t('title_inviteContactByEmail', {email: this.suggestInviteEmail})}
+                                    </div>
+                                </div>
+                                <Button className="button-affirmative" onClick={this.invite} label={t('button_send')} />
                             </div>
                             : null}
                         {!this.isLimitReached && <List selectable ripple >

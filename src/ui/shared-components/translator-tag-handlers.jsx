@@ -12,6 +12,10 @@ function i(text) {
     return <i>{text}</i>;
 }
 
+function br() {
+    return <br/>;
+}
+
 module.exports = {
-    a, b, i
+    a, b, i, br
 };

@@ -81,11 +81,17 @@
     @extend %flex-align-center;
     @extend %flex-justify-between;
     @extend %flex-shrink-0;
+
+    margin-bottom: 48px;
   }
 
   .email-invite {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @extend %flex-row;
+
+    img {
+      margin: auto;
+      padding: 0 $margin-default;
+    }
   }
 
   .error-search {

@@ -1,0 +1,15 @@
+.button-affirmative.rt-button-button:not([disabled]) {
+  background-color: $green-affirmative;
+  border-radius: 24px;
+  color: $text-light-primary;
+  transition: 250ms;
+
+  &:hover {
+    background-color: $green-affirmative;
+    color: $text-light-primary;
+
+    .rt-rippleWrapper {
+      border-radius: 0 24px 24px 0;
+    }
+  }
+}

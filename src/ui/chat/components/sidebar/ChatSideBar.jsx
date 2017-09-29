@@ -51,8 +51,7 @@ class ChatSideBar extends React.Component {
                             <ChatNameEditor showLabel tabIndex="-1" readOnly={!canIAdmin} />
                             <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin} />
                         </div>
-                    </div>
-                    : null
+                    </div> : null
                 }
                 {isChannel ?
                     <div className="sidebar-section">
@@ -77,7 +76,7 @@ class ChatSideBar extends React.Component {
                     </div>
                     : null
                 }
-                {isChannel ? <MembersSection onAddParticipants={this.props.onAddParticipants} /> : null }
+                {isChannel ? <MembersSection onAddParticipants={this.props.onAddParticipants} /> : null}
                 <FilesSection />
             </div>
         );

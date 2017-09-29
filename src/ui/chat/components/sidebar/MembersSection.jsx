@@ -102,6 +102,14 @@ class MembersSection extends React.Component {
         return (
             <SideBarSection title={t('title_Members')}>
                 <List>
+                    {isChannel && canIAdmin
+                        ? <ListItem
+                            className="admin-controls"
+                            leftIcon="add"
+                            caption={t('button_inviteToChannel')}
+                            onClick={this.props.onAddParticipants} />
+                        : null
+                    }
                     {chat.joinedParticipants
                         ? chat.joinedParticipants.map((c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu))
                         : null}
@@ -111,13 +119,6 @@ class MembersSection extends React.Component {
                     {invited
                         ? invited.map((c) => this.renderInvitedParticipant(c, inviteMenu))
                         : null}
-                    {isChannel && canIAdmin
-                        ? <ListItem
-                            className="admin-controls"
-                            caption={t('button_inviteToChannel')}
-                            onClick={this.props.onAddParticipants} />
-                        : null
-                    }
                 </List>
             </SideBarSection>
         );

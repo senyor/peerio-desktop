@@ -56,9 +56,35 @@
     white-space: nowrap;
   }
 
+  .purpose-container {
+    border-bottom: 1px solid $divider-dark;
+    padding-bottom: 9px;
+    padding-left: $padding-default;
+    padding-top: 7px;
+  }
+
+  .purpose-label,
+  .purpose-label-big {
+    color: $text-dark-hint;
+  }
+
+  .purpose-label {
+    font-size: 12px;
+  }
+
+  .purpose-label-big {
+    padding: 12px 0 7px;
+  }
+
+  .purpose-text {
+    padding-right: $padding-default;
+    padding-top: 3px;
+    word-wrap: break-word;
+  }
+
   .rt-input-input {
     border-bottom: 1px solid $divider-dark;
-    height: 56px;
+    height: auto;
     margin-top: 0;
     padding-bottom: $padding-small;
     padding-left: $padding-small;
@@ -69,6 +95,12 @@
 
     input {
       border: 0;
+    }
+
+    textarea {
+      line-height: inherit;
+      padding-right: $padding-default;
+      padding-top: 25px;
     }
   }
 

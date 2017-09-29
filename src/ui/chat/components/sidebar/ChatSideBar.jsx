@@ -1,4 +1,5 @@
 const React = require('react');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { List, ListItem } = require('~/react-toolbox');
 const { chatStore } = require('~/icebear');
@@ -11,6 +12,10 @@ const FilesSection = require('./FilesSection');
 
 @observer
 class ChatSideBar extends React.Component {
+    // Switching between textarea and static text is not really needed, we could always use textarea
+    // but there's some bug with chrome or react-toolbox that shifts entire view up a bit if textarea renders on app start
+    @observable chatPurposeEditorVisible = false;
+
     deleteChannel() {
         const chat = chatStore.activeChat;
         if (!chat) return;
@@ -35,6 +40,16 @@ class ChatSideBar extends React.Component {
         }
     }
 
+    showChatPurposeEditor = () => {
+        if (!chatStore.activeChat.canIAdmin) return;
+        this.chatPurposeEditorVisible = true;
+    }
+    hideChatPurposeEditor = () => {
+        this.chatPurposeEditorVisible = false;
+    }
+    chatPurposeEditorRef = ref => {
+        if (ref) ref.nameInput.focus();
+    };
 
     render() {
         const chat = chatStore.activeChat;
@@ -49,7 +64,19 @@ class ChatSideBar extends React.Component {
                         <div className="title">{t('title_About')}</div>
                         <div>
                             <ChatNameEditor showLabel tabIndex="-1" readOnly={!canIAdmin} />
-                            <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin} />
+                            <div onClick={this.showChatPurposeEditor}>
+                                {
+                                    this.chatPurposeEditorVisible
+                                        ? <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin}
+                                            onBlur={this.hideChatPurposeEditor} multiline ref={this.chatPurposeEditorRef} />
+                                        : <div className="purpose-container">
+                                            {chat.chatHead && chat.chatHead.purpose
+                                                ? [<T tag="div" k="title_purpose" className="purpose-label" key="1" />,
+                                                    <div key="2" className="purpose-text">{chat.chatHead.purpose}</div>]
+                                                : <T tag="div" k="title_purpose" className="purpose-label-big" />}
+                                        </div>
+                                }
+                            </div>
                         </div>
                     </div> : null
                 }

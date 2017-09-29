@@ -47,6 +47,7 @@ class ChatNameEditor extends React.Component {
                 displayValue={displayValue}
                 tabIndex={this.props.tabIndex}
                 readOnly={this.props.readOnly}
+                multiline={this.props.multiline}
             />
 
         );

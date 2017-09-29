@@ -9,7 +9,6 @@
 
   .onboarding-content {
     @extend %flex-col;
-
     height: 100%;
     margin-top: 64px;
 
@@ -54,6 +53,7 @@
 
     .material-icons {
       height: 29px;
+      margin-right: $spacing-default;
       margin-top: 3px;
     }
 

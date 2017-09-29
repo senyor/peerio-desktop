@@ -29,7 +29,9 @@ class ShareFiles extends React.Component {
                     button={t('button_share')}
                     onAccept={this.handleFileShareAccept}
                     onClose={this.closeUserPicker}
-                    sharing />
+                    sharing
+                    limit={1}
+                />
             </div>
         );
     }

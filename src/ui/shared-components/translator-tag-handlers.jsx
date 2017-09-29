@@ -13,7 +13,7 @@ function i(text) {
 }
 
 function br() {
-    return <br/>;
+    return <br />;
 }
 
 module.exports = {

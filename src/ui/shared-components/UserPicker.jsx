@@ -39,7 +39,7 @@ class UserPicker extends React.Component {
     }
 
     @computed get isValid() {
-        return !this.selected.find(s => s.loading || s.notFound) && !this.isLimitReached;
+        return !this.selected.find(s => s.loading || s.notFound) && !this.isOverLimit;
     }
 
     @computed get selectedSelfless() {
@@ -147,7 +147,11 @@ class UserPicker extends React.Component {
     }
 
     get isLimitReached() {
-        return this.props.limit && this.selectedSelfless.length >= this.props.limit;
+        return !!(this.props.limit && this.selectedSelfless.length === this.props.limit);
+    }
+
+    get isOverLimit() {
+        return !!(this.props.limit && this.selectedSelfless.length > this.props.limit);
     }
 
     render() {
@@ -191,21 +195,24 @@ class UserPicker extends React.Component {
                                                 : c.username}
                                         </Chip>)
                                     )}
-                                    <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')}
-                                        value={this.query} onChange={this.handleTextChange}
-                                        onKeyDown={this.handleKeyDown} />
+                                    {this.isLimitReached || this.isOverLimit
+                                        ? null :
+                                        <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')}
+                                            value={this.query} onChange={this.handleTextChange}
+                                            onKeyDown={this.handleKeyDown} />
+                                    }
                                 </div>
                                 <Button className={css('confirm', {
                                     banish: this.props.onlyPick
                                     || (!this.selected.length && (!this.props.extraChips || !this.props.extraChips.length))
                                 })} label={this.props.button || t('button_go')} onClick={this.accept} disabled={!this.isValid} />
                             </div>
-                            {this.props.limit &&
+                            {/* this.props.limit &&
                                 <div className={css('text-right', 'dark-label', { 'error-search': this.isLimitReached })}>
                                     <T k="title_addedPeopleLimit">
                                         {{ added: this.selectedSelfless.length + 1, limit: this.props.limit }}
                                     </T>
-                                </div>}
+                            </div> */}
                             {this.showNotFoundError && !this.suggestInviteEmail
                                 ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div" className="error-search" />
                                 : null
@@ -214,15 +221,15 @@ class UserPicker extends React.Component {
                         {this.suggestInviteEmail ?
                             <div className="email-invite-container">
                                 <div className="email-invite">
-                                    <img src="./static/img/questionmark-grey.png"/>
+                                    <img alt="" src="./static/img/questionmark-grey.png" />
                                     <div className="email-invite-text">
-                                        {t('title_inviteContactByEmail', {email: this.suggestInviteEmail})}
+                                        {t('title_inviteContactByEmail', { email: this.suggestInviteEmail })}
                                     </div>
                                 </div>
                                 <Button className="button-affirmative" onClick={this.invite} label={t('button_send')} />
                             </div>
                             : null}
-                        {!this.isLimitReached && <List selectable ripple >
+                        {this.isLimitReached || this.isOverLimit ? null : <List selectable ripple >
                             <div key="list" className="user-list">
                                 <ListSubHeader key="fav-header" caption={t('title_favoriteContacts')} />
                                 {this.options.map(c => {

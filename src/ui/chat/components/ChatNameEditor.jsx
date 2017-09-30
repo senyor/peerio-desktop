@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const BetterInput = require('~/ui/shared-components/BetterInput');
-const { chatStore } = require('~/icebear');
+const { chatStore, config } = require('~/icebear');
 const { t } = require('peerio-translator');
 
 @observer
@@ -48,6 +48,7 @@ class ChatNameEditor extends React.Component {
                 tabIndex={this.props.tabIndex}
                 readOnly={this.props.readOnly}
                 multiline={this.props.multiline}
+                maxLength={this.props.purpose ? config.chat.maxChatPurposeLength : config.chat.maxChatNameLength}
             />
 
         );

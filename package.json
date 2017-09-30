@@ -76,7 +76,7 @@
     "devtron": "1.4.0",
     "diff2html-cli": "2.5.0",
     "electron": "1.7.8",
-    "electron-builder": "19.31.1",
+    "electron-builder": "19.32.2",
     "electron-devtools-installer": "2.2.0",
     "electron-reload": "1.2.2",
     "emojione": "3.1.2",

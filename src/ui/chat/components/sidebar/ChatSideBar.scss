@@ -15,14 +15,6 @@
     top: 28px;
   }
 
-  .admin-controls {
-    border-top: 1px solid $divider-dark;
-
-    &.delete-room {
-      border-top: 0;
-    }
-  }
-
   // TODO: combine with chat list avatar styles.
   .rt-avatar-avatar {
     font-size: 20px;

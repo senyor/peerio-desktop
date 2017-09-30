@@ -15,6 +15,7 @@ class ChatSideBar extends React.Component {
     // Switching between textarea and static text is not really needed, we could always use textarea
     // but there's some bug with chrome or react-toolbox that shifts entire view up a bit if textarea renders on app start
     @observable chatPurposeEditorVisible = false;
+    @observable openSectionIndex = 0;
 
     deleteChannel() {
         const chat = chatStore.activeChat;
@@ -49,6 +50,14 @@ class ChatSideBar extends React.Component {
     }
     chatPurposeEditorRef = ref => {
         if (ref) ref.nameInput.focus();
+    };
+
+    // todo: this needs to be made smarter when we have at least one more section
+    onMembersToggle = () => {
+        this.openSectionIndex = this.openSectionIndex === 0 ? 1 : 0;
+    };
+    onFilesToggle = () => {
+        this.openSectionIndex = this.openSectionIndex === 1 ? 0 : 1;
     };
 
     render() {
@@ -103,8 +112,11 @@ class ChatSideBar extends React.Component {
                     </div>
                     : null
                 }
-                {isChannel ? <MembersSection onAddParticipants={this.props.onAddParticipants} /> : null}
-                <FilesSection />
+                {isChannel
+                    ? <MembersSection onAddParticipants={this.props.onAddParticipants}
+                        onToggle={this.onMembersToggle} open={this.openSectionIndex === 0} />
+                    : null}
+                <FilesSection onToggle={this.onFilesToggle} open={this.openSectionIndex === 1} />
             </div>
         );
     }

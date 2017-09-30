@@ -8,6 +8,7 @@ const { getAttributeInParentChain } = require('~/helpers/dom');
 const uiStore = require('~/stores/ui-store');
 const T = require('~/ui/shared-components/T');
 const SideBarSection = require('./SideBarSection');
+const css = require('classnames');
 
 @observer
 class MembersSection extends React.Component {
@@ -100,27 +101,31 @@ class MembersSection extends React.Component {
         }
 
         return (
-            <SideBarSection title={t('title_Members')}>
-                <List>
-                    {isChannel && canIAdmin
-                        ? <ListItem
-                            className="admin-controls"
-                            leftIcon="add"
-                            caption={t('button_inviteToChannel')}
-                            onClick={this.props.onAddParticipants} />
-                        : null
-                    }
-                    {chat.joinedParticipants
-                        ? chat.joinedParticipants.map((c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu))
-                        : null}
-                    {invited && invited.length
-                        ? <ListSubHeader caption={t('title_invited')} />
-                        : null}
-                    {invited
-                        ? invited.map((c) => this.renderInvitedParticipant(c, inviteMenu))
-                        : null}
-                </List>
-            </SideBarSection>
+            <SideBarSection title={t('title_Members')} onToggle={this.props.onToggle} open={this.props.open}>
+                <div className={css('member-list', { 'with-admin-controls': isChannel && canIAdmin })}>
+                    <List className="action-list">
+                        {isChannel && canIAdmin
+                            ? <ListItem
+                                className="admin-controls"
+                                leftIcon="add"
+                                caption={t('button_inviteToChannel')}
+                                onClick={this.props.onAddParticipants} />
+                            : null
+                        }
+                    </List>
+                    <List>
+                        {chat.joinedParticipants
+                            ? chat.joinedParticipants.map((c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu))
+                            : null}
+                        {invited && invited.length
+                            ? <ListSubHeader caption={t('title_invited')} />
+                            : null}
+                        {invited
+                            ? invited.map((c) => this.renderInvitedParticipant(c, inviteMenu))
+                            : null}
+                    </List>
+                </div>
+            </SideBarSection >
         );
     }
 }

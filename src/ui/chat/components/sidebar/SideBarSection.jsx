@@ -6,20 +6,16 @@ const css = require('classnames');
 
 @observer
 class SideBarSection extends React.Component {
-    @observable closed = false;
-
-    toggleSection = () => {
-        this.closed = !this.closed;
-    }
-
     render() {
         return (
-            <div className={css('sidebar-section', { closed: this.closed })} >
-                <div className="list-header clickable" onClick={this.toggleSection}>
+            <div className={css('sidebar-section', { closed: !this.props.open, open: this.props.open })} >
+                <div className="list-header clickable" onClick={this.props.onToggle}>
                     <div className="section-title">{this.props.title}</div>
-                    <FontIcon value={this.closed ? 'arrow_drop_down' : 'arrow_drop_up'} />
+                    <FontIcon value={this.props.open ? 'arrow_drop_up' : 'arrow_drop_down'} />
                 </div>
-                {this.closed ? null : this.props.children}
+                <div className="section-content">
+                    {this.props.open ? this.props.children : null}
+                </div>
             </div>
         );
     }

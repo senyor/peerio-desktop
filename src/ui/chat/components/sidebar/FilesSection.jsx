@@ -12,7 +12,7 @@ const { downloadFile } = require('~/helpers/file');
 class FilesSection extends React.Component {
     share(ev) {
         ev.stopPropagation();
-        const fileId = getAttributeInParentChain(ev.target, 'data-fileId');
+        const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
         const file = fileStore.getById(fileId);
         if (!file) return;
         fileStore.clearSelection();
@@ -22,7 +22,7 @@ class FilesSection extends React.Component {
 
     download(ev) {
         ev.stopPropagation();
-        const fileId = getAttributeInParentChain(ev.target, 'data-fileId');
+        const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
         const file = fileStore.getById(fileId);
         if (!file) return;
         downloadFile(file);
@@ -41,12 +41,12 @@ class FilesSection extends React.Component {
         </IconMenu>);
 
         return (
-            <SideBarSection title={t('title_recentFiles')}>
+            <SideBarSection title={t('title_recentFiles')} onToggle={this.props.onToggle} open={this.props.open}>
                 <List>
                     {chat.recentFiles.map(id => {
                         const file = fileStore.getById(id);
                         if (!file) return null;
-                        return (<span key={id} data-fileId={id}>
+                        return (<span key={id} data-fileid={id}>
                             <ListItem caption={file.name} rightActions={[menu]} onClick={this.download} />
                         </span>);
                     })}

@@ -1,8 +1,10 @@
 .sidebar-section {
   @extend %flex-shrink-0;
   border-bottom: 1px solid $divider-dark;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  overflow-y: auto;
+  // overflow-y: auto;
 
   .section-title {
     margin-right: auto;
@@ -19,8 +21,20 @@
     }
   }
 
+  .section-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
   &.closed {
+    flex-shrink: 0;
     height: 48px;
     overflow: hidden;
+  }
+
+  &.open {
+    flex-shrink: 1;
   }
 }

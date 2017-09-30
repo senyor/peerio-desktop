@@ -1,0 +1,18 @@
+.member-list {
+  flex-shrink: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  &.with-admin-controls {
+    padding-top: 64px;
+  }
+}
+
+.action-list {
+  background: #fcfcfc;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}

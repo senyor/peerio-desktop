@@ -21,7 +21,7 @@ class ChannelInvites extends React.Component {
     }
 
     inviteOptions(kegDbId) {
-        return (<div data-kegDbId={kegDbId}>
+        return (<div data-kegdbid={kegDbId}>
             <Button label={t('button_accept')}
                 onClick={this.acceptInvite}
                 flat primary disabled={this.isLimitReached} />
@@ -42,12 +42,12 @@ class ChannelInvites extends React.Component {
     }
 
     acceptInvite = (ev) => {
-        const id = getAttributeInParentChain(ev.target, 'data-kegDbId');
+        const id = getAttributeInParentChain(ev.target, 'data-kegdbid');
         chatInviteStore.acceptInvite(id).then(this.gotoChats);
     }
 
     rejectInvite = (ev) => {
-        const id = getAttributeInParentChain(ev.target, 'data-kegDbId');
+        const id = getAttributeInParentChain(ev.target, 'data-kegdbid');
         chatInviteStore.rejectInvite(id);
         if (chatInviteStore.received.length === 0 ||
             (chatInviteStore.received.length === 1 && chatInviteStore.received[0].kegDbId === id)) {

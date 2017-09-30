@@ -129,7 +129,6 @@
   .title {
     @extend %flex-row;
     color: $text-dark-primary;
-    display: none;
     font-size: 20px;
     font-weight: $font-weight-bold;
     height: 24px;

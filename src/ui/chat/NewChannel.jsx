@@ -60,6 +60,11 @@ class NewChannel extends React.Component {
         this.upgradeDialog = ref;
     };
 
+    setNameInputRef = ref => {
+        if (!ref) return;
+        ref.focus();
+    };
+
     render() {
         if (this.waiting) {
             return (<div className="new-channel create-new-chat">
@@ -79,7 +84,7 @@ class NewChannel extends React.Component {
                 <T k={detailsKey} tag="div" className="create-room-info" />
                 <div className="new-chat-search">
                     <div className="chip-wrapper">
-                        <Input placeholder={t('title_channelName')}
+                        <Input placeholder={t('title_channelName')} innerRef={this.setNameInputRef}
                             value={this.channelName} onChange={this.handleNameChange} />
                     </div>
                     {<Button className={css('confirm', {
@@ -95,7 +100,8 @@ class NewChannel extends React.Component {
                             value={this.purpose} onChange={this.handlePurposeChange} />
                     </div>
                 </div>
-                <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')} noHeader onlyPick noInvite />
+                <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')}
+                    noHeader onlyPick noInvite noAutoFocus />
                 <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} />
             </div>
         );

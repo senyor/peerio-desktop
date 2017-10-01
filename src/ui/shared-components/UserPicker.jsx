@@ -127,10 +127,10 @@ class UserPicker extends React.Component {
         this.props.onClose();
     };
 
-    onInputMount(input) {
-        if (!input) return;
+    onInputMount = (input) => {
+        if (!input || this.props.noAutoFocus) return;
         input.focus();
-    }
+    };
 
     onContactClick = (ev) => {
         const username = getAttributeInParentChain(ev.target, 'data-id');

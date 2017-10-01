@@ -1,6 +1,7 @@
 const React = require('react');
 const { Checkbox } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
+const { observable } = require('mobx');
 const { fileStore, clientApp } = require('~/icebear');
 const Filter = require('./components/Filter');
 const GlobalActions = require('./components/GlobalActions');
@@ -10,19 +11,28 @@ const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
 
-@observer class Files extends React.Component {
+@observer
+class Files extends React.Component {
     constructor() {
         super();
         this.handleUpload = this.handleUpload.bind(this);
     }
+
+    @observable renderedItemsCount = 15;
+    pageSize = 15;
 
     componentWillMount() {
         fileStore.loadAllFiles();
         clientApp.isInFilesView = true;
     }
 
+    componentDidMount() {
+        window.addEventListener('resize', this.enqueueCheck, false);
+    }
+
     componentWillUnmount() {
         clientApp.isInFilesView = false;
+        window.removeEventListener('resize', this.enqueueCheck);
     }
 
     handleUpload() {
@@ -70,15 +80,43 @@ const { getListOfFiles } = require('~/helpers/file');
         window.router.push('/app/sharefiles');
     };
 
+    checkScrollPosition = () => {
+        if (!this.container) return;
+        if (this.renderedItemsCount >= fileStore.visibleFiles.length) {
+            this.renderedItemsCount = fileStore.visibleFiles.length;
+            return;
+        }
+
+        const distanceToBottom = this.container.scrollHeight - this.container.scrollTop - this.container.clientHeight;
+        if (distanceToBottom < 250) {
+            this.renderedItemsCount += this.pageSize;
+        }
+    };
+
+    enqueueCheck = () => {
+        window.requestAnimationFrame(this.checkScrollPosition);
+    };
+
+    setContainerRef = (ref) => {
+        this.container = ref;
+        this.enqueueCheck();
+    }
+
     render() {
-        if (!fileStore.files.length && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
+        if (!fileStore.visibleFiles.length && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
+        const files = [];
+        for (let i = 0; i < this.renderedItemsCount && i < fileStore.visibleFiles.length; i++) {
+            const f = fileStore.visibleFiles[i];
+            files.push(<FileLine key={f.fileId} file={f} />);
+        }
+        this.enqueueCheck();
         return (
             <div className="files">
                 <div className="file-wrapper">
                     <Filter />
                     <GlobalActions onUpload={this.handleUpload} onDelete={this.handleBulkDelete}
                         onShare={this.handleFileShareIntent} />
-                    <div className="file-table-wrapper">
+                    <div className="file-table-wrapper" ref={this.setContainerRef} onScroll={this.enqueueCheck}>
                         <table>
                             <thead>
                                 <tr>
@@ -95,7 +133,7 @@ const { getListOfFiles } = require('~/helpers/file');
                                 </tr>
                             </thead>
                             <tbody>
-                                {fileStore.visibleFiles.map(f => <FileLine key={f.fileId} file={f} />)}
+                                {files}
                             </tbody>
                         </table>
                     </div>

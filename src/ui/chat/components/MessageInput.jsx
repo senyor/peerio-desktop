@@ -17,7 +17,15 @@ const { pickLocalFiles } = require('~/helpers/file');
 
 const MessageInputQuill = require('./MessageInputQuill');
 
-
+/**
+ * @augments {React.Component<{
+        readonly : boolean
+        placeholder : string
+        onSend : (message : any) => void
+        onAck : () => void
+        onFileShare: (files : any) => void
+    }, {}>}
+ */
 @observer
 class MessageInput extends React.Component {
     @observable filePickerActive = false;

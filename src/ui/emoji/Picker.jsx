@@ -62,6 +62,13 @@ function skipNulls(i) {
     if (i === null) return false;
     return true;
 }
+
+/**
+ * @augments {React.Component<{
+        onPicked : (emoji : any) => void
+        onBlur : () => void
+    }, {}>}
+ */
 @observer
 class Picker extends React.Component {
     @observable selectedCategory = categories[0].id;

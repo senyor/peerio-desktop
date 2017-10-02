@@ -5,6 +5,11 @@ const WarningDisplayBase = require('./WarningDisplayBase');
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 
+/**
+ * @augments {React.Component<{
+        className : string
+    }, {}>}
+ */
 @observer
 class Snackbar extends WarningDisplayBase {
     constructor() {

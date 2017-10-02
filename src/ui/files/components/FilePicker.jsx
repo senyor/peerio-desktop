@@ -5,6 +5,13 @@ const { Dialog, ProgressBar, List, ListItem } = require('~/react-toolbox');
 const Search = require('~/ui/shared-components/Search');
 const { t } = require('peerio-translator');
 
+/**
+ * @augments {React.Component<{
+        onClose : () => void
+        active : boolean
+        onShare: (files : any) => void
+    }, {}>}
+ */
 @observer
 class FilePicker extends React.Component {
     handleClose = () => {

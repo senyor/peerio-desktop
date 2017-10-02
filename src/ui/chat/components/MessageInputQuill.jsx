@@ -78,6 +78,12 @@ function onEmojiPicked(emoji) {
     currentInputInstance.insertEmoji(emoji);
 }
 
+/**
+ * @augments {React.Component<{
+        placeholder : string
+        onSend : (message : any) => void
+    }, {}>}
+ */
 @observer
 class MessageInputQuill extends React.Component {
     @observable suggests = null;
@@ -372,6 +378,7 @@ class MessageInputQuill extends React.Component {
         );
     }
 
+    /** @returns {any} */
     render() {
         return [
             this.renderSuggests(),

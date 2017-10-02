@@ -221,7 +221,7 @@ class UserPicker extends React.Component {
                         {this.suggestInviteEmail ?
                             <div className="email-invite-container">
                                 <div className="email-invite">
-                                    <img alt="" src="./static/img/questionmark-grey.png" />
+                                    <FontIcon value="help_outline" />
                                     <div className="email-invite-text">
                                         {t('title_inviteContactByEmail', { email: this.suggestInviteEmail })}
                                     </div>

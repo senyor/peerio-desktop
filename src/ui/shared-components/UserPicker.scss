@@ -88,9 +88,11 @@
   .email-invite {
     @extend %flex-row;
 
-    img {
-      margin: auto;
-      padding: 0 $margin-default;
+    /* TODO change to flex */
+    .material-icons {
+      margin: auto $margin-large;
+      overflow: hidden;
+      width: 24px;
     }
   }
 

@@ -156,7 +156,11 @@ class Chat extends React.Component {
 
                     </div>
                 </div>
-                {chat.isChannel || chat.recentFiles.length ? <IconButton icon="chrome_reader_mode" onClick={this.toggleSidebar} /> : null }
+                {
+                    chat.isChannel || chat.recentFiles.length
+                        ? <IconButton icon="chrome_reader_mode" onClick={this.toggleSidebar} />
+                        : null
+                }
             </div>
         );
     }
@@ -183,14 +187,24 @@ class Chat extends React.Component {
                                 </div>
                                 : <div className="messages-container">
                                     {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}
-                                    {chat && chat.uploadQueue.length ? <UploadInChatProgress queue={chat.uploadQueue} /> : null}
-                                    <MessageInput readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
+                                    {
+                                        chat && chat.uploadQueue.length
+                                            ? <UploadInChatProgress queue={chat.uploadQueue} />
+                                            : null
+                                    }
+                                    <MessageInput
+                                        readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
                                         placeholder={
-                                            chat ?
-                                                t('title_messageInputPlaceholder', { chatName: `${chat.isChannel ? '# ' : ''}${chat.name}` })
+                                            chat
+                                                ? t(
+                                                    'title_messageInputPlaceholder',
+                                                    { chatName: `${chat.isChannel ? '# ' : ''}${chat.name}` })
                                                 : null
                                         }
-                                        onSend={this.sendMessage} onAck={this.sendAck} onFileShare={this.shareFiles} />
+                                        onSend={this.sendMessage}
+                                        onAck={this.sendAck}
+                                        onFileShare={this.shareFiles}
+                                    />
                                 </div>
                         }
                         {chat ? <ChatSideBar open={Chat.sidebarOpen} onAddParticipants={this.openUserPicker} /> : null}

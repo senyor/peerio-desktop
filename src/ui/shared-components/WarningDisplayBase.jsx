@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { computed } = require('mobx');
-const { warnings, warningStates } = require('~./icebear');
+const { warnings, warningStates } = require('~/icebear');
 
 @observer
 class WarningDisplayBase extends React.Component {

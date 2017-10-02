@@ -1,24 +1,26 @@
-/* eslint-disable react/no-multi-comp, no-cond-assign */
-const React = require('react');
-const { IconMenu, MenuItem, IconButton } = require('~/react-toolbox');
-const { observe, reaction } = require('mobx');
-const { observer } = require('mobx-react');
-const { fileStore, chatStore } = require('~/icebear');
-const ComposeInput = require('../../shared-components/ComposeInput');
-const { pickLocalFiles } = require('~/helpers/file');
-const { t } = require('peerio-translator');
-const Snackbar = require('~/ui/shared-components/Snackbar');
-const uiStore = require('~/stores/ui-store');
+// @ts-check
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 
+const React = require('react');
+const { observable } = require('mobx');
+const { observer } = require('mobx-react');
+
+const { t } = require('peerio-translator');
+const { fileStore, chatStore } = require('~/icebear');
+const { IconMenu, MenuItem, IconButton } = require('~/react-toolbox');
+
+const FilePicker = require('~/ui/files/components/FilePicker');
+const Snackbar = require('~/ui/shared-components/Snackbar');
+const { pickLocalFiles } = require('~/helpers/file');
+
+const MessageInputQuill = require('./MessageInputQuill');
+
+
 @observer
-class MessageInput extends ComposeInput {
-    constructor() {
-        super();
-        this.returnToSend = true;
-    }
+class MessageInput extends React.Component {
+    @observable filePickerActive = false;
 
     handleUpload = () => {
         const chat = chatStore.activeChat;
@@ -29,48 +31,28 @@ class MessageInput extends ComposeInput {
         });
     };
 
-    componentDidMount() {
-        this.disposer = observe(chatStore, 'activeChat', change => {
-            this.backupUnsentMessage(change.oldValue);
-            this.restoreUnsentMessage(change.newValue);
-        }, true);
-    }
+    /**
+     * Drag-and-drop is handled by another component higher in the hierarchy,
+     * so we use this event handler to ensure drops aren't caught in our input field.
+     */
+    preventDrop = (e) => {
+        e.preventDefault();
+        return false;
+    };
 
-    componentWillUnmount() {
-        this.backupUnsentMessage(chatStore.activeChat);
-        this.disposer();
-    }
+    handleFilePickerClose = () => {
+        this.filePickerActive = false;
+    };
+
+    shareFiles = selected => {
+        this.props.onFileShare(selected);
+        this.handleFilePickerClose();
+    };
 
     showFilePicker = () => {
         fileStore.clearSelection();
         this.filePickerActive = true;
     };
-
-    backupUnsentMessage(chat) {
-        try {
-            if (!chat || !this.quill) return;
-            const delta = this.quill.getContents();
-            uiStore.unsentMessages[chat.id] = delta;
-        } catch (err) {
-            console.error(err);
-            // don't care, swallowing errors because don't want to deal with all the mounted/unmounted/created states
-        }
-    }
-
-    restoreUnsentMessage(chat) {
-        try {
-            if (!this.quill) return;
-            let delta;
-            if (!chat || !(delta = uiStore.unsentMessages[chat.id])) {
-                this.clearEditor();
-                return;
-            }
-            this.quill.setContents(delta);
-        } catch (err) {
-            console.error(err);
-            // don't care, swallowing errors because don't want to deal with all the mounted/unmounted/created states
-        }
-    }
 
     onPaste = (ev) => {
         const chat = chatStore.activeChat;
@@ -101,40 +83,14 @@ class MessageInput extends ComposeInput {
             break;
         }
     }
-    onInputBlur = () => {
-        setTimeout(() => { this.suggests = null; });
-    }
 
-    onBackdropClick = (ev) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-    }
-
-    renderSuggests() {
-        if (!this.suggests || !this.suggests.length) return null;
-        let c = 0;
+    renderFilePicker() {
         return (
-            <div className="suggests-wrapper" >
-                <div className="suggests">
-                    {this.suggests ?
-                        this.suggests.map(s => {
-                            const i = c++;
-                            return (
-                                <div className={`suggest-item ${i === this.selectedSuggestIndex ? 'selected' : ''}`}
-                                    key={s.username}
-                                    onMouseDown={() => {
-                                        this.selectedSuggestIndex = i;
-                                        this.acceptSuggestedString();
-                                    }}
-                                    onMouseOver={() => {
-                                        this.selectedSuggestIndex = i;
-                                    }}>
-                                    @{s.username} - {s.fullName}
-                                </div>
-                            );
-                        }) : null}
-                </div>
-            </div>
+            <FilePicker
+                active={this.filePickerActive}
+                onClose={this.handleFilePickerClose}
+                onShare={this.shareFiles}
+            />
         );
     }
 
@@ -143,7 +99,6 @@ class MessageInput extends ComposeInput {
         return (
             <div className="message-input-wrapper" >
                 <Snackbar className="snackbar-chat" />
-                {this.renderSuggests()}
                 <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
                     <IconMenu icon="add_circle_outline">
                         <MenuItem value="share" caption={t('title_shareFromFiles')} onClick={this.showFilePicker} />
@@ -151,25 +106,24 @@ class MessageInput extends ComposeInput {
                     </IconMenu>
                     {this.props.readonly
                         ? <div className="message-editor-empty" >&nbsp;</div>
-                        : <div id="messageEditor" onBlur={this.onInputBlur}
-                            ref={this.activateQuill} />
+                        : <MessageInputQuill
+                            placeholder={this.props.placeholder}
+                            onSend={this.props.onSend}
+                        />
                     }
-                    <IconButton icon="mood" disabled={this.emojiPickerVisible} onClick={this.showEmojiPicker} />
+                    <IconButton
+                        disabled={!chat || !chat.canSendAck}
+                        icon="thumb_up"
+                        onClick={this.props.onAck}
+                        className="color-brand"
+                    />
 
-                    {this.text === ''
-                        ? <IconButton disabled={!chat || !chat.canSendAck} icon="thumb_up"
-                            onClick={this.props.onAck} className="color-brand" />
-                        : null}
-
-                    {this.emojiPickerVisible ? this.cachedPicker : null}
                     {this.renderFilePicker()}
                 </div>
                 {this.props.readonly ? <div className="backdrop" /> : null}
-
             </div>
         );
     }
 }
-
 
 module.exports = MessageInput;

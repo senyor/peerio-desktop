@@ -1,126 +1,25 @@
 /* eslint-disable react/no-danger */
 const React = require('react');
-const Avatar = require('~/ui/shared-components/Avatar');
 const { observer } = require('mobx-react');
-const { time } = require('~/helpers/formatter');
-const { sanitizeChatMessage } = require('~/helpers/sanitizer');
-const emojione = require('~/static/emoji/emojione.js');
-const Autolinker = require('autolinker');
-const InlineFiles = require('./InlineFiles');
 const css = require('classnames');
 const { t } = require('peerio-translator');
+const { systemMessages } = require('~/icebear');
+
 const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
-const { isUrlAllowed } = require('~/helpers/url');
+const Avatar = require('~/ui/shared-components/Avatar');
+const { time } = require('~/helpers/formatter');
+const { processMessageForDisplay } = require('~/helpers/process-message-for-display');
 const urls = require('~/config').translator.urlMap;
-const { User, systemMessages, contactStore } = require('~/icebear');
-// const { getHeaders } = require('~/helpers/http');
 const uiStore = require('~/stores/ui-store');
-const htmlEncoder = require('html-entities').AllHtmlEntities;
+
+const InlineFiles = require('./InlineFiles');
 
 
-// TODO: move somewhere?
-// const URL_STATE = { WAITING: 1, FAILED: 2, GOOD: 3, SKIP: 4 }; // don't make this start from 0
-// const urlMap = {}; // key - url, value - URL_STATE
-// const MAX_IMG_SIZE = 1024 * 1024 * 1024 * 5;
-// ugly, but works. autolinker has only one global replacer fn, and we need to get message object in there somehow
-// let currentProcessingMessage;
-/*
-function processUrl(url) {
-    const msg = currentProcessingMessage;
-    if (urlMap[url]) {
-        if (urlMap[url] === URL_STATE.GOOD && !msg.inlineImages.includes(url)) msg.inlineImages.push(url);
-        return;
-    }
-    urlMap[url] = URL_STATE.WAITING;
-
-    getHeaders(url).then(headers => {
-        const type = headers['content-type'];
-        const length = +headers['content-length'];
-        if (!type || !type.startsWith('image/') || length > MAX_IMG_SIZE) {
-            urlMap[url] = URL_STATE.SKIP;
-            return;
-        }
-        urlMap[url] = URL_STATE.GOOD;
-        if (!msg.inlineImages.includes(url)) msg.inlineImages.push(url);
-    }).catch(err => {
-        urlMap[url] = URL_STATE.FAILED;
-    });
-}
-*/
-const autolinker = new Autolinker({
-    urls: {
-        schemeMatches: true,
-        wwwMatches: true,
-        tldMatches: true
-    },
-    replaceFn(match) {
-        if (match.getType() === 'url') {
-            let url = match.getUrl();
-            url = htmlEncoder.decode(url);
-            if (!isUrlAllowed(url)) return false;
-            // processUrl(url); TODO: consent
-            return true;
-        }
-
-        return false;
-    },
-    email: true,
-    phone: false,
-    mention: false,
-    hashtag: false,
-    stripPrefix: false,
-    newWindow: false,
-    truncate: 0,
-    className: '',
-    stripTrailingSlash: false
-});
-
-let ownMentionRegex;
-
-function highlightMentions(str) {
-    // eslint-disable-next-line
-    return str.replace(
-        ownMentionRegex || (ownMentionRegex = contactStore.getContact(User.current.username).mentionRegex),
-        '<span class="mention self">$&</span>'
-    );
-}
 // HACK: make this as a proper react component
 window.openContact = (username) => {
     uiStore.contactDialogUsername = username;
 };
-const mentionRegex = /(\s*|^)@([a-zA-Z0-9_]{1,32})/gm;
-function linkifyMentions(str) {
-    return str.replace(mentionRegex, '$1<span class="mention clickable" onClick=openContact("$2")>@$2</span>');
-}
 
-const inlinePreRegex = /`(.*)`/g;
-const blockPreRegex = /`{3}([^`]*)`{3}/g;
-function formatPre(str) {
-    return str.replace(blockPreRegex, '<div class="pre">$1</div>')
-        .replace(inlinePreRegex, '<span class="pre">$1</span>');
-}
-
-function processMessage(msg) {
-    if (msg.lastProcessedVersion !== msg.version) msg.processedText = null;
-    if (msg.processedText != null) return msg.processedText;
-    // currentProcessingMessage = msg;
-    // we don't expect any html in original text,
-    // if there are any tags - user entered them, we consider them plaintext and encode
-    let str = emojione.toShort(msg.text);
-    str = htmlEncoder.encode(str);
-    // in case some tags magically sneak in - remove all html except whitelisted
-    str = sanitizeChatMessage(str);
-    // now we start producing our own html
-    str = autolinker.link(str);
-    str = emojione.shortnameToImage(str);
-    str = highlightMentions(str);
-    str = linkifyMentions(str);
-    str = formatPre(str);
-    str = { __html: str };
-    msg.processedText = str;
-    msg.lastProcessedVersion = msg.version;
-    return str;
-}
 
 /**
  * IMPORTANT:
@@ -135,6 +34,20 @@ class Message extends React.Component {
         return <p className="system-message selectable">{systemMessages.getSystemMessageText(m)}</p>;
     }
     render() {
+        /*
+            props: {
+                /// the active chat, as defined in icebear's chatStore singleton (chatStore.activeChat)
+                /// peerio-icebear/src/models/chats/chat.js
+                chat
+                /// the message proper
+                /// peerio-icebear/src/models/chats/message.js
+                message
+                /// the message.groupWithPrevious field (bool)
+                light
+                /// callback injected by MessageList, to ensure we stick to the bottom of the chat view.
+                onImageLoaded
+            }
+        */
         const m = this.props.message;
         // console.log('Rendering message ', m.tempId || m.id);
         const invalidSign = m.signatureError === true;
@@ -145,10 +58,9 @@ class Message extends React.Component {
                     'invalid-sign': invalidSign, 'send-error': m.sendError, light: this.props.light
                 })}>
                 <div className="message-content-wrapper-inner">
-                    {this.props.light ? null : <Avatar contact={m.sender} size="medium" />}
-                    {this.props.light ?
-                        <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div> : null
-                    }
+                    {this.props.light
+                        ? <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div>
+                        : <Avatar contact={m.sender} size="medium" />}
                     <div className="message-content">
                         {
                             this.props.light
@@ -167,7 +79,7 @@ class Message extends React.Component {
                             {
                                 m.systemData || m.files
                                     ? null
-                                    : <p dangerouslySetInnerHTML={processMessage(m)} className="selectable" />
+                                    : <p dangerouslySetInnerHTML={processMessageForDisplay(m)} className="selectable" />
                             }
                             {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
                             {

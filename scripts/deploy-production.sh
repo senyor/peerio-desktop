@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+read -p "Confirm releasing PRODUCTION build from MASTER branch? (y/n)" choice
+case "$choice" in
+  y|Y ) echo "yes";;
+  n|N ) exit;;
+  * ) exit;;
+esac
 
 # Check if there are uncommited changes
 if ! git diff-index --quiet HEAD --; then

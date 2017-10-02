@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+if [ -z "$1" ]; then
+    echo "*** Please specify branch name to release staging build from it."
+    exit 1
+fi
+
+read -p "Confirm releasing STAGING build from $1 branch? (y/n)" choice
+case "$choice" in
+  y|Y ) echo "yes";;
+  n|N ) exit;;
+  * ) exit;;
+esac
+
 # Check if there are uncommited changes
 if ! git diff-index --quiet HEAD --; then
     git status
@@ -31,5 +43,5 @@ peerio-desktop-release --key ~/.peerio-updater/secret.key \
                        --repository PeerioTechnologies/peerio-desktop \
                        --overrides PeerioTechnologies/peerio-desktop-staging \
                        --publish \
-                       --tag performance-release \
+                       --tag dev \
                        --prerelease

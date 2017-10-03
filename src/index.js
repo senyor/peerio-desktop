@@ -80,6 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.on('router', (event, message) => {
         window.router.push(message);
     });
+    // starting power management
+    require('~/helpers/power');
 });
 
 // Disable zoom.

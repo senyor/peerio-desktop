@@ -5,7 +5,7 @@ const { FontIcon, IconButton, TooltipIconButton, ProgressBar } = require('~/reac
 const ChatList = require('./components/ChatList');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
-const { chatStore, TinyDb, clientApp, crypto, chatInviteStore, contactStore } = require('~/icebear');
+const { chatStore, TinyDb, clientApp, crypto } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
@@ -15,7 +15,6 @@ const css = require('classnames');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
 const UserPicker = require('~/ui/shared-components/UserPicker');
-const routerStore = require('~/stores/router-store');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';

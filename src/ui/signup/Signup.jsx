@@ -101,7 +101,7 @@ const config = require('~/config');
                 // todo: error message will not be localized, maybe don't use it at all
                 this.errorMessage = `${t('error_signupServerError')} ${errors.normalize(err).message}`;
             })
-            .then(async() => {
+            .then(async () => {
                 const { avatarBuffers, keyBackedUp } = this.profileStore;
                 keyBackedUp && await User.current.setAccountKeyBackedUp();
                 avatarBuffers && await User.current.saveAvatar(avatarBuffers);

@@ -4,8 +4,6 @@ const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Input } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
-
 
 @observer class ConfirmKey extends Component {
     @observable confirmText = '';
@@ -38,7 +36,8 @@ const T = require('~/ui/shared-components/T');
                     <p>{t('title_confirmTextInput', { sample: this.confirmTextSample })}</p>
                     <Input
                         onKeyPress={this.handleKeyPress}
-                        value={this.confirmText} label={t('title_confirmTextInputLabel')} onChange={text => { this.confirmText = text; }} />
+                        value={this.confirmText} label={t('title_confirmTextInputLabel')}
+                        onChange={text => { this.confirmText = text; }} />
                 </div>
             </div>
         );

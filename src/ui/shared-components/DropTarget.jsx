@@ -3,7 +3,7 @@ const dragStore = require('~/stores/drag-drop-store');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon, Dialog } = require('~/react-toolbox');
-const { fileStore, chatStore, util } = require('~/icebear');
+const { fileStore, chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
 

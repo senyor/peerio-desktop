@@ -1,11 +1,10 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Button, List, ListSubHeader, ListItem, TooltipIconButton, FontIcon } = require('~/react-toolbox');
+const { Button, List, ListSubHeader, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const ChatList = require('./components/ChatList');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const { t } = require('peerio-translator');
 const { chatInviteStore, clientApp, chatStore, User } = require('~/icebear');
-const config = require('../../config');
 const ChannelUpgradeOffer = require('./components/ChannelUpgradeOffer');
 const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 const moment = require('moment');
@@ -82,7 +81,13 @@ class ChannelInvites extends React.Component {
                                     {chatInviteStore.received.map(i =>
                                         (<ListItem
                                             key={`${i.kegDbId}${i.username}${i.timestamp}`}
-                                            caption={t('title_invitedBy', { username: i.username, timestamp: moment(i.timestamp).format('llll') })}
+                                            caption={
+                                                t('title_invitedBy',
+                                                    {
+                                                        username: i.username,
+                                                        timestamp: moment(i.timestamp).format('llll')
+                                                    })
+                                            }
                                             legend={i.channelName}
                                             rightIcon={this.inviteOptions(i.kegDbId)}
                                         />)

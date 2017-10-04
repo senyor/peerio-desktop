@@ -94,10 +94,11 @@ class LoginStore extends OrderedFormStore {
                 this.loginStore.username = undefined;
             });
     };
-    // need this to sqallow event arguments
+
     onLoginClick = () => {
         this.login();
     };
+
     login = (isAutologin = false) => {
         if (this.loginStore.busy && !isAutologin) return;
         if (!isAutologin && this.loginStore.hasErrors) return;
@@ -123,7 +124,7 @@ class LoginStore extends OrderedFormStore {
                     });
             }
             return window.router.push('/app/chats');
-        }).catch((e) => {
+        }).catch(() => {
             User.current = null;
             this.loginStore.busy = false;
             // show error inline

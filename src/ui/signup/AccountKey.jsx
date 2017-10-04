@@ -6,7 +6,6 @@ const { clipboard } = require('electron').remote;
 const PDFSaver = require('~/ui/shared-components/PDFSaver');
 const AvatarControl = require('./AvatarControl');
 const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
 const { warnings } = require('~/icebear');
 
 
@@ -40,7 +39,6 @@ const { warnings } = require('~/icebear');
         const { store: { passphrase, temporaryAvatarDataUrl } } = this.props;
         return (
             <div className="savekey-container">
-                {/* FIXME: This should be switch for uploaded Avatar or First/Last Avatar */}
                 <AvatarControl url={temporaryAvatarDataUrl} />
                 <p>{t('title_accountKey1')}</p>
                 <div className="account-key-wrapper">
@@ -53,7 +51,8 @@ const { warnings } = require('~/icebear');
                     </div>
                 </div>
                 <p>{t('title_accountKey2')}</p>
-                <Button label={t('button_saveAccountKey')} icon="file_download" className="pdf-download" onClick={this.backupAccountKey} />
+                <Button label={t('button_saveAccountKey')} icon="file_download" className="pdf-download"
+                    onClick={this.backupAccountKey} />
                 <PDFSaver ref={ref => { this.pdfSaver = ref; }} template="./AccountKeyBackup.html" />
             </div>
         );

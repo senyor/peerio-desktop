@@ -6,7 +6,6 @@ const { User, contactStore, validation } = require('~/icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const css = require('classnames');
-const electron = require('electron').remote;
 const AvatarEditor = require('./AvatarEditor');
 
 @observer
@@ -40,7 +39,7 @@ class Profile extends React.Component {
         User.current.deleteAvatar();
     };
 
-    saveAvatar = async(blobs) => {
+    saveAvatar = async (blobs) => {
         const buffers = await AvatarEditor.closeAndReturnBuffers(blobs);
         await User.current.saveAvatar(buffers);
     };
@@ -147,8 +146,9 @@ class Profile extends React.Component {
                                     leftIcon={
                                         a.primary
                                             ? 'radio_button_checked'
-                                            : <TooltipIconButton className={a.confirmed ? '' : 'hide'} disabled={!a.confirmed}
-                                                tooltip={t('button_makePrimary')} icon="radio_button_unchecked"
+                                            : <TooltipIconButton className={a.confirmed ? '' : 'hide'}
+                                                disabled={!a.confirmed} tooltip={t('button_makePrimary')}
+                                                icon="radio_button_unchecked"
                                                 onClick={() => { this.makePrimary(a.address); }} />
 
                                     }

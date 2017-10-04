@@ -30,11 +30,14 @@ class SecuritySettings extends React.Component {
     requestSetup = () => {
         User.current.setup2fa().then(secret => {
             this.twoFASecret = secret;
-            QR.toDataURL(`otpauth://totp/Peerio:${User.current.username}?secret=${secret}&issuer=Peerio&algorithm=SHA1&digits=6&period=30`, (err, dataUrl) => {
-                if (err) console.error(err);
-                console.log(dataUrl);
-                this.twoFAQRCode = dataUrl;
-            });
+            QR.toDataURL(
+                // eslint-disable-next-line
+                `otpauth://totp/Peerio:${User.current.username}?secret=${secret}&issuer=Peerio&algorithm=SHA1&digits=6&period=30`,
+                (err, dataUrl) => {
+                    if (err) console.error(err);
+                    console.log(dataUrl);
+                    this.twoFAQRCode = dataUrl;
+                });
         });
     }
 
@@ -46,7 +49,7 @@ class SecuritySettings extends React.Component {
         this.accountKeyPDFRef = ref;
     };
 
-    backupAccountKey = async() => {
+    backupAccountKey = async () => {
         const tplVars = {
             username: User.current.username,
             email: User.current.email,
@@ -176,7 +179,9 @@ class SecuritySettings extends React.Component {
                     <Dialog active={this.authAppsDialogActive} title={t('title_authApps')}
                         onOverlayClick={this.closeAuthApps} onEscKeyDown={this.closeAuthApps}
                         actions={[{ label: t('button_dismiss'), onClick: this.closeAuthApps }]}>
-                        <div className="text-center"><FontIcon value="file_download" className="dialog-illustration" /></div>
+                        <div className="text-center">
+                            <FontIcon value="file_download" className="dialog-illustration" />
+                        </div>
                         <T k="title_authAppsDetails" tag="p" />
                     </Dialog>
                 </p>
@@ -204,7 +209,9 @@ class SecuritySettings extends React.Component {
                                                 <TooltipIconButton icon="content_copy" onClick={this.copyTOTPSecret}
                                                     tooltip={t('title_copy')} primary /></div>
                                             <br />
-                                            <a onClick={this.toggleQRCode}><T k="button_2FAShowQRCode" tag="div" className="text-center" /></a>
+                                            <a onClick={this.toggleQRCode}>
+                                                <T k="button_2FAShowQRCode" tag="div" className="text-center" />
+                                            </a>
                                         </div>
                                 )
                                 : <ProgressBar type="circular" className="block" />
@@ -215,7 +222,8 @@ class SecuritySettings extends React.Component {
                         <T k="title_enterTOTPCode" tag="div" />
                         <br />
                         <T k="title_enterTOTPCodeFromApp" tag="div" className="dark-label" />
-                        <input type="text" className="totp-input" disabled={!this.twoFASecret || this.totpCodeValidating}
+                        <input type="text" className="totp-input"
+                            disabled={!this.twoFASecret || this.totpCodeValidating}
                             value={this.totpCode} onChange={this.onTOTPCodeChange}
                             style={{ backgroundColor: this.totpCodeError ? '#ffaaaa' : '#ffffff' }} />
                         {this.totpCodeValidating ? <ProgressBar type="circular" className="totp-progress" /> : null}
@@ -229,10 +237,17 @@ class SecuritySettings extends React.Component {
         return (
             <section className="with-bg">
                 <T k="title_2FA" className="title" tag="div" />
-                <p><FontIcon value="thumb_up" className="large-inline-icon" />&nbsp;&nbsp;<T k="title_2FAEnabledThanks" /></p>
+                <p>
+                    <FontIcon value="thumb_up" className="large-inline-icon" />
+                    &nbsp;&nbsp;
+                    <T k="title_2FAEnabledThanks" />
+                </p>
                 <T k="title_2FABackupDetail" tag="p" />
-                <Button icon="file_download" label={t('button_2FABackupDownload')} onClick={this.downloadBackupCodes} flat />
-                <div className="text-right"><Button label={t('button_disable')} flat primary onClick={this.disable2fa} /></div>
+                <Button icon="file_download" label={t('button_2FABackupDownload')}
+                    onClick={this.downloadBackupCodes} flat />
+                <div className="text-right">
+                    <Button label={t('button_disable')} flat primary onClick={this.disable2fa} />
+                </div>
             </section>
         );
     }

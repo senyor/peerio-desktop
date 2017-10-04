@@ -85,19 +85,29 @@ class MembersSection extends React.Component {
         }
         const userMenu = [], adminMenu = [], inviteMenu = [];
         if (isChannel && canIAdmin) {
-            userMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
-                <MenuItem value="make_admin" icon="account_balance" caption={t('button_makeAdmin')} onClick={this.makeAdmin} />
-                <MenuItem value="delete" icon="delete" caption={t('button_remove')} onClick={this.deleteParticipant} />
-            </IconMenu>);
+            userMenu.push(
+                <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
+                    <MenuItem value="make_admin" icon="account_balance" caption={t('button_makeAdmin')}
+                        onClick={this.makeAdmin} />
+                    <MenuItem value="delete" icon="delete" caption={t('button_remove')}
+                        onClick={this.deleteParticipant} />
+                </IconMenu>
+            );
 
-            adminMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
-                <MenuItem value="demote_admin" icon="cancel" caption={t('button_demoteAdmin')} onClick={this.demoteAdmin} />
-                <MenuItem value="delete" icon="delete" caption={t('button_remove')} onClick={this.deleteParticipant} />
-            </IconMenu>);
+            adminMenu.push(
+                <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
+                    <MenuItem value="demote_admin" icon="cancel" caption={t('button_demoteAdmin')}
+                        onClick={this.demoteAdmin} />
+                    <MenuItem value="delete" icon="delete" caption={t('button_remove')}
+                        onClick={this.deleteParticipant} />
+                </IconMenu>
+            );
 
-            inviteMenu.push(<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
-                <MenuItem value="delete" icon="delete" caption={t('button_remove')} onClick={this.deleteInvite} />
-            </IconMenu>);
+            inviteMenu.push(
+                <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
+                    <MenuItem value="delete" icon="delete" caption={t('button_remove')} onClick={this.deleteInvite} />
+                </IconMenu>
+            );
         }
 
         return (
@@ -115,8 +125,9 @@ class MembersSection extends React.Component {
                     </List>
                     <List>
                         {chat.joinedParticipants
-                            ? chat.joinedParticipants.map((c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu))
-                            : null}
+                            ? chat.joinedParticipants.map(
+                                (c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu)
+                            ) : null}
                         {invited && invited.length
                             ? <ListSubHeader caption={t('title_invited')} />
                             : null}

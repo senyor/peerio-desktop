@@ -2,7 +2,7 @@ const React = require('react');
 const { autorunAsync, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { IconMenu, MenuItem, MenuDivider, Dialog } = require('~/react-toolbox');
-const { User, contactStore, chatStore, fileStore, mailStore } = require('~/icebear');
+const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const css = require('classnames');
@@ -83,13 +83,13 @@ class AppNav extends React.Component {
         startTaskbarOverlay();
     }
 
-    _doSignout = async() => {
+    _doSignout = async () => {
         await autologin.disable();
         await User.current.signout();
         appControl.relaunch();
     }
 
-    signout = async() => {
+    signout = async () => {
         if (!User.current.autologinEnabled) {
             this._doSignout();
             return;

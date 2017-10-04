@@ -3,7 +3,6 @@ const { Component } = require('react');
 const { FontIcon } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const AvatarDialog = require('./AvatarDialog');
-const { t } = require('peerio-translator');
 
 @observer class AvatarControl extends Component {
     render() {

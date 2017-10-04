@@ -4,7 +4,6 @@ const { List, ListItem, IconMenu, MenuItem } = require('~/react-toolbox');
 const { chatStore, fileStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
-const T = require('~/ui/shared-components/T');
 const SideBarSection = require('./SideBarSection');
 const { downloadFile } = require('~/helpers/file');
 
@@ -35,7 +34,8 @@ class FilesSection extends React.Component {
         const chat = chatStore.activeChat;
         if (!chat || !chat.recentFiles || !chat.recentFiles.length) return null;
 
-        const menu = (<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
+        const menu = (<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple
+            onClick={this.stopPropagation}>
             <MenuItem caption={t('title_download')} icon="file_download" onClick={this.download} />
             <MenuItem caption={t('button_share')} icon="reply" onClick={this.share} />
         </IconMenu>);

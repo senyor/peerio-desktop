@@ -3,7 +3,6 @@ const { Dialog, Checkbox } = require('~/react-toolbox');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
 const { clientApp } = require('~/icebear');
 const uiStore = require('~/stores/ui-store');
 const { validateCode } = require('~/helpers/2fa');

@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = require('react');
-const { observable, computed } = require('mobx');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const { socket, validation, crypto } = require('~/icebear');

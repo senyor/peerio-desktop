@@ -4,7 +4,6 @@ const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dialog } = require('~/react-toolbox');
 const AvatarEditor = require('~/ui/settings/components/AvatarEditor');
-const { t } = require('peerio-translator');
 
 @observer class AvatarDialog extends Component {
     @observable static show = false;
@@ -19,7 +18,7 @@ const { t } = require('peerio-translator');
         AvatarEditor.selectFile();
     }
 
-    saveAvatar = async(blobs) => {
+    saveAvatar = async (blobs) => {
         this.props.onSave(await AvatarEditor.closeAndReturnBuffers(blobs), blobs);
     };
 

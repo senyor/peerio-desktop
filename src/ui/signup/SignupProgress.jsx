@@ -1,8 +1,6 @@
 const React = require('react');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
-const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
 
 @observer class SignupProgress extends Component {
     render() {

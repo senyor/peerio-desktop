@@ -65,7 +65,9 @@ class DragDropStore {
         if (this._subscribers.length) {
             // this._subscribers.forEach(handler => { handler(this._hoveringFiles); });
             // restore this line ^ after electron bug is fixed
-            this._subscribers.forEach(handler => { handler(getListOfFiles(Array.prototype.slice.call(ev.dataTransfer.files).map(this._extractPath))); });
+            this._subscribers.forEach(handler => {
+                handler(getListOfFiles(Array.prototype.slice.call(ev.dataTransfer.files).map(this._extractPath)));
+            });
             // remove this line ^ after electron bug is fixed
         }
     };

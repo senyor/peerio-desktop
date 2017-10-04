@@ -13,7 +13,8 @@ const FilesSection = require('./FilesSection');
 @observer
 class ChatSideBar extends React.Component {
     // Switching between textarea and static text is not really needed, we could always use textarea
-    // but there's some bug with chrome or react-toolbox that shifts entire view up a bit if textarea renders on app start
+    // but there's some bug with chrome or react-toolbox that shifts
+    // entire view up a bit if textarea renders on app start
     @observable chatPurposeEditorVisible = false;
     @observable openSectionIndex = 0;
 
@@ -77,7 +78,8 @@ class ChatSideBar extends React.Component {
                                 {
                                     this.chatPurposeEditorVisible
                                         ? <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin}
-                                            onBlur={this.hideChatPurposeEditor} multiline ref={this.chatPurposeEditorRef} />
+                                            onBlur={this.hideChatPurposeEditor} multiline
+                                            ref={this.chatPurposeEditorRef} />
                                         : <div className="purpose-container">
                                             {chat.chatHead && chat.chatHead.purpose
                                                 ? [<T tag="div" k="title_purpose" className="purpose-label" key="1" />,

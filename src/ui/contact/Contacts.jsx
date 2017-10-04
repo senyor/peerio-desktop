@@ -1,6 +1,6 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { FontIcon, List, ListItem, ListDivider } = require('~/react-toolbox');
+const { List, ListItem, ListDivider } = require('~/react-toolbox');
 const { action } = require('mobx');
 const { observer } = require('mobx-react');
 const routerStore = require('~/stores/router-store');

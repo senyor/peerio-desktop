@@ -57,7 +57,8 @@ class InlineFiles extends React.Component {
                         }
                         if (file.signatureError) {
                             return (
-                                <div className="invalid-file" key={f} data-id={f} onClick={uiStore.showFileSignatureErrorDialog}>
+                                <div className="invalid-file" key={f} data-id={f}
+                                    onClick={uiStore.showFileSignatureErrorDialog}>
                                     <div className="container">
                                         <FontIcon value="info_outline" />
                                         <div className="file-name">{t('error_invalidFileSignature')}</div>

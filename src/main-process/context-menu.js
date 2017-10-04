@@ -1,4 +1,4 @@
-const { Menu, MenuItem, globalShortcut } = require('electron');
+const { Menu, globalShortcut } = require('electron');
 const devtools = require('~/main-process/dev-tools');
 const isDevEnv = require('~/helpers/is-dev-env');
 

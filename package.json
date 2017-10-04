@@ -3,7 +3,7 @@
   "description": "Peerio 2",
   "version": "2.44.0",
   "scripts": {
-    "precommit": "npm run validate",
+    "precommit": "stylelint src/styles/**.scss && eslint ./src --ext .js,.jsx --max-warnings 0",
     "postmerge": "npm update",
     "postcommit": "git fetch --prune origin '+refs/tags/*:refs/tags/*'",
     "postinstall": "electron-builder install-app-deps",
@@ -82,7 +82,7 @@
     "electron-reload": "1.2.2",
     "emojione": "3.1.2",
     "emojione-assets": "3.1.1",
-    "eslint-config-peerio": "1.19.11",
+    "eslint-config-peerio": "1.20.0",
     "husky": "0.14.3",
     "mkdirp": "0.5.1",
     "mobx-react-devtools": "4.2.15",

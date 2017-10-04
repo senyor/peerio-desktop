@@ -18,7 +18,7 @@ class UserPicker extends React.Component {
     accepted = false;
     @observable suggestInviteEmail = '';
     @observable showNotFoundError;
-    legacyContactError = false; // not observable bcs changes only with showNotFoundError
+    legacyContactError = false; // not observable because changes only with showNotFoundError
 
     componentDidMount() {
         if (this.props.onChange) {
@@ -134,7 +134,7 @@ class UserPicker extends React.Component {
 
     onContactClick = (ev) => {
         const username = getAttributeInParentChain(ev.target, 'data-id');
-        // avoiding incorrect setState bcs of computed options
+        // avoiding incorrect setState because of computed options
         setTimeout(() => {
             this.selected.push(contactStore.getContact(username));
             this.query = '';
@@ -202,19 +202,25 @@ class UserPicker extends React.Component {
                                             onKeyDown={this.handleKeyDown} />
                                     }
                                 </div>
-                                <Button className={css('confirm', {
-                                    banish: this.props.onlyPick
-                                    || (!this.selected.length && (!this.props.extraChips || !this.props.extraChips.length))
-                                })} label={this.props.button || t('button_go')} onClick={this.accept} disabled={!this.isValid} />
+                                <Button className={
+                                    css('confirm', {
+                                        banish: this.props.onlyPick ||
+                                        (!this.selected.length
+                                            && (!this.props.extraChips || !this.props.extraChips.length))
+                                    })}
+                                label={this.props.button || t('button_go')}
+                                onClick={this.accept} disabled={!this.isValid} />
                             </div>
                             {/* this.props.limit &&
-                                <div className={css('text-right', 'dark-label', { 'error-search': this.isLimitReached })}>
+                                <div className={css('text-right', 'dark-label',
+                                { 'error-search': this.isLimitReached })}>
                                     <T k="title_addedPeopleLimit">
                                         {{ added: this.selectedSelfless.length + 1, limit: this.props.limit }}
                                     </T>
                             </div> */}
                             {this.showNotFoundError && !this.suggestInviteEmail
-                                ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div" className="error-search" />
+                                ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div"
+                                    className="error-search" />
                                 : null
                             }
                         </div>
@@ -233,7 +239,11 @@ class UserPicker extends React.Component {
                             <div key="list" className="user-list">
                                 <ListSubHeader key="fav-header" caption={t('title_favoriteContacts')} />
                                 {this.options.map(c => {
-                                    if (c === true) return <ListSubHeader key="all-header" caption={t('title_allContacts')} />;
+                                    if (c === true) {
+                                        return (
+                                            <ListSubHeader key="all-header" caption={t('title_allContacts')} />
+                                        );
+                                    }
 
                                     return (<span key={c.username} data-id={c.username}>
                                         <ListItem

@@ -1,9 +1,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
-const { Button } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
 
 
 @observer class Welcome extends Component {

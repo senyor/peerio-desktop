@@ -1,5 +1,4 @@
 const React = require('react');
-const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon } = require('~/react-toolbox');
 const css = require('classnames');

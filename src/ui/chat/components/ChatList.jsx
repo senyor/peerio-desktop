@@ -11,7 +11,7 @@ const routerStore = require('~/stores/router-store');
 @observer
 class ChatList extends React.Component {
     activateChat(id) {
-        // need this bcs of weirdly composed channel invites
+        // need this because of weirdly composed channel invites
         routerStore.navigateTo(routerStore.ROUTES.chats);
         clientApp.isInChatsView = true;
         chatStore.activate(id);
@@ -83,7 +83,9 @@ class ChatList extends React.Component {
                                 <FlipMove duration={200} easing="ease-in-out" >
                                     {chatStore.channels.map(c =>
                                         (<ListItem key={c.id || c.tempId}
-                                            className={css('room-item', { active: c.active, unread: c.unreadCount > 0 })}
+                                            className={
+                                                css('room-item', { active: c.active, unread: c.unreadCount > 0 })
+                                            }
                                             caption={`# ${c.name}`}
                                             onClick={() => this.activateChat(c.id)}
                                             rightIcon={
@@ -129,7 +131,9 @@ class ChatList extends React.Component {
                                                     tooltipDelay={500}
                                                     tooltipPosition="right">
                                                     <span className="rt-list-primary">
-                                                        {c.isFavorite ? <span className="starred">&#x2605;</span> : null}
+                                                        {c.isFavorite
+                                                            ? <span className="starred">&#x2605;</span>
+                                                            : null}
                                                         {c.name}
                                                     </span>
                                                     {/* <span className="rt-list-itemText">

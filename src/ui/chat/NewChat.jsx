@@ -15,7 +15,7 @@ class NewChat extends React.Component {
         if (selected && selected.length) this.handleAccept(selected);
     }
 
-    handleAccept = async(selected) => {
+    handleAccept = async (selected) => {
         this.waiting = true;
         await Contact.ensureAllLoaded(selected);
         if (!selected.length || selected.filter(c => c.notFound).length) {

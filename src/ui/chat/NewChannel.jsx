@@ -101,7 +101,7 @@ class NewChannel extends React.Component {
                     </div>
                 </div>
                 <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')}
-                    noHeader onlyPick noInvite noAutoFocus />
+                    noHeader onlyPick noAutoFocus />
                 <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} />
             </div>
         );

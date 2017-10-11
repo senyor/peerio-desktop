@@ -7,6 +7,7 @@ const Login = require('./login/Login');
 const Signup = require('./signup/Signup');
 const Chat = require('./chat/Chat');
 const NewChat = require('./chat/NewChat');
+const ChatView = require('./chat/ChatView');
 const NewChannel = require('./chat/NewChannel');
 const ChannelInvites = require('./chat/ChannelInvites');
 const Files = require('./files/Files');
@@ -38,8 +39,10 @@ module.exports = (
         <Route path="autologin" component={AutoLogin} />
         <Route path="/app" component={App} >
             <IndexRedirect to="/app/chats" />
-            <Route path="chats" component={Chat} />
-            <Route path="new-chat" component={NewChat} />
+            <Route path="chats" component={Chat}>
+                <IndexRoute component={ChatView} />
+                <Route path="new-chat" component={NewChat} />
+            </Route>
             <Route path="new-channel" component={NewChannel} />
             <Route path="channel-invites" component={ChannelInvites} />
             <Route path="files" component={Files} />

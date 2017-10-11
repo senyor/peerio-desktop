@@ -1,15 +1,26 @@
-.button-affirmative.rt-button-button:not([disabled]) {
-  background-color: $green-affirmative;
+// Green affirmative buttons
+.button-affirmative.rt-button-button {
   border-radius: 24px;
-  color: $text-light-primary;
   transition: 250ms;
 
   &:hover {
-    background-color: $green-affirmative;
-    color: $text-light-primary;
-
     .rt-rippleWrapper {
       border-radius: 0 24px 24px 0;
     }
   }
+}
+
+.button-affirmative.rt-button-button:not([disabled]) {
+  background-color: $green-affirmative;
+  color: $text-light-primary;
+
+  &:hover {
+    background-color: $green-affirmative;
+    color: $text-light-primary;
+  }
+}
+
+.button-affirmative.rt-button-button:disabled {
+  background-color: #f0f0f0;
+  color: $text-light-primary;
 }

@@ -24,10 +24,12 @@ class RouterStore {
         });
     }
 
+    get isNewChat() { return this.currentRoute === this.ROUTES.newChat; }
+
     get ROUTES() {
         return {
             chats: '/app/chats',
-            newChat: '/app/new-chat',
+            newChat: '/app/chats/new-chat',
             channelInvites: 'app/channel-invites',
             onboarding: '/app/onboarding',
             mail: '/app/mail',

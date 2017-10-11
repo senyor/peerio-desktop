@@ -2,19 +2,27 @@ const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon, IconButton, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
-const ChatList = require('./components/ChatList');
-const { chatStore, TinyDb, clientApp } = require('~/icebear');
+const MessageInput = require('./components/MessageInput');
+const MessageList = require('./components/MessageList');
+const { chatStore, TinyDb, clientApp, crypto } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
+const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T');
 const css = require('classnames');
+const ChatSideBar = require('./components/sidebar/ChatSideBar');
+const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
-const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
+const UserPicker = require('~/ui/shared-components/UserPicker');
 
 const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
 
+const messages = ['title_randomMessage1', 'title_randomMessage2', 'title_randomMessage3', 'title_randomMessage4'];
+const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
+
 @observer
-class Chat extends React.Component {
+class ChatView extends React.Component {
     @observable static sidebarOpen = true; // static, so it acts like lazy internal store
     @observable chatNameEditorVisible = false;
     @observable showUserPicker = false;
@@ -24,10 +32,10 @@ class Chat extends React.Component {
     componentWillMount() {
         clientApp.isInChatsView = true;
         TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
-            Chat.sidebarOpen = isOpen == null ? Chat.sidebarOpen : isOpen;
+            ChatView.sidebarOpen = isOpen == null ? ChatView.sidebarOpen : isOpen;
         });
-        if (!Chat.sidebarStateSaver) {
-            Chat.sidebarStateSaver = reaction(() => Chat.sidebarOpen, open => {
+        if (!ChatView.sidebarStateSaver) {
+            ChatView.sidebarStateSaver = reaction(() => ChatView.sidebarOpen, open => {
                 TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
             }, { delay: 1000 });
         }
@@ -44,7 +52,7 @@ class Chat extends React.Component {
     sendMessage(m) {
         try {
             chatStore.activeChat.sendMessage(m)
-                .catch(() => Chat.playErrorSound());
+                .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
         }
@@ -53,7 +61,7 @@ class Chat extends React.Component {
     sendAck() {
         try {
             chatStore.activeChat.sendAck()
-                .catch(() => Chat.playErrorSound());
+                .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
         }
@@ -62,7 +70,7 @@ class Chat extends React.Component {
     shareFiles = (files) => {
         try {
             chatStore.activeChat.shareFiles(files)
-                .catch(() => Chat.playErrorSound());
+                .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
         }
@@ -86,7 +94,7 @@ class Chat extends React.Component {
     };
 
     toggleSidebar = () => {
-        Chat.sidebarOpen = !Chat.sidebarOpen;
+        ChatView.sidebarOpen = !ChatView.sidebarOpen;
     };
 
     showChatNameEditor = () => {
@@ -152,18 +160,60 @@ class Chat extends React.Component {
             </div>
         );
     }
+
+    get sidebar() {
+        if (!chatStore.activeChat) return null;
+        return chatStore.activeChat.isChannel ?
+            <ChannelSideBar open={ChatView.sidebarOpen} onAddParticipants={this.openUserPicker} /> :
+            <ChatSideBar open={ChatView.sidebarOpen} />;
+    }
+
     render() {
         const chat = chatStore.activeChat;
-
         return (
-            <div className="messages">
-                <ChatList />
-                {this.props.children}
-                {chat && chat.leaving ? <FullCoverLoader show /> : null}
+            <div className="message-view">
+                {chatStore.loading ?
+                    <div className="random-messages">
+                        <div className="headline"><T k={randomMessage} /></div>
+                    </div>
+                    : null}
+                {chat ? this.renderHeader() : null}
+                <div className="messages-and-sidebar-container">
+                    {
+                        this.showUserPicker
+                            ? <div className="create-new-chat">
+                                <UserPicker onClose={this.closeUserPicker} onAccept={this.addParticipants}
+                                    exceptContacts={chat ? chat.participants : null}
+                                    title={t('title_addParticipants')} noDeleted noInvite />
+                            </div>
+                            : <div className="messages-container">
+                                {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}
+                                {
+                                    chat && chat.uploadQueue.length
+                                        ? <UploadInChatProgress queue={chat.uploadQueue} />
+                                        : null
+                                }
+                                <MessageInput
+                                    readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
+                                    placeholder={
+                                        chat
+                                            ? t(
+                                                'title_messageInputPlaceholder',
+                                                { chatName: `${chat.isChannel ? '# ' : ''}${chat.name}` })
+                                            : null
+                                    }
+                                    onSend={this.sendMessage}
+                                    onAck={this.sendAck}
+                                    onFileShare={this.shareFiles}
+                                />
+                            </div>
+                    }
+                    {this.sidebar}
+                </div>
             </div>
         );
     }
 }
 
 
-module.exports = Chat;
+module.exports = ChatView;

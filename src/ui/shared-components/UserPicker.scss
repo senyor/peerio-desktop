@@ -1,3 +1,7 @@
+$userpicker-margin-large: 96px; // 96px
+$userpicker-maxwidth: 720px;
+$userlist-maxwidth: 624px; // $userpicker-maxwidth - $userpicker-margin-large
+
 .user-picker {
   @extend %flex-row;
   background: $background-root;
@@ -18,23 +22,25 @@
 
   .inputs-container {
     @extend %flex-row;
-    @extend %flex-justify-center;
+
     width: 100%;
 
     .inputs-container-inner {
       @extend %flex-col;
       @extend %flex-grow-1;
-      max-width: 600px;
     }
   }
 
   .user-list {
-    overflow-y: auto;
+    max-width: $userlist-maxwidth;
+    padding-right: $padding-default;
   }
 
   .rt-list-list {
     //max-height: 50vh;
     padding-bottom: 0;
+    padding-left: $userpicker-margin-large;
+    padding-top: 0;
   }
 
   .rt-list-subheader,
@@ -76,39 +82,48 @@
     text-overflow: ellipsis;
   }
 
-  .email-invite-container {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    @extend %flex-justify-between;
-    @extend %flex-shrink-0;
-
-    margin-bottom: 48px;
+  .user-list-container {
+    overflow-y: auto;
   }
 
-  .email-invite {
+  .usernotfound-container {
+    color: $text-dark-secondary;
+    padding-left: $userpicker-margin-large;
+  }
+
+  .email-invite-container,
+  .email-suggestsearch-container {
+    @extend %flex-row;
+    // @extend %flex-align-center;
+    @extend %flex-justify-between;
+    @extend %flex-shrink-0;
+    max-width: $userlist-maxwidth;
+    padding-right: 24px;
+    padding-top: $padding-xl;
+  }
+
+  .usernotfound-text {
     @extend %flex-row;
 
     /* TODO change to flex */
     .material-icons {
-      margin: auto $margin-large;
+      margin: 0 $margin-large;
+      min-width: 24px;
       overflow: hidden;
-      width: 24px;
     }
   }
 
-  .error-search {
-    @extend %hint-error-label;
-    color: $red-error;
-    margin-left: 48px;
-    margin-top: 6px;
+  .chat-creation-header-container {
+    border-bottom: 1px solid $divider-dark;
   }
 
   .chat-creation-header {
     @extend %flex-row;
     @extend %flex-align-center;
     @extend %flex-shrink-0;
-    margin-bottom: $margin-large;
+    max-width: $userpicker-maxwidth;
     padding: $padding-default;
+    padding-left: $padding-xxl;
 
     .title {
       margin-right: auto;
@@ -116,6 +131,17 @@
       span {
         display: block;
       }
+    }
+  }
+
+  .message-search-wrapper {
+    max-width: $userpicker-maxwidth;
+    padding: 0 $padding-default 0 $padding-xxl;
+
+    .title-to {
+      @extend %title;
+      font-weight: $font-weight-regular;
+      margin-right: $margin-large;
     }
   }
 }

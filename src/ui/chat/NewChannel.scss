@@ -1,6 +1,38 @@
 .new-channel.create-new-chat {
+  .create-room-info {
+    margin-bottom: 20px;
+  }
+
   .user-picker {
-    @extend %flex-justify-center;
+    .inputs-container {
+      @extend %flex-row;
+      @extend %flex-justify-center;
+      width: 100%;
+
+      .inputs-container-inner {
+        @extend %flex-col;
+        @extend %flex-grow-1;
+        max-width: 600px;
+      }
+    }
+
+    .user-list {
+      margin-top: 0;
+      max-width: none;
+      padding-right: 0;
+    }
+
+    .rt-list-list {
+      padding-left: 0;
+    }
+
+    .title-to {
+      display: none;
+    }
+  }
+
+  .chat-creation-header-container {
+    border-bottom: 0;
   }
 
   .chat-creation-header {
@@ -21,8 +53,29 @@
     }
   }
 
-  .create-room-info {
-    margin-bottom: 20px;
-    max-width: 560px;
+  .new-chat-search {
+    @extend %flex-align-center;
+    border: 1px solid $input-border;
+    border-radius: 24px;
+    display: flex;
+    flex-shrink: 0;
+    max-width: 600px;
+    overflow: hidden;
+    padding: 0 $padding-small 0 $padding-default;
+    width: 100%;
+  }
+
+  .message-search-wrapper {
+    padding: 0;
+  }
+
+  .usernotfound-container {
+    padding-left: 0;
+  }
+
+  .email-invite-container,
+  .email-suggestsearch-container {
+    margin-bottom: $margin-large;
+    padding-top: $padding-large;
   }
 }

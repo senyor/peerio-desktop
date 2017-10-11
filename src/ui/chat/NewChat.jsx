@@ -11,8 +11,8 @@ class NewChat extends React.Component {
     @observable waiting = false;
     @observable picker;
 
-    handleChange = (selected) => {
-        if (selected && selected.length) this.handleAccept(selected);
+    componentDidMount() {
+        chatStore.deactivateCurrentChat();
     }
 
     handleAccept = async (selected) => {
@@ -46,12 +46,12 @@ class NewChat extends React.Component {
 
     render() {
         return (
-            <div className="create-new-chat new-dm">
+            <div className="new-dm create-new-chat">
                 <div className="userpicker-container">
                     <UserPicker
                         ref={this.setRef}
-                        title={t('title_chatWith')}
-                        onChange={this.handleChange}
+                        title={t('title_newDirectMessage')}
+                        limit={1}
                         onAccept={this.handleAccept}
                         onClose={this.handleClose} />
                 </div>

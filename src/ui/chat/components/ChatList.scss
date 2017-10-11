@@ -16,7 +16,6 @@
   }
 
   .dm-item {
-
     background: #eee;
     cursor: pointer;
     transition: 150ms;
@@ -38,8 +37,13 @@
       @extend %flex-align-center;
       height: 32px;
     }
+  }
 
-
+  .new-dm-avatar {
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    font-size: 32px;
   }
 }
 

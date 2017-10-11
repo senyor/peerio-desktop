@@ -18,7 +18,7 @@ class ChatList extends React.Component {
     }
 
     newMessage = () => {
-        window.router.push('/app/new-chat');
+        window.router.push(routerStore.ROUTES.newChat);
     };
 
     newChannel() {
@@ -105,6 +105,21 @@ class ChatList extends React.Component {
                                         <div className="chat-item-add-icon" />
                                     </div>
                                 </TooltipDiv>
+                                {routerStore.isNewChat &&
+                                    <ListItem key="new chat"
+                                        className={css('dm-item', { active: routerStore.isNewChat })}
+                                        leftIcon={<div className="new-dm-avatar material-icons">help_outline</div>}
+                                        itemContent={
+                                            <TooltipDiv className="item-content"
+                                                tooltip={t('title_newDirectMessage')}
+                                                tooltipDelay={500}
+                                                tooltipPosition="right">
+                                                <span className="rt-list-primary new-dm-list-entry">
+                                                    <i>{t('title_newDirectMessage')}</i>
+                                                </span>
+                                            </TooltipDiv>
+                                        }
+                                    />}
                                 <FlipMove duration={200} easing="ease-in-out">
                                     {chatStore.directMessages.map(c =>
                                         (<ListItem key={c.id || c.tempId}

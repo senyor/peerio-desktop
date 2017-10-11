@@ -10,7 +10,7 @@ class SideBarSection extends React.Component {
             <div className={css('sidebar-section', { closed: !this.props.open, open: this.props.open })} >
                 <div className="list-header clickable" onClick={this.props.onToggle}>
                     <div className="section-title">{this.props.title}</div>
-                    <FontIcon value={this.props.open ? 'arrow_drop_up' : 'arrow_drop_down'} />
+                    {this.props.onToggle && <FontIcon value={this.props.open ? 'arrow_drop_up' : 'arrow_drop_down'} />}
                 </div>
                 <div className="section-content">
                     {this.props.open ? this.props.children : null}

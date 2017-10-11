@@ -5,12 +5,16 @@ $margin-tiny: #{$spacing-default/2}; // 4px
 $margin-small: $spacing-default; // 8px
 $margin-default: #{$spacing-default * 2}; // 16px
 $margin-large: #{$spacing-default * 2.5}; // 20px
+$margin-xl: #{$spacing-default * 4}; // 32px
+$margin-xxl: #{$spacing-default * 6}; // 48px
 
 // PADDING
 $padding-tiny: #{$spacing-default/2}; // 4px
 $padding-small: $spacing-default; // 8px
 $padding-default: #{$spacing-default * 2}; // 16px
 $padding-large: #{$spacing-default * 2.5}; // 20px
+$padding-xl: #{$spacing-default * 4}; // 32px
+$padding-xxl: #{$spacing-default * 6}; // 48px
 
 // COMPONENT MEASUREMENTS
 // TODO: consider moving component specific vars into their component style sheets

@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Chip, FontIcon, IconButton, Input, List,
+const { Button, Chip, FontIcon, Input, List,
     ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('~/icebear');
@@ -14,11 +14,12 @@ const { getAttributeInParentChain } = require('~/helpers/dom');
 class UserPicker extends React.Component {
     @observable selected = [];
     @observable query = '';
-    @observable noGood = false;
     accepted = false;
     @observable suggestInviteEmail = '';
+    @observable suggestInviteEmailSent = false;
     @observable showNotFoundError;
-    legacyContactError = false; // not observable because changes only with showNotFoundError
+    @observable foundContact;
+    legacyContactError = false; // not observable bcs changes only with showNotFoundError
 
     componentDidMount() {
         if (this.props.onChange) {
@@ -28,18 +29,16 @@ class UserPicker extends React.Component {
 
     @computed get options() {
         const ret = contactStore.filter(this.query).filter(this.filterOptions);
-        for (let i = 0; i < ret.length; i++) {
-            if (!ret[i].isAdded) {
-                if (i === 0 || i === (ret.length - 1)) break;
-                ret.splice(i, 0, true); // separator
-                break;
-            }
-        }
-        return ret;
+        const favorites = ret.filter(s => s.isAdded);
+        const normal = ret.filter(s => !s.isAdded);
+        return {
+            favorites,
+            normal
+        };
     }
 
     @computed get isValid() {
-        return !this.selected.find(s => s.loading || s.notFound) && !this.isOverLimit;
+        return !this.selected.find(s => s.loading || s.notFound);
     }
 
     @computed get selectedSelfless() {
@@ -68,8 +67,21 @@ class UserPicker extends React.Component {
         return contact.username !== User.current.username;
     }
 
+    reset() {
+        this.legacyContactError = false;
+        this.showNotFoundError = false;
+        this.suggestInviteEmail = '';
+        this.foundContact = null;
+    }
+
     handleTextChange = newVal => {
+        this.reset();
         const newValLower = newVal.toLocaleLowerCase();
+        if (this.props.limit === 1) {
+            this.query = newValLower.trim();
+            this.searchUsernameTimeout(this.query);
+            return;
+        }
         if (newValLower.length > 1 && ', '.includes(newValLower[newValLower.length - 1])) {
             this.query = newValLower.substr(0, newValLower.length - 1).trim();
             this.tryAcceptUsername();
@@ -81,38 +93,67 @@ class UserPicker extends React.Component {
     // Don't use onKeyPress it won't catch backspace
     // Don't use onKeyUp - text change fires earlier
     handleKeyDown = e => {
-        if (e.key === 'Enter' && this.query !== '') this.tryAcceptUsername();
+        if (e.key === 'Enter' && this.query !== '') {
+            // if we are in 1-1 DM selection and user hits enter
+            if (this.props.limit === 1) {
+                const c = this.foundContact || this.searchUsername(this.query);
+                // if we know for sure contact is there, then go to DM immediately
+                if (c && !c.loading && !c.notFound) {
+                    this.selected = [c];
+                    this.accept();
+                }
+                return;
+            }
+            this.tryAcceptUsername();
+        }
         if (e.key === 'Backspace' && this.query === '' && this.selected.length > 0) {
             this.selected.remove(this.selected[this.selected.length - 1]);
         }
     };
 
-    tryAcceptUsername() {
-        this.legacyContactError = false;
-        this.showNotFoundError = false;
-        if (this.selected.find(s => s.username === this.query)) {
-            return;
+    searchUsernameTimeout(q) {
+        if (this._searchUsernameTimeout) {
+            clearTimeout(this._searchUsernameTimeout);
         }
-        const q = this.query;
+        this._searchUsernameTimeout = setTimeout(() => this.searchUsername(q), 1000);
+    }
+
+    searchUsername(q) {
+        if (!q) return null;
         const c = contactStore.getContact(q);
         if (this.isExcluded(c)) {
-            this.query = '';
+            return null;
+        }
+        when(() => !c.loading, () => {
+            const atInd = q.indexOf('@');
+            const isEmail = atInd > -1 && atInd === q.lastIndexOf('@');
+            this.userNotFound = c.notFound ? q : '';
+            this.suggestInviteEmail = (c.notFound && isEmail && !this.props.noInvite) ? q : '';
+            this.legacyContactError = c.isLegacy;
+            this.showNotFoundError = c.notFound;
+            this.suggestInviteEmailSent = false;
+            this.foundContact = !c.notFound && c;
+        });
+        return c;
+    }
+
+    async tryAcceptUsername() {
+        this.reset();
+        const c = this.searchUsername(this.query);
+        if (c === null || this.selected.find(s => s.username === this.query)) {
             return;
         }
-        const atInd = q.indexOf('@');
-        const isEmail = atInd > -1 && atInd === q.lastIndexOf('@');
+        this.query = '';
+        if (this.isExcluded(c)) {
+            return;
+        }
         this.selected.push(c);
         when(() => !c.loading, () => {
             setTimeout(() => {
                 if (c.notFound) this.selected.remove(c);
             }, 1000);
-            this.suggestInviteEmail = (c.notFound && isEmail && !this.props.noInvite) ? q : '';
-            this.legacyContactError = c.isLegacy;
-            this.showNotFoundError = c.notFound;
         });
-        this.query = '';
     }
-
 
     accept = () => {
         if (this.props.onlyPick || this.accepted || !this.isValid) return;
@@ -121,10 +162,6 @@ class UserPicker extends React.Component {
             if (s.notFound) this.selected.remove(s);
         });
         this.props.onAccept(this.selected);
-    };
-
-    handleClose = () => {
-        this.props.onClose();
     };
 
     onInputMount = (input) => {
@@ -136,6 +173,12 @@ class UserPicker extends React.Component {
         const username = getAttributeInParentChain(ev.target, 'data-id');
         // avoiding incorrect setState because of computed options
         setTimeout(() => {
+            if (this.props.limit === 1) {
+                this.selected.clear();
+                this.selected.push(contactStore.getContact(username));
+                this.accept();
+                return;
+            }
             this.selected.push(contactStore.getContact(username));
             this.query = '';
         });
@@ -143,15 +186,25 @@ class UserPicker extends React.Component {
 
     invite = () => {
         contactStore.invite(this.suggestInviteEmail);
-        this.suggestInviteEmail = '';
+        this.suggestInviteEmailSent = true;
     }
 
-    get isLimitReached() {
-        return !!(this.props.limit && this.selectedSelfless.length === this.props.limit);
-    }
-
-    get isOverLimit() {
-        return !!(this.props.limit && this.selectedSelfless.length > this.props.limit);
+    renderList(subTitle, items) {
+        if (!items.length) return null;
+        return (
+            <div key={subTitle} className="user-list">
+                {!!subTitle && <ListSubHeader key={subTitle} caption={`${t(subTitle)} (${items.length})`} />}
+                {items.map(c => (
+                    <span key={c.username} data-id={c.username}>
+                        <ListItem
+                            leftActions={[<Avatar key="a" contact={c} size="medium" />]}
+                            caption={c.username}
+                            legend={`${c.firstName} ${c.lastName}`}
+                            onClick={this.onContactClick} />
+                    </span>
+                ))}
+            </div>
+        );
     }
 
     render() {
@@ -172,92 +225,80 @@ class UserPicker extends React.Component {
                 </div>
                 <div className="inputs-container">
                     <div className="inputs-container-inner">
-                        {this.props.noHeader
-                            ? null
-                            : <div className="chat-creation-header">
-                                <div className="title">
-                                    {this.props.title}
-                                    {this.props.subtitle ? <span>{this.props.subtitle}</span> : ''}
+                        <div className="chat-creation-header-container">
+                            {this.props.noHeader
+                                ? null
+                                : <div className="chat-creation-header">
+                                    <div className="title">
+                                        {this.props.title}
+                                        {this.props.subtitle ? <span>{this.props.subtitle}</span> : ''}
+                                    </div>
                                 </div>
-                                <IconButton icon="close" onClick={this.handleClose} />
-                            </div>
-                        }
-                        <div className="message-search-wrapper">
-                            <div className="new-chat-search">
-                                <FontIcon value="search" />
-                                <div className="chip-wrapper">
-                                    {this.selected.map(c =>
-                                        (<Chip key={c.username}
-                                            className={css('chip-label', { 'not-found': c.notFound })}
-                                            onDeleteClick={() => this.selected.remove(c)} deletable>
-                                            {c.loading
-                                                ? <ProgressBar type="linear" mode="indeterminate" />
-                                                : c.username}
-                                        </Chip>)
-                                    )}
-                                    {this.isLimitReached || this.isOverLimit
-                                        ? null :
+                            }
+                            <div className="message-search-wrapper">
+                                <T k="title_to" className="title-to" />
+                                <div className="new-chat-search">
+                                    <FontIcon value="search" />
+                                    <div className="chip-wrapper">
+                                        {this.selected.map(c =>
+                                            (<Chip key={c.username}
+                                                className={css('chip-label', { 'not-found': c.notFound })}
+                                                onDeleteClick={() => this.selected.remove(c)} deletable>
+                                                {c.loading
+                                                    ? <ProgressBar type="linear" mode="indeterminate" />
+                                                    : c.username}
+                                            </Chip>)
+                                        )}
                                         <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')}
                                             value={this.query} onChange={this.handleTextChange}
                                             onKeyDown={this.handleKeyDown} />
-                                    }
-                                </div>
-                                <Button className={
-                                    css('confirm', {
-                                        banish: this.props.onlyPick ||
-                                        (!this.selected.length
-                                            && (!this.props.extraChips || !this.props.extraChips.length))
-                                    })}
-                                label={this.props.button || t('button_go')}
-                                onClick={this.accept} disabled={!this.isValid} />
-                            </div>
-                            {/* this.props.limit &&
-                                <div className={css('text-right', 'dark-label',
-                                { 'error-search': this.isLimitReached })}>
-                                    <T k="title_addedPeopleLimit">
-                                        {{ added: this.selectedSelfless.length + 1, limit: this.props.limit }}
-                                    </T>
-                            </div> */}
-                            {this.showNotFoundError && !this.suggestInviteEmail
-                                ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'} tag="div"
-                                    className="error-search" />
-                                : null
-                            }
-                        </div>
-                        {this.suggestInviteEmail ?
-                            <div className="email-invite-container">
-                                <div className="email-invite">
-                                    <FontIcon value="help_outline" />
-                                    <div className="email-invite-text">
-                                        {t('title_inviteContactByEmail', { email: this.suggestInviteEmail })}
                                     </div>
+                                    {this.props.limit !== 1 && this.props.onAccept &&
+                                        <Button
+                                            className="button-affirmative"
+                                            label={this.props.button || t('button_go')}
+                                            onClick={this.accept}
+                                            disabled={!this.isValid
+                                                || (this.queryIsEmpty && this.selected.length === 0)} />}
                                 </div>
-                                <Button className="button-affirmative" onClick={this.invite} label={t('button_send')} />
                             </div>
-                            : null}
-                        {this.isLimitReached || this.isOverLimit ? null : <List selectable ripple >
-                            <div key="list" className="user-list">
-                                <ListSubHeader key="fav-header" caption={t('title_favoriteContacts')} />
-                                {this.options.map(c => {
-                                    if (c === true) {
-                                        return (
-                                            <ListSubHeader key="all-header" caption={t('title_allContacts')} />
-                                        );
-                                    }
-
-                                    return (<span key={c.username} data-id={c.username}>
-                                        <ListItem
-                                            leftActions={[<Avatar key="a" contact={c} size="medium" />]}
-                                            caption={c.username}
-                                            // Should be something like <span class="tag"> In channel</span>
-                                            legend={`${c.firstName} ${c.lastName}`}
-                                            onClick={this.onContactClick}
-                                            className={css({ warning: this.noGood })} />
-                                    </span>);
-                                })
+                        </div>
+                        <div className="user-list-container">
+                            <div className="usernotfound-container">
+                                {this.suggestInviteEmail ?
+                                    <div className="email-invite-container">
+                                        <div className="usernotfound-text">
+                                            <FontIcon value="help_outline" />
+                                            <T k="title_inviteContactByEmail">{{ email: this.suggestInviteEmail }}</T>
+                                        </div>
+                                        <Button
+                                            className="button-affirmative"
+                                            onClick={this.invite}
+                                            label={t('button_send')}
+                                            disabled={this.suggestInviteEmailSent} />
+                                    </div>
+                                    : null
+                                }
+                                {this.showNotFoundError && !this.suggestInviteEmail
+                                    ? <div className="email-suggestsearch-container">
+                                        <div className="usernotfound-text">
+                                            <FontIcon value="help_outline" />
+                                            <T k={this.legacyContactError ?
+                                                'title_inviteLegacy' : 'error_userNotFoundTryEmail'} tag="div">
+                                                {{ user: this.userNotFound }}
+                                            </T>
+                                        </div>
+                                    </div>
+                                    : null
                                 }
                             </div>
-                        </List>}
+                            <List selectable ripple>
+                                {this.foundContact && this.renderList(null, [this.foundContact])}
+                                {!this.foundContact
+                                    && this.renderList('title_favoriteContacts', this.options.favorites)}
+                                {!this.foundContact && this.renderList('title_allContacts', this.options.normal)}
+                            </List>
+                        </div>
                     </div>
                 </div>
             </div>

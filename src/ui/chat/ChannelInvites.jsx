@@ -2,7 +2,6 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { Button, List, ListSubHeader, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const ChatList = require('./components/ChatList');
-const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const { t } = require('peerio-translator');
 const { chatInviteStore, clientApp, chatStore, User } = require('~/icebear');
 const ChannelUpgradeOffer = require('./components/ChannelUpgradeOffer');
@@ -95,7 +94,6 @@ class ChannelInvites extends React.Component {
                                 </List>
                             </div>
                         </div>
-                        <ChatSideBar open="true" />
                     </div>
                 </div>
                 <ChannelUpgradeDialog />

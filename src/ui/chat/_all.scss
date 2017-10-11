@@ -2,6 +2,8 @@
 .messages {
   @extend %flex-row;
   background: $background-root;
+  padding-right: $app-nav-width;
+  width: 100%;
 
   .starred,
   .starred .material-icons {
@@ -16,12 +18,21 @@
   @extend %flex-align-center;
   background: white;
   height: 100vh;
-  padding: 0 20px;
   position: relative;
   width: 100vw;
 
   .message-search-wrapper {
-    margin-bottom: 48px;
+    @extend %flex-align-center;
+    @extend %flex-shrink-0;
+    display: flex;
+    margin-bottom: $margin-xl;
+    width: 100%;
+
+    .title-to {
+      @extend %title;
+      font-weight: $font-weight-regular;
+      margin-right: $margin-large;
+    }
   }
 
   .new-chat-search {
@@ -29,8 +40,6 @@
     border: 1px solid $input-border;
     border-radius: 24px;
     display: flex;
-    flex-shrink: 0;
-    max-width: 600px;
     overflow: hidden;
     padding: 0 $padding-small 0 $padding-default;
     width: 100%;
@@ -62,26 +71,6 @@
         padding: 0;
       }
     }
-
-    .rt-button-button {
-      background-color: $green-affirmative;
-      border-radius: 24px;
-      color: $text-light-primary;
-      transition: 250ms;
-
-      &:hover {
-        background-color: $green-affirmative;
-        color: $white;
-
-        .rt-rippleWrapper {
-          border-radius: 0 24px 24px 0;
-        }
-      }
-    }
-
-    .rt-button-button[disabled] {
-      background-color: #f0f0f0;
-    }
   }
 
   .rt-list-list {
@@ -92,7 +81,6 @@
       cursor: pointer;
       // Temporary fix. We'll want to add sticky headers to lists once multiple
       // lists are shown.
-      overflow-y: auto;
     }
   }
 
@@ -100,6 +88,7 @@
     @extend %flex-shrink-0;
     border-bottom: $divider-dark solid 1px;
     cursor: default;
+    margin-top: $margin-default;
   }
 
   .rt-list-listItem {

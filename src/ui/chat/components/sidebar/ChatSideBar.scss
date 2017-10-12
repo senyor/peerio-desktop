@@ -43,6 +43,8 @@
   }
 
   .rt-list-itemText {
+    @extend %flex-row;
+    @extend %flex-align-center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -103,11 +105,11 @@
 
   .tag {
     background-color: #757575;
-    border-radius: 5px;
-    color: white;
+    border-radius: 4px;
+    color: $text-light-primary;
     display: inline-block;
     font-size: 11px;
-    margin-left: 10px;
+    margin-left: $margin-small;
     padding: 0 4px 2px;
   }
 }

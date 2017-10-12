@@ -10,13 +10,17 @@ const T = require('~/ui/shared-components/T');
 const MembersSection = require('./MembersSection');
 const FilesSection = require('./FilesSection');
 
+const MEMBERS = 'members';
+const FILES = 'files';
+
 @observer
 class ChannelSideBar extends React.Component {
     // Switching between textarea and static text is not really needed, we could always use textarea
     // but there's some bug with chrome or react-toolbox that shifts
     // entire view up a bit if textarea renders on app start
     @observable chatPurposeEditorVisible = false;
-    @observable openSectionIndex = 0;
+    @observable showFiles;
+    @observable openSection = MEMBERS;
 
     deleteChannel() {
         const chat = chatStore.activeChat;
@@ -54,12 +58,13 @@ class ChannelSideBar extends React.Component {
     };
 
     // todo: this needs to be made smarter when we have at least one more section
-    onMembersToggle = () => {
-        this.openSectionIndex = this.openSectionIndex === 0 ? 1 : 0;
-    };
-    onFilesToggle = () => {
-        this.openSectionIndex = this.openSectionIndex === 1 ? 0 : 1;
-    };
+    onToggleSection = section => {
+        if (this.openSection === section) {
+            this.openSection = null;
+        } else {
+            this.openSection = section;
+        }
+    }
 
     render() {
         const chat = chatStore.activeChat;
@@ -109,8 +114,10 @@ class ChannelSideBar extends React.Component {
                     </List>
                 </div>
                 <MembersSection onAddParticipants={this.props.onAddParticipants}
-                    onToggle={hasFiles ? this.onMembersToggle : null} open={this.openSectionIndex === 0} />
-                <FilesSection onToggle={this.onFilesToggle} open={this.openSectionIndex === 1} />
+                    onToggle={hasFiles ? () => this.onToggleSection(MEMBERS) : null}
+                    open={this.openSection === MEMBERS} />
+                <FilesSection onToggle={() => this.onToggleSection(FILES)}
+                    open={this.openSection === FILES} />
             </div>
         );
     }

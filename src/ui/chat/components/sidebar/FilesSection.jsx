@@ -42,15 +42,17 @@ class FilesSection extends React.Component {
 
         return (
             <SideBarSection title={t('title_recentFiles')} onToggle={this.props.onToggle} open={this.props.open}>
-                <List>
-                    {chat.recentFiles.map(id => {
-                        const file = fileStore.getById(id);
-                        if (!file) return null;
-                        return (<span key={id} data-fileid={id}>
-                            <ListItem caption={file.name} rightActions={[menu]} onClick={this.download} />
-                        </span>);
-                    })}
-                </List>
+                <div className="member-list">
+                    <List>
+                        {chat.recentFiles.map(id => {
+                            const file = fileStore.getById(id);
+                            if (!file) return null;
+                            return (<span key={id} data-fileid={id}>
+                                <ListItem caption={file.name} rightActions={[menu]} onClick={this.download} />
+                            </span>);
+                        })}
+                    </List>
+                </div>
             </SideBarSection>
         );
     }

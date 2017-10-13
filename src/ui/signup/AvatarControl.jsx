@@ -3,6 +3,7 @@ const { Component } = require('react');
 const { FontIcon } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const AvatarDialog = require('./AvatarDialog');
+const { t } = require('peerio-translator');
 
 @observer class AvatarControl extends Component {
     render() {
@@ -11,10 +12,10 @@ const AvatarDialog = require('./AvatarDialog');
             <div className="avatar-input" onClick={AvatarDialog.showDialog}>
                 <FontIcon value="add" />
                 <div className="avatar-instructions">
-                    Add photo
+                    {t('title_avatarInstructions')}
                 </div>
                 {url && <img src={url} alt="avatar" />}
-                <div className="caption">(optional)</div>
+                <div className="caption">{t('title_optional')}</div>
             </div>
         );
     }

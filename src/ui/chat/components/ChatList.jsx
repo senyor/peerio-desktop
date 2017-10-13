@@ -67,7 +67,7 @@ class ChatList extends React.Component {
                         :
                         <div className="list">
                             <List selectable ripple>
-                                <TooltipDiv tooltip="Add a room"
+                                <TooltipDiv tooltip={t('title_addRoom')}
                                     tooltipPosition="right">
                                     <div className="chat-item-add" onClick={this.newChannel} >
                                         <div className="chat-item-title">{t('title_channels')}</div>
@@ -98,7 +98,7 @@ class ChatList extends React.Component {
                                 </FlipMove>
                             </List>
                             <List selectable ripple>
-                                <TooltipDiv tooltip="Add direct message"
+                                <TooltipDiv tooltip={t('title_addDirectMessage')}
                                     tooltipPosition="right">
                                     <div className="chat-item-add" onClick={this.newMessage}>
                                         <div className="chat-item-title">{t('title_directMessages')}</div>

@@ -103,6 +103,10 @@
     .rt-list-primary {
       color: $text-light-primary;
       font-weight: $font-weight-bold;
+
+      &.new-dm-list-entry {
+        font-weight: $font-weight-semibold;
+      }
     }
 
     &:hover {

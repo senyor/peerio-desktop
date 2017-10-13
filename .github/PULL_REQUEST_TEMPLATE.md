@@ -3,7 +3,7 @@ Please read complete the checklist, then fill out any sections that are relevant
 ### PR Checklist
 
 - [ ] I have merged `dev` into my branch before submitting
-- [ ] I have checked with either the repo owner or person who previously worked on this feature to ensure correctness
+- [ ] I have checked with either the repo owner or person who previously worked on this feature to ensure correctness (if applicable)
 - [ ] I have ensured that I am not using any English strings, only `t('translation_keys)`
 - [ ] The pull request name follows the standard commit guidelines, e.g. `feat(files): filter by file type`
 

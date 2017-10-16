@@ -1,6 +1,7 @@
 const React = require('react');
 const { t } = require('peerio-translator');
 const { List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
+const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore, User, systemMessages, clientApp, chatInviteStore, contactStore } = require('~/icebear');
 const { observer } = require('mobx-react');
@@ -66,6 +67,7 @@ class ChatList extends React.Component {
                         ? null
                         :
                         <div className="list">
+                            <MaintenanceWarning />
                             <List selectable ripple>
                                 <TooltipDiv tooltip={t('title_addRoom')}
                                     tooltipPosition="right">

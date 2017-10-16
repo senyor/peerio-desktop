@@ -1,0 +1,30 @@
+.maintenance-wrapper {
+    @extend %flex-row;
+    @extend %flex-align-center;
+    transition: 250ms $transition-easing-ease-in;
+    cursor: pointer;
+    height: 48px;
+    padding: 0 $padding-default;
+
+    .maintenance-title {
+        color: $red-error;
+        font-size: 16px; 
+        font-weight: $font-weight-semibold;
+        margin-top: -$margin-tiny;
+        padding-top: $padding-tiny;
+    }
+    
+    .maintenance-icon {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 24px;
+        margin-left: auto;
+        width: 24px;
+    }    
+}
+
+.dialog-maintenance {
+    border-top: 12px solid $red-error;
+}
+  

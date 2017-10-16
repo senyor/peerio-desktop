@@ -40,30 +40,65 @@ app.on('ready', () => {
     app.setAppUserModelId(config.appId);
 
     getSavedWindowState()
-        .then(state => {
-            const winConfig = Object.assign(state, {
+        .then(windowState => {
+            const winConfig = Object.assign({
                 show: false,
                 center: true,
                 minWidth: 900,
                 minHeight: 728,
                 title: app.getName()
-            });
+            }, windowState);
 
             if (process.platform === 'linux') {
-                state.icon = `${__dirname}/static/img/icon.png`;
+                winConfig.icon = `${__dirname}/static/img/icon.png`;
             }
 
             mainWindow = new BrowserWindow(winConfig);
             mainWindow.loadURL(`file://${__dirname}/index.html`);
 
+            const rememberWindowState = () => {
+                if (mainWindow.isMaximized()) {
+                    windowState.isMaximized = true;
+                    return;
+                }
+                windowState.isMaximized = false;
+                if (mainWindow.isMinimized() || mainWindow.isFullScreen()) {
+                    // don't remember minimized or fullscreen state.
+                    return;
+                }
+                Object.assign(windowState, mainWindow.getBounds());
+            };
+
             mainWindow.once('ready-to-show', () => {
                 mainWindow.show();
                 mainWindow.focus();
+                if (windowState.isMaximized) {
+                    mainWindow.maximize();
+                }
+            });
+
+            mainWindow.on('resize', () => {
+                rememberWindowState();
+            });
+
+            mainWindow.on('maximize', () => {
+                rememberWindowState();
+            });
+
+            mainWindow.on('unmaximize', () => {
+                rememberWindowState();
+            });
+
+            mainWindow.on('restore', () => {
+                rememberWindowState();
+            });
+
+            mainWindow.on('minimize', () => {
+                rememberWindowState();
             });
 
             mainWindow.on('close', () => {
-                const bounds = mainWindow.getBounds();
-                saveWindowState(bounds);
+                saveWindowState(windowState);
             });
 
             mainWindow.on('closed', () => {

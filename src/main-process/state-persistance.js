@@ -5,12 +5,15 @@ function saveWindowState(state) {
 }
 
 function getSavedWindowState() {
-    const defaultState = {
-        width: 1024,
-        height: 728
-    };
     return TinyDb.system.getValue('windowState')
-        .then(savedState => Object.assign(defaultState, savedState || {}));
+        .then(savedState => savedState || {})
+        .then(savedState => ({
+            x: savedState.x,
+            y: savedState.y,
+            width: savedState.width || 1024,
+            height: savedState.height || 728,
+            isMaximized: savedState.isMaximized
+        }));
 }
 
 module.exports = { saveWindowState, getSavedWindowState };

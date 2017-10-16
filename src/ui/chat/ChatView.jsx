@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { FontIcon, IconButton, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
-const { chatStore, TinyDb, clientApp, crypto } = require('~/icebear');
+const { chatStore, clientApp, crypto } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
@@ -14,31 +14,20 @@ const css = require('classnames');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
+const NoChatSelected = require('./components/NoChatSelected');
 const UserPicker = require('~/ui/shared-components/UserPicker');
-
-const SIDEBAR_STATE_KEY = 'chatSideBarIsOpen';
+const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 
 const messages = ['title_randomMessage1', 'title_randomMessage2', 'title_randomMessage3', 'title_randomMessage4'];
 const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
 
 @observer
 class ChatView extends React.Component {
-    @observable static sidebarOpen = true; // static, so it acts like lazy internal store
     @observable chatNameEditorVisible = false;
     @observable showUserPicker = false;
 
-    static sidebarStateSaver;
-
     componentWillMount() {
         clientApp.isInChatsView = true;
-        TinyDb.user.getValue(SIDEBAR_STATE_KEY).then(isOpen => {
-            ChatView.sidebarOpen = isOpen == null ? ChatView.sidebarOpen : isOpen;
-        });
-        if (!ChatView.sidebarStateSaver) {
-            ChatView.sidebarStateSaver = reaction(() => ChatView.sidebarOpen, open => {
-                TinyDb.user.setValue(SIDEBAR_STATE_KEY, open);
-            }, { delay: 1000 });
-        }
         this.reactionsToDispose = [
             reaction(() => this.showUserPicker, show => { clientApp.isInChatsView = !show; })
         ];
@@ -94,7 +83,7 @@ class ChatView extends React.Component {
     };
 
     toggleSidebar = () => {
-        ChatView.sidebarOpen = !ChatView.sidebarOpen;
+        uiStore.prefs.chatSideBarIsOpen = !uiStore.prefs.chatSideBarIsOpen;
     };
 
     showChatNameEditor = () => {
@@ -164,12 +153,13 @@ class ChatView extends React.Component {
     get sidebar() {
         if (!chatStore.activeChat) return null;
         return chatStore.activeChat.isChannel ?
-            <ChannelSideBar open={ChatView.sidebarOpen} onAddParticipants={this.openUserPicker} /> :
-            <ChatSideBar open={ChatView.sidebarOpen} />;
+            <ChannelSideBar open={uiStore.prefs.chatSideBarIsOpen} onAddParticipants={this.openUserPicker} /> :
+            <ChatSideBar open={uiStore.prefs.chatSideBarIsOpen} />;
     }
 
     render() {
         const chat = chatStore.activeChat;
+        if (!chat) return <NoChatSelected />;
         return (
             <div className="message-view">
                 {chatStore.loading ?
@@ -177,14 +167,14 @@ class ChatView extends React.Component {
                         <div className="headline"><T k={randomMessage} /></div>
                     </div>
                     : null}
-                {chat ? this.renderHeader() : null}
+                {this.renderHeader()}
                 <div className="messages-and-sidebar-container">
                     {
                         this.showUserPicker
                             ? <div className="create-new-chat">
                                 <UserPicker onClose={this.closeUserPicker} onAccept={this.addParticipants}
-                                    exceptContacts={chat ? chat.participants : null}
-                                    title={t('title_addParticipants')} noDeleted noInvite />
+                                    exceptContacts={chat.participants}
+                                    title={t('title_addParticipants')} noDeleted />
                             </div>
                             : <div className="messages-container">
                                 {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}
@@ -210,6 +200,7 @@ class ChatView extends React.Component {
                     }
                     {this.sidebar}
                 </div>
+                {chat.leaving ? <FullCoverLoader show /> : null}
             </div>
         );
     }

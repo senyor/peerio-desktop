@@ -6,6 +6,11 @@
 
   .invite-form {
     width: 480px;
+
+    .message-search-wrapper {
+      display: block;
+      padding: 0;
+    }
   }
 
   .email-invite-container {

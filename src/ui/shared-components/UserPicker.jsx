@@ -16,7 +16,6 @@ class UserPicker extends React.Component {
     @observable query = '';
     accepted = false;
     @observable suggestInviteEmail = '';
-    @observable suggestInviteEmailSent = false;
     @observable showNotFoundError;
     @observable foundContact;
     legacyContactError = false; // not observable bcs changes only with showNotFoundError
@@ -99,6 +98,7 @@ class UserPicker extends React.Component {
                 const c = this.foundContact || this.searchUsername(this.query);
                 // if we know for sure contact is there, then go to DM immediately
                 if (c && !c.loading && !c.notFound) {
+                    this.query = '';
                     this.selected = [c];
                     this.accept();
                 }
@@ -131,7 +131,6 @@ class UserPicker extends React.Component {
             this.suggestInviteEmail = (c.notFound && isEmail && !this.props.noInvite) ? q : '';
             this.legacyContactError = c.isLegacy;
             this.showNotFoundError = c.notFound;
-            this.suggestInviteEmailSent = false;
             this.foundContact = !c.notFound && c;
         });
         return c;
@@ -156,6 +155,10 @@ class UserPicker extends React.Component {
     }
 
     accept = () => {
+        if (this.query) {
+            this.tryAcceptUsername();
+            return;
+        }
         if (this.props.onlyPick || this.accepted || !this.isValid) return;
         this.accepted = true;
         this.selected.forEach(s => {
@@ -173,20 +176,24 @@ class UserPicker extends React.Component {
         const username = getAttributeInParentChain(ev.target, 'data-id');
         // avoiding incorrect setState because of computed options
         setTimeout(() => {
+            const c = contactStore.getContact(username);
             if (this.props.limit === 1) {
                 this.selected.clear();
-                this.selected.push(contactStore.getContact(username));
+                this.selected.push(c);
                 this.accept();
                 return;
             }
-            this.selected.push(contactStore.getContact(username));
             this.query = '';
+            if (this.isExcluded(c)) return;
+            if (this.selected.find(i => i.username === c.username)) return;
+            this.selected.push(c);
         });
     };
 
     invite = () => {
         contactStore.invite(this.suggestInviteEmail);
-        this.suggestInviteEmailSent = true;
+        this.query = '';
+        this.reset();
     }
 
     renderList(subTitle, items) {
@@ -274,8 +281,7 @@ class UserPicker extends React.Component {
                                         <Button
                                             className="button-affirmative"
                                             onClick={this.invite}
-                                            label={t('button_send')}
-                                            disabled={this.suggestInviteEmailSent} />
+                                            label={t('button_send')} />
                                     </div>
                                     : null
                                 }

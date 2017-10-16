@@ -129,7 +129,7 @@ class NewContact extends React.Component {
                                         value={this.query} onChange={this.handleTextChange}
                                         onKeyDown={this.handleKeyDown} />
                                 </div>
-                                <Button className={css('confirm',
+                                <Button className={css('confirm', 'button-affirmative',
                                     {
                                         hide: !this.query.length || this.waiting ||
                                         (this.isInviteView && this.query.indexOf('@') < 0)

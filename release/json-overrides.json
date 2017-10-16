@@ -1,0 +1,7 @@
+{
+    "app/package.json": {
+        "peerio": {
+            "socketServerUrl": "wss://icebear.peerio.com"
+        }
+    }
+}

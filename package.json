@@ -50,7 +50,7 @@
   },
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "devDependencies": {
-    "@peerio/desktop-release-builder": "4.2.1",
+    "@peerio/desktop-release-builder": "6.0.0",
     "@peerio/peerio-icebear": "2.11.1",
     "@types/react": "16.0.7",
     "babel-cli": "6.26.0",

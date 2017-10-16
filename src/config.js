@@ -8,9 +8,15 @@ const StorageEngine = require('~/icebear/models/storage/node-json-storage');
 const { setUrlMap, setTagHandler } = require('peerio-translator');
 const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
 
-const cfgBase = require('~/config-base');
+const packageJson = require(path.join(app.getAppPath(), 'package.json'));
+if (!packageJson) {
+    throw new Error(`Unable to find package.json (resources path: ${process.resourcesPath})`);
+}
+if (!packageJson.peerio) {
+    throw new Error('Missing "peerio" in package.json');
+}
 
-Object.assign(cfg, cfgBase);
+Object.assign(cfg, packageJson.peerio);
 
 cfg.appVersion = app.getVersion();
 cfg.platform = 'electron';

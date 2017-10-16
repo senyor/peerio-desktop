@@ -1,7 +1,7 @@
 
 const isDevEnv = require('~/helpers/is-dev-env');
 const { ipcMain } = require('electron');
-const config = require('~/config-base');
+const config = require('~/config');
 const { TinyDb } = require('~/icebear');
 
 const usePeerioUpdater = (

@@ -1,4 +1,4 @@
-const cfg = require('~/config-base');
+const cfg = require('~/config');
 
 /**
  * Keytar is a native module and we suspect it might not always work as expected.

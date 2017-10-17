@@ -1,6 +1,7 @@
 .new-channel.create-new-chat {
   .create-room-info {
-    margin-bottom: 20px;
+    margin-bottom: $margin-xl;
+    max-width: 600px;
   }
 
   .user-picker {
@@ -42,6 +43,7 @@
     margin-bottom: $margin-large;
     max-width: 600px;
     padding: $padding-default;
+    padding-top: $padding-xl;
     width: 100%;
 
     .title {

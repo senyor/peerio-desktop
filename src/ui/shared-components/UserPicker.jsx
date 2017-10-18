@@ -180,6 +180,7 @@ class UserPicker extends React.Component {
             if (this.props.limit === 1) {
                 this.selected.clear();
                 this.selected.push(c);
+                this.query = '';
                 this.accept();
                 return;
             }

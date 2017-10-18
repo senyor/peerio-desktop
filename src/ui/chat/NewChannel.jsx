@@ -68,7 +68,7 @@ class NewChannel extends React.Component {
     render() {
         if (this.waiting) {
             return (<div className="new-channel create-new-chat">
-                <div className="user-picker"><ProgressBar type="circular" /></div>
+                <div className="create-channel-loading"><ProgressBar type="circular" /></div>
             </div>);
         }
         const detailsKey = config.disablePayments || User.current.hasActivePlans

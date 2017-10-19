@@ -272,7 +272,7 @@ class UserPicker extends React.Component {
                             </div>
                         </div>
                         <div className="user-list-container">
-                            <div className="usernotfound-container">
+                            <div className="user-not-found-container">
                                 {this.suggestInviteEmail ?
                                     <div className="email-invite-container">
                                         <div className="usernotfound-text">

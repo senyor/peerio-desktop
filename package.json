@@ -249,5 +249,8 @@
     "skip": {
       "changelog": true
     }
+  },
+  "dependencies": {
+    "url-regex": "4.1.1"
   }
 }

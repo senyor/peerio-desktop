@@ -4,6 +4,7 @@ const { observer } = require('mobx-react');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { chatStore, Contact } = require('~/icebear');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class NoChatSelected extends React.Component {
@@ -30,13 +31,10 @@ class NoChatSelected extends React.Component {
         if (chatStore.loading) return null;
         return (
             <div className="zero-message new-dm create-new-chat">
-                <div style={{
-                    marginTop: '168px',
-                    maxWidth: '600px'
-                }} >
-                    <h2 className="display-2">No chats? <strong>No problem!</strong></h2>
-                    <div className="title">Enter a contacts email or user name to get started</div>
-                    <div className="userpicker-container">
+                <div className="zero-message-content">
+                    <T k="title_zeroChat" className="zero-chat-header" tag="div" />
+                    <T k="title_zeroChatInstructions" className="zero-chat-instructions" tag="div" />
+                    <div className="user-picker-container">
                         <UserPicker limit={1} onAccept={this.handleAccept} />
                     </div>
                 </div>

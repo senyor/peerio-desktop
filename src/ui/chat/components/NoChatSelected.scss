@@ -3,12 +3,9 @@
   background: $background-root;
   height: 100vh;
 
-  .display-2 {
-    margin-bottom: 0;
-  }
-
-  .title {
-    margin-bottom: $margin-large;
+  .zero-message-content {
+    margin-top: 168px;
+    max-width: 600px;
   }
 
   .chat-creation-header {
@@ -17,5 +14,38 @@
 
   + .message-input-wrapper {
     display: none;
+  }
+
+  .zero-chat-header {
+    @extend %display-2;
+    color: $blue;
+    margin-bottom: $margin-default;
+  }
+
+  .zero-chat-instructions {
+    @extend %headline;
+    margin-bottom: $margin-xl;
+  }
+
+  .message-search-wrapper {
+    padding: 0;
+
+    .title-to {
+      display: none;
+    }
+  }
+
+  .user-picker {
+    .chat-creation-header-container {
+      border: none;
+    }
+
+    .email-invite-container {
+      padding-right: 0;
+    }
+  }
+
+  .user-not-found-container {
+    padding-left: 0;
   }
 }

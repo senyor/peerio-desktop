@@ -47,7 +47,7 @@ class NewChat extends React.Component {
     render() {
         return (
             <div className="new-dm create-new-chat">
-                <div className="userpicker-container">
+                <div className="user-picker-container">
                     <UserPicker
                         ref={this.setRef}
                         title={t('title_newDirectMessage')}

@@ -6,7 +6,7 @@ const { t } = require('peerio-translator');
 
 function FileActions(props) {
     return (
-        <td className="item-actions" onClick={props.onRowClick}>
+        <div className="item-actions" onClick={props.onRowClick}>
             <IconMenu icon="more_vert">
                 {props.downloadDisabled
                     ? <ProgressBar type="linear" mode="indeterminate" multicolor className="processing-file" />
@@ -38,7 +38,7 @@ function FileActions(props) {
                     onClick={props.onDelete}
                     className={css({ disabled: props.deleteDisabled })} />
             </IconMenu>
-        </td>
+        </div>
     );
 }
 

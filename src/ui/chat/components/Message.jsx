@@ -1,4 +1,4 @@
-/* eslint-disable react/no-danger */
+/* eslint-disable react/no-danger,react/no-array-index-key */
 const React = require('react');
 const { observer } = require('mobx-react');
 const css = require('classnames');
@@ -13,6 +13,7 @@ const urls = require('~/config').translator.urlMap;
 const uiStore = require('~/stores/ui-store');
 
 const InlineFiles = require('./InlineFiles');
+const UrlPreview = require('./UrlPreview');
 
 
 // HACK: make this as a proper react component
@@ -81,11 +82,27 @@ class Message extends React.Component {
                                     ? null
                                     : <p dangerouslySetInnerHTML={processMessageForDisplay(m)} className="selectable" />
                             }
-                            {m.files && m.files.length ? <InlineFiles files={m.files} /> : null}
+                            {m.files && m.files.length
+                                ? <InlineFiles
+                                    files={m.files}
+                                    onDelete={() => {
+                                        console.log('delete');
+                                        this.props.chat.removeMessage(m);
+                                    }}
+                                    onImageLoaded={this.props.onImageLoaded} />
+                                : null
+                            }
                             {
                                 /* SECURITY: sanitize if you change this to  render in dangerouslySetInnerHTML */
                                 this.renderSystemData(m)
                             }
+                            {m.hasUrls
+                                ? m.externalImages.map(
+                                    (urlData, ind) =>
+                                        (<UrlPreview key={ind} urlData={urlData}
+                                            onImageLoaded={this.props.onImageLoaded} />)
+                                )
+                                : null}
                         </div>
                         {/* m.inlineImages.map(url => (
                             <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />)) */}

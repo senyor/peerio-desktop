@@ -140,7 +140,9 @@ class ChatView extends React.Component {
                             )
                         }
                     </div>
+
                 </div>
+
                 {
                     chat.isChannel || chat.recentFiles.length
                         ? <IconButton icon="chrome_reader_mode" onClick={this.toggleSidebar} />

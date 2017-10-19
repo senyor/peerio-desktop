@@ -213,8 +213,8 @@
       }
 
       .message-body {
-        @extend %flex-row;
-        @extend %flex-align-center;
+        // @extend %flex-row;
+        // @extend %flex-align-center;
       }
 
       .system-message {

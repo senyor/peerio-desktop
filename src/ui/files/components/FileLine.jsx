@@ -94,9 +94,16 @@ class FileLine extends React.Component {
 
                 <td className="text-right">{file.sizeFormatted}</td>
 
-                <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
-                    shareDisabled={!file.readyForDownload || !file.canShare} newFolderDisabled deleteDisabled={false}
-                    onDelete={this.deleteFile} onDownload={this.download} onShare={this.share} />
+                <td className="text-right">
+                    <FileActions
+                        downloadDisabled={!file.readyForDownload || file.downloading}
+                        shareDisabled={!file.readyForDownload || !file.canShare}
+                        newFolderDisabled
+                        deleteDisabled={false}
+                        onDelete={this.deleteFile}
+                        onDownload={this.download}
+                        onShare={this.share} />
+                </td>
 
                 {(file.downloading || file.uploading)
                     ? <td className="loading">

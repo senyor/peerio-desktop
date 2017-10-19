@@ -1,6 +1,6 @@
 // global UI store
 const { observable, reaction } = require('mobx');
-const { TinyDb, Clock, User, warnings } = require('~/icebear');
+const { TinyDb, Clock, User, warnings, clientApp } = require('~/icebear');
 const autologin = require('~/helpers/autologin');
 const appControl = require('~/helpers/app-control');
 
@@ -23,11 +23,17 @@ class UIStore {
         messageDesktopNotificationsEnabled: true,
         mentionDesktopNotificationsEnabled: false,
         last2FATrustDeviceSetting: false,
-        chatSideBarIsOpen: true
+        chatSideBarIsOpen: true,
+        limitInlineImageSize: false, // will use config.chat.inlineImageSizeLimit
+        externalContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
+        externalContentEnabled: false,
+        externalContentJustForFavs: false,
+        peerioContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
+        peerioContentEnabled: true
     };
 
     @observable sharedPrefs = {
-        prereleaseUpdatesEnabled: false // this key is used in updater.js main process, mind when renaming
+        prereleaseUpdatesEnabled: false
     }
 
     // key: chat id, value: text
@@ -74,4 +80,7 @@ class UIStore {
     }
 }
 
-module.exports = new UIStore();
+const store = new UIStore();
+clientApp.uiUserPrefs = store.prefs;
+
+module.exports = store;

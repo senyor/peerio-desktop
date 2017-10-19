@@ -228,6 +228,7 @@
   "title_uploadPastedFile": "The file you pasted will be uploaded and shared with the current chat",
   "title_enableImagePreviews": "Enable image previews",
   "title_imagePreviewWarning": "Preview images will be downloaded and saved to your device without encryption, and will be removed as soon as you quit or signout of Peerio.<br/><br/>Would you like to enable previews?",
+  "title_learnMoreOnline": "Learn more online",
   "title_shareWith": "Share with",
   "title_forAllImages": "For all images",
   "title_forImagesUnder10": "For images under 10 MB",

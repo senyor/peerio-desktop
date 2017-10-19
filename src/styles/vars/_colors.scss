@@ -1,11 +1,5 @@
-//// BRAND COLORS
-// These are the "brand" colors that should not be called directly but will be referenced by other variables
-$color-brand-primary: rgb(44, 149, 207);
-$color-brand-secondary: rgb(50, 206, 195);
-$color-accent: rgb(246, 146, 35);
-
 //// COLOR VARIABLES
-// main colours
+// main colours (pulled either from _branding or whitelabel)
 $blue: $color-brand-primary;
 $green: $color-brand-secondary;
 
@@ -36,13 +30,6 @@ $black-03: rgba(0, 0, 0, .03);
 $black-01: rgba(0, 0, 0, .01);
 
 //// BACKGROUNDS
-// Gradients - used with background-image property
-$gradient-to-right: linear-gradient(to right, $blue, $green);
-$gradient-to-bottom: linear-gradient(to bottom, $blue 0, $green 50%);
-
-// Background pattern
-$background-pattern: './static/img/bg-pattern.png';
-
 // Background colors
 $background-faintblue: rgba($blue, .12);
 $background-light-dropdown: $white-12;

@@ -1,14 +1,16 @@
-// Brand colour variables
+// // Main colours
+// $color-brand-primary: rgb(44, 149, 207);
+// $color-brand-secondary: rgb(50, 206, 195);
+// $color-accent: rgb(246, 146, 35);
 //
-
-// Background gradients are used throughout Peerio Messenger.
-// If you don't wish do use gradients then leave $blue as the value for $green.
-// $gradient-to-right: linear-gradient(to right, $blue, $green);
-// $gradient-to-bottom: $gradient-to-right;
-
-// Background patterns
+// // Gradients - used with background-image property
+// // If you don't want to use gradients, in the next line replace '$color-brand-secondary' with '$color-brand-primary'
+// $gradient-to-right: linear-gradient(to right, $color-brand-primary, $color-brand-secondary);
+// $gradient-to-bottom: linear-gradient(to bottom, $color-brand-primary 0, $color-brand-secondary 50%);
+//
+// // Background pattern
 // $background-pattern: './static/img/bg-pattern.png';
-
-// fonts
+//
+// // Main font stack
 // @import './static/fonts/OpenSans/opensans.css';
 // $font-stack: 'Open Sans', sans-serif;

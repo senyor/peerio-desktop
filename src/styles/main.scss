@@ -5,8 +5,11 @@
 @import '../node_modules/croppie/croppie.css';
 @import './static/emoji/sprites/emojione.css';
 
+// Brand/identity
+@import './vars/_branding';
+@import './whitelabel'; // variable overrides for whitelabel releases
+
 // Variables
-@import './whitelabel';
 @import './vars/_colors';
 @import './vars/_grid';
 @import './vars/_layout';

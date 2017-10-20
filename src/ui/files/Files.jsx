@@ -22,7 +22,6 @@ class Files extends React.Component {
     pageSize = 15;
 
     componentWillMount() {
-        fileStore.loadAllFiles();
         clientApp.isInFilesView = true;
     }
 

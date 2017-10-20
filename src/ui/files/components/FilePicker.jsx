@@ -25,11 +25,6 @@ class FilePicker extends React.Component {
         this.props.onShare(selected);
     };
 
-    constructor() {
-        super();
-        fileStore.loadAllFiles();
-    }
-
     handleSearch = val => {
         if (val === '') {
             fileStore.clearFilter();

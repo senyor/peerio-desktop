@@ -4,7 +4,8 @@
     transition: 250ms $transition-easing-ease-in;
     cursor: pointer;
     height: 48px;
-    padding: 0 $padding-default;
+    margin-top: -12px;
+    padding: $padding-default;
 
     .maintenance-title {
         color: $red-error;
@@ -26,5 +27,6 @@
 
 .dialog-maintenance {
     border-top: 12px solid $red-error;
+    border-radius: 8px;
 }
   

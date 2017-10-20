@@ -31,6 +31,7 @@ class ShareFiles extends React.Component {
                     onClose={this.closeUserPicker}
                     sharing
                     limit={1}
+                    closeable
                 />
             </div>
         );

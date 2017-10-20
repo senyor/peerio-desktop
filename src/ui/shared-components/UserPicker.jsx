@@ -1,7 +1,7 @@
 const React = require('react');
-const { observable, computed, when } = require('mobx');
+const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Chip, FontIcon, Input, List,
+const { Button, Chip, FontIcon, IconButton, Input, List,
     ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('~/icebear');
@@ -19,6 +19,8 @@ class UserPicker extends React.Component {
     @observable showNotFoundError;
     @observable foundContact;
     legacyContactError = false; // not observable bcs changes only with showNotFoundError
+    @observable contactLoading = false;
+    @observable _searchUsernameTimeout = false;
 
     componentDidMount() {
         if (this.props.onChange) {
@@ -114,8 +116,15 @@ class UserPicker extends React.Component {
     searchUsernameTimeout(q) {
         if (this._searchUsernameTimeout) {
             clearTimeout(this._searchUsernameTimeout);
+            this._searchUsernameTimeout = null;
         }
-        this._searchUsernameTimeout = setTimeout(() => this.searchUsername(q), 1000);
+        if (!q) return;
+        this._searchUsernameTimeout = setTimeout(() => {
+            transaction(() => {
+                this._searchUsernameTimeout = null;
+                this.searchUsername(q);
+            });
+        }, 1000);
     }
 
     searchUsername(q) {
@@ -124,6 +133,7 @@ class UserPicker extends React.Component {
         if (this.isExcluded(c)) {
             return null;
         }
+        this.contactLoading = true;
         when(() => !c.loading, () => {
             const atInd = q.indexOf('@');
             const isEmail = atInd > -1 && atInd === q.lastIndexOf('@');
@@ -132,6 +142,7 @@ class UserPicker extends React.Component {
             this.legacyContactError = c.isLegacy;
             this.showNotFoundError = c.notFound;
             this.foundContact = !c.notFound && c;
+            this.contactLoading = false;
         });
         return c;
     }
@@ -170,6 +181,10 @@ class UserPicker extends React.Component {
     onInputMount = (input) => {
         if (!input || this.props.noAutoFocus) return;
         input.focus();
+    };
+
+    handleClose = () => {
+        this.props.onClose();
     };
 
     onContactClick = (ev) => {
@@ -241,6 +256,9 @@ class UserPicker extends React.Component {
                                         {this.props.title}
                                         {this.props.subtitle ? <span>{this.props.subtitle}</span> : ''}
                                     </div>
+                                    {this.props.closeable &&
+                                        <IconButton icon="close" onClick={this.handleClose} className="button-close" />
+                                    }
                                 </div>
                             }
                             <div className="message-search-wrapper">
@@ -267,7 +285,11 @@ class UserPicker extends React.Component {
                                             label={this.props.button || t('button_go')}
                                             onClick={this.accept}
                                             disabled={!this.isValid
-                                                || (this.queryIsEmpty && this.selected.length === 0)} />}
+                                                || (this.queryIsEmpty && this.selected.length === 0)} />
+                                    }
+                                    { (this.contactLoading || this._searchUsernameTimeout) &&
+                                        <ProgressBar type="circular" mode="indeterminate" />
+                                    }
                                 </div>
                             </div>
                         </div>

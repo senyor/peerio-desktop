@@ -113,16 +113,16 @@ class MembersSection extends React.Component {
         return (
             <SideBarSection title={t('title_Members')} onToggle={this.props.onToggle} open={this.props.open}>
                 <div className={css('member-list', { 'with-admin-controls': isChannel && canIAdmin })}>
-                    <List className="action-list">
-                        {isChannel && canIAdmin
-                            ? <ListItem
+                    {isChannel && canIAdmin
+                        ? <List className="action-list">
+                            <ListItem
                                 className="admin-controls"
                                 leftIcon="add"
                                 caption={t('button_inviteToChannel')}
                                 onClick={this.props.onAddParticipants} />
-                            : null
-                        }
-                    </List>
+                        </List>
+                        : null
+                    }
                     <List>
                         {chat.joinedParticipants
                             ? chat.joinedParticipants.map(

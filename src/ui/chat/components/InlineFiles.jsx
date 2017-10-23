@@ -124,10 +124,10 @@ class InlineFile extends React.Component {
                             icon="reply"
                             onClick={this.props.onShare}
                             className={css('reverse-icon', 'button-small', { disabled: this.props.shareDisabled })} />
-                        <Button caption={t('button_delete')}
+                        {(file.fileOwner === User.current.username) && <Button caption={t('button_delete')}
                             icon="delete"
                             onClick={this.props.onDelete}
-                            className={css('button-small', { disabled: this.props.deleteDisabled })} />
+                            className={css('button-small', { disabled: this.props.deleteDisabled })} />}
                     </div>
                 </div>
             </Dialog>);
@@ -206,7 +206,8 @@ class InlineFile extends React.Component {
         if (file.isImage && uiStore.prefs.peerioContentEnabled && uiStore.prefs.peerioContentConsented) {
             setTimeout(() => {
                 !file.tmpCached && file.tryToCacheTemporarily();
-                when(() => !file.downloading, () => { this.isExpanded = true; });
+                (this.isExpanded === undefined)
+                    && when(() => !file.downloading, () => { this.isExpanded = true; });
             });
         }
 

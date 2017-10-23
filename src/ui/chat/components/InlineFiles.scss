@@ -147,18 +147,22 @@
     }
 
     .file-name {
-      margin-right: auto;
+      margin-right: 0;
       max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .file-ext {
+      margin-right: auto;
     }
   }
 
   .unknown-file {
     color: $text-dark-hint;
     cursor: auto;
-    margin-left: $margin-small;
+    margin-left: $margin-default;
   }
 
   .invalid-file {
@@ -237,10 +241,8 @@
 
         button.display-overlimit-image {
           display: inline;
-          height: auto;
           line-height: 1.3em;
           padding: 0;
-          width: auto;
         }
       }
 

@@ -88,10 +88,6 @@ class Message extends React.Component {
                             {m.files && m.files.length
                                 ? <InlineFiles
                                     files={m.files}
-                                    onDelete={() => {
-                                        console.log('delete');
-                                        this.props.chat.removeMessage(m);
-                                    }}
                                     onImageLoaded={this.props.onImageLoaded} />
                                 : null
                             }

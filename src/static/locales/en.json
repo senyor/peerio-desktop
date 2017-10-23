@@ -228,7 +228,6 @@
   "title_uploadPastedFile": "The file you pasted will be uploaded and shared with the current chat",
   "title_enableImagePreviews": "Enable image previews",
   "title_imagePreviewWarning": "Preview images will be downloaded and saved to your device without encryption, and will be removed as soon as you quit or signout of Peerio.<br/><br/>Would you like to enable previews?",
-  "title_learnMoreOnline": "Learn more online",
   "title_shareWith": "Share with",
   "title_forAllImages": "For all images",
   "title_forImagesUnder10": "For images under 10 MB",
@@ -552,5 +551,6 @@
   "dialog_rating2Star": "Dislike it",
   "dialog_rating3Star": "It's okay",
   "dialog_rating4Star": "Like it",
-  "dialog_rating5Star": "Love it"
+  "dialog_rating5Star": "Love it",
+  "error_loadingImage": "Error loading image - the file is corrupted or not an image"
 }

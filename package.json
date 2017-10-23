@@ -51,7 +51,7 @@
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "devDependencies": {
     "@peerio/desktop-release-builder": "6.0.0",
-    "@peerio/peerio-icebear": "2.11.1",
+    "@peerio/peerio-icebear": "git+ssh://git@github.com/PeerioTechnologies/peerio-icebear.git#dev",
     "@types/react": "16.0.12",
     "babel-cli": "6.26.0",
     "babel-eslint": "8.0.1",

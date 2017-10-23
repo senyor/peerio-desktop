@@ -32,11 +32,10 @@ function FileActions(props) {
                 {/* icon="create_new_folder" */}
                 {/* onClick={noop} */}
                 {/* className={css({ disabled: props.newFolderDisabled })} /> */}
-                <MenuDivider />
-                <MenuItem caption={t('button_delete')}
+                {!props.deleteDisabled && <MenuDivider />}
+                {!props.deleteDisabled && <MenuItem caption={t('button_delete')}
                     icon="delete"
-                    onClick={props.onDelete}
-                    className={css({ disabled: props.deleteDisabled })} />
+                    onClick={props.onDelete} />}
             </IconMenu>
         </div>
     );

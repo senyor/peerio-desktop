@@ -17,6 +17,7 @@ class FileLine extends React.Component {
     toggleChecked = val => {
         this.props.file.selected = val;
     };
+
     deleteFile = () => {
         let msg = t('title_confirmRemoveFilename', { name: this.props.file.name });
         if (this.props.file.shared) {

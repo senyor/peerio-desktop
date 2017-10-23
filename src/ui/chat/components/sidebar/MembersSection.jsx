@@ -40,6 +40,7 @@ class MembersSection extends React.Component {
         const username = getAttributeInParentChain(ev.target, 'data-username');
         chatStore.activeChat.demoteAdmin(contactStore.getContact(username));
     }
+
     stopPropagation(ev) {
         ev.stopPropagation();
     }

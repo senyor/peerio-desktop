@@ -1,8 +1,8 @@
 const React = require('react');
-const { fileStore } = require('~/icebear');
+const { fileStore, User, fileHelpers } = require('~/icebear');
 const { Button, FontIcon, ProgressBar, Dialog, RadioGroup, RadioButton } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
-const { observable } = require('mobx');
+const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -10,13 +10,11 @@ const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
 const css = require('classnames');
 const FileActions = require('~/ui/files/components/FileActions');
+const { getAttributeInParentChain } = require('~/helpers/dom');
 
 const ALL_IMAGES = 'all_images';
 const UNDER_LIMIT_ONLY = 'under_limit_only';
 const DISABLED = 'disabled';
-
-// this is temporary, until we rework files
-const gaveUpMap = {};
 
 @observer
 class InlineFile extends React.Component {
@@ -26,6 +24,22 @@ class InlineFile extends React.Component {
 
     @observable selectedMode = ALL_IMAGES;
     @observable firstSave = false;
+
+    @observable errorLoading = false;
+
+    // give up waiting for file object to appear in store
+    @observable giveUp = false;
+
+    startTimer = () => {
+        if (this.timer) return;
+        this.timer = setTimeout(() => {
+            if (!fileStore.getById(this.props.id)) this.giveUp = true;
+        }, 30000);
+    };
+
+    componentWillUnmount() {
+        if (this.timer) clearTimeout(this.timer);
+    }
 
     onSelectedModeChange = (value) => {
         this.selectedMode = value;
@@ -54,6 +68,10 @@ class InlineFile extends React.Component {
                 uiStore.prefs.peerioContentEnabled = false;
                 break;
         }
+    }
+
+    onErrorLoadingImage = () => {
+        this.errorLoading = true;
     }
 
     toggleExpand = () => {
@@ -92,7 +110,7 @@ class InlineFile extends React.Component {
                 className="image-popup">
                 <img src={this.currentImageSrc} alt="" />
                 <Button onClick={this.hideImagePopup} icon="close" className="button-close button-small" />
-                <div className="info-bar">
+                <div className="info-bar" data-fileid={this.props.id}>
                     <div className="left">
                         <div className="file-name">{file.name}</div>
                         <div className="file-size">{file.sizeFormatted}</div>
@@ -100,16 +118,15 @@ class InlineFile extends React.Component {
                     <div className="right">
                         <Button caption={t('title_download')}
                             icon="file_download"
-                            onClick={file.download}
+                            onClick={this.props.onDownload}
                             className={css('button-small', { disabled: this.props.downloadDisabled })} />
-
                         <Button caption={t('button_share')}
                             icon="reply"
-                            onClick={file.share}
+                            onClick={this.props.onShare}
                             className={css('reverse-icon', 'button-small', { disabled: this.props.shareDisabled })} />
                         <Button caption={t('button_delete')}
                             icon="delete"
-                            onClick={file.deleteFile}
+                            onClick={this.props.onDelete}
                             className={css('button-small', { disabled: this.props.deleteDisabled })} />
                     </div>
                 </div>
@@ -145,14 +162,17 @@ class InlineFile extends React.Component {
     }
 
     renderNoFile(id) {
-        if (!gaveUpMap[id]) this.props.startTimer();
-        return (<div className="unknown-file" key={id}>
-            {t((this.giveUp || gaveUpMap[id]) ? 'error_fileRemoved' : 'title_processing')}
-            {this.giveUp || gaveUpMap[id]
-                ? null
-                : <ProgressBar type="linear" mode="indeterminate" />
-            }
-        </div>);
+        if (this.giveUp) {
+            return (
+                <div className="inline-files-container">
+                    <div className="unknown-file" key={id}>
+                        {t('error_fileRemoved')}
+                    </div>
+                </div>
+            );
+        }
+        if (!this.timer) this.startTimer();
+        return null;
     }
 
     renderNoSignature(id) {
@@ -166,6 +186,7 @@ class InlineFile extends React.Component {
             </div>
         );
     }
+
     renderOversizeWarning() {
         return (
             <div className="image-over-limit-warning">
@@ -182,19 +203,18 @@ class InlineFile extends React.Component {
         const file = fileStore.getById(this.props.id);
         if (!file) return this.renderNoFile(this.props.id);
         if (file.signatureError) return this.renderNoSignature(this.props.id);
-        if (file.isImage && !file.tmpCached) {
+        if (file.isImage && uiStore.prefs.peerioContentEnabled) {
             setTimeout(() => {
-                // this.isExpanded = uiStore.prefs.peerioContentEnabled;
-                file.tryToCacheTemporarily();
+                !file.tmpCached && file.tryToCacheTemporarily();
+                when(() => !file.downloading, () => { this.isExpanded = true; });
             });
         }
 
         const textParser = {
             toSettings: text => <a className="clickable" onClick={this.goToSettings}>{text}</a>
         };
-
         return (
-            <div className="inline-files-container">
+            <div className="inline-files-container" data-fileid={this.props.id}>
                 <div className="inline-files">
                     <div className="inline-files-topbar">
                         <div className="shared-file" data-id={this.props.id}>
@@ -205,7 +225,10 @@ class InlineFile extends React.Component {
                                     }
                                 </div>
                                 <div className="file-name">
-                                    {file.name}
+                                    {file.nameWithoutExtension}
+                                </div>
+                                <div className="file-ext">
+                                    .{file.ext}
                                 </div>
                                 {(file.isImage && uiStore.prefs.peerioContentConsented) &&
                                     <Button icon={this.isExpanded
@@ -215,10 +238,12 @@ class InlineFile extends React.Component {
                                 }
                                 <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
                                     shareDisabled={!file.readyForDownload || !file.canShare} newFolderDisabled
-                                    deleteDisabled={false}
+                                    deleteDisabled={file.fileOwner !== User.current.username}
                                     {...this.props} />
                             </div>
-                            {file.downloading
+                            {file.cachingFailed ? <span>{t('error_downloadFailed')}</span> : null}
+                            {file.deleted ? <span>File deleted</span> : null}
+                            {!file.deleted && !file.cachingFailed && file.downloading
                                 ? <ProgressBar type="linear" mode="determinate" value={file.progress}
                                     max={file.progressMax} />
                                 : null
@@ -231,8 +256,12 @@ class InlineFile extends React.Component {
                             {file.tmpCached || this.inlineImagesEnabled
                                 ? <div className="inline-files-dropdown">
                                     {file.tmpCached
-                                        ? <img src={file.tmpCachePath} alt="" onLoad={this.props.onImageLoaded}
-                                            onClick={this.imageClick} />
+                                        ? (this.errorLoading
+                                            ? <span>{t('error_loadingImage')}</span>
+                                            : <img src={file.tmpCachePath} alt=""
+                                                onLoad={this.props.onImageLoaded}
+                                                onError={this.onErrorLoadingImage}
+                                                onClick={this.imageClick} />)
                                         : (file.isOverInlineSizeLimit
                                             ? this.renderOversizeWarning()
                                             : <img src="./static/img/bg-pattern.png" alt="" />)
@@ -247,7 +276,7 @@ class InlineFile extends React.Component {
                     }
                     {this.currentImageSrc && this.imagePopup}
                 </div>
-                <div>{!uiStore.prefs.peerioContentConsented &&
+                <div>{!uiStore.prefs.peerioContentConsented && file.isImage &&
                     this.renderConsent()
                 }</div>
                 <div>
@@ -266,36 +295,30 @@ class InlineFile extends React.Component {
 
 @observer
 class InlineFiles extends React.Component {
-    // give up waiting for file object to appear in store
-    @observable giveUp = false;
-
-    startTimer = () => {
-        if (this.timer) return;
-        this.timer = setTimeout(() => {
-            this.giveUp = true;
-            this.props.files.forEach(f => {
-                if (gaveUpMap[f]) return;
-                if (!fileStore.getById(f)) gaveUpMap[f] = true;
-            });
-        }, 60000);
-    };
-
-    componentWillUnmount() {
-        if (this.timer) clearTimeout(this.timer);
-    }
-
-    download(id) {
-        const file = fileStore.getById(id);
+    download(ev) {
+        const file = fileStore.getById(getAttributeInParentChain(ev.target, 'data-fileid'));
         if (!file || file.downloading) return;
         downloadFile(file);
     }
 
-    share(id) {
-        const file = fileStore.getById(id);
+    share(ev) {
+        const file = fileStore.getById(getAttributeInParentChain(ev.target, 'data-fileid'));
         if (!file || file.downloading) return;
         fileStore.clearSelection();
         file.selected = true;
         window.router.push('/app/sharefiles');
+    }
+
+
+    deleteFile(ev) {
+        const file = fileStore.getById(getAttributeInParentChain(ev.target, 'data-fileid'));
+        let msg = t('title_confirmRemoveFilename', { name: file.name });
+        if (file.shared) {
+            msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
+        }
+        if (confirm(msg)) {
+            file.remove();
+        }
     }
 
     render() {
@@ -307,8 +330,9 @@ class InlineFiles extends React.Component {
                         (<InlineFile
                             key={f}
                             id={f}
-                            onShare={() => this.share(f)}
-                            onDownload={() => this.download(f)}
+                            onShare={this.share}
+                            onDownload={this.download}
+                            onDelete={this.deleteFile}
                             startTimer={this.startTimer}
                             onImageLoaded={this.props.onImageLoaded} {...this.props} />)
                     )

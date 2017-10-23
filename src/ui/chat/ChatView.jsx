@@ -29,7 +29,8 @@ class ChatView extends React.Component {
     componentWillMount() {
         clientApp.isInChatsView = true;
         this.reactionsToDispose = [
-            reaction(() => this.showUserPicker, show => { clientApp.isInChatsView = !show; })
+            reaction(() => this.showUserPicker, show => { clientApp.isInChatsView = !show; }),
+            reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
         ];
     }
 
@@ -174,7 +175,10 @@ class ChatView extends React.Component {
                     {
                         this.showUserPicker
                             ? <div className="create-new-chat">
-                                <UserPicker onClose={this.closeUserPicker} onAccept={this.addParticipants}
+                                <UserPicker
+                                    closeable
+                                    onClose={this.closeUserPicker}
+                                    onAccept={this.addParticipants}
                                     exceptContacts={chat.participants}
                                     title={t('title_addParticipants')} noDeleted />
                             </div>

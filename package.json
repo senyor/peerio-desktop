@@ -1,7 +1,7 @@
 {
   "name": "peerio-2",
   "description": "Peerio 2",
-  "version": "2.53.0",
+  "version": "2.54.0",
   "scripts": {
     "precommit": "stylelint src/styles/**.scss && eslint ./src --ext .js,.jsx --max-warnings 0",
     "postmerge": "npm install",

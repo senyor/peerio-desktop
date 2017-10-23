@@ -209,8 +209,8 @@ class InlineFile extends React.Component {
                                 </div>
                                 {(file.isImage && uiStore.prefs.peerioContentConsented) &&
                                     <Button icon={this.isExpanded
-                                        ? 'arrow_drop_down'
-                                        : 'arrow_drop_up'
+                                        ? 'arrow_drop_up'
+                                        : 'arrow_drop_down'
                                     } onClick={this.toggleExpand} />
                                 }
                                 <FileActions downloadDisabled={!file.readyForDownload || file.downloading}

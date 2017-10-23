@@ -14,6 +14,7 @@ const uiStore = require('~/stores/ui-store');
 
 const InlineFiles = require('./InlineFiles');
 const UrlPreview = require('./UrlPreview');
+const UrlPreviewConsent = require('./UrlPreviewConsent');
 
 
 // HACK: make this as a proper react component
@@ -56,7 +57,9 @@ class Message extends React.Component {
         return (
             <div className={
                 css('message-content-wrapper', {
-                    'invalid-sign': invalidSign, 'send-error': m.sendError, light: this.props.light
+                    'invalid-sign': invalidSign,
+                    'send-error': m.sendError,
+                    light: this.props.light
                 })}>
                 <div className="message-content-wrapper-inner">
                     {this.props.light
@@ -103,6 +106,9 @@ class Message extends React.Component {
                                             onImageLoaded={this.props.onImageLoaded} />)
                                 )
                                 : null}
+                            {!uiStore.prefs.externalContentConsented && m.hasUrls &&
+                                <UrlPreviewConsent />
+                            }
                         </div>
                         {/* m.inlineImages.map(url => (
                             <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />)) */}

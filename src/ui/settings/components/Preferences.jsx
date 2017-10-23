@@ -128,7 +128,7 @@ class Preferences extends React.Component {
                 <section className="section-divider prefs-url">
                     <p className="subheading">{t('title_urlPreview')}</p>
                     <div className="warning">
-                        <FontIcon value="warning" />
+                        <FontIcon value="security" />
                         <div>
                             <span>{t('title_EnableUrlPreviewWarning')}&nbsp;</span>
                             <a href="https://peerio.zendesk.com/hc/en-us/articles/115005090766">

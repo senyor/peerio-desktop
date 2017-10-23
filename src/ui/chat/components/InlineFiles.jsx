@@ -1,5 +1,5 @@
 const React = require('react');
-const { fileStore, User, fileHelpers } = require('~/icebear');
+const { fileStore, User } = require('~/icebear');
 const { Button, FontIcon, ProgressBar, Dialog, RadioGroup, RadioButton } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
 const { observable, when } = require('mobx');
@@ -203,7 +203,7 @@ class InlineFile extends React.Component {
         const file = fileStore.getById(this.props.id);
         if (!file) return this.renderNoFile(this.props.id);
         if (file.signatureError) return this.renderNoSignature(this.props.id);
-        if (file.isImage && uiStore.prefs.peerioContentEnabled) {
+        if (file.isImage && uiStore.prefs.peerioContentEnabled && uiStore.prefs.peerioContentConsented) {
             setTimeout(() => {
                 !file.tmpCached && file.tryToCacheTemporarily();
                 when(() => !file.downloading, () => { this.isExpanded = true; });

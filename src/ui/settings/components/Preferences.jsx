@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Button, Checkbox, FontIcon, Switch } = require('~/react-toolbox');
+const { Checkbox, FontIcon, Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User, chatStore } = require('~/icebear');
 const uiStore = require('~/stores/ui-store');
@@ -104,7 +104,7 @@ class Preferences extends React.Component {
                         disabled={this.mentionDesktopNotificationsSwitchDisabled}
                         onChange={this.onMentionDesktopNotificationsChanged} />
                 </section>
-                <section className="section-divider prefs-files">
+                {/* <section className="section-divider prefs-files">
                     <div className="title">{t('title_files')}</div>
                     <div className="files-location-container">
                         <p className="narrow">{t('title_fileDownloadLocation')}</p>
@@ -114,6 +114,7 @@ class Preferences extends React.Component {
                         </div>
                     </div>
                 </section>
+        */}
                 <section className="section-divider prefs-display">
                     <div className="title">{t('title_displayPreferences')}</div>
                     <p className="subheading">{t('title_imageFilePreviews')}</p>

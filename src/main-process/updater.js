@@ -7,7 +7,7 @@ const { TinyDb } = require('~/icebear');
 const usePeerioUpdater = (
     process.platform === 'linux' // always uses peerio-updater on Linux
     || (process.platform === 'win32' && config.usePeerioUpdater)
-    || (process.platform === 'darwin' && config.usePeerioUpdater)
+    || process.platform === 'darwin'
 );
 
 let autoUpdater;

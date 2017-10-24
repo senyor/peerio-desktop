@@ -161,6 +161,7 @@
     .message-content {
       @extend %flex-col;
       flex-grow: 1;
+      max-width: calc(100vw - 440px); // TODO find solution that is not hard-coded
 
       a {
         @extend %selectable;

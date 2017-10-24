@@ -61,7 +61,7 @@
     }
   },
   "dependencies": {
-    "@peerio/updater": "0.3.0",
+    "@peerio/updater": "0.4.0",
     "autolinker": "1.4.4",
     "blake2s-js": "1.2.2",
     "bluebird": "3.5.1",

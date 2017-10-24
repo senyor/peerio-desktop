@@ -241,6 +241,7 @@
       ]
     },
     "appImage": {
+      "systemIntegration": "doNotAsk",
       "artifactName": "${name}-${os}-x86_64.${ext}"
     }
   },

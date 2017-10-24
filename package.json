@@ -76,7 +76,7 @@
     "cz-conventional-changelog": "2.0.0",
     "devtron": "1.4.0",
     "electron": "1.7.9",
-    "electron-builder": "19.40.0",
+    "electron-builder": "git+https://github.com/dchest/electron-builder-empire-strikes-back.git",
     "electron-devtools-installer": "2.2.1",
     "electron-reload": "1.2.2",
     "emojione": "3.1.2",

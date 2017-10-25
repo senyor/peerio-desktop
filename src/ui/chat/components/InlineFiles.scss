@@ -165,6 +165,13 @@
     margin-left: $margin-default;
   }
 
+  .unknown-file-progress-bar.rt-progress_bar-linear.rt-progress_bar-indeterminate {
+    left: auto;
+    margin: 0 $margin-default;
+    position: relative;
+    width: 100%;
+  }
+
   .invalid-file {
     border-color: currentColor;
     color: rgba($red-error, .6);

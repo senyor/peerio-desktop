@@ -171,8 +171,13 @@ class InlineFile extends React.Component {
                 </div>
             );
         }
+
         if (!this.timer) this.startTimer();
-        return null;
+        return (
+            <div className="inline-files-container">
+                <ProgressBar type="linear" mode="indeterminate" className="unknown-file-progress-bar" />
+            </div>
+        );
     }
 
     renderNoSignature(id) {

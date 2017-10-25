@@ -102,7 +102,8 @@ class Files extends React.Component {
     }
 
     render() {
-        if (!fileStore.visibleFiles.length && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
+        if (!fileStore.files.length
+            && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
         const files = [];
         for (let i = 0; i < this.renderedItemsCount && i < fileStore.visibleFiles.length; i++) {
             const f = fileStore.visibleFiles[i];

@@ -114,10 +114,12 @@ class ChannelSideBar extends React.Component {
                     </List>
                 </div>
                 <MembersSection onAddParticipants={this.props.onAddParticipants}
-                    onToggle={hasFiles ? () => this.onToggleSection(MEMBERS) : null}
+                    onToggle={() => this.onToggleSection(MEMBERS)}
                     open={this.openSection === MEMBERS} />
-                <FilesSection onToggle={() => this.onToggleSection(FILES)}
-                    open={this.openSection === FILES} />
+                {hasFiles
+                    ? <FilesSection onToggle={() => this.onToggleSection(FILES)}
+                        open={this.openSection === FILES} />
+                    : null }
             </div>
         );
     }

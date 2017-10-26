@@ -75,10 +75,8 @@ class FileLine extends React.Component {
 
                 <td>
                     {(file.downloading || file.uploading)
-                        ? <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
+                        && <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
                             onCancel={this.cancelUploadOrDownload} />
-                        : <Checkbox disabled={!file.readyForDownload} checked={file.selected}
-                            onChange={this.toggleChecked} />
                     }</td>
 
                 <td className="file-title selectable" onClick={this.download}>{file.name}</td>

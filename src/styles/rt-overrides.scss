@@ -18,6 +18,17 @@
     background-color: $green-affirmative;
     color: $text-light-primary;
   }
+
+  &.inverted {
+    background-color: $white;
+    border: 1px solid $green-affirmative;
+    color: $green-affirmative;
+
+    &:hover {
+      background-color: $white;
+      color: $green-affirmative;
+    }
+  }
 }
 
 .button-affirmative.rt-button-button:disabled {

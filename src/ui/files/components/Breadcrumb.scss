@@ -1,0 +1,14 @@
+.breadcrumb {
+  @extend %title;
+
+  align-items: center;
+  display: flex;
+  font-weight: normal;
+  margin-left: $margin-xl;
+
+  a {
+    align-items: center;
+    color: $text-dark-secondary;
+    display: flex;
+  }
+}

@@ -1,10 +1,10 @@
 const React = require('react');
-const { Checkbox } = require('~/react-toolbox');
+const { Button, Dialog, Input } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const { observable } = require('mobx');
 const { fileStore, clientApp } = require('~/icebear');
-const Filter = require('./components/Filter');
-const GlobalActions = require('./components/GlobalActions');
+const Search = require('~/ui/shared-components/Search');
+const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
 const ZeroScreen = require('./components/ZeroScreen');
 const { pickLocalFiles } = require('~/helpers/file');
@@ -33,6 +33,50 @@ class Files extends React.Component {
         clientApp.isInFilesView = false;
         window.removeEventListener('resize', this.enqueueCheck);
     }
+
+    handleSearch = val => {
+        if (val === '') {
+            fileStore.clearFilter();
+            return;
+        }
+        fileStore.filterByName(val);
+    };
+
+    @observable addFolderPopupVisible = false;
+    @observable folderName = '';
+
+    showAddFolderPopup = () => {
+        this.addFolderPopupVisible = true;
+    }
+
+    handleFolderNameChange = (val) => {
+        this.folderName = val;
+    }
+
+    handleAddFolder = () => {
+        this.addFolderPopupVisible = false;
+    }
+
+    get addFolderPopup() {
+        const hide = () => { this.addFolderPopupVisible = false; };
+        const dialogActions = [
+            { label: t('button_cancel'), onClick: hide },
+            { label: t('button_create'), onClick: this.handleAddFolder }
+        ];
+        return (
+            <Dialog title={t('button_addFolder')}
+                active={this.addFolderPopupVisible} type="small" ref={this.onPopupRef}
+                actions={dialogActions}
+                onOverlayClick={hide} onEscKeyDown={hide}
+                className="add-folder-popup">
+                <Input placeholder={t('title_folderName')}
+                    value={this.folderName} onChange={this.handleFolderNameChange} />
+            </Dialog>);
+    }
+
+    onPopupRef = (ref) => {
+        if (ref) this.addFolderPopupVisible = true;
+    };
 
     handleUpload() {
         pickLocalFiles().then(paths => {
@@ -112,18 +156,24 @@ class Files extends React.Component {
         this.enqueueCheck();
         return (
             <div className="files">
+                <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
                 <div className="file-wrapper">
-                    <Filter />
-                    <GlobalActions onUpload={this.handleUpload} onDelete={this.handleBulkDelete}
-                        onShare={this.handleFileShareIntent} />
+                    <div className="files-header">
+                        <Breadcrumb />
+                        <Button className="button-affirmative inverted"
+                            label={t('button_addFolder')}
+                            onClick={this.showAddFolderPopup}
+                        />
+                        <Button className="button-affirmative"
+                            label={t('button_upload')}
+                            onClick={this.handleUpload}
+                        />
+                    </div>
                     <div className="file-table-wrapper" ref={this.setContainerRef} onScroll={this.enqueueCheck}>
                         <table>
                             <thead>
                                 <tr>
-                                    <th>
-                                        <Checkbox checked={fileStore.allVisibleSelected}
-                                            onChange={this.toggleSelection} />
-                                    </th>
+                                    <th />
                                     <th>{t('title_name')}</th>
                                     <th>{t('title_owner')}</th>
                                     {/* <th>{t('title_shareable')}</th> */}
@@ -138,6 +188,7 @@ class Files extends React.Component {
                         </table>
                     </div>
                 </div>
+                {this.addFolderPopupVisible && this.addFolderPopup}
             </div>
         );
     }

@@ -91,7 +91,8 @@
         width: 100%;
       }
 
-      &:hover {
+      &:hover,
+      &.selected {
         background-color: $black-03;
         border-radius: 2px;
       }

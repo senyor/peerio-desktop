@@ -116,7 +116,7 @@ section {
   position: relative;
 
   & + & {
-    margin-left: #{ - $margin-tiny};
+    margin-left: -8px;
   }
 
   .material-icons {

@@ -9,6 +9,8 @@
     @extend %flex-align-end;
     @extend %flex-justify-end;
     margin-left: auto;
+    min-width: 82px;
+    width: 82px;
   }
 
   .invalid-sign-warning {
@@ -26,6 +28,23 @@
 
     .content {
       margin-right: auto;
+    }
+  }
+
+  .plus-receipts {
+    background: #757575;
+    border-radius: 20px;
+    color: #f2f2f2;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-left: -14px;
+    padding: 0 8px 0 22px;
+    transition: background-color 100ms linear;
+
+    &:hover {
+      background: #ababab;
     }
   }
 }

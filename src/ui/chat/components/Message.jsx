@@ -4,14 +4,12 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { systemMessages } = require('~/icebear');
-
 const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { time } = require('~/helpers/formatter');
 const { processMessageForDisplay } = require('~/helpers/process-message-for-display');
 const urls = require('~/config').translator.urlMap;
 const uiStore = require('~/stores/ui-store');
-
 const InlineFiles = require('./InlineFiles');
 const UrlPreview = require('./UrlPreview');
 const UrlPreviewConsent = require('./UrlPreviewConsent');
@@ -34,6 +32,33 @@ class Message extends React.Component {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
         return <p className="system-message selectable">{systemMessages.getSystemMessageText(m)}</p>;
+    }
+    openMessageInfo = () => {
+        uiStore.selectedMessage = this.props.message;
+    };
+    renderReceipts(m) {
+        if (!m.receipts || !m.receipts.length) {
+            return <div key={`${m.tempId || m.id}receipts`} className="receipt-wrapper" />;
+        }
+        // yeah, we skip receipts signature errors so the 3 + X math won't really work that well in some cases
+        // but it's ok, signature error is not a common thing, and there's a task in tracker to deal with this someday
+        const renderMe = [];
+        // if there's 1-6 receipts, we just render them
+        // if more then 6 - we render 3 and (+X) number
+        const limit = m.receipts.length > 6 ? 3 : m.receipts.length;
+        for (let i = 0; i < limit && m.receipts.length > i; i++) {
+            const r = m.receipts[i];
+            if (r.receipt.signatureError) continue;
+            renderMe.push(<Avatar key={r.username} username={r.username} size="tiny" />);
+        }
+
+        return (
+            <div key={`${m.tempId || m.id}receipts`} className="receipt-wrapper">
+                {renderMe}
+                {m.receipts.length > 6
+                    && <div onClick={this.openMessageInfo} className="plus-receipts">+{m.receipts.length - 3}</div>}
+            </div>
+        );
     }
     render() {
         /*
@@ -126,13 +151,7 @@ class Message extends React.Component {
                         }
                     </div>
                     {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null}
-                    {m.receipts ?
-                        <div key={`${m.tempId || m.id}receipts`} className="receipt-wrapper">
-                            {m.receipts.map(r => {
-                                return r.receipt.signatureError ? null
-                                    : <Avatar key={r.username} username={r.username} size="tiny" />;
-                            })}
-                        </div> : null}
+                    {this.renderReceipts(m)}
 
                 </div>
                 {invalidSign ?

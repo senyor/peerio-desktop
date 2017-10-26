@@ -7,6 +7,9 @@ const appControl = require('~/helpers/app-control');
 class UIStore {
     @observable contactDialogUsername;
 
+    // Message object to show in sidebar when clicking on receipts
+    @observable selectedMessage;
+
     // show dialog about signature error
     @observable isFileSignatureErrorDialogActive = false;
 

@@ -88,7 +88,7 @@
   "serverWarning_emailConfirmationSent": "Check your email to confirm your address. Emails <b>MUST</> be confirmed for other users to find you.",
   "serverWarning_emailNotConfirmed": "Your email hasn't been confirmed. Go to your profile to resend the confirmation link.",
   "serverWarning_addressConfirmed": "Your email address was confirmed.",
-  "serverWarning_scheduledDowntime":"Peerio will be unavailable due to scheduled maintenance between {time1} and {time2}. Thank you for your understanding.",
+  "serverWarning_scheduledDowntime": "Peerio will be unavailable due to scheduled maintenance between {time1} and {time2}. Thank you for your understanding.",
   "error_fieldRequired": "Required",
   "error_usernameBadFormat": "Only letters, numbers or underscore allowed.",
   "error_usernameNotAvailable": "Username already exists, try another one.",
@@ -552,5 +552,7 @@
   "dialog_rating3Star": "It's okay",
   "dialog_rating4Star": "Like it",
   "dialog_rating5Star": "Love it",
-  "error_loadingImage": "Error loading image - the file is corrupted or not an image"
+  "error_loadingImage": "Error loading image - the file is corrupted or not an image",
+  "title_readBy": "Read by",
+  "title_messageInfo": "Message info"
 }

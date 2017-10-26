@@ -68,19 +68,19 @@ class Root extends React.Component {
         }, { fireImmediately: true });
 
         // Dev tools ---------->
-        this.devtools = null;
-        if (isDevEnv) {
-            const MobxTools = require('mobx-react-devtools').default; //eslint-disable-line
-            this.devtools = null;// <MobxTools />;
-            window.hideMobxTools = () => {
-                this.devtools = null;
-                this.forceUpdate();
-            };
-            window.showMobxTools = () => {
-                this.devtools = <MobxTools />;
-                this.forceUpdate();
-            };
-        }
+        // this.devtools = null;
+        // if (isDevEnv) {
+        //     const MobxTools = require('mobx-react-devtools').default; //eslint-disable-line
+        //     this.devtools = null;// <MobxTools />;
+        //     window.hideMobxTools = () => {
+        //         this.devtools = null;
+        //         this.forceUpdate();
+        //     };
+        //     window.showMobxTools = () => {
+        //         this.devtools = <MobxTools />;
+        //         this.forceUpdate();
+        //     };
+        // }
         // <--------- Dev tools
     }
 

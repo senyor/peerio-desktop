@@ -11,6 +11,7 @@ const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const css = require('classnames');
+const MessageSideBar = require('./components/sidebar/MessageSideBar');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
@@ -150,6 +151,9 @@ class ChatView extends React.Component {
 
     get sidebar() {
         if (!chatStore.activeChat) return null;
+        if (uiStore.selectedMessage) {
+            return <MessageSideBar />;
+        }
         return chatStore.activeChat.isChannel ?
             <ChannelSideBar open={uiStore.prefs.chatSideBarIsOpen} onAddParticipants={this.openUserPicker} /> :
             <ChatSideBar open={uiStore.prefs.chatSideBarIsOpen} />;

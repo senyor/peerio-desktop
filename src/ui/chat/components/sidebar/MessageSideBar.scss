@@ -1,0 +1,50 @@
+.message-sidebar {
+  @extend %flex-col;
+  @extend %flex-shrink-0;
+  background: $black-01;
+  border-left: 1px solid $divider-dark;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+  position: relative;
+  width: 272px;
+
+  .rt-list-itemContentRoot {
+    overflow: hidden;
+  }
+
+  .header {
+    background: #f1f1f1;
+    margin-bottom: 15px;
+  }
+
+  .title {
+    @extend %flex-row;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .rt-list-itemText {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .list-header {
+    @extend %flex-shrink-1;
+    height: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .close-button {
+    @extend %flex-shrink-0;
+    margin-right: $margin-default;
+    text-align: right;
+  }
+
+  .receipts {
+    height: 100%;
+    margin-top: 10px;
+    overflow: scroll;
+  }
+}

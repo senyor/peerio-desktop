@@ -304,23 +304,38 @@
     }
   }
 
+  .button-close,
+  .info-bar {
+    opacity: 0;
+    transition: opacity 250ms;
+  }
+
+  &:hover {
+    .button-close,
+    .info-bar {
+      opacity: 1;
+    }
+  }
+
   .button-close {
-    background-color: $white-70;
+    background-color: $white;
     position: absolute;
     right: $margin-default;
     top: $margin-default;
 
     &:hover {
-      background-color: $white-70 !important;
+      background-color: $white !important;
     }
   }
 
   .info-bar {
-    background-color: $white-70;
+    align-items: center;
+    background-color: $white;
     bottom: 0;
     display: flex;
+    height: 64px;
     justify-content: space-between;
-    padding: $padding-default $padding-xl;
+    padding: 0 $padding-xl;
     position: absolute;
     width: 100%;
 

@@ -25,6 +25,7 @@
       @extend %flex-col;
       @extend %flex-grow-1;
       max-width: 100%;
+      min-width: 0;
       position: relative;
     }
   }
@@ -146,6 +147,7 @@
   @extend %flex-align-center;
   @extend %flex-justify-start;
   height: 100vh;
+  width: 100%;
 
   .headline {
     margin: 160px 48px 0;

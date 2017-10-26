@@ -34,7 +34,9 @@ class MessageSideBar extends React.Component {
         uiStore.contactDialogUsername = username;
     }
     close() {
-        setTimeout(() => { uiStore.selectedMessage = null; });
+        setTimeout(() => {
+            uiStore.selectedMessage = null;
+        });
     }
     renderMessage(m) {
         if (m.systemData) {

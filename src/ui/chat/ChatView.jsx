@@ -86,6 +86,7 @@ class ChatView extends React.Component {
 
     toggleSidebar = () => {
         uiStore.prefs.chatSideBarIsOpen = !uiStore.prefs.chatSideBarIsOpen;
+        uiStore.selectedMessage = null;
     };
 
     showChatNameEditor = () => {
@@ -161,14 +162,18 @@ class ChatView extends React.Component {
 
     render() {
         const chat = chatStore.activeChat;
-        if (!chat) return <NoChatSelected />;
-        return (
-            <div className="message-view">
-                {chatStore.loading ?
+        if (chatStore.loading) {
+            return (
+                <div className="message-view">
                     <div className="random-messages">
                         <div className="headline"><T k={randomMessage} /></div>
                     </div>
-                    : null}
+                </div>
+            );
+        }
+        if (!chat) return <NoChatSelected />;
+        return (
+            <div className="message-view">
                 {this.renderHeader()}
                 <div className="messages-and-sidebar-container">
                     {

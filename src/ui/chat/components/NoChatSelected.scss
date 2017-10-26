@@ -2,6 +2,7 @@
   @extend %flex-row;
   background: $background-root;
   height: 100vh;
+  padding: 0 $padding-xl;
 
   .zero-message-content {
     margin-top: 168px;

@@ -35,6 +35,7 @@ class Message extends React.Component {
     }
     openMessageInfo = () => {
         uiStore.selectedMessage = this.props.message;
+        uiStore.prefs.chatSideBarIsOpen = false;
     };
     renderReceipts(m) {
         if (!m.receipts || !m.receipts.length) {

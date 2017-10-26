@@ -196,7 +196,7 @@ class InlineFile extends React.Component {
         return (
             <div className="image-over-limit-warning">
                 <T k="title_imageSizeWarning" className="text" />&nbsp;
-                <Button className="display-this-image display-overlimit-image"
+                <Button className="display-this-image display-over-limit-image"
                     onClick={this.forceDownload}>
                     {t('button_displayThisImageAfterWarning')}
                 </Button>
@@ -259,7 +259,7 @@ class InlineFile extends React.Component {
                     {this.isExpanded && uiStore.prefs.peerioContentConsented &&
                         <div className={css('inline-files-expanded',
                             { 'display-image': uiStore.prefs.peerioContentEnabled && !file.isOverInlineSizeLimit })}>
-                            {file.tmpCached || this.inlineImagesEnabled
+                            {file.tmpCached || uiStore.prefs.peerioContentEnabled
                                 ? <div className="inline-files-dropdown">
                                     {file.tmpCached
                                         ? (this.errorLoading

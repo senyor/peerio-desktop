@@ -124,6 +124,7 @@ class Files extends React.Component {
                                         <Checkbox checked={fileStore.allVisibleSelected}
                                             onChange={this.toggleSelection} />
                                     </th>
+                                    <th />
                                     <th>{t('title_name')}</th>
                                     <th>{t('title_owner')}</th>
                                     {/* <th>{t('title_shareable')}</th> */}

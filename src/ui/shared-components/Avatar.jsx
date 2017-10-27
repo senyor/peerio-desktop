@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const RTAvatar = require('~/react-toolbox').Avatar;
+const TooltipAvatar = require('~/react-toolbox').TooltipAvatar;
 const { FontIcon } = require('~/react-toolbox');
 const uiStore = require('~/stores/ui-store');
 const { contactStore } = require('~/icebear');
@@ -26,9 +26,10 @@ class Avatar extends React.Component {
         const className = `clickable-avatar ${this.props.size || 'medium'}`;
         return (
             <div className="avatar-wrapper">
-                <RTAvatar style={style} onClick={this.openContactDialog} className={className}>
+                <TooltipAvatar tooltip={c.fullNameAndUsername} tooltipDelay={250} tooltipPosition="top"
+                    style={style} onClick={this.openContactDialog} className={className}>
                     <div>{c.hasAvatar ? null : c.letter}</div>
-                </RTAvatar>
+                </TooltipAvatar>
                 {icon}
             </div>
         );

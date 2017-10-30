@@ -9,6 +9,7 @@ class Breadcrumb extends React.Component {
     }
 
     render() {
+        // const currentPath = ['Folder1', 'Folder2', 'Folder3']; // TODO: dummy content
         return (
             <div className="breadcrumb">
                 <a className="clickable" onClick={this.handleClick}>

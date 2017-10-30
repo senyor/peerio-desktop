@@ -4,13 +4,14 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 const FileActions = require('./FileActions');
 const FileLoading = require('./FileLoading');
-const { ProgressBar } = require('~/react-toolbox');
+const { FontIcon, ProgressBar } = require('~/react-toolbox');
 const { fileStore, User } = require('~/icebear');
 const { downloadFile } = require('~/helpers/file');
 const uiStore = require('~/stores/ui-store');
 const { t } = require('peerio-translator');
 const moment = require('moment');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
+const MoveFileDialog = require('./MoveFileDialog');
 
 @observer
 class FileLine extends React.Component {
@@ -39,11 +40,28 @@ class FileLine extends React.Component {
         downloadFile(this.props.file);
     };
 
+    goToFolder = () => {
+        // navigate to clicked folder
+    }
+
     share = () => {
         fileStore.clearSelection();
         this.props.file.selected = true;
         window.router.push('/app/sharefiles');
     };
+
+    renameFile = () => {
+
+    }
+
+    @observable moveFileVisible = false;
+    moveFile = () => {
+        this.moveFileVisible = true;
+    }
+
+    hideMoveFile = () => {
+        this.moveFileVisible = false;
+    }
 
     onShowActions = () => {
         this.showActions = true;
@@ -84,10 +102,19 @@ class FileLine extends React.Component {
                 </td>
 
                 <td className="file-icon">
-                    <FileSpriteIcon type={file.iconType} size="medium" />
+                    {this.props.isFolder
+                        ? <FontIcon value="folder" />
+                        : <FileSpriteIcon type={file.iconType} size="medium" />
+                    }
                 </td>
 
-                <td className="file-title selectable" onClick={this.download}>{file.name}</td>
+                <td className="file-title selectable"
+                    onClick={this.props.isFolder
+                        ? this.goToFolder
+                        : this.download
+                    } >
+                    {file.name}
+                </td>
 
                 <td className="clickable-username" onClick={this.openContactDialog}>
                     {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
@@ -103,17 +130,27 @@ class FileLine extends React.Component {
 
                 <td className="text-right">
                     <FileActions
-                        downloadDisabled={!file.readyForDownload || file.downloading}
-                        onDownload={this.download}
-                        shareable
-                        shareDisabled={!file.readyForDownload || !file.canShare}
-                        onShare={this.share}
+                        downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
+                        shareable shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.share}
                         newFolderDisabled
-                        renameable
-                        moveable
-                        deleteable
-                        onDelete={this.deleteFile}
+                        renameable onRename={this.renameFile}
+                        moveable onMove={this.moveFile}
+                        deleteable onDelete={this.deleteFile}
                     />
+                    {this.moveFileVisible &&
+                        // TODO: dummy folderpath, needs to connect to real file paths
+                        <MoveFileDialog
+                            folderpath={[
+                                ['Folder1', 'path1'],
+                                ['Folder2', 'path2'],
+                                ['Folder3', 'path3'],
+                                ['Folder4', 'path1'],
+                                ['Folder5', 'path2']
+                            ]}
+                            visible={this.moveFileVisible}
+                            onHide={this.hideMoveFile}
+                        />
+                    }
                 </td>
 
                 {(file.downloading || file.uploading)

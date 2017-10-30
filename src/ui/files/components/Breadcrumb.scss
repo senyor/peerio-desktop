@@ -4,11 +4,28 @@
   align-items: center;
   display: flex;
   font-weight: normal;
-  margin-left: $margin-xl;
+  max-width: 100%;
+  overflow: hidden;
 
-  a {
+  .breadcrumb-entry {
     align-items: center;
-    color: $text-dark-secondary;
     display: flex;
+    overflow: hidden;
+
+    .material-icons {
+      font-size: 32px;
+    }
+
+    a {
+      @extend %title;
+      align-items: center;
+      color: $text-dark-secondary;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:last-of-type a {
+      color: $blue;
+    }
   }
 }

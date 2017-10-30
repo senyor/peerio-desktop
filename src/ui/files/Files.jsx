@@ -11,6 +11,7 @@ const ZeroScreen = require('./components/ZeroScreen');
 const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
+const MoveFileDialog = require('./components/MoveFileDialog');
 
 @observer
 class Files extends React.Component {
@@ -43,29 +44,51 @@ class Files extends React.Component {
         fileStore.filterByName(val);
     };
 
+    @observable moveFolderVisible = false;
+    moveFolder = () => {
+        this.moveFolderVisible = true;
+    }
+    hideMoveFolder = () => {
+        this.moveFolderVisible = false;
+    }
+
+    renameFolder = () => {
+
+    }
+
+    deleteFolder = () => {
+
+    }
+
+    @observable triggerFolderPopup = false;
     @observable addFolderPopupVisible = false;
     @observable folderName = '';
 
     showAddFolderPopup = () => {
-        this.addFolderPopupVisible = true;
+        this.triggerFolderPopup = true;
     }
-
     handleFolderNameChange = (val) => {
         this.folderName = val;
     }
-
     handleAddFolder = () => {
         this.addFolderPopupVisible = false;
+        this.triggerFolderPopup = false;
     }
+    onPopupRef = (ref) => {
+        if (ref) this.addFolderPopupVisible = true;
+    };
 
     get addFolderPopup() {
-        const hide = () => { this.addFolderPopupVisible = false; };
+        const hide = () => {
+            this.addFolderPopupVisible = false;
+            this.triggerFolderPopup = false;
+        };
         const dialogActions = [
             { label: t('button_cancel'), onClick: hide },
             { label: t('button_create'), onClick: this.handleAddFolder }
         ];
         return (
-            <Dialog title={t('button_addFolder')}
+            <Dialog title={t('button_newFolder')}
                 active={this.addFolderPopupVisible} type="small" ref={this.onPopupRef}
                 actions={dialogActions}
                 onOverlayClick={hide} onEscKeyDown={hide}
@@ -74,10 +97,6 @@ class Files extends React.Component {
                     value={this.folderName} onChange={this.handleFolderNameChange} />
             </Dialog>);
     }
-
-    onPopupRef = (ref) => {
-        if (ref) this.addFolderPopupVisible = true;
-    };
 
     handleUpload() {
         pickLocalFiles().then(paths => {
@@ -149,22 +168,39 @@ class Files extends React.Component {
     render() {
         if (!fileStore.files.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
+
         const files = [];
-        // TODO: scope this to current folder/path
         for (let i = 0; i < this.renderedItemsCount && i < fileStore.visibleFiles.length; i++) {
             const f = fileStore.visibleFiles[i];
             files.push(<FileLine key={f.fileId} file={f} />);
         }
+
+        // TODO: dummy content below, make 3 fake folders
+        const folders = [];
+        for (let i = 0; i < this.renderedItemsCount && i < fileStore.visibleFiles.length && i < 3; i++) {
+            const f = fileStore.visibleFiles[i];
+            folders.push(<FileLine key={f.fileId} file={f} isFolder />);
+        } // dummy content
+
         this.enqueueCheck();
         return (
             <div className="files">
                 <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
                 <div className="file-wrapper">
                     <div className="files-header">
-                        <Breadcrumb />
+                        <Breadcrumb folderpath={[
+                            ['Folder1', 'path1'],
+                            ['Folder2', 'path2'],
+                            ['Folder3', 'path3'],
+                            ['Folder4', 'path1'],
+                            ['Folder5', 'path2']
+                        ]} />
                         <FileActions
-                            moveable
-                            renameable />
+                            onDownload={this.downloadFolder}
+                            moveable onMove={this.moveFolder}
+                            renameable onRename={this.renameFolder}
+                            deleteable onDelete={this.deleteFolder}
+                        />
                         <Button className="button-affirmative inverted"
                             label={t('button_newFolder')}
                             onClick={this.showAddFolderPopup}
@@ -178,8 +214,8 @@ class Files extends React.Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th />
-                                    <th />
+                                    <th />{/* blank space for download-in-progress icon */}
+                                    <th />{/* blank space for file icon image */}
                                     <th>{t('title_name')}</th>
                                     <th>{t('title_owner')}</th>
                                     {/* <th>{t('title_shareable')}</th> */}
@@ -189,12 +225,27 @@ class Files extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
+                                {folders}
                                 {files}
                             </tbody>
                         </table>
                     </div>
                 </div>
-                {this.addFolderPopupVisible && this.addFolderPopup}
+                {this.moveFolderVisible &&
+                    // TODO: dummy folderpath, needs to connect to real file paths
+                    <MoveFileDialog
+                        folderpath={[
+                            ['Folder1', 'path1'],
+                            ['Folder2', 'path2'],
+                            ['Folder3', 'path3'],
+                            ['Folder4', 'path1'],
+                            ['Folder5', 'path2']
+                        ]}
+                        visible={this.moveFolderVisible}
+                        onHide={this.hideMoveFolder}
+                    />
+                }
+                {this.triggerFolderPopup && this.addFolderPopup}
             </div>
         );
     }

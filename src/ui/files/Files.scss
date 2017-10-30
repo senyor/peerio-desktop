@@ -8,8 +8,6 @@
 
   // 36px added to ensure that the file actions button never over flows.
   @media (max-width: #{$minimum-screen-width + 36}) {
-    padding: 0;
-
     // hides size column at minimum-screen-width
     .text-right + .text-right {
       display: none;
@@ -44,7 +42,12 @@
       width: 100%;
 
       .breadcrumb {
+        margin-left: $margin-xl;
         margin-right: auto;
+      }
+
+      .item-actions {
+        margin-right: $margin-xl;
       }
 
       button {
@@ -98,7 +101,8 @@
       }
 
       td.file-icon {
-        padding-right: $padding-default;
+        padding-right: $padding-small;
+        width: 48px;
 
         .material-icons {
           font-size: 32px;

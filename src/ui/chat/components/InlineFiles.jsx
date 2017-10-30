@@ -244,7 +244,6 @@ class InlineFile extends React.Component {
                                 }
                                 <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
                                     shareable shareDisabled={!file.readyForDownload || !file.canShare}
-                                    moveable renameable
                                     newFolderDisabled
                                     deleteable={file.fileOwner === User.current.username}
                                     {...this.props} />

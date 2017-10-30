@@ -179,6 +179,7 @@ class Files extends React.Component {
                             <thead>
                                 <tr>
                                     <th />
+                                    <th />
                                     <th>{t('title_name')}</th>
                                     <th>{t('title_owner')}</th>
                                     {/* <th>{t('title_shareable')}</th> */}

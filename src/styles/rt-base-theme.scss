@@ -360,3 +360,13 @@ ul {
 .rt-dialog-title {
   font-weight: 400;
 }
+
+.rt-tooltip-tooltip {
+  max-width: 230px;
+}
+
+.rt-tooltip-tooltipInner {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

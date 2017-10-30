@@ -1,4 +1,4 @@
-.clickable-username {
+.clickable-username { // TODO refactor these into .file-table-wrapper
   cursor: pointer;
 
   &:hover {
@@ -6,7 +6,7 @@
   }
 }
 
-.files .file-wrapper {
+.files .file-wrapper { // TODO refactor these into .file-table-wrapper
   .file-title {
     cursor: pointer;
     font-weight: $font-weight-semibold;

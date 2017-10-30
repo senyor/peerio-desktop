@@ -49,26 +49,43 @@ class MessageSideBar extends React.Component {
         </span>
         );
     }
-    renderReceipt(r) {
-        const c = contactStore.getContact(r.username);
-        return r.receipt.signatureError
+    renderReceipt = (entry) => {
+        return !entry || entry[1].signatureError
             ? null
-            : <span data-username={c.username} key={c.username}>
+            : <span data-username={entry[0].username} key={entry[0].username}>
                 <ListItem
-                    leftActions={[<Avatar key="a" contact={c} size="small" />]}
+                    leftActions={[<Avatar key="a" contact={entry[0]} size="small" />]}
                     itemContent={
                         <span className="rt-list-itemContentRoot rt-list-large">
                             <span className="rt-list-itemText rt-list-primary">
-                                {c.username}
+                                {entry[0].username}
                             </span>
                             <span className="rt-list-itemText">
-                                {c.fullName}
+                                {entry[0].fullName}
                             </span>
                         </span>
                     }
                     onClick={this.openContact}
                 />
             </span>;
+    }
+    compareReceipts(r1, r2) {
+        if (!r1) return 1;
+        if (!r2) return -1;
+        return r1[0].fullNameAndUsername.localeCompare(r2[0].fullNameAndUsername);
+    }
+    getReceipts(msg) {
+        const entries = chatStore.activeChat.receipts.entries();
+        for (let i = 0; i < entries.length; i++) {
+            if (+msg.id > entries[i][1].chatPosition) {
+                entries[i] = null;
+                continue;
+            }
+            entries[i][0] = contactStore.getContact(entries[i][0]);
+        }
+        entries.sort(this.compareReceipts);
+
+        return entries.map(this.renderReceipt);
     }
     render() {
         if (!this.validate(chatStore.activeChat)) return null;
@@ -102,7 +119,7 @@ class MessageSideBar extends React.Component {
                 <T k="title_readBy" tag="div" className="list-header" />
 
                 <List className="receipts">
-                    {msg.receipts && msg.receipts.map(r => this.renderReceipt(r))}
+                    {this.getReceipts(msg)}
                 </List>
             </div>
         );

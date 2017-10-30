@@ -60,3 +60,5 @@ module.exports.TooltipDiv = module.exports.Tooltip()(props =>
         onMouseLeave: props.onMouseLeave
     }, props.children)
 );
+
+module.exports.TooltipAvatar = module.exports.Tooltip()(module.exports.Avatar);

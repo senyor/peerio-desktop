@@ -85,7 +85,8 @@ class Message extends React.Component {
                 css('message-content-wrapper', {
                     'invalid-sign': invalidSign,
                     'send-error': m.sendError,
-                    light: this.props.light
+                    light: this.props.light,
+                    selected: m === uiStore.selectedMessage
                 })}>
                 <div className="message-content-wrapper-inner">
                     {this.props.light

@@ -97,6 +97,14 @@
         }
       }
 
+      td.file-icon {
+        padding-right: $padding-default;
+
+        .material-icons {
+          font-size: 32px;
+        }
+      }
+
       tbody tr {
         position: relative;
 

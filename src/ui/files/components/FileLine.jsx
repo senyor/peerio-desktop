@@ -10,10 +10,12 @@ const { downloadFile } = require('~/helpers/file');
 const uiStore = require('~/stores/ui-store');
 const { t } = require('peerio-translator');
 const moment = require('moment');
+const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 
 @observer
 class FileLine extends React.Component {
     @observable showActions = false;
+
     toggleChecked = val => {
         this.props.file.selected = val;
     };
@@ -65,6 +67,7 @@ class FileLine extends React.Component {
         if (!file.show) return null;
         // minuteClock.now is never null, but this will subscribe us to clock events to re-render relative timesamp
         if (!uiStore.minuteClock.now) return null;
+
         return (
             <tr className={css({
                 selected: this.checked,
@@ -77,7 +80,12 @@ class FileLine extends React.Component {
                     {(file.downloading || file.uploading)
                         && <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
                             onCancel={this.cancelUploadOrDownload} />
-                    }</td>
+                    }
+                </td>
+
+                <td className="file-icon">
+                    <FileSpriteIcon type={file.iconType} size="medium" />
+                </td>
 
                 <td className="file-title selectable" onClick={this.download}>{file.name}</td>
 

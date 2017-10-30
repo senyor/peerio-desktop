@@ -37,6 +37,7 @@
     },
     "globals": {
         "document": false,
+        "navigator": false,
         "alert": false,
         "confirm": false,
         "window": false,

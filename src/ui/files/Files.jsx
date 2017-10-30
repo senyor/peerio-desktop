@@ -6,6 +6,7 @@ const { fileStore, clientApp } = require('~/icebear');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
+const FileActions = require('./components/FileActions');
 const ZeroScreen = require('./components/ZeroScreen');
 const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
@@ -149,6 +150,7 @@ class Files extends React.Component {
         if (!fileStore.files.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
         const files = [];
+        // TODO: scope this to current folder/path
         for (let i = 0; i < this.renderedItemsCount && i < fileStore.visibleFiles.length; i++) {
             const f = fileStore.visibleFiles[i];
             files.push(<FileLine key={f.fileId} file={f} />);
@@ -160,8 +162,11 @@ class Files extends React.Component {
                 <div className="file-wrapper">
                     <div className="files-header">
                         <Breadcrumb />
+                        <FileActions
+                            moveable
+                            renameable />
                         <Button className="button-affirmative inverted"
-                            label={t('button_addFolder')}
+                            label={t('button_newFolder')}
                             onClick={this.showAddFolderPopup}
                         />
                         <Button className="button-affirmative"

@@ -53,3 +53,29 @@
 .reverse-icon .material-icons {
   @extend %reverse-icon;
 }
+
+// custom icons for MenuItem
+.custom-icon.rt-menu-menuItem {
+  position: relative;
+
+  .rt-menu-caption {
+    align-items: center;
+    display: flex;
+  }
+
+  .rt-menu-caption::before {
+    background-position-y: center;
+    background-repeat: no-repeat;
+    content: ' ';
+    display: inline-block;
+    height: 24px;
+    width: 38.4px;
+  }
+
+  &.button-move {
+    .rt-menu-caption::before {
+      background-image: url('./static/img/icon-movefolder.png');
+      background-size: 70%;
+    }
+  }
+}

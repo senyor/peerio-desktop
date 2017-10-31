@@ -4,10 +4,10 @@
       @extend %title;
       @extend %flex-row;
       @extend %flex-align-center;
-      color: $text-dark-secondary;
       cursor: default;
       height: 80px;
       margin-left: 24px;
+      color: $text-dark-secondary;
     }
   }
 }

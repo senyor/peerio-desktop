@@ -1,20 +1,20 @@
 .message-sidebar {
   @extend %flex-col;
   @extend %flex-shrink-0;
+  position: relative;
+  height: calc(100vh - 80px);
+  width: 272px;
+  overflow: hidden;
   background: $black-01;
   border-left: 1px solid $divider-dark;
-  height: calc(100vh - 80px);
-  overflow: hidden;
-  position: relative;
-  width: 272px;
 
   .rt-list-itemContentRoot {
     overflow: hidden;
   }
 
   .header {
-    background: #f1f1f1;
     margin-bottom: 15px;
+    background: #f1f1f1;
   }
 
   .title {

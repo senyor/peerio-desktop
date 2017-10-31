@@ -15,12 +15,12 @@
     @extend %flex-row;
     @extend %flex-shrink-0;
     @extend %flex-align-center;
-    border-bottom: 1px solid $divider-dark;
     height: 80px;
+    border-bottom: 1px solid $divider-dark;
 
     .material-icons {
-      font-size: 48px;
       margin-left: 32px;
+      font-size: 48px;
     }
 
     .rt-input-input {
@@ -28,8 +28,8 @@
       margin-top: 0;
 
       input {
-        border: 0;
         padding: 0;
+        border: 0;
       }
     }
   }
@@ -38,10 +38,10 @@
     @extend %flex-row;
     @extend %flex-shrink-0;
     @extend %flex-align-center;
-    background: $black-06;
     height: 48px;
-    padding-left: 32px;
     width: 100%;
+    padding-left: 32px;
+    background: $black-06;
 
     .sort-filter {
       .rt-dropdown-value {
@@ -49,9 +49,9 @@
       }
 
       .rt-input-inputElement {
-        border: 0;
-        font-weight: 600;
         padding: 0 0 0 10px;
+        font-weight: 600;
+        border: 0;
       }
     }
   }

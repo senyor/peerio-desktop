@@ -1,26 +1,26 @@
 $picker-border-radius: 6px;
 
 .emoji-picker {
+  display: block;
+  position: absolute;
+  height: 500px;
+  width: 400px;
+  right: 49px;
+  bottom: 90px;
+  color: #222427;
   background: #fff;
   border: 1px solid #d9d9d9;
   border-radius: $picker-border-radius;
-  bottom: 90px;
-  color: #222427;
-  display: block;
-  height: 500px;
-  position: absolute;
-  right: 49px;
-  width: 400px;
 
   .emoji-search {
-    align-items: center;
     display: flex;
+    align-items: center;
     padding: 0 0 0 5px;
 
     .clear-keyword-button {
-      border-radius: 15px;
       cursor: pointer;
       margin-right: 5px;
+      border-radius: 15px;
 
       &:hover {
         background-color: #e6e6e6;
@@ -29,11 +29,11 @@ $picker-border-radius: 6px;
   }
 
   .emoji-search-input {
-    border: none;
-    font-size: 13px;
     height: 34px;
-    padding: 0 5px;
     width: 100%;
+    padding: 0 5px;
+    font-size: 13px;
+    border: none;
 
     &:focus {
       outline: none;
@@ -41,19 +41,19 @@ $picker-border-radius: 6px;
   }
 
   .emojis {
+    position: absolute;
+    width: 100%;
+    top: 70px;
     bottom: 73px;
+    padding-left: 3px;
     overflow-x: hidden;
     overflow-y: scroll;
-    padding-left: 3px;
-    position: absolute;
-    top: 70px;
-    width: 100%;
 
     .emojione {
-      box-sizing: content-box;
-      cursor: pointer;
       display: inline-block;
+      cursor: pointer;
       margin: 14px 7px 7px;
+      box-sizing: content-box;
       transition: transform .15s ease;
       // zoom: .5;
     }
@@ -64,24 +64,24 @@ $picker-border-radius: 6px;
   }
 
   .info-pane {
+    display: flex;
     align-items: center;
+    position: absolute;
+    height: 73px;
+    width: 100%;
+    bottom: 0;
+    padding: 5px;
+    overflow: hidden;
+    font-size: 90%;
     background-color: #fafafa;
     border-bottom-left-radius: $picker-border-radius;
     border-bottom-right-radius: $picker-border-radius;
     border-top: 1px solid #d9d9d9;
-    bottom: 0;
-    display: flex;
-    font-size: 90%;
-    height: 73px;
-    overflow: hidden;
-    padding: 5px;
-    position: absolute;
-    width: 100%;
 
     .emojione {
+      zoom: .8;
       flex-shrink: 0;
       margin-right: 10px;
-      zoom: .8;
     }
   }
 
@@ -90,39 +90,39 @@ $picker-border-radius: 6px;
   }
 
   .categories {
+    display: flex;
+    justify-content: space-around;
+    height: 37px;
     background-color: #fafafa;
     border-bottom: 1px solid #d9d9d9;
     border-top-left-radius: $picker-border-radius;
     border-top-right-radius: $picker-border-radius;
-    display: flex;
-    height: 37px;
-    justify-content: space-around;
   }
 
   .category {
-    box-sizing: border-box;
     cursor: pointer;
-    opacity: .2;
     padding: 10px 10px 7px;
+    box-sizing: border-box;
     transition: opacity .2s, background-color .2s;
+    opacity: .2;
   }
 
   .category:hover {
-    background-color: #e0e0e0;
     opacity: .6;
+    background-color: #e0e0e0;
   }
 
   .category.selected {
-    border-bottom: 3px solid #3b97cc;
-    opacity: .6;
     padding: 10px 10px 4px;
+    opacity: .6;
+    border-bottom: 3px solid #3b97cc;
   }
 
   .category-header {
-    border-top: 1px solid #d9d9d9;
-    font-weight: 600;
-    margin-right: 3px;
     padding: 5px;
+    margin-right: 3px;
+    font-weight: 600;
+    border-top: 1px solid #d9d9d9;
   }
 
   .skin-tone-1 {

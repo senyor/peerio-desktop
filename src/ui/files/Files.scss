@@ -1,39 +1,29 @@
 .files {
   @extend %flex-col;
   @extend %flex-align-center;
-  background: $background-root;
   height: 100vh;
-  padding: 0 24px;
   width: 100vw;
-
-  // 36px added to ensure that the file actions button never over flows.
-  @media (max-width: #{$minimum-screen-width + 36}) {
-    padding: 0;
-
-    // hides size column at minimum-screen-width
-    .text-right + .text-right {
-      display: none;
-    }
-  }
+  padding: 0 24px;
+  background: $background-root;
 
   .file-wrapper {
-    box-sizing: border-box;
     width: 100%;
+    box-sizing: border-box;
 
     .file-table-wrapper {
       @extend %flex-col;
       @extend %flex-grow-1;
       @extend %flex-shrink-0;
       height: calc(100vh - 144px);
+      padding-bottom: $padding-default;
       overflow-x: hidden;
       overflow-y: auto;
-      padding-bottom: $padding-default;
     }
 
     .item-actions {
+      width: 48px;
       padding-right: 0 !important;
       text-align: center;
-      width: 48px;
 
       .reverse-icon .material-icons {
         @extend %reverse-icon;
@@ -41,27 +31,27 @@
     }
 
     table {
-      background: $white;
-      border-spacing: 0;
       position: relative;
       width: 100%;
+      background: $white;
+      border-spacing: 0;
 
       thead th {
-        color: $text-dark-secondary;
         font-size: 12px;
         font-weight: $font-weight-semibold;
         text-align: left;
+        color: $text-dark-secondary;
       }
 
       th,
       td {
-        border-bottom: 1px solid $divider-dark;
         padding-right: 24px;
         white-space: nowrap;
+        border-bottom: 1px solid $divider-dark;
 
         &:first-of-type {
-          padding: 0 24px;
           width: 18px;
+          padding: 0 24px;
         }
       }
 
@@ -100,9 +90,9 @@
 
       label {
         display: inline-block;
-        margin-bottom: 0;
-        max-width: 18px;
         width: 18px;
+        max-width: 18px;
+        margin-bottom: 0;
 
         &:not(.rt-checkbox-disabled) .rt-checkbox-check:not(.rt-checkbox-checked) {
           background: $white;
@@ -126,5 +116,15 @@
 
   .waiting-3rd-party {
     background-color: $black-03;
+  }
+
+  // 36px added to ensure that the file actions button never over flows.
+  @media (max-width: #{$minimum-screen-width + 36}) {
+    padding: 0;
+
+    // hides size column at minimum-screen-width
+    .text-right + .text-right {
+      display: none;
+    }
   }
 }

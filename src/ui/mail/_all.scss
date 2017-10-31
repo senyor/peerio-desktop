@@ -3,7 +3,6 @@ $width-mail-list: 224px; // TODO: create a list variable because it's used every
 $width-mail-compose: 80px + $width-mail-sidebar + $width-mail-sidebar;
 
 @import './Mail';
-@import './components/EmailPicker';
 @import './components/MailCompose';
 @import './components/MailFormatActions';
 @import './components/MailItem';

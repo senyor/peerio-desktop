@@ -5,9 +5,9 @@
 
   .confirm-key {
     @extend %flex-col;
+    width: 432px;
 
     text-align: left;
-    width: 432px;
 
     .safe {
       margin: 0 auto;

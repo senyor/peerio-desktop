@@ -1,26 +1,26 @@
 .chat-sidebar {
   @extend %flex-col;
   @extend %flex-shrink-0;
-  background: $black-01;
-  border-left: 1px solid $divider-dark;
   height: calc(100vh - 80px);
-  overflow: hidden;
   // transition: width 300ms $transition-easing-ease-in;
   width: 0;
+  overflow: hidden;
+  background: $black-01;
+  border-left: 1px solid $divider-dark;
 
   .rt-input-hint {
-    font-size: 12px;
-    line-height: 14px;
-    margin-left: $margin-default;
     top: 28px;
+    margin-left: $margin-default;
+    line-height: 14px;
+    font-size: 12px;
   }
 
   // TODO: combine with chat list avatar styles.
   .rt-avatar-avatar {
-    font-size: 20px;
     height: 32px;
-    line-height: 32px;
     width: 32px;
+    line-height: 32px;
+    font-size: 20px;
   }
 
   .avatar-wrapper > .material-icons {
@@ -29,8 +29,8 @@
 
   .title {
     height: 48px;
-    line-height: 48px;
     margin: $margin-tiny $margin-default 0;
+    line-height: 48px;
   }
 
   .rt-list-itemContentRoot {
@@ -51,10 +51,10 @@
   }
 
   .purpose-container {
-    border-bottom: 1px solid $divider-dark;
-    padding-bottom: 9px;
     padding-left: $padding-default;
     padding-top: 7px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid $divider-dark;
   }
 
   .purpose-label,
@@ -77,11 +77,11 @@
   }
 
   .rt-input-input {
-    border-bottom: 1px solid $divider-dark;
     height: auto;
-    margin-top: 0;
-    padding-bottom: $padding-small;
     padding-left: $padding-small;
+    padding-bottom: $padding-small;
+    margin-top: 0;
+    border-bottom: 1px solid $divider-dark;
 
     .rt-input-label {
       padding-left: $padding-default;
@@ -92,9 +92,9 @@
     }
 
     textarea {
-      line-height: inherit;
       padding-right: $padding-default;
       padding-top: 25px;
+      line-height: inherit;
     }
   }
 
@@ -104,14 +104,14 @@
   }
 
   .tag {
+    display: inline-block;
+    height: 18px;
+    padding: 0 4px 2px;
+    margin-left: $margin-small;
+    line-height: 18px;
+    font-size: 11px;
+    color: $text-light-primary;
     background-color: #757575;
     border-radius: 4px;
-    color: $text-light-primary;
-    display: inline-block;
-    font-size: 11px;
-    height: 18px;
-    line-height: 18px;
-    margin-left: $margin-small;
-    padding: 0 4px 2px;
   }
 }

@@ -1,17 +1,17 @@
 .files {
   .file-loading {
+    display: flex;
     // TODO: add pulse to imply activity.
     align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 32px;
+    width: 32px;
+    margin: 0 -7px;
+    transition: 150ms;
     background-color: $background-root;
     border: 2px solid $green-affirmative;
     border-radius: 20px;
-    cursor: pointer;
-    display: flex;
-    height: 32px;
-    justify-content: center;
-    margin: 0 -7px;
-    transition: 150ms;
-    width: 32px;
 
     > span:last-child {
       display: none;

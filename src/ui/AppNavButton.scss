@@ -1,27 +1,27 @@
 .app-nav {
   .menu-item {
-    align-items: center;
-    color: $icon-light-active;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    margin-top: $margin-large;
     position: relative;
+    cursor: pointer;
+    margin-top: $margin-large;
+    color: $icon-light-active;
 
     .look-at-me {
       @extend %hint-error-label;
+      display: block;
+      position: absolute;
+      height: 24px;
+      width: 24px;
+      right: 2px;
+      top: 2px;
+      line-height: 20px;
+      text-align: center;
       background: $red-error;
       border: 2px solid $blue;
       border-radius: 12px;
-      display: block;
-      height: 24px;
-      line-height: 20px;
-      position: absolute;
-      right: 2px;
-      text-align: center;
-      top: 2px;
-      width: 24px;
     }
 
     .rt-button-button {
@@ -34,8 +34,8 @@
     }
     // TODO transition variables
     .rt-button-icon {
-      color: $icon-light-inactive;
       transition: color 150ms;
+      color: $icon-light-inactive;
     }
 
     &[disabled] {
@@ -55,8 +55,8 @@
     &.active,
     &:hover {
       .rt-button-icon {
-        background: tranparent;
         color: $icon-light-active;
+        background: tranparent;
       }
     }
   }

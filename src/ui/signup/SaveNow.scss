@@ -4,8 +4,8 @@
   .title-container {
     @extend %flex-col;
     @extend %flex-justify-center;
-    white-space: nowrap;
     width: 275px;
+    white-space: nowrap;
   }
 
   .account-key-save {

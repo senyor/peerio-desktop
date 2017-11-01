@@ -2,7 +2,7 @@
   padding: 0 $padding-default $padding-default;
 }
 
-.sidebar-file-container {
+.sidebar-file-list {
   .sidebar-file-label {
     align-items: center;
     display: flex;
@@ -38,5 +38,9 @@
       @extend %hint-error-label;
       color: $text-dark-hint;
     }
+  }
+
+  .rt-menu-iconMenu {
+    margin-left: $margin-small;
   }
 }

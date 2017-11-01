@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { List, ListItem, IconMenu, MenuItem } = require('~/react-toolbox');
+const { IconMenu, MenuItem } = require('~/react-toolbox');
 const { chatStore, fileStore, User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -63,35 +63,44 @@ class FilesSection extends React.Component {
         return (
             <SideBarSection title={t('title_recentFiles')} onToggle={this.props.onToggle} open={this.props.open}>
                 <div className="member-list">
-                    <List>
+                    <ul className="rt-list-list sidebar-file-list">
                         {chat.recentFiles.map(id => {
                             const file = fileStore.getById(id);
                             if (!file) return null;
                             return (
-                                <span key={id} data-fileid={id} className="sidebar-file-container">
-                                    <ListItem
-                                        caption={<span className="sidebar-file-label">
-                                            <FileSpriteIcon type={file.iconType} size="medium" />
-                                            <div className="meta">
-                                                <div className="file-name-container">
-                                                    <span className="file-name">{file.nameWithoutExtension}</span>
-                                                    <span className="file-ext">.{file.ext}</span>
-                                                </div>
-                                                <span className="file-shared-by">
-                                                    {file.fileOwner === User.current.username
-                                                        ? `${t('title_fileFilterShared')}`
-                                                        : `${t('title_fileSharedByUser', { user: file.fileOwner })}`
-                                                    }
+                                <li key={id} data-fileid={id}
+                                    className="sidebar-file-container rt-list-listItem"
+                                    onClick={this.download}
+                                >
+                                    <span className="rt-list-item">
+                                        <span className="rt-list-itemContentRoot">
+                                            <span className="rt-list-itemText rt-list-primary">
+                                                <span className="sidebar-file-label">
+                                                    <FileSpriteIcon type={file.iconType} size="medium" />
+                                                    <div className="meta">
+                                                        <div className="file-name-container">
+                                                            <span className="file-name">
+                                                                {file.nameWithoutExtension}
+                                                            </span>
+                                                            <span className="file-ext">.{file.ext}</span>
+                                                        </div>
+                                                        <span className="file-shared-by">
+                                                            {file.fileOwner === User.current.username
+                                                                ? `${t('title_fileFilterShared')}`
+                                                                : `${t('title_fileSharedByUser',
+                                                                    { user: file.fileOwner })}`
+                                                            }
+                                                        </span>
+                                                    </div>
                                                 </span>
-                                            </div>
-                                        </span>}
-                                        rightActions={[menu]}
-                                        onClick={this.download}
-                                    />
-                                </span>
+                                            </span>
+                                        </span>
+                                        {menu}
+                                    </span>
+                                </li>
                             );
                         })}
-                    </List>
+                    </ul>
                 </div>
                 {!chat.recentFiles || !chat.recentFiles.length &&
                     <div className="sidebar-zero-files">

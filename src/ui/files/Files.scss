@@ -3,6 +3,7 @@
   @extend %flex-align-center;
   background: $background-root;
   height: 100vh;
+  min-width: 0;
   padding: 0 24px;
   width: 100vw;
 

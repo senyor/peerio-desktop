@@ -60,23 +60,34 @@ class Files extends React.Component {
 
     }
 
-    deleteFolder = () => {
-
+    @action deleteFolder = folder => {
+        this.currentFolder = folder.parent;
+        fileStore.fileFolders.deleteFolder(folder);
+        fileStore.fileFolders.save();
     }
 
     @observable triggerFolderPopup = false;
     @observable addFolderPopupVisible = false;
+    @observable triggerRenameFolderPopup = false;
+    @observable renameFolderPopupVisible = false;
     @observable folderName = '';
+    @observable folderToRename;
 
     showAddFolderPopup = () => {
         this.triggerFolderPopup = true;
+    }
+
+    @action showRenameFolderPopup = folder => {
+        this.folderName = folder.name;
+        this.folderToRename = folder;
+        this.triggerRenameFolderPopup = true;
     }
 
     handleFolderNameChange = (val) => {
         this.folderName = val;
     }
 
-    handleAddFolder = () => {
+    @action handleAddFolder = () => {
         this.addFolderPopupVisible = false;
         this.triggerFolderPopup = false;
         const { folderName, currentFolder } = this;
@@ -85,6 +96,16 @@ class Files extends React.Component {
             fileStore.fileFolders.save();
         }
         this.folderName = '';
+    }
+
+    @action handleRenameFolder = () => {
+        this.renameFolderPopupVisible = false;
+        this.triggerRenameFolderPopup = null;
+        const { folderName, folderToRename } = this;
+        folderToRename.name = folderName;
+        fileStore.fileFolders.save();
+        this.folderName = '';
+        this.folderToRename = null;
     }
 
     onPopupRef = (ref) => {
@@ -102,6 +123,26 @@ class Files extends React.Component {
         ];
         return (
             <Dialog title={t('button_newFolder')}
+                active={this.addFolderPopupVisible} type="small" ref={this.onPopupRef}
+                actions={dialogActions}
+                onOverlayClick={hide} onEscKeyDown={hide}
+                className="add-folder-popup">
+                <Input placeholder={t('title_folderName')}
+                    value={this.folderName} onChange={this.handleFolderNameChange} />
+            </Dialog>);
+    }
+
+    get renameFolderPopup() {
+        const hide = () => {
+            this.renameFolderPopupVisible = false;
+            this.triggerRenameFolderPopup = false;
+        };
+        const dialogActions = [
+            { label: t('button_cancel'), onClick: hide },
+            { label: t('Rename'), onClick: this.handleRenameFolder }
+        ];
+        return (
+            <Dialog title={t('Rename folder')}
                 active={this.addFolderPopupVisible} type="small" ref={this.onPopupRef}
                 actions={dialogActions}
                 onOverlayClick={hide} onEscKeyDown={hide}
@@ -200,7 +241,13 @@ class Files extends React.Component {
         const folders = [];
         for (let i = 0; i < currentFolder.folders.length; i++) {
             const f = currentFolder.folders[i];
-            folders.push(<FolderLine key={f.fileId} folder={f} onChangeFolder={this.changeFolder} />);
+            folders.push(
+                <FolderLine
+                    key={f.fileId}
+                    folder={f}
+                    onDeleteFolder={this.deleteFolder}
+                    onChangeFolder={this.changeFolder} />
+            );
         }
 
         const folderPath = [];
@@ -217,7 +264,10 @@ class Files extends React.Component {
                 <div className="file-wrapper">
                     <div className="files-header">
                         <Breadcrumb folderpath={folderPath} onSelectFolder={this.changeFolder} />
-                        {!currentFolder.isRoot && <FolderActions />}
+                        {!currentFolder.isRoot &&
+                            <FolderActions
+                                onDelete={() => this.deleteFolder(this.currentFolder)}
+                                onRename={() => this.showRenameFolderPopup(this.currentFolder)} />}
                         <Button className="button-affirmative inverted"
                             label={t('button_newFolder')}
                             onClick={this.showAddFolderPopup}
@@ -263,6 +313,7 @@ class Files extends React.Component {
                     />
                 }
                 {this.triggerFolderPopup && this.addFolderPopup}
+                {this.triggerRenameFolderPopup && this.renameFolderPopup}
             </div>
         );
     }

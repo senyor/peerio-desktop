@@ -32,6 +32,7 @@ const config = require('~/config');
 
 
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
+app.commandLine.appendSwitch('disk-cache-size', 200 * 1024 * 1024);
 
 app.on('ready', () => {
     console.log('Electron ready event - Starting app.');

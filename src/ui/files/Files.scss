@@ -43,15 +43,18 @@
 
       .breadcrumb {
         margin-left: $margin-xl;
-        margin-right: auto;
       }
 
       .item-actions {
-        margin-right: $margin-xl;
+        margin-right: auto;
       }
 
       button {
         margin-left: $margin-small;
+
+        &.new-folder {
+          margin-left: auto;
+        }
       }
     }
 

@@ -271,7 +271,7 @@ class Files extends React.Component {
                                 onMove={() => this.moveFolder(this.currentFolder)}
                                 onDelete={() => this.deleteFolder(this.currentFolder)}
                                 onRename={() => this.showRenameFolderPopup(this.currentFolder)} />}
-                        <Button className="button-affirmative inverted"
+                        <Button className="button-affirmative inverted new-folder"
                             label={t('button_newFolder')}
                             onClick={this.showAddFolderPopup}
                         />

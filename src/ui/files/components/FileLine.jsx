@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 const FileActions = require('./FileActions');
 const FileLoading = require('./FileLoading');
-const { FontIcon, ProgressBar } = require('~/react-toolbox');
+const { ProgressBar } = require('~/react-toolbox');
 const { fileStore, User } = require('~/icebear');
 const { downloadFile } = require('~/helpers/file');
 const uiStore = require('~/stores/ui-store');
@@ -102,17 +102,11 @@ class FileLine extends React.Component {
                 </td>
 
                 <td className="file-icon">
-                    {this.props.isFolder
-                        ? <FontIcon value="folder" />
-                        : <FileSpriteIcon type={file.iconType} size="medium" />
-                    }
+                    <FileSpriteIcon type={file.iconType} size="medium" />
                 </td>
 
                 <td className="file-title selectable"
-                    onClick={this.props.isFolder
-                        ? this.goToFolder
-                        : this.download
-                    } >
+                    onClick={this.download} >
                     {file.name}
                 </td>
 
@@ -133,7 +127,7 @@ class FileLine extends React.Component {
                         downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
                         shareable shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.share}
                         newFolderDisabled
-                        renameable onRename={this.renameFile}
+                        onRename={this.renameFile}
                         moveable onMove={this.moveFile}
                         deleteable onDelete={this.deleteFile}
                     />

@@ -10,26 +10,18 @@ class Breadcrumb extends React.Component {
     }
 
     render() {
-        /* Breadcrumb component should be given "folderpath" prop
-            folderpath = array of arrays of folder/path pairs
-                e.g. [['file1', 'path1'], ['file2', 'path2'], ['file3', 'path3']]
-        */
-        const paths = [];
-        for (let i = 0; i < this.props.folderpath.length; i++) {
-            paths.push(
-                <div key={this.props.folderpath[i][0]} className="breadcrumb-entry">
-                    <a className="clickable"
-                        onClick={() => this.handleClick(this.props.folderpath[i][1])}>
-                        {this.props.folderpath[i][0]}
-                    </a>
-                    {i !== this.props.folderpath.length - 1 && <FontIcon value="keyboard_arrow_right" /> }
-                </div>
-            );
-        }
-
+        const { folderpath } = this.props;
         return (
             <div className="breadcrumb">
-                {paths}
+                {folderpath.map((folder, i) => (
+                    <div key={folder.name || 'root'} className="breadcrumb-entry">
+                        <a className="clickable"
+                            onClick={() => this.props.onSelectFolder(folder)}>
+                            {folder.name || 'Files'}
+                        </a>
+                        {i !== this.props.folderpath.length - 1 && <FontIcon value="keyboard_arrow_right" />}
+                    </div>
+                ))}
             </div>
         );
     }

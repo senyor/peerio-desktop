@@ -1,17 +1,20 @@
 const React = require('react');
 const { Button, Dialog, Input } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
-const { observable } = require('mobx');
+const { observable, action } = require('mobx');
 const { fileStore, clientApp } = require('~/icebear');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
-const FileActions = require('./components/FileActions');
+const FolderLine = require('./components/FolderLine');
+const FolderActions = require('./components/FolderActions');
 const ZeroScreen = require('./components/ZeroScreen');
 const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
+
+const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
 @observer
 class Files extends React.Component {
@@ -20,8 +23,9 @@ class Files extends React.Component {
         this.handleUpload = this.handleUpload.bind(this);
     }
 
-    @observable renderedItemsCount = 15;
-    pageSize = 15;
+    @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
+    pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
+    @observable currentFolder = fileStore.fileFolders.root;
 
     componentWillMount() {
         clientApp.isInFilesView = true;
@@ -67,13 +71,22 @@ class Files extends React.Component {
     showAddFolderPopup = () => {
         this.triggerFolderPopup = true;
     }
+
     handleFolderNameChange = (val) => {
         this.folderName = val;
     }
+
     handleAddFolder = () => {
         this.addFolderPopupVisible = false;
         this.triggerFolderPopup = false;
+        const { folderName, currentFolder } = this;
+        if (folderName && folderName.trim()) {
+            fileStore.fileFolders.createFolder(folderName, currentFolder);
+            fileStore.fileFolders.save();
+        }
+        this.folderName = '';
     }
+
     onPopupRef = (ref) => {
         if (ref) this.addFolderPopupVisible = true;
     };
@@ -115,6 +128,7 @@ class Files extends React.Component {
             fileStore.clearSelection();
         }
     };
+
     // todo: move to icebear
     handleBulkDelete = () => {
         const selected = fileStore.getSelectedFiles();
@@ -165,22 +179,36 @@ class Files extends React.Component {
         this.enqueueCheck();
     }
 
+    @action changeFolder = folder => {
+        if (folder !== this.currentFolder) {
+            this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
+            this.currentFolder = folder;
+        }
+    };
+
     render() {
         if (!fileStore.files.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
+        const { currentFolder } = this;
         const files = [];
-        for (let i = 0; i < this.renderedItemsCount && i < fileStore.visibleFiles.length; i++) {
-            const f = fileStore.visibleFiles[i];
-            files.push(<FileLine key={f.fileId} file={f} />);
+        for (let i = 0; i < this.renderedItemsCount && i < currentFolder.files.length; i++) {
+            const f = currentFolder.files[i];
+            files.push(<FileLine key={f.folderId} file={f} />);
         }
 
-        // TODO: dummy content below, make 3 fake folders
         const folders = [];
-        for (let i = 0; i < this.renderedItemsCount && i < fileStore.visibleFiles.length && i < 3; i++) {
-            const f = fileStore.visibleFiles[i];
-            folders.push(<FileLine key={f.fileId} file={f} isFolder />);
-        } // dummy content
+        for (let i = 0; i < currentFolder.folders.length; i++) {
+            const f = currentFolder.folders[i];
+            folders.push(<FolderLine key={f.fileId} folder={f} onChangeFolder={this.changeFolder} />);
+        }
+
+        const folderPath = [];
+        let iterator = currentFolder;
+        do {
+            folderPath.unshift(iterator);
+            iterator = iterator.parent;
+        } while (iterator);
 
         this.enqueueCheck();
         return (
@@ -188,19 +216,8 @@ class Files extends React.Component {
                 <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
                 <div className="file-wrapper">
                     <div className="files-header">
-                        <Breadcrumb folderpath={[
-                            ['Folder1', 'path1'],
-                            ['Folder2', 'path2'],
-                            ['Folder3', 'path3'],
-                            ['Folder4', 'path1'],
-                            ['Folder5', 'path2']
-                        ]} />
-                        <FileActions
-                            onDownload={this.downloadFolder}
-                            moveable onMove={this.moveFolder}
-                            renameable onRename={this.renameFolder}
-                            deleteable onDelete={this.deleteFolder}
-                        />
+                        <Breadcrumb folderpath={folderPath} onSelectFolder={this.changeFolder} />
+                        {!currentFolder.isRoot && <FolderActions />}
                         <Button className="button-affirmative inverted"
                             label={t('button_newFolder')}
                             onClick={this.showAddFolderPopup}

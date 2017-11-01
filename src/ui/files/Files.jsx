@@ -1,7 +1,7 @@
 const React = require('react');
 const { Button, Dialog, Input } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
-const { observable, action } = require('mobx');
+const { observable, action, when } = require('mobx');
 const { fileStore, clientApp } = require('~/icebear');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
@@ -153,14 +153,20 @@ class Files extends React.Component {
             </Dialog>);
     }
 
-    handleUpload() {
-        pickLocalFiles().then(paths => {
-            if (!paths || !paths.length) return;
-            const list = getListOfFiles(paths);
-            if (!list.success.length) return;
-            // don't refactor argument to file.upload forEach has index arg that is interpreted as a file name
-            list.success.forEach((path) => fileStore.upload(path));
-        });
+    async handleUpload() {
+        const paths = await pickLocalFiles();
+        if (!paths || !paths.length) return;
+        const list = getListOfFiles(paths);
+        if (!list.success.length) return;
+        await Promise.all(list.success.map(path => {
+            const file = fileStore.upload(path);
+            return new Promise(resolve =>
+                when(() => file.fileId, () => {
+                    this.currentFolder.moveInto(file);
+                    resolve();
+                }));
+        }));
+        fileStore.fileFolders.save();
     }
 
     toggleSelection = val => {

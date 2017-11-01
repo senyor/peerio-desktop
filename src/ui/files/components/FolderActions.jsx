@@ -7,9 +7,9 @@ function FolderActions(props) {
     return (
         <div className="item-actions" onClick={props.onRowClick}>
             <IconMenu icon="more_vert">
-                {/* <MenuItem caption={t('button_move')}
+                <MenuItem caption={t('button_move')}
                     onClick={props.onMove}
-                    className="custom-icon button-move" /> */}
+                    className="custom-icon button-move" />
                 <MenuItem caption={t('button_rename')}
                     icon="mode_edit"
                     onClick={props.onRename} />

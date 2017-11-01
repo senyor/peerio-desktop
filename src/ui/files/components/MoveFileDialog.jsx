@@ -22,12 +22,9 @@ class MoveFileDialog extends React.Component {
     onHide = this.props.onHide;
     @action handleMove = () => {
         const { file, folder } = this.props;
-        if (file) {
-            this.selectedFolder.moveInto(file);
-            fileStore.fileFolders.save();
-        } else if (folder) {
-            console.log('move folder');
-        }
+        const target = this.selectedFolder || this.currentFolder;
+        target.moveInto(file || folder);
+        fileStore.fileFolders.save();
         this.onHide();
     }
 
@@ -35,11 +32,10 @@ class MoveFileDialog extends React.Component {
         const { currentFolder } = this;
         const actions = [
             { label: t('button_cancel'), onClick: this.props.onHide },
-            { label: t('button_move'), onClick: this.handleMove, disabled: !this.selectedFolder }
+            { label: t('button_move'), onClick: this.handleMove }
         ];
 
-        // TODO: dummy content below, need to connect to real files
-        const folders = currentFolder.folders.map(folder => (
+        const folders = currentFolder.folders.filter(f => f !== this.props.folder).map(folder => (
             <div key={`folder-${folder.folderId}`} className="move-file-row">
                 <Button
                     icon={this.selectedFolder === folder ?
@@ -48,10 +44,12 @@ class MoveFileDialog extends React.Component {
                     className="button-small"
                 />
                 <FontIcon value="folder" className="folder-icon" />
-                <div className="file-info">
+                <div className="file-info" onClick={() => { this.currentFolder = folder; }}>
                     <div className="file-name">{folder.name}</div>
                 </div>
-                <Button icon="keyboard_arrow_right" className="button-small" />
+                <Button
+                    onClick={() => { this.currentFolder = folder; }}
+                    icon="keyboard_arrow_right" className="button-small" />
             </div>
         ));
 
@@ -61,7 +59,9 @@ class MoveFileDialog extends React.Component {
                 active={this.props.visible}
                 title={t('title_moveFileTo')}
                 className="move-file-dialog">
-                <Breadcrumb currentFolder={currentFolder} />
+                <Breadcrumb
+                    currentFolder={currentFolder}
+                    onSelectFolder={folder => { this.currentFolder = folder; }} />
                 {folders}
             </Dialog>
         );

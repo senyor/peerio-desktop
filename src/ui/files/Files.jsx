@@ -246,6 +246,7 @@ class Files extends React.Component {
                 <FolderLine
                     key={f.folderId}
                     folder={f}
+                    onMoveFolder={() => this.moveFolder(f)}
                     onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.deleteFolder}
                     onChangeFolder={this.changeFolder} />
@@ -297,7 +298,7 @@ class Files extends React.Component {
                 {this.moveFolderVisible &&
                     <MoveFileDialog
                         folder={this.folderToMove}
-                        currentFolder={currentFolder.parent}
+                        currentFolder={currentFolder.parent || currentFolder}
                         visible={this.moveFolderVisible}
                         onHide={this.hideMoveFolder}
                     />

@@ -49,15 +49,15 @@ class Files extends React.Component {
     };
 
     @observable moveFolderVisible = false;
-    moveFolder = () => {
+
+    @action moveFolder = folder => {
+        this.folderToMove = folder;
         this.moveFolderVisible = true;
     }
+
     hideMoveFolder = () => {
         this.moveFolderVisible = false;
-    }
-
-    renameFolder = () => {
-
+        this.folderToMove = null;
     }
 
     @action deleteFolder = folder => {
@@ -72,6 +72,7 @@ class Files extends React.Component {
     @observable renameFolderPopupVisible = false;
     @observable folderName = '';
     @observable folderToRename;
+    @observable folderToMove;
 
     showAddFolderPopup = () => {
         this.triggerFolderPopup = true;
@@ -235,7 +236,7 @@ class Files extends React.Component {
         const files = [];
         for (let i = 0; i < this.renderedItemsCount && i < currentFolder.files.length; i++) {
             const f = currentFolder.files[i];
-            files.push(<FileLine key={f.folderId} file={f} />);
+            files.push(<FileLine key={f.fileId} file={f} currentFolder={currentFolder} />);
         }
 
         const folders = [];
@@ -243,19 +244,13 @@ class Files extends React.Component {
             const f = currentFolder.folders[i];
             folders.push(
                 <FolderLine
-                    key={f.fileId}
+                    key={f.folderId}
                     folder={f}
+                    onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.deleteFolder}
                     onChangeFolder={this.changeFolder} />
             );
         }
-
-        const folderPath = [];
-        let iterator = currentFolder;
-        do {
-            folderPath.unshift(iterator);
-            iterator = iterator.parent;
-        } while (iterator);
 
         this.enqueueCheck();
         return (
@@ -263,9 +258,10 @@ class Files extends React.Component {
                 <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
                 <div className="file-wrapper">
                     <div className="files-header">
-                        <Breadcrumb folderpath={folderPath} onSelectFolder={this.changeFolder} />
+                        <Breadcrumb currentFolder={currentFolder} onSelectFolder={this.changeFolder} />
                         {!currentFolder.isRoot &&
                             <FolderActions
+                                onMove={() => this.moveFolder(this.currentFolder)}
                                 onDelete={() => this.deleteFolder(this.currentFolder)}
                                 onRename={() => this.showRenameFolderPopup(this.currentFolder)} />}
                         <Button className="button-affirmative inverted"
@@ -299,15 +295,9 @@ class Files extends React.Component {
                     </div>
                 </div>
                 {this.moveFolderVisible &&
-                    // TODO: dummy folderpath, needs to connect to real file paths
                     <MoveFileDialog
-                        folderpath={[
-                            ['Folder1', 'path1'],
-                            ['Folder2', 'path2'],
-                            ['Folder3', 'path3'],
-                            ['Folder4', 'path1'],
-                            ['Folder5', 'path2']
-                        ]}
+                        folder={this.folderToMove}
+                        currentFolder={currentFolder.parent}
                         visible={this.moveFolderVisible}
                         onHide={this.hideMoveFolder}
                     />

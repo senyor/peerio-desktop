@@ -1,59 +1,59 @@
 const React = require('react');
-const { observable } = require('mobx');
+const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Button, Dialog, FontIcon } = require('~/react-toolbox');
-
+const { fileStore } = require('~/icebear');
 const Breadcrumb = require('./Breadcrumb');
-// const { fileStore } = require('~/icebear');
-// const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 
 @observer
 class MoveFileDialog extends React.Component {
-    @observable selectedFolder = '';
-    selectionChange = (index) => {
-        this.selectedFolder = index;
-        console.log(this.selectedFolder);
+    @observable selectedFolder = null;
+    @observable currentFolder = null;
+
+    componentWillMount() {
+        this.currentFolder = this.props.currentFolder;
+    }
+
+    @action selectionChange = folder => {
+        this.selectedFolder = folder;
     }
 
     onHide = this.props.onHide;
-    handleMove = () => {
-        // move folder to selected location
+    @action handleMove = () => {
+        const { file, folder } = this.props;
+        if (file) {
+            this.selectedFolder.moveInto(file);
+            fileStore.fileFolders.save();
+        } else if (folder) {
+            console.log('move folder');
+        }
         this.onHide();
     }
 
     render() {
+        const { currentFolder } = this;
         const actions = [
             { label: t('button_cancel'), onClick: this.props.onHide },
-            { label: t('button_move'), onClick: this.handleMove, disabled: this.selectedFolder === '' }
+            { label: t('button_move'), onClick: this.handleMove, disabled: !this.selectedFolder }
         ];
 
         // TODO: dummy content below, need to connect to real files
-        const folders = [];
-        for (let i = 0; i < 3; i++) {
-            folders.push(
-                <div key={`folder-${i}`} className="move-file-row">
-                    <Button
-                        icon={this.selectedFolder === `folder-${i}`
-                            ? 'radio_button_checked'
-                            : 'radio_button_unchecked'
-                        }
-                        onClick={() => this.selectionChange(`folder-${i}`)}
-                        className="button-small"
-                    />
-                    <FontIcon value="folder" className="folder-icon" />
-                    <div className="file-info">
-                        <div className="file-name">
-                            Folder name
-                        </div>
-                        <div className="file-meta">
-                            June 5, 2016 - Steve
-                        </div>
-                    </div>
-                    <Button icon="keyboard_arrow_right" className="button-small" />
+        const folders = currentFolder.folders.map(folder => (
+            <div key={`folder-${folder.folderId}`} className="move-file-row">
+                <Button
+                    icon={this.selectedFolder === folder ?
+                        'radio_button_checked' : 'radio_button_unchecked'}
+                    onClick={() => this.selectionChange(folder)}
+                    className="button-small"
+                />
+                <FontIcon value="folder" className="folder-icon" />
+                <div className="file-info">
+                    <div className="file-name">{folder.name}</div>
                 </div>
-            );
-        }
+                <Button icon="keyboard_arrow_right" className="button-small" />
+            </div>
+        ));
 
         return (
             <Dialog actions={actions}
@@ -61,7 +61,7 @@ class MoveFileDialog extends React.Component {
                 active={this.props.visible}
                 title={t('title_moveFileTo')}
                 className="move-file-dialog">
-                <Breadcrumb folderpath={this.props.folderpath} />
+                <Breadcrumb currentFolder={currentFolder} />
                 {folders}
             </Dialog>
         );

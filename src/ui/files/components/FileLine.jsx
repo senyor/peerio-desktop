@@ -131,16 +131,10 @@ class FileLine extends React.Component {
                         moveable onMove={this.moveFile}
                         deleteable onDelete={this.deleteFile}
                     />
-                    {this.moveFileVisible &&
-                        // TODO: dummy folderpath, needs to connect to real file paths
+                    {this.moveFileVisible && this.props.currentFolder &&
                         <MoveFileDialog
-                            folderpath={[
-                                ['Folder1', 'path1'],
-                                ['Folder2', 'path2'],
-                                ['Folder3', 'path3'],
-                                ['Folder4', 'path1'],
-                                ['Folder5', 'path2']
-                            ]}
+                            file={file}
+                            currentFolder={this.props.currentFolder}
                             visible={this.moveFileVisible}
                             onHide={this.hideMoveFile}
                         />

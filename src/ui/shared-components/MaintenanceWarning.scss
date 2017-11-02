@@ -1,32 +1,31 @@
 .maintenance-wrapper {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    transition: 250ms $transition-easing-ease-in;
-    cursor: pointer;
-    height: 48px;
-    margin-top: -12px;
-    padding: $padding-default;
+  @extend %flex-row;
+  @extend %flex-align-center;
+  cursor: pointer;
+  height: 48px;
+  padding: $padding-default;
+  margin-top: -12px;
+  transition: 250ms $transition-easing-ease-in;
 
-    .maintenance-title {
-        color: $red-error;
-        font-size: 16px; 
-        font-weight: $font-weight-semibold;
-        margin-top: -$margin-tiny;
-        padding-top: $padding-tiny;
-    }
-    
-    .maintenance-icon {
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 24px;
-        margin-left: auto;
-        width: 24px;
-    }    
+  .maintenance-title {
+    padding-top: $padding-tiny;
+    margin-top: -$margin-tiny;
+    font-size: 16px;
+    font-weight: $font-weight-semibold;
+    color: $red-error;
+  }
+
+  .maintenance-icon {
+    height: 24px;
+    width: 24px;
+    margin-left: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 }
 
 .dialog-maintenance {
-    border-top: 12px solid $red-error;
-    border-radius: 8px;
+  border-radius: 8px;
+  border-top: 12px solid $red-error;
 }
-  

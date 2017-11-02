@@ -3,11 +3,11 @@
 //       replace padding and margins with variables where applicable
 // so that I don't have to write millions of font rules to overwrite RTs millions of font rules.
 * {
-  font-family: $font-stack;
-  -webkit-font-smoothing: antialiased;
+  -webkit-user-drag: none;
   -webkit-user-select: none;
   user-select: none;
-  -webkit-user-drag: none;
+  font-family: $font-stack;
+  -webkit-font-smoothing: antialiased;
 }
 // but that ^ overrides icon font, so:
 .material-icons * {
@@ -22,16 +22,16 @@
 }
 
 .rt-avatar-letter {
+  -webkit-user-select: none;
   text-shadow: 0 0 0 rgba(0, 0, 0, 0); // so we can see letters on white background
   text-transform: capitalize;
-  -webkit-user-select: none;
 }
 
 // BUTTONS and ICONS!
 // makes buttons look like links. This might be a bad idea.
 .button-link {
-  font-weight: $font-weight-regular;
   padding: 0;
+  font-weight: $font-weight-regular;
   text-decoration: underline;
   text-transform: inherit;
 
@@ -42,16 +42,16 @@
 
 .rt-button-button {
   @extend %flex-shrink-0;
-  font-weight: $font-weight-semibold;
-  overflow: hidden;
   padding-top: 0;
+  overflow: hidden;
+  font-weight: $font-weight-semibold;
   transform: translate3d(0, 0, 0);
 }
 
 .rt-button-button > .rt-button-icon,
 .material-icons {
-  color: $icon-dark-active;
   font-size: 24px;
+  color: $icon-dark-active;
 }
 
 .rt-button-neutral:not([disabled]).rt-button-flat,
@@ -83,8 +83,8 @@
 .rt-link-link {
   display: inline-flex;
   font-family: $font-stack;
-  opacity: 1 !important;
   text-decoration: underline;
+  opacity: 1 !important;
 }
 
 // INPUTS
@@ -94,31 +94,31 @@
 
 .rt-input-input {
   height: 48px;
-  margin-top: 40px;
-  padding: 0;
   width: 100%;
+  padding: 0;
+  margin-top: 40px;
 
   &.immutable input {
-    border-width: 0;
     pointer-events: none;
+    border-width: 0;
   }
 
   input {
+    height: 48px;
+    padding-top: 18px;
+    margin-top: 0;
+    transition: 150ms;
     // TODO border-radius variables
     border: 1px solid $black-38;
     border-radius: 2px;
-    height: 48px;
-    margin-top: 0;
-    padding-top: 18px;
-    transition: 150ms;
   }
 }
 
 .rt-input-input {
   .rt-input-label {
-    font-size: 14px;
-    padding-left: $padding-small;
     top: 17px;
+    padding-left: $padding-small;
+    font-size: 14px;
   }
 }
 
@@ -137,11 +137,11 @@
 
 .rt-input-inputElement {
   @extend %input-text;
+  padding: 0 $padding-small;
+  margin-top: 2px;
+  color: $text-dark-primary;
   background-color: transparent;
   border-bottom-color: transparent;
-  color: $text-dark-primary;
-  margin-top: 2px;
-  padding: 0 $padding-small;
 }
 
 .rt-input-label,
@@ -151,14 +151,14 @@
 
 // TODO: review password class in rt-light-theme.scss
 .input-with-action {
-  margin-top: 40px;
   position: relative;
+  margin-top: 40px;
 
   .rt-button-button {
-    color: $icon-dark-active;
     position: absolute;
     right: 6px;
     top: 6px;
+    color: $icon-dark-active;
 
     .rt-button-icon {
       color: $icon-dark-active;
@@ -171,8 +171,8 @@
 }
 
 .rt-dropdown-value {
-  align-items: center;
   display: flex;
+  align-items: center;
   height: 48px;
   padding: 0;
 }
@@ -190,8 +190,8 @@
 }
 
 .rt-input-errored > .rt-input-inputElement {
-  border: 1px solid $red-error;
   margin-top: 2px;
+  border: 1px solid $red-error;
 }
 
 // OVERLAY
@@ -207,15 +207,15 @@
 
 .chip-label {
   @extend %flex-shrink-0;
-  background: $background-root;
-  border: 1px solid $blue;
-  color: $blue;
-  margin-bottom: $margin-tiny;
-  margin-right: 0;
-  margin-top: $margin-tiny;
   max-width: 176px;
   min-width: 88px;
+  margin-right: 0;
+  margin-top: $margin-tiny;
+  margin-bottom: $margin-tiny;
   transition: 500ms 500ms $transition-easing-ease-out;
+  color: $blue;
+  background: $background-root;
+  border: 1px solid $blue;
 
   + .chip-label {
     margin-left: $margin-tiny;
@@ -225,8 +225,8 @@
     @extend %flex-align-center;
     @extend %flex-justify-center;
     display: inline-flex;
-    opacity: 1;
     transition: 250ms;
+    opacity: 1;
   }
 
   .rt-chip-delete {
@@ -248,24 +248,24 @@
 
   .rt-chip-deleteIcon {
     @extend %flex-shrink-0;
-    background: #fff;
     height: 20px;
     width: 20px;
+    background: #fff;
 
     .rt-chip-deleteX {
-      stroke: rgba($blue, .35);
       stroke-width: 4px;
+      stroke: rgba($blue, .35);
     }
   }
 
   &.not-found {
-    background: $red-error;
-    color: transparent;
-    margin: 0;
-    min-width: 0;
-    opacity: 0;
-    padding: 0;
     width: 0;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    color: transparent;
+    opacity: 0;
+    background: $red-error;
 
     span:last-of-type {
       opacity: 0;
@@ -279,18 +279,18 @@
   width: 480px;
 
   .rt-switch-text {
-    color: $text-dark-primary;
     flex-grow: 1;
     padding: 0;
+    color: $text-dark-primary;
   }
 
   .rt-switch-off,
   .rt-switch-on {
-    border: 1px solid $divider-dark;
-    height: 24px;
-    margin-top: 0;
     order: 2;
+    height: 24px;
     width: 48px;
+    margin-top: 0;
+    border: 1px solid $divider-dark;
   }
 
   .rt-switch-off {
@@ -304,19 +304,19 @@
 
   .rt-switch-thumb {
     height: 22px;
-    top: 0;
     width: 22px;
+    top: 0;
   }
 
   .rt-switch-off .rt-switch-thumb {
-    background: $black-12;
     box-shadow: none;
+    background: $black-12;
   }
 
   .rt-switch-on .rt-switch-thumb {
-    background-color: $white;
-    box-shadow: none;
     left: 24px;
+    box-shadow: none;
+    background-color: $white;
   }
 }
 
@@ -359,14 +359,4 @@ ul {
 
 .rt-dialog-title {
   font-weight: 400;
-}
-
-.rt-tooltip-tooltip {
-  max-width: 230px;
-}
-
-.rt-tooltip-tooltipInner {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }

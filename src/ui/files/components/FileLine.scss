@@ -9,9 +9,9 @@
 .files .file-wrapper { // TODO refactor these into .file-table-wrapper
   .file-title {
     cursor: pointer;
-    font-weight: $font-weight-semibold;
     max-width: 304px;
     overflow: hidden;
+    font-weight: $font-weight-semibold;
     text-overflow: ellipsis;
     transition: 150ms;
 
@@ -22,13 +22,13 @@
 
   .loading {
     @extend %flex-row;
-    border-bottom: 0;
-    height: 4px;
-    left: 0;
-    margin-top: 44px;
-    padding: 0;
     position: absolute;
-    right: 0;
+    height: 4px;
     width: 100%;
+    left: 0;
+    right: 0;
+    padding: 0;
+    margin-top: 44px;
+    border-bottom: 0;
   }
 }

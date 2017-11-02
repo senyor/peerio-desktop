@@ -6,8 +6,8 @@
   .url-grey,
   .warning-body,
   .url-content {
-    border-left: 1px solid $divider-dark;
     padding-left: $padding-default;
+    border-left: 1px solid $divider-dark;
   }
 
   .warning-header {
@@ -29,14 +29,14 @@
 
   .warning-body {
     p.text {
+      max-width: $urlpreview-text-width;
       margin: 0;
       margin-bottom: $margin-default;
-      max-width: $urlpreview-text-width;
     }
 
     .options {
-      margin-top: $margin-xl;
       padding-left: $padding-default;
+      margin-top: $margin-xl;
 
       .rt-radio-radio {
         border-color: $text-dark-secondary;
@@ -63,29 +63,29 @@
 
   .update-settings {
     @extend %hint-error-label;
+    display: flex;
 
     align-content: center;
-    display: flex;
-    font-style: italic;
     margin-left: -7px; // half of icon size
     margin-top: $margin-small;
+    font-style: italic;
 
     &.nomargin {
       margin-left: 0;
     }
 
     .material-icons {
-      color: $green-affirmative;
       font-size: 16px;
+      color: $green-affirmative;
     }
 
     .text {
-      color: $text-dark-secondary;
       margin-left: $margin-small;
+      color: $text-dark-secondary;
 
       a {
-        color: $text-dark-secondary;
         text-decoration: underline;
+        color: $text-dark-secondary;
       }
     }
   }

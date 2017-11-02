@@ -45,6 +45,10 @@ window.stopSpam = function() {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (navigator.platform.startsWith('Linux')) {
+        document.body.classList.add('platform-linux');
+    }
+
     // <emojione> ------------------------------------------------------------------------------------------------
     // configuring emojione and preloading sprites
     const emojione = require('~/static/emoji/emojione.js');

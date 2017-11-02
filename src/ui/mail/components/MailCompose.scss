@@ -12,21 +12,21 @@
     width: calc(100vw - 574px);
 
     .compose-meta {
-      padding-top: $padding-small;
       @extend %flex-row;
       @extend %flex-shrink-0;
+      padding-top: $padding-small;
 
       .meta-labels {
-        line-height: 48px;
         @extend .dark-label;
         @extend %flex-col;
         @extend %flex-justify-between;
+        line-height: 48px;
       }
 
       .attached-files {
         @extend %flex-shrink-0;
-        font-weight: $font-weight-semibold;
         margin-left: auto;
+        font-weight: $font-weight-semibold;
 
         // so that the menu icon appears on the right side of the label.
         .rt-menu-menuItem .rt-menu-icon {
@@ -65,13 +65,13 @@
         @extend %flex-row;
         @extend %flex-shrink-1;
         @extend %flex-grow-1;
-        margin-top: 0;
-        padding: 0;
         width: auto;
+        padding: 0;
+        margin-top: 0;
 
         input {
-          border-width: 0;
           padding: 0;
+          border-width: 0;
         }
       }
     }
@@ -96,9 +96,9 @@
   }
 
   .mail-content {
-    color: $text-dark-primary;
     flex: 1;
     overflow-y: hidden;
+    color: $text-dark-primary;
 
     .chip-wrapper {
       margin: $margin-tiny 0 0 $margin-default;

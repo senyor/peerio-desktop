@@ -1,7 +1,7 @@
 .auto-sign-in {
   @extend %background-pattern;
-  color: $text-light-primary;
   height: 100vh;
+  color: $text-light-primary;
 
   .content {
     @extend %flex-align-center;
@@ -27,11 +27,11 @@
       }
 
       .rt-button-button {
-        background-color: $white-12;
-        border: 2px solid $white-12;
+        width: 168px;
         line-height: 32px;
         transition: 250ms;
-        width: 168px;
+        background-color: $white-12;
+        border: 2px solid $white-12;
 
         &:hover {
           border-color: $white;

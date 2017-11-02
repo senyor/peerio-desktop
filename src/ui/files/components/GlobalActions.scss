@@ -2,14 +2,14 @@
   .file-wrapper {
     .table-action-bar {
       @extend %flex-row;
-      align-items: center;
-      background: $black-06;
-      border-radius: 2px;
       flex-shrink: 0;
+      align-items: center;
       height: 64px;
+      width: 100%;
       padding: 0 $padding-default 0 24px;
       white-space: nowrap;
-      width: 100%;
+      background: $black-06;
+      border-radius: 2px;
 
       .search {
         margin-left: auto;
@@ -24,8 +24,8 @@
       }
 
       .material-icons {
-        color: rgba($blue, .5);
         transition: 250ms;
+        color: rgba($blue, .5);
       }
 
       .rt-button-button:hover .material-icons {

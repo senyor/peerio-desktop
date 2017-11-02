@@ -1,8 +1,8 @@
 .file-sprite-icon {
+  display: block;
   background-image: url(./static/sprites/ic-files.png);
   background-repeat: no-repeat;
   background-size: 960px auto; /* width = half of bg img */
-  display: block;
 
   &.ic-48dp {
     height: 48px;

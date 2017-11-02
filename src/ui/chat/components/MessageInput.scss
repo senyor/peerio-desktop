@@ -2,20 +2,20 @@ $suggests-max-height: 200px;
 
 .message-view {
   .suggests-wrapper {
+    position: absolute;
+    height: $suggests-max-height; // keep it like this until staged hide animation is implemented
+    max-height: $suggests-max-height;
+    min-height: $suggests-max-height;
+    left: 20px;
+    right: 20px;
+    bottom: 100%;
+    overflow: hidden;
+    box-shadow: 0 4px 13px -6px;
     background-color: #fafafa;
     border: 1px solid #eee;
     border-bottom: none;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
-    bottom: 100%;
-    box-shadow: 0 4px 13px -6px;
-    height: $suggests-max-height; // keep it like this until staged hide animation is implemented
-    left: 20px;
-    max-height: $suggests-max-height;
-    min-height: $suggests-max-height;
-    overflow: hidden;
-    position: absolute;
-    right: 20px;
 
     //transition: 350ms cubic-bezier(.4, 0, .2, 1);
 
@@ -23,13 +23,13 @@ $suggests-max-height: 200px;
     //  bottom: 100%;
     // }
     .suggests {
-      bottom: 10px;
-      left: 0;
-      overflow-x: hidden;
-      overflow-y: scroll;
       position: absolute;
+      left: 0;
       right: 0;
       top: 10px;
+      bottom: 10px;
+      overflow-x: hidden;
+      overflow-y: scroll;
     }
 
     .suggest-item {
@@ -38,8 +38,8 @@ $suggests-max-height: 200px;
     }
 
     .selected {
-      background-color: $blue;
       color: white;
+      background-color: $blue;
     }
   }
 
@@ -50,15 +50,15 @@ $suggests-max-height: 200px;
   .message-input {
     @extend %flex-row;
     @extend %flex-align-center;
-    background-color: $background-root;
-    border-top: 1px solid $divider-dark;
     //flex-grow: 1; FIXME: only grow when textarea grows.
     flex-shrink: 0;
-    margin-top: auto;
+    position: relative;
     max-height: 112px;
     min-height: 64px;
     padding: 0 $padding-small 0 26px;
-    position: relative;
+    margin-top: auto;
+    background-color: $background-root;
+    border-top: 1px solid $divider-dark;
 
     #messageEditor,
     .message-editor-empty {
@@ -74,25 +74,25 @@ $suggests-max-height: 200px;
     }
 
     .ql-container {
+      width: 100%;
+      padding: $padding-small 0;
+      margin-left: 18px;
       font-family: inherit;
       font-size: inherit;
-      margin-left: 18px;
-      padding: $padding-small 0;
-      width: 100%;
     }
 
     .ql-editor {
-      line-height: 1.45;
       max-height: 96px;
       padding: 0;
+      line-height: 1.45;
 
       &.ql-blank::before {
+        width: 100%;
         left: 0;
-        overflow: hidden;
         right: auto;
+        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        width: 100%;
       }
 
       p {
@@ -100,19 +100,19 @@ $suggests-max-height: 200px;
       }
 
       img {
-        vertical-align: middle;
         width: 1.5em;
+        vertical-align: middle;
       }
     }
   }
 
   // RANDOM MESSAGES
   .backdrop {
-    background-color: rgba(255, 255, 255, .58);
-    bottom: 0;
-    left: 0;
     position: absolute;
+    left: 0;
     right: 0;
     top: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .58);
   }
 }

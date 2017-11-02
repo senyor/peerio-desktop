@@ -1,9 +1,9 @@
 .sidebar-section {
   @extend %flex-shrink-0;
-  border-bottom: 1px solid $divider-dark;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-bottom: 1px solid $divider-dark;
   // overflow-y: auto;
 
   .section-title {
@@ -24,8 +24,8 @@
   .section-content {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
   }
 
   &.closed {

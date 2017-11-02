@@ -1,26 +1,26 @@
 .notification {
-  background-color: $blue;
-  border-radius: 24px;
-  color: $text-light-primary;
+  height: 22px;
+  width: 28px;
+  line-height: 22px;
   font-size: 14px;
   font-weight: $font-weight-semibold;
-  height: 22px;
-  line-height: 22px;
   text-align: center;
-  width: 28px;
+  color: $text-light-primary;
+  background-color: $blue;
+  border-radius: 24px;
 }
 
 .small-notification {
-  background-color: $black-38;
-  border-radius: 2px;
-  color: $text-light-primary;
+  height: 16px;
+  width: 16px;
+  margin: 0;
+  line-height: 16px;
   font-size: 12px;
   font-weight: $font-weight-bold;
-  height: 16px;
-  line-height: 16px;
-  margin: 0;
   text-align: center;
-  width: 16px;
+  color: $text-light-primary;
+  background-color: $black-38;
+  border-radius: 2px;
 }
 
 .dialog-warning {

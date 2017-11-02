@@ -5,9 +5,16 @@
     "allowJs": true,
     "baseUrl": "./src",
     "paths": {
-      "~/*": ["./*"],
-      "~/icebear": ["../node_modules/@peerio/peerio-icebear/src"],
-      "*": ["*", "../app/node_modules/*"]
+      "~/*": [
+        "./*"
+      ],
+      "~/icebear": [
+        "../app/node_modules/peerio-icebear/src"
+      ],
+      "*": [
+        "*",
+        "../app/node_modules/*"
+      ]
     }
   },
   "exclude": [

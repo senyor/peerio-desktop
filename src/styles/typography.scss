@@ -71,8 +71,8 @@
 }
 
 .passphrase {
+  user-select: text;
+  line-height: 1;
   font-size: 24px;
   font-weight: $font-weight-bold;
-  line-height: 1;
-  user-select: text;
 }

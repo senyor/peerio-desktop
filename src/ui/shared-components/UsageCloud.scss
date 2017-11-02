@@ -2,9 +2,9 @@
   .usage {
     @extend %flex-col;
     @extend %hint-error-label;
-    color: $text-light-secondary;
     margin: auto 0 32px;
     text-align: center;
+    color: $text-light-secondary;
 
     .material-icons {
       color: $icon-light-active;

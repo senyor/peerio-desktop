@@ -1,9 +1,9 @@
 // view wrapper
 .messages {
   @extend %flex-row;
-  background: $background-root;
-  padding-right: $app-nav-width;
   width: 100%;
+  padding-right: $app-nav-width;
+  background: $background-root;
 
   .starred,
   .starred .material-icons {
@@ -16,41 +16,41 @@
   @extend %flex-col;
   @extend %flex-grow-1;
   @extend %flex-align-center;
-  background: white;
-  height: 100vh;
   position: relative;
+  height: 100vh;
   width: 100vw;
+  background: white;
 
   .message-search-wrapper {
     @extend %flex-align-center;
     @extend %flex-shrink-0;
     display: flex;
-    margin-bottom: $margin-xl;
     width: 100%;
+    margin-bottom: $margin-xl;
 
     .title-to {
       @extend %title;
-      font-weight: $font-weight-regular;
       margin-right: $margin-large;
+      font-weight: $font-weight-regular;
     }
   }
 
   .new-chat-search {
     @extend %flex-align-center;
+    display: flex;
+    width: 100%;
+    padding: 0 $padding-small 0 $padding-default;
+    overflow: hidden;
     border: 1px solid $input-border;
     border-radius: 24px;
-    display: flex;
-    overflow: hidden;
-    padding: 0 $padding-small 0 $padding-default;
-    width: 100%;
 
     + .new-chat-search {
       margin-top: 32px;
     }
 
     + .user-picker {
-      margin-top: 32px;
       padding-top: 0;
+      margin-top: 32px;
     }
 
     .chip-wrapper {
@@ -61,15 +61,15 @@
 
     .rt-input-input {
       flex-grow: 1;
-      margin: 0;
+      width: inherit;
       max-width: 100%;
       padding: 0;
-      width: inherit;
+      margin: 0;
 
       input {
-        border-width: 0;
-        font-style: italic;
         padding: 0;
+        font-style: italic;
+        border-width: 0;
       }
     }
 
@@ -92,9 +92,9 @@
 
   .rt-list-subheader {
     @extend %flex-shrink-0;
-    border-bottom: $divider-dark solid 1px;
     cursor: default;
     margin-top: $margin-default;
+    border-bottom: $divider-dark solid 1px;
   }
 
   .rt-list-listItem {
@@ -110,11 +110,11 @@
 
 .message-toolbar {
   @extend %flex-justify-between;
-  align-items: center;
-  border-bottom: 1px solid $divider-dark;
   display: flex;
   flex: 0 0 80px;
+  align-items: center;
   padding: 0 $padding-default 0 24px;
+  border-bottom: 1px solid $divider-dark;
 
   .message-toolbar-inner {
     @extend %flex-col;
@@ -123,32 +123,32 @@
 
   .title {
     @extend %flex-row;
-    color: $text-dark-primary;
-    font-size: 20px;
-    font-weight: $font-weight-bold;
     height: 24px;
     margin: $margin-default $margin-default $margin-tiny 0;
     overflow: hidden;
+    font-size: 20px;
+    font-weight: $font-weight-bold;
+    color: $text-dark-primary;
 
     .name-editor {
       height: 24px;
-      margin: 0;
-      padding: 0;
       width: 260px;
+      padding: 0;
+      margin: 0;
 
       .name-editor-inner {
         overflow: hidden;
       }
 
       input {
+        height: 24px;
+        padding: $padding-tiny $padding-small;
+        margin: 0;
+        line-height: 20px;
+        font-weight: $font-weight-bold;
+        color: $text-dark-secondary;
         border: 1px solid rgba($blue, .54);
         border-radius: 4px;
-        color: $text-dark-secondary;
-        font-weight: $font-weight-bold;
-        height: 24px;
-        line-height: 20px;
-        margin: 0;
-        padding: $padding-tiny $padding-small;
       }
     }
 
@@ -162,11 +162,11 @@
 
     // styling for edit icon in title bar thing.
     .material-icons {
-      color: $black-38;
       display: none;
-      font-size: 18px;
-      left: 2px;
       position: absolute; // FIXME: rewrite to remove absolute positioning - Paul
+      left: 2px;
+      font-size: 18px;
+      color: $black-38;
     }
 
     &:hover {
@@ -185,8 +185,8 @@
 
     .rt-progress_bar-circular {
       height: 20px;
-      margin: 4px 9px 0 7px;
       width: 20px;
+      margin: 4px 9px 0 7px;
     }
 
     .material-icons {
@@ -213,7 +213,6 @@
 @import './ChannelInvites';
 @import './NewChannel';
 @import './NewChat';
-@import './components/ChannelUpgradeDialog';
 @import './components/ChannelUpgradeOffer';
 @import './components/ChatList';
 @import './components/ChatNameEditor';

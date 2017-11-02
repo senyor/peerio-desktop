@@ -66,22 +66,6 @@ class Root extends React.Component {
                 this.showOfflineNotification = !socket.connected;
             }, 5000);
         }, { fireImmediately: true });
-
-        // Dev tools ---------->
-        // this.devtools = null;
-        // if (isDevEnv) {
-        //     const MobxTools = require('mobx-react-devtools').default; //eslint-disable-line
-        //     this.devtools = null;// <MobxTools />;
-        //     window.hideMobxTools = () => {
-        //         this.devtools = null;
-        //         this.forceUpdate();
-        //     };
-        //     window.showMobxTools = () => {
-        //         this.devtools = <MobxTools />;
-        //         this.forceUpdate();
-        //     };
-        // }
-        // <--------- Dev tools
     }
 
     componentWillMount() {

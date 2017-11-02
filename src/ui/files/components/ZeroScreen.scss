@@ -1,9 +1,9 @@
 .files {
   .zero-file {
     @extend %flex-row;
-    background-color: white;
     height: 100vh;
     width: calc(100vw - #{$app-nav-width});
+    background-color: white;
 
     .spacer {
       @extend %flex-col;
@@ -21,9 +21,9 @@
       margin-top: 64px;
 
       .display-3 {
-        color: $text-dark-secondary;
-        margin-bottom: 48px;
         margin-top: 80px;
+        margin-bottom: 48px;
+        color: $text-dark-secondary;
       }
     }
 
@@ -37,9 +37,9 @@
         @extend %flex-align-start;
 
         p {
-          line-height: 1.4;
-          margin-bottom: 48px;
           width: 200px;
+          margin-bottom: 48px;
+          line-height: 1.4;
         }
       }
 
@@ -50,9 +50,9 @@
     }
 
     .upgrade {
-      color: $text-dark-secondary;
       margin-top: 48px;
       text-align: center;
+      color: $text-dark-secondary;
     }
   }
 }

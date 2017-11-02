@@ -1,15 +1,15 @@
 .mail {
   @extend %flex-row;
-  background-color: $white;
-  color: $text-dark-secondary;
   position: relative;
   width: 100%;
+  color: $text-dark-secondary;
+  background-color: $white;
 
   .rt-button-floating {
-    background-color: $orange !important;
-    bottom: 32px;
-    left: 198px;
     position: absolute;
+    left: 198px;
+    bottom: 32px;
+    background-color: $orange !important;
 
     .material-icons {
       color: $text-light-primary;
@@ -20,10 +20,10 @@
     @extend %flex-grow-0;
     @extend %flex-shrink-0;
     @extend %flex-col;
-    background-color: $background-faintblue;
-    border-right: 1px solid $divider-dark;
     height: 100%;
     width: $width-mail-list;
+    background-color: $background-faintblue;
+    border-right: 1px solid $divider-dark;
   }
 
   &-list {
@@ -35,20 +35,20 @@
     @extend %flex-row;
     @extend %flex-align-center;
     @extend %flex-shrink-0;
-    border-bottom: 1px solid $divider-dark;
     height: 48px;
-    margin-top: $margin-small;
     padding-left: $padding-small;
+    margin-top: $margin-small;
+    border-bottom: 1px solid $divider-dark;
   }
 
   .mail-sidebar {
     @extend %flex-grow-0;
     @extend %flex-shrink-0;
     @extend %flex-col;
-    border-left: 1px solid $divider-dark;
     height: 100%;
-    padding: $padding-large $padding-default $padding-default;
     width: $width-mail-sidebar;
+    padding: $padding-large $padding-default $padding-default;
+    border-left: 1px solid $divider-dark;
 
     .mail-link {
       @extend %flex-row;

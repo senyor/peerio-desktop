@@ -1,11 +1,11 @@
 .contacts-view .invited-contacts {
   .avatar-invited {
-    background: $black-06;
-    border-radius: 40px;
-    color: $text-dark-secondary;
     height: 40px;
+    width: 40px;
     line-height: 40px;
     text-align: center;
-    width: 40px;
+    color: $text-dark-secondary;
+    background: $black-06;
+    border-radius: 40px;
   }
 }

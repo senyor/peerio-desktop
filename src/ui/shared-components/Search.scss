@@ -1,12 +1,12 @@
 .search {
+  display: flex;
+  flex-shrink: 0;
   align-items: center;
+  height: 36px;
+  width: 256px;
   background: $background-root;
   border: 1px solid $input-border;
   border-radius: 8px;
-  display: flex;
-  flex-shrink: 0;
-  height: 36px;
-  width: 256px;
 
   .rt-input-input {
     height: 36px;
@@ -14,10 +14,10 @@
   }
 
   input {
-    border-width: 0;
     height: 36px;
-    line-height: 36px;
     padding: 0 0 0 $padding-small;
+    line-height: 36px;
+    border-width: 0;
   }
 
   .search-icon {

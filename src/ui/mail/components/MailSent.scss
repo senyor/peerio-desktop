@@ -6,10 +6,10 @@
 
   .compose-view {
     .compose-meta.sent {
-      background-color: $black-03;
-      border-bottom: 1px solid $divider-dark;
       height: 112px;
       padding: $padding-small $padding-default $padding-default 56px;
+      background-color: $black-03;
+      border-bottom: 1px solid $divider-dark;
 
       .meta-container {
         @extend %flex-row;
@@ -19,9 +19,9 @@
       }
 
       .subject {
+        overflow: hidden;
         font-size: 16px;
         font-weight: $font-weight-bold;
-        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }

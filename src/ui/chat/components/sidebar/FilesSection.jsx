@@ -54,7 +54,6 @@ class FilesSection extends React.Component {
         </IconMenu>);
 
         const textParser = {
-            // emphasis: text => 'hi',
             clickHere: text => (
                 <a className="clickable" onClick={this.handleUpload}>{text}</a>
             )

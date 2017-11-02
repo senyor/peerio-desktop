@@ -20,13 +20,13 @@
   }
 
   &.inverted {
+    color: $green-affirmative;
     background-color: $white;
     border: 1px solid $green-affirmative;
-    color: $green-affirmative;
 
     &:hover {
-      background-color: $white;
       color: $green-affirmative;
+      background-color: $white;
     }
   }
 }
@@ -64,17 +64,17 @@
   position: relative;
 
   .rt-menu-caption {
-    align-items: center;
     display: flex;
+    align-items: center;
   }
 
   .rt-menu-caption::before {
-    background-position-y: center;
-    background-repeat: no-repeat;
     content: ' ';
     display: inline-block;
     height: 24px;
     width: 38.4px;
+    background-position-y: center;
+    background-repeat: no-repeat;
   }
 
   &.button-move {

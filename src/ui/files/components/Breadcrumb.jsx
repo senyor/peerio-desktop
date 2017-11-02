@@ -5,10 +5,6 @@ const { FontIcon } = require('~/react-toolbox');
 
 @observer
 class Breadcrumb extends React.Component {
-    handleClick = (path) => {
-        console.log(path); // go to path
-    }
-
     @computed get folderPath() {
         const folderPath = [];
         let iterator = this.props.currentFolder;

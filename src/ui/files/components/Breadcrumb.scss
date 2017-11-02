@@ -1,15 +1,15 @@
 .breadcrumb {
   @extend %title;
 
-  align-items: center;
   display: flex;
-  font-weight: normal;
+  align-items: center;
   max-width: 100%;
   overflow: hidden;
+  font-weight: normal;
 
   .breadcrumb-entry {
-    align-items: center;
     display: flex;
+    align-items: center;
     min-width: 3em;
     overflow: hidden;
 
@@ -20,10 +20,10 @@
     a {
       @extend %title;
       align-items: center;
-      color: $text-dark-secondary;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      color: $text-dark-secondary;
     }
 
     &:last-of-type a {

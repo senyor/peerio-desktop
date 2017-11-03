@@ -15,13 +15,35 @@ class Breadcrumb extends React.Component {
         return folderPath;
     }
 
+    componentDidMount() {
+        window.addEventListener('resize', this.getAllTextWidths, false);
+    }
+
+    componentWillUnmount() {
+        window.addEventListener('resize', this.getAllTextWidths);
+    }
+
+    // getTextWidth = (text) => {
+    //     this.element = document.createElement('canvas');
+    //     this.context = this.element.getContext('2d');
+    //     this.context.font = '20px Open Sans bold';
+    //     return this.context.measureText(text).width;
+    // }
+
+    getAllTextWidths = () => {
+        const folderLinks = document.getElementsByClassName('folder-link');
+        Array.prototype.forEach.call(folderLinks, (folder) => {
+            console.log(window.getComputedStyle(folder).getPropertyValue('width'));
+        });
+    }
+
     render() {
         const { folderPath } = this;
         return (
             <div className="breadcrumb">
                 {this.folderPath.map((folder, i) => (
                     <div key={folder.name || 'root'} className="breadcrumb-entry">
-                        <a className="clickable"
+                        <a className="folder-link clickable"
                             onClick={() => this.props.onSelectFolder(folder)}>
                             {folder.name || 'Files'}
                         </a>

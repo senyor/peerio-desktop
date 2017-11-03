@@ -39,3 +39,4 @@ jobs:
       - run:
           name: eslint and stylelint
           command: npm run validate
+      - run: npm test

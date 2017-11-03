@@ -1,0 +1,1 @@
+Unit tests are setup for testing only simple desktop modules without use of sdk.

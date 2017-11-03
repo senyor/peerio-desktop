@@ -24,15 +24,6 @@ class Breadcrumb extends React.Component {
         window.addEventListener('resize', this.computeFolderWidths);
     }
 
-    // @action getButtonWidths = () => {
-    //     const buttons = document.querySelectorAll('.breadcrumb .rt-button-button');
-    //     Array.prototype.forEach.call(buttons, (button) => {
-    //         this.buttonWidths += window.getComputedStyle(button).getPropertyValue('width');
-    //         console.log(button);
-    //     });
-    //     console.log(this.buttonWidths);
-    // }
-
     // Total combined current widths of text, before replacing folder names with ellipses
     @observable folderWidths = [];
     @observable totalWidth = 0;
@@ -98,13 +89,6 @@ class Breadcrumb extends React.Component {
             count++;
             console.log(`${this.calcActualWidth - containerWidth}  `);
         }
-
-        // while (this.calcActualWidth < containerWidth) {
-        // let sum = 0;
-        // for (let i = 0; i < this.foldersToEllipsize.length - 1; i++) {
-        //     sum += this.foldersToEllipsize[i];
-        // }
-        // }
     }
 
     render() {

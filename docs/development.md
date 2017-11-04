@@ -11,7 +11,7 @@ Assuming you have nodejs and npm installed.
 
 ## Linking the SDK
 
-If you want to use a local development version of `peerio-icebear`, run `npm link` inside that project, then `npm link @peerio/peerio-icebear`.
+If you want to use a local development version of `peerio-icebear`, run `npm link` inside that project, then `cd app && npm link peerio-icebear && cd ..`.
 
 **Beware:** Don't ever use a development SDK with production servers, especially not with your own account (you could break it permanently).
 
@@ -20,6 +20,14 @@ If you want to use a local development version of `peerio-icebear`, run `npm lin
 Due to the 2-package.json structure, as well as other idiosyncracies, the following gotchas must be observed when adding dependencies to peerio-desktop:
 1. If you add a dependency to peerio-icebear, you should add it to both the dependencies and peerDependencies of that project.
 2. Only dependencies from `app/` will end up in a prod build, and they have to be added to `app/package.json` manually.
+
+## git hooks
+
+There are several git hooks configured, some of them are optional and you can opt in by creating `.opt-in` file in repository root (it's git ignored).
+`.opt-in` file should contain optional hooks names one per line.
+Add `link-sdk` to enable workaround for npm bug that removes linked repository. This hook will re-link icebear sdk after every `npm install`.
+Add `lint` to run code validation before commit, commit will fail if there are any issues.
+Add `npm-install` to never ever forget to run `npm install` after package.json was changed in result of branch change/merge/pull.
 
 ## Logging
 

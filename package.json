@@ -4,8 +4,8 @@
   "version": "2.59.0",
   "scripts": {
     "=== HOOKS ===": "",
-    "postcheckout": "npm run warn-npm-install",
-    "postmerge": "npm run warn-npm-install",
+    "postcheckout": "opt --in npm-install --exec \"npm install\"",
+    "postmerge": "opt --in npm-install --exec \"npm install\"",
     "precommit": "opt --in lint --exec \"npm run validate\"",
     "prepush": "git fetch --prune origin '+refs/tags/*:refs/tags/*'",
     "commitmsg": "validate-commit-msg",
@@ -40,8 +40,7 @@
     "check-links": "echo node_modules: && ls -la node_modules | grep peerio && echo app/node_modules: && ls -la app/node_modules | grep peerio",
     "react-toolbox": "react-toolbox-themr",
     "electron:run": "electron ./app",
-    "cleanup": "rm -rf app/build && mkdirp app/build",
-    "warn-npm-install": "echo \"$(tput -Txterm-256color setaf 0)$(tput -Txterm-256color setab 11) Reminder to run 'npm install' $(tput -Txterm-256color sgr 0)\""
+    "cleanup": "rm -rf app/build && mkdirp app/build"
   },
   "repository": {
     "type": "git",

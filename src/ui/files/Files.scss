@@ -159,16 +159,6 @@
   .waiting-3rd-party {
     background-color: $black-03;
   }
-
-  // 36px added to ensure that the file actions button never over flows.
-  @media (max-width: #{$minimum-screen-width + 36}) {
-    padding: 0;
-
-    // hides size column at minimum-screen-width
-    .text-right + .text-right {
-      display: none;
-    }
-  }
 }
 
 .add-folder-popup {

@@ -120,7 +120,7 @@ class Files extends React.Component {
         };
         const dialogActions = [
             { label: t('button_cancel'), onClick: hide },
-            { label: t('button_create'), onClick: this.handleAddFolder }
+            { label: t('button_create'), disabled: !this.folderName.trim(), onClick: this.handleAddFolder }
         ];
         return (
             <Dialog title={t('button_newFolder')}
@@ -140,10 +140,10 @@ class Files extends React.Component {
         };
         const dialogActions = [
             { label: t('button_cancel'), onClick: hide },
-            { label: t('Rename'), onClick: this.handleRenameFolder }
+            { label: t('button_rename'), disabled: !this.folderName.trim(), onClick: this.handleRenameFolder }
         ];
         return (
-            <Dialog title={t('Rename folder')}
+            <Dialog title={t('button_rename')}
                 active={this.addFolderPopupVisible} type="small" ref={this.onPopupRef}
                 actions={dialogActions}
                 onOverlayClick={hide} onEscKeyDown={hide}

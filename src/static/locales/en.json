@@ -189,6 +189,7 @@
   "button_rename": "Rename",
   "button_newFolder": "New folder",
   "title_folderName": "Folder name",
+  "title_deleteFolder": "Are you sure you want to delete this folder?",
   "button_create": "Create",
   "title_fileSize": "File size",
   "title_selectedFiles": "Selected file(s)",

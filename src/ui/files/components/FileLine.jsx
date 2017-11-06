@@ -14,6 +14,9 @@ const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 
 @observer
 class FileLine extends React.Component {
+    // 21 hour limit for displaying relative timestamp (because moment.js says '1 day' starting from 21h)
+    static relativeTimeDisplayLimit = 21 * 60 * 60 * 1000;
+
     @observable showActions = false;
 
     toggleChecked = val => {
@@ -57,16 +60,22 @@ class FileLine extends React.Component {
         uiStore.contactDialogUsername = this.props.file.fileOwner;
     };
 
-    formatDate(date) {
-        if (!date) return '';
-        return moment(date).fromNow();
-    }
-
     render() {
         const file = this.props.file;
         if (!file.show) return null;
-        // minuteClock.now is never null, but this will subscribe us to clock events to re-render relative timesamp
-        if (!uiStore.minuteClock.now) return null;
+
+        // We want relative timestamp in case it's not older then 1 day.
+        // In case of relative timestamp we also want to re-render periodically to update it
+        let uploadedAt, uploadedAtTooltip;
+
+        // if file timestamp is past the limit...
+        if (Date.now() - file.uploadedAt > FileLine.relativeTimeDisplayLimit) {
+            uploadedAt = file.uploadedAt.toLocaleString();
+            // this condition is always true and we need it only to subscribe to clock updates
+        } else if (uiStore.minuteClock.now) {
+            uploadedAt = moment(file.uploadedAt).fromNow();
+            uploadedAtTooltip = file.uploadedAt.toLocaleString();
+        }
 
         return (
             <tr className={css({
@@ -97,8 +106,8 @@ class FileLine extends React.Component {
 
                 {/* <td>{file.canShare ? t('button_yes') : ''} </td> */}
 
-                <td className="text-right" title={file.uploadedAt ? file.uploadedAt.toLocaleString() : ''}>
-                    {this.formatDate(file.uploadedAt)}
+                <td className="text-right" title={uploadedAtTooltip}>
+                    {uploadedAt}
                 </td>
 
                 <td className="text-right">{file.sizeFormatted}</td>

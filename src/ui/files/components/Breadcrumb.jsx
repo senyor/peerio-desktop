@@ -24,11 +24,6 @@ class Breadcrumb extends React.Component {
         window.addEventListener('resize', this.ellipsizeFolderNames);
     }
 
-    handleClick = (folder) => {
-        this.props.onSelectFolder(folder);
-        this.ellipsizeFolderNames();
-    }
-
     // Total combined current widths of text, before replacing folder names with ellipses
     @computed get folderWidths() {
         const array = [];
@@ -106,16 +101,34 @@ class Breadcrumb extends React.Component {
         const breadcrumbContainer = document.getElementsByClassName('breadcrumb')[0];
         const containerWidth = parseInt(window.getComputedStyle(breadcrumbContainer).getPropertyValue('width'), 10);
 
-        let countUp = 0;
-        while (this.totalWidth > containerWidth && countUp < this.folderWidthsWithEllipsized.length) {
-            this.foldersToEllipsize = countUp;
-            countUp++;
+        while (this.totalWidth > containerWidth && this.foldersToEllipsize < this.folderWidthsWithEllipsized.length) {
+            this.foldersToEllipsize++;
         }
 
+        /* Compare folder name width vs ellipsis width. Compare breadcrumb container width vs current breadcrumb width.
+         * If folder name will not overflow breadcrumb container, then replace ellipsis with folder name.
+         * Repeat until the folder name WOULD overflow breadcrumb container.
+         */
         while ((this.folderWidths[this.foldersToEllipsize] - this.folderWidthsWithEllipsized[this.foldersToEllipsize])
             < (containerWidth - this.totalWidth)) {
             this.foldersToEllipsize--;
         }
+
+        // console.log(`
+        //         folderWidths: ${this.folderWidths}
+        //         folderWidthsWithEllipsized: ${this.folderWidthsWithEllipsized}
+        //
+        //         foldersToEllipsize: ${this.foldersToEllipsize}
+        //
+        //         containerWidth: ${containerWidth}
+        //         totalWidth: ${this.totalWidth}
+        //
+        //         folderWidths[${this.foldersToEllipsize}]: ${this.folderWidths[this.foldersToEllipsize]}
+        //     `);
+    }
+
+    handleClick = (folder) => {
+        this.props.onSelectFolder(folder);
     }
 
     render() {

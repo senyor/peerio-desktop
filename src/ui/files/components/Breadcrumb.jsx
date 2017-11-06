@@ -17,77 +17,104 @@ class Breadcrumb extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('resize', this.computeFolderWidths, false);
+        window.addEventListener('resize', this.ellipsizeFolderNames, false);
     }
 
     componentWillUnmount() {
-        window.addEventListener('resize', this.computeFolderWidths);
+        window.addEventListener('resize', this.ellipsizeFolderNames);
+    }
+
+    handleClick = (folder) => {
+        this.props.onSelectFolder(folder);
+        this.ellipsizeFolderNames();
     }
 
     // Total combined current widths of text, before replacing folder names with ellipses
-    @observable folderWidths = [];
-    @observable totalWidth = 0;
-    @computed get calcTotalWidth() {
-        let localTotal = 0;
-        this.folderWidths.forEach((folder) => {
-            localTotal += folder;
+    @computed get folderWidths() {
+        const array = [];
+        this.folderPath.forEach((folder) => {
+            folder.name
+                ? array.push(folder.name)
+                : array.push(t('title_files'));
         });
-        this.totalWidth = localTotal;
-        return this.totalWidth;
+
+        return this.calcTextWidths(array);
     }
+
+    // Folders, by index, that will be ellipsized
+    @observable foldersToEllipsize = -1;
 
     // Actual current widths, after replacing folder names with ellipses
-    @observable folderWidthsWithEllipsized = [];
-    @observable actualWidth = 0;
-    @computed get calcActualWidth() {
-        let localTotal = 0;
-        this.folderWidthsWithEllipsized.forEach((folder) => {
-            localTotal += folder;
+    @computed get folderWidthsWithEllipsized() {
+        const array = [];
+        this.folderPath.forEach((folder) => {
+            folder.name
+                ? array.push(folder.name)
+                : array.push(t('title_files'));
         });
-        this.actualWidth = localTotal;
-        return this.actualWidth;
+
+        for (let i = 0; i <= this.foldersToEllipsize; i++) {
+            array[i] = '...';
+        }
+
+        return this.calcTextWidths(array);
     }
 
-    @observable foldersToEllipsize = [];
-
-    computeFolderWidths = () => {
-        const breadcrumbContainer = document.getElementsByClassName('breadcrumb')[0];
-
-        const containerWidth = parseInt(window.getComputedStyle(breadcrumbContainer).getPropertyValue('width'), 10);
-        const folderMaxWidth = 120;
-        const iconWidth = 32;
-
+    // Takes array of folder names, return array of the widths of those names
+    calcTextWidths(array) {
         this.element = document.createElement('canvas');
         this.context = this.element.getContext('2d');
-        this.context.font = '600 20px Open Sans'; // hardcoded
+        this.context.font = '600 20px Open Sans'; // hardcoded, need to change if font stack changes!
 
-        const ellipsisWidth = this.context.measureText('...').width;
+        const widthArray = [];
+        const folderMaxWidth = 120;
 
-        this.folderWidths = [];
-        this.folderPath.forEach((folder, i) => {
-            let thisWidth;
-
-            if (i === 0) {
-                thisWidth = this.context.measureText(t('title_files')).width;
-            } else {
-                thisWidth = this.context.measureText(folder.name).width + iconWidth;
-            }
-
-            this.folderWidths[i] =
-                thisWidth <= folderMaxWidth
+        array.forEach((folder) => {
+            const thisWidth = this.context.measureText(folder).width;
+            widthArray.push(
+                thisWidth < folderMaxWidth
                     ? thisWidth
-                    : folderMaxWidth;
+                    : folderMaxWidth
+            );
         });
 
-        this.folderWidthsWithEllipsized = this.folderWidths;
+        return widthArray;
+    }
 
-        let count = 0;
-        while (this.calcActualWidth > containerWidth && count < this.folderWidthsWithEllipsized.length) {
-            this.folderWidthsWithEllipsized[count] = ellipsisWidth;
-            this.foldersToEllipsize[count] = count;
+    // Used to calculate total actual width of folder names, including ellipsized names
+    @computed get totalWidth() {
+        this.element = document.createElement('canvas');
+        this.context = this.element.getContext('2d');
+        this.context.font = '600 20px Open Sans'; // hardcoded, need to change if font stack changes!
 
-            count++;
-            console.log(`${this.calcActualWidth - containerWidth}  `);
+        let totalWidth = 0;
+        const folderMaxWidth = 120;
+
+        this.folderWidthsWithEllipsized.forEach((width) => {
+            totalWidth += width < folderMaxWidth
+                ? width
+                : folderMaxWidth;
+        });
+
+        // Add width of icons (hardcoded at 32px right now)
+        totalWidth += 32 * (this.folderWidthsWithEllipsized.length - 1);
+
+        return totalWidth;
+    }
+
+    ellipsizeFolderNames = () => {
+        const breadcrumbContainer = document.getElementsByClassName('breadcrumb')[0];
+        const containerWidth = parseInt(window.getComputedStyle(breadcrumbContainer).getPropertyValue('width'), 10);
+
+        let countUp = 0;
+        while (this.totalWidth > containerWidth && countUp < this.folderWidthsWithEllipsized.length) {
+            this.foldersToEllipsize = countUp;
+            countUp++;
+        }
+
+        while ((this.folderWidths[this.foldersToEllipsize] - this.folderWidthsWithEllipsized[this.foldersToEllipsize])
+            < (containerWidth - this.totalWidth)) {
+            this.foldersToEllipsize--;
         }
     }
 
@@ -98,8 +125,8 @@ class Breadcrumb extends React.Component {
                 {this.folderPath.map((folder, i) => (
                     <div key={folder.name || 'root'} className="breadcrumb-entry">
                         <a className="folder-link clickable"
-                            onClick={() => this.props.onSelectFolder(folder)}>
-                            {this.foldersToEllipsize.indexOf(i) === -1
+                            onClick={() => this.handleClick(folder)}>
+                            {i > this.foldersToEllipsize
                                 ? folder.name || t('title_files')
                                 : '...'
                             }

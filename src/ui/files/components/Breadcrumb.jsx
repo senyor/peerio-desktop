@@ -1,5 +1,5 @@
 const React = require('react');
-const { computed, observable } = require('mobx');
+const { computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
@@ -17,11 +17,12 @@ class Breadcrumb extends React.Component {
     }
 
     componentDidMount() {
+        reaction(() => this.props.currentFolder, this.ellipsizeFolderNames, true);
         window.addEventListener('resize', this.ellipsizeFolderNames, false);
     }
 
     componentWillUnmount() {
-        window.addEventListener('resize', this.ellipsizeFolderNames);
+        window.removeEventListener('resize', this.ellipsizeFolderNames);
     }
 
     // Total combined current widths of text, before replacing folder names with ellipses
@@ -103,6 +104,11 @@ class Breadcrumb extends React.Component {
 
         while (this.totalWidth > containerWidth && this.foldersToEllipsize < this.folderWidthsWithEllipsized.length) {
             this.foldersToEllipsize++;
+        }
+
+        // A "catch" for navigating up the folderPath, so that the folderWidth[] below doesn't end up undefined
+        if (this.folderPath.length - 1 < this.foldersToEllipsize) {
+            this.foldersToEllipsize = this.folderPath.length - 1;
         }
 
         /* Compare folder name width vs ellipsis width. Compare breadcrumb container width vs current breadcrumb width.

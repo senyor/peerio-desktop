@@ -103,10 +103,10 @@ class Files extends React.Component {
         this.renameFolderPopupVisible = false;
         this.triggerRenameFolderPopup = null;
         const { folderName, folderToRename } = this;
-        folderToRename.name = folderName;
-        fileStore.fileFolders.save();
         this.folderName = '';
         this.folderToRename = null;
+        folderToRename.rename(folderName);
+        fileStore.fileFolders.save();
     }
 
     onPopupRef = (ref) => {
@@ -240,23 +240,26 @@ class Files extends React.Component {
 
         const { currentFolder } = this;
         const files = [];
-        for (let i = 0; i < this.renderedItemsCount && i < currentFolder.files.length; i++) {
-            const f = currentFolder.files[i];
+        const data = fileStore.currentFilter ? fileStore.files : currentFolder.files;
+        for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
+            const f = data[i];
             files.push(<FileLine key={f.fileId} file={f} currentFolder={currentFolder} />);
         }
 
         const folders = [];
-        for (let i = 0; i < currentFolder.folders.length; i++) {
-            const f = currentFolder.folders[i];
-            folders.push(
-                <FolderLine
-                    key={f.folderId}
-                    folder={f}
-                    onMoveFolder={() => this.moveFolder(f)}
-                    onRenameFolder={this.showRenameFolderPopup}
-                    onDeleteFolder={this.deleteFolder}
-                    onChangeFolder={this.changeFolder} />
-            );
+        if (!fileStore.currentFilter) {
+            for (let i = 0; i < currentFolder.folders.length; i++) {
+                const f = currentFolder.folders[i];
+                folders.push(
+                    <FolderLine
+                        key={f.folderId}
+                        folder={f}
+                        onMoveFolder={() => this.moveFolder(f)}
+                        onRenameFolder={this.showRenameFolderPopup}
+                        onDeleteFolder={this.deleteFolder}
+                        onChangeFolder={this.changeFolder} />
+                );
+            }
         }
 
         this.enqueueCheck();

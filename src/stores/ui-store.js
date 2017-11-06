@@ -27,7 +27,7 @@ class UIStore {
         mentionDesktopNotificationsEnabled: false,
         last2FATrustDeviceSetting: false,
         chatSideBarIsOpen: true,
-        limitInlineImageSize: false, // will use config.chat.inlineImageSizeLimit
+        limitInlineImageSize: true, // will use config.chat.inlineImageSizeLimit
         externalContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
         externalContentEnabled: false,
         externalContentJustForFavs: false,

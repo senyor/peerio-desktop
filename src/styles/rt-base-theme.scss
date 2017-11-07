@@ -75,7 +75,7 @@
 .rt-dialog-button {
   min-width: 64px;
 
-  .rt-dialog-navigation &:last-of-type {
+  .rt-dialog-navigation &:last-of-type:not([disabled]) {
     color: $blue;
   }
 }

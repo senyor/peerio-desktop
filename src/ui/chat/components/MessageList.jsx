@@ -13,7 +13,9 @@ const config = require('~/config');
 @observer
 class MessageList extends React.Component {
     loadTriggerDistance = 20;
-    stickDistance = 250;
+    stickDistance = 220;
+    lastRenderedMessageId = null;
+    lastRenderedChatId = null;
 
     componentWillMount() {
         this.stickToBottom = true;
@@ -51,35 +53,24 @@ class MessageList extends React.Component {
             () => chatStore.activeChat && chatStore.activeChat.loadingBottomPage,
             () => { this.lastTopElement = null; }
         );
-        // reaction to user changing chats
-        this._chatSwitchReaction = reaction(() => chatStore.activeChat, (chat) => {
-            if (chat) this.scrollToBottom();
-        });
     }
 
     componentWillUnmount() {
         this._topLoadReaction();
         this._botLoadReaction();
         this._initialLoadReaction();
-        this._chatSwitchReaction();
-    }
-
-    componentDidUpdate() {
-        this.scrollToBottomIfSticky();
     }
 
     componentDidMount() {
-        this.scrollToBottomIfSticky();
+        this.scrollToBottomIfNeeded();
+    }
+
+    componentDidUpdate() {
+        this.scrollToBottomIfNeeded();
     }
 
     scrollToBottom = () => {
         window.requestAnimationFrame(this.smoothScrollStep);
-    };
-
-    scrollToBottomIfSticky = () => {
-        if (this.stickToBottom) {
-            this.scrollToBottom();
-        }
     };
 
     smoothScrollStep = () => {
@@ -89,6 +80,26 @@ class MessageList extends React.Component {
         if (el.scrollTop >= goal - 1) return;
         el.scrollTop += (goal - el.scrollTop) / 2;
         window.requestAnimationFrame(this.smoothScrollStep);
+    }
+
+    // we want to autoscroll only if there are new messages
+    scrollToBottomIfNeeded() {
+        if (!chatStore.activeChat) return;
+        // check if chat has changed since last render
+        if (this.lastRenderedChatId !== chatStore.activeChat.id) {
+            this.lastRenderedMessageId = null;
+            this.lastRenderedChatId = chatStore.activeChat.id;
+        }
+        const messages = chatStore.activeChat.messages;
+        if (messages.length) {
+            if (this.lastRenderedMessageId !== messages[messages.length - 1].id) {
+                this.lastRenderedMessageId = messages[messages.length - 1].id;
+                // if user has scrolled too far from bottom (threshold) - do not autoscroll
+                if (this.stickToBottom) setTimeout(this.scrollToBottom, 400);
+            }
+        } else {
+            this.lastRenderedMessageId = null;
+        }
     }
 
     onImageLoaded = () => {
@@ -204,8 +215,6 @@ class MessageList extends React.Component {
 
     render() {
         if (!chatStore.activeChat) return null;
-
-        setTimeout(this.scrollToBottomIfSticky, 400);
         return (
             <div className="messages-current" onScroll={this.handleScroll} ref={this.setContainerRef}>
                 {this.renderChatStart()}

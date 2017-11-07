@@ -143,7 +143,7 @@ class Breadcrumb extends React.Component {
         return (
             <div className="breadcrumb">
                 {this.folderPath.map((folder, i) => (
-                    <div key={folder.name || 'root'} className="breadcrumb-entry">
+                    <div key={`${i}-${folder.name}` || 'root'} className="breadcrumb-entry">
                         <a className="folder-link clickable"
                             onClick={() => this.handleClick(folder)}>
                             {i > this.foldersToEllipsize

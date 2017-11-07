@@ -7,6 +7,10 @@ const appControl = require('~/helpers/app-control');
 class UIStore {
     @observable contactDialogUsername;
 
+    // current folder selected in Files.jsx
+    // used by drop
+    @observable currentFolder;
+
     // Message object to show in sidebar when clicking on receipts
     @observable selectedMessage;
 

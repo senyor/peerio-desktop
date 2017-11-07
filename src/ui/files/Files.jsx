@@ -13,6 +13,7 @@ const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
+const uiStore = require('../../stores/ui-store');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -25,9 +26,11 @@ class Files extends React.Component {
 
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
-    @observable currentFolder = fileStore.fileFolders.root;
 
     componentWillMount() {
+        if (!uiStore.currentFolder) {
+            uiStore.currentFolder = fileStore.fileFolders.root;
+        }
         clientApp.isInFilesView = true;
     }
 
@@ -62,7 +65,7 @@ class Files extends React.Component {
 
     @action deleteFolder = folder => {
         if (!confirm(t('title_deleteFolder'))) return;
-        this.currentFolder = folder.parent;
+        uiStore.currentFolder = folder.parent;
         fileStore.fileFolders.deleteFolder(folder);
         fileStore.fileFolders.save();
     }
@@ -92,9 +95,9 @@ class Files extends React.Component {
     @action handleAddFolder = () => {
         this.addFolderPopupVisible = false;
         this.triggerFolderPopup = false;
-        const { folderName, currentFolder } = this;
+        const { folderName } = this;
         if (folderName && folderName.trim()) {
-            fileStore.fileFolders.createFolder(folderName, currentFolder);
+            fileStore.fileFolders.createFolder(folderName, uiStore.currentFolder);
             fileStore.fileFolders.save();
         }
         this.folderName = '';
@@ -179,7 +182,7 @@ class Files extends React.Component {
             const file = fileStore.upload(path);
             return new Promise(resolve =>
                 when(() => file.fileId, () => {
-                    this.currentFolder.moveInto(file);
+                    uiStore.currentFolder.moveInto(file);
                     resolve();
                 }));
         }));
@@ -245,9 +248,9 @@ class Files extends React.Component {
     }
 
     @action changeFolder = folder => {
-        if (folder !== this.currentFolder) {
+        if (folder !== uiStore.currentFolder) {
             this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
-            this.currentFolder = folder;
+            uiStore.currentFolder = folder;
         }
     };
 
@@ -255,7 +258,7 @@ class Files extends React.Component {
         if (!fileStore.files.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
-        const { currentFolder } = this;
+        const { currentFolder } = uiStore;
         const files = [];
         const data = fileStore.currentFilter ? fileStore.visibleFiles : currentFolder.files;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
@@ -288,9 +291,9 @@ class Files extends React.Component {
                         <Breadcrumb currentFolder={currentFolder} onSelectFolder={this.changeFolder} />
                         {!currentFolder.isRoot &&
                             <FolderActions
-                                onMove={() => this.moveFolder(this.currentFolder)}
-                                onDelete={() => this.deleteFolder(this.currentFolder)}
-                                onRename={() => this.showRenameFolderPopup(this.currentFolder)} />}
+                                onMove={() => this.moveFolder(uiStore.currentFolder)}
+                                onDelete={() => this.deleteFolder(uiStore.currentFolder)}
+                                onRename={() => this.showRenameFolderPopup(uiStore.currentFolder)} />}
                         <Button className="button-affirmative inverted new-folder"
                             label={t('button_newFolder')}
                             onClick={this.showAddFolderPopup}

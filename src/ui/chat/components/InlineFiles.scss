@@ -147,16 +147,17 @@
       margin-right: $margin-small;
     }
 
+    .file-name-container {
+      display: flex;
+      margin-right: auto;
+    }
+
     .file-name {
       max-width: 100%;
       margin-right: 0;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-    }
-
-    .file-ext {
-      margin-right: auto;
     }
   }
 

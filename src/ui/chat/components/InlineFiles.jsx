@@ -230,11 +230,13 @@ class InlineFile extends React.Component {
                                         <FontIcon value="image" />
                                     }
                                 </div>
-                                <div className="file-name">
-                                    {file.nameWithoutExtension}
-                                </div>
-                                <div className="file-ext">
-                                    .{file.ext}
+                                <div className="clickable file-name-container" onClick={this.props.onDownload}>
+                                    <div className="file-name">
+                                        {file.nameWithoutExtension}
+                                    </div>
+                                    <div className="file-ext">
+                                        .{file.ext}
+                                    </div>
                                 </div>
                                 {(file.isImage && uiStore.prefs.peerioContentConsented) &&
                                     <Button icon={this.isExpanded

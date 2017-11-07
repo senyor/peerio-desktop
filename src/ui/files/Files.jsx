@@ -100,6 +100,12 @@ class Files extends React.Component {
         this.folderName = '';
     }
 
+    handleKeyDownAddFolder = (ev) => {
+        if (ev.key === 'Enter' && this.folderName.trim()) {
+            this.handleAddFolder();
+        }
+    }
+
     @action handleRenameFolder = () => {
         this.renameFolderPopupVisible = false;
         this.triggerRenameFolderPopup = null;
@@ -108,6 +114,12 @@ class Files extends React.Component {
         this.folderToRename = null;
         folderToRename.rename(folderName);
         fileStore.fileFolders.save();
+    }
+
+    handleKeyDownRenameFolder = (ev) => {
+        if (ev.key === 'Enter' && this.folderName.trim()) {
+            this.handleRenameFolder();
+        }
     }
 
     onPopupRef = (ref) => {
@@ -130,7 +142,9 @@ class Files extends React.Component {
                 onOverlayClick={hide} onEscKeyDown={hide}
                 className="add-folder-popup">
                 <Input placeholder={t('title_folderName')}
-                    value={this.folderName} onChange={this.handleFolderNameChange} />
+                    value={this.folderName} onChange={this.handleFolderNameChange}
+                    onKeyDown={this.handleKeyDownAddFolder}
+                />
             </Dialog>);
     }
 
@@ -146,11 +160,13 @@ class Files extends React.Component {
         return (
             <Dialog title={t('button_rename')}
                 active={this.addFolderPopupVisible} type="small" ref={this.onPopupRef}
-                actions={dialogActions}
+                actions={dialogActions} onKeyDown={this.keyDownRenameFolder}
                 onOverlayClick={hide} onEscKeyDown={hide}
                 className="add-folder-popup">
                 <Input placeholder={t('title_folderName')}
-                    value={this.folderName} onChange={this.handleFolderNameChange} />
+                    value={this.folderName} onChange={this.handleFolderNameChange}
+                    onKeyDown={this.handleKeyDownRenameFolder}
+                />
             </Dialog>);
     }
 

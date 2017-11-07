@@ -257,7 +257,7 @@ class Files extends React.Component {
 
         const { currentFolder } = this;
         const files = [];
-        const data = fileStore.currentFilter ? fileStore.files : currentFolder.files;
+        const data = fileStore.currentFilter ? fileStore.visibleFiles : currentFolder.files;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             files.push(<FileLine key={f.fileId} file={f} currentFolder={currentFolder} />);

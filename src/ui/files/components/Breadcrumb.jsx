@@ -102,7 +102,7 @@ class Breadcrumb extends React.Component {
         const breadcrumbContainer = document.getElementsByClassName('breadcrumb')[0];
         const containerWidth = parseInt(window.getComputedStyle(breadcrumbContainer).getPropertyValue('width'), 10);
 
-        while (this.totalWidth > containerWidth && this.foldersToEllipsize < this.folderWidthsWithEllipsized.length) {
+        while (this.totalWidth > containerWidth && this.foldersToEllipsize < this.folderPath.length) {
             this.foldersToEllipsize++;
         }
 
@@ -117,6 +117,7 @@ class Breadcrumb extends React.Component {
          */
         while ((this.folderWidths[this.foldersToEllipsize] - this.folderWidthsWithEllipsized[this.foldersToEllipsize])
             < (containerWidth - this.totalWidth)) {
+            // console.log(this.foldersToEllipsize)
             this.foldersToEllipsize--;
         }
 

@@ -68,13 +68,15 @@ class FileLine extends React.Component {
         // In case of relative timestamp we also want to re-render periodically to update it
         let uploadedAt, uploadedAtTooltip;
 
-        // if file timestamp is past the limit...
-        if (Date.now() - file.uploadedAt > FileLine.relativeTimeDisplayLimit) {
-            uploadedAt = file.uploadedAt.toLocaleString();
-            // this condition is always true and we need it only to subscribe to clock updates
-        } else if (uiStore.minuteClock.now) {
-            uploadedAt = moment(file.uploadedAt).fromNow();
-            uploadedAtTooltip = file.uploadedAt.toLocaleString();
+        if (file.uploadedAt) {
+            // if file timestamp is past the limit...
+            if (Date.now() - file.uploadedAt > FileLine.relativeTimeDisplayLimit) {
+                uploadedAt = file.uploadedAt.toLocaleString();
+                // this condition is always true and we need it only to subscribe to clock updates
+            } else if (uiStore.minuteClock.now) {
+                uploadedAt = moment(file.uploadedAt).fromNow();
+                uploadedAtTooltip = file.uploadedAt.toLocaleString();
+            }
         }
 
         return (

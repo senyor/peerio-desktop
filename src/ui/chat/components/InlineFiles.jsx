@@ -225,12 +225,12 @@ class InlineFile extends React.Component {
                     <div className="inline-files-topbar">
                         <div className="shared-file" data-id={this.props.id}>
                             <div className="container">
-                                <div className="file-icon">
-                                    {file.isImage &&
-                                        <FontIcon value="image" />
-                                    }
-                                </div>
                                 <div className="clickable file-name-container" onClick={this.props.onDownload}>
+                                    <div className="file-icon">
+                                        {file.isImage &&
+                                            <FontIcon value="image" />
+                                        }
+                                    </div>
                                     <div className="file-name">
                                         {file.nameWithoutExtension}
                                     </div>

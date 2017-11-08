@@ -21,8 +21,10 @@ $status-bar-height: 36px;
   background-image: $gradient-to-right;
   background-size: 400%;
   border-radius: 4px;
+  visibility: hidden;
 
   &.visible {
+    visibility: visible;
     top: 0;
     animation: 4s infinite gradient;
   }

@@ -89,7 +89,6 @@
 
   .inline-files {
     position: relative;
-    width: calc(100% - 100px); // reduce reflow from read receipts
     min-width: 180px;
     margin-left: $margin-default;
     font-weight: $font-weight-bold;
@@ -150,6 +149,9 @@
 
     .file-name-container {
       display: flex;
+      // we add a min-width because this container is itself in a flex
+      // container, and we want this to shrink (truncating the filename).
+      min-width: 50px;
       margin-right: auto;
     }
 

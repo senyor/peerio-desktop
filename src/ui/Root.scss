@@ -4,6 +4,7 @@ $status-bar-height: 36px;
   @extend %flex-row;
   @extend %flex-align-center;
   @extend %flex-justify-center;
+  visibility: hidden;
   position: fixed;
   z-index: 2;
   user-select: none;
@@ -21,7 +22,6 @@ $status-bar-height: 36px;
   background-image: $gradient-to-right;
   background-size: 400%;
   border-radius: 4px;
-  visibility: hidden;
 
   &.visible {
     visibility: visible;

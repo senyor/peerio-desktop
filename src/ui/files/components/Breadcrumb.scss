@@ -1,34 +1,43 @@
-.breadcrumb {
-  @extend %title;
-
+.breadcrumb-container {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  font-weight: normal;
 
-  .breadcrumb-entry {
+  .breadcrumb {
+    @extend %title;
+
     display: flex;
     align-items: center;
+    max-width: 100%;
     overflow: hidden;
+    font-weight: normal;
 
-    .material-icons {
-      font-size: 32px;
-    }
-
-    a {
-      @extend %title;
+    .breadcrumb-entry {
+      display: flex;
       align-items: center;
-      max-width: 120px;
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: $text-dark-secondary;
-    }
 
-    &:last-of-type a {
-      color: $blue;
+      .material-icons {
+        font-size: 32px;
+      }
+
+      a {
+        @extend %title;
+        align-items: center;
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: $text-dark-secondary;
+      }
+
+      &:last-of-type a {
+        color: $blue;
+      }
     }
+  }
+
+  .item-actions {
+    margin-right: auto;
   }
 }

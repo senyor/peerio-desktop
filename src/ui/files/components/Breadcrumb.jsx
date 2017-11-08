@@ -3,6 +3,7 @@ const { computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
+const FolderActions = require('./FolderActions');
 
 @observer
 class Breadcrumb extends React.Component {
@@ -99,8 +100,12 @@ class Breadcrumb extends React.Component {
     }
 
     ellipsizeFolderNames = () => {
-        const breadcrumbContainer = document.getElementsByClassName('breadcrumb')[0];
-        const containerWidth = parseInt(window.getComputedStyle(breadcrumbContainer).getPropertyValue('width'), 10);
+        const breadcrumbContainer = document.getElementsByClassName('breadcrumb-container')[0];
+
+        // 48px subtracted to take into account the width of the three-dots button
+        // 32px subtracted to take into account the left margin of the breadcrumb
+        const containerWidth =
+            parseInt(window.getComputedStyle(breadcrumbContainer).getPropertyValue('width'), 10) - 48 - 32;
 
         while (this.totalWidth > containerWidth && this.foldersToEllipsize < this.folderPath.length) {
             this.foldersToEllipsize++;
@@ -141,19 +146,28 @@ class Breadcrumb extends React.Component {
     render() {
         const { folderPath } = this;
         return (
-            <div className="breadcrumb">
-                {this.folderPath.map((folder, i) => (
-                    <div key={`${i}-${folder.name}` || 'root'} className="breadcrumb-entry">
-                        <a className="folder-link clickable"
-                            onClick={() => this.handleClick(folder)}>
-                            {i > this.foldersToEllipsize
-                                ? folder.name || t('title_files')
-                                : '...'
-                            }
-                        </a>
-                        {i !== folderPath.length - 1 && <FontIcon value="keyboard_arrow_right" />}
-                    </div>
-                ))}
+            <div className="breadcrumb-container">
+                <div className="breadcrumb">
+                    {this.folderPath.map((folder, i) => (
+                        <div key={`${i}-${folder.name}` || 'root'} className="breadcrumb-entry">
+                            <a className="folder-link clickable"
+                                onClick={() => this.handleClick(folder)}>
+                                {i > this.foldersToEllipsize
+                                    ? folder.name || t('title_files')
+                                    : '...'
+                                }
+                            </a>
+                            {i !== folderPath.length - 1 && <FontIcon value="keyboard_arrow_right" />}
+                        </div>
+                    ))}
+                </div>
+                {!this.props.currentFolder.isRoot &&
+                    <FolderActions
+                        onMove={this.props.onMove}
+                        onDelete={this.props.onDelete}
+                        onRename={this.props.onRename}
+                    />
+                }
             </div>
         );
     }

@@ -7,7 +7,6 @@ const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
-const FolderActions = require('./components/FolderActions');
 const ZeroScreen = require('./components/ZeroScreen');
 const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
@@ -288,12 +287,12 @@ class Files extends React.Component {
                 <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
                 <div className="file-wrapper">
                     <div className="files-header">
-                        <Breadcrumb currentFolder={currentFolder} onSelectFolder={this.changeFolder} />
-                        {!currentFolder.isRoot &&
-                            <FolderActions
-                                onMove={() => this.moveFolder(uiStore.currentFolder)}
-                                onDelete={() => this.deleteFolder(uiStore.currentFolder)}
-                                onRename={() => this.showRenameFolderPopup(uiStore.currentFolder)} />}
+                        <Breadcrumb currentFolder={currentFolder}
+                            onSelectFolder={this.changeFolder}
+                            onMove={() => this.moveFolder(uiStore.currentFolder)}
+                            onDelete={() => this.deleteFolder(uiStore.currentFolder)}
+                            onRename={() => this.showRenameFolderPopup(uiStore.currentFolder)}
+                        />
                         <Button className="button-affirmative inverted new-folder"
                             label={t('button_newFolder')}
                             onClick={this.showAddFolderPopup}

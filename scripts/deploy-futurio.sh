@@ -20,7 +20,7 @@ git tag -d `git describe --tags` # Remove latest tag created by standard-version
 git push && git push --follow-tags origin master
 
 echo "[•••••••••••••••] building and publishing"
-peerio-desktop-release --repository PeerioTechnologies/peerio-desktop \
+./node_modules/.bin/peerio-desktop-release --repository PeerioTechnologies/peerio-desktop \
                        --overrides PeerioTechnologies/peerio-desktop-futurio \
                        --publish \
                        --tag dev \

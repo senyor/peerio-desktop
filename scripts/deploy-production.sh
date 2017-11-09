@@ -17,7 +17,7 @@ fi
 npm install
 
 echo "[•              ] getting locales"
-./scripts/get-locales.js
+./scripts/get-locales.sh
 if git diff-index HEAD --; then
     echo "*** Locales changed, committing."
     git commit -a -m "chore: update locales"

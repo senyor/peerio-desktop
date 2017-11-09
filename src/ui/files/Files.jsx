@@ -258,29 +258,20 @@ class Files extends React.Component {
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
         const { currentFolder } = uiStore;
-        const files = [];
-        const data = fileStore.currentFilter ? fileStore.visibleFiles : currentFolder.files;
+        const items = [];
+        const data = fileStore.currentFilter ? fileStore.visibleFiles : currentFolder.foldersAndFilesDefaultSorting;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
-            files.push(<FileLine key={f.fileId} file={f} currentFolder={currentFolder} />);
+            items.push(f.isFolder ?
+                <FolderLine
+                    key={f.folderId}
+                    folder={f}
+                    onMoveFolder={() => this.moveFolder(f)}
+                    onRenameFolder={this.showRenameFolderPopup}
+                    onDeleteFolder={this.deleteFolder}
+                    onChangeFolder={this.changeFolder} /> :
+                <FileLine key={f.fileId} file={f} currentFolder={currentFolder} />);
         }
-
-        const folders = [];
-        if (!fileStore.currentFilter) {
-            for (let i = 0; i < currentFolder.folders.length; i++) {
-                const f = currentFolder.folders[i];
-                folders.push(
-                    <FolderLine
-                        key={f.folderId}
-                        folder={f}
-                        onMoveFolder={() => this.moveFolder(f)}
-                        onRenameFolder={this.showRenameFolderPopup}
-                        onDeleteFolder={this.deleteFolder}
-                        onChangeFolder={this.changeFolder} />
-                );
-            }
-        }
-
         this.enqueueCheck();
         return (
             <div className="files">
@@ -317,8 +308,7 @@ class Files extends React.Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {folders}
-                                {files}
+                                {items}
                             </tbody>
                         </table>
                     </div>

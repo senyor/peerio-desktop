@@ -69,7 +69,7 @@ class Files extends React.Component {
         fileStore.fileFolders.save();
     }
 
-    @observable triggerFolderPopup = false;
+    @observable triggerAddFolderPopup = false;
     @observable addFolderPopupVisible = false;
     @observable triggerRenameFolderPopup = false;
     @observable renameFolderPopupVisible = false;
@@ -78,7 +78,8 @@ class Files extends React.Component {
     @observable folderToMove;
 
     showAddFolderPopup = () => {
-        this.triggerFolderPopup = true;
+        this.folderName = '';
+        this.triggerAddFolderPopup = true;
     }
 
     @action showRenameFolderPopup = folder => {
@@ -93,7 +94,7 @@ class Files extends React.Component {
 
     @action handleAddFolder = () => {
         this.addFolderPopupVisible = false;
-        this.triggerFolderPopup = false;
+        this.triggerAddFolderPopup = false;
         const { folderName } = this;
         if (folderName && folderName.trim()) {
             fileStore.fileFolders.createFolder(folderName, uiStore.currentFolder);
@@ -124,14 +125,18 @@ class Files extends React.Component {
         }
     }
 
-    onPopupRef = (ref) => {
+    onAddPopupRef = (ref) => {
         if (ref) this.addFolderPopupVisible = true;
+    };
+
+    onRenamePopupRef = (ref) => {
+        if (ref) this.renameFolderPopupVisible = true;
     };
 
     get addFolderPopup() {
         const hide = () => {
             this.addFolderPopupVisible = false;
-            this.triggerFolderPopup = false;
+            this.triggerAddFolderPopup = false;
         };
         const dialogActions = [
             { label: t('button_cancel'), onClick: hide },
@@ -139,7 +144,7 @@ class Files extends React.Component {
         ];
         return (
             <Dialog title={t('button_newFolder')}
-                active={this.addFolderPopupVisible} type="small" ref={this.onPopupRef}
+                active={this.addFolderPopupVisible} type="small" ref={this.onAddPopupRef}
                 actions={dialogActions}
                 onOverlayClick={hide} onEscKeyDown={hide}
                 className="add-folder-popup">
@@ -161,7 +166,7 @@ class Files extends React.Component {
         ];
         return (
             <Dialog title={t('button_rename')}
-                active={this.addFolderPopupVisible} type="small" ref={this.onPopupRef}
+                active={this.renameFolderPopupVisible} type="small" ref={this.onRenamePopupRef}
                 actions={dialogActions} onKeyDown={this.keyDownRenameFolder}
                 onOverlayClick={hide} onEscKeyDown={hide}
                 className="add-folder-popup">
@@ -321,7 +326,7 @@ class Files extends React.Component {
                         onHide={this.hideMoveFolder}
                     />
                 }
-                {this.triggerFolderPopup && this.addFolderPopup}
+                {this.triggerAddFolderPopup && this.addFolderPopup}
                 {this.triggerRenameFolderPopup && this.renameFolderPopup}
             </div>
         );

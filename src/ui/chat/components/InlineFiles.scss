@@ -255,6 +255,7 @@
           display: inline;
           width: auto;
           padding: 0;
+          padding-right: 4px; // to account for italic font
           line-height: 1.3em;
         }
       }

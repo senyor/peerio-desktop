@@ -42,6 +42,10 @@ cfg.upload.uploadBufferSize = 1024 * 1024 * 3;
 // --- PERFORMANCE
 cfg.chat.maxInitialChats = 20;
 
+// --- IMAGE DISPLAY LIMITS
+cfg.chat.inlineImageSizeLimit = 10 * 1024 * 1024;
+cfg.chat.inlineImageSizeLimitCutoff = 30 * 1024 * 1024;
+
 // --- DEBUG
 cfg.nodeLogFolder = path.join(app.getPath('userData'), 'logs');
 

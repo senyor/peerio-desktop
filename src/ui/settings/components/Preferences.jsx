@@ -4,6 +4,7 @@ const { Checkbox, FontIcon, Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User, chatStore } = require('~/icebear');
 const uiStore = require('~/stores/ui-store');
+const { fileStore } = require('~/icebear');
 
 @observer
 class Preferences extends React.Component {
@@ -122,9 +123,11 @@ class Preferences extends React.Component {
                         checked={uiStore.prefs.peerioContentEnabled}
                         onChange={this.onPeerioContentPreviewToggle} />
                     <p className="narrow smalltext">{t('title_showImagePreviewsDescription2')}</p>
-                    <Switch label={t('title_showLargeImages10MB')}
+                    <Switch label={t('title_showLargeImages', { size: fileStore.inlineImageSizeLimitFormatted })}
                         checked={!uiStore.prefs.limitInlineImageSize}
                         onChange={this.onInlineContentSizeLimitToggle} />
+                    <p className="narrow smalltext">{t('title_imageTooBigCutoff',
+                        { size: fileStore.inlineImageSizeLimitCutoffFormatted })}</p>
                 </section>
                 <section className="section-divider prefs-url">
                     <p className="subheading">{t('title_urlPreview')}</p>

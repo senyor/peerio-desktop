@@ -11,7 +11,7 @@ Assuming you have nodejs and npm installed.
 
 ## Linking the SDK
 
-If you want to use a local development version of `peerio-icebear`, run `npm link` inside that project, then `cd app && npm link peerio-icebear && cd ..`.
+If you want to use a local development version of `peerio-icebear`, run `npm link` inside that project, then `cd app && npm link peerio-icebear && cd ..`
 
 **Beware:** Don't ever use a development SDK with production servers, especially not with your own account (you could break it permanently).
 
@@ -35,6 +35,12 @@ In production builds, calls to `console` functions like `console.log` and
 `console.err` will be transformed with our Babel plugin
 [console-kungfu](https://github.com/PeerioTechnologies/babel-plugin-console-kungfu)
 to add helpful information like filenames and line numbers.
+
+## Localization
+
+Localization is done via `peerio-copy`. Copy will be fetched automatically when making production builds. 
+
+When changing copy in development, you should stop the development build, run `./scripts/get-locales.sh`, and then `npm start` again, since the copy changes will not trigger a refresh like changing a js or scss file will. 
 
 ## UI Tests
 

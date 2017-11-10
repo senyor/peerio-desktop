@@ -87,42 +87,45 @@ class FileLine extends React.Component {
         if (!uiStore.minuteClock.now) return null;
 
         return (
-            <tr className={css({
-                selected: this.checked,
-                'selected-row': file.selected,
-                'waiting-3rd-party': !file.uploading && !file.readyForDownload
-            })}
+            <div className={css(
+                'row',
+                {
+                    selected: this.checked,
+                    'selected-row': file.selected,
+                    'waiting-3rd-party': !file.uploading && !file.readyForDownload
+                }
+            )}
             onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
 
-                <td>
+                <div className="loading-icon">
                     {(file.downloading || file.uploading)
                         && <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
                             onCancel={this.cancelUploadOrDownload} />
                     }
-                </td>
+                </div>
 
-                <td className="file-icon">
+                <div className="file-icon">
                     <FileSpriteIcon type={file.iconType} size="medium" />
-                </td>
+                </div>
 
-                <td className="file-title selectable"
+                <div className="file-name selectable"
                     onClick={this.download} >
                     {file.name}
-                </td>
+                </div>
 
-                <td className="clickable-username" onClick={this.openContactDialog}>
+                <div className="file-owner" onClick={this.openContactDialog}>
                     {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
-                </td>
+                </div>
 
-                {/* <td>{file.canShare ? t('button_yes') : ''} </td> */}
-
-                <td className="text-right" title={file.uploadedAt ? file.uploadedAt.toLocaleString() : ''}>
+                <div className="file-uploaded text-right" title={
+                    file.uploadedAt ? file.uploadedAt.toLocaleString() : ''
+                }>
                     {this.formatDate(file.uploadedAt)}
-                </td>
+                </div>
 
-                <td className="text-right">{file.sizeFormatted}</td>
+                <div className="file-size text-right">{file.sizeFormatted}</div>
 
-                <td className="text-right">
+                <div className="file-actions text-right">
                     <FileActions
                         downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
                         shareable shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.share}
@@ -139,15 +142,15 @@ class FileLine extends React.Component {
                             onHide={this.hideMoveFile}
                         />
                     }
-                </td>
+                </div>
 
                 {(file.downloading || file.uploading)
-                    ? <td className="loading">
+                    ? <div className="loading">
                         <ProgressBar type="linear" mode="determinate" value={file.progress}
                             max={file.progressMax} />
-                    </td>
+                    </div>
                     : null}
-            </tr>
+            </div>
         );
     }
 }

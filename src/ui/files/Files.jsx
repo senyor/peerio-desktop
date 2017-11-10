@@ -299,23 +299,18 @@ class Files extends React.Component {
                         />
                     </div>
                     <div className="file-table-wrapper" ref={this.setContainerRef} onScroll={this.enqueueCheck}>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th />{/* blank space for download-in-progress icon */}
-                                    <th />{/* blank space for file icon image */}
-                                    <th>{t('title_name')}</th>
-                                    <th>{t('title_owner')}</th>
-                                    {/* <th>{t('title_shareable')}</th> */}
-                                    <th className="text-right">{t('title_uploaded')}</th>
-                                    <th className="text-right">{t('title_size')}</th>
-                                    <th />
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {items}
-                            </tbody>
-                        </table>
+                        <div className="file-table-header row">
+                            <div className="loading-icon" />{/* blank space for download-in-progress icon */}
+                            <div className="file-icon" />{/* blank space for file icon image */}
+                            <div className="file-name">{t('title_name')}</div>
+                            <div className="file-owner">{t('title_owner')}</div>
+                            <div className="file-uploaded text-right">{t('title_uploaded')}</div>
+                            <div className="file-size text-right">{t('title_size')}</div>
+                            <div className="file-actions" />
+                        </div>
+                        <div className="file-table-body">
+                            {items}
+                        </div>
                     </div>
                 </div>
                 {this.moveFolderVisible &&

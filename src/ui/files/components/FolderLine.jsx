@@ -21,29 +21,29 @@ class FolderLine extends React.Component {
         const folder = this.props.folder;
 
         return (
-            <tr onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
-                <td />
-                <td className="file-icon">
+            <div className="row" onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
+                <div className="loading-icon" />
+                <div className="file-icon">
                     <FontIcon value="folder" />
-                </td>
-                <td className="file-title selectable"
+                </div>
+                <div className="file-name selectable"
                     onClick={() => this.props.onChangeFolder(this.props.folder)} >
                     {folder.name}
-                </td>
+                </div>
 
-                <td className="clickable-username">
+                <div className="file-owner">
                     {t('title_you')}
-                </td>
-                <td className="text-right" />
-                <td className="text-right" />
-                <td className="text-right">
+                </div>
+                <div className="file-uploaded text-right" />
+                <div className="file-size text-right" />
+                <div className="file-actions text-right">
                     <FolderActions
                         onRename={() => this.props.onRenameFolder(this.props.folder)}
                         onMove={() => this.props.onMoveFolder(this.props.folder)}
                         onDelete={() => this.props.onDeleteFolder(this.props.folder)}
                     />
-                </td>
-            </tr>
+                </div>
+            </div>
         );
     }
 }

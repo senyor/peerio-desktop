@@ -1,4 +1,4 @@
-.clickable-username { // TODO refactor these into .file-table-wrapper
+.file-owner { // TODO refactor these into .file-table-wrapper
   cursor: pointer;
 
   &:hover {
@@ -7,9 +7,9 @@
 }
 
 .files .file-wrapper { // TODO refactor these into .file-table-wrapper
-  .file-title {
+  .file-name {
     cursor: pointer;
-    max-width: 304px;
+    width: 100%;
     overflow: hidden;
     font-weight: $font-weight-semibold;
     text-overflow: ellipsis;
@@ -18,17 +18,5 @@
     &:hover {
       color: $blue;
     }
-  }
-
-  .loading {
-    @extend %flex-row;
-    position: absolute;
-    height: 4px;
-    width: 100%;
-    left: 0;
-    right: 0;
-    padding: 0;
-    margin-top: 44px;
-    border-bottom: 0;
   }
 }

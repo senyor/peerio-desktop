@@ -49,7 +49,7 @@ class FilesSection extends React.Component {
         const menu = (<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple
             onClick={this.stopPropagation}>
             <MenuItem caption={t('title_download')} icon="file_download" onClick={this.download} />
-            <MenuItem caption={t('button_share')} icon="reply" onClick={this.share} />
+            <MenuItem caption={t('button_share')} icon="reply" onClick={this.share} className="reverse-icon" />
         </IconMenu>);
 
         const textParser = {

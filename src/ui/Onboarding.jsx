@@ -8,8 +8,8 @@ const { User } = require('~/icebear');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 
-function createOnboardingItem(icon, title, description, valueFn, action, extraClass, buttonItem) {
-    return { icon, title, description, valueFn, action, extraClass, buttonItem };
+function createOnboardingItem(icon, title, description, descriptionFinished, valueFn, action, extraClass, buttonItem) {
+    return { icon, title, description, descriptionFinished, valueFn, action, extraClass, buttonItem };
 }
 
 @observer
@@ -23,20 +23,23 @@ class Onboarding extends React.Component {
                 'mail',
                 t('title_onboardingConfirmEmail'),
                 t('title_onboardingConfirmEmailContent'),
+                t('title_onboardingStorageUnlocked', { amount: '100' }),
                 () => User.current.hasConfirmedEmailBonus,
                 () => window.router.push('/app/settings/profile')
             ),
             createOnboardingItem(
                 'settings',
-                'Upload your avatar',
-                '100MB storage added',
+                t('title_onboardingAvatar'),
+                t('title_onboardingAvatarContent'),
+                t('title_onboardingStorageUnlocked', { amount: '100' }),
                 () => User.current.hasAvatarUploadedBonus,
                 () => window.router.push('/app/settings/profile')
             ),
             createOnboardingItem(
                 'file_download',
-                'Save your Account Key PDF document',
-                '100MB storage added',
+                t('title_onboardingAccountKey'),
+                t('title_onboardingAccountKeyContent'),
+                t('title_onboardingStorageUnlocked', { amount: '100' }),
                 () => User.current.hasAccountKeyBackedUpBonus,
                 () => window.router.push('/app/settings/security')
             ),
@@ -44,6 +47,7 @@ class Onboarding extends React.Component {
                 'forum',
                 t('title_onboardingCreateARoom'),
                 t('title_onboardingCreateARoomContent'),
+                t('title_onboardingStorageUnlocked', { amount: '100' }),
                 () => User.current.hasCreatedRoomBonus,
                 () => window.router.push('/app/new-channel'),
                 'chat-item-add',
@@ -53,6 +57,7 @@ class Onboarding extends React.Component {
                 'person_add',
                 t('title_onboardingInvitePeople', { current: currentInvitedPeopleBonus, max: maxInvitedPeopleBonus }),
                 t('title_onboardingInvitePeopleContent'),
+                t('title_onboardingStorageUnlocked', { amount: '250' }),
                 () => currentInvitedPeopleBonus >= maxInvitedPeopleBonus,
                 () => window.router.push('/app/contacts')
             ),
@@ -60,6 +65,7 @@ class Onboarding extends React.Component {
                 'phonelink_setup',
                 t('title_onboardingTSV'),
                 t('title_onboardingTSVContent'),
+                t('title_onboardingStorageUnlocked', { amount: '100' }),
                 () => User.current.hasTwoFABonus,
                 () => window.router.push('/app/settings/security')
             ),
@@ -67,13 +73,14 @@ class Onboarding extends React.Component {
                 'phonelink_setup',
                 <T k="title_onboardingInstallMobileApp" />,
                 t('title_onboardingInstallMobileAppContent'),
+                t('title_onboardingStorageUnlocked', { amount: '100' }),
                 () => User.current.hasInstallBonus
             )
         ];
     }
 
     renderItem = (item, index) => {
-        const { icon, title, description, valueFn, action, extraClass, buttonItem } = item;
+        const { icon, title, description, descriptionFinished, valueFn, action, extraClass, buttonItem } = item;
         const done = valueFn();
         return (
             <div key={title}
@@ -87,7 +94,7 @@ class Onboarding extends React.Component {
                             {title}
                             {buttonItem}
                         </div>
-                        <p>{description}</p>
+                        <p>{done ? descriptionFinished : description}</p>
                     </div>
                 </div>
             </div>

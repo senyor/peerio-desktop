@@ -129,5 +129,6 @@
 
   .addemail-container {
     @extend %flex-row;
+    align-items: center;
   }
 }

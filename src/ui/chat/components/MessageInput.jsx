@@ -15,13 +15,13 @@ const FilePicker = require('~/ui/files/components/FilePicker');
 const Snackbar = require('~/ui/shared-components/Snackbar');
 const { pickLocalFiles } = require('~/helpers/file');
 
-const MessageInputQuill = require('./MessageInputQuill');
+const MessageInputProseMirror = require('./MessageInputProseMirror');
 
 /**
  * @augments {React.Component<{
         readonly : boolean
         placeholder : string
-        onSend : (message : any) => void
+        onSend : (richText : Object, legacyText : string) => void
         onAck : () => void
         onFileShare: (files : any) => void
     }, {}>}
@@ -76,7 +76,6 @@ class MessageInput extends React.Component {
             if (!confirm(t('title_uploadPastedFile'))) break;
             const tmpPath = path.join(os.tmpdir(), `peerio-${Date.now()}.${items[i].type.split('/')[1]}`);
 
-            // eslint-disable-next-line
             reader.onloadend = () => {
                 const buffer = new Buffer(reader.result);
                 fs.writeFile(tmpPath, buffer, {}, (err) => {
@@ -114,7 +113,7 @@ class MessageInput extends React.Component {
                     </IconMenu>
                     {this.props.readonly
                         ? <div className="message-editor-empty" >&nbsp;</div>
-                        : <MessageInputQuill
+                        : <MessageInputProseMirror
                             placeholder={this.props.placeholder}
                             onSend={this.props.onSend}
                         />

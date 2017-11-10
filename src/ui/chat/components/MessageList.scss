@@ -147,6 +147,13 @@
         }
       }
 
+      &.render-error {
+        min-width: 320px;
+        padding: $padding-small $padding-tiny;
+        margin: 0 0 12px;
+        background-color: rgba($red-error, .06);
+      }
+
       .sending-overlay {
         position: absolute;
         height: 100%;
@@ -159,6 +166,8 @@
       }
     }
 
+    // Duplicated in MessageInputProseMirror
+    // TODO: find sensible way to share styles
     .message-content {
       @extend %flex-col;
       flex-grow: 1;
@@ -167,19 +176,28 @@
       a {
         @extend %selectable;
         word-break: break-word;
+        color: $blue;
       }
 
       .mention {
+        @extend %selectable;
         cursor: pointer;
         font-weight: $font-weight-semibold;
+        transition: background-color 50ms;
         color: $text-dark-primary;
+        background-color: rgba($blue, .15);
+        border-radius: 3px;
+
+        &:hover {
+          background-color: rgba($blue, .1);
+        }
 
         &.self {
           background-color: rgba($green, .5);
-        }
 
-        &:hover {
-          text-decoration: underline;
+          &:hover {
+            background-color: rgba($green, .3);
+          }
         }
       }
 
@@ -225,6 +243,7 @@
       }
 
       p {
+        @extend %selectable;
         flex-grow: 1;
         max-width: calc(100% - 100px);
         min-width: 96px;
@@ -238,13 +257,18 @@
         margin-top: $margin-tiny;
       }
 
-      b,
-      strong {
-        font-weight: 600;
+      em {
+        @extend %selectable;
       }
 
-      a {
-        color: $blue;
+      s {
+        @extend %selectable;
+      }
+
+      b,
+      strong {
+        @extend %selectable;
+        font-weight: $font-weight-semibold;
       }
     }
 

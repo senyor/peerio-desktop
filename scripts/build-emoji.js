@@ -102,6 +102,11 @@ function convertToArray() {
         item.ascii = item.ascii.slice(0, 2).join('  ');
         item.unicode = keys[k];
 
+        item.characters = item.code_points.fully_qualified
+            .split('-')
+            .map(code => String.fromCodePoint(Number.parseInt(code, 16)))
+            .join('');
+
         delete item.shortname_alternates;
         delete item.keywords;
         delete item.display;

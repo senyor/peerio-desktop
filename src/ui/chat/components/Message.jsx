@@ -1,13 +1,18 @@
-/* eslint-disable react/no-danger,react/no-array-index-key */
+// @ts-check
+
+/* eslint no-warning-comments: "warn" */
+
 const React = require('react');
 const { observer } = require('mobx-react');
+const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
-const { systemMessages } = require('~/icebear');
+const { systemMessages, User } = require('~/icebear');
 const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { time } = require('~/helpers/formatter');
-const { processMessageForDisplay } = require('~/helpers/process-message-for-display');
+const { processMessageForDisplay } = require('~/helpers/chat/process-message-for-display');
+const { chatSchema, Renderer } = require('~/helpers/chat/prosemirror/chat-schema');
 const urls = require('~/config').translator.urlMap;
 const uiStore = require('~/stores/ui-store');
 const InlineFiles = require('./InlineFiles');
@@ -15,19 +20,84 @@ const UrlPreview = require('./UrlPreview');
 const UrlPreviewConsent = require('./UrlPreviewConsent');
 
 
-// HACK: make this as a proper react component
-window.openContact = (username) => {
-    uiStore.contactDialogUsername = username;
-};
-
-
 /**
  * IMPORTANT:
  * MessageList.jsx scroll retention logic relies on root element of this component to have
  * class name 'message-content-wrapper' at the first position in class list
+ *
+ * @augments {React.Component<{
+        /// the active chat, as defined in icebear's chatStore singleton (chatStore.activeChat)
+        /// peerio-icebear/src/models/chats/chat.js
+        chat : any
+
+        /// the message proper, defined in peerio-icebear/src/models/chats/message.js
+        message : any
+
+        /// the message.groupWithPrevious field
+        light : boolean
+
+        /// callback injected by MessageList, to ensure we stick to the bottom of the chat view.
+        onImageLoaded : () => void
+    }, {}>}
  */
 @observer
 class Message extends React.Component {
+    @observable.shallow errorData = null;
+
+    @action
+    onClickContact(ev) {
+        uiStore.contactDialogUsername = ev.target.attributes['data-username'].value;
+    }
+
+    /**
+     * Given an Icebear message (which may or may not have a richText field), return the sanitized HTML representation.
+     * @param {{
+         lastProcessedVersion,
+        version,
+        processedText : { __html : string },
+        text: string,
+        richText?: Object
+        }} message An Icebear message keg.
+    * @returns {JSX.Element} The processed rich text as a DOM fragment if we successfully parsed it, or else an object
+    *                        with an HTML string ready to directly be used in `dangerouslySetInnerHTML`.
+    */
+    getMessageComponent(message) {
+        const richText = message.richText;
+        if (richText &&
+            (typeof richText === 'object') &&
+            (richText.type === 'doc') &&
+            (richText.content)
+        ) {
+            try {
+                // Creating the ProseMirror node from the JSON may seem like an
+                // added step/layer of indirection, but it lets us validate the
+                // rich text payload and ensure it conforms to the schema.
+                const proseMirrorNode = chatSchema.nodeFromJSON(richText);
+
+                // Note that an error in the renderer component won't get caught
+                // by this try-catch -- it's not actually invoked in this stack
+                // frame.
+                return (<Renderer
+                    fragment={proseMirrorNode.content}
+                    onClickContact={this.onClickContact}
+                    currentUser={User.current.username}
+                />);
+            } catch (e) {
+                console.warn(`Couldn't deserialize message rich text:`, e);
+            }
+        }
+        if (!message.text) {
+            // HACK: React error boundaries only catch errors in children, so we
+            // wrap this throw in a createElement.
+            return React.createElement(
+                () => { throw new Error("Can't render rich text and message has no plaintext!"); }
+            );
+        }
+
+        // eslint-disable-next-line react/no-danger
+        return <p dangerouslySetInnerHTML={processMessageForDisplay(message)} className="selectable" />;
+    }
+
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
@@ -61,24 +131,19 @@ class Message extends React.Component {
             </div>
         );
     }
+
+    componentDidCatch(error, info) {
+        runInAction(() => { this.errorData = { error, info }; });
+    }
+
     render() {
-        /*
-            props: {
-                /// the active chat, as defined in icebear's chatStore singleton (chatStore.activeChat)
-                /// peerio-icebear/src/models/chats/chat.js
-                chat
-                /// the message proper
-                /// peerio-icebear/src/models/chats/message.js
-                message
-                /// the message.groupWithPrevious field (bool)
-                light
-                /// callback injected by MessageList, to ensure we stick to the bottom of the chat view.
-                onImageLoaded
-            }
-        */
         const m = this.props.message;
-        // console.log('Rendering message ', m.tempId || m.id);
+
+        if (this.errorData) { return renderError(this.errorData, m); }
+
         const invalidSign = m.signatureError === true;
+
+        const MessageComponent = this.getMessageComponent(m);
 
         return (
             <div className={
@@ -110,7 +175,7 @@ class Message extends React.Component {
                             {
                                 m.systemData || m.files
                                     ? null
-                                    : <p dangerouslySetInnerHTML={processMessageForDisplay(m)} className="selectable" />
+                                    : MessageComponent
                             }
                             {m.files && m.files.length
                                 ? <InlineFiles
@@ -124,9 +189,11 @@ class Message extends React.Component {
                             }
                             {m.hasUrls
                                 ? m.externalImages.map(
-                                    (urlData, ind) =>
-                                        (<UrlPreview key={ind} urlData={urlData}
-                                            onImageLoaded={this.props.onImageLoaded} />)
+                                    (urlData, ind) => (<UrlPreview
+                                        key={ind} // eslint-disable-line react/no-array-index-key
+                                        urlData={urlData}
+                                        onImageLoaded={this.props.onImageLoaded}
+                                    />)
                                 )
                                 : null}
                             {!uiStore.prefs.externalContentConsented && m.hasUrls &&
@@ -168,6 +235,51 @@ class Message extends React.Component {
             </div>
         );
     }
+}
+
+/**
+ *
+ * @param {{ error : Error, info : { componentStack : string }}} errorData
+ * @param {*} msg TODO/TS: icebear message
+ */
+function renderError(errorData, msg) {
+    console.error('Error rendering the following message:');
+    console.dir(msg);
+    // If you change any tags or styles in here, make sure all text remains selectable
+    // (The CSS property "user-select" isn't inherited!)
+    return (
+        <div className="message-content-wrapper render-error">
+            <div className="message-content-wrapper-inner">
+                <div className="message-content">
+                    <div className="message-body">
+                        <p><strong>{t('error_messageErrorHeader')}:</strong></p>
+                        <p>{errorData.error.toString()}</p><br />
+                        <p><strong>{t('error_messageErrorMessageInfo')}:</strong></p>
+                        { // We can't just stringify the message keg, it's not plain data and can be circular
+                        /* eslint-disable prefer-template, react/no-array-index-key */
+                            msg ?
+                                <ul>
+                                    {[
+                                        `${t('error_messageErrorSenderName')}: ` +
+                                            (msg.sender && msg.sender.username),
+                                        `${t('error_messageErrorMessageId')}: ${msg.id}`,
+                                        `${t('error_messageErrorTimestamp')}: ` +
+                                            (msg.timestamp && msg.timestamp.toLocaleString()),
+                                        `${t('error_messageErrorMessagePlaintext')}: ${msg.text}`,
+                                        `${t('error_messageErrorMessageRichtext')}: ` +
+                                            (msg.richText && JSON.stringify(msg.richText, undefined, 2))
+                                    ].map((l, i) => <li key={i}>{l}</li>)}
+                                </ul>
+                                : t('error_messageErrorNotAvailable')
+                        /* eslint-enable prefer-template, react/no-array-index-key */
+                        }<br />
+                        <p><strong>{t('error_messageErrorAdditionalInfo')}:</strong></p>
+                        <p>{errorData.info && errorData.info.componentStack}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 module.exports = Message;

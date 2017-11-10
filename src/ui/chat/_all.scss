@@ -219,7 +219,8 @@
 @import './components/InlineFiles';
 @import './components/Message';
 @import './components/MessageInput';
-@import './components/MessageInputQuill';
+@import './components/MessageInputProseMirror';
+@import './components/MessageInputSuggestions';
 @import './components/MessageList';
 @import './components/NoChatSelected';
 @import './components/UploadInChatProgress';

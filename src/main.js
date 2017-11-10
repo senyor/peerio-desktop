@@ -33,6 +33,7 @@ const config = require('~/config');
 
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
 app.commandLine.appendSwitch('disk-cache-size', 200 * 1024 * 1024);
+app.commandLine.appendSwitch('js-flags', '--harmony_regexp_lookbehind');
 
 app.on('ready', () => {
     console.log('Electron ready event - Starting app.');
@@ -117,4 +118,3 @@ app.on('window-all-closed', () => {
     globalShortcut.unregisterAll();
     app.quit();
 });
-

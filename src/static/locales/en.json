@@ -593,5 +593,6 @@
   "error_messageErrorTimestamp": "Timestamp",
   "error_messageErrorMessagePlaintext": "Message Plaintext",
   "error_messageErrorMessageRichtext": "Message Rich Text",
-  "error_messageErrorAdditionalInfo": "Additional information about this error"
+  "error_messageErrorAdditionalInfo": "Additional information about this error",
+  "error_messageErrorNotAvailable": "Not available"
 }

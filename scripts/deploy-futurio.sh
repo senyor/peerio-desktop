@@ -17,7 +17,7 @@ export NODE_ENV=production
 echo "[••••••••       ] updating version number"
 ./node_modules/.bin/standard-version
 git tag -d `git describe --tags` # Remove latest tag created by standard-version
-git push && git push --follow-tags origin master
+git push && git push --follow-tags origin dev
 
 echo "[•••••••••••••••] building and publishing"
 ./node_modules/.bin/peerio-desktop-release --repository PeerioTechnologies/peerio-desktop \

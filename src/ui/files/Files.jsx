@@ -63,7 +63,7 @@ class Files extends React.Component {
     }
 
     @action deleteFolder = folder => {
-        if (!confirm(t('title_deleteFolder'))) return;
+        if (!confirm(t('title_deleteFolder', { folderName: folder.name }))) return;
         uiStore.currentFolder = folder.parent;
         fileStore.fileFolders.deleteFolder(folder);
         fileStore.fileFolders.save();

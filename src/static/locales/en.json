@@ -45,6 +45,8 @@
   "button_lock": "Lock",
   "button_saveAccountKey": "Save Account Key",
   "error_connecting": "You seem to be offline. Trying to connect...",
+  "title_welcomeUser": "Welcome {username}",
+  "button_tapToChangeUserMobile": "Not {username}? Tap here to change.",
   "button_changeUserDesktop": "Not {username}? Click here to change.",
   "button_changeUserMobile": "Change User",
   "button_resendInvite": "Resend invite",

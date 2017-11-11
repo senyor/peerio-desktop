@@ -56,7 +56,8 @@
         "androidApp": "https://play.google.com/store/apps/details?id=com.peerio.app",
         "googleAuthA": "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en",
         "googleAuthI": "https://itunes.apple.com/app/google-authenticator/id388497605",
-        "authy": "https://authy.com"
+        "authy": "https://authy.com",
+        "download": "https://peerio.com"
       }
     }
   },

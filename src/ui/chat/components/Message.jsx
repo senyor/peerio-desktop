@@ -205,7 +205,7 @@ class Message extends React.Component {
                         {m.sendError ?
                             <div className="send-error-container">
                                 <div className="send-error-menu">
-                                    <IconMenu icon="error" position="topLeft" menuRipple>
+                                    <IconMenu icon="error" position="auto" menuRipple>
                                         <MenuItem value={t('button_retry')}
                                             caption={t('button_retry')}
                                             onClick={() => m.send()} />

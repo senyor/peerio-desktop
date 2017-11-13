@@ -231,8 +231,8 @@ class Files extends React.Component {
 
     checkScrollPosition = () => {
         if (!this.container) return;
-        if (this.renderedItemsCount >= fileStore.visibleFiles.length) {
-            this.renderedItemsCount = fileStore.visibleFiles.length;
+        if (this.renderedItemsCount >= this.items.length) {
+            this.renderedItemsCount = this.items.length;
             return;
         }
 
@@ -258,13 +258,19 @@ class Files extends React.Component {
         }
     };
 
+    get items() {
+        return fileStore.currentFilter ?
+            fileStore.visibleFiles
+            : uiStore.currentFolder.foldersAndFilesDefaultSorting;
+    }
+
     render() {
         if (!fileStore.files.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
         const { currentFolder } = uiStore;
         const items = [];
-        const data = fileStore.currentFilter ? fileStore.visibleFiles : currentFolder.foldersAndFilesDefaultSorting;
+        const data = this.items;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             items.push(f.isFolder ?

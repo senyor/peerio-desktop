@@ -75,12 +75,12 @@
     }
 
     .loading-icon {
-      width: 48px;
+      min-width: 48px;
       padding-left: $padding-large;
     }
 
     .file-icon {
-      width: 48px;
+      min-width: 48px;
       padding-right: $padding-small;
 
       .material-icons {

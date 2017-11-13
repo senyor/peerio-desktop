@@ -153,49 +153,11 @@
       }
     }
 
-    // Duplicated in MessageInputProseMirror
-    // TODO: find sensible way to share styles
     .message-content {
+      @extend %chat-message;
       @extend %flex-col;
       flex-grow: 1;
       min-width: 0;
-
-      a {
-        @extend %selectable;
-        word-break: break-word;
-        color: $blue;
-      }
-
-      .mention {
-        @extend %selectable;
-        cursor: pointer;
-        font-weight: $font-weight-semibold;
-        transition: background-color 50ms;
-        color: $text-dark-primary;
-        background-color: rgba($blue, .15);
-        border-radius: 3px;
-
-        &:hover {
-          background-color: rgba($blue, .1);
-        }
-
-        &.self {
-          background-color: rgba($green, .5);
-
-          &:hover {
-            background-color: rgba($green, .3);
-          }
-        }
-      }
-
-      .pre {
-        @extend %selectable;
-        padding: $padding-tiny 6px;
-        margin-right: $margin-tiny;
-        font-family: monospace;
-        background-color: $black-03;
-        border-radius: 4px;
-      }
 
       .meta-data {
         @extend %flex-row;
@@ -219,43 +181,9 @@
         }
       }
 
-      .message-body {
-        // @extend %flex-row;
-        // @extend %flex-align-center;
-      }
-
       .system-message {
         font-style: italic;
         color: $text-dark-secondary;
-      }
-
-      p {
-        @extend %selectable;
-        flex-grow: 1;
-        max-width: calc(100% - 100px);
-        min-width: 96px;
-        margin: 0 0 0 $margin-default;
-        line-height: 1.4;
-        word-break: break-word;
-        white-space: pre-wrap;
-      }
-
-      p + p {
-        margin-top: $margin-tiny;
-      }
-
-      em {
-        @extend %selectable;
-      }
-
-      s {
-        @extend %selectable;
-      }
-
-      b,
-      strong {
-        @extend %selectable;
-        font-weight: $font-weight-semibold;
       }
     }
 

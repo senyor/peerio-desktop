@@ -1,0 +1,90 @@
+// The input box styles and the rendered message styles should be identical unless explicitly overridden.
+%chat-message {
+  // Remember to mark entities as selectable if they get added to the schema!
+
+  // Nodes:
+  p,          // paragraph
+  a,          // link
+  .mention,   // mention
+  .emojione,  // emoji
+  // Marks:
+  em,         // em
+  s,          // strike
+  strong {    // strong
+    @extend %selectable;
+  }
+
+  // Not in the chat schema, but error messages use them and we want those to be
+  // selectable too
+  ul,
+  li {
+    @extend %selectable;
+  }
+
+  /////////////////////////
+  // Listed in the same order as the chat-schema:
+
+  p {
+    flex-grow: 1;
+    max-width: calc(100% - 100px);
+    min-width: 96px;
+    margin: 0 0 0 $margin-default;
+    line-height: 1.4;
+    word-break: break-word;
+    white-space: pre-wrap;
+
+    // It's not actually possible to have successive paragraphs in the current
+    // schema, but we can keep this for future usage
+    + p {
+      margin-top: $margin-tiny;
+    }
+  }
+
+  // Note that links can't be created directly inside the message input -- we
+  // only see them in the message list.
+  a {
+    @extend %selectable;
+    word-break: break-word;
+    color: $blue;
+  }
+
+  .mention {
+    cursor: pointer;
+    font-weight: $font-weight-semibold;
+    transition: background-color 50ms;
+    color: $text-dark-primary;
+    background-color: rgba($blue, .15);
+    border-radius: 3px;
+
+    &:hover {
+      background-color: rgba($blue, .1);
+    }
+
+    &.self {
+      background-color: rgba($green, .5);
+
+      &:hover {
+        background-color: rgba($green, .3);
+      }
+    }
+  }
+
+  strong {
+    font-weight: $font-weight-semibold;
+  }
+
+  // TODO: code blocks and blockquotes not yet implemented.
+  // .pre {
+  //   padding: $padding-tiny 6px;
+  //   margin-right: $margin-tiny;
+  //   font-family: monospace;
+  //   background-color: $black-03;
+  //   border-radius: 4px;
+  // }
+  // blockquote {
+  //   padding-left: 1em;
+  //   margin-left: 0;
+  //   margin-right: 0;
+  //   border-left: 3px solid #eee;
+  // }
+}

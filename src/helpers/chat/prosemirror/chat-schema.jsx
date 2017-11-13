@@ -45,22 +45,6 @@ const chatSchema = new Schema({
             parseDOM: [{ tag: 'p' }],
             toDOM() { return ['p', 0]; }
         },
-        blockquote: {
-            content: 'block+',
-            group: 'block',
-            defining: true,
-            parseDOM: [{ tag: 'blockquote' }],
-            toDOM() { return ['blockquote', 0]; }
-        },
-        code_block: {
-            content: 'text*',
-            marks: '',
-            group: 'block',
-            code: true,
-            defining: true,
-            parseDOM: [{ tag: 'pre', preserveWhitespace: 'full' }],
-            toDOM() { return ['pre', ['code', 0]]; }
-        },
         text: { group: 'inline' },
         hard_break: {
             inline: true,
@@ -261,10 +245,6 @@ const chatSchema = new Schema({
                 { style: 'font-weight', getAttrs: value => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null }
             ],
             toDOM() { return ['strong']; }
-        },
-        code: {
-            parseDOM: [{ tag: 'code' }],
-            toDOM() { return ['code']; }
         }
     }
 });

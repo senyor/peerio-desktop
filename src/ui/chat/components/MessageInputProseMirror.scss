@@ -9,8 +9,8 @@
   font-size: inherit;
 }
 
-// TODO: element styles should apply to rendered content too!
 .ProseMirror {
+  @extend %chat-message;
   height: 100%;
   max-height: 96px;
   padding: 0;
@@ -37,49 +37,8 @@
     color: rgba(0, 0, 0, .6);
   }
 
-  p {
-    word-break: break-all;
-  }
-
-  img {
-    width: 1.5em;
-    vertical-align: middle;
-  }
-
-  blockquote {
-    padding-left: 1em;
-    margin-left: 0;
-    margin-right: 0;
-    border-left: 3px solid #eee;
-  }
-
-  // duplicated in MessageList.scss
-  // TODO: share styles across input and display, including above...?
-  .mention {
-    @extend %selectable;
-    cursor: pointer;
-    font-weight: $font-weight-semibold;
-    color: $text-dark-primary;
-    background-color: rgba($blue, .15);
-    border-radius: 3px;
-  }
-
-  em {
-    @extend %selectable;
-  }
-
-  s {
-    @extend %selectable;
-  }
-
-  b,
-  strong {
-    @extend %selectable;
-    font-weight: $font-weight-semibold;
-  }
-
+  // Disable the hover zoom effect for emoji inside the input box
   img.emojione {
-    margin: unset;
     transition: unset;
     &:hover { transform: unset; }
   }

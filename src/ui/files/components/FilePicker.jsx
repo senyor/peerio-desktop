@@ -1,7 +1,7 @@
 const React = require('react');
 const { fileStore } = require('~/icebear');
 const { observer } = require('mobx-react');
-const { observable } = require('mobx');
+const { observable, computed } = require('mobx');
 const { Dialog, ProgressBar, List, ListItem } = require('~/react-toolbox');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./Breadcrumb');
@@ -15,6 +15,10 @@ class FilePicker extends React.Component {
 
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
+
+    componentWillUnmount() {
+        fileStore.clearFilter();
+    }
 
     checkScrollPosition = () => {
         console.log('check scroll position');
@@ -63,6 +67,21 @@ class FilePicker extends React.Component {
         fileStore.filterByName(val);
     };
 
+    get breadCrumbsHeader() {
+        return (
+            <Breadcrumb currentFolder={this.currentFolder} noActions
+                onSelectFolder={this.changeFolder} />
+        );
+    }
+
+    get searchResultsHeader() {
+        return (
+            <div className="search-results-header">
+                Search results
+            </div>
+        );
+    }
+
     render() {
         const actions = [
             { label: t('button_cancel'), onClick: this.handleClose },
@@ -84,8 +103,7 @@ class FilePicker extends React.Component {
                 {!fileStore.loading && this.props.active ?
                     <div ref={this.setScrollerRef}>
                         <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
-                        <Breadcrumb currentFolder={this.currentFolder} noActions
-                            onSelectFolder={this.changeFolder} />
+                        {fileStore.currentFilter ? this.searchResultsHeader : this.breadCrumbsHeader}
                         {this.renderList()}
                     </div> : null}
                 { fileStore.loading && this.renderLoader() }
@@ -117,6 +135,7 @@ class FilePicker extends React.Component {
 
     changeFolder = f => {
         this.currentFolder = f;
+        fileStore.clearFilter();
     };
 
     renderFolder = f => {
@@ -126,8 +145,10 @@ class FilePicker extends React.Component {
         );
     };
 
-    get items() {
-        return this.currentFolder.foldersAndFilesDefaultSorting;
+    @computed get items() {
+        return fileStore.currentFilter ?
+            fileStore.visibleFilesAndFolders
+            : this.currentFolder.foldersAndFilesDefaultSorting;
     }
 
     renderList() {

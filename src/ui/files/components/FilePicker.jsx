@@ -77,7 +77,7 @@ class FilePicker extends React.Component {
     get searchResultsHeader() {
         return (
             <div className="search-results-header">
-                Search results
+                {t('title_searchResults')}
             </div>
         );
     }

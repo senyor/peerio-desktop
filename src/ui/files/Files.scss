@@ -7,6 +7,12 @@
   padding: 0 24px;
   background: $background-root;
 
+  .search-results-header {
+    @extend %title;
+    margin-left: $margin-xl;
+    color: $text-dark-secondary;
+  }
+
   .search {
     height: 50px;
     width: 100%;

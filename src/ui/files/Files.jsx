@@ -1,7 +1,7 @@
 const React = require('react');
 const { Button, Dialog, Input } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
-const { observable, action, when } = require('mobx');
+const { observable, action, when, computed } = require('mobx');
 const { fileStore, clientApp } = require('~/icebear');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
@@ -40,6 +40,7 @@ class Files extends React.Component {
     componentWillUnmount() {
         clientApp.isInFilesView = false;
         window.removeEventListener('resize', this.enqueueCheck);
+        fileStore.clearFilter();
     }
 
     handleSearch = val => {
@@ -255,13 +256,45 @@ class Files extends React.Component {
         if (folder !== uiStore.currentFolder) {
             this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
             uiStore.currentFolder = folder;
+            fileStore.clearFilter();
         }
     };
 
-    get items() {
+    @computed get items() {
         return fileStore.currentFilter ?
-            fileStore.visibleFiles
+            fileStore.visibleFilesAndFolders
             : uiStore.currentFolder.foldersAndFilesDefaultSorting;
+    }
+
+    get breadCrumbsHeader() {
+        return (
+            <div className="files-header">
+                <Breadcrumb currentFolder={uiStore.currentFolder}
+                    onSelectFolder={this.changeFolder}
+                    onMove={() => this.moveFolder(uiStore.currentFolder)}
+                    onDelete={() => this.deleteFolder(uiStore.currentFolder)}
+                    onRename={() => this.showRenameFolderPopup(uiStore.currentFolder)}
+                />
+                <Button className="button-affirmative inverted new-folder"
+                    label={t('button_newFolder')}
+                    onClick={this.showAddFolderPopup}
+                />
+                <Button className="button-affirmative"
+                    label={t('button_upload')}
+                    onClick={this.handleUpload}
+                />
+            </div>
+        );
+    }
+
+    get searchResultsHeader() {
+        return (
+            <div className="files-header">
+                <div className="search-results-header">
+                    Search results
+                </div>
+            </div>
+        );
     }
 
     render() {
@@ -288,22 +321,7 @@ class Files extends React.Component {
             <div className="files">
                 <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
                 <div className="file-wrapper">
-                    <div className="files-header">
-                        <Breadcrumb currentFolder={currentFolder}
-                            onSelectFolder={this.changeFolder}
-                            onMove={() => this.moveFolder(uiStore.currentFolder)}
-                            onDelete={() => this.deleteFolder(uiStore.currentFolder)}
-                            onRename={() => this.showRenameFolderPopup(uiStore.currentFolder)}
-                        />
-                        <Button className="button-affirmative inverted new-folder"
-                            label={t('button_newFolder')}
-                            onClick={this.showAddFolderPopup}
-                        />
-                        <Button className="button-affirmative"
-                            label={t('button_upload')}
-                            onClick={this.handleUpload}
-                        />
-                    </div>
+                    {fileStore.currentFilter ? this.searchResultsHeader : this.breadCrumbsHeader}
                     <div className="file-table-wrapper" ref={this.setContainerRef} onScroll={this.enqueueCheck}>
                         <div className="file-table-header row">
                             <div className="loading-icon" />{/* blank space for download-in-progress icon */}

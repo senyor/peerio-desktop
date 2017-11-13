@@ -32,7 +32,6 @@
 
 ## Repository owner
 
-- [ ] Breaking changes are applied correctly.
 - [ ] At least one approved code review exists.
 - [ ] Approved tester review exists and was done after last code changes.
 - [ ] CI build and tests passed.

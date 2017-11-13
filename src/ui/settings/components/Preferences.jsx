@@ -2,6 +2,7 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { Checkbox, FontIcon, Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T');
 const { User, chatStore } = require('~/icebear');
 const uiStore = require('~/stores/ui-store');
 const { fileStore } = require('~/icebear');
@@ -135,9 +136,7 @@ class Preferences extends React.Component {
                         <FontIcon value="security" />
                         <div>
                             <span>{t('title_EnableUrlPreviewWarning')}&nbsp;</span>
-                            <a href="https://peerio.zendesk.com/hc/en-us/articles/115005090766">
-                                {t('title_learnMore')}
-                            </a>
+                            <T k="title_learnMore" />
                         </div>
                     </div>
                     <Switch label={t('title_EnableUrlPreviews')}

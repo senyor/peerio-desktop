@@ -25,8 +25,8 @@
   }
 
   .breadcrumb-container {
-    margin-top: $margin-default;
     margin-left: $margin-default;
+    margin-top: $margin-default;
   }
 
   .breadcrumb * {
@@ -34,9 +34,24 @@
   }
 
   .search-results-header {
-    font-size: 16px;
-    margin-top: $margin-default;
     margin-left: $margin-default;
+    margin-top: $margin-default;
+    font-size: 16px;
     color: $text-dark-secondary;
+  }
+
+  .file-picker-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // overriding File table defaults
+  .file-table-wrapper {
+    height: 55vh;
+
+    .row {
+      padding-left: $padding-default;
+      border: none;
+    }
   }
 }

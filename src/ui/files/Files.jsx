@@ -315,8 +315,17 @@ class Files extends React.Component {
                     onMoveFolder={() => this.moveFolder(f)}
                     onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.deleteFolder}
-                    onChangeFolder={this.changeFolder} /> :
-                <FileLine key={f.fileId} file={f} currentFolder={currentFolder} />);
+                    onChangeFolder={this.changeFolder}
+                    folderActions
+                    folderDetails
+                /> :
+                <FileLine
+                    key={f.fileId}
+                    file={f}
+                    currentFolder={currentFolder}
+                    fileActions
+                    fileDetails
+                />);
         }
         this.enqueueCheck();
         return (

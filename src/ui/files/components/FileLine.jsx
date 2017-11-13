@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 const FileActions = require('./FileActions');
 const FileLoading = require('./FileLoading');
-const { ProgressBar } = require('~/react-toolbox');
+const { Button, ProgressBar } = require('~/react-toolbox');
 const { fileStore, User } = require('~/icebear');
 const { downloadFile } = require('~/helpers/file');
 const uiStore = require('~/stores/ui-store');
@@ -97,12 +97,14 @@ class FileLine extends React.Component {
             )}
             onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
 
-                <div className="loading-icon">
-                    {(file.downloading || file.uploading)
-                        && <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
-                            onCancel={this.cancelUploadOrDownload} />
-                    }
-                </div>
+                {this.props.fileDetails &&
+                    <div className="loading-icon">
+                        {(file.downloading || file.uploading)
+                            && <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
+                                onCancel={this.cancelUploadOrDownload} />
+                        }
+                    </div>
+                }
 
                 <div className="file-icon">
                     <FileSpriteIcon type={file.iconType} size="medium" />
@@ -113,36 +115,54 @@ class FileLine extends React.Component {
                     {file.name}
                 </div>
 
-                <div className="file-owner" onClick={this.openContactDialog}>
-                    {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
-                </div>
+                {this.props.fileDetails &&
+                    <div className="file-owner" onClick={this.openContactDialog}>
+                        {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
+                    </div>
+                }
 
-                <div className="file-uploaded text-right" title={
-                    file.uploadedAt ? file.uploadedAt.toLocaleString() : ''
-                }>
-                    {this.formatDate(file.uploadedAt)}
-                </div>
+                {this.props.fileDetails &&
+                    <div className="file-uploaded text-right" title={
+                        file.uploadedAt ? file.uploadedAt.toLocaleString() : ''}>
+                        {this.formatDate(file.uploadedAt)}
+                    </div>
+                }
 
-                <div className="file-size text-right">{file.sizeFormatted}</div>
+                {this.props.fileDetails &&
 
-                <div className="file-actions text-right">
-                    <FileActions
-                        downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
-                        shareable shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.share}
-                        newFolderDisabled
-                        onRename={this.renameFile}
-                        moveable onMove={this.moveFile}
-                        deleteable onDelete={this.deleteFile}
-                    />
-                    {this.moveFileVisible && this.props.currentFolder &&
-                        <MoveFileDialog
-                            file={file}
-                            currentFolder={this.props.currentFolder}
-                            visible={this.moveFileVisible}
-                            onHide={this.hideMoveFile}
+                    <div className="file-size text-right">{file.sizeFormatted}</div>
+                }
+
+                {this.props.fileActions &&
+                    <div className="file-actions text-right">
+                        <FileActions
+                            downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
+                            shareable shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.share}
+                            newFolderDisabled
+                            onRename={this.renameFile}
+                            moveable onMove={this.moveFile}
+                            deleteable onDelete={this.deleteFile}
                         />
-                    }
-                </div>
+                        {this.moveFileVisible && this.props.currentFolder &&
+                            <MoveFileDialog
+                                file={file}
+                                currentFolder={this.props.currentFolder}
+                                visible={this.moveFileVisible}
+                                onHide={this.hideMoveFile}
+                            />
+                        }
+                    </div>
+                }
+
+                {this.props.checkbox &&
+                    <Button
+                        className="checkbox no-ripple"
+                        icon={this.props.selected
+                            ? 'check_box'
+                            : 'check_box_outline_blank'}
+                        onClick={this.props.onToggleSelect}
+                    />
+                }
 
                 {(file.downloading || file.uploading)
                     ? <div className="loading">

@@ -54,6 +54,11 @@
   }
 }
 
+// remove ripple
+.no-ripple.rt-button-button > .rt-button-rippleWrapper {
+  display: none;
+}
+
 // horizontally flip icons (used for "share" buttons)
 .reverse-icon .material-icons {
   @extend %reverse-icon;

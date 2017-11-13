@@ -22,27 +22,38 @@ class FolderLine extends React.Component {
 
         return (
             <div className="row" onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
-                <div className="loading-icon" />
+                {this.props.folderDetails &&
+                    <div className="loading-icon" />
+                }
+
                 <div className="file-icon">
                     <FontIcon value="folder" />
                 </div>
-                <div className="file-name selectable"
+
+                <div className="file-name clickable selectable"
                     onClick={() => this.props.onChangeFolder(this.props.folder)} >
                     {folder.name}
                 </div>
 
-                <div className="file-owner">
-                    {t('title_you')}
-                </div>
-                <div className="file-uploaded text-right" />
-                <div className="file-size text-right" />
-                <div className="file-actions text-right">
-                    <FolderActions
-                        onRename={() => this.props.onRenameFolder(this.props.folder)}
-                        onMove={() => this.props.onMoveFolder(this.props.folder)}
-                        onDelete={() => this.props.onDeleteFolder(this.props.folder)}
-                    />
-                </div>
+                {this.props.folderDetails &&
+                    <div className="file-owner">
+                        {t('title_you')}
+                    </div>
+                }
+
+                {this.props.folderDetails && <div className="file-uploaded text-right" /> }
+
+                {this.props.folderDetails && <div className="file-size text-right" /> }
+
+                {this.props.folderActions &&
+                    <div className="file-actions text-right">
+                        <FolderActions
+                            onRename={() => this.props.onRenameFolder(this.props.folder)}
+                            onMove={() => this.props.onMoveFolder(this.props.folder)}
+                            onDelete={() => this.props.onDeleteFolder(this.props.folder)}
+                        />
+                    </div>
+                }
             </div>
         );
     }

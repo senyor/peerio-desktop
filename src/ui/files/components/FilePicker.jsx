@@ -2,7 +2,10 @@ const React = require('react');
 const { fileStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const { observable, computed } = require('mobx');
-const { Dialog, ProgressBar, List, ListItem } = require('~/react-toolbox');
+const { Dialog, ProgressBar } = require('~/react-toolbox');
+const FileLine = require('./FileLine');
+const FolderLine = require('./FolderLine');
+const uiStore = require('../../../stores/ui-store');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./Breadcrumb');
 const { t } = require('peerio-translator');
@@ -82,6 +85,12 @@ class FilePicker extends React.Component {
         );
     }
 
+    @computed get items() {
+        return fileStore.currentFilter ?
+            fileStore.visibleFilesAndFolders
+            : this.currentFolder.foldersAndFilesDefaultSorting;
+    }
+
     render() {
         const actions = [
             { label: t('button_cancel'), onClick: this.handleClose },
@@ -93,6 +102,27 @@ class FilePicker extends React.Component {
             }
         ];
 
+        const { currentFolder } = uiStore;
+        const items = [];
+        const data = this.items;
+        for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
+            const f = data[i];
+            items.push(f.isFolder ?
+                <FolderLine
+                    key={f.folderId}
+                    folder={f}
+                    onChangeFolder={() => this.changeFolder(f)}
+                /> :
+                <FileLine
+                    key={f.fileId}
+                    file={f}
+                    currentFolder={currentFolder}
+                    checkbox
+                    selected={f.selected}
+                    onToggleSelect={() => this.toggleSelect(f)}
+                />);
+        }
+
         return (
             <Dialog title={t('title_shareFromFiles')}
                 className="file-picker"
@@ -101,10 +131,14 @@ class FilePicker extends React.Component {
                 onEscKeyDown={this.handleClose}
                 onOverlayClick={this.handleClose}>
                 {!fileStore.loading && this.props.active ?
-                    <div ref={this.setScrollerRef}>
+                    <div ref={this.setScrollerRef} className="file-picker-body">
                         <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
                         {fileStore.currentFilter ? this.searchResultsHeader : this.breadCrumbsHeader}
-                        {this.renderList()}
+                        <div className="file-table-wrapper">
+                            <div className="file-table-body">
+                                {items}
+                            </div>
+                        </div>
                     </div> : null}
                 { fileStore.loading && this.renderLoader() }
             </Dialog>
@@ -126,10 +160,10 @@ class FilePicker extends React.Component {
     renderFile = f => {
         return (
             f.readyForDownload && f.show && f.canShare ?
-                <ListItem key={f.fileId} caption={f.name}
+                <li key={f.fileId} caption={f.name}
                     leftIcon={f.selected ? 'check_box' : 'check_box_outline_blank'}
                     onClick={() => { f.selected = !f.selected; }} />
-                : <ListItem key={f.fileId} className="banish" />
+                : <li key={f.fileId} className="banish" />
         );
     };
 
@@ -138,33 +172,16 @@ class FilePicker extends React.Component {
         fileStore.clearFilter();
     };
 
+    toggleSelect = f => {
+        f.selected = !f.selected;
+    };
+
     renderFolder = f => {
         return (
-            <ListItem key={f.folderId} caption={f.name}
+            <li key={f.folderId} caption={f.name}
                 leftIcon="folder" onClick={() => this.changeFolder(f)} />
         );
     };
-
-    @computed get items() {
-        return fileStore.currentFilter ?
-            fileStore.visibleFilesAndFolders
-            : this.currentFolder.foldersAndFilesDefaultSorting;
-    }
-
-    renderList() {
-        const { items } = this;
-        const rendered = [];
-        for (let i = 0; i < Math.min(this.renderedItemsCount, items.length); ++i) {
-            rendered.push(this.renderItem(items[i]));
-        }
-        this.enqueueCheck();
-        return (
-            <List
-                selectable ripple className="file-picker file-picker-scroll-container">
-                {rendered}
-            </List>
-        );
-    }
 }
 
 

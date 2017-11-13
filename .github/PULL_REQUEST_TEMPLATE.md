@@ -11,8 +11,6 @@
 | ....... | 
 | **Manual testing instructions:** | 
 | ....... |
-| **Breaking changes:** | 
-| ....... |
 | **Additional notes:** | 
 | ....... |
 

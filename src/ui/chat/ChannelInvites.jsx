@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Button, List, ListSubHeader, ListItem, TooltipIconButton } = require('~/react-toolbox');
+const { Button, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const ChatList = require('./components/ChatList');
 const { t } = require('peerio-translator');
 const { chatInviteStore, clientApp, chatStore, User } = require('~/icebear');
@@ -41,7 +41,7 @@ class ChannelInvites extends React.Component {
 
     acceptInvite = (ev) => {
         const id = getAttributeInParentChain(ev.target, 'data-kegdbid');
-        chatInviteStore.acceptInvite(id).then(this.gotoChats);
+        chatInviteStore.acceptInvite(id);
     }
 
     rejectInvite = (ev) => {
@@ -61,41 +61,51 @@ class ChannelInvites extends React.Component {
         return (
             <div className="messages channel-invites">
                 <ChatList />
-                <div className="message-view">
-                    <div className="message-toolbar">
-                        <div className="title-container">
-                            <div className="title" onClick={this.showChatNameEditor}>
-                                <T k="title_channelInvites" />
-                            </div>
-                            {/* here for layout */}
-                            <div className="meta-nav" />
-                        </div>
-                    </div>
-                    <div className="room-invites-container">
-                        <div className="inner">
-                            <div className="room-invites-list">
-                                <ChannelUpgradeOffer />
-                                <List selectable>
-                                    <ListSubHeader caption="Pending invites" />
-                                    {chatInviteStore.received.map(i =>
-                                        (<ListItem
-                                            key={`${i.kegDbId}${i.username}${i.timestamp}`}
-                                            caption={
-                                                t('title_invitedBy',
-                                                    {
-                                                        username: i.username,
-                                                        timestamp: moment(i.timestamp).format('llll')
-                                                    })
-                                            }
-                                            legend={i.channelName}
-                                            rightIcon={this.inviteOptions(i.kegDbId)}
-                                        />)
-                                    )}
-                                </List>
+                { chatInviteStore.received.length
+                    ? <div className="message-view">
+                        <div className="message-toolbar">
+                            <div className="title-container">
+                                <div className="title" onClick={this.showChatNameEditor}>
+                                    <T k="title_channelInvites" />
+                                </div>
+                                {/* here for layout */}
+                                <div className="meta-nav" />
                             </div>
                         </div>
+                        <div className="room-invites-container">
+                            <div className="inner">
+                                <div className="room-invites-list-container">
+                                    <ChannelUpgradeOffer />
+                                    <List className="room-invites-list">
+                                        {chatInviteStore.received.map(i =>
+                                            (<ListItem
+                                                key={`${i.kegDbId}${i.username}${i.timestamp}`}
+                                                caption={`# ${i.channelName}`}
+                                                legend={
+                                                    t('title_invitedBy',
+                                                        {
+                                                            username: i.username,
+                                                            timestamp: moment(i.timestamp).format('L')
+                                                        })
+                                                }
+                                                rightIcon={this.inviteOptions(i.kegDbId)}
+                                                selectable={false}
+                                                ripple={false}
+                                            />)
+                                        )}
+                                    </List>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    : <div className="zero-invites-container">
+                        <div className="content">
+                            <div className="emoji-double emojione-32-people _1f44d" alt="👍" title=":thumbsup:" />
+                            <T k="title_allCaughtUp" className="title" tag="div" />
+                            <T k="title_noMoreInvites" className="subtitle" tag="div" />
+                        </div>
+                    </div>
+                }
                 <ChannelUpgradeDialog />
             </div>
         );

@@ -1,5 +1,7 @@
 // main message-view styling in Chat.scss
 .channel-invites {
+  padding-right: 0;
+
   .message-toolbar {
     .title-container {
       @extend %flex-col;
@@ -22,7 +24,11 @@
     }
   }
 
-  .room-invites-list {
+  .room-invites-list-container {
+    .room-invites-list {
+      padding: 0 $padding-large;
+    }
+
     .rt-list-subheader {
       background: $black-03;
     }
@@ -34,6 +40,29 @@
 
     .rt-list-item {
       height: 64px;
+    }
+  }
+}
+
+.zero-invites-container {
+  display: flex;
+  max-width: 96vw;
+  padding-bottom: $padding-xl;
+  margin: auto;
+
+  .content {
+    text-align: center;
+
+    .emoji-double {
+      height: 48px;
+      width: 48px;
+      margin-bottom: $margin-default;
+      background-position: -100px -198px;
+      background-size: 939px 939px;
+    }
+
+    .subtitle {
+      color: $text-dark-secondary;
     }
   }
 }

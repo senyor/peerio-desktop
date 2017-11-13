@@ -1,16 +1,21 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
+const { Button, List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
 const Avatar = require('~/ui/shared-components/Avatar');
-const { chatStore, User, systemMessages, clientApp, chatInviteStore, contactStore } = require('~/icebear');
+const { chatStore, User, systemMessages, clientApp, chatInviteStore } = require('~/icebear');
 const { observer } = require('mobx-react');
+const { computed } = require('mobx');
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
 const routerStore = require('~/stores/router-store');
 
 @observer
 class ChatList extends React.Component {
+    @computed get inRoomInvites() {
+        return routerStore.currentRoute === '/app/channel-invites';
+    }
+
     activateChat(id) {
         // need this because of weirdly composed channel invites
         routerStore.navigateTo(routerStore.ROUTES.chats);
@@ -76,12 +81,19 @@ class ChatList extends React.Component {
                                         <div className="chat-item-add-icon" />
                                     </div>
                                 </TooltipDiv>
-                                {newChatInvites > 0 || contactStore.hasChannelInvites ?
-                                    <ListItem key="room-invites" className="room-invites"
-                                        onClick={this.goToChannelInvite}
-                                        caption="Room invites"
-                                        rightIcon={<div className="notification">{newChatInvites}</div>} />
-                                    : null}
+                                <li className={css('room-invites-button-container',
+                                    { show: newChatInvites > 0 }
+                                )}>
+                                    <Button key="room-invites"
+                                        className={css(
+                                            'room-invites-button',
+                                            'button-neutral',
+                                            { selected: this.inRoomInvites }
+                                        )}
+                                        onClick={this.goToChannelInvite}>
+                                        {t('title_viewChannelInvites')}
+                                    </Button>
+                                </li>
                                 <FlipMove duration={200} easing="ease-in-out" >
                                     {chatStore.channels.map(c =>
                                         (<ListItem key={c.id || c.tempId}

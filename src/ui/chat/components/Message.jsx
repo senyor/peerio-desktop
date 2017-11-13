@@ -8,7 +8,7 @@ const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { systemMessages, User } = require('~/icebear');
-const { Button, FontIcon, IconMenu, MenuItem } = require('~/react-toolbox');
+const { Button, FontIcon, Menu, MenuItem } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { time } = require('~/helpers/formatter');
 const { processMessageForDisplay } = require('~/helpers/chat/process-message-for-display');
@@ -43,6 +43,7 @@ const UrlPreviewConsent = require('./UrlPreviewConsent');
 @observer
 class Message extends React.Component {
     @observable.shallow errorData = null;
+    @observable errorMenuVisible = false;
 
     @action
     onClickContact(ev) {
@@ -203,18 +204,27 @@ class Message extends React.Component {
                         {/* m.inlineImages.map(url => (
                             <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />)) */}
                         {m.sendError ?
-                            <div className="send-error-container">
-                                <div className="send-error-menu">
-                                    <IconMenu icon="error" position="auto" menuRipple>
-                                        <MenuItem value={t('button_retry')}
+                            <div
+                                className="send-error-container"
+                                onClick={action(() => { this.errorMenuVisible = true; })}>
+                                <div className="send-error-menu-container">
+                                    <Menu
+                                        position="auto"
+                                        ripple
+                                        active={this.errorMenuVisible}
+                                        onHide={action(() => { this.errorMenuVisible = false; })}>
+                                        <MenuItem
                                             caption={t('button_retry')}
                                             onClick={() => m.send()} />
-                                        <MenuItem value={t('button_delete')}
+                                        <MenuItem
                                             caption={t('button_delete')}
                                             onClick={() => this.props.chat.removeMessage(m)} />
-                                    </IconMenu>
+                                    </Menu>
                                 </div>
-                                <div className="send-error-message">{t('error_messageSendFail')}</div>
+                                <FontIcon className="send-error-icon" value="error" />
+                                <div className="send-error-message">
+                                    {t('error_messageSendFail')}
+                                </div>
                             </div>
                             : null
                         }

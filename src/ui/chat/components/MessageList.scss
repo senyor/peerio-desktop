@@ -66,19 +66,6 @@
       margin-bottom: auto;
     }
 
-    .send-error {
-      &-menu {
-        .material-icons {
-          color: $red-error;
-        }
-      }
-
-      &-message {
-        @extend %hint-error-label;
-        color: $red-error;
-      }
-    }
-
     .message-content-wrapper {
       @extend %flex-col;
       @extend %flex-shrink-0;

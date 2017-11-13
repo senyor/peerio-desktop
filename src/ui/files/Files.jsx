@@ -152,6 +152,7 @@ class Files extends React.Component {
                 <Input placeholder={t('title_folderName')}
                     value={this.folderName} onChange={this.handleFolderNameChange}
                     onKeyDown={this.handleKeyDownAddFolder}
+                    autoFocus
                 />
             </Dialog>);
     }
@@ -174,6 +175,7 @@ class Files extends React.Component {
                 <Input placeholder={t('title_folderName')}
                     value={this.folderName} onChange={this.handleFolderNameChange}
                     onKeyDown={this.handleKeyDownRenameFolder}
+                    autoFocus
                 />
             </Dialog>);
     }

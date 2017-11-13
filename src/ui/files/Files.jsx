@@ -291,7 +291,7 @@ class Files extends React.Component {
         return (
             <div className="files-header">
                 <div className="search-results-header">
-                    Search results
+                    {t('title_searchResults')}
                 </div>
             </div>
         );

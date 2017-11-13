@@ -49,7 +49,6 @@ class DropTarget extends React.Component {
             }
         });
         this.dialogActive = false;
-        if (folder) Promise.all(promises).then(() => fileStore.fileFolders.save());
     };
 
     uploadAndShare = () => {

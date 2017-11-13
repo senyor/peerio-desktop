@@ -186,14 +186,15 @@ class Files extends React.Component {
         const list = getListOfFiles(paths);
         if (!list.success.length) return;
         await Promise.all(list.success.map(path => {
-            const file = fileStore.upload(path);
+            const file = fileStore.upload(
+                path, null, uiStore.currentFolder.isRoot ? null : uiStore.currentFolder.folderId
+            );
             return new Promise(resolve =>
                 when(() => file.fileId, () => {
                     uiStore.currentFolder.moveInto(file);
                     resolve();
                 }));
         }));
-        fileStore.fileFolders.save();
     }
 
     toggleSelection = val => {

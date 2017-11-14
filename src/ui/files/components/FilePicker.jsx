@@ -154,20 +154,6 @@ class FilePicker extends React.Component {
         );
     }
 
-    renderItem = (item) => {
-        return item.isFolder ? this.renderFolder(item) : this.renderFile(item);
-    }
-
-    renderFile = f => {
-        return (
-            f.readyForDownload && f.show && f.canShare ?
-                <li key={f.fileId} caption={f.name}
-                    leftIcon={f.selected ? 'check_box' : 'check_box_outline_blank'}
-                    onClick={() => { f.selected = !f.selected; }} />
-                : <li key={f.fileId} className="banish" />
-        );
-    };
-
     changeFolder = f => {
         this.currentFolder = f;
         fileStore.clearFilter();
@@ -175,13 +161,6 @@ class FilePicker extends React.Component {
 
     toggleSelect = f => {
         f.selected = !f.selected;
-    };
-
-    renderFolder = f => {
-        return (
-            <li key={f.folderId} caption={f.name}
-                leftIcon="folder" onClick={() => this.changeFolder(f)} />
-        );
     };
 }
 

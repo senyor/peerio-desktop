@@ -12,7 +12,6 @@ class MaintenanceWarning extends React.Component {
     @observable maintenanceStartDate = undefined;
     @observable maintenanceEndDate = undefined;
     @observable showDialog = false;
-    @observable seen = false;
 
     constructor() {
         super();
@@ -30,12 +29,11 @@ class MaintenanceWarning extends React.Component {
     }
 
     dismiss = () => {
-        this.seen = true;
         this.toggleDialog();
     }
 
     render() {
-        if (this.maintenanceStartDate && this.maintenanceEndDate && !this.seen) {
+        if (this.maintenanceStartDate && this.maintenanceEndDate) {
             return (
                 <div>
                     <div className="maintenance-wrapper" onClick={this.toggleDialog}>

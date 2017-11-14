@@ -1,6 +1,5 @@
 .list {
-  .room-item,
-  .room-invites {
+  .room-item {
     cursor: pointer;
     background: #eee;
 
@@ -8,6 +7,26 @@
       height: 26px;
       max-height: 26px;
       min-height: 26px;
+    }
+  }
+
+  .room-invites-button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-height: 0;
+    padding: 0 $padding-default;
+    margin-bottom: $margin-small;
+    overflow: hidden;
+
+    transition: max-height 250ms;
+
+    &.show {
+      max-height: $button-neutral-height;
+    }
+
+    .room-invites-button {
+      width: 100%;
     }
   }
 
@@ -22,10 +41,6 @@
 
     &:hover:not(.active) {
       background-color: $lightblue-hover;
-    }
-
-    [data-react-toolbox=font-icon] {
-      margin-right: $margin-default;
     }
 
     .rt-list-item {

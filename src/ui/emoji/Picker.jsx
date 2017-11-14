@@ -1,55 +1,30 @@
-/* eslint-disable react/no-multi-comp */
 const React = require('react');
-const { observable, action } = require('mobx');
+const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const data = require('~/static/emoji/emoji.json');
 const { FontIcon } = require('~/react-toolbox');
 const _ = require('lodash');
 const { t } = require('peerio-translator');
 const { User } = require('~/icebear');
 
-data.recent = observable([]);
+const {
+    emojiCategories,
+    emojiByCanonicalShortname,
+    emojiData
+} = require('~/helpers/chat/emoji');
 
-const shortnameMap = {};
-function getCategoryName(item) {
-    return item.diversity ? 'diversity' : (item.origCategory || item.category);
-}
-function buildMap() {
-    const catKeys = Object.keys(data);
-    for (let i = 0; i < catKeys.length; i++) {
-        data[catKeys[i]].forEach(item => {
-            shortnameMap[item.shortname] = item;
-            item.className = `emojione emojione-32-${getCategoryName(item)} _${item.unicode}`;
-        });
-    }
-}
+const recentList = computed(() => {
+    if (!User.current) return [];
+    return User.current.emojiMRU.list.map(shortname => emojiByCanonicalShortname[shortname]);
+});
 
-buildMap();
+const emojiDataWithRecent = { ...emojiData };
+Object.defineProperty(emojiDataWithRecent, 'recent', {
+    get: () => recentList.get()
+});
 
-const categories = [
-    { id: 'recent', name: 'Recently Used' },
-    { id: 'people', name: 'Smileys & People' },
-    { id: 'nature', name: 'Animals & Nature' },
-    { id: 'food', name: 'Food & Drink' },
-    { id: 'activity', name: 'Activity' },
-    { id: 'travel', name: 'Travel & Places' },
-    { id: 'objects', name: 'Objects' },
-    { id: 'symbols', name: 'Symbols' },
-    { id: 'flags', name: 'Flags' }
-];
+const categories = [{ id: 'recent', name: 'Recently Used' }, ...emojiCategories];
 
-let mruInitialized = false;
-function initMRU() {
-    if (mruInitialized || !User.current) return;
-    mruInitialized = true;
-    User.current.emojiMRU.list.observe(action(event => {
-        data.recent.clear();
-        event.object.forEach(shortname => {
-            data.recent.push(shortnameMap[shortname]);
-        });
-    }), true);
-}
 
 // separate store is needed to avoid re-render of all emojis on hover
 class PickerStore {
@@ -75,10 +50,6 @@ class Picker extends React.Component {
     @observable searchKeyword = '';
 
     dontHide = false;
-
-    componentWillMount() {
-        initMRU();
-    }
 
     onCategoryClick = id => {
         const el = document.getElementsByClassName(`category-header ${id}`)[0];
@@ -124,7 +95,7 @@ class Picker extends React.Component {
     onPicked = (e) => {
         const shortname = e.target.attributes['data-shortname'].value;
         User.current.emojiMRU.addItem(shortname);
-        this.props.onPicked(shortnameMap[shortname]);
+        this.props.onPicked(emojiByCanonicalShortname[shortname]);
     };
     preventBlur = () => {
         this.noBlur = true;
@@ -155,7 +126,7 @@ class Picker extends React.Component {
                         categories.map(c => {
                             return (<div key={c.id}>
                                 <div className={`category-header ${c.id}`}>{c.name}</div>
-                                {data[c.id].map(e => {
+                                {emojiDataWithRecent[c.id].map(e => {
                                     if (!e || e.index.indexOf(searchLow) < 0) return null;
                                     return (
                                         <span onMouseEnter={this.onEmojiMouseEnter}
@@ -217,7 +188,7 @@ class InfoPane extends React.Component {
                 </div>
             );
         }
-        const item = shortnameMap[store.hovered];
+        const item = emojiByCanonicalShortname[store.hovered];
         return (
             <div className="info-pane">
                 <span className={item.className} />

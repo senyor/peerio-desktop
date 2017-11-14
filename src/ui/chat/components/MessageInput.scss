@@ -1,48 +1,4 @@
-$suggests-max-height: 200px;
-
 .message-view {
-  .suggests-wrapper {
-    position: absolute;
-    height: $suggests-max-height; // keep it like this until staged hide animation is implemented
-    max-height: $suggests-max-height;
-    min-height: $suggests-max-height;
-    left: 20px;
-    right: 20px;
-    bottom: 100%;
-    overflow: hidden;
-    box-shadow: 0 4px 13px -6px;
-    background-color: #fafafa;
-    border: 1px solid #eee;
-    border-bottom: none;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-
-    //transition: 350ms cubic-bezier(.4, 0, .2, 1);
-
-    //&.show {
-    //  bottom: 100%;
-    // }
-    .suggests {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 10px;
-      bottom: 10px;
-      overflow-x: hidden;
-      overflow-y: scroll;
-    }
-
-    .suggest-item {
-      cursor: pointer;
-      padding: 3px 10px;
-    }
-
-    .selected {
-      color: white;
-      background-color: $blue;
-    }
-  }
-
   .message-input-wrapper {
     position: relative;
   }
@@ -60,49 +16,12 @@ $suggests-max-height: 200px;
     background-color: $background-root;
     border-top: 1px solid $divider-dark;
 
-    #messageEditor,
-    .message-editor-empty {
-      width: 100%;
-    }
-
     .color-brand:not([disabled]) > .material-icons {
       color: $blue;
     }
 
     .color-affirmative > .material-icons {
       color: $green-affirmative;
-    }
-
-    .ql-container {
-      width: 100%;
-      padding: $padding-small 0;
-      margin-left: 18px;
-      font-family: inherit;
-      font-size: inherit;
-    }
-
-    .ql-editor {
-      max-height: 96px;
-      padding: 0;
-      line-height: 1.45;
-
-      &.ql-blank::before {
-        width: 100%;
-        left: 0;
-        right: auto;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      p {
-        word-break: break-all;
-      }
-
-      img {
-        width: 1.5em;
-        vertical-align: middle;
-      }
     }
   }
 

@@ -4,6 +4,10 @@
     "jsx": "react",
     "allowJs": true,
     "baseUrl": "./src",
+    "target": "esnext",
+    "noImplicitThis": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
     "paths": {
       "~/*": [
         "./*"

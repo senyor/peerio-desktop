@@ -57,6 +57,19 @@
     border-bottom: 1px solid $divider-dark;
   }
 
+  // There doesn't seem to be a way to assign a classname to the React-Toolbox
+  // Input component's inner textarea, so we grab it by element name
+  .purpose-editor > textarea {
+    // With the 'multiline' attribute set, the Input component is resizable by
+    // default -- on both axes -- with no option to disable it.
+    // the input automatically sizes to the content and resizing on the x-axis
+    // breaks our page layout, so let's just disable it.
+    resize: none;
+    // unfortunately, the input seems to resize to the content slightly too
+    // small, resulting in ugly scrollbars. we can just hide the overflow.
+    overflow: hidden;
+  }
+
   .purpose-label,
   .purpose-label-big {
     color: $text-dark-hint;
@@ -71,6 +84,7 @@
   }
 
   .purpose-text {
+    @extend %selectable;
     padding-right: $padding-default;
     padding-top: 3px;
     word-wrap: break-word;

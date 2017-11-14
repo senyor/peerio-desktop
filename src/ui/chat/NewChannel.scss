@@ -79,12 +79,11 @@
     padding: 0;
   }
 
-  .user-not-found-container {
+  .user-search-error-container {
     padding-left: 0;
   }
 
-  .email-invite-container,
-  .email-suggestsearch-container {
+  .user-search-error {
     padding-top: $padding-large;
     margin-bottom: $margin-large;
   }

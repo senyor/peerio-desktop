@@ -6,8 +6,12 @@ const noSpaceRegex = /\s+/g;
  * @returns {{isBackupCode:bool, readyToSubmit:bool}}
  */
 function validateCode(code) {
-    code = code.replace(noSpaceRegex, ''); // eslint-disable-line
-    const res = {};
+    /* eslint-disable no-param-reassign */
+    code = code || '';
+    code = code.toString();
+    code = code.replace(noSpaceRegex, '');
+    /* eslint-enable no-param-reassign */
+    const res = { isBackupCode: false, readyToSubmit: false };
     if (code.includes('-')) {
         res.isBackupCode = true;
         if (code.length >= 19) {

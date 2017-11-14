@@ -1,0 +1,72 @@
+.message-editor-container-prosemirror {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: $padding-small 0;
+  margin: 0 0 0 18px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.ProseMirror {
+  @extend %chat-message;
+  height: 100%;
+  max-height: 96px;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.45;
+  overflow-y: auto;
+  text-align: left;
+  word-wrap: break-word;
+  tab-size: 4;
+  white-space: pre-wrap;
+  outline: none;
+
+  &.ProseMirror-empty::before {
+    content: attr(data-placeholder);
+    position: absolute;
+    pointer-events: none;
+    width: 100%;
+    left: 0;
+    right: auto;
+    overflow: hidden;
+    font-style: italic;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: rgba(0, 0, 0, .6);
+  }
+
+  // Disable the hover zoom effect for emoji inside the input box
+  img.emojione {
+    transition: unset;
+    &:hover { transform: unset; }
+  }
+
+  // A reset from Quill core -- TODO verify if this is actually the behaviour we want
+  p,
+  ol,
+  ul,
+  pre,
+  blockquote,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.ProseMirror-hideselection *::selection { background: transparent; }
+
+.ProseMirror-selectednode {
+  box-shadow: inset 0 0 0 100px $lightblue;
+}
+
+.ProseMirror-focused {
+  outline: none;
+  border: none;
+}

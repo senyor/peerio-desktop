@@ -40,9 +40,27 @@ class ChatView extends React.Component {
         this.reactionsToDispose.forEach(dispose => dispose());
     }
 
-    sendMessage(m) {
+    /**
+     * Create a new Message keg with the given plaintext and send it to server as part of this chat.
+     * @param {string} text The plaintext of the message.
+     */
+    sendMessage(text) {
         try {
-            chatStore.activeChat.sendMessage(m)
+            chatStore.activeChat.sendMessage(text)
+                .catch(() => ChatView.playErrorSound());
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    /**
+     * Create a new Message keg with the given plaintext and send it to server as part of this chat.
+     * @param {Object} richText A ProseMirror document tree, in JSON.
+     * @param {string} legacyText The rendered HTML of the rich text, for back-compat with older clients
+     */
+    sendRichTextMessage(richText, legacyText) {
+        try {
+            chatStore.activeChat.sendRichTextMessage(richText, legacyText)
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
@@ -202,7 +220,7 @@ class ChatView extends React.Component {
                                                 { chatName: `${chat.isChannel ? '# ' : ''}${chat.name}` })
                                             : null
                                     }
-                                    onSend={this.sendMessage}
+                                    onSend={this.sendRichTextMessage}
                                     onAck={this.sendAck}
                                     onFileShare={this.shareFiles}
                                 />

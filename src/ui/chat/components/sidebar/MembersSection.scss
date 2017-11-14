@@ -6,6 +6,15 @@
   &.with-admin-controls {
     padding-top: 64px;
   }
+
+  // Prevent x scrolling
+  .rt-list-listItem {
+    overflow-x: hidden;
+
+    .rt-list-item {
+      width: 100%;
+    }
+  }
 }
 
 .action-list {

@@ -40,6 +40,29 @@
 .rt-dialog-button.rt-button-neutral:not([disabled]).rt-button-flat:not(:last-of-type) {
   color: $text-dark-secondary;
 }
+// Grey/blue "neutral UI" buttons
+$button-neutral-height: 36px;
+
+.button-neutral.rt-button-button.rt-button-neutral.rt-button-flat {
+  @extend %subtitle;
+
+  align-items: center;
+  height: $button-neutral-height;
+  text-transform: none;
+  color: $blue;
+  background-color: transparent;
+  border: 1px solid $blue;
+  border-radius: 4px;
+
+  &:hover,
+  &.selected {
+    background-color: $white-50;
+  }
+
+  .rt-ripple-rippleWrapper {
+    display: none;
+  }
+}
 
 // smaller buttons
 .button-small.rt-button-button {

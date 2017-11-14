@@ -22,7 +22,7 @@ fi
 npm install
 
 echo "[•              ] getting locales"
-./scripts/get-locales.js
+./scripts/get-locales.sh
 if git diff-index HEAD --; then
     echo "*** Locales changed, committing."
     git commit -a -m "chore: update locales"
@@ -35,7 +35,7 @@ export NODE_ENV=production
 echo "[••••••••       ] updating version number"
 ./node_modules/.bin/standard-version
 git tag -d `git describe --tags` # Remove latest tag created by standard-version
-git push && git push --follow-tags origin master
+git push && git push --follow-tags origin $1
 
 echo "[•••••••••••••••] building and publishing"
 peerio-desktop-release --key ~/.peerio-updater/secret.key \

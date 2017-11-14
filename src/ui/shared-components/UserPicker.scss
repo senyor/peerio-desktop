@@ -85,13 +85,12 @@ $userlist-maxwidth: 624px; // $userpicker-maxwidth - $userpicker-margin-large
     overflow-y: auto;
   }
 
-  .user-not-found-container {
+  .user-search-error-container {
     padding-left: $userpicker-margin-large;
     color: $text-dark-secondary;
   }
 
-  .email-invite-container,
-  .email-suggestsearch-container {
+  .user-search-error {
     @extend %flex-row;
     // @extend %flex-align-center;
     @extend %flex-justify-between;
@@ -101,7 +100,7 @@ $userlist-maxwidth: 624px; // $userpicker-maxwidth - $userpicker-margin-large
     padding-top: $padding-xl;
   }
 
-  .usernotfound-text {
+  .search-error-text {
     @extend %flex-row;
 
     /* TODO change to flex */

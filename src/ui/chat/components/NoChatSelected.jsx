@@ -28,7 +28,7 @@ class NoChatSelected extends React.Component {
     };
 
     render() {
-        if (chatStore.loading) return null;
+        if (chatStore.loading || chatStore.chats.length) return null;
         return (
             <div className="zero-message new-dm create-new-chat">
                 <div className="zero-message-content">

@@ -89,7 +89,6 @@
 
   .inline-files {
     position: relative;
-    width: calc(100% - 100px); // reduce reflow from read receipts
     min-width: 180px;
     margin-left: $margin-default;
     font-weight: $font-weight-bold;
@@ -135,6 +134,7 @@
     .material-icons {
       padding: 0;
       margin: 0;
+      vertical-align: middle;
     }
 
     button {
@@ -147,16 +147,20 @@
       margin-right: $margin-small;
     }
 
+    .file-name-container {
+      display: flex;
+      // we add a min-width because this container is itself in a flex
+      // container, and we want this to shrink (truncating the filename).
+      min-width: 50px;
+      margin-right: auto;
+    }
+
     .file-name {
       max-width: 100%;
       margin-right: 0;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-    }
-
-    .file-ext {
-      margin-right: auto;
     }
   }
 
@@ -251,6 +255,7 @@
           display: inline;
           width: auto;
           padding: 0;
+          padding-right: 4px; // to account for italic font
           line-height: 1.3em;
         }
       }

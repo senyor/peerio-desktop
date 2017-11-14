@@ -1,7 +1,6 @@
 // Libraries
 @import '../node_modules/normalize.css/normalize.css';
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
-@import '../node_modules/quill/dist/quill.core.css';
 @import '../node_modules/croppie/croppie.css';
 @import './static/emoji/sprites/emojione.css';
 
@@ -114,6 +113,12 @@ section {
 
   & + & {
     margin-left: -8px;
+  }
+
+  &.avatar-inline {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
   }
 
   .material-icons {

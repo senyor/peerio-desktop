@@ -66,19 +66,6 @@
       margin-bottom: auto;
     }
 
-    .send-error {
-      &-menu {
-        .material-icons {
-          color: $red-error;
-        }
-      }
-
-      &-message {
-        @extend %hint-error-label;
-        color: $red-error;
-      }
-    }
-
     .message-content-wrapper {
       @extend %flex-col;
       @extend %flex-shrink-0;
@@ -147,6 +134,13 @@
         }
       }
 
+      &.render-error {
+        min-width: 320px;
+        padding: $padding-small $padding-tiny;
+        margin: 0 0 12px;
+        background-color: rgba($red-error, .06);
+      }
+
       .sending-overlay {
         position: absolute;
         height: 100%;
@@ -160,37 +154,10 @@
     }
 
     .message-content {
+      @extend %chat-message;
       @extend %flex-col;
       flex-grow: 1;
       min-width: 0;
-
-      a {
-        @extend %selectable;
-        word-break: break-word;
-      }
-
-      .mention {
-        cursor: pointer;
-        font-weight: $font-weight-semibold;
-        color: $text-dark-primary;
-
-        &.self {
-          background-color: rgba($green, .5);
-        }
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-
-      .pre {
-        @extend %selectable;
-        padding: $padding-tiny 6px;
-        margin-right: $margin-tiny;
-        font-family: monospace;
-        background-color: $black-03;
-        border-radius: 4px;
-      }
 
       .meta-data {
         @extend %flex-row;
@@ -214,37 +181,9 @@
         }
       }
 
-      .message-body {
-        // @extend %flex-row;
-        // @extend %flex-align-center;
-      }
-
       .system-message {
         font-style: italic;
         color: $text-dark-secondary;
-      }
-
-      p {
-        flex-grow: 1;
-        max-width: calc(100% - 100px);
-        min-width: 96px;
-        margin: 0 0 0 $margin-default;
-        line-height: 1.4;
-        word-break: break-word;
-        white-space: pre-wrap;
-      }
-
-      p + p {
-        margin-top: $margin-tiny;
-      }
-
-      b,
-      strong {
-        font-weight: 600;
-      }
-
-      a {
-        color: $blue;
       }
     }
 

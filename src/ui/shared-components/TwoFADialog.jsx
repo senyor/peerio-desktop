@@ -1,6 +1,6 @@
 const React = require('react');
 const { Dialog, Checkbox } = require('~/react-toolbox');
-const { observable } = require('mobx');
+const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { clientApp } = require('~/icebear');
@@ -11,10 +11,26 @@ const appControl = require('~/helpers/app-control');
 @observer
 class TwoFADialog extends React.Component {
     @observable totpCode = '';
+    @computed get readyToSubmit() {
+        return validateCode(this.totpCode).readyToSubmit;
+    }
 
-    onTOTPCodeChange = ev => {
+    @action.bound
+    onTOTPCodeChange(ev) {
         this.totpCode = ev.target.value;
-    };
+    }
+
+    @action.bound
+    submitCode() {
+        clientApp.active2FARequest.submit(this.totpCode, uiStore.prefs.last2FATrustDeviceSetting);
+        this.totpCode = '';
+    }
+
+    handleKeyDown = e => {
+        if (this.readyToSubmit && e.key === 'Enter') {
+            this.submitCode();
+        }
+    }
 
     cancel() {
         if (clientApp.active2FARequest.type === 'login') {
@@ -58,17 +74,6 @@ class TwoFADialog extends React.Component {
         if (clientApp.active2FARequest) ref.focus();
     }
 
-    onTOTPCodeChange = ev => {
-        this.totpCode = ev.target.value;
-        this.totpCodeError = false;
-        const res = validateCode(this.totpCode);
-        if (res.readyToSubmit) {
-            this.totpCodeValidating = true;
-            clientApp.active2FARequest.submit(this.totpCode, uiStore.prefs.last2FATrustDeviceSetting);
-            this.totpCode = '';
-        }
-    };
-
     onToggleTrust() {
         uiStore.prefs.last2FATrustDeviceSetting = !uiStore.prefs.last2FATrustDeviceSetting;
     }
@@ -77,7 +82,14 @@ class TwoFADialog extends React.Component {
         const req = clientApp.active2FARequest;
         let actions;
         if (req) {
-            actions = [{ label: t('button_cancel'), onClick: this.cancel }];
+            actions = [
+                { label: t('button_cancel'), onClick: this.cancel },
+                {
+                    label: t('button_submit'),
+                    onClick: this.submitCode,
+                    disabled: !this.readyToSubmit
+                }
+            ];
         }
         return (
             <Dialog
@@ -90,7 +102,7 @@ class TwoFADialog extends React.Component {
                 <div className="text-center">
                     <input type="text" className="totp-input" ref={this.setInputRef}
                         value={this.totpCode} onChange={this.onTOTPCodeChange}
-                        style={this.totpCodeError ? this.errorStyle : null}
+                        onKeyDown={this.handleKeyDown}
                     />
                 </div>
                 <br />

@@ -10,7 +10,7 @@ const { dropCursor } = require('prosemirror-dropcursor');
 const { gapCursor } = require('prosemirror-gapcursor');
 
 const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
-const { emojiByAllShortnames } = require('~/helpers/chat/emoji');
+const { emojiByAllShortnames, emojiByAsciiSequences } = require('~/helpers/chat/emoji');
 const { emojiPlugin } = require('~/helpers/chat/prosemirror/emoji-plugin');
 const { ensuredInputRules } = require('~/helpers/chat/prosemirror/ensured-input-rules');
 
@@ -99,13 +99,40 @@ const emojiShortnameInputRule = new InputRule(emojiShortnameInputRulePattern, (s
     );
 });
 
+
+const asciiPattern = Object.keys(emojiByAsciiSequences) // take all the ascii sequences we can match...
+    .map(seq => seq.replace(/[\\^$*+?.()|[\]{}]/g, '\\$&')) // ...and escape all their regex-meaningful characters...
+    .join('|'); // ...then join them as a single regex-able match pattern.
+
+// Match (but don't include) the start of the input, or any kind of whitespace,
+// or the unicode object replacement character (used by InputRule to replace
+// leaf nodes that don't contain text), then any of the ascii emoji sequences,
+// followed by whitespace.
+const emojiAsciiInputRulePattern = new RegExp(
+    `(?<=^|\\s|\u{fffc})(${asciiPattern})(\\s)$`,
+    'u'
+);
+const emojiAsciiInputRule = new InputRule(emojiAsciiInputRulePattern, (state, match, start, end) => {
+    const emoji = emojiByAsciiSequences[match[1]];
+    if (!emoji) return null;
+
+    const s = state.schema;
+    const replacement = [
+        s.node('emoji', { shortname: emoji.shortname }),
+        s.text(match[2]) // use the same kind of trailing whitespace in the replacement.
+    ];
+
+    return state.tr.replaceWith(start, end, replacement);
+});
+
+
 module.exports = {
     chatPlugins: [
         chatKeymap,
         dropCursor(),
         gapCursor(),
         history(),
-        inputRules({ rules: [emojiShortnameInputRule] }),
+        inputRules({ rules: [emojiShortnameInputRule, emojiAsciiInputRule] }),
         ensuredInputRules({ rules: [mentionInputRule] }),
         emojiPlugin()
     ]

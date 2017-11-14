@@ -1,5 +1,7 @@
+// @ts-check
+
 const React = require('react');
-const { observable, computed } = require('mobx');
+const { observable, computed, action, runInAction } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const { FontIcon } = require('~/react-toolbox');
@@ -10,7 +12,7 @@ const { User } = require('~/icebear');
 const {
     emojiCategories,
     emojiByCanonicalShortname,
-    emojiData
+    emojiByCategories
 } = require('~/helpers/chat/emoji');
 
 const recentList = computed(() => {
@@ -18,7 +20,7 @@ const recentList = computed(() => {
     return User.current.emojiMRU.list.map(shortname => emojiByCanonicalShortname[shortname]);
 });
 
-const emojiDataWithRecent = { ...emojiData };
+const emojiDataWithRecent = { ...emojiByCategories };
 Object.defineProperty(emojiDataWithRecent, 'recent', {
     get: () => recentList.get()
 });
@@ -51,12 +53,13 @@ class Picker extends React.Component {
 
     dontHide = false;
 
-    onCategoryClick = id => {
+    @action.bound
+    onCategoryClick(id) {
         const el = document.getElementsByClassName(`category-header ${id}`)[0];
         if (!el) return;
         this.selectedCategory = id;
         el.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    };
+    }
 
     resetHovered = () => {
         this.dontHide = false;
@@ -65,15 +68,20 @@ class Picker extends React.Component {
         }, 2000);
     };
 
-    onSearchKeywordChange = (val) => {
+    @action.bound
+    onSearchKeywordChange(val) {
         this.searchKeyword = val;
-    };
+    }
 
     handleScroll = _.throttle(() => {
         const candidates = [];
         let closest;
+        /** @type {HTMLElement} */
+        // @ts-ignore (can't as-cast without typescript)
         const parent = document.getElementsByClassName(`emojis`)[0];
         for (let i = 0; i < categories.length; i++) {
+            /** @type {HTMLElement} */
+            // @ts-ignore (can't as-cast without typescript)
             const c = document.getElementsByClassName(`category-header ${categories[i].id}`)[0];
             if (!c || c.offsetTop > (parent.offsetHeight + parent.scrollTop)) continue;
             candidates.push({ id: categories[i].id, offsetTop: c.offsetTop });
@@ -85,7 +93,7 @@ class Picker extends React.Component {
                 closest = candidates[i];
             }
         }
-        if (this.selectedCategory !== closest.id) this.selectedCategory = closest.id;
+        if (this.selectedCategory !== closest.id) runInAction(() => { this.selectedCategory = closest.id; });
     }, 1000);
 
     onEmojiMouseEnter = (e) => {
@@ -119,8 +127,7 @@ class Picker extends React.Component {
                                 name={c.name} onClick={this.onCategoryClick} />))
                     }
                 </div>
-                <SearchEmoji searchKeyword={this.searchKeyword} onSearchKeywordChange={this.onSearchKeywordChange}
-                    clearSearchKeyword={this.clearSearchKeyword} />
+                <SearchEmoji searchKeyword={this.searchKeyword} onSearchKeywordChange={this.onSearchKeywordChange} />
                 <div className="emojis" key="emojis" onScroll={this.handleScroll}>
                     {
                         categories.map(c => {
@@ -129,10 +136,14 @@ class Picker extends React.Component {
                                 {emojiDataWithRecent[c.id].map(e => {
                                     if (!e || e.index.indexOf(searchLow) < 0) return null;
                                     return (
-                                        <span onMouseEnter={this.onEmojiMouseEnter}
-                                            onMouseLeave={this.resetHovered} onClick={this.onPicked}
+                                        <span
+                                            onMouseEnter={this.onEmojiMouseEnter}
+                                            onMouseLeave={this.resetHovered}
+                                            onClick={this.onPicked}
                                             className={e.className}
-                                            key={e.unicode} data-shortname={e.shortname} />);
+                                            key={e.shortname}
+                                            data-shortname={e.shortname} />
+                                    );
                                 }).filter(skipNulls)}
                             </div>);
                         }).filter(item => item.props.children[1].length > 0)
@@ -144,6 +155,13 @@ class Picker extends React.Component {
     }
 }
 
+
+/**
+ * @augments {React.Component<{
+        searchKeyword : string
+        onSearchKeywordChange : (keyword : string) => void
+    }, {}>}
+ */
 @observer
 class SearchEmoji extends React.Component {
     @observable keyword = '';

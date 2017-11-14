@@ -36,4 +36,15 @@
       user-select: text;
     }
   }
+
+  .suggest-add-contact {
+    display: flex;
+    align-items: center;
+    margin: $margin-xl;
+    color: $text-dark-secondary;
+
+    .text {
+      margin-left: $margin-default;
+    }
+  }
 }

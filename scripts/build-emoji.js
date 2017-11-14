@@ -1,57 +1,69 @@
 #!/usr/bin/env node
+
+// @ts-check
+
 const fs = require('fs');
 const cp = require('child_process');
+
+/** @type {any} */
+const emojione = require('emojione');
+
 
 const srcImages = './node_modules/emojione-assets/png/32/';
 const srcSprites = './node_modules/emojione-assets/sprites/*-32-*@2x.png';
 const srcCss = './node_modules/emojione-assets/sprites/emojione-sprite-32.css';
 const srcJson = './node_modules/emojione/emoji.json';
 const srcJs = './node_modules/emojione/lib/js/emojione.js';
-const out = './src/static/emoji/';
+const outDir = './src/static/emoji/';
+const relativePngFolder = './static/emoji/png/';
 
-// "has_img_emojione": false
 
 // We need this so we can detect when new category has been added, it requires manual actions.
 // Value should be an ascending index.
 const knownCategories = {
     people: 1,
-    activity: 1,
-    food: 1,
-    objects: 1,
     nature: 1,
+    food: 1,
+    activity: 1,
     travel: 1,
+    objects: 1,
     symbols: 1,
-    regional: 1,
     flags: 1
 };
 
-// Preparing data
-let resultCount = 0;
-let raw = fs.readFileSync(srcJson, { encoding: 'utf8' });
-raw = JSON.parse(raw);
+const rawEmoji = JSON.parse(fs.readFileSync(srcJson, { encoding: 'utf8' }));
 
-checkConsistencyWithLib();
-convertToArray();
+checkConsistencyWithLib(rawEmoji);
 
-console.log(`Raw data source contains ${raw.length} records`);
-const origCount = raw.length;
+const asArray = convertToArrayAndCleanup(rawEmoji);
+console.log(`Raw data source contains ${asArray.length} records`);
 
-groupByCategory();
+// byCanonicalShortname contains the fully-serialized emoji data; everything
+// else exported by this file contains normalized references using the canonical
+// shortname, and should be denormalized on load.
+const { byCanonicalShortname, byAllShortnames, byAscii } = buildMaps(asArray);
+const byCategory = groupByCategory(asArray);
 
-if (origCount !== resultCount) {
-    throw new Error(`Something went wrong. Original file had ${origCount} emojis. Result file: ${resultCount}`);
-}
-// -- Writing out data
 
 cleanOutputDir();
-fs.writeFileSync(`${out}emoji.json`, JSON.stringify(raw));
 
-// copy sprites
-console.log('Optimising and copying sprites.');
-// cp.execSync(`pngquant ${srcSprites} -o ${out}emojione.sprites.png`);
-fs.mkdirSync(`${out}sprites`);
-cp.execSync(`cp ${srcSprites} ${out}sprites`);
-cp.execSync(`cp ${srcJs} ${out}emojione.js`);
+const dataToWrite = {
+    byCanonicalShortname,
+    byAllShortnames,
+    byAscii,
+    byCategory
+};
+
+console.log('Writing JSON file.');
+fs.writeFileSync(`${outDir}emoji.json`, JSON.stringify(dataToWrite));
+
+console.log('Copying sprites.');
+fs.mkdirSync(`${outDir}sprites`);
+cp.execSync(`cp ${srcSprites} ${outDir}sprites`);
+cp.execSync(`cp ${srcJs} ${outDir}emojione.js`);
+
+
+console.log('Adjusting CSS.');
 let css = fs.readFileSync(srcCss, 'utf8');
 let repl;
 // eslint-disable-next-line
@@ -65,27 +77,32 @@ while (true) {
     }
     break;
 }
-fs.writeFileSync(`${out}sprites/emojione.css`, css);
-// cp.execSync(`cp ${srcCss} ${out}/sprites`);
-// cp.execSync(`echo ".emoji-picker $(cat ${srcCss})" > ${out}sprites/emojione.sprites.css`);
+console.log('Writing CSS to file.');
+fs.writeFileSync(`${outDir}sprites/emojione.css`, css);
 
 console.log('Copying images.');
-cp.execSync(`cp -R ${srcImages} ${out}png`);
+cp.execSync(`cp -R ${srcImages} ${outDir}png`);
+
+console.log('Done.');
+process.exit(0);
 
 // ---------------------------------------------------------------------------------------------------------------
 function cleanOutputDir() {
-    if (fs.existsSync(out)) cp.execSync(`rm -rf ${out}`);
-    fs.mkdirSync(out);
-    fs.writeFileSync(`${out}README.md`, '```\r\nThis directory is wiped and re-generated on build.\r\n' +
+    console.log('Cleaning output directory.');
+    if (fs.existsSync(outDir)) cp.execSync(`rm -rf ${outDir}`);
+    fs.mkdirSync(outDir);
+    fs.writeFileSync(`${outDir}README.md`, '```\r\nThis directory is wiped and re-generated on build.\r\n' +
         'Do not add or modify files manually\r\n```');
 }
 
-function convertToArray() {
+function getCSSCategoryName(emoji) { return (emoji.diversity ? 'diversity' : (emoji.origCategory || emoji.category)); }
+
+function convertToArrayAndCleanup(emojiJson) {
     console.log('Converting raw emoji data to array.');
     const arr = [];
-    const keys = Object.keys(raw);
+    const keys = Object.keys(emojiJson);
     for (let k = 0; k < keys.length; k++) {
-        const item = raw[keys[k]];
+        const item = emojiJson[keys[k]];
         if (item.category === 'regional') {
             item.category = 'flags';
             item.origCategory = 'regional';
@@ -98,61 +115,104 @@ function convertToArray() {
         item.index += `${item.ascii.join(' ')} `;
         item.index = item.index.toLowerCase();
 
+        // Used only for building in buildMaps function below, then deleted.
+        item.tempAliases = item.shortname_alternates.slice(0, 2);
+        item.tempAscii = item.ascii.slice(0, 2);
+
+        // These are only used in the emoji picker component to show hints
+        // (i _think_ that's why they're joined with double spaces here, too.)
         item.aliases = item.shortname_alternates.slice(0, 2).join('  ');
         item.ascii = item.ascii.slice(0, 2).join('  ');
-        item.unicode = keys[k];
+
+        item.filename = `${relativePngFolder}${keys[k]}.png`;
 
         item.characters = item.code_points.fully_qualified
             .split('-')
             .map(code => String.fromCodePoint(Number.parseInt(code, 16)))
             .join('');
 
+        item.className = `emojione emojione-32-${getCSSCategoryName(item)} _${keys[k]}`;
+
         delete item.shortname_alternates;
         delete item.keywords;
         delete item.display;
         delete item.code_points;
-        // delete item.diversity;
-        // delete item.diversities;
         delete item.gender;
         delete item.genders;
+        delete item.unicode_version;
 
+        delete item.diversity;
+        delete item.diversities;
+        delete item.origCategory;
 
         arr.push(item);
     }
-    arr.sort((a, b) => a.order > b.order ? 1 : (a.order === b.order ? 0 : -1)); //eslint-disable-line
 
-    raw = arr;
+    arr.sort((a, b) => a.order > b.order ? 1 : (a.order === b.order ? 0 : -1)); //eslint-disable-line
+    arr.forEach(item => { delete item.order; });
+
+    return arr;
 }
 
-function groupByCategory() {
-    console.log('Grouping emojis by category');
-    const grouped = {};
-    const cats = Object.keys(knownCategories);
-    for (let i = 0; i < cats.length; i++) {
-        grouped[cats[i]] = [];
-    }
+function buildMaps(emojiArray) {
+    console.log('Building shortname and ascii maps.');
+    /* eslint-disable no-shadow */
+    const byCanonicalShortname = {};
+    const byAllShortnames = {};
+    const byAscii = {};
+    /* eslint-enable no-shadow */
 
-    raw.forEach(item => {
+    emojiArray.forEach(emoji => {
+        if (emoji.shortname in byCanonicalShortname) {
+            throw new Error(`Duplicate shortname detected: '${emoji.shortname}'`);
+        }
+        byCanonicalShortname[emoji.shortname] = emoji;
+        byAllShortnames[emoji.shortname] = emoji.shortname;
+        emoji.tempAliases.forEach(alias => {
+            if (alias in byAllShortnames) {
+                throw new Error(`Duplicate shortname alias detected: '${alias}' => '${byAllShortnames[alias]}'`);
+            }
+            byAllShortnames[alias] = emoji.shortname;
+        });
+        emoji.tempAscii.forEach(ascii => {
+            if (ascii in byAscii) {
+                throw new Error(`Duplicate ascii sequence detected: '${ascii}' => '${byAscii[ascii]}'`);
+            }
+            byAscii[ascii] = emoji.shortname;
+        });
+
+        delete emoji.tempAliases;
+        delete emoji.tempAscii;
+    });
+
+    return { byCanonicalShortname, byAllShortnames, byAscii };
+}
+
+function groupByCategory(emojiArray) {
+    console.log('Grouping emojis by category.');
+    const grouped = {};
+    Object.keys(knownCategories).forEach(category => { grouped[category] = []; });
+
+    emojiArray.forEach(item => {
         if (typeof knownCategories[item.category] === 'undefined') {
             throw new Error(`Unknown category detected: ${item.category}`);
         }
-
-        grouped[item.category].push(item);
-        resultCount++;
+        grouped[item.category].push(item.shortname);
     });
 
-    raw = grouped;
+    return grouped;
 }
 
 // checks if emoji.json and precompiled emojione library have the same emojis
 // well, technically we don't check if library has more then data, but it's very unlikely
 // and it won't cause issues if it happens
-function checkConsistencyWithLib() {
-    const lib = require('emojione');
-    const keys = Object.keys(raw);
+function checkConsistencyWithLib(emojiJson) {
+    const keys = Object.keys(emojiJson);
     for (let i = 0; i < keys.length; i++) {
-        if (lib.emojioneList[raw[keys[i]].shortname]) continue;
-        console.log(`${keys[i]} is missing from emojione lib.`);
-        delete raw[keys[i]];
+        if (emojione.emojioneList[emojiJson[keys[i]].shortname]) continue;
+        console.log(
+            `WARNING: '${emojiJson[keys[i]].shortname}' is missing from emojione lib. Deleting from emoji data.`
+        );
+        delete emojiJson[keys[i]];
     }
 }

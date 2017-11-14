@@ -174,7 +174,7 @@ const chatSchema = new Schema({
                             class: 'emojione',
                             alt: '❔',
                             title: ':grey_question:',
-                            src: './static/emoji/png/2754.png'
+                            src: `${pngFolder}/2754.png`
                         }
                     ];
                 }
@@ -185,7 +185,7 @@ const chatSchema = new Schema({
                         class: 'emojione',
                         alt: emoji.characters,
                         title: node.attrs.shortname,
-                        src: `${pngFolder}${emoji.unicode}.png`
+                        src: emoji.filename
                     },
                     emoji.characters
                 ];
@@ -198,7 +198,7 @@ const chatSchema = new Schema({
                         className="emojione"
                         alt="❔"
                         title=":grey_question:"
-                        src="./static/emoji/png/2754.png"
+                        src={`${pngFolder}2754.png`}
                     />);
                 }
 
@@ -206,7 +206,7 @@ const chatSchema = new Schema({
                     className="emojione"
                     alt={emoji.characters}
                     title={node.attrs.shortname}
-                    src={`${pngFolder}${emoji.unicode}.png`}
+                    src={emoji.filename}
                 />);
             }
         }

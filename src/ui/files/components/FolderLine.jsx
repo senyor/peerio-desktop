@@ -26,6 +26,10 @@ class FolderLine extends React.Component {
                     <div className="loading-icon" />
                 }
 
+                {this.props.checkboxPlaceholder &&
+                    <div className="checkbox" />
+                }
+
                 <div className="file-icon">
                     <FontIcon value="folder" />
                 </div>

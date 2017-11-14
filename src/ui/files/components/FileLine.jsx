@@ -108,6 +108,16 @@ class FileLine extends React.Component {
             )}
             onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
 
+                {this.props.checkbox &&
+                    <Button
+                        className="checkbox no-ripple"
+                        icon={this.props.selected
+                            ? 'check_box'
+                            : 'check_box_outline_blank'}
+                        onClick={this.props.onToggleSelect}
+                    />
+                }
+
                 {this.props.fileDetails &&
                     <div className="loading-icon">
                         {(file.downloading || file.uploading)
@@ -162,16 +172,6 @@ class FileLine extends React.Component {
                             />
                         }
                     </div>
-                }
-
-                {this.props.checkbox &&
-                    <Button
-                        className="checkbox no-ripple"
-                        icon={this.props.selected
-                            ? 'check_box'
-                            : 'check_box_outline_blank'}
-                        onClick={this.props.onToggleSelect}
-                    />
                 }
 
                 {(file.downloading || file.uploading)

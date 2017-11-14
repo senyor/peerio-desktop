@@ -23,6 +23,13 @@
     padding-left: $padding-large;
   }
 
+  .checkbox {
+    width: 24px;
+    min-width: 24px;
+    padding: 0;
+    margin-right: $margin-default;
+  }
+
   .file-icon {
     min-width: 48px;
     padding-right: $padding-small;

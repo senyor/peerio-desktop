@@ -25,7 +25,7 @@ class MoveFileDialog extends React.Component {
         const target = this.selectedFolder || this.currentFolder;
         target.moveInto(file || folder);
         // TODO: this is probably only needed for folders
-        fileStore.fileFolders.save();
+        fileStore.folders.save();
         this.onHide();
     }
 

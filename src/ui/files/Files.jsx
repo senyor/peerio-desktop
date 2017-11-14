@@ -28,7 +28,7 @@ class Files extends React.Component {
 
     componentWillMount() {
         if (!uiStore.currentFolder) {
-            uiStore.currentFolder = fileStore.fileFolders.root;
+            uiStore.currentFolder = fileStore.folders.root;
         }
         clientApp.isInFilesView = true;
     }
@@ -66,8 +66,8 @@ class Files extends React.Component {
     @action deleteFolder = folder => {
         if (!confirm(t('title_deleteFolder', { folderName: folder.name }))) return;
         uiStore.currentFolder = folder.parent;
-        fileStore.fileFolders.deleteFolder(folder);
-        fileStore.fileFolders.save();
+        fileStore.folders.deleteFolder(folder);
+        fileStore.folders.save();
     }
 
     @observable triggerAddFolderPopup = false;
@@ -98,8 +98,8 @@ class Files extends React.Component {
         this.triggerAddFolderPopup = false;
         const { folderName } = this;
         if (folderName && folderName.trim()) {
-            fileStore.fileFolders.createFolder(folderName, uiStore.currentFolder);
-            fileStore.fileFolders.save();
+            fileStore.folders.createFolder(folderName, uiStore.currentFolder);
+            fileStore.folders.save();
         }
         this.folderName = '';
     }
@@ -117,7 +117,7 @@ class Files extends React.Component {
         this.folderName = '';
         this.folderToRename = null;
         folderToRename.rename(folderName);
-        fileStore.fileFolders.save();
+        fileStore.folders.save();
     }
 
     handleKeyDownRenameFolder = (ev) => {

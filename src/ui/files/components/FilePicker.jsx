@@ -14,7 +14,7 @@ const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
 @observer
 class FilePicker extends React.Component {
-    @observable currentFolder = fileStore.fileFolders.root;
+    @observable currentFolder = fileStore.folders.root;
 
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
@@ -140,7 +140,7 @@ class FilePicker extends React.Component {
                             </div>
                         </div>
                     </div> : null}
-                { fileStore.loading && this.renderLoader() }
+                {fileStore.loading && this.renderLoader()}
             </Dialog>
         );
     }

@@ -1,7 +1,7 @@
 // @ts-check
 const React = require('react');
 const Suggestions = require('./Suggestions');
-const { emojiByAllShortnames, pngFolder } = require('~/helpers/chat/emoji');
+const { emojiByAllShortnames } = require('~/helpers/chat/emoji');
 const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
 
 const { EditorView } = require('prosemirror-view'); // eslint-disable-line no-unused-vars, (for typechecking)
@@ -32,7 +32,7 @@ function makeEmojiSuggestions(getView) {
                 <img
                     className="emojione"
                     alt={data.emoji.characters}
-                    src={`${pngFolder}${data.emoji.unicode}.png`}
+                    src={data.emoji.filename}
                     style={{ marginRight: 8 }}
                 />
                 {data.name}

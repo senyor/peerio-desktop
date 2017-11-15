@@ -28,11 +28,12 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        color: $text-dark-secondary;
+        color: $blue;
       }
 
       &:last-of-type a {
-        color: $blue;
+        cursor: default;
+        color: $text-dark-secondary;
       }
     }
   }

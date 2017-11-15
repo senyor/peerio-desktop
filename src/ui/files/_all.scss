@@ -45,6 +45,7 @@
     overflow: hidden;
     font-weight: $font-weight-semibold;
     text-overflow: ellipsis;
+    white-space: nowrap;
     transition: 150ms;
 
     &:hover {

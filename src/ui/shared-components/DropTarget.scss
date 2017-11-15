@@ -2,13 +2,14 @@
   @extend %flex-col;
   @extend %flex-align-center;
   @extend %flex-justify-center;
-  background-color: $background-overlay;
-  bottom: 0;
-  color: $text-light-primary;
-  left: 0;
   position: fixed;
+  z-index: 99;
+  left: 0;
   right: 0;
   top: 0;
+  bottom: 0;
+  color: $text-light-primary;
+  background-color: $background-overlay;
 
   .drop-content {
     @extend %flex-row;
@@ -25,7 +26,7 @@
 
   .material-icons {
     @extend %display-4;
-    color: $text-light-primary;
     margin-right: $margin-default;
+    color: $text-light-primary;
   }
 }

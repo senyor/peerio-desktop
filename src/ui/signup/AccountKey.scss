@@ -1,10 +1,10 @@
 .account-key {
   cursor: pointer;
+  user-select: none;
+  line-height: 1;
   font-family: monospace;
   font-size: 24px;
   font-weight: $font-weight-bold;
-  line-height: 1;
-  user-select: none;
 }
 
 .signup {
@@ -23,13 +23,13 @@
   }
 
   .pdf-download {
+    margin-top: auto;
+    margin-bottom: auto;
+    transition: 150ms;
+    color: $text-light-primary !important;
+    box-shadow: none;
     background-color: $blue !important;
     border-radius: 4px;
-    box-shadow: none;
-    color: $text-light-primary !important;
-    margin-bottom: auto;
-    margin-top: auto;
-    transition: 150ms;
 
     &:hover {
       box-shadow: $shadow-5;

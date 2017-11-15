@@ -65,9 +65,7 @@ class UrlPreviewConsent extends React.Component {
                 <div className="warning-body">
                     <p className="text">
                         <T k="title_UrlPreviewsWarning2" />&nbsp;
-                        <a href="https://peerio.zendesk.com/hc/en-us/articles/115005090766">
-                            <T k="title_learnMore" />
-                        </a>
+                        <T k="title_learnMore" />
                     </p>
                     <RadioGroup
                         className="options"

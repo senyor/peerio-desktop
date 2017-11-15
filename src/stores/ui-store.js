@@ -7,6 +7,13 @@ const appControl = require('~/helpers/app-control');
 class UIStore {
     @observable contactDialogUsername;
 
+    // current folder selected in Files.jsx
+    // used by drop
+    @observable currentFolder;
+
+    // Message object to show in sidebar when clicking on receipts
+    @observable selectedMessage;
+
     // show dialog about signature error
     @observable isFileSignatureErrorDialogActive = false;
 
@@ -24,7 +31,7 @@ class UIStore {
         mentionDesktopNotificationsEnabled: false,
         last2FATrustDeviceSetting: false,
         chatSideBarIsOpen: true,
-        limitInlineImageSize: false, // will use config.chat.inlineImageSizeLimit
+        limitInlineImageSize: true, // will use config.chat.inlineImageSizeLimit
         externalContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
         externalContentEnabled: false,
         externalContentJustForFavs: false,

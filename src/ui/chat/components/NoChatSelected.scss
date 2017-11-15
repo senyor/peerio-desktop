@@ -1,11 +1,12 @@
 .zero-message {
   @extend %flex-row;
-  background: $background-root;
   height: 100vh;
+  padding: 0 $padding-xl;
+  background: $background-root;
 
   .zero-message-content {
-    margin-top: 168px;
     max-width: 600px;
+    margin-top: 168px;
   }
 
   .chat-creation-header {
@@ -18,8 +19,8 @@
 
   .zero-chat-header {
     @extend %display-2;
-    color: $blue;
     margin-bottom: $margin-default;
+    color: $blue;
   }
 
   .zero-chat-instructions {
@@ -40,12 +41,12 @@
       border: none;
     }
 
-    .email-invite-container {
+    .user-search-error {
       padding-right: 0;
     }
   }
 
-  .user-not-found-container {
+  .user-search-error-container {
     padding-left: 0;
   }
 }

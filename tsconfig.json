@@ -4,10 +4,21 @@
     "jsx": "react",
     "allowJs": true,
     "baseUrl": "./src",
+    "target": "esnext",
+    "noImplicitThis": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
     "paths": {
-      "~/*": ["./*"],
-      "~/icebear": ["../node_modules/@peerio/peerio-icebear/src"],
-      "*": ["*", "../app/node_modules/*"]
+      "~/*": [
+        "./*"
+      ],
+      "~/icebear": [
+        "../app/node_modules/peerio-icebear/src"
+      ],
+      "*": [
+        "*",
+        "../app/node_modules/*"
+      ]
     }
   },
   "exclude": [

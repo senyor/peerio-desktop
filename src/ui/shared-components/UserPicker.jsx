@@ -17,10 +17,15 @@ class UserPicker extends React.Component {
     accepted = false;
     @observable suggestInviteEmail = '';
     @observable showNotFoundError;
+    @observable userAlreadyAdded = '';
     @observable foundContact;
     legacyContactError = false; // not observable bcs changes only with showNotFoundError
     @observable contactLoading = false;
     @observable _searchUsernameTimeout = false;
+
+    @computed get showSearchError() {
+        return this.suggestInviteEmail || this.showNotFoundError || this.userAlreadyAdded;
+    }
 
     componentDidMount() {
         if (this.props.onChange) {
@@ -71,6 +76,7 @@ class UserPicker extends React.Component {
     reset() {
         this.legacyContactError = false;
         this.showNotFoundError = false;
+        this.userAlreadyAdded = '';
         this.suggestInviteEmail = '';
         this.foundContact = null;
     }
@@ -131,6 +137,7 @@ class UserPicker extends React.Component {
         if (!q) return null;
         const c = contactStore.getContact(q);
         if (this.isExcluded(c)) {
+            this.userAlreadyAdded = this.query;
             return null;
         }
         this.contactLoading = true;
@@ -294,32 +301,34 @@ class UserPicker extends React.Component {
                             </div>
                         </div>
                         <div className="user-list-container">
-                            <div className="user-not-found-container">
-                                {this.suggestInviteEmail ?
-                                    <div className="email-invite-container">
-                                        <div className="usernotfound-text">
+                            <div className="user-search-error-container">
+                                <div className="user-search-error">
+                                    <div className="search-error-text">
+                                        {this.showSearchError &&
                                             <FontIcon value="help_outline" />
+                                        }
+                                        {this.suggestInviteEmail &&
                                             <T k="title_inviteContactByEmail">{{ email: this.suggestInviteEmail }}</T>
-                                        </div>
-                                        <Button
-                                            className="button-affirmative"
-                                            onClick={this.invite}
-                                            label={t('button_send')} />
-                                    </div>
-                                    : null
-                                }
-                                {this.showNotFoundError && !this.suggestInviteEmail
-                                    ? <div className="email-suggestsearch-container">
-                                        <div className="usernotfound-text">
-                                            <FontIcon value="help_outline" />
+                                        }
+                                        {this.showNotFoundError && !this.suggestInviteEmail &&
                                             <T k={this.legacyContactError ?
                                                 'title_inviteLegacy' : 'error_userNotFoundTryEmail'} tag="div">
                                                 {{ user: this.userNotFound }}
                                             </T>
-                                        </div>
+                                        }
+                                        {this.userAlreadyAdded &&
+                                            <T k="error_userAlreadyAdded" tag="div">
+                                                {{ user: this.userAlreadyAdded }}
+                                            </T>
+                                        }
                                     </div>
-                                    : null
-                                }
+                                    {this.suggestInviteEmail &&
+                                        <Button
+                                            className="button-affirmative"
+                                            onClick={this.invite}
+                                            label={t('button_send')} />
+                                    }
+                                </div>
                             </div>
                             <List selectable ripple>
                                 {this.foundContact && this.renderList(null, [this.foundContact])}

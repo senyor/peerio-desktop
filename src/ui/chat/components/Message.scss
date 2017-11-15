@@ -2,12 +2,32 @@
   .send-error-container {
     @extend %flex-row;
     @extend %flex-align-center;
+
+    cursor: pointer;
+    margin: $margin-tiny 0 0 $margin-default;
+
+    .send-error-menu-container {
+      // we need position: relative so that the react-toolbox <Menu>
+      // component is positioned relative to this container.
+      position: relative;
+    }
+
+    .send-error-icon {
+      color: $red-error;
+    }
+
+    .send-error-message {
+      @extend %hint-error-label;
+      color: $red-error;
+    }
   }
 
   .receipt-wrapper {
     @extend %flex-row;
     @extend %flex-align-end;
     @extend %flex-justify-end;
+    width: 82px;
+    min-width: 82px;
     margin-left: auto;
   }
 
@@ -16,16 +36,33 @@
     @extend %hint-error-label;
     @extend %flex-align-center;
     @extend %flex-justify-between;
-    background-color: $black-06;
-    border-radius: 2px;
-    color: $text-dark-hint;
     height: 52px;
+    padding: 0 $padding-small 0 $padding-default;
     margin-left: -8px;
     margin-top: 24px;
-    padding: 0 $padding-small 0 $padding-default;
+    color: $text-dark-hint;
+    background-color: $black-06;
+    border-radius: 2px;
 
     .content {
       margin-right: auto;
+    }
+  }
+
+  .plus-receipts {
+    cursor: pointer;
+    padding: 0 8px 0 22px;
+    margin-left: -14px;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background-color 100ms linear;
+    color: #f2f2f2;
+    background: #757575;
+    border-radius: 20px;
+
+    &:hover {
+      background: #444;
     }
   }
 }

@@ -3,33 +3,33 @@
     @extend %flex-row;
     @extend %flex-align-center;
     @extend %flex-justify-center;
-    min-height: 50px;
     width: 100%;
+    min-height: 50px;
   }
 
   .marker-wrapper {
     @extend %flex-row;
     @extend %flex-align-center;
     @extend %flex-justify-center;
-    margin: $margin-default 0;
     width: 100%;
+    margin: $margin-default 0;
 
     .marker {
       @extend %flex-grow-1;
-      background: $divider-dark;
       height: 1px;
       margin: $margin-default 0;
+      background: $divider-dark;
     }
 
     .content {
       padding: 0 $padding-small;
 
       .material-icons {
-        color: $red-error;
-        font-size: 8px;
         height: 8px;
-        left: 16px;
         width: 8px;
+        left: 16px;
+        font-size: 8px;
+        color: $red-error;
       }
 
       .rt-avatar-avatar {
@@ -46,9 +46,9 @@
     }
 
     .content {
-      color: rgba($red-error, .7);
-      font-size: 12px;
       padding-right: $padding-default;
+      font-size: 12px;
+      color: rgba($red-error, .7);
     }
   }
 
@@ -56,42 +56,30 @@
     @extend %flex-col;
     @extend %flex-align-start;
     flex: 1 1 auto;
+    padding-bottom: 24px;
     overflow-x: hidden;
     overflow-y: auto;
-    padding-bottom: 24px;
 
     .messages-progress-bar {
       align-self: center;
-      margin-bottom: auto;
       margin-top: auto;
-    }
-
-    .send-error {
-      &-menu {
-        .material-icons {
-          color: $red-error;
-        }
-      }
-
-      &-message {
-        @extend %hint-error-label;
-        color: $red-error;
-      }
+      margin-bottom: auto;
     }
 
     .message-content-wrapper {
       @extend %flex-col;
       @extend %flex-shrink-0;
-      border-radius: 2px;
-      margin: 12px 0 0;
-      padding: $padding-tiny 24px;
       position: relative;
+      padding: $padding-tiny 24px;
+      margin: 12px 0 0;
+      border-radius: 2px;
 
       &:not(.invalid-sign) {
         width: 100%;
       }
 
-      &:hover {
+      &:hover,
+      &.selected {
         background-color: $black-03;
         border-radius: 2px;
       }
@@ -110,12 +98,12 @@
         .timestamp {
           @extend %flex-shrink-0;
           @extend %hint-error-label;
-          color: rgba($text-dark-hint, 0);
-          overflow: hidden;
+          width: 40px;
           padding-top: 2px; // To align the timestamp with the first row of text.
+          overflow: hidden;
           text-align: right;
           white-space: nowrap;
-          width: 40px;
+          color: rgba($text-dark-hint, 0);
         }
 
         &:hover {
@@ -126,18 +114,18 @@
       }
 
       &.invalid-sign {
+        min-width: 320px;
+        padding: $padding-tiny 0 0 $padding-tiny;
+        margin: 0 32px 0 28px;
+        overflow: hidden;
         background-color: rgba($red-error, .06);
         border-radius: 18px;
-        margin: 0 32px 0 28px;
-        min-width: 320px;
-        overflow: hidden;
-        padding: $padding-tiny 0 0 $padding-tiny;
 
         .warning-icon {
           @extend %flex-shrink-0;
-          color: $red-error;
-          margin: 0 12px 0 auto;
           width: 24px;
+          margin: 0 12px 0 auto;
+          color: $red-error;
 
           + .receipt-wrapper {
             @extend %flex-align-center;
@@ -146,49 +134,30 @@
         }
       }
 
+      &.render-error {
+        min-width: 320px;
+        padding: $padding-small $padding-tiny;
+        margin: 0 0 12px;
+        background-color: rgba($red-error, .06);
+      }
+
       .sending-overlay {
-        background-color: rgba(255, 255, 255, .7);
-        bottom: 0;
-        height: 100%;
-        left: 0;
         position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
         right: 0;
         top: 0;
-        width: 100%;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, .7);
       }
     }
 
     .message-content {
+      @extend %chat-message;
       @extend %flex-col;
       flex-grow: 1;
-
-      a {
-        @extend %selectable;
-        word-break: break-word;
-      }
-
-      .mention {
-        color: $text-dark-primary;
-        cursor: pointer;
-        font-weight: $font-weight-semibold;
-
-        &.self {
-          background-color: rgba($green, .5);
-        }
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-
-      .pre {
-        @extend %selectable;
-        background-color: $black-03;
-        border-radius: 4px;
-        font-family: monospace;
-        margin-right: $margin-tiny;
-        padding: $padding-tiny 6px;
-      }
+      min-width: 0;
 
       .meta-data {
         @extend %flex-row;
@@ -201,68 +170,41 @@
         }
 
         .user {
-          font-weight: $font-weight-bold;
           margin: 0 $padding-small 0 $padding-default;
+          font-weight: $font-weight-bold;
 
           .username {
-            color: $text-dark-secondary;
             font-style: italic;
             font-weight: $font-weight-regular;
+            color: $text-dark-secondary;
           }
         }
       }
 
-      .message-body {
-        // @extend %flex-row;
-        // @extend %flex-align-center;
-      }
-
       .system-message {
-        color: $text-dark-secondary;
         font-style: italic;
-      }
-
-      p {
-        flex-grow: 1;
-        line-height: 1.4;
-        margin: 0 0 0 $margin-default;
-        max-width: calc(100% - 100px);
-        white-space: pre-wrap;
-        word-break: break-word;
-      }
-
-      p + p {
-        margin-top: $margin-tiny;
-      }
-
-      b,
-      strong {
-        font-weight: 600;
-      }
-
-      a {
-        color: $blue;
+        color: $text-dark-secondary;
       }
     }
 
     .inline-image {
-      margin: $margin-small auto $margin-small $margin-default;
+      object-fit: contain;
       max-height: 500px;
       max-width: 100%;
-      object-fit: contain;
+      margin: $margin-small auto $margin-small $margin-default;
     }
 
     .messages-start {
-      margin-bottom: $margin-small;
-      margin-top: auto;
-      padding: 0 24px;
       width: 100%;
+      padding: 0 24px;
+      margin-top: auto;
+      margin-bottom: $margin-small;
 
       .avatars {
         @extend %flex-row;
         @extend %flex-wrap;
-        margin-bottom: $margin-small;
         margin-top: 64px;
+        margin-bottom: $margin-small;
 
         .avatar-wrapper:not(:last-of-type) {
           margin: 0 $margin-small $margin-small 0;

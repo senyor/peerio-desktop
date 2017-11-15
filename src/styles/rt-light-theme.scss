@@ -2,14 +2,14 @@
   // INPUTS
   .rt-input-input {
     input {
+      box-shadow: $shadow-2;
       background-color: $input-light;
       border-color: transparent;
       border-width: 0 0 4px;
-      box-shadow: $shadow-2;
 
       &:hover {
-        background: $white;
         box-shadow: $shadow-8;
+        background: $white;
       }
 
       &:focus {
@@ -20,22 +20,22 @@
 
   .rt-dropdown-dropdown {
     input {
-      background: $background-light-dropdown;
-      box-shadow: none;
-      color: $text-light-primary;
       padding: 0 $padding-small;
+      color: $text-light-primary;
+      box-shadow: none;
+      background: $background-light-dropdown;
 
       &:focus,
       &:hover {
-        background: $background-light-dropdown;
         box-shadow: none;
+        background: $background-light-dropdown;
       }
     }
 
     .rt-dropdown-value::after {
-      border-top: 6px solid $icon-light-inactive;
       right: 12px;
       top: 21px;
+      border-top: 6px solid $icon-light-inactive;
     }
   }
 
@@ -43,10 +43,10 @@
     padding: 0;
 
     li {
-      color: $text-dark-hint;
       height: 48px;
-      line-height: 48px;
       padding: 0 $padding-small;
+      line-height: 48px;
+      color: $text-dark-hint;
 
       &:hover {
         color: $text-dark-primary;
@@ -55,15 +55,15 @@
   }
 
   .rt-dropdown-values > li.rt-dropdown-selected {
-    background-color: rgba($blue, .7);
-    color: $text-light-primary;
     font-weight: $font-weight-semibold;
+    color: $text-light-primary;
+    background-color: rgba($blue, .7);
   }
 
   .rt-button-icon,
   .material-icons {
-    color: $icon-light-active;
     font-size: 24px;
+    color: $icon-light-active;
   }
 
   .rt-button-neutral:not([disabled]).rt-button-flat,
@@ -85,17 +85,17 @@
   }
 
   .rt-input-error {
-    color: $white;
     display: block;
     white-space: nowrap;
+    color: $white;
   }
 
   .rt-input-counter {
     @extend %hint-error-label;
-    color: $text-dark-hint;
-    line-height: 20px;
     right: 8px;
     top: 4px;
+    line-height: 20px;
+    color: $text-dark-hint;
   }
 
   strong {
@@ -103,14 +103,14 @@
   }
 
   .password {
-    margin-top: 40px;
     position: relative;
+    margin-top: 40px;
 
     .rt-button-button {
-      color: $icon-dark-active;
       position: absolute;
       right: 6px;
       top: 6px;
+      color: $icon-dark-active;
 
       .rt-button-icon {
         color: $icon-dark-active;

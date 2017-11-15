@@ -1,8 +1,8 @@
 .contacts {
   .contact-list {
     @extend %flex-col;
-    overflow: auto;
     padding-top: 8px;
+    overflow: auto;
 
     .avatar-wrapper > .material-icons {
       margin-right: 0;
@@ -10,19 +10,19 @@
 
     .contact-list-section {
       @extend %flex-row;
-      border-bottom: 1px solid $divider-dark;
       flex-shrink: 0;
       padding: 24px 0 32px;
+      border-bottom: 1px solid $divider-dark;
 
       .contact-list-section-marker {
         @extend %flex-row;
         @extend %flex-grow-1;
         @extend %flex-justify-center;
-        color: $blue;
-        font-size: 24px;
         max-width: 224px;
         min-width: 120px;
         padding-top: $padding-large;
+        font-size: 24px;
+        color: $blue;
       }
 
       .contact-list-section-content {
@@ -34,6 +34,17 @@
     .rt-list-itemText,
     .rt-list-primary {
       user-select: text;
+    }
+  }
+
+  .suggest-add-contact {
+    display: flex;
+    align-items: center;
+    margin: $margin-xl;
+    color: $text-dark-secondary;
+
+    .text {
+      margin-left: $margin-default;
     }
   }
 }

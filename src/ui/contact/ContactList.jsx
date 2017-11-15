@@ -4,6 +4,7 @@ const { FontIcon, Input, List, ListItem, TooltipIconButton, Dropdown } = require
 const Avatar = require('~/ui/shared-components/Avatar');
 const { contactStore, chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const routerStore = require('~/stores/router-store');
 
@@ -16,16 +17,13 @@ class ContactList extends React.Component {
     ];
 
     componentWillMount() {
-        this.rerouteIfZero();
-    }
-
-    componentWillUpdate() {
-        this.rerouteIfZero();
-    }
-
-    rerouteIfZero = () => {
         if (contactStore.uiView.length) return;
+        this.goToAddContact();
+    }
+
+    goToAddContact = () => {
         routerStore.navigateTo(routerStore.ROUTES.newContact);
+        contactStore.uiViewSearchQuery = '';
     };
 
     startChat(ev) {
@@ -67,6 +65,10 @@ class ContactList extends React.Component {
     }
 
     render() {
+        const textParser = {
+            searchString: contactStore.uiViewSearchQuery,
+            toAddContact: text => <a className="clickable" onClick={this.goToAddContact}>{text}</a>
+        };
         return (
             <div className="contacts-view">
                 <div className="toolbar">
@@ -83,29 +85,35 @@ class ContactList extends React.Component {
                         value={contactStore.uiViewSortBy} />
                 </div>
 
-                <div className="contact-list">
-                    {contactStore.uiView.map(section =>
-                        (
-                            <div key={section.letter} className="contact-list-section">
-                                <div className="contact-list-section-marker">
-                                    {section.letter}
+                {contactStore.uiView.length
+                    ? <div className="contact-list">
+                        {contactStore.uiView.map(section =>
+                            (
+                                <div key={section.letter} className="contact-list-section">
+                                    <div className="contact-list-section-marker">
+                                        {section.letter}
+                                    </div>
+                                    <List className="contact-list-section-content">
+                                        {section.items.map(c =>
+                                            (
+                                                <ListItem key={c.username} ripple={false}
+                                                    leftActions={[<Avatar key="a" contact={c} size="medium" />]}
+                                                    legend={c.usernameTag}
+                                                    caption={`${c.firstName} ${c.lastName}`}
+                                                    rightIcon={this.contactActions(c)}
+                                                />
+                                            )
+                                        )}
+                                    </List>
                                 </div>
-                                <List className="contact-list-section-content">
-                                    {section.items.map(c =>
-                                        (
-                                            <ListItem key={c.username} ripple={false}
-                                                leftActions={[<Avatar key="a" contact={c} size="medium" />]}
-                                                legend={c.usernameTag}
-                                                caption={`${c.firstName} ${c.lastName}`}
-                                                rightIcon={this.contactActions(c)}
-                                            />
-                                        )
-                                    )}
-                                </List>
-                            </div>
-                        )
-                    )}
-                </div>
+                            )
+                        )}
+                    </div>
+                    : <div className="suggest-add-contact">
+                        <FontIcon value="help_outline" />
+                        <T k="error_contactNotFound" className="text">{textParser}</T>
+                    </div>
+                }
             </div>
 
         );

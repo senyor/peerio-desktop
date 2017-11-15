@@ -1,8 +1,8 @@
 .contact-profile {
   .row {
-    border-bottom: 1px solid $divider-dark;
-    margin-bottom: $margin-default;
     padding: $padding-default 0;
+    margin-bottom: $margin-default;
+    border-bottom: 1px solid $divider-dark;
 
     &:last-of-type {
       border-bottom-width: 0;
@@ -20,18 +20,18 @@
   }
 
   .rt-avatar-avatar {
-    border-radius: 4px;
     height: 168px;
-    margin-right: 24px;
     width: 168px;
+    margin-right: 24px;
+    border-radius: 4px;
   }
 
   .contact-error {
+    padding: $padding-small;
+    font-weight: $font-weight-semibold;
+    color: $text-light-primary;
     background-color: $red-error;
     border-radius: 2px;
-    color: $text-light-primary;
-    font-weight: $font-weight-semibold;
-    padding: $padding-small;
   }
 
   .contact-avatar-info {

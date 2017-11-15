@@ -2,8 +2,8 @@
   @extend %flex-col;
   @extend %flex-align-center;
   @extend %flex-justify-center;
-  margin-top: 64px;
   width: 368px;
+  margin-top: 64px;
 
   @media (max-height: $minimum-screen-height) {
     margin-top: 32px;
@@ -12,8 +12,8 @@
 
 .signup-step-title {
   @extend %headline;
-  color: $text-light-primary;
   font-weight: $font-weight-bold;
+  color: $text-light-primary;
 }
 
 .signup-step-indicator {
@@ -21,31 +21,31 @@
   @extend %flex-align-center;
   @extend %flex-justify-between;
   @extend %flex-shrink-0;
-  margin-top: $margin-default;
   width: 100%;
+  margin-top: $margin-default;
 }
 
 .signup-step-divider {
-  background: #fff;
   height: 1px;
-  margin: 0 8px;
   width: 100%;
+  margin: 0 8px;
+  background: #fff;
 }
 
 .signup-step {
   @extend %flex-shrink-0;
-  border: 1px solid #fff;
-  border-radius: 16px;
   display: block;
   height: 16px;
-  padding: 2px;
   width: 16px;
+  padding: 2px;
+  border: 1px solid #fff;
+  border-radius: 16px;
 }
 
 .current-step {
-  background: #fff;
-  border-radius: 10px;
   display: block;
   height: 10px;
   width: 10px;
+  background: #fff;
+  border-radius: 10px;
 }

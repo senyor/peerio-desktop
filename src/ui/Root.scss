@@ -4,33 +4,35 @@ $status-bar-height: 36px;
   @extend %flex-row;
   @extend %flex-align-center;
   @extend %flex-justify-center;
+  visibility: hidden;
+  position: fixed;
+  z-index: 2;
+  user-select: none;
+  height: $status-bar-height;
+  max-width: 80vw;
+  left: 0;
+  right: 0;
+  top: -$status-bar-height - 36;
+  margin: $margin-default auto;
+  font-weight: $font-weight-semibold;
+  text-align: center;
+  transition: all 400ms $transition-easing-bounce-in-out;
+  color: $text-light-primary;
+  box-shadow: $shadow-8;
   background-image: $gradient-to-right;
   background-size: 400%;
   border-radius: 4px;
-  box-shadow: $shadow-8;
-  color: $text-light-primary;
-  font-weight: $font-weight-semibold;
-  height: $status-bar-height;
-  left: 0;
-  margin: $margin-default auto;
-  max-width: 80vw;
-  position: fixed;
-  right: 0;
-  text-align: center;
-  top: -$status-bar-height - 36;
-  transition: all 400ms $transition-easing-bounce-in-out;
-  user-select: none;
-  z-index: 2;
 
   &.visible {
-    animation: 4s infinite gradient;
+    visibility: visible;
     top: 0;
+    animation: 4s infinite gradient;
   }
 
   .rt-progress_bar-circular {
     height: 20px;
-    margin-right: $margin-default;
     width: 20px;
+    margin-right: $margin-default;
   }
 
   .rt-progress_bar-path {

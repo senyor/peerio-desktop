@@ -1,48 +1,4 @@
-$suggests-max-height: 200px;
-
 .message-view {
-  .suggests-wrapper {
-    background-color: #fafafa;
-    border: 1px solid #eee;
-    border-bottom: none;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    bottom: 100%;
-    box-shadow: 0 4px 13px -6px;
-    height: $suggests-max-height; // keep it like this until staged hide animation is implemented
-    left: 20px;
-    max-height: $suggests-max-height;
-    min-height: $suggests-max-height;
-    overflow: hidden;
-    position: absolute;
-    right: 20px;
-
-    //transition: 350ms cubic-bezier(.4, 0, .2, 1);
-
-    //&.show {
-    //  bottom: 100%;
-    // }
-    .suggests {
-      bottom: 10px;
-      left: 0;
-      overflow-x: hidden;
-      overflow-y: scroll;
-      position: absolute;
-      right: 0;
-      top: 10px;
-    }
-
-    .suggest-item {
-      cursor: pointer;
-      padding: 3px 10px;
-    }
-
-    .selected {
-      background-color: $blue;
-      color: white;
-    }
-  }
-
   .message-input-wrapper {
     position: relative;
   }
@@ -50,20 +6,15 @@ $suggests-max-height: 200px;
   .message-input {
     @extend %flex-row;
     @extend %flex-align-center;
-    background-color: $background-root;
-    border-top: 1px solid $divider-dark;
     //flex-grow: 1; FIXME: only grow when textarea grows.
     flex-shrink: 0;
-    margin-top: auto;
+    position: relative;
     max-height: 112px;
     min-height: 64px;
     padding: 0 $padding-small 0 26px;
-    position: relative;
-
-    #messageEditor,
-    .message-editor-empty {
-      width: 100%;
-    }
+    margin-top: auto;
+    background-color: $background-root;
+    border-top: 1px solid $divider-dark;
 
     .color-brand:not([disabled]) > .material-icons {
       color: $blue;
@@ -72,47 +23,15 @@ $suggests-max-height: 200px;
     .color-affirmative > .material-icons {
       color: $green-affirmative;
     }
-
-    .ql-container {
-      font-family: inherit;
-      font-size: inherit;
-      margin-left: 18px;
-      padding: $padding-small 0;
-      width: 100%;
-    }
-
-    .ql-editor {
-      line-height: 1.45;
-      max-height: 96px;
-      padding: 0;
-
-      &.ql-blank::before {
-        left: 0;
-        overflow: hidden;
-        right: auto;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 100%;
-      }
-
-      p {
-        word-break: break-all;
-      }
-
-      img {
-        vertical-align: middle;
-        width: 1.5em;
-      }
-    }
   }
 
   // RANDOM MESSAGES
   .backdrop {
-    background-color: rgba(255, 255, 255, .58);
-    bottom: 0;
-    left: 0;
     position: absolute;
+    left: 0;
     right: 0;
     top: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .58);
   }
 }

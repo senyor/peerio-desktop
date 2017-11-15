@@ -1,0 +1,60 @@
+.move-file-dialog {
+  height: 75vh;
+
+  .rt-dialog-body {
+    padding: 0;
+  }
+
+  .rt-dialog-title {
+    margin: 24px $margin-default 0;
+  }
+
+  .breadcrumb {
+    height: 48px;
+    margin-top: $margin-small;
+    padding: $padding-default $padding-large;
+
+    a {
+      @extend %list-title;
+    }
+
+    .material-icons {
+      font-size: 18px;
+    }
+  }
+
+  .move-file-row {
+    align-items: center;
+    border-bottom: 1px solid $divider-dark;
+    display: flex;
+    height: 48px;
+    padding: 0 $padding-large;
+
+    > *:not(:last-child) {
+      margin-right: $margin-default;
+    }
+
+    > button:last-child {
+      margin-left: auto;
+    }
+  }
+
+  .folder-icon {
+    font-size: 32px;
+  }
+
+  .file-info {
+    .file-name {
+      color: $text-dark-primary;
+    }
+
+    .file-meta {
+      @extend %hint-error-label;
+      color: $text-dark-hint;
+    }
+  }
+
+  .rt-dialog-navigation {
+    padding: $padding-large;
+  }
+}

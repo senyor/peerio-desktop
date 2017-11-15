@@ -2,16 +2,16 @@
   @extend %flex-col;
   @extend %flex-shrink-0;
   align-items: center;
+  height: 100vh;
+  width: $app-nav-width;
   background-image: url($background-pattern), $gradient-to-bottom;
   background-position-x: 90px;
   background-size: 220px;
-  height: 100vh;
-  width: $app-nav-width;
 
   .app-menu {
-    align-items: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 100vh;
   }
 
@@ -20,8 +20,8 @@
     @extend %flex-align-center;
     @extend %flex-justify-center;
     @extend %flex-shrink-0;
-    height: 80px;
     position: relative;
+    height: 80px;
     width: 80px;
 
     .rt-menu-active {
@@ -47,10 +47,10 @@
       z-index: 2;
 
       > .rt-button-button {
-        background: transparent;
-        border-radius: 40px;
         height: 40px;
         width: 40px;
+        background: transparent;
+        border-radius: 40px;
       }
     }
   }

@@ -4,17 +4,17 @@
   @extend %flex-align-center;
   @extend %flex-justify-start;
   @extend %background-pattern;
-  color: $text-light-primary;
   flex: 0 0 auto;
   width: 100vw;
+  color: $text-light-primary;
 
   a {
     color: inherit;
   }
 
   .login-form {
-    margin-top: 24px;
     width: 275px;
+    margin-top: 24px;
   }
 
   .title + .validated-input .rt-input-input {
@@ -23,31 +23,31 @@
 
   .login-button {
     @extend %flex-align-center;
-    border-radius: 18px;
     margin: 48px 0;
     transition: 150ms $transition-easing-default;
+    border-radius: 18px;
 
     &:not([disabled]),
     &:hover:not([disabled]) {
-      background-color: $white !important; // so important
       color: $blue !important; // :( - Paul
+      background-color: $white !important; // so important
     }
   }
 
   .login-reg-button {
-    color: $text-light-secondary;
     text-align: center;
+    color: $text-light-secondary;
 
     > a:hover {
-      color: $text-light-primary;
       text-decoration: underline;
+      color: $text-light-primary;
     }
   }
 
   .welcome-back-wrapper {
+    margin-top: $margin-large;
     background: $gradient-to-right;
     border-radius: 4px;
-    margin-top: $margin-large;
   }
 
   .welcome-back {
@@ -55,33 +55,33 @@
     @extend %flex-align-center;
     @extend %flex-shrink-0;
     @extend %flex-justify-center;
-    background: $white-50;
-    border-radius: 4px;
-    color: $text-dark-secondary;
-    cursor: pointer;
-    font-size: 20px;
     justify-content: center;
+    cursor: pointer;
     min-width: 375px;
     padding: 24px;
+    font-size: 20px;
     // TODO: make transition vars
     transition: 250ms;
+    color: $text-dark-secondary;
+    background: $white-50;
+    border-radius: 4px;
 
     &:hover {
       background: $white;
     }
 
     .overflow {
-      overflow: hidden;
+      width: 100%;
       padding: 0 $padding-large;
+      overflow: hidden;
       text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
-      width: 100%;
     }
 
     strong {
-      color: $text-dark-primary;
       font-weight: $font-weight-bold;
+      color: $text-dark-primary;
     }
 
     .subtitle {

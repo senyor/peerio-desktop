@@ -1,7 +1,6 @@
 // Libraries
 @import '../node_modules/normalize.css/normalize.css';
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
-@import '../node_modules/quill/dist/quill.core.css';
 @import '../node_modules/croppie/croppie.css';
 @import './static/emoji/sprites/emojione.css';
 
@@ -49,18 +48,15 @@
 @import '../ui/settings/_all';
 @import '../ui/signup/_all';
 
-// Icon Spritesheet
-@import './ic-files';
-
 // General styles and overrides
 @import './misc';
 @import './typography';
 
 html {
   box-sizing: border-box;
+  overflow: hidden;
   font-family: $font-stack;
   font-size: 10px;
-  overflow: hidden;
 }
 
 button,
@@ -88,13 +84,13 @@ body {
 body,
 #root,
 .app-root {
-  color: $text-dark-primary;
-  font: 14px/1.45 $font-stack;
   height: 100vh;
+  width: 100vw;
+  padding: 0;
   margin: 0;
   overflow: hidden;
-  padding: 0;
-  width: 100vw;
+  font: 14px/1.45 $font-stack;
+  color: $text-dark-primary;
 }
 
 .app-root {
@@ -107,8 +103,8 @@ section {
 
 .global-update-progress {
   .rt-progress_bar-linear {
-    height: 2px;
     position: fixed;
+    height: 2px;
   }
 }
 
@@ -116,55 +112,87 @@ section {
   position: relative;
 
   & + & {
-    margin-left: #{ - $margin-tiny};
+    margin-left: -8px;
+  }
+
+  &.avatar-inline {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
   }
 
   .material-icons {
-    background-color: $background-root;
-    border-radius: 12px;
-    color: $red-error;
-    height: 24px;
     position: absolute;
+    height: 24px;
+    width: 24px;
     right: -8px;
     top: 0;
-    width: 24px;
+    color: $red-error;
+    background-color: $background-root;
+    border-radius: 12px;
   }
 
   .large {
-    background-size: contain;
     height: 64px;
     width: 64px;
+    background-size: contain;
 
     + .material-icons {
-      border-radius: 32px;
-      font-size: 32px;
       height: 32px;
       width: 32px;
+      font-size: 32px;
+      border-radius: 32px;
     }
   }
 
   .medium {
-    background-size: contain;
     height: 40px;
     width: 40px;
+    background-size: contain;
   }
 
   .small {
-    background-size: contain;
     height: 32px;
     width: 32px;
+    background-size: contain;
 
     + .material-icons {
-      font-size: 20px;
       height: 20px;
       width: 20px;
+      font-size: 20px;
     }
   }
 
   .tiny {
-    background-size: contain;
-    font-size: 95%;
     height: 20px;
     width: 20px;
+    font-size: 95%;
+    background-size: contain;
+  }
+}
+
+.platform-linux {
+  ::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-button {
+    height: 0;
+    width: 0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 50px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: $white-50;
+    border-radius: 50px;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: transparent;
   }
 }

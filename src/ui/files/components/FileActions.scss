@@ -1,11 +1,11 @@
 .files {
   .processing-file {
+    position: absolute;
+    z-index: 10;
     height: 48px;
+    width: 100%;
+    padding: $padding-default;
     margin: 0;
     opacity: .5;
-    padding: $padding-default;
-    position: absolute;
-    width: 100%;
-    z-index: 10;
   }
 }

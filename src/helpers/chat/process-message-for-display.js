@@ -1,10 +1,19 @@
 // @ts-check
+const { action } = require('mobx');
 const Autolinker = require('autolinker');
 const htmlEncoder = require('html-entities').AllHtmlEntities;
+
 const { User, contactStore } = require('~/icebear');
+const uiStore = require('~/stores/ui-store');
+
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const { isUrlAllowed } = require('~/helpers/url');
 const emojione = require('~/static/emoji/emojione.js');
+
+
+// @ts-ignore (legacy)
+window.legacyOpenContact = action(contactName => { uiStore.contactDialogUsername = contactName; });
+
 
 let ownMentionRegex;
 function highlightMentions(str) {
@@ -17,7 +26,7 @@ function highlightMentions(str) {
 
 const mentionRegex = /(\s*|^)@([a-zA-Z0-9_]{1,32})/gm;
 function linkifyMentions(str) {
-    return str.replace(mentionRegex, '$1<span class="mention clickable" onClick=openContact("$2")>@$2</span>');
+    return str.replace(mentionRegex, '$1<span class="mention clickable" onClick=legacyOpenContact("$2")>@$2</span>');
 }
 
 const inlinePreRegex = /`(.*)`/g;

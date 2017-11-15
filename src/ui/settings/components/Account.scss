@@ -7,11 +7,11 @@
       @extend %flex-row;
       @extend %flex-shrink-0;
       @extend %flex-align-center;
+      padding: 8px 16px;
+      margin-top: 4px;
 
       background: rgba(50, 206, 195, .15);
       border-radius: 4px;
-      margin-top: 4px;
-      padding: 8px 16px;
 
       .message {
         font-size: 16px;

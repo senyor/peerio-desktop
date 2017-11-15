@@ -7,11 +7,11 @@
   @extend %flex-row;
   @extend %flex-align-center;
   @extend %flex-shrink-0;
-  color: $text-dark-secondary;
-  font-size: 14px;
-  font-weight: $font-weight-semibold;
   height: 48px;
   padding: 0 $padding-default;
+  font-size: 14px;
+  font-weight: $font-weight-semibold;
+  color: $text-dark-secondary;
 }
 
 .list-item {
@@ -19,16 +19,16 @@
   @extend %flex-row;
 
   height: 48px;
-  padding: 0 $padding-default;
   width: 100%;
+  padding: 0 $padding-default;
 
   &:hover {
-    background: rgba(0, 0, 0, .06) // TODO: make a variable for hovers - paul
+    background: rgba(0, 0, 0, .06); // TODO: make a variable for hovers - paul
   }
 
   .content {
-    font-size: 14px;
     padding: 0 $padding-default;
+    font-size: 14px;
   }
 
   .left-icon,
@@ -49,23 +49,23 @@
 .feature-navigation-list {
   @extend %flex-col;
   @extend %flex-shrink-0;
-  height: 100vh;
   position: relative;
+  height: 100vh;
   width: $width-list;
 
   .list {
-    background: #eee;
     height: 100%;
-    overflow: auto;
     padding-top: 12px; // padding is 20px this + the 8px from rtb list padding.
+    overflow: auto;
+    background: #eee;
   }
 
   .rt-list-list {
     @extend %flex-shrink-0;
+    padding-bottom: 0;
 
     overflow-x: hidden;
     overflow-y: auto;
-    padding-bottom: 0;
 
     .item-content {
       @extend %flex-grow-1;

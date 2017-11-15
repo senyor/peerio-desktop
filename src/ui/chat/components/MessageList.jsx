@@ -13,7 +13,9 @@ const config = require('~/config');
 @observer
 class MessageList extends React.Component {
     loadTriggerDistance = 20;
-    stickDistance = 250;
+    stickDistance = 50;
+    // lastRenderedMessageId = null;
+    lastRenderedChatId = null;
 
     componentWillMount() {
         this.stickToBottom = true;
@@ -51,35 +53,24 @@ class MessageList extends React.Component {
             () => chatStore.activeChat && chatStore.activeChat.loadingBottomPage,
             () => { this.lastTopElement = null; }
         );
-        // reaction to user changing chats
-        this._chatSwitchReaction = reaction(() => chatStore.activeChat, (chat) => {
-            if (chat) this.scrollToBottom();
-        });
     }
 
     componentWillUnmount() {
         this._topLoadReaction();
         this._botLoadReaction();
         this._initialLoadReaction();
-        this._chatSwitchReaction();
-    }
-
-    componentDidUpdate() {
-        this.scrollToBottomIfSticky();
     }
 
     componentDidMount() {
-        this.scrollToBottomIfSticky();
+        this.scrollToBottomIfNeeded();
+    }
+
+    componentDidUpdate() {
+        this.scrollToBottomIfNeeded();
     }
 
     scrollToBottom = () => {
         window.requestAnimationFrame(this.smoothScrollStep);
-    };
-
-    scrollToBottomIfSticky = () => {
-        if (this.stickToBottom) {
-            this.scrollToBottom();
-        }
     };
 
     smoothScrollStep = () => {
@@ -91,33 +82,46 @@ class MessageList extends React.Component {
         window.requestAnimationFrame(this.smoothScrollStep);
     }
 
+    scrollToBottomIfNeeded() {
+        if (!chatStore.activeChat) {
+            this.stickToBottom = true;
+            return;
+        }
+        // check if chat has changed since last render
+        if (this.lastRenderedChatId !== chatStore.activeChat.id) {
+            this.lastRenderedChatId = chatStore.activeChat.id;
+            this.stickToBottom = true;
+        }
+        if (this.stickToBottom) setTimeout(this.scrollToBottom);
+    }
+
     onImageLoaded = () => {
         if (this.stickToBottom && !chatStore.activeChat.canGoDown) this.scrollToBottom();
     }
 
     // todo: investigate why throttling causes lags when scrolling with trackpad at big velocity
     handleScroll = // _.throttle(
-    () => {
-        // console.log('SCROLL');
-        // we can't handle scroll if content height is too small
-        if (this.containerRef.scrollHeight <= this.containerRef.clientHeight) return;
+        () => {
+            // console.log('SCROLL');
+            // we can't handle scroll if content height is too small
+            if (this.containerRef.scrollHeight <= this.containerRef.clientHeight) return;
 
-        const distanceToBottom = this.containerRef.scrollHeight - this.containerRef.scrollTop
-            - this.containerRef.clientHeight;
-        const distanceToTop = this.containerRef.scrollTop;
-        // console.log(distanceToTop, distanceToBottom);
-        // detecting sticking state
-        this.stickToBottom = distanceToBottom < this.stickDistance && !chatStore.activeChat.canGoDown;
-        // triggering page load
-        if (distanceToBottom < this.loadTriggerDistance) {
-            //  console.log('TRIGGER');
-            chatStore.activeChat.loadNextPage();
-        }
-        if (distanceToTop < this.loadTriggerDistance) {
-            // console.log('TRIGGER');
-            chatStore.activeChat.loadPreviousPage();
-        }
-    }// , 150, { leading: true, trailing: true });
+            const distanceToBottom = this.containerRef.scrollHeight - this.containerRef.scrollTop
+                - this.containerRef.clientHeight;
+            const distanceToTop = this.containerRef.scrollTop;
+            // console.log(distanceToTop, distanceToBottom);
+            // detecting sticking state
+            this.stickToBottom = distanceToBottom < this.stickDistance && !chatStore.activeChat.canGoDown;
+            // triggering page load
+            if (distanceToBottom < this.loadTriggerDistance) {
+                //  console.log('TRIGGER');
+                chatStore.activeChat.loadNextPage();
+            }
+            if (distanceToTop < this.loadTriggerDistance) {
+                // console.log('TRIGGER');
+                chatStore.activeChat.loadPreviousPage();
+            }
+        }// , 150, { leading: true, trailing: true });
 
     setContainerRef = (r) => {
         this.containerRef = r;
@@ -204,8 +208,6 @@ class MessageList extends React.Component {
 
     render() {
         if (!chatStore.activeChat) return null;
-
-        setTimeout(this.scrollToBottomIfSticky, 400);
         return (
             <div className="messages-current" onScroll={this.handleScroll} ref={this.setContainerRef}>
                 {this.renderChatStart()}

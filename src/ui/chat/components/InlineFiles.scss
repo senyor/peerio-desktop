@@ -1,13 +1,13 @@
 .inline-files-container {
   .first-time { // consent UI //
-    margin-top: $margin-xl;
     max-width: 440px;
     padding-left: $padding-default;
+    margin-top: $margin-xl;
 
     .warning-body,
     .url-content {
-      border-left: 1px solid $divider-dark;
       padding-left: $padding-default;
+      border-left: 1px solid $divider-dark;
     }
 
     .warning-header {
@@ -29,14 +29,14 @@
 
     .warning-body {
       p.text {
+        max-width: 100%; // override of a general <p> style in MessageList
         margin: 0;
         margin-bottom: $margin-default;
-        max-width: 100%; // override of a general <p> style in MessageList
       }
 
       .options {
-        margin-top: $margin-xl;
         padding-left: $padding-default;
+        margin-top: $margin-xl;
 
         .rt-radio-radio {
           border-color: $text-dark-secondary;
@@ -64,39 +64,39 @@
 
   .update-settings {
     @extend %hint-error-label;
+    display: flex;
 
     align-content: center;
-    display: flex;
-    font-style: italic;
     margin-left: $margin-default;
     margin-top: $margin-small;
+    font-style: italic;
 
     .material-icons {
-      color: $green-affirmative;
       font-size: 16px;
+      color: $green-affirmative;
     }
 
     .text {
-      color: $text-dark-secondary;
       margin-left: $margin-small;
+      color: $text-dark-secondary;
 
       a {
-        color: $text-dark-secondary;
         text-decoration: underline;
+        color: $text-dark-secondary;
       }
     }
   }
 
   .inline-files {
+    position: relative;
+    min-width: 180px;
+    margin-left: $margin-default;
+    font-weight: $font-weight-bold;
+    transition: 250ms;
+    color: $text-dark-secondary;
     background: $white;
     border: 1px solid $divider-dark;
     border-radius: 2px;
-    color: $text-dark-secondary;
-    font-weight: $font-weight-bold;
-    margin-left: $margin-default;
-    position: relative;
-    transition: 250ms;
-    width: calc(100% - 100px); // reduce reflow from read receipts
 
     .inline-files-topbar {
       padding: 0 $padding-small 0 $padding-default;
@@ -132,42 +132,54 @@
     }
 
     .material-icons {
-      margin: 0;
       padding: 0;
+      margin: 0;
+      vertical-align: middle;
     }
 
     button {
-      margin: 0 $margin-tiny;
       min-width: 0;
       padding: 0 $padding-tiny;
+      margin: 0 $margin-tiny;
     }
 
     .file-icon {
       margin-right: $margin-small;
     }
 
+    .file-name-container {
+      display: flex;
+      // we add a min-width because this container is itself in a flex
+      // container, and we want this to shrink (truncating the filename).
+      min-width: 50px;
+      margin-right: auto;
+    }
+
     .file-name {
-      margin-right: 0;
       max-width: 100%;
+      margin-right: 0;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
-    .file-ext {
-      margin-right: auto;
-    }
   }
 
   .unknown-file {
-    color: $text-dark-hint;
     cursor: auto;
     margin-left: $margin-default;
+    color: $text-dark-hint;
+  }
+
+  .unknown-file-progress-bar.rt-progress_bar-linear.rt-progress_bar-indeterminate {
+    position: relative;
+    width: 100%;
+    left: auto;
+    margin: 0 $margin-default;
   }
 
   .invalid-file {
-    border-color: currentColor;
     color: rgba($red-error, .6);
+    border-color: currentColor;
 
     .container {
       @extend %flex-row;
@@ -175,17 +187,17 @@
     }
 
     .material-icons {
-      color: rgba($red-error, .6);
       margin-right: $padding-tiny;
+      color: rgba($red-error, .6);
     }
   }
 
   .rt-progress_bar-linear.rt-progress_bar-indeterminate {
-    bottom: 0;
-    left: 24px;
     position: absolute;
-    right: 0;
     width: auto;
+    left: 24px;
+    right: 0;
+    bottom: 0;
   }
 
   .item-actions {
@@ -198,26 +210,26 @@
     @extend %flex-col;
     @extend %flex-justify-center;
     align-items: flex-start;
-    border-top: 1px solid $divider-dark;
     height: 92px;
     padding: $padding-default;
+    border-top: 1px solid $divider-dark;
 
     &.display-image {
       height: 232px;
     }
 
     button.display-this-image {
-      background: none;
-      border: 0;
-      color: $blue;
       cursor: pointer;
+      height: 100%;
+      width: 100%;
+      padding-left: 32px; // TODO switch to $padding-xl after merge
       font-style: italic;
       font-weight: $font-weight-regular;
-      height: 100%;
-      padding-left: 32px; // TODO switch to $padding-xl after merge
       text-align: left;
       text-transform: none;
-      width: 100%;
+      color: $blue;
+      background: none;
+      border: 0;
 
       &:focus {
         outline: 0;
@@ -225,34 +237,36 @@
     }
 
     .inline-files-dropdown {
-      align-items: flex-start;
       display: flex;
+      align-items: flex-start;
       height: 100%;
       width: 100%;
 
       .image-over-limit-warning {
-        margin: auto 0;
         padding-left: 32px; // TODO switch to $padding-xl after merge
+        margin: auto 0;
 
         .text {
           font-style: italic;
           font-weight: $font-weight-regular;
         }
 
-        button.display-overlimit-image {
+        button.display-over-limit-image {
           display: inline;
-          line-height: 1.3em;
+          width: auto;
           padding: 0;
+          padding-right: 4px; // to account for italic font
+          line-height: 1.3em;
         }
       }
 
       img {
-        border-radius: 2px;
         cursor: pointer;
         height: auto;
+        width: auto;
         max-height: 100%;
         max-width: 100%;
-        width: auto;
+        border-radius: 2px;
 
         &:not(:last-child) {
           margin-right: $margin-small;
@@ -263,26 +277,26 @@
 }
 
 .image-popup {
-  border-radius: 4px;
   height: auto;
+  width: auto;
   min-height: 240px; // arbitrary min-height to show enough of image above toolbar
   min-width: 240px; // arbitrary min-width to show filename and buttons
-  width: auto;
+  border-radius: 4px;
 
   .rt-dialog-body {
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding: 0;
     position: relative;
+    padding: 0;
   }
 
   img {
     flex-shrink: 0;
     height: auto;
+    width: auto;
     max-height: 96vh; // <Dialog> max dimensions
     max-width: 96vw;
-    width: auto;
   }
 
   .rt-button-neutral:not([disabled]).rt-button-flat {
@@ -297,25 +311,40 @@
     }
   }
 
+  .button-close,
+  .info-bar {
+    transition: opacity 250ms;
+    opacity: 0;
+  }
+
+  &:hover {
+    .button-close,
+    .info-bar {
+      opacity: 1;
+    }
+  }
+
   .button-close {
-    background-color: $white-70;
     position: absolute;
     right: $margin-default;
     top: $margin-default;
+    background-color: $white;
 
     &:hover {
-      background-color: $white-70 !important;
+      background-color: $white !important;
     }
   }
 
   .info-bar {
-    background-color: $white-70;
-    bottom: 0;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: $padding-default $padding-xl;
     position: absolute;
+    height: 64px;
     width: 100%;
+    bottom: 0;
+    padding: 0 $padding-xl;
+    background-color: $white;
 
     .left {
       max-width: calc(100% - 120px); // $margin-default*2 + 24px*3
@@ -323,11 +352,11 @@
 
     .file-name {
       @extend %title;
-      color: $black;
-      font-weight: normal;
       overflow: hidden;
+      font-weight: normal;
       text-overflow: ellipsis;
       white-space: nowrap;
+      color: $black;
     }
 
     .file-size {
@@ -335,8 +364,8 @@
     }
 
     .right {
-      align-items: center;
       display: flex;
+      align-items: center;
 
       button:not(:first-child) {
         margin-left: $margin-default;

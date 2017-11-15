@@ -1,3 +1,5 @@
+// @ts-check
+
 const React = require('react');
 const { observer } = require('mobx-react');
 const ChatList = require('./components/ChatList');

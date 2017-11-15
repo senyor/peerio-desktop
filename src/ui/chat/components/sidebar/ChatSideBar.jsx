@@ -9,7 +9,6 @@ class ChatSideBar extends React.Component {
     render() {
         const chat = chatStore.activeChat;
         if (!chat) return null;
-        if (!chat.recentFiles.length) return null;
         return (
             <div className={css('chat-sidebar', { open: this.props.open })}>
                 <FilesSection open />

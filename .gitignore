@@ -7,3 +7,6 @@ dist
 npm-debug.log.*
 npm-debug.log
 .vscode
+.opt-in
+.app.package.json.md5
+.package.json.md5

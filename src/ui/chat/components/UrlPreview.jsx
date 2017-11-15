@@ -1,33 +1,43 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const config = require('~/config');
-const { util } = require('~/icebear');
+const { observable } = require('mobx');
+const { Button } = require('~/react-toolbox');
+const T = require('~/ui/shared-components/T');
+const { t } = require('peerio-translator');
+const { fileStore } = require('~/icebear');
+
+const forceShowCache = observable.map();
 
 @observer
 class UrlPreview extends React.Component {
-    render() {
-        const urlData = this.props.urlData;
+    forceDownload = () => { forceShowCache.set(this.props.urlData.url, true); };
 
+    render() {
+        const { url, isOversizeCutoff, isOverInlineSizeLimit } = this.props.urlData;
+        const tooBig = !isOversizeCutoff && isOverInlineSizeLimit;
+        const showImage = forceShowCache.get(url) || !tooBig && !isOversizeCutoff;
         return (
             <div className="urlpreview">
                 <div>
                     <div className="url-content">
-                        {/* <div className="url-title">
-                                <a href="#">Website banner title</a>
-                            </div>
-                            <div className="url-info">
-                                <span className="url-condensed">address.com</span>
-                            </div>
-                            */}
                         <div className="url-image">
-                            {
-                                urlData.oversized && !urlData.forceShow
-                                    ? <div>
-                                            This image exceeds {util.formatBytes(config.chat.inlineImageSizeLimit)},
-                                        <a>expand it anyway</a>
-                                    </div>
-                                    : <img src={urlData.url} onLoad={this.props.onImageLoaded} alt="" />
-                            }
+                            {!showImage && tooBig &&
+                                <div className="image-over-limit-warning">
+                                    <T k="title_imageSizeWarning">
+                                        {{ size: fileStore.inlineImageSizeLimitFormatted }}
+                                    </T>
+                                    <Button className="display-this-image display-over-limit-image"
+                                        onClick={this.forceDownload}>
+                                        {t('button_displayThisImageAfterWarning')}
+                                    </Button>
+                                </div>}
+                            {isOversizeCutoff &&
+                                <div className="image-over-limit-warning">
+                                    <T k="title_imageTooBigCutoff">
+                                        {{ size: fileStore.inlineImageSizeLimitCutoffFormatted }}
+                                    </T>
+                                </div>}
+                            {showImage && <img src={url} onLoad={this.props.onImageLoaded} alt="" />}
                         </div>
                     </div>
                 </div>

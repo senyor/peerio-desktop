@@ -2,10 +2,10 @@
   @extend %flex-col;
   @extend %flex-align-center;
   @extend %flex-justify-center;
-  background: white;
   height: 100vh;
-  overflow: auto;
   width: 100vw;
+  overflow: auto;
+  background: white;
 
   .onboarding-content {
     @extend %flex-col;
@@ -40,8 +40,8 @@
   }
 
   .onboarding-to-do {
-    margin-bottom: $margin-default;
     padding-left: $padding-default;
+    margin-bottom: $margin-default;
 
     .done-container {
       @extend %flex-row;
@@ -87,16 +87,16 @@
     }
 
     &.done-first {
-      border-top: 1px solid $divider-dark;
       padding-top: $padding-default;
+      border-top: 1px solid $divider-dark;
     }
 
     &.done {
       color: $text-dark-hint;
 
       .title {
-        color: currentColor;
         text-decoration: line-through;
+        color: currentColor;
       }
 
       .material-icons {

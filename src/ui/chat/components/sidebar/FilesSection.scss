@@ -1,0 +1,46 @@
+.sidebar-zero-files {
+  padding: 0 $padding-default $padding-default;
+}
+
+.sidebar-file-list {
+  .sidebar-file-label {
+    align-items: center;
+    display: flex;
+    max-width: 100%;
+
+    .file-sprite-icon {
+      min-width: 32px;
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      margin-left: $margin-default;
+      overflow: hidden;
+    }
+
+    .file-name-container {
+      display: flex;
+    }
+
+    .file-name {
+      margin-right: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .file-ext {
+      margin-right: auto;
+    }
+
+    .file-shared-by {
+      @extend %hint-error-label;
+      color: $text-dark-hint;
+    }
+  }
+
+  .rt-menu-iconMenu {
+    margin-left: $margin-small;
+  }
+}

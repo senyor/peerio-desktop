@@ -81,8 +81,14 @@ class ChannelSideBar extends React.Component {
                         <div onClick={this.showChatPurposeEditor}>
                             {
                                 this.chatPurposeEditorVisible
-                                    ? <ChatNameEditor showLabel tabIndex="-1" purpose readOnly={!canIAdmin}
-                                        onBlur={this.hideChatPurposeEditor} multiline
+                                    ? <ChatNameEditor
+                                        showLabel
+                                        tabIndex="-1"
+                                        purpose
+                                        multiline
+                                        readOnly={!canIAdmin}
+                                        onBlur={this.hideChatPurposeEditor}
+                                        className={'purpose-editor'}
                                         ref={this.chatPurposeEditorRef} />
                                     : <div className="purpose-container">
                                         {chat.chatHead && chat.chatHead.purpose
@@ -114,10 +120,12 @@ class ChannelSideBar extends React.Component {
                     </List>
                 </div>
                 <MembersSection onAddParticipants={this.props.onAddParticipants}
-                    onToggle={hasFiles ? () => this.onToggleSection(MEMBERS) : null}
+                    onToggle={() => this.onToggleSection(MEMBERS)}
                     open={this.openSection === MEMBERS} />
-                <FilesSection onToggle={() => this.onToggleSection(FILES)}
-                    open={this.openSection === FILES} />
+                {hasFiles
+                    ? <FilesSection onToggle={() => this.onToggleSection(FILES)}
+                        open={this.openSection === FILES} />
+                    : null }
             </div>
         );
     }

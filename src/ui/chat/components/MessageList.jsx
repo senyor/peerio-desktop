@@ -13,8 +13,8 @@ const config = require('~/config');
 @observer
 class MessageList extends React.Component {
     loadTriggerDistance = 20;
-    stickDistance = 220;
-    lastRenderedMessageId = null;
+    stickDistance = 50;
+    // lastRenderedMessageId = null;
     lastRenderedChatId = null;
 
     componentWillMount() {
@@ -82,24 +82,17 @@ class MessageList extends React.Component {
         window.requestAnimationFrame(this.smoothScrollStep);
     }
 
-    // we want to autoscroll only if there are new messages
     scrollToBottomIfNeeded() {
-        if (!chatStore.activeChat) return;
+        if (!chatStore.activeChat) {
+            this.stickToBottom = true;
+            return;
+        }
         // check if chat has changed since last render
         if (this.lastRenderedChatId !== chatStore.activeChat.id) {
-            this.lastRenderedMessageId = null;
             this.lastRenderedChatId = chatStore.activeChat.id;
+            this.stickToBottom = true;
         }
-        const messages = chatStore.activeChat.messages;
-        if (messages.length) {
-            if (this.lastRenderedMessageId !== messages[messages.length - 1].id) {
-                this.lastRenderedMessageId = messages[messages.length - 1].id;
-                // if user has scrolled too far from bottom (threshold) - do not autoscroll
-                if (this.stickToBottom) setTimeout(this.scrollToBottom, 400);
-            }
-        } else {
-            this.lastRenderedMessageId = null;
-        }
+        if (this.stickToBottom) setTimeout(this.scrollToBottom);
     }
 
     onImageLoaded = () => {
@@ -108,27 +101,27 @@ class MessageList extends React.Component {
 
     // todo: investigate why throttling causes lags when scrolling with trackpad at big velocity
     handleScroll = // _.throttle(
-    () => {
-        // console.log('SCROLL');
-        // we can't handle scroll if content height is too small
-        if (this.containerRef.scrollHeight <= this.containerRef.clientHeight) return;
+        () => {
+            // console.log('SCROLL');
+            // we can't handle scroll if content height is too small
+            if (this.containerRef.scrollHeight <= this.containerRef.clientHeight) return;
 
-        const distanceToBottom = this.containerRef.scrollHeight - this.containerRef.scrollTop
-            - this.containerRef.clientHeight;
-        const distanceToTop = this.containerRef.scrollTop;
-        // console.log(distanceToTop, distanceToBottom);
-        // detecting sticking state
-        this.stickToBottom = distanceToBottom < this.stickDistance && !chatStore.activeChat.canGoDown;
-        // triggering page load
-        if (distanceToBottom < this.loadTriggerDistance) {
-            //  console.log('TRIGGER');
-            chatStore.activeChat.loadNextPage();
-        }
-        if (distanceToTop < this.loadTriggerDistance) {
-            // console.log('TRIGGER');
-            chatStore.activeChat.loadPreviousPage();
-        }
-    }// , 150, { leading: true, trailing: true });
+            const distanceToBottom = this.containerRef.scrollHeight - this.containerRef.scrollTop
+                - this.containerRef.clientHeight;
+            const distanceToTop = this.containerRef.scrollTop;
+            // console.log(distanceToTop, distanceToBottom);
+            // detecting sticking state
+            this.stickToBottom = distanceToBottom < this.stickDistance && !chatStore.activeChat.canGoDown;
+            // triggering page load
+            if (distanceToBottom < this.loadTriggerDistance) {
+                //  console.log('TRIGGER');
+                chatStore.activeChat.loadNextPage();
+            }
+            if (distanceToTop < this.loadTriggerDistance) {
+                // console.log('TRIGGER');
+                chatStore.activeChat.loadPreviousPage();
+            }
+        }// , 150, { leading: true, trailing: true });
 
     setContainerRef = (r) => {
         this.containerRef = r;

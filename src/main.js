@@ -51,7 +51,10 @@ app.on('ready', () => {
                 title: app.getName()
             }, windowState);
 
-            if (process.platform === 'linux' && !isDevEnv) {
+            if (isDevEnv) {
+                winConfig.title = `${winConfig.title} DEV`;
+                winConfig.icon = `${__dirname}/static/img/icon-dev.png`;
+            } else if (process.platform === 'linux') {
                 winConfig.icon = `${__dirname}/static/img/icon.png`;
             }
 

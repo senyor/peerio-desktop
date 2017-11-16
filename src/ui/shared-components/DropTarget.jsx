@@ -56,7 +56,13 @@ class DropTarget extends React.Component {
                     onEscKeyDown={this.cancelUpload}
                     onOverlayClick={this.cancelUpload}
                     title={t('title_uploadAndShare')}>
-                    <p>{t('title_fileWillBeShared')}</p>
+                    <p>{t('title_fileWillBeShared',
+                        {
+                            chatName: chatStore.activeChat.isChannel
+                                ? `# ${chatStore.activeChat.name}`
+                                : chatStore.activeChat.name
+                        }
+                    )}</p>
                 </Dialog>
             );
         }

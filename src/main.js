@@ -51,7 +51,7 @@ app.on('ready', () => {
                 title: app.getName()
             }, windowState);
 
-            if (process.platform === 'linux') {
+            if (process.platform === 'linux' && !isDevEnv) {
                 winConfig.icon = `${__dirname}/static/img/icon.png`;
             }
 

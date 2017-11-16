@@ -87,7 +87,7 @@ class NewChannel extends React.Component {
                         <Input placeholder={t('title_channelName')} innerRef={this.setNameInputRef}
                             value={this.channelName} onChange={this.handleNameChange} />
                     </div>
-                    {<Button className={css('confirm', {
+                    {<Button className={css('confirm', 'button-affirmative', {
                         banish: !this.channelName.length
                         || !this.upgradeDialog
                         || !this.userPicker.isValid

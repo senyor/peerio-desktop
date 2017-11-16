@@ -115,13 +115,13 @@
     white-space: normal;
   }
 
+  .rt-input-input {
+    margin-top: $margin-xl;
+  }
+
   @media (max-height: $minimum-screen-height) {
     img {
       margin: $margin-small 0 $margin-default;
-    }
-
-    .rt-input-input {
-      margin-top: 32px;
     }
   }
 }

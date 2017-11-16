@@ -37,8 +37,12 @@
     color: rgba(0, 0, 0, .6);
   }
 
-  // Disable the hover zoom effect for emoji inside the input box
   img.emojione {
+    // Generally we want emoji to have a margin, but in the input box it can
+    // cause them to become clipped.
+    margin: unset;
+
+    // Disable the hover zoom effect for emoji inside the input box.
     transition: unset;
     &:hover { transform: unset; }
   }

@@ -1,21 +1,18 @@
 [PR guideline](https://github.com/PeerioTechnologies/peerio-icebear/blob/dev/docs/CONTRIBUTING.md)
 
-## PR author
-*If something is not applicable to your case - acknowledge the fact by writing n/a.*
+### PR author
 
-|    📝   |
-| ------- |
-| **Relevant issue tracker links:** | 
-| ....... |
-| **Linked PRs in other repos:** | 
-| ....... | 
-| **Manual testing instructions:** | 
-| ....... |
-| **Additional notes:** | 
-| ....... |
+#### Relevant issue tracker links  
+...
+#### Linked PRs in other repos
+... 
+#### Manual testing instructions  
+...
+#### Additional notes
+... 
 
-
-## Reviewer
+----
+### Reviewer
 
 * Localisation.
 * Architectural decisions.
@@ -28,7 +25,8 @@
 * Are there any bicycles invented that should be replaced with existing SDK
 * Are there unit and e2e tests added?
 
-## Repository owner
+----
+### Repository owner
 
 - [ ] At least one approved code review exists.
 - [ ] Approved tester review exists and was done after last code changes.

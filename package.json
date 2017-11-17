@@ -39,7 +39,7 @@
     "=== HELPERS ===": "",
     "check-links": "echo node_modules: && ls -la node_modules | grep peerio && echo app/node_modules: && ls -la app/node_modules | grep peerio",
     "react-toolbox": "react-toolbox-themr",
-    "electron:run": "electron ./app",
+    "electron:run": "NODE_ENV=development electron ./app",
     "cleanup": "rm -rf app/build && mkdirp app/build",
     "dist": "npm-run-all compile"
   },

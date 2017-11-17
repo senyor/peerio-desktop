@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'development') {
+    process.env.NODE_ENV = 'production';
+}
+
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');

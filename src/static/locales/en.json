@@ -464,6 +464,8 @@
   "title_channelName": "Name",
   "title_channelNamePlaceholder": "# Name",
   "title_channelPurpose": "Purpose (optional)",
+  "title_purpose": "Purpose",
+  "title_optional": "(Optional)",
   "title_channelPurposePlaceholder": "What is it about",
   "title_channelRecentInvitations": "Recent Invitations",
   "title_confirmChannelDelete": "Are you sure you want to delete this Room?",

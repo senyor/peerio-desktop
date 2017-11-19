@@ -1,13 +1,13 @@
 {
   "name": "peerio-2",
   "description": "Peerio 2",
-  "version": "2.91.0",
+  "version": "2.92.0",
   "scripts": {
-    "=== HOOKS ===": "",
+    "=== HOOKS ===": " Note: never ever change pruning tags from postcommit to something else unless you want to break prod build",
     "postcheckout": "opt --in npm-install --exec \"npm install\"",
     "postmerge": "opt --in npm-install --exec \"npm install\"",
     "precommit": "opt --in lint --exec \"npm run validate\"",
-    "prepush": "git fetch --prune origin '+refs/tags/*:refs/tags/*'",
+    "postcommit": "git fetch --prune origin '+refs/tags/*:refs/tags/*'",
     "commitmsg": "validate-commit-msg",
     "postinstall": "./scripts/postinstall.sh",
     "=== MAIN COMMANDS ===": "",

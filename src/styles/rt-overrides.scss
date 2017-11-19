@@ -18,6 +18,17 @@
     color: $text-light-primary;
     background-color: $green-affirmative;
   }
+
+  &.inverted {
+    color: $green-affirmative;
+    background-color: $white;
+    border: 1px solid $green-affirmative;
+
+    &:hover {
+      color: $green-affirmative;
+      background-color: $white;
+    }
+  }
 }
 
 .button-affirmative.rt-button-button:disabled {
@@ -25,6 +36,10 @@
   background-color: #f0f0f0;
 }
 
+// dialog button default text colour
+.rt-dialog-button.rt-button-neutral:not([disabled]).rt-button-flat:not(:last-of-type) {
+  color: $text-dark-secondary;
+}
 // Grey/blue "neutral UI" buttons
 $button-neutral-height: 36px;
 
@@ -62,7 +77,38 @@ $button-neutral-height: 36px;
   }
 }
 
+// remove ripple
+.no-ripple.rt-button-button > .rt-button-rippleWrapper {
+  display: none;
+}
+
 // horizontally flip icons (used for "share" buttons)
 .reverse-icon .material-icons {
   @extend %reverse-icon;
+}
+
+// custom icons for MenuItem
+.custom-icon.rt-menu-menuItem {
+  position: relative;
+
+  .rt-menu-caption {
+    display: flex;
+    align-items: center;
+  }
+
+  .rt-menu-caption::before {
+    content: ' ';
+    display: inline-block;
+    height: 24px;
+    width: 38.4px;
+    background-position-y: center;
+    background-repeat: no-repeat;
+  }
+
+  &.button-move {
+    .rt-menu-caption::before {
+      background-image: url('./static/img/icon-movefolder.png');
+      background-size: 70%;
+    }
+  }
 }

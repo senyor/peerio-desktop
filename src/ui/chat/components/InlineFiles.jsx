@@ -145,7 +145,7 @@ class InlineFile extends React.Component {
                         {(file.fileOwner === User.current.username) && <Button caption={t('button_delete')}
                             icon="delete"
                             onClick={this.props.onDelete}
-                            className={css('button-small', { disabled: this.props.deleteDisabled })} />}
+                            className={css('button-small', { disabled: !this.props.deleteable })} />}
                     </div>
                 </div>
             </Dialog>);
@@ -266,8 +266,9 @@ class InlineFile extends React.Component {
                                     } onClick={this.toggleExpand} />
                                 }
                                 <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
-                                    shareDisabled={!file.readyForDownload || !file.canShare} newFolderDisabled
-                                    deleteDisabled={file.fileOwner !== User.current.username}
+                                    shareable shareDisabled={!file.readyForDownload || !file.canShare}
+                                    newFolderDisabled
+                                    deleteable={file.fileOwner === User.current.username}
                                     {...this.props} />
                             </div>
                             {file.deleted ? <span>File deleted</span> : null}

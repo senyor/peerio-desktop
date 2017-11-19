@@ -238,7 +238,7 @@
   "title_confirmRemoveFiles": "Remove {count} file(s)?",
   "title_confirmRemoveSharedFiles": "Deleting shared files will also unshare them with other users.",
   "title_confirmRemoveFilename": "Remove file {name}?",
-  "title_fileWillBeShared": "File(s) will be shared with {chatName}",
+  "title_fileWillBeShared": "File(s) will be shared with this chat",
   "title_dropToUpload": "Drop {count} file(s) to upload",
   "title_uploadPastedFile": "The file you pasted will be uploaded and shared with the current chat",
   "title_enableImagePreviews": "Enable image previews",

@@ -128,7 +128,8 @@ class Preferences extends React.Component {
                         checked={!uiStore.prefs.limitInlineImageSize}
                         onChange={this.onInlineContentSizeLimitToggle} />
                     <p className="narrow smalltext">{t('title_imageTooBigCutoff',
-                        { size: fileStore.inlineImageSizeLimitCutoffFormatted })}</p>
+                        { size: fileStore.inlineImageSizeLimitCutoffFormatted })}
+                    </p>
                 </section>
                 <section className="section-divider prefs-url">
                     <p className="subheading">{t('title_urlPreview')}</p>

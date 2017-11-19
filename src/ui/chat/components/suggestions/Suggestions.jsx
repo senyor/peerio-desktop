@@ -216,7 +216,7 @@ function makePlugin(/** @type {Suggestions} */self) {
                 // positions, which will become invalid/stale if they stick
                 // around when the doc is changed.
                 update(view, lastState) {
-                    const state = view.state;
+                    const { state } = view;
 
                     if (lastState && lastState.doc.eq(state.doc)) {
                         // For any state update where the selection changed but the

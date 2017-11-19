@@ -88,7 +88,7 @@ class ChannelSideBar extends React.Component {
                                         multiline
                                         readOnly={!canIAdmin}
                                         onBlur={this.hideChatPurposeEditor}
-                                        className={'purpose-editor'}
+                                        className="purpose-editor"
                                         ref={this.chatPurposeEditorRef} />
                                     : <div className="purpose-container">
                                         {chat.chatHead && chat.chatHead.purpose

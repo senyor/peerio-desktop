@@ -78,7 +78,7 @@ const chatSchema = new Schema({
             // happens in the send step.
             toReact(node) {
                 const content = node.textContent;
-                const href = parseUrls(content)[0].href;
+                const { href } = parseUrls(content)[0];
                 if (!href) throw new Error(`Invalid parsed href for '${content}'`);
                 return <a href={href}>{content}</a>;
             }
@@ -95,7 +95,7 @@ const chatSchema = new Schema({
                 {
                     tag: 'span',
                     getAttrs(/** @type {HTMLSpanElement} */e) {
-                        const username = e.dataset.username;
+                        const { username } = e.dataset;
                         if (
                             username &&
                             validUsernamePattern.test(username) &&
@@ -109,7 +109,7 @@ const chatSchema = new Schema({
             ],
             toDOM(node) {
                 /** @type {string} */
-                const username = node.attrs.username;
+                const { username } = node.attrs;
                 if (!validUsernamePattern.test(username)) {
                     throw new Error(`Invalid username: '${username}'`);
                 }

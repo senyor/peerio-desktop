@@ -62,7 +62,8 @@ class DropTarget extends React.Component {
                                 ? `# ${chatStore.activeChat.name}`
                                 : chatStore.activeChat.name
                         }
-                    )}</p>
+                    )}
+                    </p>
                 </Dialog>
             );
         }

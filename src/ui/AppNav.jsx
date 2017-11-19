@@ -6,7 +6,7 @@ const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const css = require('classnames');
-const remote = require('electron').remote;
+const { remote } = require('electron');
 const notificationFactory = require('~/helpers/notifications');
 const appControl = require('~/helpers/app-control');
 const AppNavButton = require('./AppNavButton');
@@ -106,7 +106,8 @@ class AppNav extends React.Component {
         return (
             <Dialog actions={actions} active={this.isConfirmSignOutVisible}
                 onEscKeyDown={hide} onOverlayClick={hide}
-                title={t('button_logout')}>{t('title_signOutConfirmKeys')}</Dialog>
+                title={t('button_logout')}>{t('title_signOutConfirmKeys')}
+            </Dialog>
         );
     }
 
@@ -116,7 +117,7 @@ class AppNav extends React.Component {
 
     render() {
         const contact = contactStore.getContact(User.current.username);
-        const primaryAddressConfirmed = User.current.primaryAddressConfirmed;
+        const { primaryAddressConfirmed } = User.current;
         return (
             <div className="app-nav">
                 <div className="avatar-menu-wrapper">

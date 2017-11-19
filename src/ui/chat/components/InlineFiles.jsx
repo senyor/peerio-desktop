@@ -280,8 +280,10 @@ class InlineFile extends React.Component {
                     </div>
                     {this.isExpanded && uiStore.prefs.peerioContentConsented &&
                         <div className={css('inline-files-expanded',
-                            { 'display-image': uiStore.prefs.peerioContentEnabled &&
-                                (file.tmpCached || !file.isOverInlineSizeLimit) })}>
+                            {
+                                'display-image': uiStore.prefs.peerioContentEnabled &&
+                                (file.tmpCached || !file.isOverInlineSizeLimit)
+                            })}>
                             {file.tmpCached || uiStore.prefs.peerioContentEnabled
                                 ? <div className="inline-files-dropdown">
                                     {file.tmpCached &&
@@ -310,7 +312,8 @@ class InlineFile extends React.Component {
                 </div>
                 <div>{!uiStore.prefs.peerioContentConsented && file.isImage &&
                     this.renderConsent()
-                }</div>
+                }
+                </div>
                 <div>
                     {this.firstSave &&
                         <div className="update-settings">

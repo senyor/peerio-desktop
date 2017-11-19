@@ -1,7 +1,5 @@
 // @ts-check
-const {
-    Plugin
-} = require('prosemirror-state');
+const { Plugin } = require('prosemirror-state');
 
 const MAX_MATCH = 500;
 
@@ -13,7 +11,7 @@ function ensuredInputRules(/** @type {{ rules : any[] }} */{ rules }) {
     return new Plugin({
         props: {
             handleTextInput(view, from, to, text) {
-                const state = view.state;
+                const { state } = view;
                 const $from = state.doc.resolve(from);
                 const textBefore = $from.parent.textBetween(
                     Math.max(0, $from.parentOffset - MAX_MATCH),

@@ -63,7 +63,7 @@ class Message extends React.Component {
     *                        with an HTML string ready to directly be used in `dangerouslySetInnerHTML`.
     */
     getMessageComponent(message) {
-        const richText = message.richText;
+        const { richText } = message;
         if (richText &&
             (typeof richText === 'object') &&
             (richText.type === 'doc') &&

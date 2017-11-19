@@ -207,7 +207,8 @@ class SecuritySettings extends React.Component {
 
                                             <div className="bold selectable">{this.twoFASecret}
                                                 <TooltipIconButton icon="content_copy" onClick={this.copyTOTPSecret}
-                                                    tooltip={t('title_copy')} primary /></div>
+                                                    tooltip={t('title_copy')} primary />
+                                            </div>
                                             <br />
                                             <a onClick={this.toggleQRCode}>
                                                 <T k="button_2FAShowQRCode" tag="div" className="text-center" />

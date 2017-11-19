@@ -50,7 +50,7 @@ class ChatList extends React.Component {
         if (m.systemData) {
             return <em>{systemMessages.getSystemMessageText(m)}</em>;
         }
-        let username = m.sender.username;
+        let { username } = m.sender;
         if (username === User.current.username) username = t('title_you');
         return (
             <span><strong>{username}:</strong>&nbsp;

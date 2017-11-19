@@ -1,8 +1,10 @@
 const React = require('react');
 const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Chip, FontIcon, IconButton, Input, List,
-    ListItem, ListSubHeader, ProgressBar } = require('~/react-toolbox');
+const {
+    Button, Chip, FontIcon, IconButton, Input, List,
+    ListItem, ListSubHeader, ProgressBar
+} = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('~/icebear');
 const css = require('classnames');
@@ -294,7 +296,7 @@ class UserPicker extends React.Component {
                                             disabled={!this.isValid
                                                 || (this.queryIsEmpty && this.selected.length === 0)} />
                                     }
-                                    { (this.contactLoading || this._searchUsernameTimeout) &&
+                                    {(this.contactLoading || this._searchUsernameTimeout) &&
                                         <ProgressBar type="circular" mode="indeterminate" />
                                     }
                                 </div>

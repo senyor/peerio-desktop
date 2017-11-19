@@ -145,20 +145,14 @@ class PasscodeStore extends OrderedFormStore {
                 action: (value, additionalArguments) => {
                     if (value) {
                         if (value.length < MIN_PASSWORD_LENGTH) {
-                            return Promise.resolve({
-                                message: shortMsg
-                            });
+                            return Promise.resolve({ message: shortMsg });
                         }
                         if (additionalArguments.zxcvbnScore.guesses_log10 < 8) {
-                            return Promise.resolve({
-                                message: weakMsg
-                            });
+                            return Promise.resolve({ message: weakMsg });
                         }
                         return Promise.resolve(true);
                     }
-                    return Promise.resolve({
-                        message: requiredMsg
-                    });
+                    return Promise.resolve({ message: requiredMsg });
                 },
                 message: shortMsg
             }

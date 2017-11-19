@@ -43,7 +43,7 @@ function emojiPlugin() {
     const checkCharacters = debounce(view => {
         const emoji = emojiByAllShortnames[emojione.toShort(charAccumulator)];
         if (emoji) {
-            const state = view.state;
+            const { state } = view;
             view.dispatch(state.tr.replaceWith(
                 _from,
                 _from + charAccumulator.length,

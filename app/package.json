@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "@peerio/updater": "0.5.0",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v3.2.1",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v3.2.2",
     "autolinker": "1.4.4",
     "cheerio": "1.0.0-rc.2",
     "classnames": "2.2.5",
@@ -96,6 +96,7 @@
     "react-router": "3.2.0",
     "react-toolbox": "2.0.0-beta.12",
     "sanitize-filename": "1.6.1",
-    "zxcvbn": "4.4.2"
+    "zxcvbn": "4.4.2",
+    "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear"
   }
 }

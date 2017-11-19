@@ -56,7 +56,7 @@ class LanguageStore {
     buildDictionary() {
         const txtPath = path.join(
             electron.app.getAppPath(),
-            `/build/static/locales/dict/${this.language}.txt`);
+            `/node_modules/peerio-copy/phrase/dict/${this.language}.txt`);
         const dict = fs.readFileSync(txtPath, 'utf8');
         PhraseDictionary.setDictionary(this.language, dict);
     }
@@ -65,7 +65,7 @@ class LanguageStore {
         try {
             const jsonPath = path.join(
                 electron.app.getAppPath(),
-                `/build/static/locales/${code.replace('-', '_')}.json`);
+                `/node_modules/peerio-icebear/src/copy/${code.replace('-', '_')}.json`);
             const translation = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
             setLocale(code, translation);
             this.language = code;

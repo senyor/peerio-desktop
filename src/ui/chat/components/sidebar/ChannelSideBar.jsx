@@ -77,7 +77,7 @@ class ChannelSideBar extends React.Component {
                 <div>
                     <div className="title">{t('title_About')}</div>
                     <div>
-                        <ChatNameEditor showLabel tabIndex="-1" readOnly={!canIAdmin} />
+                        <ChatNameEditor className="title-editor" showLabel tabIndex="-1" readOnly={!canIAdmin} />
                         <div onClick={this.showChatPurposeEditor}>
                             {
                                 this.chatPurposeEditorVisible

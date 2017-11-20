@@ -43,8 +43,6 @@
   }
 
   .rt-list-itemText {
-    @extend %flex-row;
-    @extend %flex-align-center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -55,6 +53,13 @@
     padding-top: 7px;
     padding-bottom: 9px;
     border-bottom: 1px solid $divider-dark;
+  }
+
+  .title-editor > input,
+  .title-editor > textarea,
+  .purpose-editor > input,
+  .purpose-editor > textarea {
+    @extend %selectable;
   }
 
   // There doesn't seem to be a way to assign a classname to the React-Toolbox

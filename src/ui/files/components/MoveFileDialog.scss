@@ -11,8 +11,8 @@
 
   .breadcrumb {
     height: 48px;
-    margin-top: $margin-small;
     padding: $padding-default $padding-large;
+    margin-top: $margin-small;
 
     a {
       @extend %list-title;
@@ -24,11 +24,11 @@
   }
 
   .move-file-row {
-    align-items: center;
-    border-bottom: 1px solid $divider-dark;
     display: flex;
+    align-items: center;
     height: 48px;
     padding: 0 $padding-large;
+    border-bottom: 1px solid $divider-dark;
 
     > *:not(:last-child) {
       margin-right: $margin-default;

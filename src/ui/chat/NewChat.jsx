@@ -4,6 +4,7 @@ const { observer } = require('mobx-react');
 const { chatStore, Contact } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 
 @observer
@@ -37,7 +38,7 @@ class NewChat extends React.Component {
     }
 
     gotoNewChannel() {
-        window.router.push('/app/new-channel');
+        window.router.push('/app/chats/new-channel');
     }
 
     setRef = (ref) => {
@@ -45,12 +46,18 @@ class NewChat extends React.Component {
     }
 
     render() {
+        const textParser = {
+            toCreateRoom: text => <a className="clickable" onClick={this.gotoNewChannel}>{text}</a>
+        };
         return (
             <div className="new-dm create-new-chat">
                 <div className="user-picker-container">
                     <UserPicker
                         ref={this.setRef}
                         title={t('title_newDirectMessage')}
+                        description={
+                            <T k="title_newDirectMessageDescription">{textParser}</T>
+                        }
                         limit={1}
                         onAccept={this.handleAccept}
                         onClose={this.handleClose} />

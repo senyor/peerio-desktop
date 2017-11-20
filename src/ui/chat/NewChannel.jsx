@@ -5,8 +5,7 @@ const { chatStore, User } = require('~/icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { ProgressBar, Button, Input, IconButton } = require('~/react-toolbox');
-const css = require('classnames');
+const { ProgressBar, Input } = require('~/react-toolbox');
 const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 const config = require('~/config');
 
@@ -36,12 +35,8 @@ class NewChannel extends React.Component {
         });
     };
 
-    handleClose = () => {
-        window.router.push('/app/chats');
-    };
-
     gotoNewChat() {
-        window.router.push('/app/new-chat');
+        window.router.push('/app/chats/new-chat');
     }
 
     handleNameChange = val => {
@@ -66,42 +61,59 @@ class NewChannel extends React.Component {
     };
 
     render() {
+        const textParser = {
+            toCreateDM: text => (
+                <a className="clickable" onClick={this.gotoNewChat}>{text}</a>
+            )
+        };
+
         if (this.waiting) {
             return (<div className="new-channel create-new-chat">
                 <div className="create-channel-loading"><ProgressBar type="circular" /></div>
             </div>);
         }
-        const detailsKey = config.disablePayments || User.current.hasActivePlans
-            ? 'title_createChannelDetails_noPayments' : 'title_createChannelDetails';
         return (
             <div className="new-channel create-new-chat">
                 <div className="chat-creation-header">
                     <div className="title">
                         <T k="title_createChannel" tag="span" />
                     </div>
-                    <IconButton icon="close" onClick={this.handleClose} />
-                </div>
-                <T k={detailsKey} tag="div" className="create-room-info" />
-                <div className="new-chat-search">
-                    <div className="chip-wrapper">
-                        <Input placeholder={t('title_channelName')} innerRef={this.setNameInputRef}
-                            value={this.channelName} onChange={this.handleNameChange} />
-                    </div>
-                    {<Button className={css('confirm', 'button-affirmative', {
-                        banish: !this.channelName.length
-                        || !this.upgradeDialog
-                        || !this.userPicker.isValid
-                        || !this.userPicker.queryIsEmpty
-                    })} label={t('button_go')} onClick={this.handleAccept} />}
-                </div>
-                <div className="new-chat-search">
-                    <div className="chip-wrapper">
-                        <Input placeholder={t('title_channelPurpose')}
-                            value={this.purpose} onChange={this.handlePurposeChange} />
+                    <div className="description">
+                        <T k="title_createChannelDetails">{textParser}</T>
+                        { !(config.disablePayments || User.current.hasActivePlans) &&
+                            <T k="title_createChannelUpgradeOffer" />
+                        }
                     </div>
                 </div>
-                <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')}
-                    noHeader onlyPick noAutoFocus />
+                <div className="new-channel-inputs">
+                    <div className="message-search-wrapper-new-channel message-search-wrapper">
+                        <div className="new-chat-search">
+                            <div className="chip-wrapper">
+                                <Input placeholder={t('title_channelName')} innerRef={this.setNameInputRef}
+                                    value={this.channelName} onChange={this.handleNameChange} />
+                            </div>
+                        </div>
+                        <div className="helper-text" />
+                    </div>
+                    <div className="message-search-wrapper-new-channel message-search-wrapper">
+                        <div className="new-chat-search">
+                            <div className="chip-wrapper">
+                                <Input placeholder={t('title_purpose')}
+                                    value={this.purpose} onChange={this.handlePurposeChange} />
+                            </div>
+                        </div>
+                        <T k="title_optional" tag="div" className="helper-text" />
+                    </div>
+                    <div className="user-picker-container">
+                        <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')}
+                            noHeader onlyPick noAutoFocus
+                            onAccept={this.handleAccept}
+                            noSubmit={
+                                !this.channelName.length || !this.upgradeDialog
+                            }
+                        />
+                    </div>
+                </div>
                 <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} />
             </div>
         );

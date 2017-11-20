@@ -24,9 +24,13 @@
   .message-search-wrapper {
     @extend %flex-align-center;
     @extend %flex-shrink-0;
-    display: flex;
     width: 100%;
     margin-bottom: $margin-xl;
+
+    .message-search-inner {
+      display: flex;
+      align-items: center;
+    }
 
     .title-to {
       @extend %title;
@@ -77,6 +81,13 @@
       height: 24px;
       width: 24px;
     }
+  }
+
+  .helper-text {
+    @extend %hint-error-label;
+    margin-left: $margin-default;
+    margin-top: $margin-tiny;
+    color: $text-dark-hint;
   }
 
   .rt-list-list {

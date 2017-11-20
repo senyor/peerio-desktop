@@ -25,12 +25,17 @@ class RouterStore {
     }
 
     get isNewChat() { return this.currentRoute === this.ROUTES.newChat; }
+    get isNewChannel() { return this.currentRoute === this.ROUTES.newChannel; }
+    get isRoomInvites() {
+        return this.currentRoute === this.ROUTES.channelInvites;
+    }
 
     get ROUTES() {
         return {
             chats: '/app/chats',
             newChat: '/app/chats/new-chat',
-            channelInvites: 'app/channel-invites',
+            newChannel: '/app/chats/new-channel',
+            channelInvites: '/app/channel-invites',
             onboarding: '/app/onboarding',
             mail: '/app/mail',
             files: '/app/files',

@@ -11,6 +11,7 @@ const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const routerStore = require('~/stores/router-store');
 
 @observer
 class UserPicker extends React.Component {
@@ -263,7 +264,9 @@ class UserPicker extends React.Component {
                                 : <div className="chat-creation-header">
                                     <div className="title">
                                         {this.props.title}
-                                        {this.props.subtitle ? <span>{this.props.subtitle}</span> : ''}
+                                        {this.props.description &&
+                                            <span className="description">{this.props.description}</span>
+                                        }
                                     </div>
                                     {this.props.closeable &&
                                         <IconButton icon="close" onClick={this.handleClose} className="button-close" />
@@ -271,67 +274,91 @@ class UserPicker extends React.Component {
                                 </div>
                             }
                             <div className="message-search-wrapper">
-                                <T k="title_to" className="title-to" />
-                                <div className="new-chat-search">
-                                    <FontIcon value="search" />
-                                    <div className="chip-wrapper">
-                                        {this.selected.map(c =>
-                                            (<Chip key={c.username}
-                                                className={css('chip-label', { 'not-found': c.notFound })}
-                                                onDeleteClick={() => this.selected.remove(c)} deletable>
-                                                {c.loading
-                                                    ? <ProgressBar type="linear" mode="indeterminate" />
-                                                    : c.username}
-                                            </Chip>)
-                                        )}
-                                        <Input innerRef={this.onInputMount} placeholder={t('title_userSearch')}
-                                            value={this.query} onChange={this.handleTextChange}
-                                            onKeyDown={this.handleKeyDown} />
-                                    </div>
-                                    {this.props.limit !== 1 && this.props.onAccept &&
-                                        <Button
-                                            className="button-affirmative"
-                                            label={this.props.button || t('button_go')}
-                                            onClick={this.accept}
-                                            disabled={!this.isValid
-                                                || (this.queryIsEmpty && this.selected.length === 0)} />
-                                    }
-                                    {(this.contactLoading || this._searchUsernameTimeout) &&
+                                <div className="message-search-inner">
+                                    <T k="title_to" className="title-to" />
+                                    <div className="new-chat-search">
+                                        <FontIcon value="search" />
+                                        <div className="chip-wrapper">
+                                            {this.selected.map(c =>
+                                                (<Chip key={c.username}
+                                                    className={css('chip-label', { 'not-found': c.notFound })}
+                                                    onDeleteClick={() => this.selected.remove(c)} deletable>
+                                                    {c.loading
+                                                        ? <ProgressBar type="linear" mode="indeterminate" />
+                                                        : c.username}
+                                                </Chip>)
+                                            )}
+                                            <Input innerRef={this.onInputMount}
+                                                placeholder={
+                                                    routerStore.isNewChannel
+                                                        ? t('title_Members')
+                                                        : t('title_userSearch')
+                                                }
+                                                value={this.query} onChange={this.handleTextChange}
+                                                onKeyDown={this.handleKeyDown} />
+                                        </div>
+                                        {this.props.limit !== 1 && this.props.onAccept && !routerStore.isNewChannel &&
+                                            <Button
+                                                className="button-affirmative"
+                                                label={this.props.button || t('button_go')}
+                                                onClick={this.accept}
+                                                disabled={!this.isValid
+                                                    || (this.queryIsEmpty && this.selected.length === 0)} />
+                                        }
+                                        { (this.contactLoading || this._searchUsernameTimeout) &&
                                         <ProgressBar type="circular" mode="indeterminate" />
-                                    }
+                                        }
+                                    </div>
                                 </div>
+                                {routerStore.isNewChannel &&
+                                    <div className="helper-text">
+                                        <T k="title_userSearch" />. <T k="title_optional" />
+                                    </div>
+                                }
                             </div>
+                            {routerStore.isNewChannel &&
+                                <div className="new-channel-button-container">
+                                    <Button
+                                        className={css('button-affirmative')}
+                                        label={t('button_open')}
+                                        onClick={this.props.onAccept}
+                                        disabled={this.props.noSubmit}
+                                    />
+                                </div>
+                            }
                         </div>
                         <div className="user-list-container">
-                            <div className="user-search-error-container">
-                                <div className="user-search-error">
-                                    <div className="search-error-text">
-                                        {this.showSearchError &&
+                            {this.showSearchError &&
+                                <div className="user-search-error-container">
+                                    <div className="user-search-error">
+                                        <div className="search-error-text">
                                             <FontIcon value="help_outline" />
-                                        }
+                                            {this.suggestInviteEmail &&
+                                                <T k="title_inviteContactByEmail">
+                                                    {{ email: this.suggestInviteEmail }}
+                                                </T>
+                                            }
+                                            {this.showNotFoundError && !this.suggestInviteEmail &&
+                                                <T k={this.legacyContactError ?
+                                                    'title_inviteLegacy' : 'error_userNotFoundTryEmail'} tag="div">
+                                                    {{ user: this.userNotFound }}
+                                                </T>
+                                            }
+                                            {this.userAlreadyAdded &&
+                                                <T k="error_userAlreadyAdded" tag="div">
+                                                    {{ user: this.userAlreadyAdded }}
+                                                </T>
+                                            }
+                                        </div>
                                         {this.suggestInviteEmail &&
-                                            <T k="title_inviteContactByEmail">{{ email: this.suggestInviteEmail }}</T>
-                                        }
-                                        {this.showNotFoundError && !this.suggestInviteEmail &&
-                                            <T k={this.legacyContactError ?
-                                                'title_inviteLegacy' : 'error_userNotFoundTryEmail'} tag="div">
-                                                {{ user: this.userNotFound }}
-                                            </T>
-                                        }
-                                        {this.userAlreadyAdded &&
-                                            <T k="error_userAlreadyAdded" tag="div">
-                                                {{ user: this.userAlreadyAdded }}
-                                            </T>
+                                            <Button
+                                                className="button-affirmative"
+                                                onClick={this.invite}
+                                                label={t('button_send')} />
                                         }
                                     </div>
-                                    {this.suggestInviteEmail &&
-                                        <Button
-                                            className="button-affirmative"
-                                            onClick={this.invite}
-                                            label={t('button_send')} />
-                                    }
                                 </div>
-                            </div>
+                            }
                             <List selectable ripple>
                                 {this.foundContact && this.renderList(null, [this.foundContact])}
                                 {!this.foundContact

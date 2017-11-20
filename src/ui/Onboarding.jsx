@@ -49,7 +49,7 @@ class Onboarding extends React.Component {
                 t('title_onboardingCreateARoomContent'),
                 t('title_onboardingStorageUnlocked', { amount: '100' }),
                 () => User.current.hasCreatedRoomBonus,
-                () => window.router.push('/app/new-channel'),
+                () => window.router.push('/app/chats/new-channel'),
                 'chat-item-add',
                 <div className="chat-item-add-icon" />
             ),

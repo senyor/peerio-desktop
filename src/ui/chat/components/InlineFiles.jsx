@@ -2,7 +2,7 @@ const React = require('react');
 const { fileStore, User } = require('~/icebear');
 const { Button, FontIcon, ProgressBar, Dialog, RadioGroup, RadioButton } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
-const { observable, reaction } = require('mobx');
+const { observable, reaction, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -45,11 +45,15 @@ class InlineFile extends React.Component {
                 this.startTimer();
                 return;
             }
-            const { peerioContentEnabled, peerioContentConsented } = uiStore.prefs;
-            if (file.isImage && peerioContentEnabled && peerioContentConsented) this.isExpanded = true;
-            if (file.isImage && peerioContentEnabled && peerioContentConsented &&
-                !file.isOverInlineSizeLimit && !file.isOversizeCutoff) {
-                if (!file.tmpCached) file.tryToCacheTemporarily();
+            if (file.isImage) {
+                // if user sets the preference later, the image would be shown
+                // if it's already enabled, the when would be executed immediately
+                when(() => uiStore.prefs.peerioContentEnabled && uiStore.prefs.peerioContentConsented, () => {
+                    this.isExpanded = true;
+                    if (!file.tmpCached && !file.isOverInlineSizeLimit && !file.isOversizeCutoff) {
+                        file.tryToCacheTemporarily();
+                    }
+                });
             }
         }, true);
     }

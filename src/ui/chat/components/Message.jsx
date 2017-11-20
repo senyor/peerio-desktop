@@ -87,7 +87,7 @@ class Message extends React.Component {
                 console.warn(`Couldn't deserialize message rich text:`, e);
             }
         }
-        if (!message.text) {
+        if (typeof message.text !== 'string') {
             // HACK: React error boundaries only catch errors in children, so we
             // wrap this throw in a createElement.
             return React.createElement(

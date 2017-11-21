@@ -78,8 +78,8 @@ class MessageList extends React.Component {
         const el = this.containerRef;
         if (!el) return;
         const goal = el.scrollHeight - el.clientHeight;
-        if (el.scrollTop >= goal - 1) return;
-        el.scrollTop += (goal - el.scrollTop) / 2;
+        if (el.scrollTop >= goal - 2) return;
+        el.scrollTop += (goal - el.scrollTop) / 2 + 1;
         window.requestAnimationFrame(this.smoothScrollStep);
     }
 

@@ -108,7 +108,6 @@ const chatSchema = new Schema({
                 }
             ],
             toDOM(node) {
-                /** @type {string} */
                 const { username } = node.attrs;
                 if (!validUsernamePattern.test(username)) {
                     throw new Error(`Invalid username: '${username}'`);
@@ -258,6 +257,33 @@ const emptyState = chatSchema.node('doc', null, chatSchema.node('paragraph'));
  */
 function isEmpty(doc) { return doc.eq(emptyState); }
 
+/**
+ * Return whether the given document/node contains only whitespace.
+ * @param {Node} node
+ * @returns {boolean}
+ */
+function isWhitespaceOnly(node) {
+    if (node.isBlock) {
+        if (node.type === chatSchema.nodes.paragraph || node.type === chatSchema.nodes.doc) {
+            if (node.content.size > 0) {
+                // if we're a paragraph node or a doc with content, we're whitespace if our contents are whitespace.
+                // eslint-disable-next-line dot-notation, (inner content array not exposed in api)
+                return node.content['content'].reduce((p, c) => p && isWhitespaceOnly(c), true);
+            }
+            // if we're a paragraph node or a doc with no content, we're whitespace.
+            return true;
+        }
+        // all other block nodes aren't whitespace.
+        return false;
+    }
+    if (node.isText) {
+        return node.text.trim().length === 0;
+    }
+    if (node.type === chatSchema.nodes.hard_break) {
+        return true;
+    }
+    return false;
+}
 
 const Renderer = makeReactRenderer(chatSchema, 'MessageRichTextRenderer');
 
@@ -266,5 +292,6 @@ module.exports = {
     chatSchema,
     Renderer,
     isEmpty,
+    isWhitespaceOnly,
     emptyState
 };

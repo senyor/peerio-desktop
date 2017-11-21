@@ -25,7 +25,7 @@
     "style:compile": "node-sass src/styles/main.scss app/build/style.css",
     "style:watch": "npm run style:compile -- -w",
     "=== TEST ===": "",
-    "test": "mocha \"test/unit/**/*.test.js\" --require ./test/unit/global-setup.js --require babel-register",
+    "test": "npm run compile && mocha --require babel-register --require ./test/unit/global-setup.js \"test/unit/**/*.test.js\"",
     "=== BUILD ===": "",
     "internal-build": "NODE_ENV=production npm run compile && NODE_ENV=production build --mac --windows --x64 --publish never",
     "internal-build-mac": "NODE_ENV=production npm run compile && NODE_ENV=production build --mac --x64 --publish never",

@@ -33,7 +33,7 @@ const {
 } = require('prosemirror-state');
 const { keymap } = require('prosemirror-keymap');
 
-const { chatSchema, isEmpty, emptyState } = require('~/helpers/chat/prosemirror/chat-schema');
+const { chatSchema, isWhitespaceOnly, emptyState } = require('~/helpers/chat/prosemirror/chat-schema');
 const { chatPlugins } = require('~/helpers/chat/prosemirror/chat-plugins');
 const { placeholder } = require('~/helpers/chat/prosemirror/placeholder');
 const { linkify } = require('~/helpers/chat/prosemirror/linkify-text');
@@ -187,7 +187,7 @@ class MessageInputProseMirror extends React.Component {
                     /** @type {(tr : Transaction) => void} */dispatch,
                     /** @type {EditorView} */view
                 ) => {
-                    if (isEmpty(state.doc)) return false;
+                    if (isWhitespaceOnly(state.doc)) return false;
 
                     if (dispatch) {
                         const linkifiedState = linkify(state);

@@ -2,6 +2,8 @@
   height: 75vh;
 
   .rt-dialog-body {
+    display: flex;
+    flex-direction: column;
     padding: 0;
   }
 
@@ -21,6 +23,10 @@
     .material-icons {
       font-size: 18px;
     }
+  }
+
+  .move-folders-container {
+    overflow-y: auto;
   }
 
   .move-file-row {

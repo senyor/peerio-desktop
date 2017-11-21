@@ -61,8 +61,12 @@ class MoveFileDialog extends React.Component {
                 className="move-file-dialog">
                 <Breadcrumb
                     currentFolder={currentFolder}
-                    onSelectFolder={folder => { this.currentFolder = folder; }} />
-                {folders}
+                    onSelectFolder={folder => { this.currentFolder = folder; }}
+                    noActions
+                />
+                <div className="move-folders-container">
+                    {folders}
+                </div>
             </Dialog>
         );
     }

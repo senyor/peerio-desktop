@@ -9,6 +9,7 @@ const { chatStore, User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const urls = require('~/config').translator.urlMap;
 const config = require('~/config');
+const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 
 @observer
 class MessageList extends React.Component {
@@ -202,6 +203,7 @@ class MessageList extends React.Component {
                         &nbsp;<Link href={urls.upgrade} label={t('button_upgradeForArchive')} />
                     </div>
                 }
+                <IdentityVerificationNotice />
             </div>
         );
     }

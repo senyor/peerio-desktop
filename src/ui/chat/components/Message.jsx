@@ -18,6 +18,7 @@ const uiStore = require('~/stores/ui-store');
 const InlineFiles = require('./InlineFiles');
 const UrlPreview = require('./UrlPreview');
 const UrlPreviewConsent = require('./UrlPreviewConsent');
+const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 
 
 /**
@@ -102,7 +103,15 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
-        return <p className="system-message selectable">{systemMessages.getSystemMessageText(m)}</p>;
+        return (
+            <div className="system-message selectable">
+                <p>{systemMessages.getSystemMessageText(m)}</p>
+                {
+                    m.systemData.action === 'join' &&
+                    <IdentityVerificationNotice extraMargin />
+                }
+            </div>
+        );
     }
     openMessageInfo = () => {
         uiStore.selectedMessage = this.props.message;

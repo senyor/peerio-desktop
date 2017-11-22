@@ -5,11 +5,24 @@ const cheerio = require('cheerio');
 const debounce = require('lodash/debounce');
 
 const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
-const { emojiByAllShortnames } = require('~/helpers/chat/emoji');
-const emojione = require('~/static/emoji/emojione');
+const { emojiByCanonicalShortname } = require('~/helpers/chat/emoji');
+
+
+const unicodeToEmoji = {};
+const unicodeSequences = [];
+Object.values(emojiByCanonicalShortname).forEach(emoji => {
+    unicodeToEmoji[emoji.characters] = emoji;
+    unicodeSequences.push(emoji.characters);
+});
+
+const emojiRegex = new RegExp(
+    `[${unicodeSequences.map(seq => seq.replace(/[\\^$*+?.()|[\]{}]/g, '\\$&')).join('')}]`,
+    'gu'
+);
 
 
 const parser = DOMParser.fromSchema(chatSchema);
+
 
 /**
  * This plugin replaces emoji in three separate cases:
@@ -41,7 +54,7 @@ function emojiPlugin() {
     // TODO: verify if we need a debounce time in any scenarios or if the
     // nextTick-like default behaviour is always sufficient.
     const checkCharacters = debounce(view => {
-        const emoji = emojiByAllShortnames[emojione.toShort(charAccumulator)];
+        const emoji = unicodeToEmoji[charAccumulator];
         if (emoji) {
             const { state } = view;
             view.dispatch(state.tr.replaceWith(
@@ -54,6 +67,26 @@ function emojiPlugin() {
         resetCharacterCheck();
     });
 
+
+    // Note that this mirrors the values returned by toDOM and toReact in the
+    // chat schema, and the DOM tag we build in clipboardTextParser below -- if
+    // any of them change, the change should be reflected everywhere!
+    const unicodeToImg = (unicode) => {
+        const emoji = unicodeToEmoji[unicode];
+        if (!emoji) return unicode;
+        return `<img class="emojione" alt="${emoji.characters}" title="${emoji.shortname}" src="${emoji.filename}" />`;
+    };
+
+
+    // Our plugin intercepts both pasted HTML and pasted plaintext; it does an
+    // additional pre-parse transformation for the former, and replaces
+    // ProseMirror's initial parse step for the latter.
+    // Instead of handling both those cases, we _could_ in theory use
+    // http://prosemirror.net/docs/ref/#view.EditorProps.transformPasted and
+    // just transform the already-parsed result (ie. the ProseMirror node about
+    // to be inserted into the document), walking its tree and splitting text
+    // nodes/inserting emoji nodes where needed. In practice this seems to be
+    // both more complicated and less performant than having these separate methods.
     return new Plugin({
         props: {
             // Using Cheerio here is maybe not the most optimal solution, but it
@@ -65,23 +98,79 @@ function emojiPlugin() {
                 const $ = cheerio.load(html);
                 $('*').contents().filter((i, el) => el.type === 'text').each((i, el) => {
                     const wrapped = $(el);
-                    // HACK: emojione.unicodeToImage() doesn't always recognize
-                    // combined/composite emoji and will only replace the final
-                    // character in the sequence (for example, this happens with
-                    // "👨‍👩‍👧" as of emojione 3.1.2). but getting the
-                    // shortname for the combined sequence works, so we convert
-                    // to the image in two steps.
-                    const replacement = emojione.shortnameToImage(emojione.toShort(wrapped.text()));
-                    wrapped.replaceWith(replacement);
+
+                    /** @type {string} */
+                    const text = wrapped.text();
+                    const replacement = text.replace(emojiRegex, unicodeToImg);
+                    if (replacement !== text) {
+                        wrapped.replaceWith(replacement);
+                    }
                 });
                 return $.html();
             },
+            // Handle pasted plain text that may contain emoji. Since
+            // ProseMirror's view component is built on contentEditable, it
+            // always transforms any pasted content to HTML before parsing it to
+            // its internal model. ProseMirror's default behaviour with
+            // plaintext is to trim leading and trailing whitespace, split on
+            // newlines, and wrap each line in a <p> tag. We do the same, but
+            // additionally we test each line for emoji, and if we match any, we
+            // split the line and build text nodes and <img> tags within its <p>
+            // tag.
             clipboardTextParser(text) {
                 const dom = document.createElement('div');
                 text.trim().split(/(?:\r\n?|\n)+/).forEach(block => {
-                    // HACK: see note above about emojione.unicodeToImage.
-                    const replaced = emojione.shortnameToImage(emojione.toShort(block));
-                    dom.appendChild(document.createElement('p')).innerHTML = replaced;
+                    /** @type {RegExpMatchArray | undefined} */
+                    let match;
+
+                    // FIXME/TS: interface 'Emoji' from heplers/chat/emoji.js, not this inline def
+                    /** @type {({characters, shortname, filename} | string)[]} */
+                    const result = [];
+
+                    let lastIndex = 0;
+
+                    // eslint-disable-next-line no-cond-assign
+                    while (match = emojiRegex.exec(block)) {
+                        if (match.index > lastIndex) {
+                            result.push(block.slice(lastIndex, match.index));
+                        }
+
+                        const emoji = unicodeToEmoji[match[0]];
+                        // if we don't match the emoji for some reason, just push the characters.
+                        result.push(emoji || match[0]);
+
+                        lastIndex = emojiRegex.lastIndex; // eslint-disable-line prefer-destructuring
+                    }
+
+                    if (result.length > 0) {
+                        if (lastIndex < block.length) {
+                            result.push(block.slice(lastIndex));
+                        }
+
+                        const p = dom.appendChild(document.createElement('p'));
+                        for (const fragment of result) {
+                            if (typeof fragment === 'string') {
+                                p.appendChild(document.createTextNode(fragment));
+                            } else {
+                                // Note that this mirrors the values returned by
+                                // toDOM and toReact in the chat schema, and the
+                                // unicodeToImg function used in
+                                // transformPastedHTML above -- if any of them
+                                // change, the change should be reflected
+                                // everywhere!
+                                const img = p.appendChild(document.createElement('img'));
+                                img.className = 'emojione';
+                                img.alt = fragment.characters;
+                                img.title = fragment.shortname;
+                                img.src = fragment.filename;
+                            }
+                        }
+                    } else {
+                        // If we didn't find any emoji, no need for complex
+                        // logic to build up the dom tag -- just set its
+                        // textContent.
+                        dom.appendChild(document.createElement('p')).textContent = block;
+                    }
                 });
                 return parser.parseSlice(dom);
             },

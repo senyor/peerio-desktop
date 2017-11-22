@@ -24,4 +24,5 @@ echo "[•••••••••••••••] building and publishing"
                        --overrides PeerioTechnologies/peerio-desktop-futurio \
                        --publish \
                        --tag dev \
-                       --nosign
+                       --nosign \
+                       --key ../peerio-desktop-futurio/signing.key

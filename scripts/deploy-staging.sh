@@ -43,5 +43,4 @@ peerio-desktop-release --key ~/.peerio-updater/secret.key \
                        --repository PeerioTechnologies/peerio-desktop \
                        --overrides PeerioTechnologies/peerio-desktop-staging \
                        --publish \
-                       --tag $1 \
-                       --prerelease
+                       --tag $1

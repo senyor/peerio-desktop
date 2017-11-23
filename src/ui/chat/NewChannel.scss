@@ -1,7 +1,33 @@
 .new-channel.create-new-chat {
-  .create-room-info {
-    max-width: 600px;
-    margin-bottom: $margin-xl;
+  width: calc(100vw - 336px);
+
+  // TODO: refactor to UserPicker, share with NewChat
+  .chat-creation-header {
+    padding: $padding-default $padding-xxl;
+    margin-right: auto;
+
+    .title {
+      margin-right: auto;
+
+      span {
+        display: block;
+      }
+    }
+
+    .description {
+      margin-top: $margin-small;
+      font-size: 14px;
+      font-weight: $font-weight-regular;
+      color: $text-dark-secondary;
+
+      > span {
+        display: block;
+
+        &:last-child {
+          margin-top: 1em;
+        }
+      }
+    }
   }
 
   .create-channel-loading {
@@ -12,27 +38,14 @@
     width: 100%;
   }
 
+  .user-picker-container {
+    height: auto;
+    width: 100%;
+  }
+
   .user-picker {
-    .inputs-container {
-      @extend %flex-row;
-      @extend %flex-justify-center;
-      width: 100%;
-
-      .inputs-container-inner {
-        @extend %flex-col;
-        @extend %flex-grow-1;
-        max-width: 600px;
-      }
-    }
-
-    .user-list {
-      max-width: none;
-      padding-right: 0;
-      margin-top: 0;
-    }
-
     .rt-list-list {
-      padding-left: 0;
+      padding-left: $userpicker-margin-large;
     }
 
     .title-to {
@@ -40,47 +53,39 @@
     }
   }
 
-  .chat-creation-header-container {
-    border-bottom: 0;
-  }
-
-  .chat-creation-header {
-    @extend %flex-row;
-    @extend %flex-align-center;
-    @extend %flex-shrink-0;
+  // TODO: needs pretty serious refactor (in JSX) to share style with NewChat
+  .new-channel-inputs {
     width: 100%;
-    max-width: 600px;
-    padding: $padding-default;
-    padding-top: $padding-xl;
-    margin-bottom: $margin-large;
-
-    .title {
-      margin-right: auto;
-
-      span {
-        display: block;
-      }
-    }
-  }
-
-  .new-chat-search {
-    @extend %flex-align-center;
-    display: flex;
-    flex-shrink: 0;
-    width: 100%;
-    max-width: 600px;
-    padding: 0 $padding-small 0 $padding-default;
-    overflow: hidden;
-    border: 1px solid $input-border;
-    border-radius: 24px;
+    margin-top: $margin-small;
   }
 
   .message-search-wrapper {
-    padding: 0;
+    margin-bottom: $margin-small;
+
+    &.message-search-wrapper-new-channel {
+      flex-shrink: 0;
+      width: calc(100% - 64px); // TODO: hardcoded values
+      max-width: calc(#{$userpicker-maxwidth} - 64px); // TODO: hardcoded values
+      margin: 0 auto $margin-default $margin-xxl;
+      overflow: hidden;
+    }
+  }
+
+  .helper-text {
+    height: $margin-default;
+  }
+
+  .new-channel-button-container {
+    max-width: 720px;
+
+    button {
+      display: flex;
+      margin: 0 $margin-default $margin-large auto;
+    }
   }
 
   .user-search-error-container {
-    padding-left: 0;
+    padding-left: $userpicker-margin-large;
   }
 
   .user-search-error {

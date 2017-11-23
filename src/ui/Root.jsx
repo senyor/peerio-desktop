@@ -1,7 +1,6 @@
 const React = require('react');
 // const AutoUpdateDialog = require('~/ui/AutoUpdateDialog');
 const languageStore = require('~/stores/language-store');
-const deepForceUpdate = require('react-deep-force-update');
 const isDevEnv = require('~/helpers/is-dev-env');
 const config = require('~/config');
 const { setStringReplacement } = require('peerio-translator');
@@ -41,12 +40,6 @@ class Root extends React.Component {
         });
         // UI language handling
         languageStore.loadSavedLanguage();
-        this.onLanguageChange = reaction(
-            () => languageStore.language,
-            () => {
-                deepForceUpdate(this);
-            }
-        );
         // events from main process
         ipcRenderer.on('warning', (ev, key) => warnings.add(key));
         ipcRenderer.on('update-will-restart', () => {
@@ -73,10 +66,6 @@ class Root extends React.Component {
         reaction(() => appState.isFocused, (focused) => {
             clientApp.isFocused = focused;
         });
-    }
-
-    componentWillUnmount() {
-        this.onLanguageChange();
     }
 
     render() {

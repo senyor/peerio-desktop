@@ -24,8 +24,7 @@ class MoveFileDialog extends React.Component {
         const { file, folder } = this.props;
         const target = this.selectedFolder || this.currentFolder;
         target.moveInto(file || folder);
-        // TODO: this is probably only needed for folders
-        fileStore.folders.save();
+        if (folder) fileStore.folders.save();
         this.onHide();
     }
 
@@ -36,7 +35,7 @@ class MoveFileDialog extends React.Component {
             { label: t('button_move'), onClick: this.handleMove }
         ];
 
-        const folders = currentFolder.folders.filter(f => f !== this.props.folder).map(folder => (
+        const folders = currentFolder.foldersSortedByName.filter(f => f !== this.props.folder).map(folder => (
             <div key={`folder-${folder.folderId}`} className="move-file-row">
                 <Button
                     icon={this.selectedFolder === folder ?
@@ -62,8 +61,12 @@ class MoveFileDialog extends React.Component {
                 className="move-file-dialog">
                 <Breadcrumb
                     currentFolder={currentFolder}
-                    onSelectFolder={folder => { this.currentFolder = folder; }} />
-                {folders}
+                    onSelectFolder={folder => { this.currentFolder = folder; }}
+                    noActions
+                />
+                <div className="move-folders-container">
+                    {folders}
+                </div>
             </Dialog>
         );
     }

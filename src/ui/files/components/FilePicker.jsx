@@ -121,6 +121,7 @@ class FilePicker extends React.Component {
                     checkbox
                     selected={f.selected}
                     onToggleSelect={() => this.toggleSelect(f)}
+                    clickToSelect
                 />);
         }
 

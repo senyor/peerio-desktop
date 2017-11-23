@@ -27,14 +27,6 @@ Object.defineProperty(emojiDataWithRecent, 'recent', {
 
 const categories = [{ id: 'recent', name: 'Recently Used' }, ...emojiCategories];
 
-
-// separate store is needed to avoid re-render of all emojis on hover
-class PickerStore {
-    @observable hovered = null;
-}
-
-const store = new PickerStore();
-
 function skipNulls(i) {
     if (i === null) return false;
     return true;
@@ -48,110 +40,104 @@ function skipNulls(i) {
  */
 @observer
 class Picker extends React.Component {
-    @observable selectedCategory = categories[0].id;
     @observable searchKeyword = '';
+    selectedCategory = observable.shallowBox(categories[0].id);
+    hoveredEmoji = observable.shallowBox(null);
 
-    dontHide = false;
+    // if we click within the picker div, a blur event may be fired, but we
+    // don't want to blur. onMouseDown fires before onBlur, so in the former we
+    // set this flag and in the latter we check for it (and if it's set, we
+    // clear it and focus the div instead.)
+    blurPrevented = false;
 
-    @action.bound
-    onCategoryClick(id) {
-        const el = document.getElementsByClassName(`category-header ${id}`)[0];
-        if (!el) return;
-        this.selectedCategory = id;
-        el.scrollIntoView({ block: 'start', behavior: 'smooth' });
-    }
-
-    resetHovered = () => {
-        this.dontHide = false;
-        setTimeout(() => {
-            if (!this.dontHide) store.hovered = null;
-        }, 2000);
-    };
+    // We show info for the hovered emoji in the <InfoPane> component, and we'd
+    // like it to stick around for a second or two even if we stop hovering over
+    // anything. So instead of clearing it immediately we set a timeout to clear
+    // it, and if we hover over something else in the meantime we cancel the
+    // timeout.
+    clearHoveredEmojiTimer = null;
 
     @action.bound
     onSearchKeywordChange(val) {
-        this.searchKeyword = val;
+        this.searchKeyword = val.toLocaleLowerCase();
     }
 
-    handleScroll = _.throttle(() => {
-        const candidates = [];
-        let closest;
-        /** @type {HTMLElement} */
-        // @ts-ignore (can't as-cast without typescript)
-        const parent = document.getElementsByClassName(`emojis`)[0];
-        for (let i = 0; i < categories.length; i++) {
-            /** @type {HTMLElement} */
-            // @ts-ignore (can't as-cast without typescript)
-            const c = document.getElementsByClassName(`category-header ${categories[i].id}`)[0];
-            if (!c || c.offsetTop > (parent.offsetHeight + parent.scrollTop)) continue;
-            candidates.push({ id: categories[i].id, offsetTop: c.offsetTop });
+    @action.bound
+    onEmojiMouseEnter(e) {
+        if (this.clearHoveredEmojiTimer) {
+            clearTimeout(this.clearHoveredEmojiTimer);
         }
-        if (!candidates.length) return;
-        closest = candidates[0];
-        for (let i = 1; i < candidates.length; i++) {
-            if (Math.abs(parent.scrollTop - closest.offsetTop) > Math.abs(parent.scrollTop - candidates[i].offsetTop)) {
-                closest = candidates[i];
-            }
-        }
-        if (this.selectedCategory !== closest.id) runInAction(() => { this.selectedCategory = closest.id; });
-    }, 1000);
+        this.hoveredEmoji.set(emojiByCanonicalShortname[e.target.attributes['data-shortname'].value]);
+    }
 
-    onEmojiMouseEnter = (e) => {
-        this.dontHide = true;
-        store.hovered = e.target.attributes['data-shortname'].value;
+    onEmojiMouseLeave = () => {
+        this.clearHoveredEmojiTimer = setTimeout(this.resetHoveredEmoji, 2000);
     };
+
+    @action.bound
+    resetHoveredEmoji() {
+        this.hoveredEmoji.set(null);
+    }
+
     onPicked = (e) => {
         const shortname = e.target.attributes['data-shortname'].value;
         User.current.emojiMRU.addItem(shortname);
         this.props.onPicked(emojiByCanonicalShortname[shortname]);
     };
+
     preventBlur = () => {
-        this.noBlur = true;
+        this.blurPrevented = true;
     };
     handleBlur = (ev) => {
-        if (this.noBlur) {
-            this.noBlur = false;
+        if (this.blurPrevented) {
+            this.blurPrevented = false;
             ev.target.focus();
             return;
         }
         this.props.onBlur();
     };
+
     render() {
-        const searchLow = this.searchKeyword.toLocaleLowerCase();
         return (
             <div className="emoji-picker" onBlur={this.handleBlur} onMouseDown={this.preventBlur}>
-                <div className="categories" key="categories">
-                    {
-                        categories.map(c =>
-                            (<Category id={c.id} key={c.id} selected={this.selectedCategory === c.id}
-                                name={c.name} onClick={this.onCategoryClick} />))
-                    }
-                </div>
-                <SearchEmoji searchKeyword={this.searchKeyword} onSearchKeywordChange={this.onSearchKeywordChange} />
-                <div className="emojis" key="emojis" onScroll={this.handleScroll}>
-                    {
-                        categories.map(c => {
-                            return (<div key={c.id}>
-                                <div className={`category-header ${c.id}`}>{c.name}</div>
-                                {emojiDataWithRecent[c.id].map(e => {
-                                    if (!e || e.index.indexOf(searchLow) < 0) return null;
-                                    return (
-                                        <span
-                                            onMouseEnter={this.onEmojiMouseEnter}
-                                            onMouseLeave={this.resetHovered}
-                                            onClick={this.onPicked}
-                                            className={e.className}
-                                            key={e.shortname}
-                                            data-shortname={e.shortname} />
-                                    );
-                                }).filter(skipNulls)}
-                            </div>);
-                        }).filter(item => item.props.children[1].length > 0)
-                    }
-                </div>
-                <InfoPane />
+                <CategoriesHeader selectedCategory={this.selectedCategory} />
+                <EmojiSearch searchKeyword={this.searchKeyword} onSearchKeywordChange={this.onSearchKeywordChange} />
+                <EmojiList
+                    searchKeyword={this.searchKeyword}
+                    selectedCategory={this.selectedCategory}
+                    onEmojiMouseEnter={this.onEmojiMouseEnter}
+                    onEmojiMouseLeave={this.onEmojiMouseLeave}
+                    onEmojiPicked={this.onPicked} />
+                <InfoPane hoveredEmoji={this.hoveredEmoji} />
             </div>
         );
+    }
+}
+
+
+/**
+ * @augments {React.Component<{
+        selectedCategory : { get() : any, set(value : any) : void } // FIXME/TS: IObservableValue<any>
+    }, {}>}
+ */
+@observer
+class CategoriesHeader extends React.Component {
+    @action.bound
+    onCategoryClick(id) {
+        const el = document.getElementsByClassName(`category-header ${id}`)[0];
+        if (!el) return;
+        this.props.selectedCategory.set(id);
+        el.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    }
+
+    render() {
+        return (<div className="categories" key="categories">
+            {
+                categories.map(c =>
+                    (<Category id={c.id} key={c.id} selected={this.props.selectedCategory.get() === c.id}
+                        name={c.name} onClick={this.onCategoryClick} />))
+            }
+        </div>);
     }
 }
 
@@ -163,7 +149,7 @@ class Picker extends React.Component {
     }, {}>}
  */
 @observer
-class SearchEmoji extends React.Component {
+class EmojiSearch extends React.Component {
     @observable keyword = '';
     inputRef(ref) {
         if (ref) ref.focus();
@@ -196,24 +182,93 @@ class SearchEmoji extends React.Component {
     }
 }
 
+
+/**
+ * @augments {React.Component<{
+        searchKeyword : string,
+        selectedCategory : { get() : any, set(value : any) : void } // FIXME/TS: IObservableValue<any>
+        onEmojiMouseEnter : (ev : React.MouseEvent<any>) => void
+        onEmojiMouseLeave : (ev : React.MouseEvent<any>) => void
+        onEmojiPicked : (ev : React.MouseEvent<any>) => void
+    }, {}>}
+ */
+@observer
+class EmojiList extends React.Component {
+    // On scroll, we want to update the category headers if we've moved to a different one.
+    handleScroll = _.throttle(() => {
+        const candidates = [];
+        let closest;
+        /** @type {HTMLElement} */
+        // @ts-ignore (can't as-cast without typescript)
+        const parent = document.getElementsByClassName(`emojis`)[0];
+        for (let i = 0; i < categories.length; i++) {
+            /** @type {HTMLElement} */
+            // @ts-ignore (can't as-cast without typescript)
+            const c = document.getElementsByClassName(`category-header ${categories[i].id}`)[0];
+            if (!c || c.offsetTop > (parent.offsetHeight + parent.scrollTop)) continue;
+            candidates.push({ id: categories[i].id, offsetTop: c.offsetTop });
+        }
+        if (!candidates.length) return;
+        closest = candidates[0];
+        for (let i = 1; i < candidates.length; i++) {
+            if (Math.abs(parent.scrollTop - closest.offsetTop) > Math.abs(parent.scrollTop - candidates[i].offsetTop)) {
+                closest = candidates[i];
+            }
+        }
+        if (this.props.selectedCategory.get() !== closest.id) {
+            runInAction(() => { this.props.selectedCategory.set(closest.id); });
+        }
+    }, 1000);
+
+    render() {
+        return (<div className="emojis" key="emojis" onScroll={this.handleScroll}>
+            {
+                categories.map(c => {
+                    return (<div key={c.id}>
+                        <div className={`category-header ${c.id}`}>{c.name}</div>
+                        {emojiDataWithRecent[c.id].map(e => {
+                            if (!e || e.index.indexOf(this.props.searchKeyword) < 0) return null;
+                            return (
+                                <span
+                                    onMouseEnter={this.props.onEmojiMouseEnter}
+                                    onMouseLeave={this.props.onEmojiMouseLeave}
+                                    onClick={this.props.onEmojiPicked}
+                                    className={e.className}
+                                    key={e.shortname}
+                                    data-shortname={e.shortname} />
+                            );
+                        }).filter(skipNulls)}
+                    </div>);
+                }).filter(item => item.props.children[1].length > 0)
+            }
+        </div>);
+    }
+}
+
+
+/**
+ * @augments {React.Component<{
+        hoveredEmoji : { get() : any, set(value : any) : void } // FIXME/TS: IObservableValue<any>
+    }, {}>}
+ */
 @observer
 class InfoPane extends React.Component {
     render() {
-        if (!store.hovered) {
+        const hoveredEmoji = this.props.hoveredEmoji.get();
+        if (!hoveredEmoji) {
             return (
                 <div className="info-pane default">
                     <span className="emojione emojione-32-people _1f446" /> Pick your emoji
                 </div>
             );
         }
-        const item = emojiByCanonicalShortname[store.hovered];
         return (
             <div className="info-pane">
-                <span className={item.className} />
+                <span className={hoveredEmoji.className} />
                 <div>
-                    <span className="bold">{item.name}</span><br />
-                    {item.shortname} {item.aliases}<br />
-                    <span className="monospace">{item.ascii}</span>
+                    <span className="bold">{hoveredEmoji.name}</span><br />
+                    {hoveredEmoji.shortname} {hoveredEmoji.aliases}<br />
+                    <span className="monospace">{hoveredEmoji.ascii}</span>
                 </div>
             </div>
         );

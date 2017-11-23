@@ -3,7 +3,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const TooltipAvatar = require('~/react-toolbox').TooltipAvatar;
+const { TooltipAvatar } = require('~/react-toolbox');
 const { FontIcon } = require('~/react-toolbox');
 const uiStore = require('~/stores/ui-store');
 const { contactStore } = require('~/icebear');

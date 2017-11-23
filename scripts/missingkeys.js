@@ -1,7 +1,7 @@
 const fs = require('fs');
 const glob = require('glob');
 
-const keys = JSON.parse(fs.readFileSync('../src/static/locales/en.json'));
+const keys = JSON.parse(fs.readFileSync('../app/node_modules/peerio-icebear/src/copy/en.json'));
 
 
 glob('../**/*.jsx', (err, files) => {

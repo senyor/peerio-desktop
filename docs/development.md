@@ -38,9 +38,8 @@ to add helpful information like filenames and line numbers.
 
 ## Localization
 
-Localization is done via `peerio-copy`. Copy will be fetched automatically when making production builds. 
+Localization is done via `peerio-icebear/src/copy/en.json`. Translation copy will be fetched automatically when making production builds.
 
-When changing copy in development, you should stop the development build, run `./scripts/get-locales.sh`, and then `npm start` again, since the copy changes will not trigger a refresh like changing a js or scss file will. 
 
 ## UI Tests
 

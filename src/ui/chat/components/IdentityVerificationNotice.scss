@@ -1,0 +1,24 @@
+.identity-verification-notice {
+  margin-top: $margin-small;
+  margin-bottom: $margin-small;
+
+  .notice-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    color: $text-dark-secondary;
+
+    .text-content > a {
+      color: $text-dark-secondary;
+    }
+  }
+
+  .extra-margin {
+    margin: 0 0 0 $margin-default;
+  }
+
+  .notice-icon {
+    margin-right: $margin-small;
+  }
+}

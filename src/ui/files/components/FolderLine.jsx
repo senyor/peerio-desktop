@@ -18,7 +18,7 @@ class FolderLine extends React.Component {
     };
 
     render() {
-        const folder = this.props.folder;
+        const { folder } = this.props;
 
         return (
             <div className="row" onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>

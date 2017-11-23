@@ -3,12 +3,12 @@
 # this is important for locales, we need to pull latest en.json
 npm install
 
-echo "[•              ] getting locales"
-./scripts/get-locales.sh
-if git diff-index HEAD --; then
-    echo "*** Locales changed, committing."
-    git commit -a -m "chore: update locales"
-fi
+#echo "[•              ] getting locales"
+#./scripts/get-locales.sh
+#if git diff-index HEAD --; then
+#    echo "*** Locales changed, committing."
+#    git commit -a -m "chore: update locales"
+#fi
 
 echo "[•••            ] setting flags"
 set -e

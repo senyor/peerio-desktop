@@ -1,6 +1,6 @@
-$userpicker-margin-large: 96px; // 96px
+$userpicker-margin-large: 112px; // 112px
 $userpicker-maxwidth: 720px;
-$userlist-maxwidth: 624px; // $userpicker-maxwidth - $userpicker-margin-large
+$userlist-maxwidth: 608px; // $userpicker-maxwidth - $userpicker-margin-large
 
 .user-picker {
   @extend %flex-row;
@@ -119,9 +119,7 @@ $userlist-maxwidth: 624px; // $userpicker-maxwidth - $userpicker-margin-large
     @extend %flex-row;
     @extend %flex-align-center;
     @extend %flex-shrink-0;
-    max-width: $userpicker-maxwidth;
-    padding: $padding-default;
-    padding-left: $padding-xxl;
+    padding: $padding-default $padding-xxl;
 
     .title {
       margin-right: auto;
@@ -129,6 +127,13 @@ $userlist-maxwidth: 624px; // $userpicker-maxwidth - $userpicker-margin-large
       span {
         display: block;
       }
+    }
+
+    .description {
+      margin-top: $margin-small;
+      font-size: 14px;
+      font-weight: $font-weight-regular;
+      color: $text-dark-secondary;
     }
   }
 

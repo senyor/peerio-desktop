@@ -40,7 +40,7 @@ class Settings extends React.Component {
     };
 
     render() {
-        const primaryAddressConfirmed = User.current.primaryAddressConfirmed;
+        const { primaryAddressConfirmed } = User.current;
 
         return (
             <div className="settings">

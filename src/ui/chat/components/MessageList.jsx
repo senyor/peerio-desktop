@@ -9,6 +9,7 @@ const { chatStore, User } = require('~/icebear');
 const { t } = require('peerio-translator');
 const urls = require('~/config').translator.urlMap;
 const config = require('~/config');
+const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 
 @observer
 class MessageList extends React.Component {
@@ -77,8 +78,8 @@ class MessageList extends React.Component {
         const el = this.containerRef;
         if (!el) return;
         const goal = el.scrollHeight - el.clientHeight;
-        if (el.scrollTop >= goal - 1) return;
-        el.scrollTop += (goal - el.scrollTop) / 2;
+        if (el.scrollTop >= goal - 2) return;
+        el.scrollTop += (goal - el.scrollTop) / 2 + 1;
         window.requestAnimationFrame(this.smoothScrollStep);
     }
 
@@ -202,6 +203,7 @@ class MessageList extends React.Component {
                         &nbsp;<Link href={urls.upgrade} label={t('button_upgradeForArchive')} />
                     </div>
                 }
+                <IdentityVerificationNotice />
             </div>
         );
     }

@@ -1,7 +1,7 @@
 {
   "name": "peerio-2",
   "productName": "Peerio 2",
-  "version": "2.92.0",
+  "version": "2.97.0",
   "description": "Peerio desktop client",
   "main": "build/main.js",
   "repository": {
@@ -58,13 +58,14 @@
         "googleAuthI": "https://itunes.apple.com/app/google-authenticator/id388497605",
         "authy": "https://authy.com",
         "download": "https://peerio.com",
-        "learnUrlTracking": "https://peerio.zendesk.com/hc/en-us/articles/115005090766"
+        "learnUrlTracking": "https://peerio.zendesk.com/hc/en-us/articles/115005090766",
+        "identityVerification": "https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-"
       }
     }
   },
   "dependencies": {
     "@peerio/updater": "0.5.0",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#master",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v3.3.3",
     "autolinker": "1.4.4",
     "cheerio": "1.0.0-rc.2",
     "classnames": "2.2.5",
@@ -75,29 +76,28 @@
     "html-entities": "1.2.1",
     "keytar": "github:dchest/node-keytar#v14.0.4",
     "material-design-icons": "3.0.1",
-    "mobx-react": "4.3.3",
+    "mobx-react": "4.3.4",
     "normalize.css": "7.0.0",
     "prosemirror-commands": "1.0.1",
     "prosemirror-dropcursor": "1.0.0",
     "prosemirror-gapcursor": "1.0.0",
     "prosemirror-history": "1.0.0",
-    "prosemirror-inputrules": "1.0.0",
+    "prosemirror-inputrules": "1.0.1",
     "prosemirror-keymap": "1.0.0",
-    "prosemirror-model": "1.0.0",
+    "prosemirror-model": "1.0.1",
     "prosemirror-react-renderer": "github:PeerioTechnologies/prosemirror-react-renderer",
     "prosemirror-state": "1.0.1",
-    "prosemirror-transform": "1.0.0",
-    "prosemirror-view": "1.0.0",
-    "qrcode": "0.9.0",
-    "react": "16.0.0",
+    "prosemirror-transform": "1.0.1",
+    "prosemirror-view": "1.0.1",
+    "qrcode": "1.0.0",
+    "react": "16.1.1",
     "react-addons-css-transition-group": "15.6.2",
-    "react-deep-force-update": "2.1.0",
-    "react-dom": "16.0.0",
+    "react-dom": "16.1.1",
     "react-flip-move": "2.9.17",
     "react-router": "3.2.0",
     "react-toolbox": "2.0.0-beta.12",
-    "safe-json-stringify": "1.0.4",
     "sanitize-filename": "1.6.1",
-    "zxcvbn": "4.4.2"
+    "zxcvbn": "4.4.2",
+    "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear"
   }
 }

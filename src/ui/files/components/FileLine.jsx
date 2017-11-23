@@ -79,7 +79,7 @@ class FileLine extends React.Component {
     };
 
     render() {
-        const file = this.props.file;
+        const { file } = this.props;
         if (!file.show) return null;
 
         // We want relative timestamp in case it's not older then 1 day.
@@ -132,7 +132,10 @@ class FileLine extends React.Component {
                 </div>
 
                 <div className="file-name selectable"
-                    onClick={this.download} >
+                    onClick={this.props.clickToSelect
+                        ? this.props.onToggleSelect
+                        : this.download
+                    } >
                     {file.name}
                 </div>
 

@@ -5,17 +5,12 @@ const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore, User, systemMessages, clientApp, chatInviteStore } = require('~/icebear');
 const { observer } = require('mobx-react');
-const { computed } = require('mobx');
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
 const routerStore = require('~/stores/router-store');
 
 @observer
 class ChatList extends React.Component {
-    @computed get inRoomInvites() {
-        return routerStore.currentRoute === '/app/channel-invites';
-    }
-
     activateChat(id) {
         // need this because of weirdly composed channel invites
         routerStore.navigateTo(routerStore.ROUTES.chats);
@@ -28,7 +23,8 @@ class ChatList extends React.Component {
     };
 
     newChannel() {
-        window.router.push('/app/new-channel');
+        chatStore.deactivateCurrentChat();
+        window.router.push('/app/chats/new-channel');
     }
 
     goToChannelInvite = () => {
@@ -50,7 +46,7 @@ class ChatList extends React.Component {
         if (m.systemData) {
             return <em>{systemMessages.getSystemMessageText(m)}</em>;
         }
-        let username = m.sender.username;
+        let { username } = m.sender;
         if (username === User.current.username) username = t('title_you');
         return (
             <span><strong>{username}:</strong>&nbsp;
@@ -88,13 +84,19 @@ class ChatList extends React.Component {
                                         className={css(
                                             'room-invites-button',
                                             'button-neutral',
-                                            { selected: this.inRoomInvites }
+                                            { selected: routerStore.isRoomInvites }
                                         )}
                                         onClick={this.goToChannelInvite}>
                                         {t('title_viewChannelInvites')}
                                     </Button>
                                 </li>
                                 <FlipMove duration={200} easing="ease-in-out" >
+                                    {routerStore.isNewChannel &&
+                                        <ListItem key="new channel"
+                                            className="room-item new-room-entry active"
+                                            caption={`# ${t('title_newRoom')}`}
+                                        />
+                                    }
                                     {chatStore.channels.map(c =>
                                         (<ListItem key={c.id || c.tempId}
                                             className={
@@ -121,14 +123,16 @@ class ChatList extends React.Component {
                                 </TooltipDiv>
                                 {routerStore.isNewChat &&
                                     <ListItem key="new chat"
-                                        className={css('dm-item', { active: routerStore.isNewChat })}
+                                        className={css(
+                                            'dm-item', 'new-dm-list-entry', { active: routerStore.isNewChat }
+                                        )}
                                         leftIcon={<div className="new-dm-avatar material-icons">help_outline</div>}
                                         itemContent={
                                             <TooltipDiv className="item-content"
                                                 tooltip={t('title_newDirectMessage')}
                                                 tooltipDelay={500}
                                                 tooltipPosition="right">
-                                                <span className="rt-list-primary new-dm-list-entry">
+                                                <span className="rt-list-primary">
                                                     <i>{t('title_newDirectMessage')}</i>
                                                 </span>
                                             </TooltipDiv>

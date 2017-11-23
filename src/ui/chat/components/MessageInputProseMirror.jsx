@@ -33,7 +33,7 @@ const {
 } = require('prosemirror-state');
 const { keymap } = require('prosemirror-keymap');
 
-const { chatSchema, isEmpty, emptyState } = require('~/helpers/chat/prosemirror/chat-schema');
+const { chatSchema, isWhitespaceOnly, emptyState } = require('~/helpers/chat/prosemirror/chat-schema');
 const { chatPlugins } = require('~/helpers/chat/prosemirror/chat-plugins');
 const { placeholder } = require('~/helpers/chat/prosemirror/placeholder');
 const { linkify } = require('~/helpers/chat/prosemirror/linkify-text');
@@ -51,11 +51,17 @@ const makeEmojiSuggestions = require('./suggestions/EmojiSuggestions');
 const Suggestions = require('./suggestions/Suggestions');
 
 
-// Carried over from Quill:
-// this makes it impossible to have 2 MessageInputProseMirror rendered at the same time
-// for the sake of emoji picker performance.
-// But we probably never want to render 2 inputs anyway.
+// ---------------------------------
+// BEGIN KIND OF JANKY CACHING CODE:
+
+// We cache the emoji picker the first time we need it, and never change it.
+// This is not great for testability of the input component; it may be worth
+// revisiting later.
 let cachedPicker;
+
+// Because we're caching the emoji picker as a global, we need to also keep
+// track of its parent input component, which would normally pass down callbacks
+// for picking the emoji and handling hiding the picker.
 let currentInputInstance;
 
 function onEmojiPicked(emoji) {
@@ -85,6 +91,8 @@ function insertEmoji(emoji, state, dispatch) {
     }
     return true;
 }
+// ---------------------------------
+
 
 // Reminder that the JSDoc modifiers @private and @readonly below are basically
 // for fun, since we're not generating documentation and TypeScript can't
@@ -157,7 +165,7 @@ class MessageInputProseMirror extends React.Component {
             cachedPicker = (<EmojiPicker
                 key="emoji-picker"
                 onPicked={onEmojiPicked}
-                onBlur={currentInputInstance.hideEmojiPicker}
+                onBlur={() => { currentInputInstance.hideEmojiPicker(); }}
             />);
         }
 
@@ -179,7 +187,7 @@ class MessageInputProseMirror extends React.Component {
                     /** @type {(tr : Transaction) => void} */dispatch,
                     /** @type {EditorView} */view
                 ) => {
-                    if (isEmpty(state.doc)) return false;
+                    if (isWhitespaceOnly(state.doc)) return false;
 
                     if (dispatch) {
                         const linkifiedState = linkify(state);

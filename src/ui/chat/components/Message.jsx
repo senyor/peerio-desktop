@@ -18,6 +18,7 @@ const uiStore = require('~/stores/ui-store');
 const InlineFiles = require('./InlineFiles');
 const UrlPreview = require('./UrlPreview');
 const UrlPreviewConsent = require('./UrlPreviewConsent');
+const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 
 
 /**
@@ -63,7 +64,7 @@ class Message extends React.Component {
     *                        with an HTML string ready to directly be used in `dangerouslySetInnerHTML`.
     */
     getMessageComponent(message) {
-        const richText = message.richText;
+        const { richText } = message;
         if (richText &&
             (typeof richText === 'object') &&
             (richText.type === 'doc') &&
@@ -87,7 +88,7 @@ class Message extends React.Component {
                 console.warn(`Couldn't deserialize message rich text:`, e);
             }
         }
-        if (!message.text) {
+        if (typeof message.text !== 'string') {
             // HACK: React error boundaries only catch errors in children, so we
             // wrap this throw in a createElement.
             return React.createElement(
@@ -102,7 +103,15 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
-        return <p className="system-message selectable">{systemMessages.getSystemMessageText(m)}</p>;
+        return (
+            <div className="system-message selectable">
+                <p>{systemMessages.getSystemMessageText(m)}</p>
+                {
+                    m.systemData.action === 'join' &&
+                    <IdentityVerificationNotice extraMargin />
+                }
+            </div>
+        );
     }
     openMessageInfo = () => {
         uiStore.selectedMessage = this.props.message;

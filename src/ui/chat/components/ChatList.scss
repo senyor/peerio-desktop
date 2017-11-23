@@ -3,6 +3,10 @@
     cursor: pointer;
     background: #eee;
 
+    &.new-room-entry {
+      font-style: italic;
+    }
+
     .rt-list-item { // This should be 32px - Paul
       height: 26px;
       max-height: 26px;
@@ -51,6 +55,12 @@
     .rt-list-itemAction {
       @extend %flex-align-center;
       height: 32px;
+    }
+
+    &.new-dm-list-entry {
+      .rt-list-left .rt-list-itemAction span {
+        margin-right: $margin-default;
+      }
     }
 
     .new-dm-avatar {

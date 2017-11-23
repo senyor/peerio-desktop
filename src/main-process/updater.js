@@ -14,7 +14,7 @@ let autoUpdater;
 if (usePeerioUpdater) {
     autoUpdater = require('@peerio/updater')();
 } else {
-    autoUpdater = require('electron-updater').autoUpdater;
+    ({ autoUpdater } = require('electron-updater'));
 }
 
 // autoUpdater.logger = L;

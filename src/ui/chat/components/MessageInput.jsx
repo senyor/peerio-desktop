@@ -34,8 +34,8 @@ class MessageInput extends React.Component {
         const chat = chatStore.activeChat;
         if (!chat) return;
         pickLocalFiles().then(paths => {
-            if (!paths || !paths.length) return;
-            chat.uploadAndShareFile(paths[0]);
+            if (!paths || !paths.length) return Promise.resolve();
+            return Promise.all(paths.map(i => chat.uploadAndShareFile(i)));
         });
     };
 
@@ -65,7 +65,7 @@ class MessageInput extends React.Component {
     onPaste = (ev) => {
         const chat = chatStore.activeChat;
         if (!chat) return;
-        const items = ev.clipboardData.items;
+        const { items } = ev.clipboardData;
         for (let i = 0; i < items.length; i++) {
             if (!items[i].type.startsWith('image/')) continue;
             const blob = items[i].getAsFile();
@@ -77,7 +77,7 @@ class MessageInput extends React.Component {
             const tmpPath = path.join(os.tmpdir(), `peerio-${Date.now()}.${items[i].type.split('/')[1]}`);
 
             reader.onloadend = () => {
-                const buffer = new Buffer(reader.result);
+                const buffer = Buffer.from(reader.result);
                 fs.writeFile(tmpPath, buffer, {}, (err) => {
                     if (err) {
                         console.error(err);

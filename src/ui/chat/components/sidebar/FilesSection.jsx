@@ -38,8 +38,8 @@ class FilesSection extends React.Component {
         const chat = chatStore.activeChat;
         if (!chat) return;
         pickLocalFiles().then(paths => {
-            if (!paths || !paths.length) return;
-            chat.uploadAndShareFile(paths[0]);
+            if (!paths || !paths.length) return Promise.resolve();
+            return Promise.all(paths.map(i => chat.uploadAndShareFile(i)));
         });
     };
 

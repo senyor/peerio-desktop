@@ -20,7 +20,7 @@ function linkify(state) {
     let didMatch;
     do {
         didMatch = false;
-        const tr = linkifiedState.tr;
+        const { tr } = linkifiedState;
         // eslint-disable-next-line no-loop-func, consistent-return
         linkifiedState.doc.descendants((node, pos, parent) => {
             if (didMatch) return false;

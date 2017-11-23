@@ -17,7 +17,7 @@ function ensureMentions(state) {
     let didMatch;
     do {
         didMatch = false;
-        const tr = mentionifiedState.tr;
+        const { tr } = mentionifiedState;
         // eslint-disable-next-line no-loop-func, consistent-return
         mentionifiedState.doc.descendants((node, pos, parent) => {
             if (didMatch) return false;

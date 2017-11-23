@@ -42,8 +42,8 @@ module.exports = (
             <Route path="chats" component={Chat}>
                 <IndexRoute component={ChatView} />
                 <Route path="new-chat" component={NewChat} />
+                <Route path="new-channel" component={NewChannel} />
             </Route>
-            <Route path="new-channel" component={NewChannel} />
             <Route path="channel-invites" component={ChannelInvites} />
             <Route path="files" component={Files} />
             <Route path="onboarding" component={Onboarding} />

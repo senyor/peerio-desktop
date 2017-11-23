@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'development') {
+    process.env.NODE_ENV = 'production';
+}
+
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');
@@ -51,7 +55,10 @@ app.on('ready', () => {
                 title: app.getName()
             }, windowState);
 
-            if (process.platform === 'linux') {
+            if (isDevEnv) {
+                winConfig.title = `${winConfig.title} DEV`;
+                winConfig.icon = `${__dirname}/static/img/icon-dev.png`;
+            } else if (process.platform === 'linux') {
                 winConfig.icon = `${__dirname}/static/img/icon.png`;
             }
 

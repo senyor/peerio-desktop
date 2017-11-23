@@ -88,8 +88,10 @@ class BetterInput extends React.Component {
 
 
     render() {
-        const { onFocus, onBlur, onChange, onKeyDown, onAccept, onReject,
-            value, acceptOnBlur, validator, error, displayValue, ...props } = this.props;
+        const {
+            onFocus, onBlur, onChange, onKeyDown, onAccept, onReject,
+            value, acceptOnBlur, validator, error, displayValue, ...props
+        } = this.props;
         props.onFocus = this.onFocus;
         props.onBlur = this.onBlur;
         props.onChange = this.onChange;

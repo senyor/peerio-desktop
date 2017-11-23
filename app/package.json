@@ -1,7 +1,7 @@
 {
   "name": "peerio-2",
   "productName": "Peerio 2",
-  "version": "2.97.0",
+  "version": "2.98.0",
   "description": "Peerio desktop client",
   "main": "build/main.js",
   "repository": {
@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@peerio/updater": "0.7.0",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v3.2.4",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v3.3.3",
     "autolinker": "1.4.4",
     "cheerio": "1.0.0-rc.2",
     "classnames": "2.2.5",

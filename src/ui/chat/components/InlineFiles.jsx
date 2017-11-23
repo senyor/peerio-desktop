@@ -303,8 +303,6 @@ class InlineFile extends React.Component {
                                             && this.renderOversizeWarning()}
                                     {file.isOversizeCutoff
                                             && this.renderOversizeCutoffWarning()}
-                                    {file.downloading && !file.tmpCached &&
-                                        <img src="./static/img/bg-pattern.png" alt="" />}
                                     {file.cachingFailed ? <span>{t('error_downloadFailed')}</span> : null}
                                 </div>
                                 : <Button className="display-this-image" onClick={this.forceDownload}>

@@ -7,6 +7,8 @@ const { TooltipAvatar } = require('~/react-toolbox');
 const { FontIcon } = require('~/react-toolbox');
 const uiStore = require('~/stores/ui-store');
 const { contactStore } = require('~/icebear');
+const ReloadingImage = require('~/ui/chat/components/ReloadingImage');
+
 /**
  * @augments {React.Component<{
         /// as per icebear/models/contacts/contact.js
@@ -15,6 +17,7 @@ const { contactStore } = require('~/icebear');
         username? : string
         size? : string
         inline? : boolean
+        noclick? : boolean
     }, {}>}
  */
 @observer
@@ -34,14 +37,23 @@ class Avatar extends React.Component {
                 icon = <FontIcon value="error" />;
             }
         }
-        if (c.hasAvatar) style.backgroundImage = `url(${c.mediumAvatarUrl})`;
+
         const wrapperClassName = css('avatar-wrapper', { 'avatar-inline': this.props.inline });
-        const avatarClassName = `clickable-avatar ${this.props.size || 'medium'}`;
+        const avatarClassName = css(
+            'avatar-container',
+            `${this.props.size || 'medium'}`,
+            { 'clickable-avatar': !this.props.noclick }
+        );
+
         return (
             <div className={wrapperClassName}>
-                <TooltipAvatar tooltip={c.fullNameAndUsername} tooltipDelay={250} tooltipPosition="top"
+                <TooltipAvatar
+                    tooltip={!this.props.noclick && c.fullNameAndUsername} tooltipDelay={250} tooltipPosition="top"
                     style={style} onClick={this.openContactDialog} className={avatarClassName}>
-                    <div>{c.hasAvatar ? null : c.letter}</div>
+                    <div className="image-container">{c.hasAvatar
+                        ? <ReloadingImage url={c.mediumAvatarUrl} />
+                        : c.letter
+                    }</div>
                 </TooltipAvatar>
                 {icon}
             </div>

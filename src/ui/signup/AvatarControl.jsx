@@ -4,6 +4,7 @@ const { FontIcon } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const AvatarDialog = require('./AvatarDialog');
 const { t } = require('peerio-translator');
+const ReloadingImage = require('~/ui/chat/components/ReloadingImage');
 
 @observer class AvatarControl extends Component {
     render() {
@@ -14,7 +15,7 @@ const { t } = require('peerio-translator');
                 <div className="avatar-instructions">
                     {t('title_avatarInstructions')}
                 </div>
-                {url && <img src={url} alt="avatar" />}
+                {url && <ReloadingImage url={url} alt="avatar" />}
                 <div className="caption">{t('title_optional')}</div>
             </div>
         );

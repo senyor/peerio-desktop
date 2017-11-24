@@ -1,5 +1,5 @@
 // global UI store
-const { observable, reaction } = require('mobx');
+const { observable, reaction, action } = require('mobx');
 const { TinyDb, Clock, User, warnings, clientApp } = require('~/icebear');
 const autologin = require('~/helpers/autologin');
 const appControl = require('~/helpers/app-control');
@@ -43,6 +43,12 @@ class UIStore {
         prereleaseUpdatesEnabled: false
     }
 
+    @observable isOnline = navigator.onLine;
+
+    @action.bound changeOnlineStatus() {
+        this.isOnline = navigator.onLine;
+    }
+
     // key: chat id, value: text
     unsentMessages = {};
 
@@ -84,6 +90,9 @@ class UIStore {
                 });
             }
         });
+
+        window.addEventListener('online', this.changeOnlineStatus, false);
+        window.addEventListener('offline', this.changeOnlineStatus, false);
     }
 }
 

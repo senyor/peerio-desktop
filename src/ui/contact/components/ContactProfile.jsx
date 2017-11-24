@@ -1,12 +1,12 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const RTAvatar = require('~/react-toolbox').Avatar;
 const { ProgressBar, TooltipIconButton } = require('~/react-toolbox');
 const { contactStore, chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
+const Avatar = require('~/ui/shared-components/Avatar');
 
 @observer
 class ContactProfile extends React.Component {
@@ -53,8 +53,6 @@ class ContactProfile extends React.Component {
             );
         }
         const f = c.fingerprint.split('-');
-        const style = { backgroundColor: c.color, backgroundSize: 'contain' };
-        if (c.hasAvatar) style.backgroundImage = `url(${c.largeAvatarUrl})`;
         return (
             <div className="contact-profile">
                 {c.tofuError
@@ -63,8 +61,7 @@ class ContactProfile extends React.Component {
                     </div>
                     : null}
                 <div className="contact-avatar-info">
-                    {/* TODO: use our Avatar component instead, and strip it of mouse events */}
-                    <RTAvatar style={style} >{c.hasAvatar ? null : c.letter}</RTAvatar>
+                    <Avatar size="profile" contact={c} noclick />
                     <div className="deleted-account-container">
                         {c.isDeleted ? <T k="title_accountDeleted" className="deleted-account" tag="div" /> : null}
                         <div className="title">{c.firstName} {c.lastName}</div>

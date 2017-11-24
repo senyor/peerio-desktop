@@ -11,6 +11,7 @@ const routerStore = require('~/stores/router-store');
 const css = require('classnames');
 const FileActions = require('~/ui/files/components/FileActions');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const ReloadingImage = require('~/ui/chat/components/ReloadingImage');
 
 const ALL_IMAGES = 'all_images';
 const UNDER_LIMIT_ONLY = 'under_limit_only';
@@ -130,7 +131,7 @@ class InlineFile extends React.Component {
             <Dialog active={this.imagePopupVisible} type="large" ref={this.onPopupRef}
                 onOverlayClick={this.hideImagePopup} onEscKeyDown={this.hideImagePopup}
                 className="image-popup">
-                <img src={this.currentImageSrc} alt="" />
+                <ReloadingImage url={this.currentImageSrc} />
                 <Button onClick={this.hideImagePopup} icon="close" className="button-close button-small" />
                 <div className="info-bar" data-fileid={this.props.id}>
                     <div className="left">

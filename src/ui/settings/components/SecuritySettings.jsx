@@ -122,12 +122,8 @@ class SecuritySettings extends React.Component {
     renderAccountKeySection() {
         return (
             <section className="with-bg">
-                <div className="title">
-                    {t('title_AccountKey')}
-                </div>
-                <p>
-                    {t('title_AKDetail')}
-                </p>
+                <T k="title_AccountKey" tag="div" className="title" />
+                <T k="title_AKDetail" tag="p" />
                 <div className="account-key-toggle">
                     {this.passphraseVisible
                         ? <span className="selectable">{User.current.passphrase}</span>
@@ -154,12 +150,8 @@ class SecuritySettings extends React.Component {
     renderAutologinSection() {
         return (
             <section className="with-bg">
-                <div className="title">
-                    {t('title_securityDeviceSettings')}
-                </div>
-                <p>
-                    {t('title_securityDeviceSettingsDetail')}
-                </p>
+                <T k="title_securityDeviceSettings" tag="div" className="title" />
+                <T k="title_securityDeviceSettingsDetail" tag="p" />
                 <Switch checked={User.current.autologinEnabled}
                     label={t('title_autologinSetting')}
                     onChange={this.onToggleAutologin} />

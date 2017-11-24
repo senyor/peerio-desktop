@@ -1,7 +1,7 @@
 {
   "name": "peerio-2",
   "description": "Peerio 2",
-  "version": "2.98.0",
+  "version": "2.98.7",
   "scripts": {
     "=== HOOKS ===": " Note: never ever change pruning tags from postcommit to something else unless you want to break prod build",
     "postcheckout": "opt --in npm-install --exec \"npm install\"",
@@ -54,7 +54,7 @@
   },
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "devDependencies": {
-    "@peerio/desktop-release-builder": "6.1.0",
+    "@peerio/desktop-release-builder": "6.0.2",
     "@types/chai": "4.0.5",
     "@types/chai-as-promised": "7.1.0",
     "@types/lodash": "4.14.85",

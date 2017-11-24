@@ -39,11 +39,13 @@
   }
 
   .user-picker-container {
+    display: flex;
     height: auto;
     width: 100%;
   }
 
   .user-picker {
+    height: auto;
     .rt-list-list {
       padding-left: $userpicker-margin-large;
     }
@@ -55,6 +57,8 @@
 
   // TODO: needs pretty serious refactor (in JSX) to share style with NewChat
   .new-channel-inputs {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin-top: $margin-small;
   }

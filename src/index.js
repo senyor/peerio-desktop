@@ -85,7 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
         window.router.push(message);
     });
     // starting power management
-    require('~/helpers/power');
+    require('~/helpers/power').start();
+    // starting network management
+    require('~/helpers/network').start();
+    // starting failed image reload management
+    require('~/helpers/image-retry').start();
 });
 
 // Disable zoom.

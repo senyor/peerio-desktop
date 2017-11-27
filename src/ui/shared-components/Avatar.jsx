@@ -7,7 +7,6 @@ const { TooltipAvatar } = require('~/react-toolbox');
 const { FontIcon } = require('~/react-toolbox');
 const uiStore = require('~/stores/ui-store');
 const { contactStore } = require('~/icebear');
-const ReloadingImage = require('~/ui/chat/components/ReloadingImage');
 
 /**
  * @augments {React.Component<{
@@ -51,7 +50,7 @@ class Avatar extends React.Component {
                     tooltip={!this.props.noclick && c.fullNameAndUsername} tooltipDelay={250} tooltipPosition="top"
                     style={style} onClick={this.openContactDialog} className={avatarClassName}>
                     <div className="image-container">{c.hasAvatar
-                        ? <ReloadingImage url={c.mediumAvatarUrl} />
+                        ? <img src={c.mediumAvatarUrl} alt={c.username} />
                         : c.letter
                     }</div>
                 </TooltipAvatar>

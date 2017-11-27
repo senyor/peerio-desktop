@@ -28,7 +28,7 @@ class About extends React.Component {
         return (
             <div>
                 <section className="section-divider">
-                    <img alt="" className="logo" src="static/img/logo-blue.png" />
+                    <img className="logo" src="static/img/logo-blue.png" />
                     <p>
                         {t('title_version')} <strong>{version}</strong>
                     </p>

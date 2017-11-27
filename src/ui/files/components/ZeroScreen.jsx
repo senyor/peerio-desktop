@@ -18,7 +18,7 @@ function ZeroScreen(props) {
                             </p>
                             <Button onClick={props.onUpload} primary label={t('button_upload')} />
                         </div>
-                        <img src="static/img/file-upload.png" alt="" />
+                        <img src="static/img/file-upload.png" />
                     </div>
                 </div>
                 <div className="spacer" />

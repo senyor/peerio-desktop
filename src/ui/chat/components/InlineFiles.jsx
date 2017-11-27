@@ -11,7 +11,6 @@ const routerStore = require('~/stores/router-store');
 const css = require('classnames');
 const FileActions = require('~/ui/files/components/FileActions');
 const { getAttributeInParentChain } = require('~/helpers/dom');
-const ReloadingImage = require('~/ui/chat/components/ReloadingImage');
 
 const ALL_IMAGES = 'all_images';
 const UNDER_LIMIT_ONLY = 'under_limit_only';
@@ -131,7 +130,7 @@ class InlineFile extends React.Component {
             <Dialog active={this.imagePopupVisible} type="large" ref={this.onPopupRef}
                 onOverlayClick={this.hideImagePopup} onEscKeyDown={this.hideImagePopup}
                 className="image-popup">
-                <ReloadingImage url={this.currentImageSrc} />
+                <img src={this.currentImageSrc} />
                 <Button onClick={this.hideImagePopup} icon="close" className="button-close button-small" />
                 <div className="info-bar" data-fileid={this.props.id}>
                     <div className="left">
@@ -288,22 +287,22 @@ class InlineFile extends React.Component {
                         <div className={css('inline-files-expanded',
                             {
                                 'display-image': uiStore.prefs.peerioContentEnabled &&
-                                (file.tmpCached || !file.isOverInlineSizeLimit)
+                                    (file.tmpCached || !file.isOverInlineSizeLimit)
                             })}>
                             {file.tmpCached || uiStore.prefs.peerioContentEnabled
                                 ? <div className="inline-files-dropdown">
                                     {file.tmpCached &&
                                         (this.errorLoading
                                             ? <span>{t('error_loadingImage')}</span>
-                                            : <img src={file.tmpCachePath} alt=""
+                                            : <img src={file.tmpCachePath}
                                                 onLoad={this.props.onImageLoaded}
                                                 onError={this.onErrorLoadingImage}
                                                 onClick={this.imageClick} />)}
                                     {!file.tmpCached && !file.downloading && file.isOverInlineSizeLimit
                                         && !file.isOversizeCutoff
-                                            && this.renderOversizeWarning()}
+                                        && this.renderOversizeWarning()}
                                     {file.isOversizeCutoff
-                                            && this.renderOversizeCutoffWarning()}
+                                        && this.renderOversizeCutoffWarning()}
                                     {file.cachingFailed ? <span>{t('error_downloadFailed')}</span> : null}
                                 </div>
                                 : <Button className="display-this-image" onClick={this.forceDownload}>

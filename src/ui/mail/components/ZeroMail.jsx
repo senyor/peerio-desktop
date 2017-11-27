@@ -15,7 +15,7 @@ class ZeroMail extends React.Component {
                                 <T k="title_mailNull2" />
                             </p>
                         </div>
-                        <img src="static/img/ghost.png" alt="" />
+                        <img src="static/img/ghost.png" />
                     </div>
                     <div className="spacer" />
                 </div>

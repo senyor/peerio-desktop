@@ -5,7 +5,6 @@ const { Button } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { fileStore } = require('~/icebear');
-const ReloadingImage = require('~/ui/chat/components/ReloadingImage');
 
 const forceShowCache = observable.map();
 
@@ -38,7 +37,7 @@ class UrlPreview extends React.Component {
                                         {{ size: fileStore.inlineImageSizeLimitCutoffFormatted }}
                                     </T>
                                 </div>}
-                            {showImage && <ReloadingImage url={url} onLoad={this.props.onImageLoaded} />}
+                            {showImage && <img src={url} onLoad={this.props.onImageLoaded} />}
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,6 @@ const { ipcMain } = require('electron');
 const { TinyDb } = require('~/icebear');
 const autoUpdater = require('@peerio/updater')();
 
-// autoUpdater.logger = L;
 TinyDb.system.getValue('pref_prereleaseUpdatesEnabled')
     .then(enabled => {
         autoUpdater.allowPrerelease = !!enabled;

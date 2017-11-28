@@ -65,4 +65,8 @@
       background: #444;
     }
   }
+
+  .message-toolbar-inner-right .rt-button-neutral:disabled > .material-icons:first-child {
+    opacity: .5;
+  }
 }

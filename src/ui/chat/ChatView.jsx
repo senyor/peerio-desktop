@@ -120,6 +120,12 @@ class ChatView extends React.Component {
         if (ref) ref.nameInput.focus();
     };
 
+    postJitsiLink = () => {
+        const jitsiLink = chatStore.generateJitsiUrl();
+        this.selfNewMessageCounter++;
+        chatStore.activeChat && chatStore.activeChat.createVideoCall(jitsiLink);
+    };
+
     // assumes active chat exists, don't render if it doesn't
     renderHeader() {
         const chat = chatStore.activeChat;
@@ -163,7 +169,10 @@ class ChatView extends React.Component {
                     </div>
 
                 </div>
-                <IconButton icon="chrome_reader_mode" onClick={this.toggleSidebar} />
+                <div className="message-toolbar-inner-right">
+                    <IconButton disabled={!chat || !chat.canSendJitsi} icon="videocam" onClick={this.postJitsiLink} />
+                    <IconButton icon="chrome_reader_mode" onClick={this.toggleSidebar} />
+                </div>
             </div>
         );
     }

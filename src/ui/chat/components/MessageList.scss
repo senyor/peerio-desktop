@@ -185,6 +185,16 @@
         font-style: italic;
         color: $text-dark-secondary;
       }
+
+      .video-system-message {
+        font-style: normal;
+        color: $text-dark-hint;
+      }
+
+      .video-icon {
+        padding-right: 5px;
+        vertical-align: middle;
+      }
     }
 
     .inline-image {

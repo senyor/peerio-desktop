@@ -8,7 +8,7 @@ const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { systemMessages, User } = require('~/icebear');
-const { Button, FontIcon, Menu, MenuItem } = require('~/react-toolbox');
+const { Button, FontIcon, Menu, MenuItem, Link } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { time } = require('~/helpers/formatter');
 const { processMessageForDisplay } = require('~/helpers/chat/process-message-for-display');
@@ -103,6 +103,20 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
+        if (m.systemData.link) {
+            const videoCall = m.systemData.link;
+            const videoCallShort = videoCall.replace('https://', '');
+            const videoCallMsg = systemMessages.getSystemMessageText(m);
+            return (
+                <div>
+                    <p className="video-system-message">{videoCallMsg}</p>
+                    <p>
+                        <FontIcon value="videocam" className="video-icon" />
+                        <Link href={videoCall}>{videoCallShort}</Link>
+                    </p>
+                </div>
+            );
+        }
         return (
             <div className="system-message selectable">
                 <p>{systemMessages.getSystemMessageText(m)}</p>

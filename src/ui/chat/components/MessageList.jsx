@@ -5,7 +5,7 @@ const { Link, ProgressBar } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
 const Message = require('./Message');
-const { chatStore, User } = require('~/icebear');
+const { chatStore, User, clientApp } = require('~/icebear');
 const { t } = require('peerio-translator');
 const urls = require('~/config').translator.urlMap;
 const config = require('~/config');
@@ -57,12 +57,14 @@ class MessageList extends React.Component {
     }
 
     componentWillUnmount() {
+        clientApp.isInChatsView = false;
         this._topLoadReaction();
         this._botLoadReaction();
         this._initialLoadReaction();
     }
 
     componentDidMount() {
+        clientApp.isInChatsView = true;
         this.scrollToBottomIfNeeded();
     }
 

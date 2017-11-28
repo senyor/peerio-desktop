@@ -3,18 +3,16 @@ const { observer } = require('mobx-react');
 const { Button, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const ChatList = require('./components/ChatList');
 const { t } = require('peerio-translator');
-const { chatInviteStore, clientApp, chatStore, User } = require('~/icebear');
+const { chatInviteStore, chatStore, User } = require('~/icebear');
 const ChannelUpgradeOffer = require('./components/ChannelUpgradeOffer');
 const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 const moment = require('moment');
 const { getAttributeInParentChain } = require('~/helpers/dom');
-const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
 
 @observer
 class ChannelInvites extends React.Component {
     componentWillMount() {
-        clientApp.isInChatsView = false;
         chatStore.deactivateCurrentChat();
     }
 
@@ -32,11 +30,6 @@ class ChannelInvites extends React.Component {
                 : null}
         </div>
         );
-    }
-
-    gotoChats() {
-        routerStore.navigateTo(routerStore.ROUTES.chats);
-        clientApp.isInChatsView = true;
     }
 
     acceptInvite = (ev) => {
@@ -57,7 +50,7 @@ class ChannelInvites extends React.Component {
         return (
             <div className="messages channel-invites">
                 <ChatList />
-                { chatInviteStore.received.length
+                {chatInviteStore.received.length
                     ? <div className="message-view">
                         <div className="message-toolbar">
                             <div className="title-container">

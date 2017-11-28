@@ -3,7 +3,7 @@ const { t } = require('peerio-translator');
 const { Button, List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
 const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
 const Avatar = require('~/ui/shared-components/Avatar');
-const { chatStore, User, systemMessages, clientApp, chatInviteStore } = require('~/icebear');
+const { chatStore, User, systemMessages, chatInviteStore } = require('~/icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
@@ -12,9 +12,7 @@ const routerStore = require('~/stores/router-store');
 @observer
 class ChatList extends React.Component {
     activateChat(id) {
-        // need this because of weirdly composed channel invites
         routerStore.navigateTo(routerStore.ROUTES.chats);
-        clientApp.isInChatsView = true;
         chatStore.activate(id);
     }
 

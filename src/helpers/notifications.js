@@ -1,9 +1,11 @@
 const sounds = require('~/helpers/sounds');
-const uiStore = require('../stores/ui-store');
-const appState = require('../stores/app-state');
+const uiStore = require('~/stores/ui-store');
+const appState = require('~/stores/app-state');
+const routerStore = require('~/stores/router-store');
+const { chatStore } = require('~/icebear');
 const { t } = require('peerio-translator');
 const path = require('path');
-const { app } = require('electron').remote;
+const { app, getCurrentWindow } = require('electron').remote;
 const config = require('~/config');
 
 const notifications = {};
@@ -42,6 +44,20 @@ class MessageNotification {
         sounds.received.play();
     }
 
+    handleClick = () => {
+        if (this.chat) {
+            app.focus();
+            const win = getCurrentWindow();
+            if (win.isMinimized()) {
+                win.restore();
+            }
+            win.show();
+            // see ChatList.jsx: activateChat.
+            routerStore.navigateTo(routerStore.ROUTES.chats);
+            chatStore.activate(this.chat.id);
+        }
+    }
+
     postDesktopNotification(title, body) {
         if (!title || !body) return;
         // replace existing notification -- only one per chat
@@ -56,10 +72,12 @@ class MessageNotification {
         // icon needed for Windows, looks weird on Mac
         if (config.os !== 'Darwin') props.icon = path.join(app.getAppPath(), 'build/static/img/notification-icon.png');
 
-        notifications[this.chat.id] = new Notification(
+        const notification = new Notification(
             title,
             props
         );
+        notification.onclick = this.handleClick;
+        notifications[this.chat.id] = notification;
     }
 }
 

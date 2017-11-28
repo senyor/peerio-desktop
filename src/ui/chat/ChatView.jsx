@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { FontIcon, IconButton, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
-const { chatStore, clientApp, crypto } = require('~/icebear');
+const { chatStore, crypto } = require('~/icebear');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
@@ -28,15 +28,12 @@ class ChatView extends React.Component {
     @observable showUserPicker = false;
 
     componentWillMount() {
-        clientApp.isInChatsView = true;
         this.reactionsToDispose = [
-            reaction(() => this.showUserPicker, show => { clientApp.isInChatsView = !show; }),
             reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
         ];
     }
 
     componentWillUnmount() {
-        clientApp.isInChatsView = false;
         this.reactionsToDispose.forEach(dispose => dispose());
     }
 

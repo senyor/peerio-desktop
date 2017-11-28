@@ -7,7 +7,6 @@
     "postcheckout": "opt --in npm-install --exec \"npm install\"",
     "postmerge": "opt --in npm-install --exec \"npm install\"",
     "precommit": "opt --in lint --exec \"npm run validate\"",
-    "postcommit": "git fetch --prune origin '+refs/tags/*:refs/tags/*'",
     "commitmsg": "validate-commit-msg",
     "postinstall": "./scripts/postinstall.sh",
     "=== MAIN COMMANDS ===": "",

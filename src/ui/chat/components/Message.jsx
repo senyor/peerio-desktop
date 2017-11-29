@@ -1,5 +1,3 @@
-// @ts-check
-
 /* eslint no-warning-comments: "warn" */
 
 const React = require('react');
@@ -45,6 +43,19 @@ const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerific
 class Message extends React.Component {
     @observable.shallow errorData = null;
     @observable errorMenuVisible = false;
+    @observable allowShowSendingState = false;
+
+    componentDidMount() {
+        if (!this.props.message.sending) return;
+        this.timer = setTimeout(() => {
+            if (this.props.message.sending) this.allowShowSendingState = true;
+        }, 3000);
+    }
+
+    componentWillUnmount() {
+        if (this.timer) clearTimeout(this.timer);
+    }
+
 
     @action
     onClickContact(ev) {
@@ -103,16 +114,16 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
-        if (m.systemData.link) {
-            const videoCall = m.systemData.link;
-            const videoCallShort = videoCall.replace('https://', '');
+        if (m.systemData.action === 'videoCall' && m.systemData.link) {
+            const { link } = m.systemData;
+            const shortLink = link.replace('https://', '');
             const videoCallMsg = systemMessages.getSystemMessageText(m);
             return (
                 <div>
                     <p className="video-system-message">{videoCallMsg}</p>
                     <p>
                         <FontIcon value="videocam" className="video-icon" />
-                        <Link href={videoCall}>{videoCallShort}</Link>
+                        <Link href={link}>{shortLink}</Link>
                     </p>
                 </div>
             );
@@ -264,7 +275,7 @@ class Message extends React.Component {
                     : null
                 }
 
-                {m.sending ? <div className="sending-overlay" /> : null}
+                {this.allowShowSendingState && m.sending ? <div className="sending-overlay" /> : null}
             </div>
         );
     }
@@ -289,22 +300,22 @@ function renderError(errorData, msg) {
                         <p>{errorData.error.toString()}</p><br />
                         <p><strong>{t('error_messageErrorMessageInfo')}:</strong></p>
                         { // We can't just stringify the message keg, it's not plain data and can be circular
-                        /* eslint-disable prefer-template, react/no-array-index-key */
+                            /* eslint-disable prefer-template, react/no-array-index-key */
                             msg ?
                                 <ul>
                                     {[
                                         `${t('error_messageErrorSenderName')}: ` +
-                                            (msg.sender && msg.sender.username),
+                                        (msg.sender && msg.sender.username),
                                         `${t('error_messageErrorMessageId')}: ${msg.id}`,
                                         `${t('error_messageErrorTimestamp')}: ` +
-                                            (msg.timestamp && msg.timestamp.toLocaleString()),
+                                        (msg.timestamp && msg.timestamp.toLocaleString()),
                                         `${t('error_messageErrorMessagePlaintext')}: ${msg.text}`,
                                         `${t('error_messageErrorMessageRichtext')}: ` +
-                                            (msg.richText && JSON.stringify(msg.richText, undefined, 2))
+                                        (msg.richText && JSON.stringify(msg.richText, undefined, 2))
                                     ].map((l, i) => <li key={i}>{l}</li>)}
                                 </ul>
                                 : t('error_messageErrorNotAvailable')
-                        /* eslint-enable prefer-template, react/no-array-index-key */
+                            /* eslint-enable prefer-template, react/no-array-index-key */
                         }<br />
                         <p><strong>{t('error_messageErrorAdditionalInfo')}:</strong></p>
                         <p>{errorData.info && errorData.info.componentStack}</p>

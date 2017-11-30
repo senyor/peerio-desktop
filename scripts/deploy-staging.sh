@@ -12,35 +12,11 @@ case "$choice" in
   * ) exit;;
 esac
 
-# Check if there are uncommited changes
-if ! git diff-index --quiet HEAD --; then
-    git status
-    echo "*** There are uncommited changes, please commit or stash them"
-    exit 1
-fi
-# this is important for locales, we need to pull latest en.json
-npm install
-
-#echo "[•              ] getting locales"
-#./scripts/get-locales.sh
-#if git diff-index HEAD --; then
-#    echo "*** Locales changed, committing."
-#    git commit -a -m "chore: update locales"
-#fi
-
-echo "[•••            ] setting flags"
-set -e
-export NODE_ENV=production
-
-echo "[••••••••       ] updating version number"
-./node_modules/.bin/standard-version
-git tag -d `git describe --tags` # Remove latest tag created by standard-version
-git push && git push --follow-tags origin $1
-
-echo "[•••••••••••••••] building and publishing"
+echo "Building and publishing staging"
 peerio-desktop-release --key ~/.peerio-updater/secret.key \
                        --shared ~/Win \
                        --repository PeerioTechnologies/peerio-desktop \
                        --overrides PeerioTechnologies/peerio-desktop-staging \
-                       --publish \
-                       --tag $1
+                       --tag $1 \
+                       --versioning staging \
+                       --publish

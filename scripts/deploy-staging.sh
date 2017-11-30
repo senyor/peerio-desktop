@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [ -z "$1" ]; then
     echo "*** Please specify branch name to release staging build from it."
     exit 1
@@ -11,6 +13,8 @@ case "$choice" in
   n|N ) exit;;
   * ) exit;;
 esac
+
+export NODE_ENV=production
 
 echo "Building and publishing staging"
 peerio-desktop-release --key ~/.peerio-updater/secret.key \

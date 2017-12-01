@@ -38,5 +38,5 @@ jobs:
             - ./app/node_modules
       - run:
           name: eslint and stylelint
-          command: npm run validate
+          command: npm run lint
       - run: npm test

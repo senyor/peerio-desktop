@@ -1,10 +1,12 @@
 const React = require('react');
-const { observable, action } = require('mobx');
+const { observable, action, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Button, Dialog, FontIcon } = require('~/react-toolbox');
 const { fileStore } = require('~/icebear');
 const Breadcrumb = require('./Breadcrumb');
+const Search = require('~/ui/shared-components/Search');
+const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class MoveFileDialog extends React.Component {
@@ -15,53 +17,90 @@ class MoveFileDialog extends React.Component {
         this.currentFolder = this.props.currentFolder;
     }
 
-    @action selectionChange = folder => {
-        this.selectedFolder = folder;
+    getFolder(ev) {
+        const id = getAttributeInParentChain(ev.target, 'data-folderid');
+        const folder = fileStore.folders.getById(id);
+        return folder;
     }
 
-    onHide = this.props.onHide;
-    @action handleMove = () => {
-        const { file, folder } = this.props;
+    @action.bound selectionChange(ev) {
+        this.selectedFolder = this.getFolder(ev);
+    }
+
+    @action.bound setCurrentFolder(ev) {
+        this.currentFolder = this.getFolder(ev);
+    }
+
+    @action.bound handleMove() {
+        const { file, folder, onHide } = this.props;
         const target = this.selectedFolder || this.currentFolder;
         target.moveInto(file || folder);
         if (folder) fileStore.folders.save();
-        this.onHide();
+        onHide();
+    }
+
+    @computed get visibleFolders() {
+        return fileStore.folderFilter ?
+            fileStore.visibleFolders
+            : this.currentFolder.foldersSortedByName;
+    }
+
+    @action.bound handleSearch(query) {
+        fileStore.folderFilter = query;
+    }
+
+    @action.bound changeCurrentFolder(selectedFolder) {
+        this.currentFolder = selectedFolder;
+    }
+
+    getFolderRow(folder) {
+        if (folder === this.props.folder) return null;
+        return (<div
+            key={`folder-${folder.folderId}`}
+            data-folderid={folder.folderId}
+            className="move-file-row">
+            <Button
+                icon={this.selectedFolder === folder ?
+                    'radio_button_checked' : 'radio_button_unchecked'}
+                onClick={this.selectionChange}
+                className="button-small"
+            />
+            <FontIcon value="folder" className="folder-icon" />
+            <div className="file-info" onClick={this.setCurrentFolder}>
+                <div className="file-name">{folder.name}</div>
+            </div>
+            <Button
+                onClick={this.setCurrentFolder}
+                icon="keyboard_arrow_right" className="button-small" />
+        </div>);
     }
 
     render() {
-        const { currentFolder } = this;
+        const { onHide, visible } = this.props;
+
         const actions = [
-            { label: t('button_cancel'), onClick: this.props.onHide },
+            { label: t('button_cancel'), onClick: onHide },
             { label: t('button_move'), onClick: this.handleMove }
         ];
 
-        const folders = currentFolder.foldersSortedByName.filter(f => f !== this.props.folder).map(folder => (
-            <div key={`folder-${folder.folderId}`} className="move-file-row">
-                <Button
-                    icon={this.selectedFolder === folder ?
-                        'radio_button_checked' : 'radio_button_unchecked'}
-                    onClick={() => this.selectionChange(folder)}
-                    className="button-small"
-                />
-                <FontIcon value="folder" className="folder-icon" />
-                <div className="file-info" onClick={() => { this.currentFolder = folder; }}>
-                    <div className="file-name">{folder.name}</div>
-                </div>
-                <Button
-                    onClick={() => { this.currentFolder = folder; }}
-                    icon="keyboard_arrow_right" className="button-small" />
-            </div>
-        ));
+        const folders = this.visibleFolders
+            .map(this.getFolderRow);
 
         return (
-            <Dialog actions={actions}
-                onEscKeyDown={this.props.onHide} onOverlayClick={this.props.onHide}
-                active={this.props.visible}
+            <Dialog
+                actions={actions}
+                onEscKeyDown={onHide}
+                onOverlayClick={onHide}
+                active={visible}
                 title={t('title_moveFileTo')}
                 className="move-file-dialog">
+                <Search
+                    onChange={this.handleSearch}
+                    query={fileStore.folderFilter}
+                />
                 <Breadcrumb
-                    currentFolder={currentFolder}
-                    onSelectFolder={folder => { this.currentFolder = folder; }}
+                    currentFolder={this.currentFolder}
+                    onSelectFolder={this.changeCurrentFolder}
                     noActions
                 />
                 <div className="move-folders-container">

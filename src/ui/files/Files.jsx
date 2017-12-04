@@ -61,6 +61,7 @@ class Files extends React.Component {
     hideMoveFolder = () => {
         this.moveFolderVisible = false;
         this.folderToMove = null;
+        fileStore.folderFilter = '';
     }
 
     @action deleteFolder = folder => {

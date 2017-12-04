@@ -63,4 +63,21 @@
   .rt-dialog-navigation {
     padding: $padding-large;
   }
+
+  .search {
+    align-self: center;
+    height: 50px;
+    width: calc(100% - 32px);
+    margin-top: $margin-large;
+    border-radius: 24px;
+
+    input {
+      font-size: 12px;
+    }
+
+    .search-icon {
+      padding-left: $padding-default;
+      margin-right: $margin-small;
+    }
+  }
 }

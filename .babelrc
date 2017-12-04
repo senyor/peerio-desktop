@@ -1,5 +1,4 @@
 {
-    "sourceRoot": "src",
     "compact": false,
     "plugins": [
         "transform-decorators-legacy",

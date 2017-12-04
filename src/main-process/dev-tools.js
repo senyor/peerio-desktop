@@ -20,7 +20,9 @@ function onAppReady(mainWindow) {
     if (!isDevEnv) return;
     console.log('Initializing development tools.');
     installExtensions();
-    mainWindow.openDevTools();
+    if (process.env.REMOTE_DEBUG_PORT === undefined) {
+        mainWindow.openDevTools();
+    }
 }
 
 function installExtensions(forceReinstall) {

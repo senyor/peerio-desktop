@@ -38,6 +38,9 @@ const config = require('~/config');
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
 app.commandLine.appendSwitch('disk-cache-size', 200 * 1024 * 1024);
 app.commandLine.appendSwitch('js-flags', '--harmony_regexp_lookbehind');
+if (process.env.REMOTE_DEBUG_PORT !== undefined) {
+    app.commandLine.appendSwitch('remote-debugging-port', process.env.REMOTE_DEBUG_PORT);
+}
 
 app.on('ready', () => {
     console.log('Electron ready event - Starting app.');

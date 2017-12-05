@@ -22,8 +22,8 @@ function linkify(state) {
         didMatch = false;
         const { tr } = linkifiedState;
         // eslint-disable-next-line no-loop-func, consistent-return
-        linkifiedState.doc.descendants((node, pos, parent) => {
-            if (didMatch) return false;
+        linkifiedState.doc.descendants((node, pos) => {
+            if (didMatch) return false; // stop descending once we've made a replacement
             if (node.type.name === 'link') return false;
             // a limitation of examining nodes on a per-textnode level is that
             // we can't linkify a partly-styled url, eg. where part of the url
@@ -34,8 +34,7 @@ function linkify(state) {
                 // because of our weird approach, instead of iterating through
                 // the matches we just grab the first one each time.
                 if (matches.length > 0) {
-                    // seems like for text nodes we have to resolve position relative to the parent.
-                    const $from = parent.resolve(pos + matches[0].index);
+                    const $from = linkifiedState.doc.resolve(pos + matches[0].index);
                     tr.replaceWith(
                         $from.pos,
                         $from.pos + matches[0].text.length,

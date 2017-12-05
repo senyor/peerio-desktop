@@ -1,5 +1,7 @@
 // The input box styles and the rendered message styles should be identical unless explicitly overridden.
 %chat-message {
+  $paragraph-line-height: 1.4;
+
   // Remember to mark entities as selectable if they get added to the schema!
 
   // Nodes:
@@ -29,14 +31,12 @@
     max-width: calc(100% - 100px);
     min-width: 96px;
     margin: 0 0 0 $margin-default;
-    line-height: 1.4;
+    line-height: $paragraph-line-height;
     word-break: break-word;
     white-space: pre-wrap;
 
-    // It's not actually possible to have successive paragraphs in the current
-    // schema, but we can keep this for future usage
     + p {
-      margin-top: $margin-tiny;
+      margin-top: 1em * $paragraph-line-height;
     }
   }
 

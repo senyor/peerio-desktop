@@ -19,12 +19,12 @@ function ensureMentions(state) {
         didMatch = false;
         const { tr } = mentionifiedState;
         // eslint-disable-next-line no-loop-func, consistent-return
-        mentionifiedState.doc.descendants((node, pos, parent) => {
+        mentionifiedState.doc.descendants((node, pos) => {
             if (didMatch) return false;
             if (node.isText) {
                 const match = mentionEnsurePattern.exec(node.text);
                 if (match) {
-                    const $from = parent.resolve(pos + match.index);
+                    const $from = mentionifiedState.doc.resolve(pos + match.index);
                     tr.replaceWith(
                         $from.pos,
                         $from.pos + match[0].length,

@@ -6,16 +6,20 @@ const AvatarDialog = require('./AvatarDialog');
 const { t } = require('peerio-translator');
 
 @observer class AvatarControl extends Component {
+    getInstructions() {
+        return (
+            <div className="avatar-instructions">
+                <FontIcon value="add" />
+                <p>{t('title_avatarInstructions')}</p>
+                <p className="caption">{t('title_optional')}</p>
+            </div>
+        );
+    }
     render() {
         const { url } = this.props;
         return (
             <div className="avatar-input" onClick={AvatarDialog.showDialog}>
-                <FontIcon value="add" />
-                <div className="avatar-instructions">
-                    {t('title_avatarInstructions')}
-                </div>
-                {url && <img src={url} />}
-                <div className="caption">{t('title_optional')}</div>
+                {url ? <img src={url} /> : this.getInstructions() }
             </div>
         );
     }

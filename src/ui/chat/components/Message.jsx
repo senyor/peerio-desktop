@@ -9,7 +9,6 @@ const { systemMessages, User } = require('~/icebear');
 const { Button, FontIcon, Menu, MenuItem, Link } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { time } = require('~/helpers/formatter');
-const { processMessageForDisplay } = require('~/helpers/chat/process-message-for-display');
 const { chatSchema, Renderer } = require('~/helpers/chat/prosemirror/chat-schema');
 const urls = require('~/config').translator.urlMap;
 const uiStore = require('~/stores/ui-store');
@@ -17,6 +16,14 @@ const InlineFiles = require('./InlineFiles');
 const UrlPreview = require('./UrlPreview');
 const UrlPreviewConsent = require('./UrlPreviewConsent');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
+
+
+/** @type {
+        (msg : {lastProcessedVersion, version, processedText : { __html : string }, text : string})
+            => { __html : string }
+    }
+*/
+let legacyProcessMessageForDisplay;
 
 
 /**
@@ -66,16 +73,16 @@ class Message extends React.Component {
      * Given an Icebear message (which may or may not have a richText field), return the sanitized HTML representation.
      * @param {{
          lastProcessedVersion,
-        version,
-        processedText : { __html : string },
-        text: string,
-        richText?: Object
-        }} message An Icebear message keg.
+         version,
+         processedText : { __html : string },
+         text: string,
+         richText?: Object
+       }} message An Icebear message keg.
     * @returns {JSX.Element} The processed rich text as a DOM fragment if we successfully parsed it, or else an object
     *                        with an HTML string ready to directly be used in `dangerouslySetInnerHTML`.
     */
     getMessageComponent(message) {
-        const { richText } = message;
+        const richText = message.richText; // eslint-disable-line prefer-destructuring
         if (richText &&
             (typeof richText === 'object') &&
             (richText.type === 'doc') &&
@@ -99,6 +106,8 @@ class Message extends React.Component {
                 console.warn(`Couldn't deserialize message rich text:`, e);
             }
         }
+
+
         if (typeof message.text !== 'string') {
             // HACK: React error boundaries only catch errors in children, so we
             // wrap this throw in a createElement.
@@ -107,8 +116,13 @@ class Message extends React.Component {
             );
         }
 
+        // lazily load legacy message processing logic. the emojione file it
+        // requires is pretty huge and slows startup, so we should only require
+        // it if it's necessary.
+        legacyProcessMessageForDisplay = legacyProcessMessageForDisplay ||
+            require('~/helpers/chat/legacy-process-message-for-display').processMessageForDisplay;
         // eslint-disable-next-line react/no-danger
-        return <p dangerouslySetInnerHTML={processMessageForDisplay(message)} className="selectable" />;
+        return <p dangerouslySetInnerHTML={legacyProcessMessageForDisplay(message)} className="selectable" />;
     }
 
     renderSystemData(m) {

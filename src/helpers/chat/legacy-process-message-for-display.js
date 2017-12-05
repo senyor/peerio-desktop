@@ -8,7 +8,14 @@ const uiStore = require('~/stores/ui-store');
 
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const { isUrlAllowed } = require('~/helpers/url');
+
+
 const emojione = require('~/static/emoji/emojione.js');
+
+emojione.ascii = true;
+emojione.imagePathPNG = './static/emoji/png/';
+emojione.sprites = false;
+emojione.greedyMatch = true;
 
 
 // @ts-ignore (legacy)

@@ -55,12 +55,20 @@ class InlineFile extends React.Component {
                     }
                 });
             }
+            // When this image is mounted, increase the visibility counter
+            // to prevent it being deleted
+            file.visibleCounter++;
         }, true);
     }
 
     componentWillUnmount() {
         if (this.timer) clearTimeout(this.timer);
         this._fileReaction();
+
+        // When this image is mounted, increase the visibility counter
+        // to prevent it being deleted
+        const file = fileStore.getById(this.props.id);
+        if (file) file.visibleCounter--;
     }
 
     onSelectedModeChange = (value) => {

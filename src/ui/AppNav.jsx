@@ -1,10 +1,11 @@
 const React = require('react');
 const { autorunAsync, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { IconMenu, MenuItem, MenuDivider, Dialog } = require('~/react-toolbox');
+const { IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
 const { User, contactStore, chatStore, fileStore } = require('~/icebear');
 const Avatar = require('~/ui/shared-components/Avatar');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
+const SignoutDialog = require('~/ui/shared-components/SignoutDialog');
 const css = require('classnames');
 const { remote } = require('electron');
 const notificationFactory = require('~/helpers/notifications');
@@ -83,32 +84,18 @@ class AppNav extends React.Component {
         startTaskbarOverlay();
     }
 
-    _doSignout = async () => {
+    _doSignout = async (untrust) => {
         await autologin.disable();
-        await User.current.signout();
+        await User.current.signout(untrust);
         appControl.relaunch();
     }
 
     signout = async () => {
-        if (!User.current.autologinEnabled) {
-            this._doSignout();
-            return;
-        }
         this.isConfirmSignOutVisible = true;
     }
 
-    get signOutDialog() {
-        const hide = () => { this.isConfirmSignOutVisible = false; };
-        const actions = [
-            { label: t('button_cancel'), onClick: hide },
-            { label: t('button_logout'), onClick: this._doSignout }
-        ];
-        return (
-            <Dialog actions={actions} active={this.isConfirmSignOutVisible}
-                onEscKeyDown={hide} onOverlayClick={hide}
-                title={t('button_logout')}>{t('title_signOutConfirmKeys')}
-            </Dialog>
-        );
+    cancelSignout = () => {
+        this.isConfirmSignOutVisible = false;
     }
 
     toUpgrade() {
@@ -166,7 +153,11 @@ class AppNav extends React.Component {
 
                     <UsageCloud onClick={this.toOnboarding} />
                 </div>
-                {this.signOutDialog}
+                <SignoutDialog
+                    active={this.isConfirmSignOutVisible}
+                    onHide={this.cancelSignout}
+                    onSignout={this._doSignout}
+                />
             </div>
         );
     }

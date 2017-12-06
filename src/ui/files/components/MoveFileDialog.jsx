@@ -53,7 +53,7 @@ class MoveFileDialog extends React.Component {
         this.currentFolder = selectedFolder;
     }
 
-    getFolderRow(folder) {
+    getFolderRow = (folder) => {
         if (folder === this.props.folder) return null;
         return (<div
             key={`folder-${folder.folderId}`}
@@ -73,7 +73,7 @@ class MoveFileDialog extends React.Component {
                 onClick={this.setCurrentFolder}
                 icon="keyboard_arrow_right" className="button-small" />
         </div>);
-    }
+    };
 
     render() {
         const { onHide, visible } = this.props;

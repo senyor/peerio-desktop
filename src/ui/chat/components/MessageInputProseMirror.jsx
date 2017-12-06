@@ -232,6 +232,7 @@ class MessageInputProseMirror extends React.Component {
     componentWillUnmount() {
         this.backupUnsentMessage(chatStore.activeChat);
         this.disposer();
+        uiStore.messageInputEditorView = null;
         if (this.editorView) {
             this.editorView.destroy();
         }
@@ -303,8 +304,12 @@ class MessageInputProseMirror extends React.Component {
      */
     @action.bound
     mountProseMirror(el) {
-        if (!el) return;
+        if (!el) {
+            uiStore.messageInputEditorView = null;
+            return;
+        }
         this.editorView = new EditorView(el, { state: this.getEmptyState() });
+        uiStore.messageInputEditorView = this.editorView;
     }
 
     onInputBlur = () => {
@@ -314,7 +319,7 @@ class MessageInputProseMirror extends React.Component {
 
     render() {
         /*
-         * In therory, we might want to enforce that only one suggestions
+         * In theory, we might want to enforce that only one suggestions
          * component is visible at a time; in practice, this shouldn't really
          * come up, assuming the conditions (regex patterns) to show them are
          * mutually exclusive. If need be, we could pick one to show -- maybe

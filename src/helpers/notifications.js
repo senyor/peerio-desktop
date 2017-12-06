@@ -46,15 +46,20 @@ class MessageNotification {
 
     handleClick = () => {
         if (this.chat) {
+            // Put app window into foreground.
             app.focus();
             const win = getCurrentWindow();
             if (win.isMinimized()) {
                 win.restore();
             }
             win.show();
-            // see ChatList.jsx: activateChat.
+
+            // Activate chat.
             routerStore.navigateTo(routerStore.ROUTES.chats);
             chatStore.activate(this.chat.id);
+
+            // Focus on message input.
+            uiStore.focusMessageInput();
         }
     }
 

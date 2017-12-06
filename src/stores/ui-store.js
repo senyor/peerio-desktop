@@ -28,6 +28,15 @@ class UIStore {
     // message drafts, not persisted. key: chat id, value: text
     unsentMessages = {};
 
+    // Reference to ProseMirror message input editor.
+    messageInputEditorView = null;
+
+    focusMessageInput = () => {
+        if (this.messageInputEditorView) {
+            this.messageInputEditorView.focus();
+        }
+    }
+
     // anything you add here will be stored with 'pref_' prefix in personal tinydb
     @observable prefs = {
         messageSoundsEnabled: true,

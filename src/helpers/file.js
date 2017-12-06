@@ -34,7 +34,7 @@ function downloadFile(file) {
             return file.download(p);
         }) // todo: file.cached is a temporary hack
         .then(() => file.cached && electron.app.dock && electron.app.dock.downloadFinished(finalPath))
-        .then(() => file.cached && electron.getCurrentWindow().previewFile(finalPath));
+        .then(() => file.cached && electron.shell.showItemInFolder(finalPath));
 }
 
 function pickLocalFiles() {

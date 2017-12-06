@@ -1,12 +1,13 @@
 const React = require('react');
 const AppNav = require('~/ui/AppNav');
 const uiStore = require('~/stores/ui-store');
-const { Dialog, ProgressBar } = require('~/react-toolbox');
+const { Dialog, ProgressBar, Checkbox } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { observer } = require('mobx-react');
-const { observable } = require('mobx');
-const { clientApp } = require('~/icebear');
+const { observable, action } = require('mobx');
+const { clientApp, User } = require('~/icebear');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class App extends React.Component {
@@ -20,6 +21,19 @@ class App extends React.Component {
             this.contactDialogHiding = false;
         }, 500);
     };
+
+    shareUsageDialogActions = [
+        { label: t('button_ok'), onClick: this.hideShareUsageDialog }
+    ];
+
+    hideShareUsageDialog = () => {
+        uiStore.prefs.dataCollectionPromptShown = true;
+    }
+
+    @action onToggleShareUsage() {
+        User.current.settings.dataCollection = !User.current.settings.dataCollection;
+        User.current.settings.errorTracking = !User.current.settings.errorTracking;
+    }
 
     get signatureErrorDialog() {
         const hide = uiStore.hideFileSignatureErrorDialog;
@@ -66,6 +80,19 @@ class App extends React.Component {
                                 onClose={this.hideContactDialog} />
                             : null
                     }
+                </Dialog>
+                <Dialog
+                    active={User.current.settings.shouldPromptDataCollection && !uiStore.prefs.dataCollectionPromptShown}
+                    actions={this.shareUsageDialogActions}
+                    onOverlayClick={this.hideShareUsageDialog}
+                    onEscKeyDown={this.hideShareUsageDialog}
+                    title={t('title_shareUsage')}>
+                    <T k="title_shareUsageDetails" />
+                    <Checkbox
+                        checked={User.current.settings.dataCollection && User.current.settings.errorTracking}
+                        label={t('button_shareUsage')}
+                        onChange={this.onToggleShareUsage}
+                    />
                 </Dialog>
                 {this.signatureErrorDialog}
             </div>

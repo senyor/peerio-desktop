@@ -3,16 +3,20 @@ const isDevEnv = require('~/helpers/is-dev-env');
 const path = require('path');
 const appControl = require('~/helpers/app-control');
 
-const appRootPath = path.resolve(`${__dirname}/../`);
+const appRootPath = path.resolve(`${__dirname}/../`); // app/build
 const repoRootPath = path.resolve(`${__dirname}/../../../`);
-
 // restart electron when files changed in dev mode
 if (isDevEnv) {
     const PATH_APP_NODE_MODULES = path.join(repoRootPath, 'app', 'node_modules');
     require('module').globalPaths.push(PATH_APP_NODE_MODULES);
-    // eslint-disable-next-line
-    require('electron-reload')(appRootPath, {
-        electron: path.join(repoRootPath, 'node_modules', '.bin', 'electron')
+    const watchPaths = [
+        appRootPath,
+        path.join(PATH_APP_NODE_MODULES, 'peerio-icebear', 'dist')
+    ];
+    console.log('electron-reload watching:', watchPaths);
+    require('electron-reload')(watchPaths, {
+        electron: path.join(repoRootPath, 'node_modules', '.bin', 'electron'),
+        ignored: false
     });
 }
 

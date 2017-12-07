@@ -64,7 +64,6 @@
   },
   "dependencies": {
     "@peerio/updater": "0.8.2",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#dev",
     "autolinker": "1.4.4",
     "cheerio": "1.0.0-rc.2",
     "classnames": "2.2.5",
@@ -76,6 +75,8 @@
     "material-design-icons": "3.0.1",
     "mobx-react": "4.3.5",
     "normalize.css": "7.0.0",
+    "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#dev",
     "prosemirror-commands": "1.0.1",
     "prosemirror-dropcursor": "1.0.0",
     "prosemirror-gapcursor": "1.0.0",
@@ -95,7 +96,6 @@
     "react-router": "3.2.0",
     "react-toolbox": "2.0.0-beta.12",
     "sanitize-filename": "1.6.1",
-    "zxcvbn": "4.4.2",
-    "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear"
+    "zxcvbn": "4.4.2"
   }
 }

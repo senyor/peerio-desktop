@@ -1,5 +1,5 @@
 const React = require('react');
-const { fileStore, User } = require('~/icebear');
+const { fileStore, User } = require('peerio-icebear');
 const { Button, FontIcon, ProgressBar, Dialog, RadioGroup, RadioButton } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
 const { observable, reaction, when } = require('mobx');

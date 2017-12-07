@@ -6,7 +6,7 @@ const {
     ListItem, ListSubHeader, ProgressBar
 } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { fileStore, contactStore, User } = require('~/icebear');
+const { fileStore, contactStore, User } = require('peerio-icebear');
 const css = require('classnames');
 const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
@@ -305,8 +305,8 @@ class UserPicker extends React.Component {
                                                 disabled={!this.isValid
                                                     || (this.queryIsEmpty && this.selected.length === 0)} />
                                         }
-                                        { (this.contactLoading || this._searchUsernameTimeout) &&
-                                        <ProgressBar type="circular" mode="indeterminate" />
+                                        {(this.contactLoading || this._searchUsernameTimeout) &&
+                                            <ProgressBar type="circular" mode="indeterminate" />
                                         }
                                     </div>
                                 </div>

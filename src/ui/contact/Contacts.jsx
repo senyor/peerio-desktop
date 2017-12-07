@@ -4,7 +4,7 @@ const { List, ListItem, ListDivider } = require('~/react-toolbox');
 const { action } = require('mobx');
 const { observer } = require('mobx-react');
 const routerStore = require('~/stores/router-store');
-const { contactStore } = require('~/icebear');
+const { contactStore } = require('peerio-icebear');
 const css = require('classnames');
 
 @observer

@@ -3,7 +3,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { User } = require('~/icebear');
+const { User } = require('peerio-icebear');
 const urls = require('~/config').translator.urlMap;
 const config = require('~/config');
 

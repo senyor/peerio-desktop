@@ -29,6 +29,8 @@
     "shorthand-property-no-redundant-values": true,
     "unit-case": "lower",
     "declaration-empty-line-before": null,
+    "no-descending-specificity": null,
+    "font-family-no-missing-generic-family-keyword": null,
     "order/order": [
       [
         {
@@ -51,13 +53,9 @@
     "order/properties-order": [
       [
         "// Some important properties first:",
-
         "content",
-
         "display",
-
         "// Flex:",
-
         "flex",
         "flex-align",
         "flex-basis",
@@ -73,55 +71,41 @@
         "align-self",
         "justify-content",
         "order",
-
         "visibility",
         "position",
-
         "z-index",
-
         "cursor",
         "pointer-events",
         "user-select",
-
         "height",
         "width",
         "max-height",
         "max-width",
         "min-height",
         "min-width",
-
         "left",
         "right",
         "top",
         "bottom",
-
         "padding",
         "padding-left",
         "padding-right",
         "padding-top",
         "padding-bottom",
-
         "margin",
         "margin-left",
         "margin-right",
         "margin-top",
         "margin-bottom",
-
         "clear",
         "float",
-
         "box-sizing",
-
         "vertical-align",
         "line-height",
-
         "overflow",
         "overflow-x",
         "overflow-y",
-
-
         "// Typography:",
-
         "font",
         "font-family",
         "font-size",
@@ -155,10 +139,7 @@
         "word-wrap",
         "quotes",
         "tab-size",
-
-
         "// Flow:",
-
         "break-after",
         "break-before",
         "break-inside",
@@ -178,20 +159,14 @@
         "column-rule-width",
         "column-span",
         "column-width",
-
-
         "// Lists:",
-
         "list-style",
         "list-style-image",
         "list-style-position",
         "list-style-type",
         "counter-increment",
         "counter-reset",
-
-
         "// Animation:",
-
         "animation",
         "animation-delay",
         "animation-direction",
@@ -206,30 +181,22 @@
         "transition-duration",
         "transition-property",
         "transition-timing-function",
-
-
         "// Appearance:",
-
         "color",
         "opacity",
         "filter",
-
         "fill",
         "stroke",
-
         "transform",
         "transform-box",
         "transform-origin",
         "transform-style",
-
         "box-shadow",
-
         "outline",
         "outline-color",
         "outline-offset",
         "outline-style",
         "outline-width",
-
         "background",
         "background-attachment",
         "background-blend-mode",
@@ -242,7 +209,6 @@
         "background-position-y",
         "background-repeat",
         "background-size",
-
         "border",
         "border-bottom",
         "border-bottom-color",

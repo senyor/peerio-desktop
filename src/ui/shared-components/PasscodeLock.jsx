@@ -3,7 +3,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Input } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
-const { User } = require('~/icebear');
+const { User } = require('peerio-icebear');
 const _ = require('lodash');
 
 @observer

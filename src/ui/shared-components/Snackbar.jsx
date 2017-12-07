@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { warnings } = require('~./icebear');
+const { warnings } = require('peerio-icebear');
 const WarningDisplayBase = require('./WarningDisplayBase');
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');

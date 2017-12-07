@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { List, ListItem, TooltipIconButton } = require('~/react-toolbox');
-const { contactStore } = require('~/icebear');
+const { contactStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const moment = require('moment');
 const { getAttributeInParentChain } = require('~/helpers/dom');

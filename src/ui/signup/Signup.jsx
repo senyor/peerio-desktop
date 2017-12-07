@@ -1,6 +1,6 @@
 const React = require('react');
 const { Button, Dialog } = require('~/react-toolbox');
-const { User, errors } = require('~/icebear');
+const { User, errors } = require('peerio-icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');

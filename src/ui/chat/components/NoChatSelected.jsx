@@ -2,7 +2,7 @@ const React = require('react');
 const { when, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const UserPicker = require('~/ui/shared-components/UserPicker');
-const { chatStore, Contact } = require('~/icebear');
+const { chatStore, Contact } = require('peerio-icebear');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const T = require('~/ui/shared-components/T');
 

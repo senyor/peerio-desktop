@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { validation } = require('~/icebear');
+const { validation } = require('peerio-icebear');
 const { Chip, Input } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 

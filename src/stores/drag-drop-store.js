@@ -1,5 +1,5 @@
 const { observable, action } = require('mobx');
-const { User } = require('~/icebear');
+const { User } = require('peerio-icebear');
 const { getListOfFiles } = require('~/helpers/file');
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

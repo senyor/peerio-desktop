@@ -3,9 +3,9 @@ const { observer } = require('mobx-react');
 const { Checkbox, FontIcon, Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { User, chatStore } = require('~/icebear');
+const { User, chatStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
-const { fileStore } = require('~/icebear');
+const { fileStore } = require('peerio-icebear');
 
 @observer
 class Preferences extends React.Component {

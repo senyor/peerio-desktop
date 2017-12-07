@@ -4,7 +4,7 @@ const { observable } = require('mobx');
 const { Button } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { fileStore } = require('~/icebear');
+const { fileStore } = require('peerio-icebear');
 
 const forceShowCache = observable.map();
 

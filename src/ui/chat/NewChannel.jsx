@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, User } = require('~/icebear');
+const { chatStore, User } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -80,7 +80,7 @@ class NewChannel extends React.Component {
                     </div>
                     <div className="description">
                         <T k="title_createChannelDetails">{textParser}</T>
-                        { !(config.disablePayments || User.current.hasActivePlans) &&
+                        {!(config.disablePayments || User.current.hasActivePlans) &&
                             <T k="title_createChannelUpgradeOffer" />
                         }
                     </div>

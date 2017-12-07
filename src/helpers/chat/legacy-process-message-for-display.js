@@ -3,7 +3,7 @@ const { action } = require('mobx');
 const Autolinker = require('autolinker');
 const htmlEncoder = require('html-entities').AllHtmlEntities;
 
-const { User, contactStore } = require('~/icebear');
+const { User, contactStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');

@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { fileStore, chatStore } = require('~/icebear');
+const { fileStore, chatStore } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');

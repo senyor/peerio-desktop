@@ -2,7 +2,7 @@ const React = require('react');
 const { Dialog } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { warnings } = require('~/icebear');
+const { warnings } = require('peerio-icebear');
 const WarningDisplayBase = require('./WarningDisplayBase');
 const T = require('~/ui/shared-components/T');
 

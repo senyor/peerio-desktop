@@ -1,6 +1,6 @@
 // @ts-check
 const React = require('react');
-const { chatStore, contactStore } = require('~/icebear');
+const { chatStore, contactStore } = require('peerio-icebear');
 const Suggestions = require('./Suggestions');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');

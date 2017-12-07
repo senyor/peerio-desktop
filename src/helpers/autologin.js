@@ -1,4 +1,4 @@
-const { User, warnings, crypto, TinyDb } = require('~/icebear');
+const { User, warnings, crypto, TinyDb } = require('peerio-icebear');
 const keychain = require('~/helpers/keychain');
 
 function enable() {

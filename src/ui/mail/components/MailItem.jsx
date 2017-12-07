@@ -1,7 +1,7 @@
 const React = require('react');
 // const { IconMenu, MenuItem } = require('~/react-toolbox');
 const css = require('classnames');
-const { ghostStore } = require('~/icebear');
+const { ghostStore } = require('peerio-icebear');
 
 
 class MailItem extends React.Component {

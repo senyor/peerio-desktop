@@ -22,15 +22,15 @@ if (isDevEnv) {
 require('../build/helpers/logging');
 
 // debug aid global vars
-window.ice = require('~/icebear');
+window.ice = require('peerio-icebear');
 // shortcut to use with promises
 window.clog = console.log.bind(console);
 window.cerr = console.error.bind(console);
 // !!!! DEBUG. !!!!!!!!!!!!!!!!!!!!!!!!!
 window.spamCounter = 0;
-window.spam = function(interval = 1000, words = 10) {
+window.spam = (interval = 1000, words = 10) => {
     if (window.spamInterval) return;
-    const ice = require('~/icebear');
+    const ice = require('peerio-icebear');
     window.spamInterval = setInterval(() => {
         if (!ice.chatStore.activeChat) return;
         ice.chatStore.activeChat.sendMessage(
@@ -38,7 +38,7 @@ window.spam = function(interval = 1000, words = 10) {
     }, interval);
 };
 
-window.stopSpam = function() {
+window.stopSpam = () => {
     if (!window.spamInterval) return;
     clearInterval(window.spamInterval);
     window.spamInterval = null;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const React = require('react');
-    const { socket } = require('~/icebear');
+    const { socket } = require('peerio-icebear');
     const { render } = require('react-dom');
     const { Router, createMemoryHistory } = require('react-router');
     window.router = createMemoryHistory();

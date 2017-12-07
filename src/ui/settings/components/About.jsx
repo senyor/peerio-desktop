@@ -5,7 +5,7 @@ const { Button, Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
-const { socket } = require('~/icebear');
+const { socket } = require('peerio-icebear');
 const config = require('~/config');
 
 

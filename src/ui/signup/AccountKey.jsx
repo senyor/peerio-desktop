@@ -6,7 +6,7 @@ const { clipboard } = require('electron').remote;
 const PDFSaver = require('~/ui/shared-components/PDFSaver');
 const AvatarControl = require('./AvatarControl');
 const { t } = require('peerio-translator');
-const { warnings } = require('~/icebear');
+const { warnings } = require('peerio-icebear');
 
 
 @observer class AccountKey extends Component {

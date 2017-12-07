@@ -7,7 +7,7 @@ const css = require('classnames');
 const { FontIcon } = require('~/react-toolbox');
 const _ = require('lodash');
 const { t } = require('peerio-translator');
-const { User } = require('~/icebear');
+const { User } = require('peerio-icebear');
 
 const {
     emojiCategories,

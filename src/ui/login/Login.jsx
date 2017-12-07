@@ -2,7 +2,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { Button, TooltipIconButton } = require('~/react-toolbox');
-const { config, socket, User, validation, warnings } = require('~/icebear');
+const { config, socket, User, validation, warnings } = require('peerio-icebear');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');

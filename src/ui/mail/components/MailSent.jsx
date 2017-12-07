@@ -5,7 +5,7 @@ const { t } = require('peerio-translator');
 const { Dialog, IconMenu, MenuDivider, MenuItem, TooltipIconButton } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../chat/components/InlineFiles');
-const { fileStore, warnings, ghostStore } = require('~/icebear');
+const { fileStore, warnings, ghostStore } = require('peerio-icebear');
 
 
 @observer

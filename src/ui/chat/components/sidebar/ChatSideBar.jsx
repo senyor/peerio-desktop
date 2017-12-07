@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { chatStore } = require('~/icebear');
+const { chatStore } = require('peerio-icebear');
 const css = require('classnames');
 const FilesSection = require('./FilesSection');
 

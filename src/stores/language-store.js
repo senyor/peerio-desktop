@@ -1,8 +1,8 @@
 const { observable, action } = require('mobx');
 const { setLocale } = require('peerio-translator');
-const normalizeError = require('~/icebear').errors.normalize;
-const db = require('~/icebear').TinyDb;
-const { PhraseDictionary } = require('~/icebear');
+const normalizeError = require('peerio-icebear').errors.normalize;
+const db = require('peerio-icebear').TinyDb;
+const { PhraseDictionary } = require('peerio-icebear');
 const fs = require('fs');
 const path = require('path');
 const moment = require('moment');

@@ -8,7 +8,7 @@
  * 3. It forces reload of failed images.
  */
 
-const { socket } = require('~/icebear');
+const { socket } = require('peerio-icebear');
 const { reaction } = require('mobx');
 
 let disposer;

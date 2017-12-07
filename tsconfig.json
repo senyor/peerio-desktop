@@ -12,9 +12,6 @@
       "~/*": [
         "./*"
       ],
-      "~/icebear": [
-        "../app/node_modules/peerio-icebear/src"
-      ],
       "*": [
         "*",
         "../app/node_modules/*"

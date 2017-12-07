@@ -1,7 +1,7 @@
 // all kinds of network connection improvement things specific to desktop
 const appState = require('../stores/app-state');
 const { reaction } = require('mobx');
-const { socket } = require('~/icebear');
+const { socket } = require('peerio-icebear');
 
 let disposer;
 // Websocket fails to properly detect connection loss and this causes noticeable lags

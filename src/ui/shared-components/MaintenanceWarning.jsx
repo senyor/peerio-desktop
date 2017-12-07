@@ -3,7 +3,7 @@ const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon, Dialog } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
-const { serverSettings } = require('~/icebear');
+const { serverSettings } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const moment = require('moment');
 

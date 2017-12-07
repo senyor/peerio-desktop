@@ -2,7 +2,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Switch, TooltipIconButton, ProgressBar, FontIcon, Dialog } = require('~/react-toolbox');
-const { User } = require('~/icebear');
+const { User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const autologin = require('~/helpers/autologin');
 const electron = require('electron').remote;
@@ -35,7 +35,6 @@ class SecuritySettings extends React.Component {
                 `otpauth://totp/Peerio:${User.current.username}?secret=${secret}&issuer=Peerio&algorithm=SHA1&digits=6&period=30`,
                 (err, dataUrl) => {
                     if (err) console.error(err);
-                    console.log(dataUrl);
                     this.twoFAQRCode = dataUrl;
                 });
         });

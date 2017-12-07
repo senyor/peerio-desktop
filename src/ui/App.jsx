@@ -6,7 +6,7 @@ const { t } = require('peerio-translator');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { observer } = require('mobx-react');
 const { observable } = require('mobx');
-const { clientApp } = require('~/icebear');
+const { clientApp } = require('peerio-icebear');
 
 @observer
 class App extends React.Component {

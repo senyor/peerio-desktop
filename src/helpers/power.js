@@ -1,5 +1,5 @@
 const electron = require('electron').remote;
-const { socket } = require('~/icebear');
+const { socket } = require('peerio-icebear');
 
 /*
   When we receive power event there can be 3 cases:

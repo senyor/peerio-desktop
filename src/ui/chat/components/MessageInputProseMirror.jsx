@@ -40,7 +40,7 @@ const { linkify } = require('~/helpers/chat/prosemirror/linkify-text');
 const { ensureMentions } = require('~/helpers/chat/prosemirror/ensure-mentions');
 
 const { IconButton } = require('~/react-toolbox');
-const { chatStore } = require('~/icebear');
+const { chatStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 
 const EmojiPicker = require('~/ui/emoji/Picker');

@@ -1,6 +1,6 @@
 const electron = require('electron');
 const autologin = require('~/helpers/autologin');
-const { User } = require('~/icebear');
+const { User } = require('peerio-icebear');
 
 const app = electron.app || electron.remote.app;
 

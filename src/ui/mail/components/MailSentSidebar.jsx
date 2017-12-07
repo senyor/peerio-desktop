@@ -4,7 +4,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Dialog } = require('~/react-toolbox');
-const { warnings } = require('~/icebear');
+const { warnings } = require('peerio-icebear');
 const MailPassphrase = require('./MailPassphrase');
 
 @observer

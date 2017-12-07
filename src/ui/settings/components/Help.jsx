@@ -6,7 +6,7 @@ const { t } = require('peerio-translator');
 const T = require('../../shared-components/T');
 const config = require('~/config');
 const urls = require('~/config').translator.urlMap;
-const { contactStore, chatStore, warnings } = require('~/icebear');
+const { contactStore, chatStore, warnings } = require('peerio-icebear');
 const { clipboard } = require('electron').remote;
 
 @observer

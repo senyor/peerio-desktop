@@ -1,7 +1,7 @@
 const React = require('react');
 const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, systemMessages, contactStore } = require('~/icebear');
+const { chatStore, systemMessages, contactStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 const { List, ListItem, IconButton } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');

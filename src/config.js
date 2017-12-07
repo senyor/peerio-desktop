@@ -1,10 +1,10 @@
 const os = require('os');
 const path = require('path');
-const cfg = require('~/icebear').config;
+const cfg = require('peerio-icebear').config;
 const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env');
-const FileStream = require('~/icebear/models/files/node-file-stream');
-const StorageEngine = require('~/icebear/models/storage/node-json-storage');
+const FileStream = require('peerio-icebear/dist/models/files/node-file-stream');
+const StorageEngine = require('peerio-icebear/dist/models/storage/node-json-storage');
 const { setUrlMap, setTagHandler } = require('peerio-translator');
 const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
 

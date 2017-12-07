@@ -6,7 +6,7 @@ const css = require('classnames');
 const { TooltipAvatar } = require('~/react-toolbox');
 const { FontIcon } = require('~/react-toolbox');
 const uiStore = require('~/stores/ui-store');
-const { contactStore } = require('~/icebear');
+const { contactStore } = require('peerio-icebear');
 
 /**
  * @augments {React.Component<{

@@ -2,7 +2,7 @@ const React = require('react');
 const { TooltipIconButton } = require('~/react-toolbox');
 const Search = require('~/ui/shared-components/Search');
 const css = require('classnames');
-const { fileStore } = require('~/icebear');
+const { fileStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 

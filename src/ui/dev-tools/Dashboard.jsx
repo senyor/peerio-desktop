@@ -1,6 +1,6 @@
 const React = require('react');
 const { Card, CardTitle, CardText, Input, Button } = require('~/react-toolbox');
-const { User, socket } = require('~/icebear');
+const { User, socket } = require('peerio-icebear');
 const config = require('~/config');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');

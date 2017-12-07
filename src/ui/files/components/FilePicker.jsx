@@ -1,5 +1,5 @@
 const React = require('react');
-const { fileStore } = require('~/icebear');
+const { fileStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
 const { observable, computed } = require('mobx');
 const { Dialog, ProgressBar } = require('~/react-toolbox');

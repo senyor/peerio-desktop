@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 const { FontIcon } = require('~/react-toolbox');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
-const { User } = require('~/icebear');
+const { User } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 

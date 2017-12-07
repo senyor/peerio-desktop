@@ -5,8 +5,8 @@ const { Button, IconButton, Input, FontIcon } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
-const { contactStore, User } = require('~/icebear');
-const urls = require('~/icebear').config.translator.urlMap;
+const { contactStore, User } = require('peerio-icebear');
+const urls = require('peerio-icebear').config.translator.urlMap;
 const routerStore = require('~/stores/router-store');
 
 @observer
@@ -110,6 +110,9 @@ class NewContact extends React.Component {
     }
 
     render() {
+        const hideButton = !this.query.length || this.waiting
+            || (this.isInviteView && this.query.indexOf('@') < 0);
+
         return (
             <div className="contacts new-contact">
                 <div className="contacts-view create-new-chat user-picker">
@@ -129,13 +132,10 @@ class NewContact extends React.Component {
                                         value={this.query} onChange={this.handleTextChange}
                                         onKeyDown={this.handleKeyDown} />
                                 </div>
-                                <Button className={css('button-affirmative',
-                                    {
-                                        hide: !this.query.length || this.waiting ||
-                                        (this.isInviteView && this.query.indexOf('@') < 0)
-                                    })}
-                                label={t(this.isInviteView ? 'button_invite' : 'button_add')}
-                                onClick={this.isInviteView ? this.invite : this.tryAdd} />
+                                <Button className={css('button-affirmative', { hide: hideButton })}
+                                    label={t(this.isInviteView ? 'button_invite' : 'button_add')}
+                                    onClick={this.isInviteView ? this.invite : this.tryAdd}
+                                />
                             </div>
                             {this.notFound
                                 ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'}

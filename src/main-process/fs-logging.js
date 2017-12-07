@@ -2,7 +2,7 @@
 // const path = require('path');
 
 // const { app } = (require('electron').remote || require('electron'));
-// const FileStream = require('~/icebear/models/files/node-file-stream');
+// const FileStream = require('peerio-icebear/models/files/node-file-stream');
 
 // const MAX_LOG_FILE_SIZE = 1 * 1024 * 1024;
 

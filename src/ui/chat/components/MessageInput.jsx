@@ -8,7 +8,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 
 const { t } = require('peerio-translator');
-const { fileStore, chatStore } = require('~/icebear');
+const { fileStore, chatStore } = require('peerio-icebear');
 const { IconMenu, MenuItem, IconButton } = require('~/react-toolbox');
 
 const FilePicker = require('~/ui/files/components/FilePicker');

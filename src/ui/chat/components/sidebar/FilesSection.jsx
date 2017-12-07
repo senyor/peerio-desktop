@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { IconMenu, MenuItem } = require('~/react-toolbox');
-const { chatStore, fileStore, User } = require('~/icebear');
+const { chatStore, fileStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');

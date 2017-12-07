@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { TooltipIconButton } = require('~/react-toolbox');
-const { User } = require('~/icebear');
+const { User } = require('peerio-icebear');
 
 @observer
 class UsageCloud extends React.Component {

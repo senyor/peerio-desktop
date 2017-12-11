@@ -1,6 +1,5 @@
 const electron = require('electron');
-const autologin = require('~/helpers/autologin');
-const { User } = require('peerio-icebear');
+const config = require('~/config');
 
 const app = electron.app || electron.remote.app;
 
@@ -10,11 +9,14 @@ const app = electron.app || electron.remote.app;
  *                            no unsaved work saved
  */
 function relaunch(force = false) {
+    config.FileStream.deleteTempCache();
     app.relaunch();
     force ? app.exit(0) : app.quit();
 }
 
 async function signout() {
+    const autologin = require('~/helpers/autologin');
+    const { User } = require('peerio-icebear');
     await autologin.disable();
     await User.current.signout();
     relaunch();

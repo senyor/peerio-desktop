@@ -1,4 +1,4 @@
-const { TinyDb } = require('peerio-icebear');
+const TinyDb = require('peerio-icebear/dist/db/tiny-db');
 
 function saveWindowState(state) {
     TinyDb.system.setValue('windowState', state);

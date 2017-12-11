@@ -49,6 +49,7 @@ app.on('ready', () => {
     app.setAppUserModelId(config.appId);
 
     getSavedWindowState()
+        .then(() => config.FileStream.createTempCache())
         .then(windowState => {
             const winConfig = Object.assign({
                 show: false,
@@ -69,6 +70,8 @@ app.on('ready', () => {
             mainWindow.loadURL(`file://${__dirname}/index.html`);
 
             const rememberWindowState = () => {
+                // happens after window is closed
+                if (!windowState || !mainWindow) return;
                 if (mainWindow.isMaximized()) {
                     windowState.isMaximized = true;
                     return;
@@ -84,7 +87,7 @@ app.on('ready', () => {
             mainWindow.once('ready-to-show', () => {
                 mainWindow.show();
                 mainWindow.focus();
-                if (windowState.isMaximized) {
+                if (windowState && windowState.isMaximized) {
                     mainWindow.maximize();
                 }
             });
@@ -109,8 +112,19 @@ app.on('ready', () => {
                 rememberWindowState();
             });
 
-            mainWindow.on('close', () => {
+            let closing = false;
+            let close = false;
+            mainWindow.on('close', e => {
+                if (close) return;
+                e.preventDefault();
+                if (closing) return;
+                closing = true;
                 saveWindowState(windowState);
+                config.FileStream.deleteTempCache()
+                    .then(() => {
+                        close = true;
+                        mainWindow.close();
+                    });
             });
 
             mainWindow.on('closed', () => {

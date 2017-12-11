@@ -1,7 +1,7 @@
 
 const isDevEnv = require('~/helpers/is-dev-env');
 const { ipcMain } = require('electron');
-const { TinyDb } = require('peerio-icebear');
+const TinyDb = require('peerio-icebear/dist/db/tiny-db');
 const autoUpdater = require('@peerio/updater')();
 
 TinyDb.system.getValue('pref_prereleaseUpdatesEnabled')

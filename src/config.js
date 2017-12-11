@@ -30,6 +30,7 @@ for (const name in tagHandlers) {
 
 // --- PLATFORM SPECIFIC IMPLEMENTATIONS
 cfg.FileStream = FileStream;
+cfg.FileStream.storageFolder = path.join(app.getPath('userData'), 'ImageCache');
 cfg.StorageEngine = StorageEngine;
 cfg.StorageEngine.storageFolder = app.getPath('userData');
 

@@ -48,7 +48,9 @@ class ContactList extends React.Component {
                 ? null
                 : <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />}
             {c.isAdded
-                ? <TooltipIconButton icon="star" tooltip={t('button_removeFavourite')}
+                ? <TooltipIconButton className="icon-gold"
+                    icon="star"
+                    tooltip={t('button_removeFavourite')}
                     onClick={this.removeContact} />
                 : <TooltipIconButton icon="star_outline" tooltip={t('button_addFavourite')}
                     onClick={this.addContact} />}

@@ -128,7 +128,6 @@ class ChatList extends React.Component {
                                         itemContent={
                                             <TooltipDiv className="item-content"
                                                 tooltip={t('title_newDirectMessage')}
-                                                tooltipDelay={500}
                                                 tooltipPosition="right">
                                                 <span className="rt-list-primary">
                                                     <i>{t('title_newDirectMessage')}</i>
@@ -161,7 +160,6 @@ class ChatList extends React.Component {
                                                     tooltip={c.participants && c.participants.length !== 0 ?
                                                         c.participantUsernames[0] : c.name
                                                     }
-                                                    tooltipDelay={500}
                                                     tooltipPosition="right">
                                                     <span className="rt-list-primary">
                                                         {c.isFavorite

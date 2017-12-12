@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, IconButton, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
+const { FontIcon, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
 const { chatStore, crypto } = require('peerio-icebear');
@@ -149,7 +149,6 @@ class ChatView extends React.Component {
                                 <TooltipIconButton icon="person"
                                     tooltip={t('title_Members')}
                                     tooltipPosition="bottom"
-                                    tooltipDelay={500}
                                     onClick={this.toggleSidebar} />
                                 {chat.participants && chat.participants.length ? chat.participants.length : ''}
                             </div>
@@ -159,16 +158,26 @@ class ChatView extends React.Component {
                                     onClick={chat.toggleFavoriteState}
                                     className={css({ starred: chat.isFavorite })}
                                     tooltip={t('title_starChat')}
-                                    tooltipPosition="bottom"
-                                    tooltipDelay={500} />
+                                    tooltipPosition="bottom" />
                             )
                         }
                     </div>
 
                 </div>
                 <div className="message-toolbar-inner-right">
-                    <IconButton disabled={!chat || !chat.canSendJitsi} icon="videocam" onClick={this.postJitsiLink} />
-                    <IconButton icon="chrome_reader_mode" onClick={this.toggleSidebar} />
+                    <TooltipIconButton
+                        icon="videocam"
+                        disabled={!chat || !chat.canSendJitsi}
+                        onClick={this.postJitsiLink}
+                        tooltip={t('title_videoCall')}
+                        tooltipPosition="bottom"
+                    />
+                    <TooltipIconButton
+                        icon="chrome_reader_mode"
+                        onClick={this.toggleSidebar}
+                        tooltip={t('button_toggleSidebar')}
+                        tooltipPosition="bottom"
+                    />
                 </div>
             </div>
         );

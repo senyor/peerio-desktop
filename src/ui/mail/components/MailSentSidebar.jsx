@@ -58,7 +58,6 @@ class MailSentSidebar extends React.Component {
                             <a href={this.props.ghost.url} ref={(l) => { this.link = l; }}>{this.props.ghost.url}</a>
                             <TooltipIconButton
                                 tooltip={t('title_copy')}
-                                tooltipDelay={500}
                                 tooltipPosition="bottom"
                                 icon="content_copy"
                                 onClick={this.copyLink} />

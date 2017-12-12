@@ -89,14 +89,16 @@ class ContactProfile extends React.Component {
                             ? null
                             : <TooltipIconButton
                                 tooltip={t('title_haveAChat')}
-                                tooltipDelay={500}
                                 icon="forum"
                                 onClick={this.startChat} />
                         }
                         {c.isAdded
-                            ? <TooltipIconButton icon="star" tooltip={t('button_removeFavourite')}
+                            ? <TooltipIconButton icon="star"
+                                tooltip={t('button_removeFavourite')}
+                                className="icon-gold"
                                 onClick={this.removeContact} />
-                            : <TooltipIconButton icon="star_outline" tooltip={t('button_addFavourite')}
+                            : <TooltipIconButton icon="star_outline"
+                                tooltip={t('button_addFavourite')}
                                 onClick={this.addContact} />}
                     </div>
                 </div>

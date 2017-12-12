@@ -47,7 +47,6 @@ class MailSent extends React.Component {
                             <div className="subject">{this.props.ghost.subject}</div>
                             <TooltipIconButton
                                 tooltip={t('button_delete')}
-                                tooltipDelay={250}
                                 tooltipPosition="bottom"
                                 icon="delete"
                                 onClick={this.handleDelete} />

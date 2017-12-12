@@ -9,7 +9,7 @@ const { observer } = require('mobx-react');
 
 const { t } = require('peerio-translator');
 const { fileStore, chatStore } = require('peerio-icebear');
-const { IconMenu, MenuItem, IconButton } = require('~/react-toolbox');
+const { TooltipIconMenu, MenuItem, TooltipIconButton } = require('~/react-toolbox');
 
 const FilePicker = require('~/ui/files/components/FilePicker');
 const Snackbar = require('~/ui/shared-components/Snackbar');
@@ -107,10 +107,10 @@ class MessageInput extends React.Component {
             <div className="message-input-wrapper" >
                 <Snackbar className="snackbar-chat" />
                 <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
-                    <IconMenu icon="add_circle_outline">
+                    <TooltipIconMenu icon="add_circle_outline" tooltip={t('button_shareFilesWithChat')}>
                         <MenuItem value="share" caption={t('title_shareFromFiles')} onClick={this.showFilePicker} />
                         <MenuItem value="upload" caption={t('title_uploadAndShare')} onClick={this.handleUpload} />
-                    </IconMenu>
+                    </TooltipIconMenu>
                     {this.props.readonly
                         ? <div className="message-editor-empty" >&nbsp;</div>
                         : <MessageInputProseMirror
@@ -118,11 +118,12 @@ class MessageInput extends React.Component {
                             onSend={this.props.onSend}
                         />
                     }
-                    <IconButton
+                    <TooltipIconButton
                         disabled={!chat || !chat.canSendAck}
                         icon="thumb_up"
                         onClick={this.props.onAck}
                         className="color-brand"
+                        tooltip={t('button_thumbsUp')}
                     />
 
                     {this.renderFilePicker()}

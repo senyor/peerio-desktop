@@ -92,9 +92,9 @@ class AvatarEditor extends React.Component {
                 <IconButton className="rotate-button" icon="rotate_right" onClick={this.rotateRight} accent />
                 <br />
                 <br />
-                <Button icon="save" label={t('button_save')} flat onClick={this.handleSave} />
+                <Button icon="check" label={t('button_save')} flat onClick={this.handleSave} />
                 <br />
-                <Button icon="cancel" label={t('button_cancel')} flat onClick={AvatarEditor.close} />
+                <Button icon="close" label={t('button_cancel')} flat onClick={AvatarEditor.close} />
             </div>
         </div>);
     }

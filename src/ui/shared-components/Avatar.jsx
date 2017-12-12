@@ -47,7 +47,8 @@ class Avatar extends React.Component {
         return (
             <div className={wrapperClassName}>
                 <TooltipAvatar
-                    tooltip={!this.props.noclick && c.fullNameAndUsername} tooltipDelay={250} tooltipPosition="top"
+                    tooltip={!this.props.noclick && c.fullNameAndUsername}
+                    tooltipPosition="top"
                     style={style} onClick={this.openContactDialog} className={avatarClassName}>
                     <div className="image-container">{c.hasAvatar
                         ? <img src={c.mediumAvatarUrl} alt={c.username} />

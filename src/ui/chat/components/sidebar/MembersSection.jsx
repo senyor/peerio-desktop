@@ -97,16 +97,20 @@ class MembersSection extends React.Component {
 
             adminMenu.push(
                 <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
-                    <MenuItem value="demote_admin" icon="cancel" caption={t('button_demoteAdmin')}
+                    <MenuItem value="demote_admin" icon="highlight_off" caption={t('button_demoteAdmin')}
                         onClick={this.demoteAdmin} />
-                    <MenuItem value="delete" icon="delete" caption={t('button_remove')}
+                    <MenuItem value="delete" icon="remove_circle_outline" caption={t('button_remove')}
                         onClick={this.deleteParticipant} />
                 </IconMenu>
             );
 
             inviteMenu.push(
                 <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
-                    <MenuItem value="delete" icon="delete" caption={t('button_remove')} onClick={this.deleteInvite} />
+                    <MenuItem value="delete"
+                        icon="remove_circle_outline"
+                        caption={t('button_remove')}
+                        onClick={this.deleteInvite}
+                    />
                 </IconMenu>
             );
         }
@@ -118,7 +122,7 @@ class MembersSection extends React.Component {
                         ? <List className="action-list">
                             <ListItem
                                 className="admin-controls"
-                                leftIcon="add"
+                                leftIcon="person_add"
                                 caption={t('button_inviteToChannel')}
                                 onClick={this.props.onAddParticipants} />
                         </List>

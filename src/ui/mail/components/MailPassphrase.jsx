@@ -24,7 +24,6 @@ const { t } = require('peerio-translator');
                     <span ref={(pp) => { this.passphrase = pp; }}>{this.props.ghost.passphrase}</span>
                     <TooltipIconButton
                         tooltip={t('title_copy')}
-                        tooltipDelay={500}
                         tooltipPosition="bottom"
                         icon="content_copy"
                         onClick={this.copyPassphrase} />

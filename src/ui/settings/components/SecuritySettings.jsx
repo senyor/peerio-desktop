@@ -131,7 +131,6 @@ class SecuritySettings extends React.Component {
                         tooltip={this.passphraseVisible ?
                             t('title_hideAccountKey') : t('title_showAccountKey')}
                         tooltipPosition="right"
-                        tooltipDelay={500}
                         onClick={this.togglePassphraseVisibility} />
 
                     <Button icon="file_download"
@@ -166,7 +165,9 @@ class SecuritySettings extends React.Component {
                     <T k="title_2FADetailDesktop" >
                         {{ appsButton: label => <a onClick={this.openAuthApps}>{label}</a> }}
                     </T>
-                    <a onClick={this.openAuthApps}><FontIcon value="help" /></a>
+                    <a onClick={this.openAuthApps}>
+                        <TooltipIconButton icon="help" tooltip={t('title_readMore')} />
+                    </a>
                     <Dialog active={this.authAppsDialogActive} title={t('title_authApps')}
                         onOverlayClick={this.closeAuthApps} onEscKeyDown={this.closeAuthApps}
                         actions={[{ label: t('button_dismiss'), onClick: this.closeAuthApps }]}>
@@ -230,7 +231,7 @@ class SecuritySettings extends React.Component {
             <section className="with-bg">
                 <T k="title_2FA" className="title" tag="div" />
                 <p>
-                    <FontIcon value="thumb_up" className="large-inline-icon" />
+                    <FontIcon value="check_circle" className="icon-affirmative icon-large" />
                     &nbsp;&nbsp;
                     <T k="title_2FAEnabledThanks" />
                 </p>

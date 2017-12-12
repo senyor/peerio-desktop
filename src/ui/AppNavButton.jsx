@@ -10,7 +10,6 @@ class AppNav extends React.Component {
             <div className={css('menu-item', { active: this.props.active })} onClick={this.props.onClick}>
                 <TooltipIconButton
                     tooltip={this.props.tooltip}
-                    tooltipDelay={500}
                     tooltipPosition="right"
                     icon={this.props.icon} />
                 <div className={this.props.showBadge ? 'look-at-me' : 'banish'}>

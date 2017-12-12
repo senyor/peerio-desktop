@@ -201,7 +201,6 @@ class LoginStore extends OrderedFormStore {
                                 tooltip={this.loginStore.passwordVisible ?
                                     t('title_hideAccountKey') : t('title_showAccountKey')}
                                 tooltipPosition="right"
-                                tooltipDelay={500}
                                 onClick={this.togglePasswordVisibility}
                             />
                         </div>

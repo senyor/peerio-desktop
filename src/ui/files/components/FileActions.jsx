@@ -43,7 +43,6 @@ function FileActions(props) {
                         className={css({ disabled: props.shareDisabled })} /> */}
                 {/* <TooltipDiv */}
                 {/* tooltip="Add to folder" */}
-                {/* tooltipDelay={delay} */}
                 {/* tooltipPosition="top" */}
                 {/* icon="create_new_folder" */}
                 {/* onClick={noop} */}

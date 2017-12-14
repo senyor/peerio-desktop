@@ -60,7 +60,9 @@ class NewChat extends React.Component {
                         }
                         limit={1}
                         onAccept={this.handleAccept}
-                        onClose={this.handleClose} />
+                        onClose={this.handleClose}
+                        isDM
+                    />
                 </div>
                 <FullCoverLoader show={this.waiting} />
             </div>

@@ -275,7 +275,7 @@ class UserPicker extends React.Component {
                             }
                             <div className="message-search-wrapper">
                                 <div className="message-search-inner">
-                                    <T k="title_to" className="title-to" />
+                                    { this.props.isDM && <T k="title_to" className="title-to" /> }
                                     <div className="new-chat-search">
                                         <FontIcon value="search" />
                                         <div className="chip-wrapper">

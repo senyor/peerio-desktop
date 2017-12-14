@@ -13,12 +13,18 @@
     @extend %flex-row;
     @extend %flex-grow-1;
 
+    // UserPicker that appears when adding member to room
     .create-new-chat {
       @extend %flex-col;
       @extend %flex-grow-1;
       position: relative;
       height: calc(100vh - 80px);
       padding: 0 20px;
+
+      .chat-creation-header,
+      .message-search-wrapper {
+        padding-left: $padding-default;
+      }
     }
 
     .messages-container {

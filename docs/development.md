@@ -11,7 +11,7 @@ Assuming you have nodejs and npm installed.
 
 ## Linking the SDK
 
-If you want to use a local development version of `peerio-icebear`, run `npm link` inside that project, then `cd app && npm link peerio-icebear && cd ..`
+If you want to use a local development version of `peerio-icebear`, create a file named `.opt-in` in the root directory of this repo and include the line `link-sdk`. (see **git hooks** below for more info on the `.opt-in` file)
 
 **Beware:** Don't ever use a development SDK with production servers, especially not with your own account (you could break it permanently).
 
@@ -23,11 +23,14 @@ Due to the 2-package.json structure, as well as other idiosyncracies, the follow
 
 ## git hooks
 
-There are several git hooks configured, some of them are optional and you can opt in by creating `.opt-in` file in repository root (it's git ignored).
-`.opt-in` file should contain optional hooks names one per line.
-Add `link-sdk` to enable workaround for npm bug that removes linked repository. This hook will re-link icebear sdk after every `npm install`.
-Add `lint` to run code validation before commit, commit will fail if there are any issues.
-Add `npm-install` to never ever forget to run `npm install` after package.json was changed in result of branch change/merge/pull.
+There are several git hooks configured. Some of them are optional, and you can opt in by creating `.opt-in` file in repository root (it's git ignored).
+
+`.opt-in` file should contain optional hooks names, one per line:
+* `link-sdk` will copy latest icebear sdk sources from local clone before building sdk sources. It will also watch local clone for changes when using `npm start`
+* `lint` will run code validation before commit. Commit will fail if there are any issues.
+* `npm-install` to never ever forget to run `npm install` after package.json was changed in result of branch change/merge/pull.
+
+There is already a file in the repo root called `.opt-in.example` which you can copy or rename.
 
 ## Logging
 

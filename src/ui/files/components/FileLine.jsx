@@ -20,10 +20,6 @@ class FileLine extends React.Component {
 
     @observable showActions = false;
 
-    toggleChecked = val => {
-        this.props.file.selected = val;
-    };
-
     deleteFile = () => {
         let msg = t('title_confirmRemoveFilename', { name: this.props.file.name });
         if (this.props.file.shared) {
@@ -97,16 +93,18 @@ class FileLine extends React.Component {
             }
         }
 
+        const containerStyle = {
+            selected: this.checked,
+            'selected-row': file.selected,
+            'waiting-3rd-party': !file.uploading && !file.readyForDownload
+        };
+
         return (
-            <div className={css(
-                'row',
-                {
-                    selected: this.checked,
-                    'selected-row': file.selected,
-                    'waiting-3rd-party': !file.uploading && !file.readyForDownload
-                }
-            )}
-            onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
+            <div
+                data-fileid={file.fileId}
+                className={css('row', containerStyle)}
+                onMouseEnter={this.onShowActions}
+                onMouseLeave={this.onHideActions}>
 
                 {this.props.checkbox &&
                     <Button

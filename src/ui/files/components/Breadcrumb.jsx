@@ -18,11 +18,12 @@ class Breadcrumb extends React.Component {
     }
 
     componentDidMount() {
-        reaction(() => this.props.currentFolder, this.ellipsizeFolderNames, true);
+        this._watchFolder = reaction(() => this.props.currentFolder, this.ellipsizeFolderNames, true);
         window.addEventListener('resize', this.ellipsizeFolderNames, false);
     }
 
     componentWillUnmount() {
+        this._watchFolder();
         window.removeEventListener('resize', this.ellipsizeFolderNames);
     }
 
@@ -122,36 +123,22 @@ class Breadcrumb extends React.Component {
          */
         while ((this.folderWidths[this.foldersToEllipsize] - this.folderWidthsWithEllipsized[this.foldersToEllipsize])
             < (containerWidth - this.totalWidth)) {
-            // console.log(this.foldersToEllipsize)
             this.foldersToEllipsize--;
         }
-
-        // console.log(`
-        //         folderWidths: ${this.folderWidths}
-        //         folderWidthsWithEllipsized: ${this.folderWidthsWithEllipsized}
-        //
-        //         foldersToEllipsize: ${this.foldersToEllipsize}
-        //
-        //         containerWidth: ${containerWidth}
-        //         totalWidth: ${this.totalWidth}
-        //
-        //         folderWidths[${this.foldersToEllipsize}]: ${this.folderWidths[this.foldersToEllipsize]}
-        //     `);
-    }
-
-    handleClick = (folder) => {
-        this.props.onSelectFolder(folder);
     }
 
     render() {
         const { folderPath } = this;
+        // TODO: add unique id for root folder
         return (
             <div className="breadcrumb-container">
                 <div className="breadcrumb">
                     {this.folderPath.map((folder, i) => (
-                        <div key={`${i}-${folder.name}` || 'root'} className="breadcrumb-entry">
+                        <div key={`${folder.folderId}-${folder.name}`}
+                            data-folderid={folder.folderId || 'root'}
+                            className="breadcrumb-entry">
                             <a className="folder-link clickable"
-                                onClick={() => this.handleClick(folder)}>
+                                onClick={this.props.onSelectFolder}>
                                 {i > this.foldersToEllipsize
                                     ? folder.name || t('title_files')
                                     : '...'

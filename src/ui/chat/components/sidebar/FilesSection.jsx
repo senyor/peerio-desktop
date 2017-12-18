@@ -43,62 +43,66 @@ class FilesSection extends React.Component {
         });
     };
 
+    get menu() {
+        return (
+            <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple
+                onClick={this.stopPropagation}>
+                <MenuItem caption={t('title_download')} icon="file_download" onClick={this.download} />
+                <MenuItem caption={t('button_share')} icon="reply" onClick={this.share} className="reverse-icon" />
+            </IconMenu>
+        );
+    }
+
+    renderFileItem = id => {
+        const file = fileStore.getById(id);
+        if (!file) return null;
+        return (
+            <li key={id} data-fileid={id}
+                className="sidebar-file-container rt-list-listItem"
+                onClick={this.download}>
+                <span className="rt-list-item">
+                    <span className="rt-list-itemContentRoot">
+                        <span className="rt-list-itemText rt-list-primary">
+                            <span className="sidebar-file-label">
+                                <FileSpriteIcon type={file.iconType} size="medium" />
+                                <div className="meta">
+                                    <div className="file-name-container">
+                                        <span className="file-name">
+                                            {file.nameWithoutExtension}
+                                        </span>
+                                        <span className="file-ext">.{file.ext}</span>
+                                    </div>
+                                    <span className="file-shared-by">
+                                        {file.fileOwner === User.current.username
+                                            ? <T k="title_fileFilterShared" />
+                                            : <T k="title_fileSharedByUser">
+                                                {{ user: file.fileOwner }}
+                                            </T>
+                                        }
+                                    </span>
+                                </div>
+                            </span>
+                        </span>
+                    </span>
+                    {this.menu}
+                </span>
+            </li>
+        );
+    }
+
     render() {
         const chat = chatStore.activeChat;
         if (!chat) return null;
-
-        const menu = (<IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple
-            onClick={this.stopPropagation}>
-            <MenuItem caption={t('title_download')} icon="file_download" onClick={this.download} />
-            <MenuItem caption={t('button_share')} icon="reply" onClick={this.share} className="reverse-icon" />
-        </IconMenu>);
-
         const textParser = {
             clickHere: text => (
                 <a className="clickable" onClick={this.handleUpload}>{text}</a>
             )
         };
-
         return (
             <SideBarSection title={t('title_recentFiles')} onToggle={this.props.onToggle} open={this.props.open}>
                 <div className="member-list">
                     <ul className="rt-list-list sidebar-file-list">
-                        {chat.recentFiles.map(id => {
-                            const file = fileStore.getById(id);
-                            if (!file) return null;
-                            return (
-                                <li key={id} data-fileid={id}
-                                    className="sidebar-file-container rt-list-listItem"
-                                    onClick={this.download}
-                                >
-                                    <span className="rt-list-item">
-                                        <span className="rt-list-itemContentRoot">
-                                            <span className="rt-list-itemText rt-list-primary">
-                                                <span className="sidebar-file-label">
-                                                    <FileSpriteIcon type={file.iconType} size="medium" />
-                                                    <div className="meta">
-                                                        <div className="file-name-container">
-                                                            <span className="file-name">
-                                                                {file.nameWithoutExtension}
-                                                            </span>
-                                                            <span className="file-ext">.{file.ext}</span>
-                                                        </div>
-                                                        <span className="file-shared-by">
-                                                            {file.fileOwner === User.current.username
-                                                                ? `${t('title_fileFilterShared')}`
-                                                                : `${t('title_fileSharedByUser',
-                                                                    { user: file.fileOwner })}`
-                                                            }
-                                                        </span>
-                                                    </div>
-                                                </span>
-                                            </span>
-                                        </span>
-                                        {menu}
-                                    </span>
-                                </li>
-                            );
-                        })}
+                        {chat.recentFiles.map(this.renderFileItem)}
                     </ul>
                 </div>
                 {!chat.recentFiles || !chat.recentFiles.length &&

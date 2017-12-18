@@ -1,7 +1,7 @@
 const React = require('react');
 const { Button, Dialog, Input } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
-const { observable, action, when, computed } = require('mobx');
+const { observable, action, computed } = require('mobx');
 const { fileStore, clientApp } = require('peerio-icebear');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
@@ -12,7 +12,7 @@ const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
-const uiStore = require('../../stores/ui-store');
+const { getFolderByEvent } = require('~/helpers/icebear-dom');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -27,9 +27,6 @@ class Files extends React.Component {
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
 
     componentWillMount() {
-        if (!uiStore.currentFolder) {
-            uiStore.currentFolder = fileStore.folders.root;
-        }
         clientApp.isInFilesView = true;
     }
 
@@ -53,20 +50,22 @@ class Files extends React.Component {
 
     @observable moveFolderVisible = false;
 
-    @action moveFolder = folder => {
+    @action.bound moveFolder(ev) {
+        const folder = getFolderByEvent(ev);
         this.folderToMove = folder;
         this.moveFolderVisible = true;
     }
 
-    hideMoveFolder = () => {
+    @action.bound hideMoveFolder() {
         this.moveFolderVisible = false;
         this.folderToMove = null;
         fileStore.folderFilter = '';
     }
 
-    @action deleteFolder = folder => {
+    @action.bound deleteFolder(ev) {
+        const folder = getFolderByEvent(ev);
         if (!confirm(t('title_deleteFolder', { folderName: folder.name }))) return;
-        uiStore.currentFolder = folder.parent;
+        fileStore.folders.currentFolder = folder.parent;
         fileStore.folders.deleteFolder(folder);
         fileStore.folders.save();
     }
@@ -79,39 +78,40 @@ class Files extends React.Component {
     @observable folderToRename;
     @observable folderToMove;
 
-    showAddFolderPopup = () => {
+    @action.bound showAddFolderPopup() {
         this.folderName = '';
         this.triggerAddFolderPopup = true;
     }
 
-    @action showRenameFolderPopup = folder => {
+    @action.bound showRenameFolderPopup(ev) {
+        const folder = getFolderByEvent(ev);
         this.folderName = folder.name;
         this.folderToRename = folder;
         this.triggerRenameFolderPopup = true;
     }
 
-    handleFolderNameChange = (val) => {
+    @action.bound handleFolderNameChange(val) {
         this.folderName = val;
     }
 
-    @action handleAddFolder = () => {
+    @action.bound handleAddFolder() {
         this.addFolderPopupVisible = false;
         this.triggerAddFolderPopup = false;
         const { folderName } = this;
         if (folderName && folderName.trim()) {
-            fileStore.folders.createFolder(folderName, uiStore.currentFolder);
+            fileStore.folders.createFolder(folderName, fileStore.folders.currentFolder);
             fileStore.folders.save();
         }
         this.folderName = '';
     }
 
-    handleKeyDownAddFolder = (ev) => {
+    @action.bound handleKeyDownAddFolder(ev) {
         if (ev.key === 'Enter' && this.folderName.trim()) {
             this.handleAddFolder();
         }
     }
 
-    @action handleRenameFolder = () => {
+    @action.bound handleRenameFolder() {
         this.renameFolderPopupVisible = false;
         this.triggerRenameFolderPopup = null;
         const { folderName, folderToRename } = this;
@@ -187,14 +187,9 @@ class Files extends React.Component {
         const list = getListOfFiles(paths);
         if (!list.success.length) return;
         await Promise.all(list.success.map(path => {
-            const file = fileStore.upload(
-                path, null, uiStore.currentFolder.isRoot ? null : uiStore.currentFolder.folderId
+            return fileStore.upload(
+                path, null, fileStore.folders.currentFolder.isRoot ? null : fileStore.folders.currentFolder.folderId
             );
-            return new Promise(resolve =>
-                when(() => file.fileId, () => {
-                    uiStore.currentFolder.moveInto(file);
-                    resolve();
-                }));
         }));
     }
 
@@ -256,28 +251,29 @@ class Files extends React.Component {
         this.enqueueCheck();
     }
 
-    @action changeFolder = folder => {
-        if (folder !== uiStore.currentFolder) {
+    @action.bound changeFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        if (folder !== fileStore.folders.currentFolder) {
             this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
-            uiStore.currentFolder = folder;
+            fileStore.folders.currentFolder = folder;
             fileStore.clearFilter();
         }
-    };
+    }
 
     @computed get items() {
         return fileStore.currentFilter ?
             fileStore.visibleFilesAndFolders
-            : uiStore.currentFolder.foldersAndFilesDefaultSorting;
+            : fileStore.folders.currentFolder.foldersAndFilesDefaultSorting;
     }
 
     get breadCrumbsHeader() {
         return (
-            <div className="files-header">
-                <Breadcrumb currentFolder={uiStore.currentFolder}
+            <div className="files-header" data-folderid={fileStore.folders.currentFolder.folderId}>
+                <Breadcrumb currentFolder={fileStore.folders.currentFolder}
                     onSelectFolder={this.changeFolder}
-                    onMove={() => this.moveFolder(uiStore.currentFolder)}
-                    onDelete={() => this.deleteFolder(uiStore.currentFolder)}
-                    onRename={() => this.showRenameFolderPopup(uiStore.currentFolder)}
+                    onMove={this.moveFolder}
+                    onDelete={this.deleteFolder}
+                    onRename={this.showRenameFolderPopup}
                 />
                 <Button className="button-affirmative inverted new-folder"
                     label={t('button_newFolder')}
@@ -305,7 +301,7 @@ class Files extends React.Component {
         if (!fileStore.files.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
-        const { currentFolder } = uiStore;
+        const { currentFolder } = fileStore.folders;
         const items = [];
         const data = this.items;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
@@ -314,7 +310,7 @@ class Files extends React.Component {
                 <FolderLine
                     key={f.folderId}
                     folder={f}
-                    onMoveFolder={() => this.moveFolder(f)}
+                    onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.deleteFolder}
                     onChangeFolder={this.changeFolder}

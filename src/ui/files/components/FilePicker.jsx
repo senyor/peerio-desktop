@@ -1,7 +1,7 @@
 const React = require('react');
 const { fileStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
-const { observable, computed } = require('mobx');
+const { observable, computed, action } = require('mobx');
 const { Dialog, ProgressBar } = require('~/react-toolbox');
 const FileLine = require('./FileLine');
 const FolderLine = require('./FolderLine');
@@ -9,6 +9,7 @@ const uiStore = require('../../../stores/ui-store');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./Breadcrumb');
 const { t } = require('peerio-translator');
+const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -111,7 +112,7 @@ class FilePicker extends React.Component {
                 <FolderLine
                     key={f.folderId}
                     folder={f}
-                    onChangeFolder={() => this.changeFolder(f)}
+                    onChangeFolder={this.changeFolder}
                     checkboxPlaceholder
                 /> :
                 <FileLine
@@ -120,7 +121,7 @@ class FilePicker extends React.Component {
                     currentFolder={currentFolder}
                     checkbox
                     selected={f.selected}
-                    onToggleSelect={() => this.toggleSelect(f)}
+                    onToggleSelect={this.toggleSelect}
                     clickToSelect
                 />);
         }
@@ -155,14 +156,16 @@ class FilePicker extends React.Component {
         );
     }
 
-    changeFolder = f => {
-        this.currentFolder = f;
+    @action.bound changeFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        this.currentFolder = folder;
         fileStore.clearFilter();
-    };
+    }
 
-    toggleSelect = f => {
-        f.selected = !f.selected;
-    };
+    @action.bound toggleSelect(ev) {
+        const file = getFileByEvent(ev);
+        file.selected = !file.selected;
+    }
 }
 
 

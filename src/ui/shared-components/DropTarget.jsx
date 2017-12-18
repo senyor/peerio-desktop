@@ -1,12 +1,11 @@
 const React = require('react');
 const dragStore = require('~/stores/drag-drop-store');
-const { observable, when } = require('mobx');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { FontIcon, Dialog } = require('~/react-toolbox');
 const { fileStore, chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
-const uiStore = require('../../stores/ui-store');
 
 @observer
 class DropTarget extends React.Component {
@@ -31,23 +30,15 @@ class DropTarget extends React.Component {
         }
         let folder = null;
         if (routerStore.currentRoute === routerStore.ROUTES.files) {
-            folder = uiStore.currentFolder;
+            folder = fileStore.folders.currentFolder;
         }
         this.justUpload(folder);
     };
 
     justUpload = (folder) => {
-        const promises = [];
-        this._files.success.forEach(f => {
-            const file = fileStore.upload(f);
-            if (folder) {
-                promises.push(new Promise(resolve =>
-                    when(() => file.fileId, () => {
-                        folder.moveInto(file);
-                        resolve();
-                    })));
-            }
-        });
+        this._files.success.forEach(
+            f => fileStore.upload(f, null, folder ? folder.folderId : null)
+        );
         this.dialogActive = false;
     };
 

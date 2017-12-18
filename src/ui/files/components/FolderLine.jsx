@@ -1,5 +1,5 @@
 const React = require('react');
-const { observable } = require('mobx');
+const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const FolderActions = require('./FolderActions');
 const { FontIcon } = require('~/react-toolbox');
@@ -9,19 +9,22 @@ const { t } = require('peerio-translator');
 class FolderLine extends React.Component {
     @observable showActions = false;
 
-    onShowActions = () => {
+    @action.bound onShowActions() {
         this.showActions = true;
-    };
+    }
 
-    onHideActions = () => {
+    @action.bound onHideActions() {
         this.showActions = false;
-    };
+    }
 
     render() {
         const { folder } = this.props;
 
         return (
-            <div className="row" onMouseEnter={this.onShowActions} onMouseLeave={this.onHideActions}>
+            <div data-folderid={folder.folderId}
+                className="row"
+                onMouseEnter={this.onShowActions}
+                onMouseLeave={this.onHideActions}>
                 {this.props.folderDetails &&
                     <div className="loading-icon" />
                 }
@@ -35,7 +38,7 @@ class FolderLine extends React.Component {
                 </div>
 
                 <div className="file-name clickable selectable"
-                    onClick={() => this.props.onChangeFolder(this.props.folder)} >
+                    onClick={this.props.onChangeFolder} >
                     {folder.name}
                 </div>
 
@@ -52,9 +55,9 @@ class FolderLine extends React.Component {
                 {this.props.folderActions &&
                     <div className="file-actions text-right">
                         <FolderActions
-                            onRename={() => this.props.onRenameFolder(this.props.folder)}
-                            onMove={() => this.props.onMoveFolder(this.props.folder)}
-                            onDelete={() => this.props.onDeleteFolder(this.props.folder)}
+                            onRename={this.props.onRenameFolder}
+                            onMove={this.props.onMoveFolder}
+                            onDelete={this.props.onDeleteFolder}
                         />
                     </div>
                 }

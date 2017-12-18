@@ -34,9 +34,9 @@ class InvitedContacts extends React.Component {
         return (
             <div data-id={c.email}>
                 <TooltipIconButton icon="email" tooltip={t('button_resendInvite')}
-                    tooltipPosition="left" onClick={this.resendInvite} />
+                    tooltipPosition="bottom" onClick={this.resendInvite} />
                 <TooltipIconButton icon="delete" tooltip={t('button_delete')}
-                    tooltipPosition="left" onClick={this.removeInvite} />
+                    tooltipPosition="bottom" onClick={this.removeInvite} />
             </div>
         );
     }

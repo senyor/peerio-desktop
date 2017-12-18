@@ -129,11 +129,13 @@ class SecuritySettings extends React.Component {
                     {this.passphraseVisible
                         ? <span className="selectable">{User.current.passphrase}</span>
                         : <span>••••••••••••••••••••••••••••••••••••••••••</span>}&nbsp;&nbsp;
-                    <TooltipIconButton icon={this.passphraseVisible ? 'visibility_off' : 'visibility'}
+                    <TooltipIconButton icon="visibility"
                         tooltip={this.passphraseVisible ?
                             t('title_hideAccountKey') : t('title_showAccountKey')}
                         tooltipPosition="right"
-                        onClick={this.togglePassphraseVisibility} />
+                        onClick={this.togglePassphraseVisibility}
+                        className={css({ 'button-selected': this.passphraseVisible })}
+                    />
 
                     <Button icon="file_download"
                         className="save-button"

@@ -21,16 +21,26 @@ function applyMiscHooks(mainWindow) {
         }
     });
 
-    // TODO: new api will be released soon, arguments and callback change a little
-    mainWindow.webContents.session.setCertificateVerifyProc((hostname, cert, callback) => {
-        // console.log(`CERTIFICATE VERIFICATION: ${hostname} ${cert.fingerprint}`);
-        let ret = true;
+    mainWindow.webContents.session.setCertificateVerifyProc((request, callback) => {
+        let ok = true;
         certData.forEach((d) => {
-            if (hostname.match(d.hostRegex)) {
-                ret = d.fingerprint === cert.fingerprint;
+            if (request.hostname.match(d.hostRegex)) {
+                // The reason for implementing check like this is
+                // that we may want to include more fingerprints
+                // for the same host for the period of transition
+                // to a new certificate, so the later fingerprint
+                // match can override the previous non-match,
+                // setting ok back to true.
+                ok = d.fingerprint === request.certificate.fingerprint;
             }
         });
-        callback(ret);
+        if (!ok) {
+            // Verification failure.
+            callback(-2);
+            return;
+        }
+        // Let chromium verify it further.
+        callback(-3);
     });
 }
 

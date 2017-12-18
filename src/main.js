@@ -12,11 +12,52 @@ process.on('uncaughtException', (error) => {
     console.error('uncaughtException in Node:', error);
 });
 
+// On Windows, change user data path from Electron's default
+// %APPDATA% to %LOCALAPPDATA%, since we don't want any of our
+// local data to be in the Roaming directory, which is synched
+// between machines in some corporate environments.
+//
+// IMPORTANT: this must be done _before_ requiring config.js.
+if (
+    process.platform === 'win32' &&
+    process.env.LOCALAPPDATA // in case we don't have %LOCALAPPDATA% for some reason
+) {
+    const oldUserData = app.getPath('userData');
+    const newUserData = path.join(process.env.LOCALAPPDATA, app.getName());
+
+    if (oldUserData !== newUserData) {
+        try {
+            // Since we used to store data in %APPDATA%, we need to move
+            // all our old data to into a new directory if the new userData
+            // directory doesn't exist.
+            //
+            // This needs to happen before Electron's app 'ready' event.
+            // Also, everything needs to be synchronous.
+            //
+            // XXX: moving can be removed in the future when older versions
+            // of the client are deprecated and everyone's updated.
+            const fse = require('fs-extra');
+            if (!fse.existsSync(newUserData) && fse.existsSync(oldUserData)) {
+                fse.moveSync(oldUserData, newUserData);
+                console.log(`Moved ${oldUserData} to ${newUserData}`);
+            }
+
+            // Set new paths.
+            app.setPath('appData', process.env.LOCALAPPDATA);
+            app.setPath('userData', newUserData);
+        } catch (e) {
+            // Failed to move old folder, so continue using it.
+            console.error(e);
+        }
+    }
+}
+
 const isDevEnv = require('~/helpers/is-dev-env');
 // For dev builds we want to use separate user data directory
 if (isDevEnv) {
     app.setPath('userData', path.resolve(app.getPath('appData'), `${app.getName().toLowerCase()}_dev`));
 }
+
 // <UPDATES> -----------------------------------------------------------------------------------------------------
 // If the app was started as a part of update process we don't want to proceed with startup
 if (require('~/main-process/handle-windows-update')) app.quit();

@@ -2,7 +2,6 @@
 .messages {
   @extend %flex-row;
   width: 100%;
-  padding-right: $app-nav-width;
   background: $background-root;
 
   .starred,
@@ -18,7 +17,7 @@
   @extend %flex-align-center;
   position: relative;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   background: white;
 
   .message-search-wrapper {
@@ -224,6 +223,7 @@
 @import './ChannelInvites';
 @import './NewChannel';
 @import './NewChat';
+@import './ZeroChats';
 @import './components/_ChatComponentsCommon';
 @import './components/ChannelUpgradeOffer';
 @import './components/ChatList';
@@ -235,7 +235,6 @@
 @import './components/MessageInputProseMirror';
 @import './components/MessageInputSuggestions';
 @import './components/MessageList';
-@import './components/NoChatSelected';
 @import './components/UploadInChatProgress';
 @import './components/UrlPreview';
 @import './components/UrlPreviewConsent';

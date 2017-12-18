@@ -32,7 +32,9 @@ class RouterStore {
 
     get ROUTES() {
         return {
+            loading: '/app',
             chats: '/app/chats',
+            zeroChats: '/app/zero-chats',
             newChat: '/app/chats/new-chat',
             newChannel: '/app/chats/new-channel',
             channelInvites: '/app/channel-invites',

@@ -1,0 +1,42 @@
+const React = require('react');
+const { when } = require('mobx');
+const { observer } = require('mobx-react');
+const { chatStore, crypto } = require('peerio-icebear');
+const T = require('~/ui/shared-components/T');
+const { ProgressBar } = require('~/react-toolbox');
+const routerStore = require('~/stores/router-store');
+
+const messages = ['title_randomMessage1', 'title_randomMessage2', 'title_randomMessage3', 'title_randomMessage4'];
+const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
+
+@observer
+class Loading extends React.Component {
+    componentDidMount() {
+        this.dispose = when(() => chatStore.loaded, () => {
+            if (chatStore.chats.length) {
+                routerStore.navigateTo(routerStore.ROUTES.chats);
+            } else {
+                routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+            }
+            this.dispose = null;
+        });
+    }
+
+    componentWillUnmount() {
+        if (this.dispose) this.dispose();
+    }
+
+    render() {
+        return (
+            <div className="loading-screen">
+                <ProgressBar type="linear" mode="indeterminate" />
+                <div className="random-messages">
+                    <T k={randomMessage} className="headline" tag="div" />
+                </div>
+            </div>
+        );
+    }
+}
+
+
+module.exports = Loading;

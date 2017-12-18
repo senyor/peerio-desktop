@@ -8,9 +8,14 @@
       border-radius: 0 24px 24px 0;
     }
   }
+
+  > .rt-button-rippleWrapper {
+    display: none;
+  }
 }
 
 .button-affirmative.rt-button-button:not([disabled]) {
+  font-size: 14px;
   color: $text-light-primary;
   background-color: $green-affirmative;
 
@@ -64,6 +69,10 @@ $button-neutral-height: 36px;
   &:hover,
   &.selected {
     background-color: $white-50;
+  }
+
+  span {
+    vertical-align: baseline;
   }
 
   .rt-ripple-rippleWrapper {

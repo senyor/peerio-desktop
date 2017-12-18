@@ -1,11 +1,13 @@
 const React = require('react');
-const { Route, IndexRoute, IndexRedirect } = require('react-router');
+const { Route, IndexRoute } = require('react-router');
 const App = require('./App');
 const Root = require('./Root');
 const Onboarding = require('./Onboarding');
 const Login = require('./login/Login');
 const Signup = require('./signup/Signup');
+const Loading = require('./Loading');
 const Chat = require('./chat/Chat');
+const ZeroChats = require('./chat/ZeroChats');
 const NewChat = require('./chat/NewChat');
 const ChatView = require('./chat/ChatView');
 const NewChannel = require('./chat/NewChannel');
@@ -38,12 +40,13 @@ module.exports = (
         <Route path="/new-device" component={NewDevice} />
         <Route path="autologin" component={AutoLogin} />
         <Route path="/app" component={App} >
-            <IndexRedirect to="/app/chats" />
+            <IndexRoute component={Loading} />
             <Route path="chats" component={Chat}>
                 <IndexRoute component={ChatView} />
                 <Route path="new-chat" component={NewChat} />
                 <Route path="new-channel" component={NewChannel} />
             </Route>
+            <Route path="zero-chats" component={ZeroChats} />
             <Route path="channel-invites" component={ChannelInvites} />
             <Route path="files" component={Files} />
             <Route path="onboarding" component={Onboarding} />

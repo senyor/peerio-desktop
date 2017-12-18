@@ -17,17 +17,17 @@ class ChatList extends React.Component {
     }
 
     newMessage = () => {
-        window.router.push(routerStore.ROUTES.newChat);
+        routerStore.navigateTo(routerStore.ROUTES.newChat);
     };
 
     newChannel() {
         chatStore.deactivateCurrentChat();
-        window.router.push('/app/chats/new-channel');
+        routerStore.navigateTo(routerStore.ROUTES.newChannel);
     }
 
-    goToChannelInvite = () => {
-        window.router.push('/app/channel-invites');
-    };
+    goToChannelInvite() {
+        routerStore.navigateTo(routerStore.ROUTES.channelInvites);
+    }
 
     getProgressBar = loading => {
         return loading ? <ProgressBar type="linear" mode="indeterminate" /> : null;
@@ -75,6 +75,21 @@ class ChatList extends React.Component {
                                         <div className="chat-item-add-icon" />
                                     </div>
                                 </TooltipDiv>
+
+                                <li className={css('room-invites-button-container',
+                                    { show: newChatInvites > 0 }
+                                )}>
+                                    <Button key="room-invites"
+                                        className={css(
+                                            'room-invites-button',
+                                            'button-affirmative',
+                                            { selected: routerStore.isRoomInvites }
+                                        )}
+                                        onClick={this.goToChannelInvite}>
+                                        {t('title_viewChannelInvites')}
+                                    </Button>
+                                </li>
+
                                 <FlipMove duration={200} easing="ease-in-out" >
                                     {newChatInvites > 0 &&
                                         <li className="room-invites-button-container">

@@ -120,10 +120,10 @@ class LoginStore extends OrderedFormStore {
                             autologin.enable();
                             autologin.dontSuggestEnablingAgain();
                         }
-                        window.router.push('/app/chats');
+                        routerStore.navigateTo(routerStore.ROUTES.loading);
                     });
             }
-            return window.router.push('/app/chats');
+            return routerStore.navigateTo(routerStore.ROUTES.loading);
         }).catch(() => {
             User.current = null;
             this.loginStore.busy = false;

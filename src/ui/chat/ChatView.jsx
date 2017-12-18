@@ -4,33 +4,33 @@ const { observer } = require('mobx-react');
 const { FontIcon, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
-const { chatStore, crypto } = require('peerio-icebear');
+const { chatStore } = require('peerio-icebear');
+const routerStore = require('~/stores/router-store');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
 const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
 const css = require('classnames');
 const MessageSideBar = require('./components/sidebar/MessageSideBar');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
-const NoChatSelected = require('./components/NoChatSelected');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
-
-const messages = ['title_randomMessage1', 'title_randomMessage2', 'title_randomMessage3', 'title_randomMessage4'];
-const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
 
 @observer
 class ChatView extends React.Component {
     @observable chatNameEditorVisible = false;
     @observable showUserPicker = false;
 
-    componentWillMount() {
+    componentDidMount() {
         this.reactionsToDispose = [
             reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
         ];
+
+        if (!chatStore.chats.length) {
+            routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+        }
     }
 
     componentWillUnmount() {
@@ -194,17 +194,11 @@ class ChatView extends React.Component {
     }
 
     render() {
+        if (!chatStore.chats.length) return null;
+
         const chat = chatStore.activeChat;
-        if (chatStore.loading) {
-            return (
-                <div className="message-view">
-                    <div className="random-messages">
-                        <div className="headline"><T k={randomMessage} /></div>
-                    </div>
-                </div>
-            );
-        }
-        if (!chat) return <NoChatSelected />;
+        if (!chat) return null;
+
         return (
             <div className="message-view">
                 {this.renderHeader()}

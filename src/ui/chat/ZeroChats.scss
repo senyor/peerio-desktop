@@ -1,0 +1,182 @@
+$zero-chats-max-width: 1040px;
+$zero-chats-break: 984px;
+
+.zero-chats-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background: $background-root;
+
+  .zero-chats-content {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    max-width: $zero-chats-max-width;
+    padding: 0 $padding-xxl;
+  }
+
+  .header {
+    margin-top: $margin-xxl;
+    margin-bottom: auto;
+    text-align: center;
+
+    .welcome-title {
+      @extend %display-1;
+      color: $blue;
+    }
+
+    .subtitle {
+      @extend %title;
+    }
+  }
+
+  .instructions-container {
+    margin-bottom: auto;
+  }
+
+  .instructions {
+    display: flex;
+    width: 100%;
+    padding: $padding-xxl 0 $padding-xxl;
+    margin-bottom: $margin-xxl;
+
+    .text {
+      padding-left: 56px; // 40px + margin-default
+
+      .text-header {
+        @extend %title;
+      }
+
+      .text-description {
+        .description-large {
+          @extend %title;
+          margin: $margin-large 0;
+          color: $text-dark-secondary;
+        }
+
+        .description-small {
+          margin: $margin-small 0;
+        }
+      }
+    }
+
+    &.create-dms {
+      justify-content: flex-end;
+      margin-top: $margin-xxl;
+    }
+
+    .already-invited {
+      margin-top: $margin-large;
+
+      .already-invited-text {
+        @extend %hint-error-label;
+        font-weight: $font-weight-semibold;
+        color: $text-dark-secondary;
+      }
+
+      .room-invites-button {
+        padding: 0 $padding-xxl;
+        margin-top: $margin-small;
+      }
+    }
+  }
+
+  &.invite-received {
+    .instructions.create-rooms {
+      padding: $padding-xxl 0 0;
+    }
+  }
+
+  // ~~~~~~ BUTTONS ~~~~~~
+  // buttons for Create Room and Create Direct Messages
+  // modified from common component chat-item-add.scss
+  .chat-item-add {
+    padding: 0;
+
+    .chat-item-add-icon {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      width: 40px;
+      margin-left: -56px; // 40px + margin-default
+      margin-right: $margin-default;
+      border-radius: 6px;
+      border-width: 3px;
+
+      &::after {
+        height: 40px;
+        width: 40px;
+        line-height: 40px;
+        font-size: 40px;
+      }
+    }
+
+    .chat-item-title {
+      @extend %display-1;
+      color: $blue;
+      border: none;
+    }
+  }
+
+  // ~~~~~~ ILLUSTRAIONS ~~~~~~
+  // The illustrations on this page are ~unusual~
+  // Background and foreground are actually separate files so that we can have them shift/move/resize in different ways.
+  // Very labyrinthine values & media queries here, so they're separated from the rest of the styles.
+
+  /* stylelint-disable no-duplicate-selectors */
+  .instructions {
+    position: relative;
+
+    .image {
+      z-index: 0;
+      margin: 0 auto;
+      overflow: visible;
+
+      img {
+        position: absolute;
+        z-index: 2;
+        max-height: 230px;
+        bottom: 0;
+        margin: auto;
+
+        @media all and (max-width: $zero-chats-break) { max-height: 200px; }
+      }
+
+      img.background {
+        z-index: 1;
+      }
+    }
+
+    &.create-rooms .image {
+      img { right: 8%; }
+      img.background { right: 0; }
+
+      @media all and (max-width: $zero-chats-break) {
+        img { right: 0; }
+        img.background { right: -200px; }
+      }
+    }
+
+    &.create-dms .image {
+      img { left: 8%; }
+      img.background { left: 0; }
+
+      @media all and (max-width: $zero-chats-break) {
+        img { left: 0; }
+        img.background { left: -200px; }
+      }
+    }
+
+    .text {
+      position: relative;
+      z-index: 2;
+    }
+  }
+}
+/* stylelint-enable */

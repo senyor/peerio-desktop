@@ -2,6 +2,7 @@
   @extend %flex-col;
   @extend %flex-shrink-0;
   align-items: center;
+  z-index: 2;
   height: 100vh;
   width: $app-nav-width;
   background-image: url($background-pattern), $gradient-to-bottom;

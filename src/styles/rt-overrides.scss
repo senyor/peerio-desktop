@@ -36,11 +36,18 @@
   background-color: #f0f0f0;
 }
 
+// blue "selected" button (e.g. radio button)
+.button-selected.rt-button-button .material-icons,
+.button-selected.material-icons {
+  color: $blue;
+}
+
 // dialog button default text colour
 .rt-dialog-button.rt-button-neutral:not([disabled]).rt-button-flat:not(:last-of-type) {
   color: $text-dark-secondary;
 }
-// Grey/blue "neutral UI" buttons
+
+// grey/blue "neutral UI" buttons
 $button-neutral-height: 36px;
 
 .button-neutral.rt-button-button.rt-button-neutral.rt-button-flat {
@@ -149,4 +156,16 @@ $button-neutral-height: 36px;
 // large icons
 .icon-large.material-icons {
   font-size: 30px;
+}
+
+// <List> and <ListItem>
+// remove click/hover effects
+.no-effects.rt-list-list {
+  .rt-list-listItem:hover:not(.active) {
+    background-color: inherit;
+  }
+
+  .rt-ripple-rippleWrapper {
+    display: none;
+  }
 }

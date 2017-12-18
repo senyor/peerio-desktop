@@ -35,7 +35,13 @@
   }
 
   .terms-smallprint {
-    margin-bottom: 16px;
+    font-size: 12px;
+
+    .rt-button-button {
+      min-width: 0;
+      padding: 0 0 4px;
+      font-size: 12px;
+    }
   }
 
   .private,

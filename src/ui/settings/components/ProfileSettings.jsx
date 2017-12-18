@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, List, ListItem, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
+const { Button, List, ListItem, FontIcon, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
 const { User, contactStore, validation } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -132,7 +132,7 @@ class Profile extends React.Component {
                     <div className="dark-label label-email">
                         {t('title_email')}
                     </div>
-                    <List>
+                    <List className="no-effects">
                         {
                             user.addresses.map(a => {
                                 return (<ListItem key={a.address}
@@ -145,7 +145,9 @@ class Profile extends React.Component {
                                     }
                                     leftIcon={
                                         a.primary
-                                            ? 'radio_button_checked'
+                                            ? <FontIcon value="radio_button_checked"
+                                                className="button-selected"
+                                            />
                                             : <TooltipIconButton className={a.confirmed ? '' : 'hide'}
                                                 disabled={!a.confirmed} tooltip={t('button_makePrimary')}
                                                 icon="radio_button_unchecked"

@@ -7,6 +7,7 @@ const { fileStore } = require('peerio-icebear');
 const Breadcrumb = require('./Breadcrumb');
 const Search = require('~/ui/shared-components/Search');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const css = require('classnames');
 
 @observer
 class MoveFileDialog extends React.Component {
@@ -63,7 +64,9 @@ class MoveFileDialog extends React.Component {
                 icon={this.selectedFolder === folder ?
                     'radio_button_checked' : 'radio_button_unchecked'}
                 onClick={this.selectionChange}
-                className="button-small"
+                className={css('button-small', 'no-ripple', {
+                    'button-selected': this.selectedFolder === folder
+                })}
             />
             <FontIcon value="folder" className="folder-icon" />
             <div className="file-info" onClick={this.setCurrentFolder}>

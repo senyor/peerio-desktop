@@ -75,20 +75,20 @@ class ChatList extends React.Component {
                                         <div className="chat-item-add-icon" />
                                     </div>
                                 </TooltipDiv>
-                                <li className={css('room-invites-button-container',
-                                    { show: newChatInvites > 0 }
-                                )}>
-                                    <Button key="room-invites"
-                                        className={css(
-                                            'room-invites-button',
-                                            'button-neutral',
-                                            { selected: routerStore.isRoomInvites }
-                                        )}
-                                        onClick={this.goToChannelInvite}>
-                                        {t('title_viewChannelInvites')}
-                                    </Button>
-                                </li>
                                 <FlipMove duration={200} easing="ease-in-out" >
+                                    {newChatInvites > 0 &&
+                                        <li className="room-invites-button-container">
+                                            <Button key="room-invites"
+                                                className={css(
+                                                    'room-invites-button',
+                                                    'button-neutral',
+                                                    { selected: routerStore.isRoomInvites }
+                                                )}
+                                                onClick={this.goToChannelInvite}>
+                                                {t('title_viewChannelInvites')}
+                                            </Button>
+                                        </li>
+                                    }
                                     {routerStore.isNewChannel &&
                                         <ListItem key="new channel"
                                             className="room-item new-room-entry active"
@@ -156,11 +156,7 @@ class ChatList extends React.Component {
                                                     : null
                                             }
                                             itemContent={
-                                                <TooltipDiv className="item-content"
-                                                    tooltip={c.participants && c.participants.length !== 0 ?
-                                                        c.participantUsernames[0] : c.name
-                                                    }
-                                                    tooltipPosition="right">
+                                                <div className="item-content">
                                                     <span className="rt-list-primary">
                                                         {c.isFavorite
                                                             ? <span className="starred">&#x2605;</span>
@@ -170,7 +166,7 @@ class ChatList extends React.Component {
                                                     {/* <span className="rt-list-itemText">
                                                         {this.renderMostRecentMessage(c)}
                                                     </span> */}
-                                                </TooltipDiv>
+                                                </div>
                                             } />)
                                     )}
                                 </FlipMove>

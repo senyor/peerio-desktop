@@ -43,7 +43,11 @@ class About extends React.Component {
                         : <span>&copy; 2017 Peerio Technologies, Inc. All rights reserved.</span>
                     }
                     <div className="settings-terms">
-                        {t('title_appName')} <Button onClick={this.showTermsDialog} label={t('button_terms')} />
+                        {t('title_appName')}
+                        <Button onClick={this.showTermsDialog}
+                            label={t('button_terms')}
+                            className="button-link no-ripple"
+                        />
                     </div>
                 </section>
 

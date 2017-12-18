@@ -9,6 +9,8 @@ const electron = require('electron').remote;
 const T = require('~/ui/shared-components/T');
 const QR = require('qrcode');
 const PDFSaver = require('~/ui/shared-components/PDFSaver');
+const BetterInput = require('~/ui/shared-components/BetterInput');
+const css = require('classnames');
 const fs = require('fs');
 
 @observer
@@ -68,8 +70,8 @@ class SecuritySettings extends React.Component {
         this.totpCodeError = false;
     };
 
-    onTOTPCodeChange = ev => {
-        this.totpCode = ev.target.value;
+    onTOTPCodeChange = value => {
+        this.totpCode = value;
         this.totpCodeError = false;
         if (this.totpCode.replace(/\s+/g, '').length >= 6) {
             this.totpCodeValidating = true;
@@ -162,18 +164,13 @@ class SecuritySettings extends React.Component {
             <section className="with-bg">
                 <T k="title_2FA" className="title" tag="div" />
                 <p>
-                    <T k="title_2FADetailDesktop" >
-                        {{ appsButton: label => <a onClick={this.openAuthApps}>{label}</a> }}
-                    </T>
+                    <T k="title_2FADetailDesktop" />
                     <a onClick={this.openAuthApps}>
                         <TooltipIconButton icon="help" tooltip={t('title_readMore')} />
                     </a>
                     <Dialog active={this.authAppsDialogActive} title={t('title_authApps')}
                         onOverlayClick={this.closeAuthApps} onEscKeyDown={this.closeAuthApps}
-                        actions={[{ label: t('button_dismiss'), onClick: this.closeAuthApps }]}>
-                        <div className="text-center">
-                            <FontIcon value="file_download" className="dialog-illustration" />
-                        </div>
+                        actions={[{ label: t('button_close'), onClick: this.closeAuthApps }]}>
                         <T k="title_authAppsDetails" tag="p" />
                     </Dialog>
                 </p>
@@ -212,13 +209,14 @@ class SecuritySettings extends React.Component {
                     </div>
                     <div className="totp-code">
                         <T k="title_step2" tag="div" className="bold" />
-                        <T k="title_enterTOTPCode" tag="div" />
+                        <T k="title_enterTOTPCodeFromApp" tag="div" />
                         <br />
-                        <T k="title_enterTOTPCodeFromApp" tag="div" className="dark-label" />
-                        <input type="text" className="totp-input"
-                            disabled={!this.twoFASecret || this.totpCodeValidating}
-                            value={this.totpCode} onChange={this.onTOTPCodeChange}
-                            style={{ backgroundColor: this.totpCodeError ? '#ffaaaa' : '#ffffff' }} />
+                        <BetterInput label={t('title_enterTOTPCode')}
+                            className={css('totp-input', { 'totp-error': this.totpCodeError })}
+                            value={this.totpCode}
+                            onChange={this.onTOTPCodeChange}
+                            acceptOnBlur="false"
+                        />
                         {this.totpCodeValidating ? <ProgressBar type="circular" className="totp-progress" /> : null}
                     </div>
                 </div>
@@ -248,7 +246,7 @@ class SecuritySettings extends React.Component {
     render() {
         window.c = this;
         return (
-            <div>
+            <div className="security-settings">
                 {this.renderAccountKeySection()}
                 {User.current.twoFAEnabled ? this.render2faEnabledSection() : this.render2faSetupSection()}
                 {this.renderAutologinSection()}

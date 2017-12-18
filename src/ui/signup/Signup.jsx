@@ -153,7 +153,17 @@ const config = require('~/config');
     get signupNav() {
         const { step, steps } = this;
         const isLastStep = step === steps.length - 1;
-        if (this.step === 0) return <Button label={t('button_getStarted')} onClick={this.advance} primary />;
+
+        if (this.step === 0) {
+            return (
+                <Button
+                    label={t('button_getStarted')}
+                    onClick={this.advance}
+                    className="button-affirmative"
+                />
+            );
+        }
+
         return (
             <div className="signup-nav">
                 <Button flat

@@ -18,16 +18,9 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    max-height: 0;
     padding: 0 $padding-default;
     margin-bottom: $margin-small;
     overflow: hidden;
-
-    transition: max-height 250ms;
-
-    &.show {
-      max-height: $button-neutral-height;
-    }
 
     .room-invites-button {
       width: 100%;

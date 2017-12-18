@@ -38,6 +38,12 @@
     overflow: hidden;
   }
 
+  // Override default hover to prevent double-hover blue effect
+  .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover:hover:not(.active),
+  .rt-list-listItem:hover:not(.active) {
+    background-color: #afdff2;
+  }
+
   .rt-list-large {
     overflow: hidden;
   }

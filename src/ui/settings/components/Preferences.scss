@@ -25,6 +25,10 @@ $pref-width: 480px;
 
   .rt-checkbox-check {
     border-color: $icon-dark-active;
+
+    &.rt-checkbox-checked {
+      border-color: $blue;
+    }
   }
 
   .prefs-files {

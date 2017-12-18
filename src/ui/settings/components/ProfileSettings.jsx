@@ -214,7 +214,7 @@ class Profile extends React.Component {
                             tooltip={t('button_delete')} />
                         <TooltipIconButton icon="add_a_photo"
                             onClick={AvatarEditor.selectFile}
-                            tooltip={t('button_addOrUpdateAvatar')} />
+                            tooltip={t('button_updateAvatar')} />
                     </div>
                     {User.current.savingAvatar
                         ? <div className="save-progress-overlay">

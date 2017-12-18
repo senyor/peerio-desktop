@@ -169,7 +169,7 @@ class ChatView extends React.Component {
                         icon="videocam"
                         disabled={!chat || !chat.canSendJitsi}
                         onClick={this.postJitsiLink}
-                        tooltip={t('title_videoCall')}
+                        tooltip={t('button_startVideoCall')}
                         tooltipPosition="bottom"
                     />
                     <TooltipIconButton

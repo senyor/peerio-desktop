@@ -76,27 +76,13 @@ class ChatList extends React.Component {
                                     </div>
                                 </TooltipDiv>
 
-                                <li className={css('room-invites-button-container',
-                                    { show: newChatInvites > 0 }
-                                )}>
-                                    <Button key="room-invites"
-                                        className={css(
-                                            'room-invites-button',
-                                            'button-affirmative',
-                                            { selected: routerStore.isRoomInvites }
-                                        )}
-                                        onClick={this.goToChannelInvite}>
-                                        {t('title_viewChannelInvites')}
-                                    </Button>
-                                </li>
-
                                 <FlipMove duration={200} easing="ease-in-out" >
                                     {newChatInvites > 0 &&
                                         <li className="room-invites-button-container">
                                             <Button key="room-invites"
                                                 className={css(
                                                     'room-invites-button',
-                                                    'button-neutral',
+                                                    'button-affirmative',
                                                     { selected: routerStore.isRoomInvites }
                                                 )}
                                                 onClick={this.goToChannelInvite}>

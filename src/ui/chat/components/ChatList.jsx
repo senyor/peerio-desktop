@@ -141,12 +141,12 @@ class ChatList extends React.Component {
                                         (<ListItem key={c.id || c.tempId}
                                             className={css('dm-item', { active: c.active, unread: c.unreadCount > 0 })}
                                             leftIcon={
-                                                !c.participants || c.participants.length !== 1
+                                                c.otherParticipants.length !== 1
                                                     ? <div className="avatar-group-chat material-icons">people</div>
                                                     : null}
                                             leftActions={[
-                                                c.participants && c.participants.length === 1
-                                                    ? <Avatar key="a" contact={c.participants[0]} size="small" />
+                                                c.otherParticipants.length === 1
+                                                    ? <Avatar key="a" contact={c.otherParticipants[0]} size="small" />
                                                     : null
                                             ]}
 

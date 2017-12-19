@@ -20,8 +20,8 @@ function makeUsernameSuggestions(getView) {
         matchers: [/(?<=^|\s|\u{fffc})@([a-zA-Z_]{0,32})$/u],
         source(matchData) {
             const chat = chatStore.activeChat;
-            if (!chat || !chat.participants.length) return null;
-            return contactStore.filter(matchData.match[1].toLocaleLowerCase(), chat.participants);
+            if (!chat || !chat.otherParticipants.length) return null;
+            return contactStore.filter(matchData.match[1].toLocaleLowerCase(), chat.otherParticipants);
         },
         formatter: contact => (
             <span>

@@ -88,9 +88,8 @@ app.on('ready', () => {
     buildGlobalShortcuts();
     setMainMenu();
     app.setAppUserModelId(config.appId);
-
-    getSavedWindowState()
-        .then(() => config.FileStream.createTempCache())
+    config.FileStream.createTempCache()
+        .then(getSavedWindowState)
         .then(windowState => {
             const winConfig = Object.assign({
                 show: false,

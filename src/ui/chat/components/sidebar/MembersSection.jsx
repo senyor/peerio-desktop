@@ -2,7 +2,7 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { List, ListItem, ListSubHeader, IconMenu, MenuItem } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
-const { chatStore, contactStore, chatInviteStore } = require('peerio-icebear');
+const { chatStore, contactStore, chatInviteStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const uiStore = require('~/stores/ui-store');
@@ -59,7 +59,10 @@ class MembersSection extends React.Component {
                         </span>
                     </span>
                 }
-                rightActions={chat.isAdmin(c) ? adminMenu : userMenu}
+                rightActions={(User.current.username !== c.username)
+                    ? (chat.isAdmin(c) ? adminMenu : userMenu)
+                    : []
+                }
                 onClick={this.openContact}
             />
         </span>);
@@ -80,7 +83,7 @@ class MembersSection extends React.Component {
         if (!chat) return null;
         const invited = chatInviteStore.sent.get(chat.id);
         const { isChannel, canIAdmin } = chat;
-        if (!isChannel && !chat.participants.length) {
+        if (!isChannel && !chat.otherParticipants.length) {
             // this removes member section from DM chat with self
             return null;
         }
@@ -129,10 +132,9 @@ class MembersSection extends React.Component {
                         : null
                     }
                     <List>
-                        {chat.joinedParticipants
-                            ? chat.joinedParticipants.map(
-                                (c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu)
-                            ) : null}
+                        {chat.allJoinedParticipants.map(
+                            (c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu))
+                        }
                         {invited && invited.length
                             ? <ListSubHeader caption={t('title_invited')} />
                             : null}
@@ -141,7 +143,7 @@ class MembersSection extends React.Component {
                             : null}
                     </List>
                 </div>
-            </SideBarSection >
+            </SideBarSection>
         );
     }
 }

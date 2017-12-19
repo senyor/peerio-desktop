@@ -1,5 +1,5 @@
 const React = require('react');
-const { reaction } = require('mobx');
+const { reaction, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Link, ProgressBar } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
@@ -15,8 +15,14 @@ const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerific
 class MessageList extends React.Component {
     loadTriggerDistance = 20;
     stickDistance = 50;
-    // lastRenderedMessageId = null;
     lastRenderedChatId = null;
+
+    @computed get displayParticipants() {
+        const chat = chatStore.activeChat;
+        if (!chat) return [];
+        if (chat.isChannel) return chat.allParticipants;
+        return chat.otherParticipants;
+    }
 
     componentWillMount() {
         this.stickToBottom = true;
@@ -192,7 +198,7 @@ class MessageList extends React.Component {
         return (
             <div className="messages-start">
                 <div className="avatars">
-                    {chat.participants.map(c => <Avatar size="large" key={c.username} contact={c} />)}
+                    {this.displayParticipants.map(c => <Avatar size="large" key={c.username} contact={c} />)}
                 </div>
                 <T k={chat.isChannel ? 'title_chatBeginningRoom' : 'title_chatBeginning'} tag="div" className="title">
                     {{

@@ -150,7 +150,7 @@ class ChatView extends React.Component {
                                     tooltip={t('title_Members')}
                                     tooltipPosition="bottom"
                                     onClick={this.toggleSidebar} />
-                                {chat.participants && chat.participants.length ? chat.participants.length : ''}
+                                {chat.allParticipants.length || ''}
                             </div>
                             : (chat.changingFavState
                                 ? <ProgressBar type="circular" mode="indeterminate" />
@@ -210,7 +210,7 @@ class ChatView extends React.Component {
                                     closeable
                                     onClose={this.closeUserPicker}
                                     onAccept={this.addParticipants}
-                                    exceptContacts={chat.participants}
+                                    exceptContacts={chat.allParticipants}
                                     title={t('title_addParticipants')} noDeleted />
                             </div>
                             : <div className="messages-container">

@@ -107,7 +107,7 @@ class DMNotification extends MessageNotification {
 }
 
 function send(props) {
-    if (props.chat.participants.length <= 1) {
+    if (props.chat.otherParticipants.length <= 1) {
         const m = new DMNotification(props);
         m.send();
     } else if (props.freshBatchMentionCount) {

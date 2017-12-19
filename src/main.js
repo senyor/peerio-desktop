@@ -110,8 +110,6 @@ app.on('ready', () => {
             mainWindow.loadURL(`file://${__dirname}/index.html`);
 
             const rememberWindowState = () => {
-                // happens after window is closed
-                if (!windowState || !mainWindow) return;
                 if (mainWindow.isMaximized()) {
                     windowState.isMaximized = true;
                     return;
@@ -127,7 +125,7 @@ app.on('ready', () => {
             mainWindow.once('ready-to-show', () => {
                 mainWindow.show();
                 mainWindow.focus();
-                if (windowState && windowState.isMaximized) {
+                if (windowState.isMaximized) {
                     mainWindow.maximize();
                 }
             });
@@ -152,22 +150,17 @@ app.on('ready', () => {
                 rememberWindowState();
             });
 
-            let closing = false;
-            let close = false;
-            mainWindow.on('close', e => {
-                if (close) return;
+            mainWindow.once('close', async e => {
                 e.preventDefault();
-                if (closing) return;
-                closing = true;
-                saveWindowState(windowState);
-                config.FileStream.deleteTempCache()
-                    .then(() => {
-                        close = true;
-                        mainWindow.close();
-                    });
+                try {
+                    await saveWindowState(windowState);
+                } catch (err) {
+                    console.error(err);
+                }
+                mainWindow.close();
             });
 
-            mainWindow.on('closed', () => {
+            mainWindow.once('closed', () => {
                 mainWindow = null;
             });
 
@@ -176,6 +169,17 @@ app.on('ready', () => {
             devtools.onAppReady(mainWindow);
             updater.start(mainWindow);
         });
+});
+
+app.once('will-quit', async e => {
+    e.preventDefault();
+    try {
+        await config.FileStream.deleteTempCache();
+        console.log('Cache deleted');
+    } catch (err) {
+        console.error(err);
+    }
+    app.quit();
 });
 
 app.on('window-all-closed', () => {

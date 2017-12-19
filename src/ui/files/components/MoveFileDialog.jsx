@@ -8,6 +8,7 @@ const Breadcrumb = require('./Breadcrumb');
 const Search = require('~/ui/shared-components/Search');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const css = require('classnames');
+const { getFolderByEvent } = require('~/helpers/icebear-dom');
 
 @observer
 class MoveFileDialog extends React.Component {
@@ -50,8 +51,8 @@ class MoveFileDialog extends React.Component {
         fileStore.folderFilter = query;
     }
 
-    @action.bound changeCurrentFolder(selectedFolder) {
-        this.currentFolder = selectedFolder;
+    @action.bound changeCurrentFolder(ev) {
+        this.currentFolder = getFolderByEvent(ev);
     }
 
     getFolderRow = (folder) => {

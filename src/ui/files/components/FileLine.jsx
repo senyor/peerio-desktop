@@ -161,7 +161,8 @@ class FileLine extends React.Component {
                             shareable shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.share}
                             newFolderDisabled
                             onRename={this.renameFile}
-                            moveable onMove={this.moveFile}
+                            moveable={this.props.moveable}
+                            onMove={this.moveFile}
                             deleteable onDelete={this.deleteFile}
                         />
                         {this.moveFileVisible && this.props.currentFolder &&

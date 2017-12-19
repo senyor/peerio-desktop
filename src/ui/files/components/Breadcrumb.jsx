@@ -150,6 +150,7 @@ class Breadcrumb extends React.Component {
                 </div>
                 {!this.props.currentFolder.isRoot && !this.props.noActions &&
                     <FolderActions
+                        moveable
                         onMove={this.props.onMove}
                         onDelete={this.props.onDelete}
                         onRename={this.props.onRename}

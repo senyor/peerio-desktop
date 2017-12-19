@@ -310,6 +310,7 @@ class Files extends React.Component {
                 <FolderLine
                     key={f.folderId}
                     folder={f}
+                    moveable={fileStore.folders.root.folders.length > 0}
                     onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.deleteFolder}
@@ -321,6 +322,7 @@ class Files extends React.Component {
                     key={f.fileId}
                     file={f}
                     currentFolder={currentFolder}
+                    moveable={fileStore.folders.root.folders.length > 0}
                     fileActions
                     fileDetails
                 />);

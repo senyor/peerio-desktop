@@ -56,6 +56,7 @@ class FolderLine extends React.Component {
                     <div className="file-actions text-right">
                         <FolderActions
                             onRename={this.props.onRenameFolder}
+                            moveable={this.props.moveable}
                             onMove={this.props.onMoveFolder}
                             onDelete={this.props.onDeleteFolder}
                         />

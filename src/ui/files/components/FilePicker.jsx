@@ -5,7 +5,6 @@ const { observable, computed, action } = require('mobx');
 const { Dialog, ProgressBar } = require('~/react-toolbox');
 const FileLine = require('./FileLine');
 const FolderLine = require('./FolderLine');
-const uiStore = require('../../../stores/ui-store');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./Breadcrumb');
 const { t } = require('peerio-translator');
@@ -25,7 +24,6 @@ class FilePicker extends React.Component {
     }
 
     checkScrollPosition = () => {
-        console.log('check scroll position');
         if (!this.container) return;
         if (this.renderedItemsCount >= this.items.length) {
             this.renderedItemsCount = this.items.length;
@@ -43,18 +41,20 @@ class FilePicker extends React.Component {
     };
 
     setScrollerRef = ref => {
-        if (!ref) return;
-        const node = ref.querySelector('ul.file-picker-scroll-container');
-        if (this.container === node) return;
-        if (!node) return;
-        node.addEventListener('scroll', this.enqueueCheck, false);
-        node.scrollListener = true;
-        this.container = node;
+        if (!ref) {
+            this.container = null;
+            return;
+        }
+        ref.addEventListener('scroll', this.enqueueCheck, false);
+        ref.scrollListener = true;
+        this.container = ref;
+        this.enqueueCheck(); // check the initial situation
     }
 
     handleClose = () => {
         fileStore.clearSelection();
         this.props.onClose();
+        this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     };
 
     handleShare = () => {
@@ -103,7 +103,7 @@ class FilePicker extends React.Component {
             }
         ];
 
-        const { currentFolder } = uiStore;
+        const { currentFolder } = this;
         const items = [];
         const data = this.items;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
@@ -134,10 +134,10 @@ class FilePicker extends React.Component {
                 onEscKeyDown={this.handleClose}
                 onOverlayClick={this.handleClose}>
                 {!fileStore.loading && this.props.active ?
-                    <div ref={this.setScrollerRef} className="file-picker-body">
+                    <div className="file-picker-body">
                         <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
                         {fileStore.currentFilter ? this.searchResultsHeader : this.breadCrumbsHeader}
-                        <div className="file-table-wrapper">
+                        <div ref={this.setScrollerRef} className="file-table-wrapper">
                             <div className="file-table-body">
                                 {items}
                             </div>

@@ -147,7 +147,9 @@ function ChatInfo(props) {
         <div className="selectable">
             <Chip className="selectable">{props.c.id}</Chip><br />
             {
-                props.c.allParticipants.map(p => <Chip key={p.username}>{p.username}</Chip>)
+                props.c.allParticipants
+                    ? props.c.allParticipants.map(p => <Chip key={p.username}>{p.username}</Chip>)
+                    : <Chip className="selectable">{User.current.username}</Chip>
             }
         </div>
     );

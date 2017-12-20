@@ -6,6 +6,7 @@ $zero-chats-break: 984px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 1;
   height: 100vh;
   width: 100%;
   background: $background-root;

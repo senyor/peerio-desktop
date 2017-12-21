@@ -4,7 +4,7 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const { TooltipAvatar } = require('~/react-toolbox');
-const { FontIcon } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
 const uiStore = require('~/stores/ui-store');
 const { contactStore } = require('peerio-icebear');
 
@@ -31,9 +31,9 @@ class Avatar extends React.Component {
         let icon;
         if (this.props.size !== 'tiny') {
             if (c.isDeleted) {
-                icon = <FontIcon value="remove_circle" />;
+                icon = <MaterialIcon icon="remove_circle" />;
             } else if (c.tofuError) {
-                icon = <FontIcon value="error" />;
+                icon = <MaterialIcon icon="error" />;
             }
         }
 

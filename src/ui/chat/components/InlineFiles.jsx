@@ -1,6 +1,7 @@
 const React = require('react');
 const { fileStore, User } = require('peerio-icebear');
-const { Button, FontIcon, ProgressBar, Dialog, RadioGroup, RadioButton } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { Button, ProgressBar, Dialog, RadioGroup, RadioButton } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
 const { observable, reaction, when } = require('mobx');
 const { observer } = require('mobx-react');
@@ -167,7 +168,7 @@ class InlineFile extends React.Component {
         return (
             <div className="first-time">
                 <div className="warning-header">
-                    <FontIcon value="security" />
+                    <MaterialIcon icon="security" />
                     <T k="title_enableImagePreviews" className="text" />
                 </div>
                 <div className="warning-body">
@@ -213,7 +214,7 @@ class InlineFile extends React.Component {
             <div className="invalid-file" key={id} data-id={id}
                 onClick={uiStore.showFileSignatureErrorDialog}>
                 <div className="container">
-                    <FontIcon value="info_outline" />
+                    <MaterialIcon icon="info_outline" />
                     <div className="file-name">{t('error_invalidFileSignature')}</div>
                 </div>
             </div>
@@ -261,7 +262,7 @@ class InlineFile extends React.Component {
                                 <div className="clickable file-name-container" onClick={this.props.onDownload}>
                                     <div className="file-icon">
                                         {file.isImage &&
-                                            <FontIcon value="image" />
+                                            <MaterialIcon icon="image" />
                                         }
                                     </div>
                                     <div className="file-name">
@@ -328,7 +329,7 @@ class InlineFile extends React.Component {
                 <div>
                     {this.firstSave &&
                         <div className="update-settings">
-                            <FontIcon value="check_circle" />
+                            <MaterialIcon icon="check_circle" />
                             <T k="title_updateSettingsAnyTime" className="text">{textParser}</T>
                         </div>
                     }

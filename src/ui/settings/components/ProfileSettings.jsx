@@ -1,7 +1,8 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, List, ListItem, FontIcon, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { Button, List, ListItem, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
 const { User, contactStore, validation } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -145,7 +146,7 @@ class Profile extends React.Component {
                                     }
                                     leftIcon={
                                         a.primary
-                                            ? <FontIcon value="radio_button_checked"
+                                            ? <MaterialIcon icon="radio_button_checked"
                                                 className="button-selected"
                                             />
                                             : <TooltipIconButton className={a.confirmed ? '' : 'hide'}

@@ -1,5 +1,6 @@
 const React = require('react');
-const { FontIcon, IconButton, Input } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { IconButton, Input } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { observer } = require('mobx-react');
 
@@ -16,7 +17,7 @@ class Search extends React.Component {
     render() {
         return (
             <div className="search">
-                <FontIcon value="search" className="search-icon" />
+                <MaterialIcon icon="search" className="search-icon" />
                 <Input placeholder={t('title_search')} value={this.props.query} onChange={this.handleChange} />
                 {this.props.query === '' ? null : <IconButton icon="highlight_off" onClick={this.handleClear} />}
             </div>

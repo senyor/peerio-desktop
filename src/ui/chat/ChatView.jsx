@@ -1,7 +1,8 @@
 const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { TooltipIconButton, ProgressBar } = require('~/react-toolbox');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
 const { chatStore } = require('peerio-icebear');
@@ -136,7 +137,7 @@ class ChatView extends React.Component {
                                     readOnly={!chat.canIAdmin}
                                     onBlur={this.hideChatNameEditor} ref={this.chatNameEditorRef} />
                                 : <div className="name-editor-inner">
-                                    {chat.canIAdmin && chat.isChannel ? <FontIcon value="edit" /> : null}
+                                    {chat.canIAdmin && chat.isChannel ? <MaterialIcon icon="edit" /> : null}
                                     <div className="title-content">
                                         {chat.name}
                                     </div>

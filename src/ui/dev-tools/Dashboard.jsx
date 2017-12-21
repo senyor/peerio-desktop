@@ -1,5 +1,5 @@
 const React = require('react');
-const { Card, CardTitle, CardText, Input, Button } = require('~/react-toolbox');
+const { Input, Button } = require('~/react-toolbox');
 const { User, socket } = require('peerio-icebear');
 const config = require('~/config');
 const { observable } = require('mobx');
@@ -9,24 +9,18 @@ class DevToolsDashboard extends React.Component {
     render() {
         return (
             <div className="dashboard selectable">
-                <Card style={{ width: '100%' }}>
-                    <CardTitle title="Socket server" />
-                    <CardText>
-                        <ChangeServer />
-                    </CardText>
-                </Card>
-                <Card style={{ width: '35%' }}>
-                    <CardTitle title="Current user" />
-                    <CardText>
-                        <UserDetails />
-                    </CardText>
-                </Card>
-                <Card style={{ width: '57%' }}>
-                    <CardTitle title="Config" />
-                    <CardText>
-                        <pre className="selectable">{JSON.stringify(config, null, 2)}</pre>
-                    </CardText>
-                </Card>
+                <div className="card">
+                    <div className="headline">Socket server</div>
+                    <ChangeServer />
+                </div>
+                <div className="card width-1_3">
+                    <div className="headline">Current user</div>
+                    <UserDetails />
+                </div>
+                <div className="card width-2_3">
+                    <div className="headline">Config</div>
+                    <pre className="selectable">{JSON.stringify(config, null, 2)}</pre>
+                </div>
             </div>
         );
     }

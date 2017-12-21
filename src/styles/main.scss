@@ -23,6 +23,9 @@
 // React Toolbox reused overrides
 @import './rt-overrides';
 
+// PeerUI components
+@import '../ui-library/_all';
+
 // Components that get reused between views
 @import './components/grid';
 @import './components/chip-wrapper';

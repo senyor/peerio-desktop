@@ -1,15 +1,19 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const css = require('classnames');
-const FileActions = require('./FileActions');
-const FileLoading = require('./FileLoading');
-const { Button, ProgressBar } = require('~/react-toolbox');
+
 const { fileStore, User } = require('peerio-icebear');
 const { downloadFile } = require('~/helpers/file');
-const uiStore = require('~/stores/ui-store');
-const { t } = require('peerio-translator');
 const moment = require('moment');
+const css = require('classnames');
+const { t } = require('peerio-translator');
+const uiStore = require('~/stores/ui-store');
+
+const { Checkbox } = require('~/peer-ui');
+const { ProgressBar } = require('~/react-toolbox');
+
+const FileActions = require('./FileActions');
+const FileLoading = require('./FileLoading');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const MoveFileDialog = require('./MoveFileDialog');
 
@@ -107,12 +111,10 @@ class FileLine extends React.Component {
                 onMouseLeave={this.onHideActions}>
 
                 {this.props.checkbox &&
-                    <Button
-                        className="checkbox no-ripple"
-                        icon={this.props.selected
-                            ? 'check_box'
-                            : 'check_box_outline_blank'}
-                        onClick={this.props.onToggleSelect}
+                    <Checkbox
+                        className="file-checkbox"
+                        checked={this.props.selected}
+                        onChange={this.props.onToggleSelect}
                     />
                 }
 

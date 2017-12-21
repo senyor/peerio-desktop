@@ -1,8 +1,9 @@
 const React = require('react');
 const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
+const { MaterialIcon } = require('~/peer-ui');
 const {
-    Button, Chip, FontIcon, IconButton, Input, List,
+    Button, Chip, IconButton, Input, List,
     ListItem, ListSubHeader, ProgressBar
 } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
@@ -277,7 +278,7 @@ class UserPicker extends React.Component {
                                 <div className="message-search-inner">
                                     {this.props.isDM && <T k="title_to" className="title-to" />}
                                     <div className="new-chat-search">
-                                        <FontIcon value="search" />
+                                        <MaterialIcon icon="search" />
                                         <div className="chip-wrapper">
                                             {this.selected.map(c =>
                                                 (<Chip key={c.username}
@@ -332,7 +333,7 @@ class UserPicker extends React.Component {
                                 <div className="user-search-error-container">
                                     <div className="user-search-error">
                                         <div className="search-error-text">
-                                            <FontIcon value="help_outline" />
+                                            <MaterialIcon icon="help_outline" />
                                             {this.suggestInviteEmail &&
                                                 <T k="title_inviteContactByEmail">
                                                     {{ email: this.suggestInviteEmail }}

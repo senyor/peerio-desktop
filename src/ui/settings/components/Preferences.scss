@@ -23,14 +23,6 @@ $pref-width: 480px;
     // margin-bottom: $margin-default;
   }
 
-  .rt-checkbox-check {
-    border-color: $icon-dark-active;
-
-    &.rt-checkbox-checked {
-      border-color: $blue;
-    }
-  }
-
   .prefs-files {
     .files-location-container {
       .narrow {

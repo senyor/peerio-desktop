@@ -1,5 +1,6 @@
 const React = require('react');
-const { AppBar, Menu, MenuItem, MenuDivider, FontIcon, Chip } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { AppBar, Menu, MenuItem, MenuDivider, Chip } = require('~/react-toolbox');
 const { User, socket, util } = require('peerio-icebear');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
@@ -40,8 +41,8 @@ class DevTools extends React.Component {
                         <MenuDivider />
                         <MenuItem icon="close" caption="Close" onClick={this.quit} />
                     </Menu>
-                    <FontIcon value="file_upload" /> {util.formatBytes(socket.bytesSent)}&nbsp;&nbsp;&nbsp;
-                    <FontIcon value="file_download" /> {util.formatBytes(socket.bytesReceived)}
+                    <MaterialIcon icon="file_upload" /> {util.formatBytes(socket.bytesSent)}&nbsp;&nbsp;&nbsp;
+                    <MaterialIcon icon="file_download" /> {util.formatBytes(socket.bytesReceived)}
                     <div className="separator" />
                     {
                         socket.connected

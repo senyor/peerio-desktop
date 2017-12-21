@@ -2,7 +2,8 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { ProgressBar, FontIcon, IconButton } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { ProgressBar, IconButton } = require('~/react-toolbox');
 
 @observer
 class UploadInChatProgress extends React.Component {
@@ -18,7 +19,7 @@ class UploadInChatProgress extends React.Component {
         return (
             <div className="chat-upload-progress">
                 <div className="progress-content">
-                    <FontIcon value="cloud_upload" />
+                    <MaterialIcon value="cloud_upload" />
                     <div className="progress-title">
                         {queued ? t('title_queuedFiles', { name: file.name, remaining: queued })
                             : t('title_uploading', { name: file.name })}

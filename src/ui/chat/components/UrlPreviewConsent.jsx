@@ -3,7 +3,8 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const { t } = require('peerio-translator');
-const { Button, FontIcon, RadioGroup, RadioButton } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { Button, RadioGroup, RadioButton } = require('~/react-toolbox');
 const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
@@ -59,7 +60,7 @@ class UrlPreviewConsent extends React.Component {
         return (
             <div className="url-consent first-time">
                 <div className="warning-header">
-                    <FontIcon value="security" />
+                    <MaterialIcon icon="security" />
                     <T k="title_EnableUrlPreviews" className="text" />
                 </div>
                 <div className="warning-body">
@@ -84,7 +85,7 @@ class UrlPreviewConsent extends React.Component {
                 </div>
                 { this.firstSave &&
                     <div className={css('update-settings', { nomargin: !uiStore.prefs.externalContentEnabled })}>
-                        <FontIcon value="check_circle" />
+                        <MaterialIcon icon="check_circle" />
                         <T k="title_updateSettingsAnyTime" className="text">{textParser}</T>
                     </div>
                 }

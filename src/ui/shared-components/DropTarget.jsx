@@ -2,7 +2,8 @@ const React = require('react');
 const dragStore = require('~/stores/drag-drop-store');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, Dialog } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { Dialog } = require('~/react-toolbox');
 const { fileStore, chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
@@ -78,7 +79,7 @@ class DropTarget extends React.Component {
         return (
             <div className="global-drop-target">
                 <div className="drop-content">
-                    <FontIcon value="cloud_upload" />
+                    <MaterialIcon icon="cloud_upload" />
                     <div className="display-2">
                         {t('title_dropToUpload', { count: ''/* dragStore.hoveringFileCount */ })}
                         <div className="display-1">{/* util.formatBytes(dragStore.hoveringFileSize) */}</div>

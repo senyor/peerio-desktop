@@ -1,7 +1,7 @@
 const React = require('react');
 const { reaction, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Link, ProgressBar } = require('~/react-toolbox');
+const { ProgressBar } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
 const Message = require('./Message');
@@ -208,7 +208,7 @@ class MessageList extends React.Component {
                 {config.disablePayments || User.current.hasActivePlans ? null
                     : <div className="archive-link">
                         {t('title_chatArchive')}
-                        &nbsp;<Link href={urls.upgrade} label={t('button_upgradeForArchive')} />
+                        &nbsp;<a href={urls.upgrade}>{t('button_upgradeForArchive')}</a>
                     </div>
                 }
                 <IdentityVerificationNotice />

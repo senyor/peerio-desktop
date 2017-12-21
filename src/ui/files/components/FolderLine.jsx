@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const FolderActions = require('./FolderActions');
-const { FontIcon } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 
 @observer
@@ -30,11 +30,11 @@ class FolderLine extends React.Component {
                 }
 
                 {this.props.checkboxPlaceholder &&
-                    <div className="checkbox" />
+                    <div className="file-checkbox" />
                 }
 
                 <div className="file-icon">
-                    <FontIcon value="folder" />
+                    <MaterialIcon icon="folder" />
                 </div>
 
                 <div className="file-name clickable selectable"

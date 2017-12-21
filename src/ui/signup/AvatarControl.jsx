@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = require('react');
-const { FontIcon } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
 const { observer } = require('mobx-react');
 const AvatarDialog = require('./AvatarDialog');
 const { t } = require('peerio-translator');
@@ -9,7 +9,7 @@ const { t } = require('peerio-translator');
     getInstructions() {
         return (
             <div className="avatar-instructions">
-                <FontIcon value="add" />
+                <MaterialIcon icon="add" />
                 <p>{t('title_avatarInstructions')}</p>
                 <p className="caption">{t('title_optional')}</p>
             </div>

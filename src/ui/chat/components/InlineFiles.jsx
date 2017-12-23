@@ -1,7 +1,7 @@
 const React = require('react');
 const { fileStore, User } = require('peerio-icebear');
-const { MaterialIcon } = require('~/peer-ui');
-const { Button, ProgressBar, Dialog, RadioGroup, RadioButton } = require('~/react-toolbox');
+const { MaterialIcon, RadioButtons } = require('~/peer-ui');
+const { Button, ProgressBar, Dialog } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
 const { observable, reaction, when } = require('mobx');
 const { observer } = require('mobx-react');
@@ -71,6 +71,12 @@ class InlineFile extends React.Component {
         const file = fileStore.getById(this.props.id);
         if (file) file.visibleCounter--;
     }
+
+    radioOptions = [
+        { value: ALL_IMAGES, label: t('title_forAllImages') },
+        { value: UNDER_LIMIT_ONLY, label: t('title_forImagesUnder10') },
+        { value: DISABLED, label: t('title_disable') }
+    ];
 
     onSelectedModeChange = (value) => {
         this.selectedMode = value;
@@ -173,16 +179,11 @@ class InlineFile extends React.Component {
                 </div>
                 <div className="warning-body">
                     <p className="text"><T k="title_imagePreviewWarning" /></p>
-                    <RadioGroup
-                        className="options"
-                        name="option"
+                    <RadioButtons
                         value={this.selectedMode}
-                        onChange={this.onSelectedModeChange}>
-                        <RadioButton label={t('title_forAllImages')} value={ALL_IMAGES} />
-                        <RadioButton label={t('title_forImagesUnder10')} value={UNDER_LIMIT_ONLY} />
-                        <RadioButton label={t('title_disable')} value={DISABLED} />
-                    </RadioGroup>
-
+                        onChange={this.onSelectedModeChange}
+                        options={this.radioOptions}
+                    />
                     <div className="buttons-container">
                         <Button className="notnow" onClick={this.onDismiss}>{t('button_notNow')}</Button>
                         <Button className="save" onClick={this.onSubmitConsent}>{t('button_save')}</Button>

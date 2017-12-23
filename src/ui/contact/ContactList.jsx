@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { MaterialIcon } = require('~/peer-ui');
-const { Input, List, ListItem, TooltipIconButton, Dropdown } = require('~/react-toolbox');
+const { Dropdown, MaterialIcon } = require('~/peer-ui');
+const { Input, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { contactStore, chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
@@ -81,11 +81,12 @@ class ContactList extends React.Component {
                 </div>
 
                 <div className="list-sort">
-                    Sort by:
-                    <Dropdown className="sort-filter"
-                        source={this.sortOptions}
+                    <Dropdown
+                        label={t('title_sort')}
+                        options={this.sortOptions}
                         onChange={this.handleSortChange}
-                        value={contactStore.uiViewSortBy} />
+                        value={contactStore.uiViewSortBy}
+                    />
                 </div>
 
                 {contactStore.uiView.length

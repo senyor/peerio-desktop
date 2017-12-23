@@ -160,25 +160,6 @@
   }
 }
 
-.rt-dropdown-value {
-  display: flex;
-  align-items: center;
-  height: 48px;
-  padding: 0;
-}
-
-.rt-dropdown-values {
-  background: $white;
-}
-
-.rt-dropdown-values > *:hover {
-  background-color: #83c7ec;
-}
-
-.rt-dropdown-values > *.rt-dropdown-selected {
-  color: inherit;
-}
-
 .rt-input-errored > .rt-input-inputElement {
   margin-top: 2px;
   border: 1px solid $red-error;

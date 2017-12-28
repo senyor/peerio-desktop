@@ -242,17 +242,19 @@ class UserPicker extends React.Component {
     }
 
     render() {
+        const selectedFiles = fileStore.getSelectedFiles();
+
         return (
             <div className="user-picker">
                 <div className={css('selected-items', { banish: !this.props.sharing })} >
                     <List>
                         <ListSubHeader key="header" caption={t('title_selectedFiles')} />
                         {
-                            fileStore.getSelectedFiles().map(f => (<ListItem
+                            selectedFiles.map(f => (<ListItem
                                 key={f.id}
                                 leftIcon="insert_drive_file"
                                 caption={f.name}
-                                rightIcon="remove_circle_outline" />))
+                                rightIcon={selectedFiles.length > 1 ? 'remove_circle_outline' : undefined} />))
                         }
 
                     </List>

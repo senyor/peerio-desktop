@@ -34,10 +34,12 @@
   }
 
   .file-icon {
+    cursor: pointer;
     min-width: 48px;
     padding-right: $padding-small;
 
     .material-icons {
+      display: block;
       font-size: 32px;
     }
   }

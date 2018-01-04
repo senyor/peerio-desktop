@@ -127,8 +127,15 @@ class FileLine extends React.Component {
                     </div>
                 }
 
-                <div className="file-icon">
-                    <FileSpriteIcon type={file.iconType} size="medium" />
+                <div className="file-icon selectable"
+                    onClick={this.props.clickToSelect
+                        ? this.props.onToggleSelect
+                        : this.download
+                    } >
+                    <FileSpriteIcon
+                        type={file.iconType}
+                        size="medium"
+                    />
                 </div>
 
                 <div className="file-name selectable"

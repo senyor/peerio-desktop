@@ -33,7 +33,8 @@ class FolderLine extends React.Component {
                     <div className="file-checkbox" />
                 }
 
-                <div className="file-icon">
+                <div className="file-icon"
+                    onClick={this.props.onChangeFolder} >
                     <MaterialIcon icon="folder" />
                 </div>
 

@@ -91,6 +91,12 @@ class MessageList extends React.Component {
         window.requestAnimationFrame(this.smoothScrollStep);
     }
 
+    instantlyScrollToBottom = () => {
+        const el = this.containerRef;
+        if (!el) return;
+        el.scrollTop = el.scrollHeight - el.clientHeight;
+    };
+
     scrollToBottomIfNeeded() {
         if (!chatStore.activeChat) {
             this.stickToBottom = true;
@@ -100,6 +106,8 @@ class MessageList extends React.Component {
         if (this.lastRenderedChatId !== chatStore.activeChat.id) {
             this.lastRenderedChatId = chatStore.activeChat.id;
             this.stickToBottom = true;
+            this.instantlyScrollToBottom();
+            return;
         }
         if (this.stickToBottom) setTimeout(this.scrollToBottom);
     }

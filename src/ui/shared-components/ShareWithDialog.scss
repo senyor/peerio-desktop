@@ -1,0 +1,95 @@
+$share-with-spacing: 84px;
+$list-header-height: 48px;
+
+.share-with-dialog {
+  max-height: 80vh;
+  min-height: 80vh;
+
+  .rt-dialog-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 0;
+
+    .rt-dialog-title {
+      margin: $margin-large $margin-xl $margin-default;
+    }
+  }
+
+  .share-with-contents {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-search {
+    flex-shrink: 0;
+    width: calc(100% - 64px); // 2x $margin-xl
+    margin: 0 $margin-xl $margin-large;
+  }
+
+  .chat-list-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .list-header {
+    z-index: 1;
+    height: $list-header-height;
+    width: 100%;
+    top: 0;
+    padding-left: $share-with-spacing;
+    color: $text-dark-primary;
+    background-color: #eee;
+  }
+
+  .list-chats {
+    // override RT default padding
+    padding: 0;
+
+    .rt-list-item {
+      // override RT default padding
+      padding-left: 0;
+    }
+
+    .rt-list-listItem {
+      cursor: pointer;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-left: $share-with-spacing;
+
+      .checkbox {
+        display: none;
+        position: absolute;
+        left: $margin-xl;
+      }
+
+      &:hover .checkbox {
+        display: flex;
+      }
+
+      .display-name {
+        margin-left: $margin-default;
+        color: $text-dark-primary;
+      }
+
+      .username {
+        @extend %hint-error-label;
+        margin-left: $margin-small;
+        font-style: italic;
+      }
+    }
+  }
+
+  .list-channels {
+    padding: 8px 0;
+
+    .rt-list-item {
+      min-height: 24px;
+    }
+  }
+}

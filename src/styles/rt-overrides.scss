@@ -1,3 +1,4 @@
+// ~~~~ BUTTONS ~~~~
 // Use the right font stack for buttons
 .rt-button-button {
   font-family: $font-stack;
@@ -103,6 +104,7 @@ $button-neutral-height: 36px;
   display: none;
 }
 
+// ~~~~ ICONS ~~~~
 // horizontally flip icons (used for "share" buttons)
 .reverse-icon .material-icons {
   @extend %reverse-icon;
@@ -182,4 +184,9 @@ $button-neutral-height: 36px;
   .rt-ripple-rippleWrapper {
     display: none;
   }
+}
+
+// ~~~~ DIALOG ~~~~
+.rt-dialog-dialog {
+  border-radius: 8px;
 }

@@ -4,15 +4,22 @@ const css = require('classnames');
 
 class FileSpriteIcon extends React.Component {
     /* props
-        size: medium, large
+        size: small, medium, large, xlarge
         type: img, audio, video, txt, zip, pdf, ai, psd, word, xls, ppt, other
     */
 
     get pxResolution() {
-        if (this.props.size === 'large') {
-            return 'ic-48dp';
+        switch (this.props.size) {
+            case 'small':
+                return 'ic-24dp';
+            default:
+            case 'medium':
+                return 'ic-32dp';
+            case 'large':
+                return 'ic-48dp';
+            case 'xlarge':
+                return 'ic-56dp';
         }
-        return 'ic-32dp';
     }
 
     render() {

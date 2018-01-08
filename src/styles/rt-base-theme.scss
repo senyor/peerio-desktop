@@ -105,6 +105,12 @@
     border-radius: 2px;
   }
 
+  textarea {
+    padding-top: $padding-small;
+    border: 1px solid $black-38;
+    border-radius: 2px;
+  }
+
   .rt-input-label {
     top: 17px;
     padding-left: $padding-small;

@@ -222,17 +222,20 @@ class Message extends React.Component {
                                 </div>
                         }
                         <div className="message-body">
-                            {
-                                m.systemData || m.files
-                                    ? null
-                                    : MessageComponent
-                            }
-                            {m.files && m.files.length
-                                ? <InlineFiles
-                                    files={m.files}
-                                    onImageLoaded={this.props.onImageLoaded} />
-                                : null
-                            }
+                            {m.systemData || m.files
+                                ? null
+                                : MessageComponent}
+                            {m.files && m.files.length ? (
+                                <div className="inline-files-and-optional-message">
+                                    <InlineFiles
+                                        files={m.files}
+                                        onImageLoaded={this.props.onImageLoaded} />
+                                    {!!m.text &&
+                                        <div className="optional-message">
+                                            {MessageComponent}
+                                        </div>}
+                                </div>
+                            ) : null}
                             {
                                 /* SECURITY: sanitize if you change this to  render in dangerouslySetInnerHTML */
                                 this.renderSystemData(m)
@@ -244,8 +247,7 @@ class Message extends React.Component {
                                         urlData={urlData}
                                         onImageLoaded={this.props.onImageLoaded}
                                     />)
-                                )
-                                : null}
+                                ) : null}
                             {!uiStore.prefs.externalContentConsented && m.hasUrls &&
                                 <UrlPreviewConsent />
                             }

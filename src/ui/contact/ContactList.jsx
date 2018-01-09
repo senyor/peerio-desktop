@@ -1,6 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { FontIcon, Input, List, ListItem, TooltipIconButton, Dropdown } = require('~/react-toolbox');
+const { Dropdown, MaterialIcon } = require('~/peer-ui');
+const { Input, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { contactStore, chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
@@ -74,17 +75,18 @@ class ContactList extends React.Component {
         return (
             <div className="contacts-view">
                 <div className="toolbar">
-                    <FontIcon value="search" />
+                    <MaterialIcon icon="search" />
                     <Input placeholder={t('title_findAContact')} value={contactStore.uiViewSearchQuery}
                         onChange={this.handleSearchQueryChange} />
                 </div>
 
                 <div className="list-sort">
-                    Sort by:
-                    <Dropdown className="sort-filter"
-                        source={this.sortOptions}
+                    <Dropdown
+                        label={t('title_sort')}
+                        options={this.sortOptions}
                         onChange={this.handleSortChange}
-                        value={contactStore.uiViewSortBy} />
+                        value={contactStore.uiViewSortBy}
+                    />
                 </div>
 
                 {contactStore.uiView.length
@@ -112,7 +114,7 @@ class ContactList extends React.Component {
                         )}
                     </div>
                     : <div className="suggest-add-contact">
-                        <FontIcon value="help_outline" />
+                        <MaterialIcon icon="help_outline" />
                         <T k="error_contactNotFound" className="text">{textParser}</T>
                     </div>
                 }

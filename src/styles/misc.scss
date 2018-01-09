@@ -19,6 +19,13 @@
   transform: rotateY(180deg);
 }
 
+// OVERRIDE USER AGENT STYLESHEET
+ul {
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-padding-start: 0;
+}
+
 // HIDE STUFF
 // doesn't affect layout.
 .hide {
@@ -89,4 +96,27 @@
 
 a.clickable {
   text-decoration: underline;
+}
+
+// INPUTS
+// User search input (search icon, round edges)
+// TODO: use this class in UserPicker
+.user-search {
+  @extend %flex-align-center;
+  display: flex;
+  width: 100%;
+  padding: 0 $padding-small 0 $padding-default;
+  overflow: hidden;
+  border: 1px solid $input-border;
+  border-radius: 24px;
+
+  .chip-wrapper {
+    padding: 0 8px;
+  }
+
+  .rt-input-input input {
+    padding: 0;
+    font-style: italic;
+    border: 0;
+  }
 }

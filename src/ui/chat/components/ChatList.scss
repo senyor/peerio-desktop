@@ -50,6 +50,25 @@
       height: 32px;
     }
 
+    &.pinned {
+      .rt-list-item {
+        position: relative;
+        padding-left: 48px;
+
+        &::before {
+          content: ' ';
+          position: absolute;
+          height: 24px;
+          width: 24px;
+          left: $margin-default;
+          background-image: url('./static/custom-icons/pin-on.svg');
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: 100%;
+        }
+      }
+    }
+
     &.new-dm-list-entry {
       .rt-list-left .rt-list-itemAction span {
         margin-right: $margin-default;

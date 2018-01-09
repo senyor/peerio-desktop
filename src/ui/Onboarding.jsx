@@ -2,7 +2,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const { FontIcon } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const { User } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
@@ -88,7 +88,7 @@ class Onboarding extends React.Component {
                 className={css('onboarding-to-do',
                     { 'done-first': done && index === 0, done, clickable: !done && !!action })}>
                 <div className="done-container">
-                    <FontIcon value={done ? 'check' : icon} />
+                    <MaterialIcon icon={done ? 'check' : icon} />
                     <div className="extraclass-container">
                         <div className={`title ${extraClass}`}>
                             {title}

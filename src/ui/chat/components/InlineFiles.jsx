@@ -1,6 +1,7 @@
 const React = require('react');
 const { fileStore, User } = require('peerio-icebear');
-const { Button, FontIcon, ProgressBar, Dialog, RadioGroup, RadioButton } = require('~/react-toolbox');
+const { MaterialIcon, RadioButtons } = require('~/peer-ui');
+const { Button, ProgressBar, Dialog } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
 const { observable, reaction, when } = require('mobx');
 const { observer } = require('mobx-react');
@@ -70,6 +71,12 @@ class InlineFile extends React.Component {
         const file = fileStore.getById(this.props.id);
         if (file) file.visibleCounter--;
     }
+
+    radioOptions = [
+        { value: ALL_IMAGES, label: t('title_forAllImages') },
+        { value: UNDER_LIMIT_ONLY, label: t('title_forImagesUnder10') },
+        { value: DISABLED, label: t('title_disable') }
+    ];
 
     onSelectedModeChange = (value) => {
         this.selectedMode = value;
@@ -167,21 +174,16 @@ class InlineFile extends React.Component {
         return (
             <div className="first-time">
                 <div className="warning-header">
-                    <FontIcon value="security" />
+                    <MaterialIcon icon="security" />
                     <T k="title_enableImagePreviews" className="text" />
                 </div>
                 <div className="warning-body">
                     <p className="text"><T k="title_imagePreviewWarning" /></p>
-                    <RadioGroup
-                        className="options"
-                        name="option"
+                    <RadioButtons
                         value={this.selectedMode}
-                        onChange={this.onSelectedModeChange}>
-                        <RadioButton label={t('title_forAllImages')} value={ALL_IMAGES} />
-                        <RadioButton label={t('title_forImagesUnder10')} value={UNDER_LIMIT_ONLY} />
-                        <RadioButton label={t('title_disable')} value={DISABLED} />
-                    </RadioGroup>
-
+                        onChange={this.onSelectedModeChange}
+                        options={this.radioOptions}
+                    />
                     <div className="buttons-container">
                         <Button className="notnow" onClick={this.onDismiss}>{t('button_notNow')}</Button>
                         <Button className="save" onClick={this.onSubmitConsent}>{t('button_save')}</Button>
@@ -213,7 +215,7 @@ class InlineFile extends React.Component {
             <div className="invalid-file" key={id} data-id={id}
                 onClick={uiStore.showFileSignatureErrorDialog}>
                 <div className="container">
-                    <FontIcon value="info_outline" />
+                    <MaterialIcon icon="info_outline" />
                     <div className="file-name">{t('error_invalidFileSignature')}</div>
                 </div>
             </div>
@@ -261,7 +263,7 @@ class InlineFile extends React.Component {
                                 <div className="clickable file-name-container" onClick={this.props.onDownload}>
                                     <div className="file-icon">
                                         {file.isImage &&
-                                            <FontIcon value="image" />
+                                            <MaterialIcon icon="image" />
                                         }
                                     </div>
                                     <div className="file-name">
@@ -328,7 +330,7 @@ class InlineFile extends React.Component {
                 <div>
                     {this.firstSave &&
                         <div className="update-settings">
-                            <FontIcon value="check_circle" />
+                            <MaterialIcon icon="check_circle" />
                             <T k="title_updateSettingsAnyTime" className="text">{textParser}</T>
                         </div>
                     }

@@ -139,7 +139,14 @@ class ChatList extends React.Component {
                                 <FlipMove duration={200} easing="ease-in-out">
                                     {chatStore.directMessages.map(c =>
                                         (<ListItem key={c.id || c.tempId}
-                                            className={css('dm-item', { active: c.active, unread: c.unreadCount > 0 })}
+                                            className={css(
+                                                'dm-item',
+                                                {
+                                                    active: c.active,
+                                                    unread: c.unreadCount > 0,
+                                                    pinned: c.isFavorite
+                                                }
+                                            )}
                                             leftIcon={
                                                 c.otherParticipants.length !== 1
                                                     ? <div className="avatar-group-chat material-icons">people</div>
@@ -159,9 +166,6 @@ class ChatList extends React.Component {
                                             itemContent={
                                                 <div className="item-content">
                                                     <span className="rt-list-primary">
-                                                        {c.isFavorite
-                                                            ? <span className="starred">&#x2605;</span>
-                                                            : null}
                                                         {c.name}
                                                     </span>
                                                     {/* <span className="rt-list-itemText">

@@ -1,6 +1,8 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Checkbox, FontIcon, Switch } = require('~/react-toolbox');
+const { Checkbox } = require('~/peer-ui');
+const { MaterialIcon } = require('~/peer-ui');
+const { Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { User, chatStore } = require('peerio-icebear');
@@ -50,8 +52,8 @@ class Preferences extends React.Component {
         }
     }
 
-    onFavContactsPreviewToggle(value) {
-        uiStore.prefs.externalContentJustForFavs = value;
+    onFavContactsPreviewToggle(ev) {
+        uiStore.prefs.externalContentJustForFavs = ev.target.checked;
         if (!uiStore.prefs.externalContentConsented) {
             uiStore.prefs.externalContentConsented = true;
         }
@@ -134,7 +136,7 @@ class Preferences extends React.Component {
                 <section className="section-divider prefs-url">
                     <p className="subheading">{t('title_urlPreview')}</p>
                     <div className="warning">
-                        <FontIcon value="security" />
+                        <MaterialIcon icon="security" />
                         <div>
                             <span>{t('title_EnableUrlPreviewWarning')}&nbsp;</span>
                             <T k="title_learnMore" />
@@ -146,11 +148,13 @@ class Preferences extends React.Component {
                     <Checkbox label={t('title_onlyFromFavourites')}
                         checked={uiStore.prefs.externalContentJustForFavs}
                         onChange={this.onFavContactsPreviewToggle} />
+
                 </section>
             </div>
         );
     }
 }
+
 /*
  <section>
      <div className="title">{t('title_privacy')}</div>

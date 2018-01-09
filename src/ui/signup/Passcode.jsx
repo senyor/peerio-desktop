@@ -3,7 +3,7 @@ const _ = require('lodash');
 const { Component } = require('react');
 const { observable, computed, reaction, action } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
 const { socket, validation } = require('peerio-icebear'); // eslint-disable-line
 const { t } = require('peerio-translator');
 const zxcvbn = require('zxcvbn');
@@ -183,7 +183,7 @@ class PasscodeStore extends OrderedFormStore {
                                 equalsErrorMessage: t('error_passwordRepeat')
                             }}
                             onKeyPress={this.handleKeyPress} />
-                        <FontIcon value={this.passcodeStrengthMeter[this.props.store.passcodeStrength].icon}
+                        <MaterialIcon icon={this.passcodeStrengthMeter[this.props.store.passcodeStrength].icon}
                             className={this.props.store.zxcvbnScore === null ? 'hide' :
                                 this.passcodeStrengthMeter[this.props.store.passcodeStrength].class}
                         />
@@ -193,7 +193,7 @@ class PasscodeStore extends OrderedFormStore {
                         {this.props.store.passcodeHints.entries().map(([key, hint]) => {
                             return (
                                 <li key={key} className={hint ? 'passed' : ''}>
-                                    <FontIcon value={hint ? 'lens' : 'panorama_fish_eye'} />
+                                    <MaterialIcon icon={hint ? 'lens' : 'panorama_fish_eye'} />
                                     {t(`title_passwordHint_${key}`)}
                                 </li>
                             );

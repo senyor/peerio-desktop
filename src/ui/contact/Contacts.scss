@@ -43,16 +43,8 @@
     padding-left: 32px;
     background: $black-06;
 
-    .sort-filter {
-      .rt-dropdown-value {
-        margin: 0;
-      }
-
-      .rt-input-inputElement {
-        padding: 0 0 0 10px;
-        font-weight: 600;
-        border: 0;
-      }
+    .p-dropdown .inputs-container {
+      width: 240px;
     }
   }
 }

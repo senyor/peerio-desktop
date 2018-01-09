@@ -80,13 +80,6 @@
   }
 }
 
-.rt-link-link {
-  display: inline-flex;
-  font-family: $font-stack;
-  text-decoration: underline;
-  opacity: 1 !important;
-}
-
 // INPUTS
 .rt-input-bar {
   display: none;
@@ -108,6 +101,12 @@
     margin-top: 0;
     transition: 150ms;
     // TODO border-radius variables
+    border: 1px solid $black-38;
+    border-radius: 2px;
+  }
+
+  textarea {
+    padding-top: $padding-small;
     border: 1px solid $black-38;
     border-radius: 2px;
   }
@@ -165,25 +164,6 @@
   .rt-input-inputElement {
     padding-right: 40px;
   }
-}
-
-.rt-dropdown-value {
-  display: flex;
-  align-items: center;
-  height: 48px;
-  padding: 0;
-}
-
-.rt-dropdown-values {
-  background: $white;
-}
-
-.rt-dropdown-values > *:hover {
-  background-color: #83c7ec;
-}
-
-.rt-dropdown-values > *.rt-dropdown-selected {
-  color: inherit;
 }
 
 .rt-input-errored > .rt-input-inputElement {

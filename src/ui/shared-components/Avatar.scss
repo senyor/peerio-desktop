@@ -1,23 +1,29 @@
 .avatar-wrapper {
   .clickable-avatar {
     cursor: pointer;
+    pointer-events: auto;
     transition: 150ms ease-in-out;
 
     &:hover {
       transform: translateY(-4px);
       box-shadow: $shadow-5;
     }
+  }
 
-    .image-container {
+  &:not(.clickable-avatar) {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .image-container {
+    display: flex;
+    align-content: center;
+    align-items: center;
+
+    img {
       display: flex;
-      align-content: center;
-      align-items: center;
-
-      img {
-        display: flex;
-        max-height: 100%;
-        max-width: 100%;
-      }
+      max-height: 100%;
+      max-width: 100%;
     }
   }
 }

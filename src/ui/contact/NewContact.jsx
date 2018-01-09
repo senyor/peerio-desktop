@@ -1,7 +1,8 @@
 const React = require('react');
 const { observable, action, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, IconButton, Input, FontIcon } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { Button, IconButton, Input } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
@@ -125,7 +126,7 @@ class NewContact extends React.Component {
 
                         <div className="message-search-wrapper">
                             <div className="new-chat-search">
-                                <FontIcon value="search" />
+                                <MaterialIcon icon="search" />
                                 <div className="chip-wrapper">
                                     <Input innerRef={this.onInputMount}
                                         placeholder={t(this.isInviteView ? 'title_enterEmail' : 'title_userSearch')}

@@ -1,7 +1,7 @@
 const React = require('react');
 const { computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 const FolderActions = require('./FolderActions');
 
@@ -144,7 +144,7 @@ class Breadcrumb extends React.Component {
                                     : '...'
                                 }
                             </a>
-                            {i !== folderPath.length - 1 && <FontIcon value="keyboard_arrow_right" />}
+                            {i !== folderPath.length - 1 && <MaterialIcon icon="keyboard_arrow_right" />}
                         </div>
                     ))}
                 </div>

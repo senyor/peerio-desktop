@@ -1,4 +1,8 @@
 .inline-files-container {
+  .optional-message {
+    margin-top: $margin-tiny;
+  }
+
   .first-time { // consent UI //
     max-width: 440px;
     padding-left: $padding-default;
@@ -34,17 +38,9 @@
         margin-bottom: $margin-default;
       }
 
-      .options {
+      .p-radio {
         padding-left: $padding-default;
         margin-top: $margin-xl;
-
-        .rt-radio-radio {
-          border-color: $text-dark-secondary;
-        }
-
-        .rt-radio-field {
-          margin-bottom: $margin-xl;
-        }
       }
     }
 

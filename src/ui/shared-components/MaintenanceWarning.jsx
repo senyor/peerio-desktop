@@ -1,7 +1,8 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { FontIcon, Dialog } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { Dialog } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { serverSettings } = require('peerio-icebear');
 const { t } = require('peerio-translator');
@@ -38,7 +39,7 @@ class MaintenanceWarning extends React.Component {
                 <div>
                     <div className="maintenance-wrapper" onClick={this.toggleDialog}>
                         <div className="maintenance-title">{t('title_maintenance')}</div>
-                        <FontIcon value="info" className="maintenance-icon" />
+                        <MaterialIcon icon="info" className="maintenance-icon" />
                     </div>
                     <Dialog className="dialog-maintenance" active={this.showDialog}
                         title={t('dialog_scheduledMaintenance')}

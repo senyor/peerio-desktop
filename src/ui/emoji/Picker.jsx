@@ -4,7 +4,7 @@ const React = require('react');
 const { observable, computed, action, runInAction } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const { FontIcon } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
 const _ = require('lodash');
 const { t } = require('peerio-translator');
 const { User } = require('peerio-icebear');
@@ -168,14 +168,16 @@ class EmojiSearch extends React.Component {
     render() {
         // Don't make IconButton out of clear search keyword button, it messes up blur event
         return (<div className="emoji-search">
-            <FontIcon value="search" className="search-icon" />
+            <MaterialIcon icon="search" className="search-icon" />
             <input className="emoji-search-input" type="text" placeholder={t('title_search')}
                 ref={this.inputRef}
                 onChange={this.onKeywordChange} value={this.keyword} />
             {
                 this.props.searchKeyword
-                    ? <FontIcon className="clear-keyword-button"
-                        value="highlight_off" onClick={this.clearSearchKeyword} />
+                    ? <MaterialIcon
+                        className="clear-keyword-button"
+                        icon="highlight_off"
+                        onClick={this.clearSearchKeyword} />
                     : null
             }
         </div>);

@@ -6,7 +6,6 @@
   width: 0;
   overflow: hidden;
   background: $black-01;
-  border-left: 1px solid $divider-dark;
 
   .rt-input-hint {
     top: 28px;
@@ -121,6 +120,10 @@
       padding-top: 25px;
       line-height: inherit;
     }
+  }
+
+  &.open {
+    border-left: 1px solid $divider-dark;
   }
 
   &.open,

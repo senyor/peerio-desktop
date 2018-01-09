@@ -4,7 +4,7 @@ const os = require('os');
 const path = require('path');
 
 const React = require('react');
-const { observable } = require('mobx');
+const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 
 const { t } = require('peerio-translator');
@@ -14,6 +14,7 @@ const { TooltipIconMenu, MenuItem, TooltipIconButton } = require('~/react-toolbo
 const FilePicker = require('~/ui/files/components/FilePicker');
 const Snackbar = require('~/ui/shared-components/Snackbar');
 const { pickLocalFiles } = require('~/helpers/file');
+const UploadDialog = require('~/ui/shared-components/UploadDialog');
 
 const MessageInputProseMirror = require('./MessageInputProseMirror');
 
@@ -30,14 +31,24 @@ const MessageInputProseMirror = require('./MessageInputProseMirror');
 class MessageInput extends React.Component {
     @observable filePickerActive = false;
 
-    handleUpload = () => {
+    @observable uploadDialogActive = false;
+    selectedFiles = [];
+
+    @action.bound activateUploadDialog() {
         const chat = chatStore.activeChat;
         if (!chat) return;
-        pickLocalFiles().then(paths => {
-            if (!paths || !paths.length) return Promise.resolve();
-            return Promise.all(paths.map(i => chat.uploadAndShareFile(i)));
-        });
-    };
+        pickLocalFiles()
+            .then(paths => {
+                if (!paths || !paths.length) return;
+                this.selectedFiles = paths;
+                this.uploadDialogActive = true;
+            });
+    }
+
+    @action.bound deactivateUploadDialog() {
+        this.uploadDialogActive = false;
+        this.selectedFiles = [];
+    }
 
     /**
      * Drag-and-drop is handled by another component higher in the hierarchy,
@@ -102,14 +113,28 @@ class MessageInput extends React.Component {
     }
 
     render() {
+        if (this.uploadDialogActive) {
+            return (
+                <UploadDialog
+                    deactivate={this.deactivateUploadDialog}
+                    files={this.selectedFiles}
+                />
+            );
+        }
         const chat = chatStore.activeChat;
         return (
             <div className="message-input-wrapper" >
                 <Snackbar className="snackbar-chat" />
                 <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
                     <TooltipIconMenu icon="add_circle_outline" tooltip={t('button_shareFilesWithChat')}>
-                        <MenuItem value="share" caption={t('title_shareFromFiles')} onClick={this.showFilePicker} />
-                        <MenuItem value="upload" caption={t('title_uploadAndShare')} onClick={this.handleUpload} />
+                        <MenuItem value="share"
+                            caption={t('title_shareFromFiles')}
+                            onClick={this.showFilePicker}
+                        />
+                        <MenuItem value="upload"
+                            caption={t('title_uploadAndShare')}
+                            onClick={this.activateUploadDialog}
+                        />
                     </TooltipIconMenu>
                     {this.props.readonly
                         ? <div className="message-editor-empty" >&nbsp;</div>

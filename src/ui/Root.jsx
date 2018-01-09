@@ -67,6 +67,12 @@ class Root extends React.Component {
             clientApp.isFocused = focused;
         });
     }
+    renderReconnectSection() {
+        return (<span>
+            {socket.reconnectTimer.counter || ' '}&nbsp;
+            <Button className="reconnect" flat inverse label={t('button_retry')} onClick={socket.resetReconnectTimer} />
+        </span>);
+    }
 
     render() {
         return (
@@ -77,9 +83,7 @@ class Root extends React.Component {
                         {/* don't let invisible svg to always run */}
                         {this.showOfflineNotification ? <ProgressBar type="circular" mode="indeterminate" /> : null}
                         #{socket.reconnectAttempt}&nbsp;{t('error_connecting')}&nbsp;
-                        {socket.reconnectTimer.counter}&nbsp;
-                        {<Button className="reconnect" flat inverse label={t('button_retry')}
-                            onClick={socket.resetReconnectTimer} />}
+                        {appState.isOnline && this.renderReconnectSection()}
                     </div>
                     {this.props.children}
 

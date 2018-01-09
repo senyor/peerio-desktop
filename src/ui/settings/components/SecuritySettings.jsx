@@ -1,7 +1,8 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Switch, TooltipIconButton, ProgressBar, FontIcon, Dialog } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { Button, Switch, TooltipIconButton, ProgressBar, Dialog } = require('~/react-toolbox');
 const { User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const autologin = require('~/helpers/autologin');
@@ -231,7 +232,7 @@ class SecuritySettings extends React.Component {
             <section className="with-bg">
                 <T k="title_2FA" className="title" tag="div" />
                 <p>
-                    <FontIcon value="check_circle" className="icon-affirmative icon-large" />
+                    <MaterialIcon icon="check_circle" className="icon-affirmative icon-large" />
                     &nbsp;&nbsp;
                     <T k="title_2FAEnabledThanks" />
                 </p>

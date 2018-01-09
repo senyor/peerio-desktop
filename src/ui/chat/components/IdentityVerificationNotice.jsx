@@ -1,6 +1,6 @@
 const React = require('react');
 const T = require('~/ui/shared-components/T');
-const { FontIcon } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
 const css = require('classnames');
 
 class IdentityVerificationNotice extends React.Component {
@@ -8,7 +8,7 @@ class IdentityVerificationNotice extends React.Component {
         return (
             <div className="identity-verification-notice">
                 <div className={css('notice-container', { 'extra-margin': this.props.extraMargin })}>
-                    <FontIcon className="notice-icon" value="security" />
+                    <MaterialIcon className="notice-icon" icon="security" />
                     <T className="text-content" k="title_verifyUserIdentity" />
                 </div>
             </div>

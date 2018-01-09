@@ -3,7 +3,8 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const { t } = require('peerio-translator');
-const { Button, FontIcon, RadioGroup, RadioButton } = require('~/react-toolbox');
+const { MaterialIcon, RadioButtons } = require('~/peer-ui');
+const { Button } = require('~/react-toolbox');
 const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
@@ -16,6 +17,12 @@ const DISABLED = 'disabled';
 class UrlPreviewConsent extends React.Component {
     @observable selectedMode = ALL_CONTACTS;
     @observable firstSave = false;
+
+    radioOptions = [
+        { value: ALL_CONTACTS, label: t('title_forAllContacts') },
+        { value: FAV_CONTACTS, label: t('title_forFavouriteContactsOnly') },
+        { value: DISABLED, label: t('title_disable') }
+    ];
 
     onSelectedModeChange = (value) => {
         this.selectedMode = value;
@@ -59,7 +66,7 @@ class UrlPreviewConsent extends React.Component {
         return (
             <div className="url-consent first-time">
                 <div className="warning-header">
-                    <FontIcon value="security" />
+                    <MaterialIcon icon="security" />
                     <T k="title_EnableUrlPreviews" className="text" />
                 </div>
                 <div className="warning-body">
@@ -67,16 +74,11 @@ class UrlPreviewConsent extends React.Component {
                         <T k="title_UrlPreviewsWarning2" />&nbsp;
                         <T k="title_learnMore" />
                     </p>
-                    <RadioGroup
-                        className="options"
-                        name="option"
+                    <RadioButtons
                         value={this.selectedMode}
-                        onChange={this.onSelectedModeChange}>
-                        <RadioButton label={t('title_forAllContacts')} value={ALL_CONTACTS} />
-                        <RadioButton label={t('title_forFavouriteContactsOnly')} value={FAV_CONTACTS} />
-                        <RadioButton label={t('title_disable')} value={DISABLED} />
-                    </RadioGroup>
-
+                        onChange={this.onSelectedModeChange}
+                        options={this.radioOptions}
+                    />
                     <div className="buttons-container">
                         <Button className="notnow" onClick={this.onDismiss}>{t('button_notNow')}</Button>
                         <Button className="save" onClick={this.onSubmitConsent}>{t('button_save')}</Button>
@@ -84,7 +86,7 @@ class UrlPreviewConsent extends React.Component {
                 </div>
                 { this.firstSave &&
                     <div className={css('update-settings', { nomargin: !uiStore.prefs.externalContentEnabled })}>
-                        <FontIcon value="check_circle" />
+                        <MaterialIcon icon="check_circle" />
                         <T k="title_updateSettingsAnyTime" className="text">{textParser}</T>
                     </div>
                 }

@@ -6,7 +6,8 @@ const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { systemMessages, User } = require('peerio-icebear');
-const { Button, FontIcon, Menu, MenuItem, Link } = require('~/react-toolbox');
+const { MaterialIcon } = require('~/peer-ui');
+const { Button, Menu, MenuItem } = require('~/react-toolbox');
 const Avatar = require('~/ui/shared-components/Avatar');
 const { time } = require('~/helpers/formatter');
 const { chatSchema, Renderer } = require('~/helpers/chat/prosemirror/chat-schema');
@@ -136,8 +137,8 @@ class Message extends React.Component {
                 <div>
                     <p className="video-system-message">{videoCallMsg}</p>
                     <p>
-                        <FontIcon value="videocam" className="video-icon" />
-                        <Link href={link}>{shortLink}</Link>
+                        <MaterialIcon icon="videocam" className="video-icon" />
+                        <a href={link}>{shortLink}</a>
                     </p>
                 </div>
             );
@@ -221,17 +222,20 @@ class Message extends React.Component {
                                 </div>
                         }
                         <div className="message-body">
-                            {
-                                m.systemData || m.files
-                                    ? null
-                                    : MessageComponent
-                            }
-                            {m.files && m.files.length
-                                ? <InlineFiles
-                                    files={m.files}
-                                    onImageLoaded={this.props.onImageLoaded} />
-                                : null
-                            }
+                            {m.systemData || m.files
+                                ? null
+                                : MessageComponent}
+                            {m.files && m.files.length ? (
+                                <div className="inline-files-and-optional-message">
+                                    <InlineFiles
+                                        files={m.files}
+                                        onImageLoaded={this.props.onImageLoaded} />
+                                    {!!m.text &&
+                                        <div className="optional-message">
+                                            {MessageComponent}
+                                        </div>}
+                                </div>
+                            ) : null}
                             {
                                 /* SECURITY: sanitize if you change this to  render in dangerouslySetInnerHTML */
                                 this.renderSystemData(m)
@@ -243,8 +247,7 @@ class Message extends React.Component {
                                         urlData={urlData}
                                         onImageLoaded={this.props.onImageLoaded}
                                     />)
-                                )
-                                : null}
+                                ) : null}
                             {!uiStore.prefs.externalContentConsented && m.hasUrls &&
                                 <UrlPreviewConsent />
                             }
@@ -269,7 +272,7 @@ class Message extends React.Component {
                                             onClick={() => this.props.chat.removeMessage(m)} />
                                     </Menu>
                                 </div>
-                                <FontIcon className="send-error-icon" value="error" />
+                                <MaterialIcon icon="error" className="send-error-icon" />
                                 <div className="send-error-message">
                                     {t('error_messageSendFail')}
                                 </div>
@@ -277,7 +280,7 @@ class Message extends React.Component {
                             : null
                         }
                     </div>
-                    {invalidSign ? <FontIcon value="error_outline_circle" className="warning-icon" /> : null}
+                    {invalidSign ? <MaterialIcon icon="error_outline_circle" className="warning-icon" /> : null}
                     {this.renderReceipts(m)}
 
                 </div>

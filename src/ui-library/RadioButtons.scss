@@ -1,0 +1,13 @@
+.p-radio {
+  @extend %list-reset;
+
+  li {
+    display: flex;
+    align-items: center;
+    margin: $margin-large 0;
+
+    .label {
+      margin-left: $margin-default;
+    }
+  }
+}

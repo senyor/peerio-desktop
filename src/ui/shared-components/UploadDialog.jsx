@@ -138,7 +138,7 @@ class UploadDialog extends React.Component {
     render() {
         const uploadActions = [
             { label: t('button_cancel'), onClick: this.cancelUpload },
-            { label: t('button_upload'), onClick: this.uploadAndShare }
+            { label: t('button_share'), onClick: this.uploadAndShare }
         ];
 
         if (this.shareWithVisible) {
@@ -188,7 +188,7 @@ class UploadDialog extends React.Component {
                                 onClick={this.showShareWithDialog}
                             />
                         </div>
-                        <Input placeholder={t('title_addMessage')}
+                        <Input placeholder={t('title_addCommentOptional')}
                             value={this.messageText}
                             onChange={this.onMessageChange}
                             multiline

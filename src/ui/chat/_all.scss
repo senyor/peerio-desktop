@@ -190,27 +190,27 @@
     @extend %flex-row;
     @extend %flex-align-center;
     height: 20px;
-    margin: 2px 0;
-    margin-left: -$margin-small;
 
     .rt-progress_bar-circular {
-      height: 20px;
-      width: 20px;
-      margin: 4px 9px 0 7px;
+      height: 16px;
+      width: 16px;
     }
 
     .material-icons {
       font-size: 16px;
     }
 
-    .starred + .member-count {
-      border-left: 1px solid $divider-dark;
+    .pin-toggle {
+      display: flex;
+      align-items: center;
     }
 
     .member-count {
       @extend %flex-row;
       @extend %flex-align-center;
       height: 20px;
+      margin-left: -12px;
+      // border-left: 1px solid $divider-dark; TODO: add back if adding ability to "pin" rooms
     }
   }
 

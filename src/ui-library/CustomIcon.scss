@@ -1,0 +1,10 @@
+.p-custom-icon {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+
+  &.small {
+    height: 16px;
+    width: 16px;
+  }
+}

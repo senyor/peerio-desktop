@@ -5,3 +5,4 @@ module.exports.RadioButtons = require('~/ui-library/RadioButtons');
 
 // Icons
 module.exports.MaterialIcon = require('~/ui-library/MaterialIcon');
+module.exports.CustomIcon = require('~/ui-library/CustomIcon');

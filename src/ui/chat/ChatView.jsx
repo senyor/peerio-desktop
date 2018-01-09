@@ -1,8 +1,8 @@
 const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { MaterialIcon } = require('~/peer-ui');
-const { TooltipIconButton, ProgressBar } = require('~/react-toolbox');
+const { CustomIcon, MaterialIcon } = require('~/peer-ui');
+const { TooltipDiv, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
 const { chatStore } = require('peerio-icebear');
@@ -155,11 +155,25 @@ class ChatView extends React.Component {
                             </div>
                             : (chat.changingFavState
                                 ? <ProgressBar type="circular" mode="indeterminate" />
-                                : <TooltipIconButton icon={chat.isFavorite ? 'star' : 'star_border'}
+                                :
+                                <TooltipDiv icon={chat.isFavorite ? 'star' : 'star_border'}
                                     onClick={chat.toggleFavoriteState}
-                                    className={css({ starred: chat.isFavorite })}
-                                    tooltip={t('title_starChat')}
-                                    tooltipPosition="bottom" />
+                                    className={css(
+                                        'pin-toggle',
+                                        'clickable',
+                                        { starred: chat.isFavorite }
+                                    )}
+                                    tooltip={chat.isFavorite
+                                        ? t('button_unpinChat')
+                                        : t('button_pinChat')
+                                    }
+                                    tooltipPosition="bottom"
+                                >
+                                    <CustomIcon
+                                        icon={chat.isFavorite ? 'pin-on-blue' : 'pin-off'}
+                                        className="small"
+                                    />
+                                </TooltipDiv>
                             )
                         }
                     </div>

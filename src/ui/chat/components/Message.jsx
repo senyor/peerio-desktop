@@ -6,9 +6,8 @@ const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { systemMessages, User } = require('peerio-icebear');
-const { MaterialIcon } = require('~/peer-ui');
-const { Button, Menu, MenuItem } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
+const { Avatar, Button, MaterialIcon } = require('~/peer-ui');
+const { Menu, MenuItem } = require('~/react-toolbox');
 const { time } = require('~/helpers/formatter');
 const { chatSchema, Renderer } = require('~/helpers/chat/prosemirror/chat-schema');
 const urls = require('~/config').translator.urlMap;
@@ -170,7 +169,13 @@ class Message extends React.Component {
         for (let i = 0; i < limit && m.receipts.length > i; i++) {
             const r = m.receipts[i];
             if (r.receipt.signatureError) continue;
-            renderMe.push(<Avatar key={r.username} username={r.username} size="tiny" />);
+            renderMe.push(<Avatar
+                key={r.username}
+                username={r.username}
+                size="tiny"
+                clickable
+                tooltip
+            />);
         }
 
         return (
@@ -206,7 +211,7 @@ class Message extends React.Component {
                 <div className="message-content-wrapper-inner">
                     {this.props.light
                         ? <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div>
-                        : <Avatar contact={m.sender} size="medium" />}
+                        : <Avatar contact={m.sender} size="medium" tooltip clickable />}
                     <div className="message-content">
                         {
                             this.props.light
@@ -284,10 +289,13 @@ class Message extends React.Component {
                     {this.renderReceipts(m)}
 
                 </div>
-                {invalidSign ?
+                { invalidSign ?
                     <div className="invalid-sign-warning">
                         <div className="content">{t('error_invalidMessageSignature')}</div>
-                        <Button href={urls.msgSignature} label={t('title_readMore')} flat primary />
+                        <Button
+                            href={urls.msgSignature}
+                            label={t('title_readMore')}
+                        />
                     </div>
                     : null
                 }

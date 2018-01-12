@@ -2,7 +2,8 @@ const React = require('react');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, fileHelpers, User } = require('peerio-icebear');
-const { Button, Dialog, Input } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
+const { Dialog, Input } = require('~/react-toolbox');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const ShareWithDialog = require('~/ui/shared-components/ShareWithDialog');
@@ -184,8 +185,10 @@ class UploadDialog extends React.Component {
                                     {this.targetTitle}
                                 </div>
                             </div>
-                            <Button icon="edit" className="button-small"
+                            <Button
+                                icon="edit"
                                 onClick={this.showShareWithDialog}
+                                theme="small"
                             />
                         </div>
                         <Input placeholder={t('title_addCommentOptional')}

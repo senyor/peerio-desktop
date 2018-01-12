@@ -19,12 +19,12 @@
     @extend %flex-align-center;
   }
 
-  .avatar-wrapper {
+  .p-avatar {
     height: 168px;
     width: 168px;
     margin-right: 24px;
 
-    .avatar-container {
+    .image-container {
       height: 100%;
       width: 100%;
       border-radius: 4px;

@@ -1,8 +1,8 @@
 const React = require('react');
 const { observable, action, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { MaterialIcon } = require('~/peer-ui');
-const { Button, IconButton, Input } = require('~/react-toolbox');
+const { Button, MaterialIcon } = require('~/peer-ui');
+const { IconButton, Input } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
@@ -133,9 +133,11 @@ class NewContact extends React.Component {
                                         value={this.query} onChange={this.handleTextChange}
                                         onKeyDown={this.handleKeyDown} />
                                 </div>
-                                <Button className={css('button-affirmative', { hide: hideButton })}
+                                <Button
+                                    className={css({ hide: hideButton })}
                                     label={t(this.isInviteView ? 'button_invite' : 'button_add')}
                                     onClick={this.isInviteView ? this.invite : this.tryAdd}
+                                    theme="affirmative"
                                 />
                             </div>
                             {this.notFound
@@ -146,7 +148,10 @@ class NewContact extends React.Component {
                             {this.suggestInviteEmail ?
                                 <div className="email-invite-container">
                                     <div className="email-invite">{this.suggestInviteEmail}</div>
-                                    <Button primary onClick={this.invite} label={t('button_inviteEmailContact')} />
+                                    <Button
+                                        onClick={this.invite}
+                                        label={t('button_inviteEmailContact')}
+                                    />
                                 </div>
                                 : null}
                         </div>

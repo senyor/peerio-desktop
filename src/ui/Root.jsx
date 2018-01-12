@@ -6,7 +6,8 @@ const config = require('~/config');
 const { setStringReplacement } = require('peerio-translator');
 const theme = require('~/react-toolbox/theme.js');
 const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
-const { ProgressBar, Button } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
+const { ProgressBar } = require('~/react-toolbox');
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
 const { socket, clientApp, warnings } = require('peerio-icebear');
@@ -70,7 +71,12 @@ class Root extends React.Component {
     renderReconnectSection() {
         return (<span>
             {socket.reconnectTimer.counter || ' '}&nbsp;
-            <Button className="reconnect" flat inverse label={t('button_retry')} onClick={socket.resetReconnectTimer} />
+            <Button
+                className="reconnect"
+                label={t('button_retry')}
+                onClick={socket.resetReconnectTimer}
+                theme="inverted"
+            />
         </span>);
     }
 

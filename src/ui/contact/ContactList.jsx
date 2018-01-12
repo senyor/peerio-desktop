@@ -1,8 +1,8 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Dropdown, MaterialIcon } = require('~/peer-ui');
-const { Input, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
+const { Avatar, Dropdown, MaterialIcon } = require('~/peer-ui');
+const { Button } = require('~/peer-ui');
+const { Input, List, ListItem } = require('~/react-toolbox');
 const { contactStore, chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -47,13 +47,13 @@ class ContactList extends React.Component {
         return (<div data-id={c.username}>
             {c.isDeleted
                 ? null
-                : <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />}
+                : <Button icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />}
             {c.isAdded
-                ? <TooltipIconButton className="icon-gold"
+                ? <Button className="gold"
                     icon="star"
                     tooltip={t('button_removeFavourite')}
                     onClick={this.removeContact} />
-                : <TooltipIconButton icon="star_outline" tooltip={t('button_addFavourite')}
+                : <Button icon="star_outline" tooltip={t('button_addFavourite')}
                     onClick={this.addContact} />}
         </div>
         );

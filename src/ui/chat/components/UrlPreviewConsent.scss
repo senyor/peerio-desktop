@@ -44,13 +44,7 @@
     @extend %flex-row;
     @extend %flex-justify-end;
 
-    .notnow {
-      color: $text-dark-secondary;
-    }
-
-    .save {
-      color: $blue;
-    }
+    max-width: $urlpreview-text-width;
   }
 
   .update-settings {

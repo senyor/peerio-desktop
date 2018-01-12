@@ -2,12 +2,9 @@
   .settings-terms {
     margin-top: $margin-large;
 
-    .rt-button-button {
-      width: auto;
-      min-width: 0;
+    .p-button {
       padding: 0 $padding-tiny;
       font-weight: $font-weight-regular;
-      text-transform: none;
       color: $blue;
     }
   }

@@ -190,3 +190,10 @@ $button-neutral-height: 36px;
 .rt-dialog-dialog {
   border-radius: 8px;
 }
+
+// Remove transforms so that tooltips work
+.rt-dialog-dialog.rt-dialog-active {
+  z-index: 1;
+  -webkit-transform: none;
+  transform: none;
+}

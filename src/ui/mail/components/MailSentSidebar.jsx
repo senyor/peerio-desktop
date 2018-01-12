@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button, TooltipIconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -56,7 +56,7 @@ class MailSentSidebar extends React.Component {
                         <div className="dark-label">{t('title_mailUrl')}</div>
                         <div className="mail-link">
                             <a href={this.props.ghost.url} ref={(l) => { this.link = l; }}>{this.props.ghost.url}</a>
-                            <TooltipIconButton
+                            <Button
                                 tooltip={t('title_copy')}
                                 tooltipPosition="bottom"
                                 icon="content_copy"
@@ -69,9 +69,10 @@ class MailSentSidebar extends React.Component {
                                 <div className="content">
                                     <div className="dark-label">{t('title_mailExpires')}</div>
                                     <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
-                                    <Button className="mail-revoke" label={t('button_mailRevoke')}
+                                    <Button className="mail-revoke"
+                                        label={t('button_mailRevoke')}
                                         onClick={this.showRevokeDialog}
-                                        primary />
+                                    />
                                 </div>
                                 :
                                 <div className="dark-label">

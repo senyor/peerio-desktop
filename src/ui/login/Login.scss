@@ -17,6 +17,21 @@
     margin-top: 24px;
   }
 
+  .password {
+    position: relative;
+    margin-top: 40px;
+
+    .p-button {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+    }
+
+    .rt-input-inputElement {
+      padding-right: 40px;
+    }
+  }
+
   .title + .validated-input .rt-input-input {
     margin-top: $margin-default;
   }

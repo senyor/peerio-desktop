@@ -4,10 +4,6 @@
     padding-top: 8px;
     overflow: auto;
 
-    .avatar-wrapper > .material-icons {
-      margin-right: 0;
-    }
-
     .contact-list-section {
       @extend %flex-row;
       flex-shrink: 0;

@@ -1,8 +1,5 @@
-const React = require('react');
-
 module.exports.AppBar = require('react-toolbox/lib/app_bar/AppBar').default;
 module.exports.Autocomplete = require('react-toolbox/lib/autocomplete/Autocomplete').default;
-module.exports.Avatar = require('react-toolbox/lib/avatar/Avatar').default;
 module.exports.Button = require('react-toolbox/lib/button/Button').default;
 module.exports.BrowseButton = require('react-toolbox/lib/button/BrowseButton').default;
 module.exports.IconButton = require('react-toolbox/lib/button/IconButton').default;
@@ -14,7 +11,6 @@ module.exports.Chip = require('react-toolbox/lib/chip/Chip').default;
 module.exports.DatePicker = require('react-toolbox/lib/date_picker/DatePicker').default;
 module.exports.Dialog = require('react-toolbox/lib/dialog/Dialog').default;
 module.exports.Drawer = require('react-toolbox/lib/drawer/Drawer').default;
-module.exports.Dropdown = require('react-toolbox/lib/dropdown/Dropdown').default;
 module.exports.Input = require('react-toolbox/lib/input/Input').default;
 module.exports.Layout = require('react-toolbox/lib/layout/Layout').default;
 module.exports.NavDrawer = require('react-toolbox/lib/layout/NavDrawer').default;
@@ -35,8 +31,6 @@ module.exports.MenuDivider = require('react-toolbox/lib/menu/MenuDivider').defau
 module.exports.MenuItem = require('react-toolbox/lib/menu/MenuItem').default;
 module.exports.Navigation = require('react-toolbox/lib/navigation/Navigation').default;
 module.exports.ProgressBar = require('react-toolbox/lib/progress_bar/ProgressBar').default;
-module.exports.RadioButton = require('react-toolbox/lib/radio/RadioButton').default;
-module.exports.RadioGroup = require('react-toolbox/lib/radio/RadioGroup').default;
 module.exports.Ripple = require('react-toolbox/lib/ripple/Ripple').default;
 module.exports.Slider = require('react-toolbox/lib/slider/Slider').default;
 module.exports.Snackbar = require('react-toolbox/lib/snackbar/Snackbar').default;
@@ -47,16 +41,4 @@ module.exports.Tabs = require('react-toolbox/lib/tabs/Tabs').default;
 module.exports.Tooltip = require('react-toolbox/lib/tooltip/Tooltip').default;
 module.exports.TimePicker = require('react-toolbox/lib/time_picker/TimePicker').default;
 
-module.exports.TooltipIconButton = module.exports.Tooltip()(module.exports.IconButton);
 module.exports.TooltipIconMenu = module.exports.Tooltip()(module.exports.IconMenu);
-module.exports.TooltipDiv = module.exports.Tooltip()(props =>
-    React.createElement('div', {
-        style: props.style,
-        className: props.className,
-        onMouseEnter: props.onMouseEnter,
-        onMouseLeave: props.onMouseLeave,
-        onClick: props.onClick
-    }, props.children)
-);
-
-module.exports.TooltipAvatar = module.exports.Tooltip()(module.exports.Avatar);

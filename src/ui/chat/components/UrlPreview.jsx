@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { observable } = require('mobx');
-const { Button } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { fileStore } = require('peerio-icebear');
@@ -30,7 +30,8 @@ class UrlPreview extends React.Component {
                                         onClick={this.forceDownload}>
                                         {t('button_displayThisImageAfterWarning')}
                                     </Button>
-                                </div>}
+                                </div>
+                            }
                             {isOversizeCutoff &&
                                 <div className="image-over-limit-warning">
                                     <T k="title_imageTooBigCutoff">

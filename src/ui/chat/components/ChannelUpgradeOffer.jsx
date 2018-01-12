@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Button } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 const { User } = require('peerio-icebear');
 const config = require('../../../config');
@@ -22,7 +22,10 @@ class ChannelUpgradeOffer extends React.Component {
                     <span>👋 </span>
                     <T k="title_channelUpgradeOffer">{{ limit: User.current.channelLimit }}</T>
                 </div>
-                <Button flat primary onClick={this.toUpgrade} label={t('button_upgrade')} />
+                <Button
+                    onClick={this.toUpgrade}
+                    label={t('button_upgrade')}
+                />
             </div>
         );
     }

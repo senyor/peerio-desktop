@@ -1,5 +1,6 @@
 const React = require('react');
-const { Button, Dialog, Input } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
+const { Dialog, Input } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const { observable, action, computed } = require('mobx');
 const { fileStore, clientApp } = require('peerio-icebear');
@@ -275,13 +276,16 @@ class Files extends React.Component {
                     onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
                 />
-                <Button className="button-affirmative inverted new-folder"
+                <Button
                     label={t('button_newFolder')}
+                    className="new-folder"
                     onClick={this.showAddFolderPopup}
+                    theme="affirmative secondary"
                 />
                 <Button className="button-affirmative"
                     label={t('button_upload')}
                     onClick={this.handleUpload}
+                    theme="affirmative"
                 />
             </div>
         );

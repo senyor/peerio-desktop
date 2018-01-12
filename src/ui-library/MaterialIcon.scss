@@ -1,3 +1,9 @@
 .material-icons {
+  vertical-align: middle;
+
+  &.gold {
+    color: gold;
+  }
+
   // TODO: move .material-icons styles here where relevant
 }

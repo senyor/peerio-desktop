@@ -13,19 +13,6 @@
 .material-icons * {
   font-family: 'Material Icons';
 }
-// AVATAR
-.rt-avatar-avatar {
-  @extend %flex-row;
-  @extend %flex-align-center;
-  @extend %flex-justify-center;
-  flex-shrink: 0;
-}
-
-.rt-avatar-letter {
-  -webkit-user-select: none;
-  text-shadow: 0 0 0 rgba(0, 0, 0, 0); // so we can see letters on white background
-  text-transform: capitalize;
-}
 
 // BUTTONS and ICONS!
 // makes buttons look like links. This might be a bad idea.

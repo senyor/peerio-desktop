@@ -22,12 +22,12 @@
     .delete-account {
       margin-top: auto;
 
-      .rt-button-button {
+      .p-button {
         color: $red-error;
-      }
 
-      .rt-ripple-ripple {
-        background-color: $red-error;
+        &:hover {
+          background-color: rgba($red-error, .2);
+        }
       }
     }
   }

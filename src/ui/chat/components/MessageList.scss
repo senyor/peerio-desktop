@@ -31,10 +31,6 @@
         font-size: 8px;
         color: $red-error;
       }
-
-      .rt-avatar-avatar {
-        margin: 0 $margin-tiny;
-      }
     }
   }
 
@@ -216,17 +212,8 @@
         margin-top: 64px;
         margin-bottom: $margin-small;
 
-        .avatar-wrapper:not(:last-of-type) {
+        .p-avatar {
           margin: 0 $margin-small $margin-small 0;
-        }
-
-        .rt-avatar-avatar {
-          height: 64px;
-          width: 64px;
-
-          .rt-avatar-letter {
-            line-height: 64px;
-          }
         }
       }
 

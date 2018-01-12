@@ -40,7 +40,7 @@ const { linkify } = require('~/helpers/chat/prosemirror/linkify-text');
 const { ensureMentions } = require('~/helpers/chat/prosemirror/ensure-mentions');
 
 const { t } = require('peerio-translator');
-const { TooltipIconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const { chatStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 
@@ -340,12 +340,13 @@ class MessageInputProseMirror extends React.Component {
                 onBlur={this.onInputBlur}
                 ref={this.mountProseMirror}
             />,
-            <TooltipIconButton
+            <Button
                 key="emoji-picker-open-button"
                 icon="mood"
                 disabled={this.emojiPickerVisible}
                 onClick={this.showEmojiPicker}
                 tooltip={t('button_emojis')}
+                theme="no-hover"
             />,
             this.emojiPickerVisible ? cachedPicker : null
         ];

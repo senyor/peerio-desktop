@@ -3,8 +3,8 @@ const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, systemMessages, contactStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
+const { Avatar } = require('~/peer-ui');
 const { List, ListItem, IconButton } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -54,7 +54,7 @@ class MessageSideBar extends React.Component {
             ? null
             : <span data-username={entry[0].username} key={entry[0].username}>
                 <ListItem
-                    leftActions={[<Avatar key="a" contact={entry[0]} size="small" />]}
+                    leftActions={[<Avatar key="a" contact={entry[0]} size="small" tooltip clickable />]}
                     itemContent={
                         <span className="rt-list-itemContentRoot rt-list-large">
                             <span className="rt-list-itemText rt-list-primary">
@@ -101,7 +101,7 @@ class MessageSideBar extends React.Component {
                             </div>
                         </div>
                         <ListItem selectable={false} ripple={false} className="active"
-                            leftActions={[<Avatar key="a" contact={msg.sender} size="small" />]}
+                            leftActions={[<Avatar key="a" contact={msg.sender} size="small" clickable tooltip />]}
                             itemContent={
                                 <span className="rt-list-itemContentRoot rt-list-large">
                                     <span className="rt-list-itemText rt-list-primary">

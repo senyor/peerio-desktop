@@ -1,7 +1,8 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
+const { Dialog } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
@@ -44,9 +45,10 @@ class About extends React.Component {
                     }
                     <div className="settings-terms">
                         {t('title_appName')}
-                        <Button onClick={this.showTermsDialog}
+                        <Button
+                            onClick={this.showTermsDialog}
                             label={t('button_terms')}
-                            className="button-link no-ripple"
+                            theme="link"
                         />
                     </div>
                 </section>

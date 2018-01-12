@@ -1,7 +1,7 @@
 const React = require('react');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
-const { Button, TooltipIconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const { clipboard } = require('electron').remote;
 const PDFSaver = require('~/ui/shared-components/PDFSaver');
 const AvatarControl = require('./AvatarControl');
@@ -45,14 +45,21 @@ const { warnings } = require('peerio-icebear');
                     <div className="label">{t('title_yourAccountKey')}</div>
                     <div className="inner">
                         <div className="account-key" onClick={this.copyPassphrase}>{passphrase}</div>
-                        <TooltipIconButton icon="content_copy"
+                        <Button icon="content_copy"
                             tooltip={t('title_copy')}
-                            onClick={this.copyPassphrase} />
+                            onClick={this.copyPassphrase}
+                            theme="no-hover"
+                        />
                     </div>
                 </div>
                 <p>{t('title_accountKey2')}</p>
-                <Button label={t('button_saveAccountKey')} icon="file_download" className="pdf-download"
-                    onClick={this.backupAccountKey} />
+                <Button
+                    label={t('button_saveAccountKey')}
+                    icon="file_download"
+                    className="pdf-download"
+                    onClick={this.backupAccountKey}
+                    theme="primary"
+                />
                 <PDFSaver ref={ref => { this.pdfSaver = ref; }} template="./AccountKeyBackup.html" />
             </div>
         );

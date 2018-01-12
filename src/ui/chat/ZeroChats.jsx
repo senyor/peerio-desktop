@@ -3,7 +3,7 @@ const { computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
-const { Button } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const css = require('classnames');
 
@@ -64,8 +64,11 @@ class ZeroChats extends React.Component {
                                     { this.invitesReceived &&
                                         <div className="already-invited">
                                             <T k="title_alreadyInvited" tag="div" className="already-invited-text" />
-                                            <Button className="room-invites-button button-affirmative"
-                                                onClick={this.goToChannelInvite}>
+                                            <Button
+                                                className="room-invites-button"
+                                                onClick={this.goToChannelInvite}
+                                                theme="affirmative"
+                                            >
                                                 <T k="title_viewChannelInvites" />
                                             </Button>
                                         </div>

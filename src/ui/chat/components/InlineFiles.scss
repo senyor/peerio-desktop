@@ -47,14 +47,6 @@
     .buttons-container {
       @extend %flex-row;
       @extend %flex-justify-end;
-
-      .notnow {
-        color: $text-dark-secondary;
-      }
-
-      .save {
-        color: $blue;
-      }
     }
   }
 
@@ -295,7 +287,7 @@
     max-width: 96vw;
   }
 
-  .rt-button-neutral:not([disabled]).rt-button-flat {
+  .p-button {
     &:hover {
       .material-icons {
         color: $blue;
@@ -325,9 +317,10 @@
     right: $margin-default;
     top: $margin-default;
     background-color: $white;
+    border-radius: 4px;
 
     &:hover {
-      background-color: $white !important;
+      background-color: $white;
     }
   }
 
@@ -365,10 +358,6 @@
 
       button:not(:first-child) {
         margin-left: $margin-default;
-      }
-
-      button:hover {
-        background-color: none;
       }
     }
   }

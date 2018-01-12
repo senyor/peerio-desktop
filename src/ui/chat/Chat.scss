@@ -60,20 +60,8 @@
     margin-right: $margin-tiny;
   }
 
-  .avatar-wrapper > .material-icons {
-    width: 20px !important; // :( - paul
-  }
-
   .rt-list-left .rt-list-itemAction span {
     width: 32px;
-  }
-
-  .rt-avatar-avatar {
-    height: 32px;
-    width: 32px;
-    margin: 0 $margin-default 0 0;
-    line-height: 32px;
-    font-size: 20px;
   }
 
   // shown when when loading chats in the chat list.

@@ -1,6 +1,6 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { Button } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 
 function ZeroScreen(props) {
     return (
@@ -16,7 +16,10 @@ function ZeroScreen(props) {
                             <p>
                                 {t('title_filesNull2')}
                             </p>
-                            <Button onClick={props.onUpload} primary label={t('button_upload')} />
+                            <Button
+                                onClick={props.onUpload}
+                                label={t('button_upload')}
+                            />
                         </div>
                         <img src="static/img/file-upload.png" />
                     </div>

@@ -9,7 +9,8 @@ const { observer } = require('mobx-react');
 
 const { t } = require('peerio-translator');
 const { fileStore, chatStore } = require('peerio-icebear');
-const { TooltipIconMenu, MenuItem, TooltipIconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
+const { IconMenu, MenuItem } = require('~/react-toolbox');
 
 const FilePicker = require('~/ui/files/components/FilePicker');
 const Snackbar = require('~/ui/shared-components/Snackbar');
@@ -126,7 +127,7 @@ class MessageInput extends React.Component {
             <div className="message-input-wrapper" >
                 <Snackbar className="snackbar-chat" />
                 <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
-                    <TooltipIconMenu icon="add_circle_outline" tooltip={t('button_shareFilesWithChat')}>
+                    <IconMenu icon="add_circle_outline">
                         <MenuItem value="share"
                             caption={t('title_shareFromFiles')}
                             onClick={this.showFilePicker}
@@ -135,7 +136,8 @@ class MessageInput extends React.Component {
                             caption={t('title_uploadAndShare')}
                             onClick={this.activateUploadDialog}
                         />
-                    </TooltipIconMenu>
+                        {/* TODO: add back Tooltip once Menu components are ready */ }
+                    </IconMenu>
                     {this.props.readonly
                         ? <div className="message-editor-empty" >&nbsp;</div>
                         : <MessageInputProseMirror
@@ -143,12 +145,13 @@ class MessageInput extends React.Component {
                             onSend={this.props.onSend}
                         />
                     }
-                    <TooltipIconButton
+                    <Button
                         disabled={!chat || !chat.canSendAck}
                         icon="thumb_up"
                         onClick={this.props.onAck}
-                        className="color-brand"
+                        className="thumbs-up"
                         tooltip={t('button_thumbsUp')}
+                        theme="no-hover"
                     />
 
                     {this.renderFilePicker()}

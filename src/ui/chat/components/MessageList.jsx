@@ -1,8 +1,8 @@
 const React = require('react');
 const { reaction, computed } = require('mobx');
 const { observer } = require('mobx-react');
+const { Avatar } = require('~/peer-ui');
 const { ProgressBar } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
 const Message = require('./Message');
 const { chatStore, User, clientApp } = require('peerio-icebear');
@@ -206,7 +206,9 @@ class MessageList extends React.Component {
         return (
             <div className="messages-start">
                 <div className="avatars">
-                    {this.displayParticipants.map(c => <Avatar size="large" key={c.username} contact={c} />)}
+                    {this.displayParticipants.map(
+                        c => <Avatar size="large" key={c.username} contact={c} tooltip clickable />
+                    )}
                 </div>
                 <T k={chat.isChannel ? 'title_chatBeginningRoom' : 'title_chatBeginning'} tag="div" className="title">
                     {{

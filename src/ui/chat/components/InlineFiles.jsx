@@ -1,7 +1,7 @@
 const React = require('react');
 const { fileStore, User } = require('peerio-icebear');
-const { MaterialIcon, RadioButtons } = require('~/peer-ui');
-const { Button, ProgressBar, Dialog } = require('~/react-toolbox');
+const { Button, MaterialIcon, RadioButtons } = require('~/peer-ui');
+const { ProgressBar, Dialog } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
 const { observable, reaction, when } = require('mobx');
 const { observer } = require('mobx-react');
@@ -146,7 +146,7 @@ class InlineFile extends React.Component {
                 onOverlayClick={this.hideImagePopup} onEscKeyDown={this.hideImagePopup}
                 className="image-popup">
                 <img src={this.currentImageSrc} />
-                <Button onClick={this.hideImagePopup} icon="close" className="button-close button-small" />
+                <Button onClick={this.hideImagePopup} icon="close" className="button-close" theme="small" />
                 <div className="info-bar" data-fileid={this.props.id}>
                     <div className="left">
                         <div className="file-name">{file.name}</div>
@@ -156,15 +156,24 @@ class InlineFile extends React.Component {
                         <Button caption={t('title_download')}
                             icon="file_download"
                             onClick={this.props.onDownload}
-                            className={css('button-small', { disabled: this.props.downloadDisabled })} />
+                            disabled={this.props.downloadDisabled}
+                            theme="small"
+                        />
                         <Button caption={t('button_share')}
                             icon="reply"
                             onClick={this.props.onShare}
-                            className={css('reverse-icon', 'button-small', { disabled: this.props.shareDisabled })} />
-                        {(file.fileOwner === User.current.username) && <Button caption={t('button_delete')}
-                            icon="delete"
-                            onClick={this.props.onDelete}
-                            className={css('button-small', { disabled: !this.props.deleteable })} />}
+                            className={css('reverse-icon')}
+                            disabled={this.props.shareDisabled}
+                            theme="small"
+                        />
+                        {(file.fileOwner === User.current.username) &&
+                            <Button
+                                caption={t('button_delete')}
+                                icon="delete"
+                                onClick={this.props.onDelete}
+                                theme="small"
+                            />
+                        }
                     </div>
                 </div>
             </Dialog>);
@@ -274,10 +283,11 @@ class InlineFile extends React.Component {
                                     </div>
                                 </div>
                                 {(file.isImage && uiStore.prefs.peerioContentConsented) &&
-                                    <Button icon={this.isExpanded
-                                        ? 'arrow_drop_up'
-                                        : 'arrow_drop_down'
-                                    } onClick={this.toggleExpand} />
+                                    <Button
+                                        icon={this.isExpanded ? 'arrow_drop_up' : 'arrow_drop_down'}
+                                        onClick={this.toggleExpand}
+                                        theme="no-hover"
+                                    />
                                 }
                                 <FileActions downloadDisabled={!file.readyForDownload || file.downloading}
                                     shareable shareDisabled={!file.readyForDownload || !file.canShare}

@@ -1,5 +1,5 @@
 const React = require('react');
-const { TooltipIconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const css = require('classnames');
 const { observer } = require('mobx-react');
 
@@ -8,10 +8,11 @@ class AppNav extends React.Component {
     render() {
         return (
             <div className={css('menu-item', { active: this.props.active })} onClick={this.props.onClick}>
-                <TooltipIconButton
+                <Button
                     tooltip={this.props.tooltip}
                     tooltipPosition="right"
-                    icon={this.props.icon} />
+                    icon={this.props.icon}
+                />
                 <div className={this.props.showBadge ? 'look-at-me' : 'banish'}>
                     {this.props.badge}
                 </div>

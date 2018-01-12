@@ -108,8 +108,12 @@
           color: $icon-light-inactive;
         }
 
-        .rt-button-button:hover .material-icons {
-          color: $icon-light-active;
+        .p-button:hover {
+          background-color: $background-light-dropdown;
+
+          .material-icons {
+            color: $icon-light-active;
+          }
         }
       }
 

@@ -1,8 +1,8 @@
 const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { CustomIcon, MaterialIcon } = require('~/peer-ui');
-const { TooltipDiv, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
+const { Button, CustomIcon, MaterialIcon, Tooltip } = require('~/peer-ui');
+const { ProgressBar } = require('~/react-toolbox');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
 const { chatStore } = require('peerio-icebear');
@@ -147,7 +147,7 @@ class ChatView extends React.Component {
                     <div className="meta-nav">
                         {chat.isChannel
                             ? <div className="member-count">
-                                <TooltipIconButton icon="person"
+                                <Button icon="person"
                                     tooltip={t('title_Members')}
                                     tooltipPosition="bottom"
                                     onClick={this.toggleSidebar} />
@@ -156,38 +156,40 @@ class ChatView extends React.Component {
                             : (chat.changingFavState
                                 ? <ProgressBar type="circular" mode="indeterminate" />
                                 :
-                                <TooltipDiv icon={chat.isFavorite ? 'star' : 'star_border'}
+                                <div
                                     onClick={chat.toggleFavoriteState}
                                     className={css(
                                         'pin-toggle',
                                         'clickable',
                                         { starred: chat.isFavorite }
                                     )}
-                                    tooltip={chat.isFavorite
-                                        ? t('button_unpinChat')
-                                        : t('button_pinChat')
-                                    }
-                                    tooltipPosition="bottom"
                                 >
                                     <CustomIcon
                                         icon={chat.isFavorite ? 'pin-on-blue' : 'pin-off'}
                                         className="small"
                                     />
-                                </TooltipDiv>
+                                    <Tooltip
+                                        text={chat.isFavorite
+                                            ? t('button_unpinChat')
+                                            : t('button_pinChat')
+                                        }
+                                        position="bottom"
+                                    />
+                                </div>
                             )
                         }
                     </div>
 
                 </div>
                 <div className="message-toolbar-inner-right">
-                    <TooltipIconButton
+                    <Button
                         icon="videocam"
                         disabled={!chat || !chat.canSendJitsi}
                         onClick={this.postJitsiLink}
                         tooltip={t('button_startVideoCall')}
                         tooltipPosition="bottom"
                     />
-                    <TooltipIconButton
+                    <Button
                         icon="chrome_reader_mode"
                         onClick={this.toggleSidebar}
                         tooltip={t('button_toggleSidebar')}

@@ -1,8 +1,8 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { MaterialIcon } = require('~/peer-ui');
-const { Button, List, ListItem, TooltipIconButton, ProgressBar } = require('~/react-toolbox');
+const { Button, MaterialIcon } = require('~/peer-ui');
+const { List, ListItem, ProgressBar } = require('~/react-toolbox');
 const { User, contactStore, validation } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -91,12 +91,12 @@ class Profile extends React.Component {
             <div>
                 {a.confirmed
                     ? null
-                    : <TooltipIconButton tooltip={t('button_resend')} icon="mail"
+                    : <Button tooltip={t('button_resend')} icon="mail" theme="no-hover"
                         onClick={() => { this.resendConfirmation(a.address); }} />
                 }
                 {a.primary
                     ? null
-                    : <TooltipIconButton tooltip={t('button_delete')} icon="delete"
+                    : <Button tooltip={t('button_delete')} icon="delete" theme="no-hover"
                         onClick={() => { this.removeEmail(a.address); }} />
                 }
             </div>
@@ -149,16 +149,20 @@ class Profile extends React.Component {
                                             ? <MaterialIcon icon="radio_button_checked"
                                                 className="button-selected"
                                             />
-                                            : <TooltipIconButton className={a.confirmed ? '' : 'hide'}
+                                            : <Button className={a.confirmed ? '' : 'hide'}
                                                 disabled={!a.confirmed} tooltip={t('button_makePrimary')}
                                                 icon="radio_button_unchecked"
-                                                onClick={() => { this.makePrimary(a.address); }} />
+                                                onClick={() => { this.makePrimary(a.address); }}
+                                                theme="no-hover"
+                                            />
 
                                     }
                                     rightIcon={
                                         a.confirmed && !a.primary
-                                            ? <TooltipIconButton tooltip={t('button_delete')} icon="delete"
-                                                onClick={() => { this.removeEmail(a.address); }} />
+                                            ? <Button tooltip={t('button_delete')} icon="delete"
+                                                onClick={() => { this.removeEmail(a.address); }}
+                                                theme="no-hover"
+                                            />
                                             : this.renderButton(a)
                                     }
                                 />);
@@ -171,18 +175,23 @@ class Profile extends React.Component {
                                 <BetterInput type="email" label={t('title_email')} acceptOnBlur="false"
                                     validator={validation.validators.emailFormat.action}
                                     onChange={this.onNewEmailChange} value={this.newEmail} error="error_invalidEmail"
-                                    onAccept={this.onNewEmailAccept} onReject={this.cancelNewEmail} />
-                                <TooltipIconButton tooltip={t('button_save')} icon="done"
-                                    onClick={this.saveNewEmail} disabled={!this.newEmailValid} />
-                                <TooltipIconButton tooltip={t('button_cancel')} icon="cancel"
-                                    onClick={this.cancelNewEmail} />
+                                    onAccept={this.onNewEmailAccept} onReject={this.cancelNewEmail}
+                                />
+                                <Button tooltip={t('button_save')} icon="done"
+                                    onClick={this.saveNewEmail} disabled={!this.newEmailValid}
+                                    theme="no-hover"
+                                />
+                                <Button tooltip={t('button_cancel')} icon="cancel"
+                                    onClick={this.cancelNewEmail}
+                                    theme="no-hover"
+                                />
                             </div>
                             : null
                     }
                     {
                         this.addMode || user.addresses.length > 2
                             ? null
-                            : <Button label={t('button_addEmail')} onClick={this.switchToAddMode} primary />
+                            : <Button label={t('button_addEmail')} onClick={this.switchToAddMode} />
                     }
 
                     <div className="row peerio-id-container">
@@ -209,11 +218,11 @@ class Profile extends React.Component {
                         {this.contact.hasAvatar ? null : this.contact.letter}
                     </div>
                     <div className="card-footer">
-                        <TooltipIconButton icon="delete"
+                        <Button icon="delete"
                             className={css({ banish: !this.contact.hasAvatar })}
                             onClick={this.handleDeleteAvatar}
                             tooltip={t('button_delete')} />
-                        <TooltipIconButton icon="add_a_photo"
+                        <Button icon="add_a_photo"
                             onClick={AvatarEditor.selectFile}
                             tooltip={t('button_updateAvatar')} />
                     </div>

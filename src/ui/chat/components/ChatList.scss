@@ -1,7 +1,6 @@
 .list {
   .room-item {
     cursor: pointer;
-    background: #eee;
 
     &.new-room-entry {
       font-style: italic;
@@ -20,7 +19,6 @@
     width: 100%;
     padding: 0 $padding-default;
     margin-bottom: $margin-small;
-    overflow: hidden;
 
     .room-invites-button {
       width: 100%;
@@ -48,6 +46,7 @@
     .rt-list-itemAction {
       @extend %flex-align-center;
       height: 32px;
+      margin-right: $margin-default;
     }
 
     &.pinned {

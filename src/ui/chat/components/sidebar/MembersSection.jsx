@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
+const { Avatar } = require('~/peer-ui');
 const { List, ListItem, ListSubHeader, IconMenu, MenuItem } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore, contactStore, chatInviteStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -48,7 +48,7 @@ class MembersSection extends React.Component {
     renderJoinedParticipant = (c, chat, adminMenu, userMenu) => {
         return (<span data-username={c.username} key={c.username}>
             <ListItem
-                leftActions={[<Avatar key="a" contact={c} size="small" />]}
+                leftActions={[<Avatar key="a" contact={c} size="small" tooltip clickable />]}
                 itemContent={
                     <span className="rt-list-itemContentRoot rt-list-large">
                         <span className="rt-list-itemText rt-list-primary">

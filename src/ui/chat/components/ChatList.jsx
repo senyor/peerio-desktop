@@ -1,8 +1,8 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { Button, List, ListItem, ProgressBar, TooltipDiv } = require('~/react-toolbox');
+const { Avatar, Button, Tooltip } = require('~/peer-ui');
+const { List, ListItem, ProgressBar } = require('~/react-toolbox');
 const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
-const Avatar = require('~/ui/shared-components/Avatar');
 const { chatStore, User, systemMessages, chatInviteStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
 const css = require('classnames');
@@ -68,26 +68,24 @@ class ChatList extends React.Component {
                         <div className="list">
                             <MaintenanceWarning />
                             <List selectable ripple>
-                                <TooltipDiv tooltip={t('title_addRoom')}
-                                    tooltipPosition="right">
+                                <div>
                                     <div className="chat-item-add" onClick={this.newChannel} >
                                         <div className="chat-item-title">{t('title_channels')}</div>
                                         <div className="chat-item-add-icon" />
                                     </div>
-                                </TooltipDiv>
+                                    <Tooltip text={t('title_addRoom')}
+                                        position="right" />
+                                </div>
 
                                 <FlipMove duration={200} easing="ease-in-out" >
                                     {newChatInvites > 0 &&
                                         <li className="room-invites-button-container">
                                             <Button key="room-invites"
-                                                className={css(
-                                                    'room-invites-button',
-                                                    'button-affirmative',
-                                                    { selected: routerStore.isRoomInvites }
-                                                )}
-                                                onClick={this.goToChannelInvite}>
-                                                {t('title_viewChannelInvites')}
-                                            </Button>
+                                                label={t('title_viewChannelInvites')}
+                                                className="room-invites-button"
+                                                theme="affirmative"
+                                                onClick={this.goToChannelInvite}
+                                            />
                                         </li>
                                     }
                                     {routerStore.isNewChannel &&
@@ -113,13 +111,14 @@ class ChatList extends React.Component {
                                 </FlipMove>
                             </List>
                             <List selectable ripple>
-                                <TooltipDiv tooltip={t('title_addDirectMessage')}
-                                    tooltipPosition="right">
+                                <div>
                                     <div className="chat-item-add" onClick={this.newMessage}>
                                         <div className="chat-item-title">{t('title_directMessages')}</div>
                                         <div className="chat-item-add-icon" />
                                     </div>
-                                </TooltipDiv>
+                                    <Tooltip text={t('title_addDirectMessage')}
+                                        position="right" />
+                                </div>
                                 {routerStore.isNewChat &&
                                     <ListItem key="new chat"
                                         className={css(
@@ -127,13 +126,13 @@ class ChatList extends React.Component {
                                         )}
                                         leftIcon={<div className="new-dm-avatar material-icons">help_outline</div>}
                                         itemContent={
-                                            <TooltipDiv className="item-content"
-                                                tooltip={t('title_newDirectMessage')}
-                                                tooltipPosition="right">
+                                            <div className="item-content">
                                                 <span className="rt-list-primary">
                                                     <i>{t('title_newDirectMessage')}</i>
                                                 </span>
-                                            </TooltipDiv>
+                                                <Tooltip text={t('title_newDirectMessage')}
+                                                    position="right" />
+                                            </div>
                                         }
                                     />}
                                 <FlipMove duration={200} easing="ease-in-out">
@@ -153,7 +152,13 @@ class ChatList extends React.Component {
                                                     : null}
                                             leftActions={[
                                                 c.otherParticipants.length === 1
-                                                    ? <Avatar key="a" contact={c.otherParticipants[0]} size="small" />
+                                                    ? <Avatar
+                                                        key="a"
+                                                        contact={c.otherParticipants[0]}
+                                                        size="small"
+                                                        clickable
+                                                        tooltip
+                                                    />
                                                     : null
                                             ]}
 

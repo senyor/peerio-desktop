@@ -1,8 +1,8 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { MaterialIcon } = require('~/peer-ui');
-const { Button, Switch, TooltipIconButton, ProgressBar, Dialog } = require('~/react-toolbox');
+const { Button, MaterialIcon } = require('~/peer-ui');
+const { Switch, ProgressBar, Dialog } = require('~/react-toolbox');
 const { User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const autologin = require('~/helpers/autologin');
@@ -130,19 +130,21 @@ class SecuritySettings extends React.Component {
                     {this.passphraseVisible
                         ? <span className="selectable">{User.current.passphrase}</span>
                         : <span>••••••••••••••••••••••••••••••••••••••••••</span>}&nbsp;&nbsp;
-                    <TooltipIconButton icon="visibility"
+                    <Button icon="visibility"
                         tooltip={this.passphraseVisible ?
                             t('title_hideAccountKey') : t('title_showAccountKey')}
                         tooltipPosition="right"
                         onClick={this.togglePassphraseVisibility}
-                        className={css({ 'button-selected': this.passphraseVisible })}
+                        selected={this.passphraseVisible}
+                        theme="no-hover"
                     />
 
                     <Button icon="file_download"
                         className="save-button"
                         label={t('button_saveAccountKey')}
                         onClick={this.backupAccountKey}
-                        primary />
+                        theme="primary"
+                    />
                 </div>
                 <PDFSaver ref={this.setAccountKeyPDFRef} template="./AccountKeyBackup.html" />
 
@@ -169,7 +171,7 @@ class SecuritySettings extends React.Component {
                 <p>
                     <T k="title_2FADetailDesktop" />
                     <a onClick={this.openAuthApps}>
-                        <TooltipIconButton icon="help" tooltip={t('title_readMore')} />
+                        <Button icon="help" tooltip={t('title_readMore')} theme="no-hover" />
                     </a>
                     <Dialog active={this.authAppsDialogActive} title={t('title_authApps')}
                         onOverlayClick={this.closeAuthApps} onEscKeyDown={this.closeAuthApps}
@@ -198,7 +200,7 @@ class SecuritySettings extends React.Component {
                                             <T k="title_2FASecretKey" className="dark-label" tag="div" />
 
                                             <div className="bold selectable">{this.twoFASecret}
-                                                <TooltipIconButton icon="content_copy" onClick={this.copyTOTPSecret}
+                                                <Button icon="content_copy" onClick={this.copyTOTPSecret}
                                                     tooltip={t('title_copy')} primary />
                                             </div>
                                             <br />
@@ -237,10 +239,17 @@ class SecuritySettings extends React.Component {
                     <T k="title_2FAEnabledThanks" />
                 </p>
                 <T k="title_2FABackupDetail" tag="p" />
-                <Button icon="file_download" label={t('button_2FABackupDownload')}
-                    onClick={this.downloadBackupCodes} flat />
+                <Button
+                    icon="file_download"
+                    label={t('button_2FABackupDownload')}
+                    onClick={this.downloadBackupCodes}
+                    theme="primary"
+                />
                 <div className="text-right">
-                    <Button label={t('button_disable')} flat primary onClick={this.disable2fa} />
+                    <Button
+                        label={t('button_disable')}
+                        onClick={this.disable2fa}
+                    />
                 </div>
             </section>
         );

@@ -1,7 +1,6 @@
 const React = require('react');
-const { TooltipIconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const Search = require('~/ui/shared-components/Search');
-const css = require('classnames');
 const { fileStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -21,7 +20,7 @@ class GlobalActions extends React.Component {
             <div className="table-action-bar">
                 <div className="no-select">{fileStore.selectedCount} {t('title_selected')}</div>
                 <div className="table-actions">
-                    <TooltipIconButton
+                    <Button
                         tooltip={t('button_upload')}
                         tooltipPosition="top"
                         icon="cloud_upload"
@@ -32,11 +31,12 @@ class GlobalActions extends React.Component {
                     {/* tooltipPosition="top" */}
                     {/* icon="file_download" */}
                     {/* className={css({ active: true, disabled: true })} /> */}
-                    <TooltipIconButton
+                    <Button
                         tooltip={t('button_share')}
                         tooltipPosition="top"
                         icon="reply"
-                        className={css('reverse-icon active', { disabled: !fileStore.canShareSelectedFiles })}
+                        className="reverse-icon active"
+                        disabled={!fileStore.canShareSelectedFiles}
                         onClick={this.props.onShare}
                     />
                     {/* NO MAIL YET. Uncomment when we have mail.  */}
@@ -52,11 +52,12 @@ class GlobalActions extends React.Component {
                     {/* tooltipPosition="top" */}
                     {/* icon="create_new_folder" */}
                     {/* className={css({ active: false, disabled: true })} /> */}
-                    <TooltipIconButton
+                    <Button
                         tooltip={t('button_delete')}
                         tooltipPosition="top"
                         icon="delete"
-                        className={css('active', { disabled: !fileStore.hasSelectedFiles })}
+                        className="active"
+                        disabled={!fileStore.hasSelectedFiles}
                         onClick={this.props.onDelete}
                     />
                 </div>

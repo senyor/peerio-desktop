@@ -48,7 +48,7 @@ class Help extends React.Component {
                     </div>
                     <div className="text">
                         <T k="title_supportIntro" />
-                        <Button icon="chat"
+                        <Button icon="question_answer"
                             onClick={this.support}
                             tooltip={t('button_supportChat')}
                             theme="no-hover"
@@ -64,7 +64,7 @@ class Help extends React.Component {
                     <div className="title">{t('title_feedback')}</div>
                     <div className="text">
                         <T k="title_feedbackIntro" />
-                        <Button icon="chat"
+                        <Button icon="question_answer"
                             onClick={this.feedback}
                             tooltip={t('button_feedbackChat')}
                             theme="no-hover"

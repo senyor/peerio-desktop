@@ -137,6 +137,8 @@
 
     .file-name-container {
       display: flex;
+      align-items: center;
+
       // we add a min-width because this container is itself in a flex
       // container, and we want this to shrink (truncating the filename).
       min-width: 50px;

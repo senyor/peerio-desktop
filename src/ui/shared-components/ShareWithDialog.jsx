@@ -2,8 +2,8 @@ const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, contactStore } = require('peerio-icebear');
-const { Avatar, MaterialIcon } = require('~/peer-ui');
-const { Dialog, Input, List, ListItem } = require('~/react-toolbox');
+const { Avatar, Dialog, MaterialIcon } = require('~/peer-ui');
+const { Input, List, ListItem } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getChannelByEvent, getContactByEvent } = require('~/helpers/icebear-dom');
@@ -76,8 +76,7 @@ class ShareWithDialog extends React.Component {
             <Dialog active
                 className="share-with-dialog"
                 actions={dialogActions}
-                onEscKeyDown={this.cancelDialog}
-                onOverlayClick={this.cancelDialog}
+                onCancel={this.cancelDialog}
                 title={t('title_shareWith')}>
                 <div className="share-with-contents">
                     <div className="user-search">

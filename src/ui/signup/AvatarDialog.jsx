@@ -2,7 +2,7 @@ const React = require('react');
 const { Component } = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { Dialog } = require('~/react-toolbox');
+const { Dialog } = require('~/peer-ui');
 const AvatarEditor = require('~/ui/settings/components/AvatarEditor');
 
 @observer class AvatarDialog extends Component {
@@ -26,8 +26,7 @@ const AvatarEditor = require('~/ui/settings/components/AvatarEditor');
         const { hideDialog, show } = AvatarDialog;
         return (
             <Dialog active={show}
-                onOverlayClick={hideDialog}
-                onEscKeyDown={hideDialog}
+                onCancel={hideDialog}
                 className="avatar-editor">
                 <section className="save-avatar-container">
                     <AvatarEditor onSave={this.saveAvatar} />

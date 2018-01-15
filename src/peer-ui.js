@@ -10,4 +10,5 @@ module.exports.CustomIcon = require('~/ui-library/CustomIcon');
 module.exports.MaterialIcon = require('~/ui-library/MaterialIcon');
 
 // Informational
+module.exports.Dialog = require('~/ui-library/Dialog');
 module.exports.Tooltip = require('~/ui-library/Tooltip');

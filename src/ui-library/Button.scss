@@ -69,6 +69,7 @@
   // "Affirmative" theme
   &.affirmative {
     min-width: 90px;
+    padding: 0 24px;
     color: $text-light-primary;
     background-color: $green-affirmative;
     border-radius: 24px;
@@ -125,6 +126,7 @@
   // "Rounded" theme
   &.rounded {
     min-width: 90px;
+    padding: 0 24px;
     border-radius: 24px;
   }
 

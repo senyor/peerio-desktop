@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button } = require('~/peer-ui');
-const { Dialog } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
@@ -55,8 +54,7 @@ class About extends React.Component {
 
                 <Dialog active={this.termsDialogOpen}
                     actions={termsDialogActions}
-                    onOverlayClick={this.hideTermsDialog}
-                    onEscKeyDown={this.hideTermsDialog}
+                    onCancel={this.hideTermsDialog}
                     className="terms-container">
                     <Terms />
                 </Dialog>

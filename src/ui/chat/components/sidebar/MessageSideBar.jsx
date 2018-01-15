@@ -3,8 +3,8 @@ const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, systemMessages, contactStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
-const { Avatar } = require('~/peer-ui');
-const { List, ListItem, IconButton } = require('~/react-toolbox');
+const { Avatar, Button } = require('~/peer-ui');
+const { List, ListItem } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -97,7 +97,7 @@ class MessageSideBar extends React.Component {
                         <div className="title">
                             <T k="title_messageInfo" tag="div" className="list-header" />
                             <div className="close-button">
-                                <IconButton icon="close" onClick={this.close} />
+                                <Button icon="close" onClick={this.close} />
                             </div>
                         </div>
                         <ListItem selectable={false} ripple={false} className="active"

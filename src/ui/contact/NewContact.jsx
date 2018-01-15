@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, action, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, MaterialIcon } = require('~/peer-ui');
-const { IconButton, Input } = require('~/react-toolbox');
+const { Input } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
@@ -158,7 +158,10 @@ class NewContact extends React.Component {
                         <div className="invite-elsewhere">
                             <T k="title_shareSocial" tag="strong" />
                             <div className="icons">
-                                <IconButton icon="email" href={this.getEmailUrl()} />
+                                <Button icon="email"
+                                    href={this.getEmailUrl()}
+                                    theme="no-hover"
+                                />
                                 <a className="twitter-share-button"
                                     href={this.getTwitterUrl()} data-size="large">
                                     <img src="./static/img/twitter.png" alt="twitter" />

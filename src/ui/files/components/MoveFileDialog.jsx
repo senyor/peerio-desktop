@@ -2,8 +2,7 @@ const React = require('react');
 const { observable, action, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { Button, MaterialIcon } = require('~/peer-ui');
-const { Dialog } = require('~/react-toolbox');
+const { Button, Dialog, MaterialIcon } = require('~/peer-ui');
 const { fileStore } = require('peerio-icebear');
 const Breadcrumb = require('./Breadcrumb');
 const Search = require('~/ui/shared-components/Search');
@@ -76,7 +75,7 @@ class MoveFileDialog extends React.Component {
             <div className={css('file-info', { clickable: hasFolders })}
                 onClick={this.setCurrentFolder}
             >
-                <div className="file-name">{folder.name}</div>
+                <div className="file-name clickable">{folder.name}</div>
             </div>
             { hasFolders &&
                 <Button
@@ -102,8 +101,7 @@ class MoveFileDialog extends React.Component {
         return (
             <Dialog
                 actions={actions}
-                onEscKeyDown={onHide}
-                onOverlayClick={onHide}
+                onCancel={onHide}
                 active={visible}
                 title={t('title_moveFileTo')}
                 className="move-file-dialog">

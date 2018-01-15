@@ -1,8 +1,8 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, MaterialIcon } = require('~/peer-ui');
-const { Switch, ProgressBar, Dialog } = require('~/react-toolbox');
+const { Button, Dialog, MaterialIcon } = require('~/peer-ui');
+const { Switch, ProgressBar } = require('~/react-toolbox');
 const { User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const autologin = require('~/helpers/autologin');
@@ -174,7 +174,7 @@ class SecuritySettings extends React.Component {
                         <Button icon="help" tooltip={t('title_readMore')} theme="no-hover" />
                     </a>
                     <Dialog active={this.authAppsDialogActive} title={t('title_authApps')}
-                        onOverlayClick={this.closeAuthApps} onEscKeyDown={this.closeAuthApps}
+                        onCancel={this.closeAuthApps}
                         actions={[{ label: t('button_close'), onClick: this.closeAuthApps }]}>
                         <T k="title_authAppsDetails" tag="p" />
                     </Dialog>

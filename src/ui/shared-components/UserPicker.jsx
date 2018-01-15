@@ -3,7 +3,7 @@ const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Avatar, Button, MaterialIcon } = require('~/peer-ui');
 const {
-    Chip, IconButton, Input, List,
+    Chip, Input, List,
     ListItem, ListSubHeader, ProgressBar
 } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
@@ -271,7 +271,7 @@ class UserPicker extends React.Component {
                                         }
                                     </div>
                                     {this.props.closeable &&
-                                        <IconButton icon="close" onClick={this.handleClose} className="button-close" />
+                                        <Button icon="close" onClick={this.handleClose} className="button-close" />
                                     }
                                 </div>
                             }

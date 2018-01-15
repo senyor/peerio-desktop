@@ -1,9 +1,8 @@
 const React = require('react');
-const { Button } = require('~/peer-ui');
+const { Button, Dialog } = require('~/peer-ui');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { Dialog } = require('~/react-toolbox');
 const { warnings } = require('peerio-icebear');
 const MailPassphrase = require('./MailPassphrase');
 
@@ -83,8 +82,7 @@ class MailSentSidebar extends React.Component {
                 </div>
                 {this.ghostActive ? <Dialog actions={revokeDialogActions}
                     active={this.revokeDialogActive}
-                    onEscKeyDown={this.handleRevokeDialogToggle}
-                    onOverlayClick={this.handleRevokeDialogToggle}
+                    onCancel={this.handleRevokeDialogToggle}
                     title={t('title_mailRevoke')}>
                     <p>{t('dialog_mailRevokeText')}</p>
                 </Dialog> : ''}

@@ -1,6 +1,5 @@
 const React = require('react');
-const { Button } = require('~/peer-ui');
-const { Dialog } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/peer-ui');
 const { User, errors } = require('peerio-icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
@@ -188,7 +187,7 @@ const config = require('~/config');
         ];
         return (
             <Dialog actions={errorActions} active={this.errorVisible}
-                onEscKeyDown={this.hideError} onOverlayClick={this.hideError}
+                onCancel={this.hideError}
                 title={t('title_error')}>{this.errorMessage}
             </Dialog>
         );

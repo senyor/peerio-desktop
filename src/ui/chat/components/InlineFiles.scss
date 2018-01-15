@@ -269,9 +269,8 @@
   width: auto;
   min-height: 240px; // arbitrary min-height to show enough of image above toolbar
   min-width: 240px; // arbitrary min-width to show filename and buttons
-  border-radius: 4px;
 
-  .rt-dialog-body {
+  .body {
     display: flex;
     align-items: center;
     justify-content: center;

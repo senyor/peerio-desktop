@@ -1,5 +1,4 @@
 const React = require('react');
-// const AutoUpdateDialog = require('~/ui/AutoUpdateDialog');
 const languageStore = require('~/stores/language-store');
 const isDevEnv = require('~/helpers/is-dev-env');
 const config = require('~/config');
@@ -93,7 +92,6 @@ class Root extends React.Component {
                     </div>
                     {this.props.children}
 
-                    {/* <AutoUpdateDialog /> */}
                     {this.devtools}
                     {this.snackbarVisible ? <Snackbar /> : null}
                     <SystemWarningDialog />

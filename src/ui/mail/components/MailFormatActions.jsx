@@ -1,5 +1,5 @@
 const React = require('react');
-const { IconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 
 
 class MailFormatActions extends React.Component {
@@ -7,18 +7,18 @@ class MailFormatActions extends React.Component {
         return (
             <div className="mail-actions">
                 <div className="counter">
-                    <IconButton className="attach-file" icon="attach_file"
+                    <Button className="attach-file" icon="attach_file"
                         onClick={this.props.onFileAttach} />
                     {this.props.fileCounter === 0 ?
                         null : <div className="count">{this.props.fileCounter}</div>}
                 </div>
                 <div className="mail-format">
-                    <IconButton icon="format_bold" />
-                    <IconButton icon="format_italic" />
-                    <IconButton icon="format_underline" />
-                    <IconButton icon="strikethrough_s" />
+                    <Button icon="format_bold" />
+                    <Button icon="format_italic" />
+                    <Button icon="format_underline" />
+                    <Button icon="strikethrough_s" />
                 </div>
-                <IconButton className="delete" icon="delete" />
+                <Button className="delete" icon="delete" />
 
             </div>
         );

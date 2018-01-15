@@ -2,7 +2,6 @@ const React = require('react');
 const Croppie = require('croppie');
 const { observable } = require('mobx');
 const { Button } = require('~/peer-ui');
-const { IconButton } = require('~/react-toolbox');
 const electron = require('electron').remote;
 const { t } = require('peerio-translator');
 
@@ -89,8 +88,8 @@ class AvatarEditor extends React.Component {
         return (<div className="avatar-editor-container">
             <div ref={this.initCroppie} />
             <div className="buttons-container">
-                <IconButton className="rotate-button" icon="rotate_left" onClick={this.rotateLeft} accent />
-                <IconButton className="rotate-button" icon="rotate_right" onClick={this.rotateRight} accent />
+                <Button className="rotate-button" icon="rotate_left" onClick={this.rotateLeft} accent />
+                <Button className="rotate-button" icon="rotate_right" onClick={this.rotateRight} accent />
                 <br />
                 <br />
                 <Button

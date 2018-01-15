@@ -1,6 +1,5 @@
 const React = require('react');
-const { Checkbox } = require('~/peer-ui');
-const { Dialog } = require('~/react-toolbox');
+const { Checkbox, Dialog } = require('~/peer-ui');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');

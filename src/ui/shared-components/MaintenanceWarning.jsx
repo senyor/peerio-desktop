@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { MaterialIcon } = require('~/peer-ui');
-const { Dialog } = require('~/react-toolbox');
+const { Dialog, MaterialIcon } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { serverSettings } = require('peerio-icebear');
 const { t } = require('peerio-translator');
@@ -43,7 +42,7 @@ class MaintenanceWarning extends React.Component {
                     </div>
                     <Dialog className="dialog-maintenance" active={this.showDialog}
                         title={t('dialog_scheduledMaintenance')}
-                        onOverlayClick={this.dismiss} onEscKeyDown={this.dismiss}
+                        onCancel={this.dismiss}
                         actions={[{ label: t('button_dismiss'), onClick: this.dismiss }]}>
                         <T k="dialog_scheduledMaintenanceDates" tag="p">
                             {{ start: this.maintenanceStartDate, end: this.maintenanceEndDate }}

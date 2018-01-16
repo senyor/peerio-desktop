@@ -35,6 +35,7 @@ cfg.StorageEngine = StorageEngine;
 cfg.StorageEngine.storageFolder = app.getPath('userData');
 
 // --- FILE UPLOAD/DOWNLOAD SETTINGS
+cfg.download.parallelism = 2;
 cfg.download.maxDownloadChunkSize = 1024 * 1024 * 3;
 cfg.download.maxDecryptBufferSize = 1024 * 1024 * 3;
 cfg.upload.encryptBufferSize = 1024 * 1024 * 3;

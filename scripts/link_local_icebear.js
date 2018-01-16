@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const path = require('path');
-const fs = require('fs-extra');
+const fse = require('fs-extra');
 const globalRequire = require('require-global-node-module');
 const chokidar = require('chokidar');
 const debounce = require('debounce-queue');
@@ -22,7 +22,7 @@ const copy = debounce(_ => _.forEach(filePath => {
     const fullFilePath = path.join(modulePath, filePath);
     // const filePath = path.relative(modulePath, fullFilePath);
     const fullDestPath = path.join(cwd, 'app', 'node_modules', moduleName, filePath);
-    fs.copy(fullFilePath, fullDestPath, error => {
+    fse.copy(fullFilePath, fullDestPath, error => {
         if (error) {
             console.error('Cannot copy', filePath, error.message);
         } else {

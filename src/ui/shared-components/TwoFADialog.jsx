@@ -70,8 +70,10 @@ class TwoFADialog extends React.Component {
     }
 
     setInputRef = (ref) => {
-        this.inputRef = ref;
-        if (clientApp.active2FARequest) ref.focus();
+        if (ref) {
+            this.inputRef = ref;
+            if (clientApp.active2FARequest) ref.focus();
+        }
     }
 
     onToggleTrust() {

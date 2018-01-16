@@ -5,5 +5,13 @@
     color: gold;
   }
 
+  &.reverse-icon {
+    @extend %reverse-icon;
+  }
+
+  &.selected {
+    color: $blue;
+  }
+
   // TODO: move .material-icons styles here where relevant
 }

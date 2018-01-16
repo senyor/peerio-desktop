@@ -7,7 +7,7 @@ const css = require('classnames');
     className   string
     checked     boolean
     onChange    function
-    label       string
+    label                   usually string, can be any HTML
     ----------------------------------------
 */
 
@@ -30,7 +30,7 @@ class Checkbox extends React.Component {
                     />
                     <span className={css(
                         'material-icons',
-                        { 'button-selected': this.props.checked }
+                        { selected: this.props.checked }
                     )}>
                         {this.props.checked
                             ? 'check_box'

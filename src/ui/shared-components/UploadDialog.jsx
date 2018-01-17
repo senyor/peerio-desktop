@@ -170,7 +170,7 @@ class UploadDialog extends React.Component {
         }
 
         return (
-            <Dialog active
+            <Dialog active noAnimation
                 className="upload-dialog"
                 actions={uploadActions}
                 onCancel={this.cancelUpload}

@@ -73,7 +73,7 @@ class ShareWithDialog extends React.Component {
         ];
 
         return (
-            <Dialog active
+            <Dialog active noAnimation
                 className="share-with-dialog"
                 actions={dialogActions}
                 onCancel={this.cancelDialog}

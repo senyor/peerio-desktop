@@ -51,7 +51,13 @@
   }
 
   .actions {
-    padding: $padding-default;
+    padding: $padding-small;
     text-align: right;
   }
+}
+
+// Override HTML defaults
+dialog {
+  padding: 0;
+  border: 0;
 }

@@ -14,11 +14,12 @@ const appRoot = document.getElementById('root');
     ----------------------------------------
     className       string
     active          bool
-
+    noAnimation     bool
     title                       usually string but any HTML allowed
 
-    actions         array       each element is object with {label: string, onClick: function}
-    onCancel        function
+    onCancel        function    behaviour for Esc key and overlay click
+    actions         array       each element is an object corresponding to 1 button in dialog
+                                e.g. {label: 'string', onClick: function(), disabled: bool}
     ----------------------------------------
 */
 
@@ -40,17 +41,9 @@ class Dialog extends React.Component {
             } else {
                 this.setInactive();
             }
-        });
+        }, true);
 
-        /*
-            If, on mount, dialog is already active, reaction() won't cause dialog to show. Need to set the bools here.
-            e.g. this happens in Files > MoveFileDialog, where Dialog itself is 2 components removed from `active` bool
-        */
-        if (this.props.active) {
-            this.dialogRendered = true;
-            this.dialogVisible = true;
-            window.addEventListener('keyup', this.handleEscKey, false);
-        }
+        window.addEventListener('keyup', this.handleEscKey, false);
     }
 
     componentWillUnmount() {
@@ -59,26 +52,35 @@ class Dialog extends React.Component {
     }
 
     @action.bound setActive() {
+        if (this.unmountTimeout) {
+            clearTimeout(this.unmountTimeout);
+            this.unmountTimeout = null;
+        }
         this.dialogRendered = true;
         window.addEventListener('keyup', this.handleEscKey, false);
 
-        if (this.unmountTimeout) clearTimeout(this.unmountTimeout);
-        setTimeout(() => {
+        this.mountTimeout = setTimeout(() => {
             this.dialogVisible = true;
+            this.mountTimeout = null;
         }, 1);
     }
 
     @action.bound setInactive() {
+        if (this.mountTimeout) {
+            clearTimeout(this.mountTimeout);
+            this.mountTimeout = null;
+        }
         this.dialogVisible = false;
         window.removeEventListener('keyup', this.handleEscKey);
 
-        this.unmmountTimeout = setTimeout(() => {
+        this.unmountTimeout = setTimeout(() => {
             this.dialogRendered = false;
-            this.unmmountTimeout = null;
+            this.unmountTimeout = null;
         }, 200);
     }
 
     @action.bound handleEscKey(ev) {
+        if (!this.dialogVisible || !this.dialogRendered) return;
         if (ev.keyCode === 27) {
             this.props.onCancel();
         }
@@ -98,6 +100,7 @@ class Dialog extends React.Component {
                         label={actions[i].label}
                         onClick={actions[i].onClick}
                         theme={i < actions.length - 1 ? 'secondary' : null}
+                        disabled={actions[i].disabled}
                     />
                 );
             }
@@ -107,15 +110,16 @@ class Dialog extends React.Component {
             <div
                 className={css(
                     'p-dialog-wrapper',
-                    { visible: this.dialogVisible }
+                    { visible: this.props.noAnimation || this.dialogVisible }
                 )}
             >
+
                 <div
                     className="p-dialog-overlay"
                     onClick={this.props.onCancel}
                 />
 
-                <div
+                <dialog open
                     className={css(
                         'p-dialog',
                         this.props.className
@@ -133,7 +137,7 @@ class Dialog extends React.Component {
                         ? <div className="actions">{buttons}</div>
                         : null
                     }
-                </div>
+                </dialog>
             </div>
         );
 

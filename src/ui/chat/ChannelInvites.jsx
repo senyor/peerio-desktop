@@ -1,7 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Button } = require('~/peer-ui');
-const { List, ListItem } = require('~/react-toolbox');
+const { Button, List, ListItem } = require('~/peer-ui');
 const ChatList = require('./components/ChatList');
 const { t } = require('peerio-translator');
 const { chatInviteStore, chatStore, User } = require('peerio-icebear');
@@ -74,9 +73,7 @@ class ChannelInvites extends React.Component {
                                                             timestamp: moment(i.timestamp).format('L')
                                                         })
                                                 }
-                                                rightIcon={this.inviteOptions(i.kegDbId)}
-                                                selectable={false}
-                                                ripple={false}
+                                                rightContent={this.inviteOptions(i.kegDbId)}
                                             />)
                                         )}
                                     </List>

@@ -1,11 +1,8 @@
 const React = require('react');
 const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar, Button, MaterialIcon } = require('~/peer-ui');
-const {
-    Chip, Input, List,
-    ListItem, ListSubHeader, ProgressBar
-} = require('~/react-toolbox');
+const { Avatar, Button, List, ListHeading, ListItem, MaterialIcon } = require('~/peer-ui');
+const { Chip, Input, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('peerio-icebear');
 const css = require('classnames');
@@ -226,11 +223,11 @@ class UserPicker extends React.Component {
         if (!items.length) return null;
         return (
             <div key={subTitle} className="user-list">
-                {!!subTitle && <ListSubHeader key={subTitle} caption={`${t(subTitle)} (${items.length})`} />}
+                {!!subTitle && <ListHeading key={subTitle} caption={`${t(subTitle)} (${items.length})`} />}
                 {items.map(c => (
                     <span key={c.username} data-id={c.username}>
                         <ListItem
-                            leftActions={[<Avatar key="a" contact={c} size="medium" clickable />]}
+                            leftContent={<Avatar key="a" contact={c} size="medium" />}
                             caption={c.username}
                             legend={`${c.firstName} ${c.lastName}`}
                             onClick={this.onContactClick} />
@@ -246,8 +243,8 @@ class UserPicker extends React.Component {
         return (
             <div className="user-picker">
                 <div className={css('selected-items', { banish: !this.props.sharing })} >
-                    <List>
-                        <ListSubHeader key="header" caption={t('title_selectedFiles')} />
+                    <List clickable>
+                        <ListHeading key="header" caption={t('title_selectedFiles')} />
                         {
                             selectedFiles.map(f => (<ListItem
                                 key={f.id}
@@ -363,7 +360,7 @@ class UserPicker extends React.Component {
                                     </div>
                                 </div>
                             }
-                            <List selectable ripple>
+                            <List theme="large" clickable>
                                 {this.foundContact && this.renderList(null, [this.foundContact])}
                                 {!this.foundContact
                                     && this.renderList('title_favoriteContacts', this.options.favorites)}

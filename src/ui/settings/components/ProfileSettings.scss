@@ -16,12 +16,21 @@
     .email-row {
       margin-top: $margin-small;
 
-      .rt-list-itemText:not(.rt-list-primary) {
+      .content {
+        display: flex;
+        align-items: center;
+      }
+
+      .right {
+        margin-left: auto;
+      }
+
+      .legend {
         @extend %hint-error-label;
       }
 
       &.unconfirmed {
-        .rt-list-itemText:not(.rt-list-primary) {
+        .legend {
           color: $red-error;
         }
       }

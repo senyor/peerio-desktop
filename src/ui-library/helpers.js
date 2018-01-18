@@ -16,6 +16,22 @@ function getPositionInWindow(element) {
     };
 }
 
+/**
+ * Finds all 'data-...' props of an instance of a component
+ * @param {Object} - props from component
+ * @returns {Object}
+ */
+function getDataProps(props) {
+    const dataProps = {};
+
+    Object.keys(props).filter(p => p.startsWith('data-')).forEach(key => {
+        dataProps[key] = props[key];
+    });
+
+    return dataProps;
+}
+
 module.exports = {
-    getPositionInWindow
+    getPositionInWindow,
+    getDataProps
 };

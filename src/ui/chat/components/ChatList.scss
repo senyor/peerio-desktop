@@ -1,15 +1,12 @@
-.list {
+.p-list {
   .room-item {
     cursor: pointer;
+    height: 26px;
+    max-height: 26px;
+    min-height: 26px;
 
     &.new-room-entry {
       font-style: italic;
-    }
-
-    .rt-list-item { // This should be 32px - Paul
-      height: 26px;
-      max-height: 26px;
-      min-height: 26px;
     }
   }
 
@@ -30,51 +27,37 @@
   }
 
   .dm-item {
-    cursor: pointer;
-    transition: 150ms;
-    background: #eee;
+    max-height: 44px;
+    min-height: 44px;
 
-    &:hover:not(.active) {
-      background-color: $lightblue-hover;
-    }
-
-    .rt-list-item {
-      max-height: 44px;
-      min-height: 44px;
-    }
-
-    .rt-list-itemAction {
-      @extend %flex-align-center;
+    .icon {
       height: 32px;
-      margin-right: $margin-default;
     }
 
     &.pinned {
-      .rt-list-item {
-        position: relative;
+      position: relative;
 
-        &::before {
-          content: ' ';
-          position: absolute;
-          z-index: 1;
-          height: 16px;
-          width: 16px;
-          left: 8px;
-          top: 0;
-          background-image: url('./static/custom-icons/pin-on.svg');
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: 100%;
-        }
+      &::before {
+        content: ' ';
+        position: absolute;
+        z-index: 1;
+        height: 16px;
+        width: 16px;
+        left: 8px;
+        top: 0;
+        background-image: url('./static/custom-icons/pin-on.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100%;
       }
 
-      &.active .rt-list-item::before {
+      &.active::before {
         background-image: url('./static/custom-icons/pin-on-white.svg');
       }
     }
 
     &.new-dm-list-entry {
-      .rt-list-left .rt-list-itemAction span {
+      .left-icon span {
         margin-right: $margin-default;
       }
     }
@@ -86,15 +69,4 @@
       color: $white;
     }
   }
-}
-
-// TODO: Remove when channels go live? - paul
-.avatar-group-chat {
-  height: 32px;
-  width: 32px;
-  line-height: 32px;
-  text-align: center;
-  color: $text-light-primary;
-  background: #979797;
-  border-radius: 40px;
 }

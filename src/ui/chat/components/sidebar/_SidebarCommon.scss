@@ -20,27 +20,6 @@
     line-height: 48px;
   }
 
-  .rt-list-itemContentRoot {
-    cursor: pointer;
-    overflow: hidden;
-  }
-
-  // Override default hover to prevent double-hover blue effect
-  .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover:hover:not(.active),
-  .rt-list-listItem:hover:not(.active) {
-    background-color: #afdff2;
-  }
-
-  .rt-list-large {
-    overflow: hidden;
-  }
-
-  .rt-list-itemText {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
   .purpose-container {
     padding-left: $padding-default;
     padding-top: 7px;
@@ -115,7 +94,7 @@
   }
 
   &.open,
-  .rt-list-item {
+  .p-list-item {
     width: 272px;
   }
 

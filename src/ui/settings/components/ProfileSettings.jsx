@@ -1,8 +1,8 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, MaterialIcon } = require('~/peer-ui');
-const { List, ListItem, ProgressBar } = require('~/react-toolbox');
+const { Button, List, ListItem, MaterialIcon } = require('~/peer-ui');
+const { ProgressBar } = require('~/react-toolbox');
 const { User, contactStore, validation } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -133,39 +133,39 @@ class Profile extends React.Component {
                     <div className="dark-label label-email">
                         {t('title_email')}
                     </div>
-                    <List className="no-effects">
+                    <List theme="no-hover">
                         {
                             user.addresses.map(a => {
-                                return (<ListItem key={a.address}
-                                    className={css('email-row', { unconfirmed: !a.confirmed })}
-                                    caption={a.address}
-                                    legend={
-                                        a.confirmed
-                                            ? (a.primary ? t('title_primaryEmail') : null)
-                                            : t('error_unconfirmedEmail')
-                                    }
-                                    leftIcon={
-                                        a.primary
-                                            ? <MaterialIcon icon="radio_button_checked"
-                                                className="button-selected"
-                                            />
-                                            : <Button className={a.confirmed ? '' : 'hide'}
-                                                disabled={!a.confirmed} tooltip={t('button_makePrimary')}
-                                                icon="radio_button_unchecked"
-                                                onClick={() => { this.makePrimary(a.address); }}
-                                                theme="no-hover"
-                                            />
+                                const leftButton = a.primary
+                                    ? <MaterialIcon icon="radio_button_checked" className="selected" />
+                                    : (<Button className={a.confirmed ? '' : 'hide'}
+                                        disabled={!a.confirmed} tooltip={t('button_makePrimary')}
+                                        icon="radio_button_unchecked"
+                                        onClick={() => { this.makePrimary(a.address); }}
+                                        theme="small no-hover"
+                                    />);
 
-                                    }
-                                    rightIcon={
-                                        a.confirmed && !a.primary
-                                            ? <Button tooltip={t('button_delete')} icon="delete"
-                                                onClick={() => { this.removeEmail(a.address); }}
-                                                theme="no-hover"
-                                            />
-                                            : this.renderButton(a)
-                                    }
-                                />);
+                                const legend = a.confirmed
+                                    ? (a.primary ? t('title_primaryEmail') : null)
+                                    : t('error_unconfirmedEmail');
+
+                                const rightButton = a.confirmed && !a.primary
+                                    ? (<Button tooltip={t('button_delete')} icon="delete"
+                                        onClick={() => { this.removeEmail(a.address); }}
+                                        theme="no-hover"
+                                    />)
+                                    : this.renderButton(a);
+
+                                return (
+                                    <ListItem
+                                        key={a.address}
+                                        className={css('email-row', { unconfirmed: !a.confirmed })}
+                                        leftContent={leftButton}
+                                        caption={a.address}
+                                        legend={legend}
+                                        rightContent={rightButton}
+                                    />
+                                );
                             })
                         }
                     </List>

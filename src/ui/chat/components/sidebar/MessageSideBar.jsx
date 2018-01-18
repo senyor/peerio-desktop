@@ -3,8 +3,7 @@ const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, systemMessages, contactStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
-const { Avatar, Button } = require('~/peer-ui');
-const { List, ListItem } = require('~/react-toolbox');
+const { Avatar, Button, List, ListItem } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -54,17 +53,9 @@ class MessageSideBar extends React.Component {
             ? null
             : <span data-username={entry[0].username} key={entry[0].username}>
                 <ListItem
-                    leftActions={[<Avatar key="a" contact={entry[0]} size="small" tooltip clickable />]}
-                    itemContent={
-                        <span className="rt-list-itemContentRoot rt-list-large">
-                            <span className="rt-list-itemText rt-list-primary">
-                                {entry[0].username}
-                            </span>
-                            <span className="rt-list-itemText">
-                                {entry[0].fullName}
-                            </span>
-                        </span>
-                    }
+                    leftContent={[<Avatar key="a" contact={entry[0]} size="small" clickable />]}
+                    caption={entry[0].username}
+                    legend={entry[0].fullName}
                     onClick={this.openContact}
                 />
             </span>;
@@ -93,32 +84,25 @@ class MessageSideBar extends React.Component {
         return (
             <div className="message-sidebar">
                 <div className="header">
-                    <List>
+                    <List theme="large no-hover">
                         <div className="title">
-                            <T k="title_messageInfo" tag="div" className="list-header" />
+                            <T k="title_messageInfo" tag="div" className="p-list-heading" />
                             <div className="close-button">
                                 <Button icon="close" onClick={this.close} />
                             </div>
                         </div>
-                        <ListItem selectable={false} ripple={false} className="active"
-                            leftActions={[<Avatar key="a" contact={msg.sender} size="small" clickable tooltip />]}
-                            itemContent={
-                                <span className="rt-list-itemContentRoot rt-list-large">
-                                    <span className="rt-list-itemText rt-list-primary">
-                                        {msg.sender.fullName}
-                                    </span>
-                                    <span className="rt-list-itemText">
-                                        {this.renderMessage(msg)}
-                                    </span>
-                                </span>
+                        <ListItem
+                            leftContent={
+                                <Avatar key="a" contact={msg.sender} size="small" clickable tooltip />
                             }
-
+                            caption={msg.sender.fullName}
+                            legend={this.renderMessage(msg)}
                         />
                     </List>
                 </div>
-                <T k="title_readBy" tag="div" className="list-header" />
+                <T k="title_readBy" tag="div" className="p-list-heading" />
 
-                <List className="receipts">
+                <List className="receipts" theme="large" clickable>
                     {this.getReceipts(msg)}
                 </List>
             </div>

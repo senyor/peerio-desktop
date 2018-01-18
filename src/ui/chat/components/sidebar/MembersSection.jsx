@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Avatar } = require('~/peer-ui');
-const { List, ListItem, ListSubHeader, IconMenu, MenuItem } = require('~/react-toolbox');
+const { Avatar, List, ListHeading, ListItem } = require('~/peer-ui');
+const { IconMenu, MenuItem } = require('~/react-toolbox');
 const { chatStore, contactStore, chatInviteStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -48,23 +48,21 @@ class MembersSection extends React.Component {
     renderJoinedParticipant = (c, chat, adminMenu, userMenu) => {
         return (<span data-username={c.username} key={c.username}>
             <ListItem
-                leftActions={[<Avatar key="a" contact={c} size="small" tooltip clickable />]}
-                itemContent={
-                    <span className="rt-list-itemContentRoot rt-list-large">
-                        <span className="rt-list-itemText rt-list-primary">
-                            {c.username}{chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}
-                        </span>
-                        <span className="rt-list-itemText">
-                            {c.fullName}
-                        </span>
-                    </span>
-                }
-                rightActions={(User.current.username !== c.username)
+                leftContent={[<Avatar key="a" contact={c} size="small" clickable />]}
+                rightContent={(User.current.username !== c.username)
                     ? (chat.isAdmin(c) ? adminMenu : userMenu)
                     : []
                 }
                 onClick={this.openContact}
-            />
+            >
+                <div>
+                    {c.username}
+                    {chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}
+                </div>
+                <div>
+                    {c.fullName}
+                </div>
+            </ListItem>
         </span>);
     }
 
@@ -72,7 +70,7 @@ class MembersSection extends React.Component {
         return (<span data-username={c.username} key={`invited--${c.username}`}>
             <ListItem
                 caption={c.username}
-                rightActions={inviteMenu}
+                rightContent={inviteMenu}
                 onClick={this.openContact}
             />
         </span>);
@@ -122,7 +120,7 @@ class MembersSection extends React.Component {
             <SideBarSection title={t('title_Members')} onToggle={this.props.onToggle} open={this.props.open}>
                 <div className={css('member-list', { 'with-admin-controls': isChannel && canIAdmin })}>
                     {isChannel && canIAdmin
-                        ? <List className="action-list">
+                        ? <List className="action-list" clickable>
                             <ListItem
                                 className="admin-controls"
                                 leftIcon="person_add"
@@ -131,12 +129,12 @@ class MembersSection extends React.Component {
                         </List>
                         : null
                     }
-                    <List>
+                    <List clickable>
                         {chat.allJoinedParticipants.map(
                             (c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu))
                         }
                         {invited && invited.length
-                            ? <ListSubHeader caption={t('title_invited')} />
+                            ? <ListHeading caption={t('title_invited')} />
                             : null}
                         {invited
                             ? invited.map((c) => this.renderInvitedParticipant(c, inviteMenu))

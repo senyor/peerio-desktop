@@ -3,41 +3,42 @@
 }
 
 .sidebar-file-list {
-  .sidebar-file-label {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+
+  .content {
+    width: 100%;
+  }
+
+  .file-sprite-icon {
+    min-width: 32px;
+  }
+
+  .meta {
     display: flex;
-    align-items: center;
-    max-width: 100%;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
-    .file-sprite-icon {
-      min-width: 32px;
-    }
+  .file-name-container {
+    display: flex;
+  }
 
-    .meta {
-      display: flex;
-      flex-direction: column;
-      margin-left: $margin-default;
-      overflow: hidden;
-    }
+  .file-name {
+    margin-right: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-    .file-name-container {
-      display: flex;
-    }
+  .file-ext {
+    margin-right: auto;
+  }
 
-    .file-name {
-      margin-right: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .file-ext {
-      margin-right: auto;
-    }
-
-    .file-shared-by {
-      @extend %hint-error-label;
-      color: $text-dark-hint;
-    }
+  .file-shared-by {
+    @extend %hint-error-label;
+    color: $text-dark-hint;
   }
 
   .rt-menu-iconMenu {

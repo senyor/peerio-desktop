@@ -1,7 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Button } = require('~/peer-ui');
-const { List, ListItem } = require('~/react-toolbox');
+const { Button, List, ListItem } = require('~/peer-ui');
 const { contactStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const moment = require('moment');
@@ -52,13 +51,13 @@ class InvitedContacts extends React.Component {
                 <div className="contact-list">
                     <div className="contact-list-section">
                         <div className="contact-list-section-marker" />
-                        <List className="contact-list-section-content">
+                        <List className="contact-list-section-content" theme="large">
                             {contactStore.invitedContacts.map(c =>
-                                (<ListItem ripple={false} key={c.email}
-                                    leftIcon={<div className="avatar-invited material-icons">person</div>}
+                                (<ListItem key={c.email}
+                                    leftContent={<div className="avatar-invited material-icons">person</div>}
                                     caption={c.email}
                                     legend={`${t('title_invited')} ${moment(c.added).fromNow()}`}
-                                    rightIcon={this.contactActions(c)}
+                                    rightContent={this.contactActions(c)}
                                 />)
                             )}
                         </List>

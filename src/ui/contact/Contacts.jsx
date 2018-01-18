@@ -1,7 +1,6 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { Tooltip } = require('~/peer-ui');
-const { List, ListItem, ListDivider } = require('~/react-toolbox');
+const { List, ListItem, Divider, Tooltip } = require('~/peer-ui');
 const { action } = require('mobx');
 const { observer } = require('mobx-react');
 const routerStore = require('~/stores/router-store');
@@ -37,7 +36,7 @@ class Contacts extends React.Component {
             <div className="contacts">
                 <div className="feature-navigation-list">
                     <div className="list">
-                        <List selectable ripple>
+                        <List clickable>
                             <div className="chat-item-add"
                                 onClick={this.toAddNew}
                             >
@@ -54,7 +53,7 @@ class Contacts extends React.Component {
                                 caption={`${t('title_allContacts')} (${contactStore.contacts.length})`}
                                 className={css({ active: isAllActive })}
                                 onClick={this.toAll} />
-                            <ListDivider />
+                            <Divider />
                             <ListItem leftIcon="person_add"
                                 caption={`${t('title_invitedContacts')} (${contactStore.invitedContacts.length})`}
                                 className={css({ active: isInvitedActive })}

@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { List, ListItem } = require('~/react-toolbox');
+const { CustomIcon, List, ListItem } = require('~/peer-ui');
 const { chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const css = require('classnames');
@@ -101,13 +101,14 @@ class ChannelSideBar extends React.Component {
                     </div>
                 </div>
                 <div className="sidebar-section">
-                    <List selectable>
+                    <List clickable>
                         {canILeave ?
                             <ListItem
                                 disabled={chatStore.hidingChat}
                                 caption={t('button_leaveChannel')}
                                 onClick={this.leaveChannel}
                                 className="custom-icon button-leave-room"
+                                leftContent={<CustomIcon icon="leave" />}
                             /> : null
                         }
                         {canIAdmin ?

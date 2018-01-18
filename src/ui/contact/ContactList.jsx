@@ -1,8 +1,8 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { Avatar, Dropdown, MaterialIcon } = require('~/peer-ui');
-const { Button } = require('~/peer-ui');
-const { Input, List, ListItem } = require('~/react-toolbox');
+const { Button, List, ListItem } = require('~/peer-ui');
+const { Input } = require('~/react-toolbox');
 const { contactStore, chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -97,14 +97,17 @@ class ContactList extends React.Component {
                                     <div className="contact-list-section-marker">
                                         {section.letter}
                                     </div>
-                                    <List className="contact-list-section-content">
+                                    <List
+                                        className="contact-list-section-content"
+                                        theme="large"
+                                    >
                                         {section.items.map(c =>
                                             (
-                                                <ListItem key={c.username} ripple={false}
-                                                    leftActions={[<Avatar key="a" contact={c} size="medium" />]}
+                                                <ListItem key={c.username}
+                                                    leftContent={[<Avatar key="a" contact={c} size="medium" />]}
                                                     legend={c.usernameTag}
                                                     caption={`${c.firstName} ${c.lastName}`}
-                                                    rightIcon={this.contactActions(c)}
+                                                    rightContent={this.contactActions(c)}
                                                 />
                                             )
                                         )}

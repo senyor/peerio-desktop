@@ -46,34 +46,38 @@ class MembersSection extends React.Component {
     }
 
     renderJoinedParticipant = (c, chat, adminMenu, userMenu) => {
-        return (<span data-username={c.username} key={c.username}>
+        return (
             <ListItem
-                leftContent={[<Avatar key="a" contact={c} size="small" clickable />]}
-                rightContent={(User.current.username !== c.username)
-                    ? (chat.isAdmin(c) ? adminMenu : userMenu)
-                    : []
+                data-username={c.username}
+                key={c.username}
+                leftContent={<Avatar key="a" contact={c} size="small" clickable />}
+                caption={
+                    <div className="user-caption">
+                        <span className="username">{c.username}</span>
+                        {chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}
+                    </div>
+                }
+                legend={c.fullName}
+                rightContent={
+                    (User.current.username !== c.username)
+                        ? (chat.isAdmin(c) ? adminMenu : userMenu)
+                        : null
                 }
                 onClick={this.openContact}
-            >
-                <div>
-                    {c.username}
-                    {chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}
-                </div>
-                <div>
-                    {c.fullName}
-                </div>
-            </ListItem>
-        </span>);
+            />
+        );
     }
 
     renderInvitedParticipant = (c, inviteMenu) => {
-        return (<span data-username={c.username} key={`invited--${c.username}`}>
+        return (
             <ListItem
+                data-username={c.username}
+                key={`invited--${c.username}`}
                 caption={c.username}
                 rightContent={inviteMenu}
                 onClick={this.openContact}
             />
-        </span>);
+        );
     };
 
     render() {

@@ -6,6 +6,16 @@
   &.with-admin-controls {
     padding-top: 64px;
   }
+
+  .user-caption {
+    display: flex;
+    max-width: 100%;
+
+    .username {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 .action-list {

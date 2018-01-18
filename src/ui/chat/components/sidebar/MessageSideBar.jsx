@@ -51,14 +51,14 @@ class MessageSideBar extends React.Component {
     renderReceipt = (entry) => {
         return !entry || entry[1].signatureError
             ? null
-            : <span data-username={entry[0].username} key={entry[0].username}>
-                <ListItem
-                    leftContent={[<Avatar key="a" contact={entry[0]} size="small" clickable />]}
-                    caption={entry[0].username}
-                    legend={entry[0].fullName}
-                    onClick={this.openContact}
-                />
-            </span>;
+            : <ListItem
+                data-username={entry[0].username}
+                key={entry[0].username}
+                leftContent={<Avatar key="a" contact={entry[0]} size="small" clickable />}
+                caption={entry[0].username}
+                legend={entry[0].fullName}
+                onClick={this.openContact}
+            />;
     }
     compareReceipts(r1, r2) {
         if (!r1) return 1;

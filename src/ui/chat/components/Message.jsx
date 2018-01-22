@@ -82,7 +82,7 @@ class Message extends React.Component {
     *                        with an HTML string ready to directly be used in `dangerouslySetInnerHTML`.
     */
     getMessageComponent(message) {
-        const richText = message.richText; // eslint-disable-line prefer-destructuring
+        const richText = message.richText;
         if (richText &&
             (typeof richText === 'object') &&
             (richText.type === 'doc') &&
@@ -289,7 +289,7 @@ class Message extends React.Component {
                     {this.renderReceipts(m)}
 
                 </div>
-                { invalidSign ?
+                {invalidSign ?
                     <div className="invalid-sign-warning">
                         <div className="content">{t('error_invalidMessageSignature')}</div>
                         <Button

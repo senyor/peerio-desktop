@@ -98,7 +98,7 @@
     "debounce-queue": "0.2.2",
     "devtron": "1.4.0",
     "electron": "1.7.10",
-    "electron-builder": "github:dchest/electron-builder-empire-strikes-back",
+    "electron-builder": "19.54.0",
     "electron-devtools-installer": "2.2.3",
     "electron-reload": "1.2.2",
     "emojione": "3.1.2",
@@ -207,7 +207,8 @@
     },
     "nsis": {
       "artifactName": "${name}-setup-${version}.${ext}",
-      "installerIcon": "dist-assets/win-installer.ico"
+      "installerIcon": "dist-assets/win-installer.ico",
+      "differentialPackage": false
     },
     "mac": {
       "artifactName": "${name}-${version}-mac.${ext}",

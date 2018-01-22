@@ -1,6 +1,6 @@
 const React = require('react');
 const { action } = require('mobx');
-
+const { observer } = require('mobx-react');
 const { contactStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 const css = require('classnames');
@@ -21,6 +21,7 @@ const Tooltip = require('./Tooltip');
     ----------------------------------------
 */
 
+@observer
 class Avatar extends React.Component {
     // When avatar is clickable, click opens ContactProfile dialog
     @action.bound openContactDialog(ev) {

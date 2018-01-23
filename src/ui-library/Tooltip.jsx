@@ -2,13 +2,16 @@ const React = require('react');
 const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
 
+const css = require('classnames');
 const { getPositionInWindow } = require('./helpers');
 
 /*
     PROPS       type        description
     ----------------------------------------
+    className   string
     text        string
     position    string      top (default), right, bottom, left
+    size        string      small, or leave blank for default
     ----------------------------------------
 
     NOTE:
@@ -87,7 +90,11 @@ class Tooltip extends React.Component {
         return (
             <div
                 ref={this.setRef}
-                className="p-tooltip"
+                className={css(
+                    'p-tooltip',
+                    this.props.className,
+                    this.props.size
+                )}
                 style={this.isVisible
                     ? this.style
                     : {

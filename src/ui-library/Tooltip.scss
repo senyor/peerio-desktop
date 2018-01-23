@@ -5,10 +5,9 @@
   position: fixed;
   z-index: 10;
 
-  max-width: 60px;
+  max-width: 162px;
   min-height: 1.4em;
   padding: $padding-small;
-  box-sizing: content-box;
   line-height: 1.4em;
 
   // Tooltip can sometimes be nested in container classed .material-icons
@@ -23,4 +22,8 @@
   color: $text-light-primary;
   background-color: rgba(97, 97, 97, .9);
   border-radius: 4px;
+
+  &.small {
+    max-width: 64px;
+  }
 }

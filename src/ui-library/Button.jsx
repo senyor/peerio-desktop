@@ -25,6 +25,7 @@ const Tooltip = require('./Tooltip');
 
     tooltip         string
     tooltipPosition string
+    tooltipSize     string
 
     theme           string      theme keywords to apply various styles other than default
                                 (no keyword, default theme: $blue text, transparent background)
@@ -67,6 +68,7 @@ class Button extends React.Component {
                     ? <Tooltip
                         text={this.props.tooltip}
                         position={this.props.tooltipPosition || 'top'}
+                        size={this.props.tooltipSize}
                     />
                     : null
                 }

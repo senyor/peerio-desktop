@@ -62,9 +62,9 @@ class ContactProfile extends React.Component {
                     : null}
                 <div className="contact-avatar-info">
                     <Avatar contact={c} size="large" />
-                    <div className="deleted-account-container">
+                    <div className="account-profile-container">
                         {c.isDeleted ? <T k="title_accountDeleted" className="deleted-account" tag="div" /> : null}
-                        <div className="title">{c.firstName} {c.lastName}</div>
+                        <div className="full-name">{c.firstName} {c.lastName}</div>
                         <div>{c.usernameTag}</div>
                         <div className="row">
                             <div className="list-title"> {t('title_publicKey')}</div>

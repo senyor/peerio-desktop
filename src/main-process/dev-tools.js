@@ -29,25 +29,21 @@ function onAppReady(mainWindow) {
     }
 }
 
-function installExtensions(forceReinstall) {
+function installExtensions() {
     console.log('installing extensions.');
     const devtron = require('devtron');
-
-    if (forceReinstall) {
-        devtron.uninstall();
-    }
     devtron.install();
 
-    const installer = require('electron-devtools-installer');
-    const extensions = ['REACT_DEVELOPER_TOOLS', 'REACT_PERF'];
-    for (const name of extensions) {
-        console.log(`installing ${name}`);
-        try {
-            installer.default(installer[name], forceReinstall);
-        } catch (e) {
-            console.error(`Failed to install extension ${name} with error ${e}`);
-        }
-    }
+    const {
+        default: install,
+        REACT_DEVELOPER_TOOLS,
+        REACT_PERF,
+        MOBX_DEVTOOLS
+    } = require('electron-devtools-installer');
+
+    install([REACT_DEVELOPER_TOOLS, REACT_PERF, MOBX_DEVTOOLS])
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log('An error occurred: ', err));
 }
 
 function extendContextMenu(menu, mainWindow, rightClickPos) {

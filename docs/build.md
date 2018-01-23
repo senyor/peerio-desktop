@@ -11,7 +11,7 @@
 
 * Node.js (v8 or later)
 * npm (v5 or later)
-* [electron-builder dependencies](https://github.com/electron-userland/electron-builder/wiki/Multi-Platform-Build#macos)
+* [electron-builder dependencies](https://www.electron.build/multi-platform-build)
 
 ### Instructions
 
@@ -19,21 +19,24 @@
 
 1. Download the latest release:
 
-       curl -OL https://github.com/PeerioTechnologies/peerio-desktop/archive/release.tar.gz
+       curl -OL https://github.com/PeerioTechnologies/peerio-desktop/archive/master.tar.gz
 
 2. Unpack it:
 
-       tar xvf release.tar.gz
+       tar xvf master.tar.gz
 
 3. Go to the unpacked directory:
 
-       cd peerio-desktop-release
+       cd peerio-desktop-master
 
 4. Install dependencies:
 
        npm install
 
-5. Build:
+5. Edit `app/package.json` and change the value of `"socketServerUrl"` from `""`
+to `"wss://icebear.peerio.com"`.
+
+6. Build:
 
        npm run internal-build-mac
 
@@ -46,7 +49,7 @@ Build results will be in `dist` directory.
 
 * Node.js (v8 or later)
 * npm (v5 or later)
-* [electron-builder dependencies](https://github.com/electron-userland/electron-builder/wiki/Multi-Platform-Build#linux)
+* [electron-builder dependencies](https://www.electron.build/multi-platform-build)
 
 ### Instructions
 
@@ -54,21 +57,25 @@ Build results will be in `dist` directory.
 
 1. Download the latest release:
 
-       wget https://github.com/PeerioTechnologies/peerio-desktop/archive/release.tar.gz
+       wget https://github.com/PeerioTechnologies/peerio-desktop/archive/master.tar.gz
 
 2. Unpack it:
 
-       tar xvf release.tar.gz
+       tar xvf master.tar.gz
 
 3. Go to the unpacked directory:
 
-       cd peerio-desktop-release
+       cd peerio-desktop-master
 
 4. Install dependencies:
 
        npm install
 
-5. Build:
+5. Edit `app/package.json` and change the value of `"socketServerUrl"` from `""`
+to `"wss://icebear.peerio.com"`.
+
+
+6. Build:
 
        npm run internal-build-linux
 

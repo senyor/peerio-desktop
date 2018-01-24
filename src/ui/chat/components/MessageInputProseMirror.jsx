@@ -346,6 +346,7 @@ class MessageInputProseMirror extends React.Component {
                 disabled={this.emojiPickerVisible}
                 onClick={this.showEmojiPicker}
                 tooltip={t('button_emojis')}
+                tooltipSize="small"
                 theme="no-hover"
             />,
             this.emojiPickerVisible ? cachedPicker : null

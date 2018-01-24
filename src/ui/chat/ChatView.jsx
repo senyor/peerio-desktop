@@ -188,12 +188,14 @@ class ChatView extends React.Component {
                         onClick={this.postJitsiLink}
                         tooltip={t('button_startVideoCall')}
                         tooltipPosition="bottom"
+                        tooltipSize="small"
                     />
                     <Button
                         icon="chrome_reader_mode"
                         onClick={this.toggleSidebar}
                         tooltip={t('button_toggleSidebar')}
                         tooltipPosition="bottom"
+                        tooltipSize="small"
                     />
                 </div>
             </div>

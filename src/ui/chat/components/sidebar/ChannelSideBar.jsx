@@ -107,7 +107,6 @@ class ChannelSideBar extends React.Component {
                                 disabled={chatStore.hidingChat}
                                 caption={t('button_leaveChannel')}
                                 onClick={this.leaveChannel}
-                                className="custom-icon button-leave-room"
                                 leftContent={<CustomIcon icon="leave" />}
                             /> : null
                         }

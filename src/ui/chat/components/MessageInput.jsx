@@ -151,6 +151,7 @@ class MessageInput extends React.Component {
                         onClick={this.props.onAck}
                         className="thumbs-up"
                         tooltip={t('button_thumbsUp')}
+                        tooltipSize="small"
                         theme="no-hover"
                     />
 

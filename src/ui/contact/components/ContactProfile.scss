@@ -44,8 +44,13 @@
     @extend %flex-align-start;
     @extend %flex-grow-1;
 
-    .deleted-account-container {
+    .account-profile-container {
       @extend %flex-col;
+      color: $text-dark-secondary;
+
+      .full-name {
+        @extend %title;
+      }
     }
 
     .deleted-account {

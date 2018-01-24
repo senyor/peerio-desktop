@@ -8,3 +8,43 @@
     width: 16px;
   }
 }
+
+// Put back old .custom-icon class for certain MenuItems that need it
+// TODO: remove this when new <Menu> component has been merged
+.custom-icon.rt-menu-menuItem,
+.custom-icon.rt-list-listItem {
+  position: relative;
+
+  .rt-menu-caption,
+  .rt-list-itemText {
+    display: flex;
+    align-items: center;
+  }
+
+  .rt-menu-caption::before {
+    content: ' ';
+    display: inline-block;
+    height: 24px;
+    width: 38.4px;
+    background-position-y: center;
+    background-repeat: no-repeat;
+  }
+
+  .rt-list-itemText::before {
+    content: ' ';
+    display: inline-block;
+    height: 24px;
+    width: 36px;
+    margin-right: 20px;
+    background-position-y: center;
+    background-repeat: no-repeat;
+  }
+
+  &.button-move {
+    .rt-menu-caption::before,
+    .rt-list-itemText::before {
+      background-image: url('./static/custom-icons/move.svg');
+      background-size: 70%;
+    }
+  }
+}

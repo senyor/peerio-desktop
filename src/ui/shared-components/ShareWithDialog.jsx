@@ -2,9 +2,8 @@ const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, contactStore } = require('peerio-icebear');
-const { MaterialIcon } = require('~/peer-ui');
-const { Dialog, Input, List, ListItem } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
+const { Avatar, Dialog, List, ListItem, MaterialIcon } = require('~/peer-ui');
+const { Input } = require('~/react-toolbox');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getChannelByEvent, getContactByEvent } = require('~/helpers/icebear-dom');
@@ -60,7 +59,7 @@ class ShareWithDialog extends React.Component {
         return (
             <div data-username={c.username} key={c.username}>
                 <ListItem
-                    leftActions={[<Avatar key="a" contact={c} size="medium" />]}
+                    leftContent={<Avatar key="a" contact={c} size="medium" />}
                     caption={c.username}
                     legend={c.fullName}
                     onClick={this.onContactClick} />
@@ -74,11 +73,10 @@ class ShareWithDialog extends React.Component {
         ];
 
         return (
-            <Dialog active
+            <Dialog active noAnimation
                 className="share-with-dialog"
                 actions={dialogActions}
-                onEscKeyDown={this.cancelDialog}
-                onOverlayClick={this.cancelDialog}
+                onCancel={this.cancelDialog}
                 title={t('title_shareWith')}>
                 <div className="share-with-contents">
                     <div className="user-search">
@@ -92,20 +90,20 @@ class ShareWithDialog extends React.Component {
                     </div>
                     <div className="chat-list-container">
                         <div className="list-channels-container">
-                            <div className="list-header">
+                            <div className="p-list-heading">
                                 <T k="title_channels" />
                                 &nbsp;({this.channels.length})
                             </div>
-                            <List ripple className="list-chats list-channels">
+                            <List className="list-chats list-channels" clickable>
                                 {this.channels.map(this.renderChannel)}
                             </List>
                         </div>
                         <div className="list-dms-container">
-                            <div className="list-header">
+                            <div className="p-list-heading">
                                 <T k="title_contacts" />
                             &nbsp;({this.contacts.length})
                             </div>
-                            <List ripple className="list-chats list-dms">
+                            <List className="list-chats list-dms" clickable>
                                 {this.contacts.map(this.renderContact)}
                             </List>
                         </div>

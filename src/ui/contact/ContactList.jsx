@@ -1,8 +1,8 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Dropdown, MaterialIcon } = require('~/peer-ui');
-const { Input, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
+const { Avatar, Dropdown, MaterialIcon } = require('~/peer-ui');
+const { Button, List, ListItem } = require('~/peer-ui');
+const { Input } = require('~/react-toolbox');
 const { contactStore, chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -47,13 +47,13 @@ class ContactList extends React.Component {
         return (<div data-id={c.username}>
             {c.isDeleted
                 ? null
-                : <TooltipIconButton icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />}
+                : <Button icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />}
             {c.isAdded
-                ? <TooltipIconButton className="icon-gold"
+                ? <Button className="gold"
                     icon="star"
                     tooltip={t('button_removeFavourite')}
                     onClick={this.removeContact} />
-                : <TooltipIconButton icon="star_outline" tooltip={t('button_addFavourite')}
+                : <Button icon="star_outline" tooltip={t('button_addFavourite')}
                     onClick={this.addContact} />}
         </div>
         );
@@ -97,14 +97,17 @@ class ContactList extends React.Component {
                                     <div className="contact-list-section-marker">
                                         {section.letter}
                                     </div>
-                                    <List className="contact-list-section-content">
+                                    <List
+                                        className="contact-list-section-content"
+                                        theme="large"
+                                    >
                                         {section.items.map(c =>
                                             (
-                                                <ListItem key={c.username} ripple={false}
-                                                    leftActions={[<Avatar key="a" contact={c} size="medium" />]}
+                                                <ListItem key={c.username}
+                                                    leftContent={<Avatar key="a" contact={c} size="medium" />}
                                                     legend={c.usernameTag}
                                                     caption={`${c.firstName} ${c.lastName}`}
-                                                    rightIcon={this.contactActions(c)}
+                                                    rightContent={this.contactActions(c)}
                                                 />
                                             )
                                         )}

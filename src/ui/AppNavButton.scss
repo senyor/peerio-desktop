@@ -24,7 +24,7 @@
       border-radius: 12px;
     }
 
-    .rt-button-button {
+    .p-button {
       height: 48px;
       width: 48px;
 
@@ -32,8 +32,9 @@
         background: transparent;
       }
     }
+
     // TODO transition variables
-    .rt-button-icon {
+    .material-icons {
       transition: color 150ms;
       color: $icon-light-inactive;
     }
@@ -41,11 +42,11 @@
     &[disabled] {
       pointer-events: none;
 
-      .rt-button-icon {
+      .material-icons {
         color: $text-light-disabled;
 
         &:hover {
-          .rt-button-icon {
+          .material-icons {
             color: $text-light-disabled;
           }
         }
@@ -54,7 +55,7 @@
 
     &.active,
     &:hover {
-      .rt-button-icon {
+      .material-icons {
         color: $icon-light-active;
         background: tranparent;
       }

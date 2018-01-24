@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const { User, warnings } = require('peerio-icebear');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
@@ -77,13 +77,15 @@ const T = require('~/ui/shared-components/T');
                     <FullCoverLoader show={this.busy} />
 
                     <div className="signup-nav">
-                        <Button flat
+                        <Button
                             label={t('button_skip')}
-                            onClick={this.skip} />
-                        <Button flat
+                            onClick={this.skip}
+                        />
+                        <Button
                             label={t('button_finish')}
                             onClick={this.createPasscode}
-                            disabled={this.passcodeStore.hasErrors} />
+                            disabled={this.passcodeStore.hasErrors}
+                        />
                     </div>
                 </div>
             </div>

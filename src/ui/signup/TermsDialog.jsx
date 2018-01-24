@@ -2,7 +2,7 @@ const React = require('react');
 const { Component } = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Dialog } = require('~/react-toolbox');
+const { Dialog } = require('~/peer-ui');
 const Terms = require('~/ui/shared-components/Terms');
 const { t } = require('peerio-translator');
 
@@ -25,8 +25,7 @@ const { t } = require('peerio-translator');
         return (
             <Dialog active={show}
                 actions={termsDialogActions}
-                onOverlayClick={hideDialog}
-                onEscKeyDown={hideDialog}
+                onCancel={hideDialog}
                 className="terms-container">
                 <Terms />
             </Dialog>

@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Button, List, ListItem, TooltipIconButton } = require('~/react-toolbox');
+const { Button, List, ListItem } = require('~/peer-ui');
 const ChatList = require('./components/ChatList');
 const { t } = require('peerio-translator');
 const { chatInviteStore, chatStore, User } = require('peerio-icebear');
@@ -20,14 +20,10 @@ class ChannelInvites extends React.Component {
         return (<div data-kegdbid={kegDbId}>
             <Button label={t('button_accept')}
                 onClick={this.acceptInvite}
-                flat primary disabled={this.isLimitReached} />
+                disabled={this.isLimitReached} />
             <Button label={t('button_decline')}
                 onClick={this.rejectInvite}
-                flat />
-            {this.isLimitReached
-                ? <TooltipIconButton icon="info_outline" tooltip={t('button_channelLimit')}
-                    onClick={this.toggleDialog} />
-                : null}
+                theme="secondary" />
         </div>
         );
     }
@@ -77,9 +73,7 @@ class ChannelInvites extends React.Component {
                                                             timestamp: moment(i.timestamp).format('L')
                                                         })
                                                 }
-                                                rightIcon={this.inviteOptions(i.kegDbId)}
-                                                selectable={false}
-                                                ripple={false}
+                                                rightContent={this.inviteOptions(i.kegDbId)}
                                             />)
                                         )}
                                     </List>

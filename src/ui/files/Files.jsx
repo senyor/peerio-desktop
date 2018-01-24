@@ -1,5 +1,6 @@
 const React = require('react');
-const { Button, Dialog, Input } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/peer-ui');
+const { Input } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
 const { observable, action, computed } = require('mobx');
 const { fileStore, clientApp } = require('peerio-icebear');
@@ -148,7 +149,7 @@ class Files extends React.Component {
             <Dialog title={t('button_newFolder')}
                 active={this.addFolderPopupVisible} type="small" ref={this.onAddPopupRef}
                 actions={dialogActions}
-                onOverlayClick={hide} onEscKeyDown={hide}
+                onCancel={hide}
                 className="add-folder-popup">
                 <Input placeholder={t('title_folderName')}
                     value={this.folderName} onChange={this.handleFolderNameChange}
@@ -171,7 +172,7 @@ class Files extends React.Component {
             <Dialog title={t('button_rename')}
                 active={this.renameFolderPopupVisible} type="small" ref={this.onRenamePopupRef}
                 actions={dialogActions} onKeyDown={this.keyDownRenameFolder}
-                onOverlayClick={hide} onEscKeyDown={hide}
+                onCancel={hide}
                 className="add-folder-popup">
                 <Input placeholder={t('title_folderName')}
                     value={this.folderName} onChange={this.handleFolderNameChange}
@@ -275,13 +276,16 @@ class Files extends React.Component {
                     onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
                 />
-                <Button className="button-affirmative inverted new-folder"
+                <Button
                     label={t('button_newFolder')}
+                    className="new-folder"
                     onClick={this.showAddFolderPopup}
+                    theme="affirmative secondary"
                 />
                 <Button className="button-affirmative"
                     label={t('button_upload')}
                     onClick={this.handleUpload}
+                    theme="affirmative"
                 />
             </div>
         );

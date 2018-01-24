@@ -59,24 +59,4 @@
   strong {
     color: $text-light-primary;
   }
-
-  .password {
-    position: relative;
-    margin-top: 40px;
-
-    .rt-button-button {
-      position: absolute;
-      right: 6px;
-      top: 6px;
-      color: $icon-dark-active;
-
-      .rt-button-icon {
-        color: $icon-dark-active;
-      }
-    }
-
-    .rt-input-inputElement {
-      padding-right: 40px;
-    }
-  }
 }

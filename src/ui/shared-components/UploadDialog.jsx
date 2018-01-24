@@ -1,8 +1,9 @@
 const React = require('react');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, fileHelpers, User } = require('peerio-icebear');
-const { Button, Dialog, Input } = require('~/react-toolbox');
+const { chatStore, contactStore, fileHelpers, User } = require('peerio-icebear');
+const { Button, Dialog } = require('~/peer-ui');
+const { Input } = require('~/react-toolbox');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const ShareWithDialog = require('~/ui/shared-components/ShareWithDialog');
@@ -121,12 +122,29 @@ class UploadDialog extends React.Component {
 
     @computed get targetTitle() {
         const { targetChat, targetContact } = this;
-        if (targetContact) {
-            return targetContact.fullNameAndUsername;
+
+        if (!!targetChat && targetChat.isChannel) {
+            return (
+                <div className="user-or-room-names">
+                    <span className="room-name">{`# ${targetChat.name}`}</span>
+                </div>
+            );
         }
-        return targetChat.isChannel
-            ? `# ${targetChat.name}`
-            : `@${targetChat.participantUsernames[0] || User.current.username}`;
+
+        let contact;
+        if (targetContact) {
+            contact = targetContact;
+        } else {
+            contact = contactStore.getContact(targetChat.participantUsernames[0] || User.current.username);
+        }
+
+        return (
+            <div className="user-or-room-names">
+                <span className="user-full-name">{contact.fullName}</span>
+                &nbsp;
+                <span className="user-username">{`@${contact.username}`}</span>
+            </div>
+        );
     }
 
     @computed get dialogTitle() {
@@ -152,11 +170,10 @@ class UploadDialog extends React.Component {
         }
 
         return (
-            <Dialog active
+            <Dialog active noAnimation
                 className="upload-dialog"
                 actions={uploadActions}
-                onEscKeyDown={this.cancelUpload}
-                onOverlayClick={this.cancelUpload}
+                onCancel={this.cancelUpload}
                 title={this.dialogTitle}>
                 <div className="upload-dialog-contents">
                     <div className={css('image-or-icon', { 'icon-container': this.fileType !== 'img' })}>
@@ -180,12 +197,12 @@ class UploadDialog extends React.Component {
                         <div className="share-with">
                             <div className="user-list">
                                 <T k="title_shareWith" className="heading" tag="div" />
-                                <div className="user-or-room-names">
-                                    {this.targetTitle}
-                                </div>
+                                {this.targetTitle}
                             </div>
-                            <Button icon="edit" className="button-small"
+                            <Button
+                                icon="edit"
                                 onClick={this.showShareWithDialog}
+                                theme="small"
                             />
                         </div>
                         <Input placeholder={t('title_addCommentOptional')}

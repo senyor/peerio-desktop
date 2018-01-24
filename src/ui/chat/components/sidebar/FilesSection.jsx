@@ -1,5 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
+const { List, ListItem } = require('~/peer-ui');
 const { IconMenu, MenuItem } = require('~/react-toolbox');
 const { chatStore, fileStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
@@ -57,36 +58,29 @@ class FilesSection extends React.Component {
         const file = fileStore.getById(id);
         if (!file) return null;
         return (
-            <li key={id} data-fileid={id}
-                className="sidebar-file-container rt-list-listItem"
-                onClick={this.download}>
-                <span className="rt-list-item">
-                    <span className="rt-list-itemContentRoot">
-                        <span className="rt-list-itemText rt-list-primary">
-                            <span className="sidebar-file-label">
-                                <FileSpriteIcon type={file.iconType} size="medium" />
-                                <div className="meta">
-                                    <div className="file-name-container">
-                                        <span className="file-name">
-                                            {file.nameWithoutExtension}
-                                        </span>
-                                        <span className="file-ext">.{file.ext}</span>
-                                    </div>
-                                    <span className="file-shared-by">
-                                        {file.fileOwner === User.current.username
-                                            ? <T k="title_fileFilterShared" />
-                                            : <T k="title_fileSharedByUser">
-                                                {{ user: file.fileOwner }}
-                                            </T>
-                                        }
-                                    </span>
-                                </div>
-                            </span>
+            <ListItem key={id} data-fileid={id}
+                className="sidebar-file-container"
+                onClick={this.download}
+                leftContent={<FileSpriteIcon type={file.iconType} size="medium" />}
+                rightContent={this.menu}
+            >
+                <div className="meta">
+                    <div className="file-name-container">
+                        <span className="file-name">
+                            {file.nameWithoutExtension}
                         </span>
+                        <span className="file-ext">.{file.ext}</span>
+                    </div>
+                    <span className="file-shared-by">
+                        {file.fileOwner === User.current.username
+                            ? <T k="title_fileFilterShared" />
+                            : <T k="title_fileSharedByUser">
+                                {{ user: file.fileOwner }}
+                            </T>
+                        }
                     </span>
-                    {this.menu}
-                </span>
-            </li>
+                </div>
+            </ListItem>
         );
     }
 
@@ -101,9 +95,9 @@ class FilesSection extends React.Component {
         return (
             <SideBarSection title={t('title_recentFiles')} onToggle={this.props.onToggle} open={this.props.open}>
                 <div className="member-list">
-                    <ul className="rt-list-list sidebar-file-list">
+                    <List className="sidebar-file-list" clickable>
                         {chat.recentFiles.map(this.renderFileItem)}
-                    </ul>
+                    </List>
                 </div>
                 {!chat.recentFiles || !chat.recentFiles.length &&
                     <div className="sidebar-zero-files">

@@ -89,32 +89,19 @@
     color: $text-dark-hint;
   }
 
-  .rt-list-list {
+  .p-list {
     @extend %flex-col;
     overflow: hidden;
 
     .user-list {
       cursor: pointer;
-      // Temporary fix. We'll want to add sticky headers to lists once multiple
-      // lists are shown.
     }
   }
 
-  .rt-list-subheader {
+  .p-list-heading {
     @extend %flex-shrink-0;
     cursor: default;
     margin-top: $margin-default;
-    border-bottom: $divider-dark solid 1px;
-  }
-
-  .rt-list-listItem {
-    &:not(:first-of-type) {
-      border-top: $divider-dark solid 1px;
-    }
-
-    .rt-avatar-avatar {
-      margin-right: 24px;
-    }
   }
 }
 

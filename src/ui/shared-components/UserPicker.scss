@@ -36,27 +36,27 @@ $userlist-maxwidth: 608px; // $userpicker-maxwidth - $userpicker-margin-large
     padding-right: $padding-default;
   }
 
-  .rt-list-list {
+  .p-list {
     padding-top: 0;
     //max-height: 50vh;
     padding-bottom: 0;
   }
 
-  .rt-list-subheader,
-  .rt-list-listItem {
+  .p-list-heading,
+  .p-list-item {
     overflow: hidden;
     -webkit-transform: translate3d(0, 0, 0);
     border-radius: 4px;
     border-width: 0 !important; // I did this :( - Paul
 
     &:not(.warning) {
-      .rt-list-right .material-icons {
+      .right .material-icons {
         display: none;
         cursor: pointer;
       }
 
       &:hover {
-        .rt-list-right .material-icons {
+        .right .material-icons {
           display: block;
         }
       }
@@ -65,17 +65,13 @@ $userlist-maxwidth: 608px; // $userpicker-maxwidth - $userpicker-margin-large
     &.warning {
       background-color: rgba($red-error, .25);
 
-      .rt-list-right .material-icons {
+      .right .material-icons {
         color: $red-error;
       }
     }
   }
 
-  .rt-list-itemContentRoot {
-    overflow: hidden;
-  }
-
-  .rt-list-itemText {
+  .p-list-item .content {
     overflow: hidden;
     font-size: 14px;
     text-overflow: ellipsis;

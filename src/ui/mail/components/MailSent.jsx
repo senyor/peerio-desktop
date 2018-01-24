@@ -2,7 +2,8 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { Dialog, IconMenu, MenuDivider, MenuItem, TooltipIconButton } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/peer-ui');
+const { IconMenu, MenuDivider, MenuItem } = require('~/react-toolbox');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../chat/components/InlineFiles');
 const { fileStore, warnings, ghostStore } = require('peerio-icebear');
@@ -45,7 +46,7 @@ class MailSent extends React.Component {
                     <div className="compose-meta sent">
                         <div className="meta-container">
                             <div className="subject">{this.props.ghost.subject}</div>
-                            <TooltipIconButton
+                            <Button
                                 tooltip={t('button_delete')}
                                 tooltipPosition="bottom"
                                 icon="delete"
@@ -82,8 +83,8 @@ class MailSent extends React.Component {
                 <Dialog title={t('title_mailDelete')}
                     actions={deleteActions}
                     active={this.deleteDialogActive}
-                    onEscKeyDown={this.handleClose}
-                    onOverlayClick={this.handleClose}>
+                    onCancel={this.handleClose}
+                >
                     {t('dialog_mailDeleteText')}
                 </Dialog>
             </div>

@@ -1,5 +1,5 @@
 .upload-dialog {
-  width: 608px;
+  min-width: 608px;
 
   .upload-dialog-contents {
     display: flex;
@@ -61,22 +61,36 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: $margin-default;
+        padding-left: $padding-small;
+        margin-bottom: $margin-small;
 
         .user-list {
           flex-grow: 1;
           cursor: default;
+          max-width: calc(100% - 36px);
 
           .heading {
-            font-weight: $font-weight-semibold;
-            color: $text-dark-primary;
+            @extend %hint-error-label;
+            color: $text-dark-hint;
           }
 
           .user-or-room-names {
-            max-width: calc(100% - 16px);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            display: flex;
+            justify-content: flex-start;
+            max-width: 100%;
+            color: $text-dark-secondary;
+
+            .room-name,
+            .user-full-name {
+              overflow: hidden;
+              font-weight: 600;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+
+            .user-username {
+              font-style: italic;
+            }
           }
         }
       }

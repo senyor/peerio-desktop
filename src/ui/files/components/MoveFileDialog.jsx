@@ -2,8 +2,7 @@ const React = require('react');
 const { observable, action, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { MaterialIcon } = require('~/peer-ui');
-const { Button, Dialog } = require('~/react-toolbox');
+const { Button, Dialog, MaterialIcon } = require('~/peer-ui');
 const { fileStore } = require('peerio-icebear');
 const Breadcrumb = require('./Breadcrumb');
 const Search = require('~/ui/shared-components/Search');
@@ -69,20 +68,21 @@ class MoveFileDialog extends React.Component {
                 icon={this.selectedFolder === folder ?
                     'radio_button_checked' : 'radio_button_unchecked'}
                 onClick={this.selectionChange}
-                className={css('button-small', 'no-ripple', {
-                    'button-selected': this.selectedFolder === folder
-                })}
+                theme="small"
+                selected={this.selectedFolder === folder}
             />
             <MaterialIcon icon="folder" className="folder-icon" />
             <div className={css('file-info', { clickable: hasFolders })}
                 onClick={this.setCurrentFolder}
             >
-                <div className="file-name">{folder.name}</div>
+                <div className="file-name clickable">{folder.name}</div>
             </div>
             { hasFolders &&
                 <Button
                     onClick={this.setCurrentFolder}
-                    icon="keyboard_arrow_right" className="button-small" />
+                    icon="keyboard_arrow_right"
+                    theme="small"
+                />
             }
         </div>);
     };
@@ -101,8 +101,7 @@ class MoveFileDialog extends React.Component {
         return (
             <Dialog
                 actions={actions}
-                onEscKeyDown={onHide}
-                onOverlayClick={onHide}
+                onCancel={onHide}
                 active={visible}
                 title={t('title_moveFileTo')}
                 className="move-file-dialog">

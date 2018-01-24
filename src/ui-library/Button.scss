@@ -1,0 +1,160 @@
+.p-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 $padding-default;
+  vertical-align: middle;
+  font-family: $font-stack;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 150ms;
+
+  // Default "primary" theme
+  color: $blue;
+  box-shadow: none;
+  background-color: transparent;
+  border: 0;
+  border-radius: 4px;
+
+  > span {
+    white-space: nowrap;
+  }
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+
+  &:hover {
+    // box-shadow: $shadow-8; TODO: may add box-shadow on hover later, pending design
+    background-color: rgba(44, 149, 207, .2);
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    color: $text-dark-hint;
+
+    .material-icons {
+      color: $text-dark-hint;
+    }
+  }
+
+  // "Primary" theme
+  &.primary {
+    color: $text-dark-primary;
+  }
+
+  // "Secondary" theme
+  // e.g. cancel button in a dialog
+  &.secondary {
+    color: $text-dark-secondary;
+  }
+
+  // "Inverted" theme
+  &.inverted {
+    color: $text-light-primary;
+
+    &:disabled {
+      color: $text-light-disabled;
+    }
+  }
+
+  // "Affirmative" theme
+  &.affirmative {
+    min-width: 90px;
+    padding: 0 24px;
+    color: $text-light-primary;
+    background-color: $green-affirmative;
+    border-radius: 24px;
+
+    &.secondary {
+      color: $green-affirmative;
+      background-color: $white;
+      border: 1px solid $green-affirmative;
+    }
+
+    &:disabled {
+      background-color: #f0f0f0;
+    }
+  }
+
+  // Icons
+  &.icon {
+    height: 36px;
+    width: 36px;
+    border-radius: 100%;
+
+    .material-icons {
+      color: $icon-dark-active;
+    }
+
+    &:disabled .material-icons {
+      color: $icon-dark-inactive;
+    }
+  }
+
+  &.icon-and-label {
+    .material-icons,
+    .p-custom-icon {
+      margin-right: $margin-small;
+    }
+  }
+
+  &.gold .material-icons {
+    color: gold;
+  }
+
+  // Small buttons (collapse height & padding)
+  &.small {
+    height: auto;
+    width: auto;
+    padding: 0;
+
+    &:hover {
+      // box-shadow: none;
+      background-color: inherit;
+    }
+  }
+
+  // "Rounded" theme
+  &.rounded {
+    min-width: 90px;
+    padding: 0 24px;
+    border-radius: 24px;
+  }
+
+  // "Selected" theme, e.g. used for some radio buttons
+  &.selected {
+    color: $blue;
+
+    .material-icons {
+      color: $blue;
+    }
+  }
+
+  // "Link" theme
+  &.link {
+    display: inline;
+    height: auto;
+    width: auto;
+    padding: 0;
+    vertical-align: baseline;
+    font-size: inherit;
+    text-decoration: underline;
+    text-transform: none;
+    color: inherit;
+    background-color: transparent;
+  }
+
+  // "No-hover" theme
+  &.no-hover:hover {
+    background-color: inherit;
+  }
+}

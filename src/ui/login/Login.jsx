@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 const React = require('react');
 const { Component } = require('react');
-const { Button, TooltipIconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const { config, socket, User, validation, warnings } = require('peerio-icebear');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
@@ -197,7 +197,8 @@ class LoginStore extends OrderedFormStore {
                                 name="passcodeOrPassphrase"
                                 onKeyPress={this.handleKeyPress}
                                 ref={this.onAKRef} />
-                            <TooltipIconButton icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
+                            <Button
+                                icon={this.loginStore.passwordVisible ? 'visibility_off' : 'visibility'}
                                 tooltip={this.loginStore.passwordVisible ?
                                     t('title_hideAccountKey') : t('title_showAccountKey')}
                                 tooltipPosition="right"
@@ -205,12 +206,17 @@ class LoginStore extends OrderedFormStore {
                             />
                         </div>
                         {/* <Dropdown value={languageStore.language}
-                                  source={languageStore.translationLangsDataSource}
-                                  onChange={languageStore.changeLanguage} /> */}
+                                  options={languageStore.translationLangsDataSource}
+                                  onChange={languageStore.changeLanguage} />
+                        */}
                     </div>
-                    <Button className="login-button" label={t('button_login')} flat
+                    <Button
+                        className="login-button"
+                        label={t('button_login')}
                         onClick={this.onLoginClick}
-                        disabled={this.loginStore.hasErrors} />
+                        disabled={this.loginStore.hasErrors}
+                        theme="inverted"
+                    />
 
                     <div>
                         {t('title_newUser')} &nbsp; <Link to="/signup">{t('button_CreateAccount')}</Link>

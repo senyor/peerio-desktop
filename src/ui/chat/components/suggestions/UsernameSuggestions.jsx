@@ -2,7 +2,7 @@
 const React = require('react');
 const { chatStore, contactStore } = require('peerio-icebear');
 const Suggestions = require('./Suggestions');
-const Avatar = require('~/ui/shared-components/Avatar');
+const { Avatar } = require('~/peer-ui');
 const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
 
 const { EditorView } = require('prosemirror-view'); // eslint-disable-line no-unused-vars, (for typechecking)
@@ -25,7 +25,7 @@ function makeUsernameSuggestions(getView) {
         },
         formatter: contact => (
             <span>
-                <Avatar size="tiny" contact={contact} inline />
+                <Avatar size="tiny" contact={contact} />
                 <span className="semibold">@{contact.username}</span> - {contact.fullName}
             </span>
         ),

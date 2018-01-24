@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button, Dialog } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/peer-ui');
 const { User, errors } = require('peerio-icebear');
 const { observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
@@ -159,20 +159,23 @@ const config = require('~/config');
                 <Button
                     label={t('button_getStarted')}
                     onClick={this.advance}
-                    className="button-affirmative"
+                    theme="affirmative"
                 />
             );
         }
 
         return (
             <div className="signup-nav">
-                <Button flat
+                <Button
                     label={this.step === 1 ? t('button_cancel') : t('button_back')}
-                    onClick={this.retreat} />
-                <Button flat primary
+                    onClick={this.retreat}
+                    theme="secondary"
+                />
+                <Button
                     label={isLastStep ? t('button_finish') : t('button_next')}
                     onClick={this.advance}
-                    disabled={isLastStep ? !this.readyToSignup : this.hasErrors} />
+                    disabled={isLastStep ? !this.readyToSignup : this.hasErrors}
+                />
             </div>
         );
     }
@@ -184,7 +187,7 @@ const config = require('~/config');
         ];
         return (
             <Dialog actions={errorActions} active={this.errorVisible}
-                onEscKeyDown={this.hideError} onOverlayClick={this.hideError}
+                onCancel={this.hideError}
                 title={t('title_error')}>{this.errorMessage}
             </Dialog>
         );
@@ -204,7 +207,7 @@ const config = require('~/config');
                             {{
                                 tosButton: text => (<Button onClick={TermsDialog.showDialog}
                                     label={text}
-                                    className="button-link" />)
+                                    theme="link" />)
                             }}
                         </T>
                         : null

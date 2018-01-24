@@ -1,7 +1,8 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Switch, Button, Dialog } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/peer-ui');
+const { Switch } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { User } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
@@ -55,8 +56,9 @@ class Account extends React.Component {
                 {config.disablePayments || User.current.hasActivePlans ? null
                     : <section className="upgrade-message-container">
                         <div className="message">{t('title_upgradeMessage')}</div>
-                        <Button primary flat label={t('button_upgrade')}
-                            onClick={this.toUpgrade} />
+                        <Button label={t('button_upgrade')}
+                            onClick={this.toUpgrade}
+                        />
                     </section>
                 }
                 <section className="section-divider">
@@ -81,8 +83,7 @@ class Account extends React.Component {
                     <Button label={t('button_accountDelete')} onClick={this.showConfirmDelete} />
                 </section>
                 <Dialog active={this.deleteAccountDialogActive} actions={dialogActions}
-                    onEscKeyDown={this.hideConfirmDelete}
-                    onOverlayClick={this.hideConfirmDelete} title={t('title_accountDelete')} type="normal" >
+                    onCancel={this.hideConfirmDelete} title={t('title_accountDelete')} type="normal" >
                     <T k="title_accountDeleteDescription1" tag="p" /><br />
                     <T k="title_accountDeleteDescription2" tag="p" /><br />
                     <T k="title_accountDeleteDescription3" tag="p" />

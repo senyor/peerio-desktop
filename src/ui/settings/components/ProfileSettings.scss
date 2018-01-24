@@ -16,12 +16,16 @@
     .email-row {
       margin-top: $margin-small;
 
-      .rt-list-itemText:not(.rt-list-primary) {
+      .right {
+        margin-left: auto;
+      }
+
+      .legend {
         @extend %hint-error-label;
       }
 
       &.unconfirmed {
-        .rt-list-itemText:not(.rt-list-primary) {
+        .legend {
           color: $red-error;
         }
       }
@@ -108,8 +112,12 @@
           color: $icon-light-inactive;
         }
 
-        .rt-button-button:hover .material-icons {
-          color: $icon-light-active;
+        .p-button:hover {
+          background-color: $background-light-dropdown;
+
+          .material-icons {
+            color: $icon-light-active;
+          }
         }
       }
 

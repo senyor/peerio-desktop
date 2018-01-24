@@ -29,17 +29,9 @@
       padding: 0 $padding-large;
     }
 
-    .rt-list-subheader {
-      background: $black-03;
-    }
-
-    .rt-list-listItem {
+    .p-list-item {
       height: 64px;
       border-bottom: 1px solid $divider-dark;
-    }
-
-    .rt-list-item {
-      height: 64px;
     }
   }
 }

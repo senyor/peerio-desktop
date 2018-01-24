@@ -47,14 +47,6 @@
     .buttons-container {
       @extend %flex-row;
       @extend %flex-justify-end;
-
-      .notnow {
-        color: $text-dark-secondary;
-      }
-
-      .save {
-        color: $blue;
-      }
     }
   }
 
@@ -145,6 +137,8 @@
 
     .file-name-container {
       display: flex;
+      align-items: center;
+
       // we add a min-width because this container is itself in a flex
       // container, and we want this to shrink (truncating the filename).
       min-width: 50px;
@@ -277,9 +271,8 @@
   width: auto;
   min-height: 240px; // arbitrary min-height to show enough of image above toolbar
   min-width: 240px; // arbitrary min-width to show filename and buttons
-  border-radius: 4px;
 
-  .rt-dialog-body {
+  .body {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -295,7 +288,7 @@
     max-width: 96vw;
   }
 
-  .rt-button-neutral:not([disabled]).rt-button-flat {
+  .p-button {
     &:hover {
       .material-icons {
         color: $blue;
@@ -325,9 +318,10 @@
     right: $margin-default;
     top: $margin-default;
     background-color: $white;
+    border-radius: 4px;
 
     &:hover {
-      background-color: $white !important;
+      background-color: $white;
     }
   }
 
@@ -365,10 +359,6 @@
 
       button:not(:first-child) {
         margin-left: $margin-default;
-      }
-
-      button:hover {
-        background-color: none;
       }
     }
   }

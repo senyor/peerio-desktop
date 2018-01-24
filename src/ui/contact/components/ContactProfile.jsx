@@ -1,7 +1,8 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { ProgressBar, TooltipIconButton } = require('~/react-toolbox');
+const { Avatar, Button } = require('~/peer-ui');
+const { ProgressBar } = require('~/react-toolbox');
 const { contactStore, chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
@@ -60,21 +61,10 @@ class ContactProfile extends React.Component {
                     </div>
                     : null}
                 <div className="contact-avatar-info">
-                    {/* TODO: can't use Avatar component here because it always has a ToolTip */}
-                    <div className="avatar-wrapper">
-                        <div className="rt-avatar-avatar avatar-container profile"
-                            style={{ backgroundColor: !c.hasAvatar && c.color }} >
-                            <div className="image-container">
-                                {c.hasAvatar
-                                    ? <img src={c.largeAvatarUrl} alt={c.username} />
-                                    : c.letter
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div className="deleted-account-container">
+                    <Avatar contact={c} size="large" />
+                    <div className="account-profile-container">
                         {c.isDeleted ? <T k="title_accountDeleted" className="deleted-account" tag="div" /> : null}
-                        <div className="title">{c.firstName} {c.lastName}</div>
+                        <div className="full-name">{c.firstName} {c.lastName}</div>
                         <div>{c.usernameTag}</div>
                         <div className="row">
                             <div className="list-title"> {t('title_publicKey')}</div>
@@ -87,19 +77,26 @@ class ContactProfile extends React.Component {
                     <div className="profile-actions">
                         {c.isDeleted
                             ? null
-                            : <TooltipIconButton
+                            : <Button
                                 tooltip={t('title_haveAChat')}
                                 icon="forum"
-                                onClick={this.startChat} />
+                                onClick={this.startChat}
+                                theme="no-hover"
+                            />
                         }
                         {c.isAdded
-                            ? <TooltipIconButton icon="star"
+                            ? <Button icon="star"
                                 tooltip={t('button_removeFavourite')}
-                                className="icon-gold"
-                                onClick={this.removeContact} />
-                            : <TooltipIconButton icon="star_outline"
+                                onClick={this.removeContact}
+                                theme="no-hover"
+                                className="gold"
+                            />
+                            : <Button icon="star_outline"
                                 tooltip={t('button_addFavourite')}
-                                onClick={this.addContact} />}
+                                onClick={this.addContact}
+                                theme="no-hover"
+                            />
+                        }
                     </div>
                 </div>
             </div>

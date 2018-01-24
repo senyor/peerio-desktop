@@ -1,21 +1,7 @@
 .help-container {
-  .live-help-text {
+  .text {
     @extend %flex-row;
     @extend %flex-align-center;
-  }
-
-  .support-text {
-    @extend %flex-row;
-    @extend %flex-align-center;
-  }
-
-  .feedback-text {
-    @extend %flex-row;
-    @extend %flex-align-center;
-  }
-
-  .logs-text {
-    @extend %flex-row;
-    @extend %flex-align-center;
+    margin: $margin-default 0;
   }
 }

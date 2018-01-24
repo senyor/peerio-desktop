@@ -1,7 +1,8 @@
 const React = require('react');
 const AppNav = require('~/ui/AppNav');
 const uiStore = require('~/stores/ui-store');
-const { Dialog, ProgressBar } = require('~/react-toolbox');
+const { Dialog } = require('~/peer-ui');
+const { ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { observer } = require('mobx-react');
@@ -30,8 +31,7 @@ class App extends React.Component {
             <Dialog
                 active={uiStore.isFileSignatureErrorDialogActive}
                 actions={dialogActions}
-                onOverlayClick={hide}
-                onEscKeyDown={hide}
+                onCancel={hide}
                 title={t('title_invalidFileSignature')}
                 className="dialog-warning">
                 <p>{t('error_invalidFileSignatureLong')}</p>
@@ -57,8 +57,8 @@ class App extends React.Component {
 
                 {this.props.children}
                 <Dialog active={!this.contactDialogHiding && !!uiStore.contactDialogUsername}
-                    actions={contactDialogActions} onOverlayClick={this.hideContactDialog}
-                    onEscKeyDown={this.hideContactDialog}
+                    actions={contactDialogActions}
+                    onCancel={this.hideContactDialog}
                     title={t('title_settingsProfile')}>
                     {
                         uiStore.contactDialogUsername

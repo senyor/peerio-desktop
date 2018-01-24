@@ -1,5 +1,4 @@
 const React = require('react');
-// const { computed } = require('mobx');
 const css = require('classnames');
 
 class FileSpriteIcon extends React.Component {

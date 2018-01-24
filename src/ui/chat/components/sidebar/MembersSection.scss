@@ -7,9 +7,13 @@
     padding-top: 64px;
   }
 
-  .rt-list-listItem {
-    .rt-list-item {
-      width: 100%;
+  .user-caption {
+    display: flex;
+    max-width: 100%;
+
+    .username {
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

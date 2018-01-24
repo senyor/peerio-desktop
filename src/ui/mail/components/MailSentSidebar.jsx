@@ -1,9 +1,8 @@
 const React = require('react');
-const { Button, TooltipIconButton } = require('~/react-toolbox');
+const { Button, Dialog } = require('~/peer-ui');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { Dialog } = require('~/react-toolbox');
 const { warnings } = require('peerio-icebear');
 const MailPassphrase = require('./MailPassphrase');
 
@@ -56,7 +55,7 @@ class MailSentSidebar extends React.Component {
                         <div className="dark-label">{t('title_mailUrl')}</div>
                         <div className="mail-link">
                             <a href={this.props.ghost.url} ref={(l) => { this.link = l; }}>{this.props.ghost.url}</a>
-                            <TooltipIconButton
+                            <Button
                                 tooltip={t('title_copy')}
                                 tooltipPosition="bottom"
                                 icon="content_copy"
@@ -69,9 +68,10 @@ class MailSentSidebar extends React.Component {
                                 <div className="content">
                                     <div className="dark-label">{t('title_mailExpires')}</div>
                                     <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
-                                    <Button className="mail-revoke" label={t('button_mailRevoke')}
+                                    <Button className="mail-revoke"
+                                        label={t('button_mailRevoke')}
                                         onClick={this.showRevokeDialog}
-                                        primary />
+                                    />
                                 </div>
                                 :
                                 <div className="dark-label">
@@ -82,8 +82,7 @@ class MailSentSidebar extends React.Component {
                 </div>
                 {this.ghostActive ? <Dialog actions={revokeDialogActions}
                     active={this.revokeDialogActive}
-                    onEscKeyDown={this.handleRevokeDialogToggle}
-                    onOverlayClick={this.handleRevokeDialogToggle}
+                    onCancel={this.handleRevokeDialogToggle}
                     title={t('title_mailRevoke')}>
                     <p>{t('dialog_mailRevokeText')}</p>
                 </Dialog> : ''}

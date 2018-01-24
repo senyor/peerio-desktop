@@ -2,8 +2,8 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { MaterialIcon } = require('~/peer-ui');
-const { ProgressBar, IconButton } = require('~/react-toolbox');
+const { MaterialIcon, Button } = require('~/peer-ui');
+const { ProgressBar } = require('~/react-toolbox');
 
 @observer
 class UploadInChatProgress extends React.Component {
@@ -24,7 +24,7 @@ class UploadInChatProgress extends React.Component {
                         {queued ? t('title_queuedFiles', { name: file.name, remaining: queued })
                             : t('title_uploading', { name: file.name })}
                     </div>
-                    <IconButton icon="cancel" onClick={this.cancelUpload} />
+                    <Button icon="cancel" onClick={this.cancelUpload} />
                 </div>
                 <ProgressBar type="linear" mode="determinate" value={file.progress}
                     max={file.progressMax} />

@@ -41,7 +41,8 @@ const { t } = require('peerio-translator');
                     </div>
                 </div>
                 {/* <Dropdown value={languageStore.language}
-                    source={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} /> */}
+                    options={languageStore.translationLangsDataSource} onChange={languageStore.changeLanguage} />
+                */}
             </div>
         );
     }

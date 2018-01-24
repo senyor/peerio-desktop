@@ -1,7 +1,7 @@
 const React = require('react');
 const { when } = require('mobx');
 const { observer } = require('mobx-react');
-const { TooltipIconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 const T = require('../../shared-components/T');
 const config = require('~/config');
@@ -38,33 +38,49 @@ class Help extends React.Component {
             <div className="help-container">
                 <section className="section-divider">
                     <div className="title">{t('title_support')}</div>
-                    <p className="live-help-text">
+                    <div className="text">
                         <T k="title_helpText" />
-                        <TooltipIconButton icon="live_help" href={urls.helpCenter} tooltip={t('button_HC')} primary />
-                    </p>
-                    <p className="support-text">
+                        <Button icon="live_help"
+                            href={urls.helpCenter}
+                            tooltip={t('button_HC')}
+                            theme="no-hover"
+                        />
+                    </div>
+                    <div className="text">
                         <T k="title_supportIntro" />
-                        <TooltipIconButton icon="chat" onClick={this.support} primary
-                            tooltip={t('button_supportChat')} />
-                        <TooltipIconButton icon="email" href={urls.contactSupport} primary
-                            tooltip={t('button_supportEmail')} />
-                    </p>
+                        <Button icon="question_answer"
+                            onClick={this.support}
+                            tooltip={t('button_supportChat')}
+                            theme="no-hover"
+                        />
+                        <Button icon="email"
+                            href={urls.contactSupport}
+                            tooltip={t('button_supportEmail')}
+                            theme="no-hover"
+                        />
+                    </div>
                 </section>
                 <section className="section-divider">
                     <div className="title">{t('title_feedback')}</div>
-                    <p className="feedback-text">
+                    <div className="text">
                         <T k="title_feedbackIntro" />
-                        <TooltipIconButton icon="chat" onClick={this.feedback} primary
-                            tooltip={t('button_feedbackChat')} />
-                    </p>
+                        <Button icon="question_answer"
+                            onClick={this.feedback}
+                            tooltip={t('button_feedbackChat')}
+                            theme="no-hover"
+                        />
+                    </div>
                 </section>
                 <section>
                     <div className="title">{t('title_logs')}</div>
-                    <p className="logs-text">
+                    <div className="text">
                         <T k="title_logsIntro" />
-                        <TooltipIconButton icon="content_copy" onClick={this.copyLogs}
-                            tooltip={t('button_copyLogs')} primary />
-                    </p>
+                        <Button icon="content_copy"
+                            onClick={this.copyLogs}
+                            tooltip={t('button_copyLogs')}
+                            theme="no-hover"
+                        />
+                    </div>
                 </section>
             </div>
         );

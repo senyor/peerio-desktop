@@ -1,10 +1,14 @@
 const React = require('react');
+const Tooltip = require('./Tooltip');
 
 /*
-    PROPS       type        description
+    PROPS           type        description
     ----------------------------------------
-    className   string
-    icon        string      Material Icon name with underscores for spaces
+    className       string
+    icon            string      Material Icon name with underscores for spaces
+
+    tooltip         string
+    tooltipPosition string
     ----------------------------------------
 
     TODO: size (rarely deviates from 24px, currently handled at CSS level)
@@ -19,6 +23,12 @@ class MaterialIcon extends React.Component {
         return (
             <span className={classNames}>
                 {this.props.icon}
+                {this.props.tooltip
+                    ? <Tooltip text={this.props.tooltip}
+                        position={this.props.tooltipPosition}
+                    />
+                    : null
+                }
             </span>
         );
     }

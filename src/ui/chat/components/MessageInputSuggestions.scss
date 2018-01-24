@@ -26,6 +26,11 @@ $suggests-max-height: 200px;
     .suggest-item {
       cursor: pointer;
       padding: 3px 10px;
+
+      .p-avatar {
+        display: inline-block;
+        margin-right: $margin-small;
+      }
     }
 
     .selected {

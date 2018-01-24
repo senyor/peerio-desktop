@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { List, ListItem, TooltipIconButton } = require('~/react-toolbox');
+const { Button, List, ListItem } = require('~/peer-ui');
 const { contactStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const moment = require('moment');
@@ -33,9 +33,9 @@ class InvitedContacts extends React.Component {
     contactActions(c) {
         return (
             <div data-id={c.email}>
-                <TooltipIconButton icon="email" tooltip={t('button_resendInvite')}
+                <Button icon="email" tooltip={t('button_resendInvite')}
                     tooltipPosition="bottom" onClick={this.resendInvite} />
-                <TooltipIconButton icon="delete" tooltip={t('button_delete')}
+                <Button icon="delete" tooltip={t('button_delete')}
                     tooltipPosition="bottom" onClick={this.removeInvite} />
             </div>
         );
@@ -51,13 +51,13 @@ class InvitedContacts extends React.Component {
                 <div className="contact-list">
                     <div className="contact-list-section">
                         <div className="contact-list-section-marker" />
-                        <List className="contact-list-section-content">
+                        <List className="contact-list-section-content" theme="large">
                             {contactStore.invitedContacts.map(c =>
-                                (<ListItem ripple={false} key={c.email}
-                                    leftIcon={<div className="avatar-invited material-icons">person</div>}
+                                (<ListItem key={c.email}
+                                    leftContent={<div className="avatar-invited material-icons">person</div>}
                                     caption={c.email}
                                     legend={`${t('title_invited')} ${moment(c.added).fromNow()}`}
-                                    rightIcon={this.contactActions(c)}
+                                    rightContent={this.contactActions(c)}
                                 />)
                             )}
                         </List>

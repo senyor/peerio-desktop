@@ -20,9 +20,6 @@
 @import './rt-base-theme';
 @import './rt-light-theme';
 
-// React Toolbox reused overrides
-@import './rt-overrides';
-
 // PeerUI components
 @import '../ui-library/_all';
 
@@ -36,7 +33,6 @@
 // Meta views
 @import '../ui/AppNav';
 @import '../ui/AppNavButton';
-@import '../ui/AutoUpdateDialog';
 @import '../ui/Loading';
 @import '../ui/Onboarding';
 @import '../ui/Root';
@@ -110,69 +106,6 @@ section {
   .rt-progress_bar-linear {
     position: fixed;
     height: 2px;
-  }
-}
-
-.avatar-wrapper {
-  position: relative;
-
-  & + & {
-    margin-left: -8px;
-  }
-
-  &.avatar-inline {
-    display: inline-block;
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-
-  .material-icons {
-    position: absolute;
-    height: 24px;
-    width: 24px;
-    right: -8px;
-    top: 0;
-    color: $red-error;
-    background-color: $background-root;
-    border-radius: 12px;
-  }
-
-  .large {
-    height: 64px;
-    width: 64px;
-    background-size: contain;
-
-    + .material-icons {
-      height: 32px;
-      width: 32px;
-      font-size: 32px;
-      border-radius: 32px;
-    }
-  }
-
-  .medium {
-    height: 40px;
-    width: 40px;
-    background-size: contain;
-  }
-
-  .small {
-    height: 32px;
-    width: 32px;
-    background-size: contain;
-
-    + .material-icons {
-      height: 20px;
-      width: 20px;
-      font-size: 20px;
-    }
-  }
-
-  .tiny {
-    height: 20px;
-    width: 20px;
-    font-size: 95%;
-    background-size: contain;
   }
 }
 

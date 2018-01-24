@@ -65,7 +65,8 @@ class KegEditor extends React.Component {
             .then(resp => {
                 this.keg = resp; // in case decrypt fails
                 if (resp.payload instanceof ArrayBuffer) {
-                    resp.payload = secret.decryptString(new Uint8Array(resp.payload), this.selectedDb.key);
+                    const key = this.selectedDb.boot.keys[resp.keyId].key;
+                    resp.payload = secret.decryptString(new Uint8Array(resp.payload), key);
                 }
                 resp.payload = JSON.parse(resp.payload);
                 this.keg = resp; // to trigger mobx render

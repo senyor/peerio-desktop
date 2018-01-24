@@ -1,6 +1,6 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { List, ListItem, ListDivider, TooltipDiv } = require('~/react-toolbox');
+const { List, ListItem, Divider, Tooltip } = require('~/peer-ui');
 const { action } = require('mobx');
 const { observer } = require('mobx-react');
 const routerStore = require('~/stores/router-store');
@@ -36,15 +36,15 @@ class Contacts extends React.Component {
             <div className="contacts">
                 <div className="feature-navigation-list">
                     <div className="list">
-                        <List selectable ripple>
-                            <TooltipDiv className="chat-item-add"
+                        <List clickable>
+                            <div className="chat-item-add"
                                 onClick={this.toAddNew}
-                                tooltip={t('button_addAContact')}
-                                tooltipPosition="right"
                             >
                                 <div className="chat-item-title">{t('title_contacts')}</div>
                                 <div className="chat-item-add-icon" />
-                            </TooltipDiv>
+                                <Tooltip text={t('button_addAContact')}
+                                    position="right" />
+                            </div>
                             <ListItem leftIcon="star"
                                 caption={`${t('title_favoriteContacts')} (${contactStore.addedContacts.length})`}
                                 className={css({ active: isAddedActive })}
@@ -53,7 +53,7 @@ class Contacts extends React.Component {
                                 caption={`${t('title_allContacts')} (${contactStore.contacts.length})`}
                                 className={css({ active: isAllActive })}
                                 onClick={this.toAll} />
-                            <ListDivider />
+                            <Divider />
                             <ListItem leftIcon="person_add"
                                 caption={`${t('title_invitedContacts')} (${contactStore.invitedContacts.length})`}
                                 className={css({ active: isInvitedActive })}

@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { List, ListItem, ListSubHeader, IconMenu, MenuItem } = require('~/react-toolbox');
-const Avatar = require('~/ui/shared-components/Avatar');
+const { Avatar, List, ListHeading, ListItem } = require('~/peer-ui');
+const { IconMenu, MenuItem } = require('~/react-toolbox');
 const { chatStore, contactStore, chatInviteStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -46,36 +46,38 @@ class MembersSection extends React.Component {
     }
 
     renderJoinedParticipant = (c, chat, adminMenu, userMenu) => {
-        return (<span data-username={c.username} key={c.username}>
+        return (
             <ListItem
-                leftActions={[<Avatar key="a" contact={c} size="small" />]}
-                itemContent={
-                    <span className="rt-list-itemContentRoot rt-list-large">
-                        <span className="rt-list-itemText rt-list-primary">
-                            {c.username}{chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}
-                        </span>
-                        <span className="rt-list-itemText">
-                            {c.fullName}
-                        </span>
-                    </span>
+                data-username={c.username}
+                key={c.username}
+                leftContent={<Avatar key="a" contact={c} size="small" clickable />}
+                caption={
+                    <div className="user-caption">
+                        <span className="username">{c.username}</span>
+                        {chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}
+                    </div>
                 }
-                rightActions={(User.current.username !== c.username)
-                    ? (chat.isAdmin(c) ? adminMenu : userMenu)
-                    : []
+                legend={c.fullName}
+                rightContent={
+                    (User.current.username !== c.username)
+                        ? (chat.isAdmin(c) ? adminMenu : userMenu)
+                        : null
                 }
                 onClick={this.openContact}
             />
-        </span>);
+        );
     }
 
     renderInvitedParticipant = (c, inviteMenu) => {
-        return (<span data-username={c.username} key={`invited--${c.username}`}>
+        return (
             <ListItem
+                data-username={c.username}
+                key={`invited--${c.username}`}
                 caption={c.username}
-                rightActions={inviteMenu}
+                rightContent={inviteMenu}
                 onClick={this.openContact}
             />
-        </span>);
+        );
     };
 
     render() {
@@ -122,7 +124,7 @@ class MembersSection extends React.Component {
             <SideBarSection title={t('title_Members')} onToggle={this.props.onToggle} open={this.props.open}>
                 <div className={css('member-list', { 'with-admin-controls': isChannel && canIAdmin })}>
                     {isChannel && canIAdmin
-                        ? <List className="action-list">
+                        ? <List className="action-list" clickable>
                             <ListItem
                                 className="admin-controls"
                                 leftIcon="person_add"
@@ -131,12 +133,12 @@ class MembersSection extends React.Component {
                         </List>
                         : null
                     }
-                    <List>
+                    <List clickable>
                         {chat.allJoinedParticipants.map(
                             (c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu))
                         }
                         {invited && invited.length
-                            ? <ListSubHeader caption={t('title_invited')} />
+                            ? <ListHeading caption={t('title_invited')} />
                             : null}
                         {invited
                             ? invited.map((c) => this.renderInvitedParticipant(c, inviteMenu))

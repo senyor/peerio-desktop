@@ -3,17 +3,6 @@
   background: $background-root;
 }
 
-.list-header {
-  @extend %flex-row;
-  @extend %flex-align-center;
-  @extend %flex-shrink-0;
-  height: 48px;
-  padding: 0 $padding-default;
-  font-size: 14px;
-  font-weight: $font-weight-semibold;
-  color: $text-dark-secondary;
-}
-
 .list-item {
   @extend %flex-align-center;
   @extend %flex-row;
@@ -58,19 +47,6 @@
     padding-top: 12px; // padding is 20px this + the 8px from rtb list padding.
     overflow: auto;
     background: #eee;
-  }
-
-  .rt-list-list {
-    @extend %flex-shrink-0;
-    padding-bottom: 0;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    .item-content {
-      @extend %flex-grow-1;
-      overflow: hidden;
-    }
   }
 
   .rt-progress_bar-linear {

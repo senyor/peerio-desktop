@@ -1,13 +1,13 @@
 .move-file-dialog {
   height: 75vh;
 
-  .rt-dialog-body {
+  .body {
     display: flex;
     flex-direction: column;
     padding: 0;
   }
 
-  .rt-dialog-title {
+  .title {
     margin: 24px $margin-default 0;
   }
 
@@ -60,7 +60,7 @@
     }
   }
 
-  .rt-dialog-navigation {
+  .actions {
     padding: $padding-large;
   }
 

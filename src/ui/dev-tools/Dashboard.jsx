@@ -1,5 +1,6 @@
 const React = require('react');
-const { Input, Button } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
+const { Input } = require('~/react-toolbox');
 const { User, socket } = require('peerio-icebear');
 const config = require('~/config');
 const { observable } = require('mobx');
@@ -61,7 +62,10 @@ class ChangeServer extends React.Component {
                 Current server: {socket.socket.io.uri}
                 <Input type="text" value={this.server} onChange={this.onServerChange}
                     label="Server url" /><br />
-                <Button label="Change and reconnect" raised primary onClick={this.changeServer} />
+                <Button
+                    label="Change and reconnect"
+                    onClick={this.changeServer}
+                />
             </span>
         );
     }

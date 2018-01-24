@@ -60,83 +60,10 @@
     margin-right: $margin-tiny;
   }
 
-  .avatar-wrapper > .material-icons {
-    width: 20px !important; // :( - paul
-  }
-
-  .rt-list-left .rt-list-itemAction span {
-    width: 32px;
-  }
-
-  .rt-avatar-avatar {
-    height: 32px;
-    width: 32px;
-    margin: 0 $margin-default 0 0;
-    line-height: 32px;
-    font-size: 20px;
-  }
-
   // shown when when loading chats in the chat list.
   .rt-progress_bar-linear {
     position: absolute;
     left: 0;
     top: 0;
-  }
-
-  .rt-list-itemContentRoot {
-    overflow: hidden;
-  }
-
-  .rt-list-primary,
-  .rt-list-itemText {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover,
-  .rt-list-item.selectable:not(.disabled):hover {
-    background-color: $lightblue-hover;
-  }
-
-  .rt-list-listItem.active .rt-list-item {
-    background: $lightblue;
-
-    .rt-list-itemText {
-      color: $text-light-secondary;
-    }
-
-    .avatar-group-chat,
-    .rt-list-primary {
-      font-weight: $font-weight-bold;
-      color: $text-light-primary;
-
-      &.new-dm-list-entry {
-        font-weight: $font-weight-semibold;
-      }
-    }
-
-    &:hover {
-      background: $lightblue;
-    }
-  }
-
-  .rt-ripple-ripple {
-    background-color: $blue;
-  }
-
-  .rt-list-itemAction {
-    margin: 0;
-  }
-
-  // contact status indicator
-  // status should be applied to list item parent.
-  .online .rt-list-left .avatar {
-    border-color: $green-affirmative;
-  }
-
-  .busy .rt-list-left .material-icons {
-    border-color: $red-error;
   }
 }

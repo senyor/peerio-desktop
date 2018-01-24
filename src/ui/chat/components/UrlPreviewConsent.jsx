@@ -3,8 +3,7 @@ const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const { t } = require('peerio-translator');
-const { MaterialIcon, RadioButtons } = require('~/peer-ui');
-const { Button } = require('~/react-toolbox');
+const { Button, MaterialIcon, RadioButtons } = require('~/peer-ui');
 const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
@@ -80,8 +79,15 @@ class UrlPreviewConsent extends React.Component {
                         options={this.radioOptions}
                     />
                     <div className="buttons-container">
-                        <Button className="notnow" onClick={this.onDismiss}>{t('button_notNow')}</Button>
-                        <Button className="save" onClick={this.onSubmitConsent}>{t('button_save')}</Button>
+                        <Button
+                            label={t('button_notNow')}
+                            onClick={this.onDismiss}
+                            theme="secondary"
+                        />
+                        <Button
+                            label={t('button_save')}
+                            onClick={this.onSubmitConsent}
+                        />
                     </div>
                 </div>
                 { this.firstSave &&

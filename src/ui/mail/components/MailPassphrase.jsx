@@ -1,5 +1,5 @@
 const React = require('react');
-const { TooltipIconButton } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 
@@ -22,7 +22,7 @@ const { t } = require('peerio-translator');
                 <div className="dark-label">{t('title_passphrase')}</div>
                 <div className="passphrase">
                     <span ref={(pp) => { this.passphrase = pp; }}>{this.props.ghost.passphrase}</span>
-                    <TooltipIconButton
+                    <Button
                         tooltip={t('title_copy')}
                         tooltipPosition="bottom"
                         icon="content_copy"

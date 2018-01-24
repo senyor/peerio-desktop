@@ -2,7 +2,8 @@ const React = require('react');
 const { fileStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
 const { observable, computed, action } = require('mobx');
-const { Dialog, ProgressBar } = require('~/react-toolbox');
+const { Dialog } = require('~/peer-ui');
+const { ProgressBar } = require('~/react-toolbox');
 const FileLine = require('./FileLine');
 const FolderLine = require('./FolderLine');
 const Search = require('~/ui/shared-components/Search');
@@ -131,8 +132,7 @@ class FilePicker extends React.Component {
                 className="file-picker"
                 actions={actions}
                 active={this.props.active}
-                onEscKeyDown={this.handleClose}
-                onOverlayClick={this.handleClose}>
+                onCancel={this.handleClose}>
                 {!fileStore.loading && this.props.active ?
                     <div className="file-picker-body">
                         <Search onChange={this.handleSearch} query={fileStore.currentFilter} />

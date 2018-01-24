@@ -1,5 +1,6 @@
 const React = require('react');
-const { Button, IconMenu, MenuItem } = require('~/react-toolbox');
+const { Button } = require('~/peer-ui');
+const { IconMenu, MenuItem } = require('~/react-toolbox');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { ghostStore } = require('peerio-icebear');
@@ -99,7 +100,7 @@ class Mail extends React.Component {
                 {ghostStore.ghosts.length === 0 && !ghostStore.loading ? <ZeroMail /> : null}
                 {ghostStore.selectedId && !ghostStore.loading ? this.renderRight() : null}
 
-                <Button icon="add" floating accent onClick={this.handleCompose} />
+                <Button icon="add" onClick={this.handleCompose} />
             </div>
         );
     }

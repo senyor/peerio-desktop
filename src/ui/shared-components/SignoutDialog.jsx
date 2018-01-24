@@ -1,6 +1,5 @@
 const React = require('react');
-const { Checkbox } = require('~/peer-ui');
-const { Dialog } = require('~/react-toolbox');
+const { Checkbox, Dialog } = require('~/peer-ui');
 const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -28,8 +27,7 @@ class SignoutDialog extends React.Component {
                 active={this.props.active}
                 actions={actions}
                 className="signout-dialog"
-                onEscKeyDown={this.props.onHide}
-                onOverlayClick={this.props.onHide}
+                onCancel={this.props.onHide}
                 title={t('button_logout')}>
                 {t('title_signOutConfirmKeys')}
                 {User.current.trustedDevice ?

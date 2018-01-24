@@ -1,15 +1,11 @@
 const React = require('react');
 const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { MaterialIcon } = require('~/peer-ui');
-const {
-    Button, Chip, IconButton, Input, List,
-    ListItem, ListSubHeader, ProgressBar
-} = require('~/react-toolbox');
+const { Avatar, Button, List, ListHeading, ListItem, MaterialIcon } = require('~/peer-ui');
+const { Chip, Input, ProgressBar } = require('~/react-toolbox');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('peerio-icebear');
 const css = require('classnames');
-const Avatar = require('~/ui/shared-components/Avatar');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const routerStore = require('~/stores/router-store');
@@ -227,11 +223,11 @@ class UserPicker extends React.Component {
         if (!items.length) return null;
         return (
             <div key={subTitle} className="user-list">
-                {!!subTitle && <ListSubHeader key={subTitle} caption={`${t(subTitle)} (${items.length})`} />}
+                {!!subTitle && <ListHeading key={subTitle} caption={`${t(subTitle)} (${items.length})`} />}
                 {items.map(c => (
                     <span key={c.username} data-id={c.username}>
                         <ListItem
-                            leftActions={[<Avatar key="a" contact={c} size="medium" />]}
+                            leftContent={<Avatar key="a" contact={c} size="medium" />}
                             caption={c.username}
                             legend={`${c.firstName} ${c.lastName}`}
                             onClick={this.onContactClick} />
@@ -247,8 +243,8 @@ class UserPicker extends React.Component {
         return (
             <div className="user-picker">
                 <div className={css('selected-items', { banish: !this.props.sharing })} >
-                    <List>
-                        <ListSubHeader key="header" caption={t('title_selectedFiles')} />
+                    <List clickable>
+                        <ListHeading key="header" caption={t('title_selectedFiles')} />
                         {
                             selectedFiles.map(f => (<ListItem
                                 key={f.id}
@@ -272,7 +268,7 @@ class UserPicker extends React.Component {
                                         }
                                     </div>
                                     {this.props.closeable &&
-                                        <IconButton icon="close" onClick={this.handleClose} className="button-close" />
+                                        <Button icon="close" onClick={this.handleClose} className="button-close" />
                                     }
                                 </div>
                             }
@@ -302,11 +298,12 @@ class UserPicker extends React.Component {
                                         </div>
                                         {this.props.limit !== 1 && this.props.onAccept && !routerStore.isNewChannel &&
                                             <Button
-                                                className="button-affirmative"
                                                 label={this.props.button || t('button_go')}
                                                 onClick={this.accept}
                                                 disabled={!this.isValid
-                                                    || (this.queryIsEmpty && this.selected.length === 0)} />
+                                                    || (this.queryIsEmpty && this.selected.length === 0)}
+                                                theme="affirmative"
+                                            />
                                         }
                                         {(this.contactLoading || this._searchUsernameTimeout) &&
                                             <ProgressBar type="circular" mode="indeterminate" />
@@ -322,10 +319,10 @@ class UserPicker extends React.Component {
                             {routerStore.isNewChannel &&
                                 <div className="new-channel-button-container">
                                     <Button
-                                        className={css('button-affirmative')}
                                         label={t('button_open')}
                                         onClick={this.props.onAccept}
                                         disabled={this.props.noSubmit}
+                                        theme="affirmative"
                                     />
                                 </div>
                             }
@@ -355,14 +352,15 @@ class UserPicker extends React.Component {
                                         </div>
                                         {this.suggestInviteEmail &&
                                             <Button
-                                                className="button-affirmative"
                                                 onClick={this.invite}
-                                                label={t('button_send')} />
+                                                label={t('button_send')}
+                                                theme="affirmative"
+                                            />
                                         }
                                     </div>
                                 </div>
                             }
-                            <List selectable ripple>
+                            <List theme="large" clickable>
                                 {this.foundContact && this.renderList(null, [this.foundContact])}
                                 {!this.foundContact
                                     && this.renderList('title_favoriteContacts', this.options.favorites)}

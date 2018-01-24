@@ -5,13 +5,13 @@ $list-header-height: 48px;
   max-height: 80vh;
   min-height: 80vh;
 
-  .rt-dialog-body {
+  .body {
     display: flex;
     flex-direction: column;
     min-height: 0;
     padding: 0;
 
-    .rt-dialog-title {
+    .title {
       margin: $margin-large $margin-xl $margin-default;
     }
   }
@@ -33,7 +33,7 @@ $list-header-height: 48px;
     overflow-y: auto;
   }
 
-  .list-header {
+  .p-list-heading {
     z-index: 1;
     height: $list-header-height;
     width: 100%;
@@ -44,18 +44,6 @@ $list-header-height: 48px;
   }
 
   .list-chats {
-    // override RT default padding
-    padding: 0;
-
-    .rt-list-item {
-      // override RT default padding
-      padding-left: 0;
-    }
-
-    .rt-list-listItem {
-      cursor: pointer;
-    }
-
     li {
       display: flex;
       align-items: center;
@@ -88,7 +76,7 @@ $list-header-height: 48px;
   .list-channels {
     padding: 8px 0;
 
-    .rt-list-item {
+    .p-list-item {
       min-height: 24px;
     }
   }

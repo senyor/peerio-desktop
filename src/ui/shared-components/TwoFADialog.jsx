@@ -1,6 +1,5 @@
 const React = require('react');
-const { Checkbox } = require('~/peer-ui');
-const { Dialog } = require('~/react-toolbox');
+const { Checkbox, Dialog } = require('~/peer-ui');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -71,8 +70,10 @@ class TwoFADialog extends React.Component {
     }
 
     setInputRef = (ref) => {
-        this.inputRef = ref;
-        if (clientApp.active2FARequest) ref.focus();
+        if (ref) {
+            this.inputRef = ref;
+            if (clientApp.active2FARequest) ref.focus();
+        }
     }
 
     onToggleTrust() {

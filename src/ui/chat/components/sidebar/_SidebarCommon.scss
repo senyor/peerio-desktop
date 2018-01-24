@@ -14,43 +14,10 @@
     font-size: 12px;
   }
 
-  // TODO: combine with chat list avatar styles.
-  .rt-avatar-avatar {
-    height: 32px;
-    width: 32px;
-    line-height: 32px;
-    font-size: 20px;
-  }
-
-  .avatar-wrapper > .material-icons {
-    margin-right: 0;
-  }
-
   .title {
     height: 48px;
     margin: $margin-tiny $margin-default 0;
     line-height: 48px;
-  }
-
-  .rt-list-itemContentRoot {
-    cursor: pointer;
-    overflow: hidden;
-  }
-
-  // Override default hover to prevent double-hover blue effect
-  .rt-list-item.rt-list-selectable:not(.rt-list-disabled):hover:hover:not(.active),
-  .rt-list-listItem:hover:not(.active) {
-    background-color: #afdff2;
-  }
-
-  .rt-list-large {
-    overflow: hidden;
-  }
-
-  .rt-list-itemText {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
   .purpose-container {
@@ -127,7 +94,7 @@
   }
 
   &.open,
-  .rt-list-item {
+  .p-list-item {
     width: 272px;
   }
 

@@ -10,6 +10,7 @@ const doWatch = process.argv[2] === '-w';
 
 const cwd = process.cwd();
 const moduleName = 'peerio-icebear';
+let initialCopyDone = false;
 
 const modulePath = globalRequire.resolve(moduleName);
 console.log('Source: ', modulePath);
@@ -25,7 +26,7 @@ const copy = debounce(_ => _.forEach(filePath => {
     fse.copy(fullFilePath, fullDestPath, error => {
         if (error) {
             console.error('Cannot copy', filePath, error.message);
-        } else {
+        } else if (initialCopyDone) {
             console.log(fullFilePath, '=>', fullDestPath);
         }
     });
@@ -34,11 +35,12 @@ const copy = debounce(_ => _.forEach(filePath => {
 if (!doWatch) watcher.on('add', copy);
 watcher.on('ready', debounce(() => {
     if (doWatch) {
+        initialCopyDone = true;
         watcher.removeListener('add', copy);
         console.log('Starting icebear link watcher');
         watcher.on('change', copy);
     } else {
-        console.log('Copied.');
+        console.log('Icebear copied.');
         watcher.close();
     }
 }, 1000));

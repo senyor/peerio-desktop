@@ -90,7 +90,7 @@ app.on('ready', () => {
     app.setAppUserModelId(config.appId);
     config.FileStream.createTempCache()
         .then(getSavedWindowState)
-        .then(windowState => {
+        .then(async windowState => {
             const winConfig = Object.assign({
                 show: false,
                 center: true,
@@ -105,6 +105,8 @@ app.on('ready', () => {
             } else if (process.platform === 'linux') {
                 winConfig.icon = `${__dirname}/static/img/icon.png`;
             }
+
+            await devtools.installExtensions();
 
             mainWindow = new BrowserWindow(winConfig);
             mainWindow.loadURL(`file://${__dirname}/index.html`);

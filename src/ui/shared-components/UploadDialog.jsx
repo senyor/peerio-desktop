@@ -5,7 +5,6 @@ const { chatStore, contactStore, fileHelpers, User } = require('peerio-icebear')
 const { Button, Dialog } = require('~/peer-ui');
 const { Input } = require('~/react-toolbox');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
-const BetterInput = require('~/ui/shared-components/BetterInput');
 const ShareWithDialog = require('~/ui/shared-components/ShareWithDialog');
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
@@ -23,6 +22,7 @@ class UploadDialog extends React.Component {
     }
 
     @observable fileName = '';
+
     // the chat we are sharing the file into
     @observable targetChat = null;
 
@@ -50,6 +50,23 @@ class UploadDialog extends React.Component {
 
     @computed get fileType() {
         return fileHelpers.getFileIconType(this.fileExt);
+    }
+
+    // "Display" filename can be different from true file name (ext shown on input blur, hidden on focus)
+    @observable inputFocused = false;
+
+    @action.bound onInputFocus() {
+        this.inputFocused = true;
+    }
+
+    @action.bound onInputBlur() {
+        this.inputFocused = false;
+    }
+
+    @computed get displayFileName() {
+        if (this.fileName === '') return '';
+        if (this.inputFocused) return this.fileName;
+        return `${this.fileName}.${this.fileExt}`;
     }
 
     @observable messageText = '';
@@ -101,12 +118,10 @@ class UploadDialog extends React.Component {
 
     // Check if user manually added filename extension back, remove it if so
     @computed get parsedFileName() {
-        let fileToSend = this.fileName;
         if (fileHelpers.getFileExtension(this.fileName) === this.fileExt) {
-            fileToSend = fileHelpers.getFileNameWithoutExtension(this.fileName);
+            return this.fileName;
         }
-        fileToSend = fileToSend.concat(`.${this.fileExt}`);
-        return fileToSend;
+        return this.fileName.concat(`.${this.fileExt}`);
     }
 
     @action.bound changeToContact(contact) {
@@ -156,7 +171,7 @@ class UploadDialog extends React.Component {
     render() {
         const uploadActions = [
             { label: t('button_cancel'), onClick: this.cancelUpload },
-            { label: t('button_share'), onClick: this.uploadAndShare }
+            { label: t('button_share'), onClick: this.uploadAndShare, disabled: this.fileName.length === 0 }
         ];
 
         if (this.shareWithVisible) {
@@ -186,13 +201,12 @@ class UploadDialog extends React.Component {
                         }
                     </div>
                     <div className="info-and-inputs">
-                        <BetterInput
+                        <Input
                             label={t('title_fileName')}
-                            value={this.fileName}
+                            value={this.displayFileName}
                             onChange={this.onFileNameChange}
-                            onAccept={this.onFileNameChange}
-                            onFocus={this.hideExt}
-                            onBlur={this.showExt}
+                            onFocus={this.onInputFocus}
+                            onBlur={this.onInputBlur}
                         />
                         <div className="share-with">
                             <div className="user-list">

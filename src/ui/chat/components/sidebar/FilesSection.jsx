@@ -2,13 +2,13 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { List, ListItem } = require('~/peer-ui');
 const { IconMenu, MenuItem } = require('~/react-toolbox');
-const { chatStore, fileStore, User } = require('peerio-icebear');
+const { chatStore, fileStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const SideBarSection = require('./SideBarSection');
-const { downloadFile } = require('~/helpers/file');
-const { pickLocalFiles } = require('~/helpers/file');
+const { downloadFile, pickLocalFiles } = require('~/helpers/file');
+const moment = require('moment');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 
 @observer
@@ -57,11 +57,12 @@ class FilesSection extends React.Component {
     renderFileItem = id => {
         const file = fileStore.getById(id);
         if (!file) return null;
+
         return (
             <ListItem key={id} data-fileid={id}
                 className="sidebar-file-container"
                 onClick={this.download}
-                leftContent={<FileSpriteIcon type={file.iconType} size="medium" />}
+                leftContent={<FileSpriteIcon type={file.iconType} size="large" />}
                 rightContent={this.menu}
             >
                 <div className="meta">
@@ -71,14 +72,14 @@ class FilesSection extends React.Component {
                         </span>
                         <span className="file-ext">.{file.ext}</span>
                     </div>
-                    <span className="file-shared-by">
-                        {file.fileOwner === User.current.username
-                            ? <T k="title_fileFilterShared" />
-                            : <T k="title_fileSharedByUser">
-                                {{ user: file.fileOwner }}
-                            </T>
-                        }
-                    </span>
+                    <div className="file-shared-by">{file.fileOwner}</div>
+                    <div className="file-shared-date">
+                        {moment(file.uploadedAt).format(
+                            Date.now() - file.uploadedAt > 24 * 60 * 60 * 1000
+                                ? 'll'
+                                : 'll [|] h:mmA'
+                        )}
+                    </div>
                 </div>
             </ListItem>
         );

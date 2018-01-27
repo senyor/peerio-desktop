@@ -1,6 +1,7 @@
 const React = require('react');
 const { fileStore, User } = require('peerio-icebear');
 const { Button, Dialog, MaterialIcon, RadioButtons } = require('~/peer-ui');
+const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const { ProgressBar } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
 const { observable, reaction, when } = require('mobx');
@@ -271,9 +272,7 @@ class InlineFile extends React.Component {
                             <div className="container">
                                 <div className="clickable file-name-container" onClick={this.props.onDownload}>
                                     <div className="file-icon">
-                                        {file.isImage &&
-                                            <MaterialIcon icon="image" />
-                                        }
+                                        <FileSpriteIcon type={file.iconType} size="small" />
                                     </div>
                                     <div className="file-name">
                                         {file.nameWithoutExtension}

@@ -14,8 +14,19 @@
     background-color: rgba(44, 149, 207, .3);
   }
 
-  .rt-app_bar-appBar {
+  .top-bar {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    height: 90px;
+    width: 100%;
+    top: 0;
+    padding: 24px;
     background-color: rgb(44, 149, 207);
+
+    .p-menu {
+      margin-right: auto;
+    }
 
     .material-icons {
       color: rgba(255, 255, 255, .7);
@@ -28,10 +39,6 @@
     .bad-bg {
       background-color: #fb9090;
     }
-  }
-
-  .rt-button-button > .rt-button-icon {
-    color: #fff;
   }
 
   .menu {

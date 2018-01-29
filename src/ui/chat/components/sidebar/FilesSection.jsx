@@ -1,7 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { List, ListItem } = require('~/peer-ui');
-const { IconMenu, MenuItem } = require('~/react-toolbox');
+const { List, ListItem, Menu, MenuItem } = require('~/peer-ui');
 const { chatStore, fileStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -44,13 +43,25 @@ class FilesSection extends React.Component {
         });
     };
 
-    get menu() {
+    menu(fileId) {
         return (
-            <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple
-                onClick={this.stopPropagation}>
-                <MenuItem caption={t('title_download')} icon="file_download" onClick={this.download} />
-                <MenuItem caption={t('button_share')} icon="reply" onClick={this.share} className="reverse-icon" />
-            </IconMenu>
+            <Menu
+                icon="more_vert"
+                position="bottom-right"
+                onClick={this.stopPropagation}
+                data-fileid={fileId}
+            >
+                <MenuItem
+                    caption={t('title_download')}
+                    icon="file_download"
+                    onClick={this.download}
+                />
+                <MenuItem
+                    caption={t('button_share')}
+                    icon="reply"
+                    onClick={this.share}
+                />
+            </Menu>
         );
     }
 
@@ -63,7 +74,7 @@ class FilesSection extends React.Component {
                 className="sidebar-file-container"
                 onClick={this.download}
                 leftContent={<FileSpriteIcon type={file.iconType} size="large" />}
-                rightContent={this.menu}
+                rightContent={this.menu(id)}
             >
                 <div className="meta">
                     <div className="file-name-container">
@@ -95,7 +106,7 @@ class FilesSection extends React.Component {
         };
         return (
             <SideBarSection title={t('title_recentFiles')} onToggle={this.props.onToggle} open={this.props.open}>
-                <div className="member-list">
+                <div className="member-list scrollable">
                     <List className="sidebar-file-list" clickable>
                         {chat.recentFiles.map(this.renderFileItem)}
                     </List>

@@ -2,7 +2,7 @@ const React = require('react');
 const css = require('classnames');
 
 const MaterialIcon = require('./MaterialIcon');
-const { getDataProps } = require('./helpers');
+const { getDataProps } = require('~/helpers/dom');
 
 /*
     PROPS       type        description

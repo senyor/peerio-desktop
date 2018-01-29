@@ -337,7 +337,10 @@ class Files extends React.Component {
                 <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
                 <div className="file-wrapper">
                     {fileStore.currentFilter ? this.searchResultsHeader : this.breadCrumbsHeader}
-                    <div className="file-table-wrapper" ref={this.setContainerRef} onScroll={this.enqueueCheck}>
+                    <div className="file-table-wrapper scrollable"
+                        ref={this.setContainerRef}
+                        onScroll={this.enqueueCheck}
+                    >
                         <div className="file-table-header row">
                             <div className="loading-icon" />{/* blank space for download-in-progress icon */}
                             <div className="file-icon" />{/* blank space for file icon image */}

@@ -13,6 +13,10 @@ module.exports.MaterialIcon = require('~/ui-library/MaterialIcon');
 module.exports.Dialog = require('~/ui-library/Dialog');
 module.exports.Tooltip = require('~/ui-library/Tooltip');
 
+// Navigation
+module.exports.Menu = require('~/ui-library/Menu');
+module.exports.MenuItem = require('~/ui-library/MenuItem');
+
 // Page structure & layout
 module.exports.Divider = require('~/ui-library/Divider');
 module.exports.List = require('~/ui-library/List');

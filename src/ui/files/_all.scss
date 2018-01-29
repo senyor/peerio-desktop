@@ -83,10 +83,6 @@
     .item-actions {
       min-width: 48px;
       text-align: center;
-
-      .reverse-icon .material-icons {
-        @extend %reverse-icon;
-      }
     }
   }
 

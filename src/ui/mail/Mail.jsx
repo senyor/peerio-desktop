@@ -1,6 +1,5 @@
 const React = require('react');
-const { Button } = require('~/peer-ui');
-const { IconMenu, MenuItem } = require('~/react-toolbox');
+const { Button, Menu, MenuItem } = require('~/peer-ui');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { ghostStore } = require('peerio-icebear');
@@ -75,11 +74,11 @@ class Mail extends React.Component {
                                 {availableSorts.find((s) => s.sort === ghostStore.selectedSort).caption}
                             </strong>
                         </div>
-                        <IconMenu onSelect={this.handleSort} icon="arrow_drop_down">
+                        <Menu onSelect={this.handleSort} icon="arrow_drop_down">
                             {availableSorts.map((s) => {
                                 return (<MenuItem key={s.sort} value={s.sort} caption={s.caption} />);
                             })}
-                        </IconMenu>
+                        </Menu>
                     </div>
                     <div className="mail-list">
                         {ghostStore.ghosts.map((m) => {

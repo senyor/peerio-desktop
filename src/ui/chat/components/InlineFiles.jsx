@@ -292,7 +292,9 @@ class InlineFile extends React.Component {
                                     shareable shareDisabled={!file.readyForDownload || !file.canShare}
                                     newFolderDisabled
                                     deleteable={file.fileOwner === User.current.username}
-                                    {...this.props} />
+                                    data-fileid={this.props.id}
+                                    {...this.props}
+                                />
                             </div>
                             {file.deleted ? <span>File deleted</span> : null}
                             {!file.deleted && !file.cachingFailed && file.downloading
@@ -391,7 +393,10 @@ class InlineFiles extends React.Component {
                             onDownload={this.download}
                             onDelete={this.deleteFile}
                             startTimer={this.startTimer}
-                            onImageLoaded={this.props.onImageLoaded} {...this.props} />)
+                            onImageLoaded={this.props.onImageLoaded}
+                            onMenuClick={this.handleMenuClick}
+                            {...this.props}
+                        />)
                     )
                 }
             </div>

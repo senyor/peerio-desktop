@@ -229,7 +229,10 @@ class MessageList extends React.Component {
     render() {
         if (!chatStore.activeChat) return null;
         return (
-            <div className="messages-current" onScroll={this.handleScroll} ref={this.setContainerRef}>
+            <div className="messages-current scrollable"
+                onScroll={this.handleScroll}
+                ref={this.setContainerRef}
+            >
                 {this.renderChatStart()}
                 {chatStore.activeChat.loadingInitialPage
                     ? <ProgressBar type="circular" mode="indeterminate"

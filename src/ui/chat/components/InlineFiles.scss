@@ -190,12 +190,6 @@
     bottom: 0;
   }
 
-  .item-actions {
-    .rt-menu-caption {
-      font-weight: $font-weight-regular;
-    }
-  }
-
   .inline-files-expanded {
     @extend %flex-col;
     @extend %flex-justify-center;

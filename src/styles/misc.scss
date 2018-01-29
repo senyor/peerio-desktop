@@ -76,6 +76,11 @@ ul {
   user-select: auto;
 }
 
+// Make things scrollable
+.scrollable {
+  overflow-y: auto;
+}
+
 // BUTTONS
 .button-gradient {
   line-height: 34px;

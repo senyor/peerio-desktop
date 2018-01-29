@@ -1,4 +1,3 @@
-module.exports.AppBar = require('react-toolbox/lib/app_bar/AppBar').default;
 module.exports.Autocomplete = require('react-toolbox/lib/autocomplete/Autocomplete').default;
 module.exports.BrowseButton = require('react-toolbox/lib/button/BrowseButton').default;
 module.exports.Chip = require('react-toolbox/lib/chip/Chip').default;

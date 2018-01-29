@@ -1,6 +1,9 @@
 .material-icons {
   vertical-align: middle;
 
+  font-size: 24px;
+  color: $icon-dark-active;
+
   &.gold {
     color: gold;
   }
@@ -8,8 +11,6 @@
   &.selected {
     color: $blue;
   }
-
-  // TODO: move .material-icons styles here where relevant
 }
 
 .reverse-icon.material-icons,

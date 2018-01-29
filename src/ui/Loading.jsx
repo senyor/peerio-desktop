@@ -3,7 +3,7 @@ const { when } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, crypto } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
-const { ProgressBar } = require('~/react-toolbox');
+const { ProgressBar } = require('~/peer-ui');
 const routerStore = require('~/stores/router-store');
 
 const messages = ['title_randomMessage1', 'title_randomMessage2', 'title_randomMessage3', 'title_randomMessage4'];

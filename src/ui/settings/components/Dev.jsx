@@ -1,13 +1,14 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Switch } = require('~/react-toolbox');
+const { Switch } = require('~/peer-ui');
 const uiStore = require('~/stores/ui-store');
 
 @observer
 class Dev extends React.Component {
-    onPrereleaseChange = (value) => {
-        uiStore.sharedPrefs.prereleaseUpdatesEnabled = value;
-    };
+    onPrereleaseChange(ev) {
+        uiStore.sharedPrefs.prereleaseUpdatesEnabled = ev.target.checked;
+    }
+
     render() {
         return (
             <div>

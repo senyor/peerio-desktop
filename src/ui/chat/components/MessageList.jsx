@@ -1,8 +1,7 @@
 const React = require('react');
 const { reaction, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar } = require('~/peer-ui');
-const { ProgressBar } = require('~/react-toolbox');
+const { Avatar, ProgressBar } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const Message = require('./Message');
 const { chatStore, User, clientApp } = require('peerio-icebear');

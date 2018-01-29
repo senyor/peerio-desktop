@@ -29,14 +29,10 @@ $status-bar-height: 36px;
     animation: 4s infinite gradient;
   }
 
-  .rt-progress_bar-circular {
+  .p-progress-bar {
     height: 20px;
     width: 20px;
     margin-right: $margin-default;
-  }
-
-  .rt-progress_bar-path {
-    stroke: $white;
   }
 
   .reconnect {

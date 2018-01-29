@@ -103,8 +103,10 @@ section {
 }
 
 .global-update-progress {
-  .rt-progress_bar-linear {
-    position: fixed;
+  background: white;
+
+  .p-progress-bar {
+    position: relative;
     height: 2px;
   }
 }

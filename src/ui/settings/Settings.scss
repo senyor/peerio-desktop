@@ -1,10 +1,7 @@
 .settings {
-  @extend %flex-row;
-  @extend %flex-justify-center;
   width: 100%;
-  padding-top: 32px;
+  padding: 32px 80px 0;
   overflow: auto;
-
   background: $background-root;
 
   .logo {
@@ -15,36 +12,59 @@
   .tab-wrapper {
     @extend %flex-grow-1;
     @extend %flex-col;
-    margin: 0 80px;
+    min-width: 0;
   }
 
   .tabs {
-    @extend %flex-shrink-0;
+    display: flex;
     width: 100%;
     margin-top: 24px;
+    border-bottom: 1px solid $divider-dark;
 
-    .rt-tabs-pointer {
-      height: 4px;
-      margin-top: -5px;
-    }
+    .p-button {
+      position: relative;
+      height: 100%;
+      padding: $padding-default;
+      border-radius: 0;
 
-    .rt-tabs-label,
-    .rt-tabs-label.rt-tabs-active {
-      padding-left: $padding-large;
-      padding-right: $padding-large;
-      color: $text-dark-secondary;
+      &.tab-notify::before {
+        @extend %notify;
+        z-index: 0;
+        left: 4px;
+        top: 19px;
+      }
+
+      &::after {
+        content: ' ';
+        position: absolute;
+        height: 4px;
+        min-width: 0;
+        left: 0;
+        bottom: 0;
+        background-color: $blue;
+      }
+
+      &:disabled::after {
+        min-width: 100%;
+        transition: min-width 250ms;
+      }
     }
   }
 
+  .settings-view {
+    margin-top: $margin-xl;
+  }
+
   section {
-    padding: 32px 0; // TODO change to $padding-xl after merge
+    padding: $padding-xl 0;
 
     &.section-divider {
       border-bottom: 1px solid $divider-dark;
     }
 
-    .title + label {
-      margin-top: 14px; // for instances where there is not details paragraph. - paul
+    .title + label,
+    .title + .p-switch {
+      margin-top: $margin-default; // for instances where there is not details paragraph. - paul
     }
 
     &.with-bg {
@@ -82,16 +102,13 @@
     }
   }
 
-  .tab-notify::after {
-    @extend %notify;
-    z-index: 0 !important;
-    left: 4px !important;
-    top: 19px;
-  }
-
   .error {
     margin-top: 4px;
     font-size: 12px;
     color: $red-error;
+  }
+
+  .p-switch {
+    margin-bottom: $margin-default;
   }
 }

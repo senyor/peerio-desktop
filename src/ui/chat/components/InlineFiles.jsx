@@ -1,8 +1,7 @@
 const React = require('react');
 const { fileStore, User } = require('peerio-icebear');
-const { Button, Dialog, MaterialIcon, RadioButtons } = require('~/peer-ui');
+const { Button, Dialog, MaterialIcon, ProgressBar, RadioButtons } = require('~/peer-ui');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
-const { ProgressBar } = require('~/react-toolbox');
 const { downloadFile } = require('~/helpers/file');
 const { observable, reaction, when } = require('mobx');
 const { observer } = require('mobx-react');

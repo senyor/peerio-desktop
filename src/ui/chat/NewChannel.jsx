@@ -5,7 +5,8 @@ const { chatStore, User } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { ProgressBar, Input } = require('~/react-toolbox');
+const { ProgressBar } = require('~/peer-ui');
+const { Input } = require('~/react-toolbox');
 const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 const config = require('~/config');
 

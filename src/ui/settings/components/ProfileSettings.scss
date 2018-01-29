@@ -5,6 +5,7 @@
 
   .settings-container-profile {
     @extend %flex-row;
+    margin-top: 20px;
 
     .label-email {
       height: 24px;

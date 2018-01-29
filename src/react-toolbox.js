@@ -1,6 +1,5 @@
 module.exports.Autocomplete = require('react-toolbox/lib/autocomplete/Autocomplete').default;
 module.exports.BrowseButton = require('react-toolbox/lib/button/BrowseButton').default;
-module.exports.Chip = require('react-toolbox/lib/chip/Chip').default;
 module.exports.DatePicker = require('react-toolbox/lib/date_picker/DatePicker').default;
 module.exports.Drawer = require('react-toolbox/lib/drawer/Drawer').default;
 module.exports.Input = require('react-toolbox/lib/input/Input').default;
@@ -13,15 +12,8 @@ module.exports.Menu = require('react-toolbox/lib/menu/Menu').default;
 module.exports.MenuDivider = require('react-toolbox/lib/menu/MenuDivider').default;
 module.exports.MenuItem = require('react-toolbox/lib/menu/MenuItem').default;
 module.exports.Navigation = require('react-toolbox/lib/navigation/Navigation').default;
-module.exports.ProgressBar = require('react-toolbox/lib/progress_bar/ProgressBar').default;
 module.exports.Ripple = require('react-toolbox/lib/ripple/Ripple').default;
 module.exports.Slider = require('react-toolbox/lib/slider/Slider').default;
 module.exports.Snackbar = require('react-toolbox/lib/snackbar/Snackbar').default;
-module.exports.Switch = require('react-toolbox/lib/switch/Switch').default;
 module.exports.Table = require('react-toolbox/lib/table/Table').default;
-module.exports.Tab = require('react-toolbox/lib/tabs/Tab').default;
-module.exports.Tabs = require('react-toolbox/lib/tabs/Tabs').default;
-module.exports.Tooltip = require('react-toolbox/lib/tooltip/Tooltip').default;
 module.exports.TimePicker = require('react-toolbox/lib/time_picker/TimePicker').default;
-
-module.exports.TooltipIconMenu = module.exports.Tooltip()(module.exports.IconMenu);

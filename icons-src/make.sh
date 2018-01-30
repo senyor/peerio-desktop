@@ -27,3 +27,13 @@ convert \
 
 # Linux window icon
 cp $BASE_DIR/icon.iconset/icon_512x512@2x.png $BASE_DIR/../src/static/img/icon.png
+
+# Linux app icons
+LINUX_DIR=$BASE_DIR/../dist-assets/linux-icon
+mkdir $BASE_DIR/../dist-assets/linux-icon || true
+cp $BASE_DIR/icon.iconset/icon_16x16.png $LINUX_DIR/16x16.png
+cp $BASE_DIR/icon.iconset/icon_32x32.png $LINUX_DIR/32x32.png
+cp $BASE_DIR/icon.iconset/icon_32x32@2x.png $LINUX_DIR/64x64.png
+cp $BASE_DIR/icon.iconset/icon_128x128.png $LINUX_DIR/128x128.png
+cp $BASE_DIR/icon.iconset/icon_256x256.png $LINUX_DIR/256x256.png
+cp $BASE_DIR/icon.iconset/icon_512x512.png $LINUX_DIR/512x512.png

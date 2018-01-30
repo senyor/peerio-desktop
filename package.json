@@ -253,6 +253,7 @@
     "linux": {
       "category": "Network",
       "artifactName": "${name}-${os}-x86_64.${ext}",
+      "icon": "dist-assets/linux-icon",
       "target": [
         {
           "target": "AppImage",

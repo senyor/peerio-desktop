@@ -2,19 +2,22 @@ const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('~/peer-ui');
-const MessageInput = require('./components/MessageInput');
-const MessageList = require('./components/MessageList');
 const { chatStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
-const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
 const css = require('classnames');
+
+const MessageInput = require('./components/MessageInput');
+const MessageList = require('./components/MessageList');
 const MessageSideBar = require('./components/sidebar/MessageSideBar');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
+const ShareFolderProgress = require('./components/ShareFolderProgress');
+const UploadInChatProgress = require('./components/UploadInChatProgress');
+
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 
@@ -238,6 +241,7 @@ class ChatView extends React.Component {
                                         ? <UploadInChatProgress queue={chat.uploadQueue} />
                                         : null
                                 }
+                                <ShareFolderProgress />
                                 <MessageInput
                                     readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
                                     placeholder={

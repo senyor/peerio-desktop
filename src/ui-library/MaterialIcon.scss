@@ -4,13 +4,9 @@
   font-size: 24px;
   color: $icon-dark-active;
 
-  &.gold {
-    color: gold;
-  }
-
-  &.selected {
-    color: $blue;
-  }
+  &.gold { color: gold; }
+  &.selected { color: $blue; }
+  &.affirmative { color: $green-affirmative; }
 }
 
 .reverse-icon.material-icons,

@@ -113,7 +113,9 @@ class FilePicker extends React.Component {
                     key={f.folderId}
                     folder={f}
                     onChangeFolder={this.changeFolder}
-                    checkboxPlaceholder
+                    checkbox
+                    selected={f.selected}
+                    onToggleSelect={this.toggleSelectFolder}
                 /> :
                 <FileLine
                     key={f.fileId}
@@ -159,6 +161,11 @@ class FilePicker extends React.Component {
         const folder = getFolderByEvent(ev);
         this.currentFolder = folder;
         fileStore.clearFilter();
+    }
+
+    @action.bound toggleSelectFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        folder.selected = !folder.selected;
     }
 
     @action.bound toggleSelect(ev) {

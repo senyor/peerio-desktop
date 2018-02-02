@@ -23,7 +23,7 @@ const css = require('classnames');
 class ProgressBar extends React.Component {
     render() {
         let style;
-        if (this.props.mode === 'determinate') {
+        if (this.props.mode === null || 'determinate') {
             style = { width: `${this.props.value / this.props.max * 100}%` };
         }
 
@@ -40,8 +40,8 @@ class ProgressBar extends React.Component {
                     ? <div className="progress-bar">
                         <div
                             className={css(
-                                this.props.type,
-                                this.props.mode,
+                                this.props.type || 'linear',
+                                this.props.mode || 'determinate',
                                 { multicolor: this.props.multicolor }
                             )}
                             style={style}

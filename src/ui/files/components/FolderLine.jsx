@@ -1,8 +1,9 @@
 const React = require('react');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
+const css = require('classnames');
 const FolderActions = require('./FolderActions');
-const { Checkbox, MaterialIcon } = require('~/peer-ui');
+const { Checkbox, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 
 @observer
@@ -22,23 +23,25 @@ class FolderLine extends React.Component {
 
         return (
             <div data-folderid={folder.folderId}
-                className="row"
+                className={css(
+                    'row',
+                    this.props.className
+                )}
                 onMouseEnter={this.onShowActions}
                 onMouseLeave={this.onHideActions}>
-                {this.props.folderDetails &&
-                    <div className="loading-icon" />
-                }
 
-                {this.props.checkboxPlaceholder &&
-                    <div className="file-checkbox" />
-                }
-
-                {this.props.checkbox &&
-                    <Checkbox
-                        className="file-checkbox"
-                        checked={this.props.selected}
-                        onChange={this.props.onToggleSelect}
-                    />
+                {this.props.shareProgress
+                    ? <div className="file-checkbox folder-share-progress">
+                        {`${this.props.shareProgress}%`}
+                        <ProgressBar value={this.props.shareProgress} max={100} />
+                    </div>
+                    : this.props.checkbox
+                        ? <Checkbox
+                            className="file-checkbox"
+                            checked={this.props.selected}
+                            onChange={this.props.onToggleSelect}
+                        />
+                        : this.props.checkboxPlaceholder ? <div className="file-checkbox" /> : null
                 }
 
                 <div className="file-icon"
@@ -62,7 +65,7 @@ class FolderLine extends React.Component {
                 {this.props.folderDetails && <div className="file-size text-right" /> }
 
                 {this.props.folderActions &&
-                    <div className="file-actions text-right">
+                    <div className="file-actions">
                         <FolderActions
                             onClick={this.props.onClick}
                             onRename={this.props.onRenameFolder}

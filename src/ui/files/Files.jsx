@@ -1,4 +1,5 @@
 const React = require('react');
+const css = require('classnames');
 const { Button, Dialog } = require('~/peer-ui');
 const { Input } = require('~/react-toolbox');
 const { observer } = require('mobx-react');
@@ -312,15 +313,21 @@ class Files extends React.Component {
             const f = data[i];
             items.push(f.isFolder ?
                 <FolderLine
+                    className={css({ 'share-in-progress': f.shareProgress > 0 })}
                     key={f.folderId}
                     folder={f}
+
                     moveable={fileStore.folders.root.folders.length > 0}
                     onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.deleteFolder}
                     onChangeFolder={this.changeFolder}
+
                     folderActions
                     folderDetails
+                    checkboxPlaceholder
+
+                    shareProgress={f.shareProgress}
                 /> :
                 <FileLine
                     key={f.fileId}
@@ -329,6 +336,7 @@ class Files extends React.Component {
                     moveable={fileStore.folders.root.folders.length > 0}
                     fileActions
                     fileDetails
+                    checkbox
                 />);
         }
         this.enqueueCheck();
@@ -342,7 +350,7 @@ class Files extends React.Component {
                         onScroll={this.enqueueCheck}
                     >
                         <div className="file-table-header row">
-                            <div className="loading-icon" />{/* blank space for download-in-progress icon */}
+                            <div className="file-checkbox" />{/* blank space for file icon image */}
                             <div className="file-icon" />{/* blank space for file icon image */}
                             <div className="file-name">{t('title_name')}</div>
                             <div className="file-owner">{t('title_owner')}</div>

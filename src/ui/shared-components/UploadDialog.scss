@@ -53,7 +53,8 @@
       min-width: 0;
       margin-left: $margin-default;
 
-      .rt-input-input {
+      .p-input {
+        padding-bottom: 0;
         margin-bottom: $margin-small;
       }
 
@@ -104,6 +105,7 @@
 
         textarea {
           resize: none;
+          height: 87px;
           max-height: 100%;
           overflow-y: auto;
           word-wrap: break-word;

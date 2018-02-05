@@ -32,9 +32,16 @@
       }
     }
 
-    .input-row:first-of-type .rt-input-input,
-    .flex-row .rt-input-input {
-      margin-top: 0;
+    .input-row {
+      display: flex;
+
+      .p-input:first-of-type {
+        margin-right: 1px;
+      }
+
+      .helper-text {
+        @extend %hint-error-label;
+      }
     }
 
     .peerio-id-container {

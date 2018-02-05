@@ -12,7 +12,7 @@ class UsageCloud extends React.Component {
                 <Button style={{
                     position: 'absolute',
                     clipPath: `polygon(0 0, ${cloudFillPercent}% 0, ${cloudFillPercent}% 100%, 0% 100%)`
-                }} icon="cloud" />
+                }} icon="cloud" theme="no-hover" />
                 <Button
                     onClick={this.props.onClick}
                     tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}

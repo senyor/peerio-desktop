@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Input } = require('~/react-toolbox');
+const { Input } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 
 @observer
@@ -54,7 +54,7 @@ class BetterInput extends React.Component {
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
         if (this.accepted || this.rejected) return;
-        this.props.onAccept(this.inputRef.inputNode.value, this.isValid);
+        this.props.onAccept(this.inputRef.value, this.isValid);
         this.accepted = true;
     };
 
@@ -70,6 +70,7 @@ class BetterInput extends React.Component {
             this.value = this.props.value || '';
             this.inputRef.blur();
         }
+        if (this.props.onKeyDown) this.props.onKeyDown(e);
     };
 
     cancel() {
@@ -79,6 +80,7 @@ class BetterInput extends React.Component {
     setRef = (ref) => {
         if (ref) {
             this.inputRef = ref;
+            if (this.props.innerRef) this.props.innerRef(ref);
         }
     }
 

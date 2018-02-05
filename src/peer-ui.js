@@ -2,6 +2,7 @@
 module.exports.Button = require('~/ui-library/Button');
 module.exports.Checkbox = require('~/ui-library/Checkbox');
 module.exports.Dropdown = require('~/ui-library/Dropdown');
+module.exports.Input = require('~/ui-library/Input');
 module.exports.RadioButtons = require('~/ui-library/RadioButtons');
 module.exports.Switch = require('~/ui-library/Switch');
 

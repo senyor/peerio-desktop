@@ -27,12 +27,6 @@
         @extend %flex-shrink-0;
         margin-left: auto;
         font-weight: $font-weight-semibold;
-
-        // so that the menu icon appears on the right side of the label.
-        .rt-menu-menuItem .rt-menu-icon {
-          order: 2;
-          text-align: right;
-        }
       }
     }
 
@@ -55,24 +49,6 @@
 
       .chip-label {
         max-width: 100%;
-      }
-
-      .rt-button-button {
-        margin: 6px 0;
-      }
-
-      .rt-input-input {
-        @extend %flex-row;
-        @extend %flex-shrink-1;
-        @extend %flex-grow-1;
-        width: auto;
-        padding: 0;
-        margin-top: 0;
-
-        input {
-          padding: 0;
-          border-width: 0;
-        }
       }
     }
 

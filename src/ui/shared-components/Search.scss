@@ -8,9 +8,8 @@
   border: 1px solid $input-border;
   border-radius: 8px;
 
-  .rt-input-input {
-    height: 36px;
-    margin: 0;
+  .p-input {
+    padding-right: $padding-small;
   }
 
   input {
@@ -27,13 +26,4 @@
   button {
     line-height: 34px; // takes into account the borders.
   }
-  // .rt-input-input,
-  // input {
-  //   margin-top: 0;
-  //   height: 36px;
-  // }
-  //
-  // .rt-input-input {
-  //   padding: 0;
-  // }
 }

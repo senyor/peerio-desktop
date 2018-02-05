@@ -18,7 +18,7 @@ const T = require('~/ui/shared-components/T');
     }
     render() {
         return (
-            <div className="auto-sign-in rt-light-theme" >
+            <div className="auto-sign-in" >
                 <div className="content">
                     <img alt="peerio" className="logo" src="static/img/logo-white.png" />
                     <div className="display-2">{t('title_enableAutomatic')}</div>

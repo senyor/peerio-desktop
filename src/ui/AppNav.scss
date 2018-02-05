@@ -25,10 +25,6 @@
     height: 80px;
     width: 80px;
 
-    .rt-menu-active {
-      min-width: 248px !important;
-    }
-
     .avatar-notify::before {
       @extend %notify;
       right: 20px !important;
@@ -42,22 +38,5 @@
         right: 200px;
       }
     }
-
-    .rt-menu-iconMenu {
-      position: absolute;
-      z-index: 2;
-
-      > .rt-button-button {
-        height: 40px;
-        width: 40px;
-        background: transparent;
-        border-radius: 40px;
-      }
-    }
-  }
-
-  // turns off ripple for menu icon buttons
-  .rt-ripple-ripple {
-    background-color: transparent;
   }
 }

@@ -113,10 +113,6 @@ class ChatView extends React.Component {
         this.chatNameEditorVisible = false;
     };
 
-    chatNameEditorRef = ref => {
-        if (ref) ref.nameInput.focus();
-    };
-
     postJitsiLink = () => {
         const jitsiLink = chatStore.generateJitsiUrl();
         this.selfNewMessageCounter++;
@@ -134,7 +130,7 @@ class ChatView extends React.Component {
                             this.chatNameEditorVisible
                                 ? <ChatNameEditor showLabel={false} className="name-editor"
                                     readOnly={!chat.canIAdmin}
-                                    onBlur={this.hideChatNameEditor} ref={this.chatNameEditorRef} />
+                                    onBlur={this.hideChatNameEditor} />
                                 : <div className="name-editor-inner">
                                     {chat.canIAdmin && chat.isChannel ? <MaterialIcon icon="edit" /> : null}
                                     <div className="title-content">

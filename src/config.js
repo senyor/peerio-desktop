@@ -63,7 +63,7 @@ if (isDevEnv) {
 // FOR DEV ENVIRONMENT ONLY
 // DEV MACHINE OVERRIDES SOCKET SERVER VALUE WITH THIS
 if (isDevEnv && process.env.PEERIO_STAGING_SOCKET_SERVER) {
-    cfg.socketServerUrl = 'wss://treetrunks.peerio.com'; // process.env.PEERIO_STAGING_SOCKET_SERVER;
+    cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
 }
 
 // --- DIAGNOSTIC STARTUP LOG

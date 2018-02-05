@@ -45,6 +45,7 @@ class Menu extends React.Component {
     };
 
     menuButtonRef;
+    menuContentRef;
     scrollContainer;
 
     @action.bound setMenuButtonRef(ref) {
@@ -55,7 +56,11 @@ class Menu extends React.Component {
     }
 
     @action.bound setMenuContentRef(ref) {
-        if (ref) this.menuVisible = true;
+        if (ref) {
+            this.menuVisible = true;
+            this.menuContentRef = ref;
+            ref.focus();
+        }
     }
 
     @action.bound handleMenuClick() {
@@ -69,15 +74,61 @@ class Menu extends React.Component {
         this.menuActive = true;
 
         window.addEventListener('click', this.hideMenu, true);
-        window.addEventListener('keyup', this.handleKeyUp);
 
         if (this.scrollContainer) {
             this.scrollContainer.addEventListener('scroll', this.hideMenu);
         }
     }
 
-    @action.bound handleKeyUp(ev) {
-        if (ev.keyCode === 27) this.hideMenu();
+    @action.bound handleKeyDown(ev) {
+        const menu = this.menuContentRef;
+        if (!menu) return;
+        const activeElement = document.activeElement;
+
+        function findFocusableSibling(element, up) {
+            while ((element = up ? element.previousSibling : element.nextSibling)) {
+                if (element.tabIndex >= 0 && !element.disabled) {
+                    return element;
+                }
+            }
+            return null;
+        }
+
+        function moveFocus(up) {
+            let element;
+            if (!activeElement || !menu.contains(activeElement) || menu === activeElement) {
+                element = menu.children[up ? menu.children.length - 1 : 0];
+                if (!(element.tabIndex >= 0) || element.disabled) {
+                    element = findFocusableSibling(element, up);
+                }
+            } else {
+                element = findFocusableSibling(activeElement, up);
+            }
+            if (element) {
+                element.focus();
+            }
+        }
+
+        switch (ev.key) {
+            case 'ArrowUp': {
+                moveFocus(true);
+                ev.stopPropagation();
+                ev.preventDefault();
+                break;
+            }
+            case 'ArrowDown': {
+                moveFocus(false);
+                ev.stopPropagation();
+                ev.preventDefault();
+                break;
+            }
+            case 'Enter':
+            case 'Escape':
+                this.hideMenu()
+                break;
+            default:
+            // nothing
+        }
     }
 
     @action.bound hideMenu() {
@@ -89,7 +140,6 @@ class Menu extends React.Component {
         }, 250);
 
         window.removeEventListener('click', this.hideMenu, true);
-        window.removeEventListener('keyup', this.handleKeyUp);
 
         if (this.scrollContainer) {
             this.scrollContainer.removeEventListener('scroll', this.hideMenu);
@@ -144,13 +194,15 @@ class Menu extends React.Component {
         const menuContent = (
             <div
                 key="p-menu-content"
+                tabIndex="0"
+                onKeyDown={this.handleKeyDown}
                 className={css(
                     'p-menu-content',
                     { visible: this.menuVisible }
                 )}
                 style={this.style}
                 ref={this.setMenuContentRef}
-                {...getDataProps(this.props)}
+                {...getDataProps(this.props) }
             >
                 {this.props.children}
             </div>

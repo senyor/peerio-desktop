@@ -1,4 +1,5 @@
 const React = require('react');
+const { action } = require('mobx');
 const { observer } = require('mobx-react');
 
 const css = require('classnames');
@@ -22,11 +23,19 @@ const MaterialIcon = require('./MaterialIcon');
 
 @observer
 class MenuItem extends React.Component {
+    @action.bound
+    handleKeyDown(ev) {
+        if (ev.key === 'Enter' && this.props.onClick) {
+            this.props.onClick(ev);
+        }
+    }
+
     render() {
         const { value, icon, customIcon, caption, className, onClick } = this.props;
         return (
             <div
                 value={value}
+                tabIndex={this.props.disabled ? -1 : 0}
                 className={css(
                     'p-menu-item',
                     className,
@@ -36,6 +45,7 @@ class MenuItem extends React.Component {
                     }
                 )}
                 onClick={onClick}
+                onKeyDown={this.handleKeyDown}
             >
                 {icon
                     ? <MaterialIcon

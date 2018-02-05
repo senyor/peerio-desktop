@@ -22,6 +22,10 @@
   background-color: $background-root;
   border-radius: 4px;
 
+  &:focus {
+    outline: none;
+  }
+
   &.visible {
     max-height: 370px; // TODO: hardcoded value based on AppNav menu, calculate instead?
     max-width: 248px;
@@ -43,6 +47,11 @@
 
     &:hover {
       background-color: #eee;
+    }
+
+    &:focus {
+      outline: none;
+      background-color: #ddd; /* TODO: selected color */
     }
   }
 

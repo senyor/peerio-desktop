@@ -54,7 +54,7 @@ class NewContact extends React.Component {
         this.suggestInviteEmail = '';
         this.notFound = false;
         this.legacyContactError = false;
-        const c = contactStore.getContact(this.query);
+        const c = contactStore.getContactAndSave(this.query);
         when(() => !c.loading, () => {
             if (c.notFound) {
                 this.notFound = true;
@@ -67,7 +67,6 @@ class NewContact extends React.Component {
                 }
             } else {
                 this.query = '';
-                contactStore.addContact(c);
             }
             this.waiting = false;
         });

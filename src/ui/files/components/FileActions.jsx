@@ -1,10 +1,11 @@
 const React = require('react');
-const { IconMenu, MenuItem, MenuDivider, ProgressBar } = require('~/react-toolbox');
-const css = require('classnames');
+const { observer } = require('mobx-react');
+const { Divider, Menu, MenuItem } = require('~/peer-ui');
 const { t } = require('peerio-translator');
+const { getDataProps } = require('~/helpers/dom');
 
-
-function FileActions(props) {
+@observer
+class FileActions extends React.Component {
     /* available props
         shareable: is file allowed to be shared
         shareDisabled: file download in progress, disable share button
@@ -13,47 +14,55 @@ function FileActions(props) {
         renameable: is file allowed to be renamed
         deleteable: is file not allowed to be deleted
     */
-    return (
-        <div className="item-actions" onClick={props.onRowClick}>
-            <IconMenu icon="more_vert">
-                {props.downloadDisabled
-                    ? <ProgressBar type="linear" mode="indeterminate" multicolor className="processing-file" />
-                    : null }
-                {props.shareable && <MenuItem caption={t('button_share')}
-                    icon="reply"
-                    onClick={props.onShare}
-                    className={css('reverse-icon', { disabled: props.shareDisabled })} />
+
+    render() {
+        return (
+            <Menu
+                className="item-actions"
+                icon="more_vert"
+                position="bottom-right"
+                onClick={this.props.onMenuClick}
+                {...getDataProps(this.props)}
+            >
+                {this.props.shareable
+                    ? <MenuItem caption={t('button_share')}
+                        icon="reply"
+                        onClick={this.props.onShare}
+                        className="reverse-icon"
+                        disabled={this.props.shareDisabled}
+                    />
+                    : null
                 }
                 <MenuItem caption={t('title_download')}
                     icon="file_download"
-                    onClick={props.onDownload}
-                    className={css({ disabled: props.downloadDisabled })} />
-                {props.moveable && <MenuItem caption={t('button_move')}
-                    onClick={props.onMove}
-                    className="custom-icon button-move" />
+                    onClick={this.props.onDownload}
+                    disabled={this.props.downloadDisabled}
+                />
+                {this.props.moveable
+                    ? <MenuItem caption={t('button_move')}
+                        customIcon="move"
+                        onClick={this.props.onMove}
+                    />
+                    : null
                 }
-                {props.renameable && <MenuItem caption={t('button_rename')}
-                    icon="mode_edit"
-                    onClick={props.onRename} />
+                {this.props.renameable
+                    ? <MenuItem caption={t('button_rename')}
+                        icon="mode_edit"
+                        onClick={this.props.onRename}
+                    />
+                    : null
                 }
-                {/* SHARE VIA MAIL ACTION no mail so it's commented out. */}
-                {/* <MenuItem caption={t('button_shareViaMail')}
-                        icon="email"
-                        onClick={props.onShare}
-                        className={css({ disabled: props.shareDisabled })} /> */}
-                {/* <TooltipDiv */}
-                {/* tooltip="Add to folder" */}
-                {/* tooltipPosition="top" */}
-                {/* icon="create_new_folder" */}
-                {/* onClick={noop} */}
-                {/* className={css({ disabled: props.newFolderDisabled })} /> */}
-                {props.deleteable && <MenuDivider />}
-                {props.deleteable && <MenuItem caption={t('button_delete')}
-                    icon="delete"
-                    onClick={props.onDelete} />}
-            </IconMenu>
-        </div>
-    );
+                {this.props.deleteable ? <Divider /> : null }
+                {this.props.deleteable
+                    ? <MenuItem caption={t('button_delete')}
+                        icon="delete"
+                        onClick={this.props.onDelete}
+                    />
+                    : null
+                }
+            </Menu>
+        );
+    }
 }
 
 module.exports = FileActions;

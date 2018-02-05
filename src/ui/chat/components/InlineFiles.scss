@@ -87,7 +87,14 @@
     border-radius: 2px;
 
     .inline-files-topbar {
+      position: relative;
       padding: 0 $padding-small 0 $padding-default;
+
+      .p-progress-bar {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+      }
     }
 
     .buttons-container {
@@ -160,11 +167,21 @@
     color: $text-dark-hint;
   }
 
-  .unknown-file-progress-bar.rt-progress_bar-linear.rt-progress_bar-indeterminate {
-    position: relative;
-    width: 100%;
-    left: auto;
-    margin: 0 $margin-default;
+  .p-progress-bar {
+    &.unknown-file-progress-bar {
+      position: relative;
+      width: 100%;
+      left: auto;
+      margin: 0 $margin-default;
+    }
+
+    &.determinate {
+      position: absolute;
+      width: auto;
+      left: 24px;
+      right: 0;
+      bottom: 0;
+    }
   }
 
   .invalid-file {
@@ -179,20 +196,6 @@
     .material-icons {
       margin-right: $padding-tiny;
       color: rgba($red-error, .6);
-    }
-  }
-
-  .rt-progress_bar-linear.rt-progress_bar-indeterminate {
-    position: absolute;
-    width: auto;
-    left: 24px;
-    right: 0;
-    bottom: 0;
-  }
-
-  .item-actions {
-    .rt-menu-caption {
-      font-weight: $font-weight-regular;
     }
   }
 

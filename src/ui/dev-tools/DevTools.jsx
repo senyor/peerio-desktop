@@ -1,6 +1,5 @@
 const React = require('react');
-const { MaterialIcon } = require('~/peer-ui');
-const { AppBar, Menu, MenuItem, MenuDivider, Chip } = require('~/react-toolbox');
+const { Chip, Divider, MaterialIcon, Menu, MenuItem } = require('~/peer-ui');
 const { User, socket, util } = require('peerio-icebear');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
@@ -32,13 +31,11 @@ class DevTools extends React.Component {
         return (
             <div className="dev-tools-root">
                 <link key="dev_tools_style" rel="stylesheet" href="./dev-tools-style.css" />
-                <AppBar fixed leftIcon="menu" rightIcon="close" title="Developer tools"
-                    onLeftIconClick={this.toggleMenu} onRightIconClick={this.quit}>
-                    <Menu className="menu" position="topLeft" menuRipple active={this.menuActive}
-                        onHide={this.hideMenu}>
+                <div className="top-bar">
+                    <Menu icon="menu" className="menu" position="top-left">
                         <MenuItem icon="dashboard" caption="Dashboard" onClick={this.gotoDashboard} />
                         <MenuItem icon="grid_on" caption="Keg Editor" onClick={this.gotoKegEditor} />
-                        <MenuDivider />
+                        <Divider />
                         <MenuItem icon="close" caption="Close" onClick={this.quit} />
                     </Menu>
                     <MaterialIcon icon="file_upload" /> {util.formatBytes(socket.bytesSent)}&nbsp;&nbsp;&nbsp;
@@ -55,7 +52,7 @@ class DevTools extends React.Component {
                             : <Chip className="bad-bg">not authenticated</Chip>
                     }
                     <div className="separator" />
-                </AppBar>
+                </div>
                 {this.props.children}
             </div>
         );

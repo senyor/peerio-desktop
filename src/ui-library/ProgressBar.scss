@@ -1,0 +1,225 @@
+.p-progress-bar {
+  display: flex;
+  height: 4px;
+  width: 100%;
+
+  // Linear, adapted from https://codepen.io/holdencreative/pen/vEVbwv
+  .progress-bar {
+    display: block;
+    position: relative;
+    height: 4px;
+    width: 100%;
+    overflow: hidden;
+    background-color: #eee;
+
+    .determinate {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      animation: pulse 1.5s linear infinite;
+      transition: width 200ms;
+      background-color: $blue;
+    }
+
+    .indeterminate {
+      background-color: $blue;
+
+      &::before {
+        will-change: left, right;
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+
+        animation:
+          indeterminate 2.1s cubic-bezier(.65, .815, .735, .395) infinite,
+          pulse 1.5s linear infinite;
+        background-color: inherit;
+      }
+
+      &::after {
+        will-change: left, right;
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+
+        animation:
+          indeterminate-short 2.1s cubic-bezier(.165, .84, .44, 1) infinite,
+          pulse 1.5s linear infinite;
+        animation-delay: 1.15s;
+        background-color: inherit;
+      }
+
+      &.multicolor {
+        animation: backgroundColors (6s) ease-in-out infinite;
+      }
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: .4; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes indeterminate {
+      0% {
+        left: -35%;
+        right: 100%;
+      }
+
+      60% {
+        left: 100%;
+        right: -90%;
+      }
+
+      100% {
+        left: 100%;
+        right: -90%;
+      }
+    }
+
+    @keyframes indeterminate-short {
+      0% {
+        left: -200%;
+        right: 100%;
+      }
+
+      60% {
+        left: 107%;
+        right: -8%;
+      }
+
+      100% {
+        left: 107%;
+        right: -8%;
+      }
+    }
+
+    @keyframes backgroundColors {
+      0% { background-color: #4285f4; }
+      25% { background-color: #de3e35; }
+      50% { background-color: #f7c223; }
+      75% { background-color: #1b9a59; }
+      100% { background-color: #4285f4; }
+    }
+  }
+
+  // Circular, adapted from https://codepen.io/johnlouie04/pen/LEoOGV
+  &.circular {
+    /*
+      Spinner itself is actually a solid circle with other things occluding it to make it look like a line drawn in a circle.
+      This causes a permanent 1px outline (default blue) around the outside of the spinner. Bad.
+      In the original code, a white 2px border is used to occlude this outline. However, to allow background-colors to inherit properly, we can't use this.
+      So, instead we use this clip-path to cut off the outline.
+    */
+    clip-path: circle(48% at 50% 50%);
+
+    // Default dimensions of spinner. Can be scaled to any size, but *must* be square
+    height: 60px;
+    width: 60px;
+    background-color: $background-root;
+    border-radius: 100%;
+  }
+
+  .progress-spinner {
+    $spinner-width: 5px;
+
+    display: flex;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: inherit;
+    border-radius: 100%;
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: calc(100% - #{$spinner-width * 2});
+      width: calc(100% - #{$spinner-width * 2});
+      left: $spinner-width;
+      top: $spinner-width;
+      background-color: inherit;
+      border-radius: 50%;
+    }
+
+    .rotator {
+      width: 100%;
+      overflow: hidden;
+      animation: rotate 2000ms infinite linear;
+      background-color: inherit;
+      border-radius: 100%;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: $blue;
+        border-radius: 100%;
+      }
+    }
+
+    // Multicolor
+    &.multicolor .rotator::before {
+      animation: backgroundColors (6s) ease-in-out infinite;
+    }
+
+    .inner-spin {
+      display: flex;
+      height: 100%;
+      width: 50%;
+
+      animation: rotate-left 2500ms infinite cubic-bezier(.445, .05, .55, .95);
+      transform-origin: 100% 50%;
+
+      background-color: inherit;
+
+      &:last-child {
+        margin-top: -100%;
+        float: right;
+        animation: rotate-right 2500ms infinite cubic-bezier(.445, .05, .55, .95);
+        transform-origin: 0 50%;
+      }
+    }
+
+    @keyframes rotate-left {
+      60%,
+      75%,
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes rotate-right {
+      0%,
+      25%,
+      45% {
+        transform: rotate(0);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes colors {
+      0% { stroke: #4285f4; }
+      25% { stroke: #de3e35; }
+      50% { stroke: #f7c223; }
+      75% { stroke: #1b9a59; }
+      100% { stroke: #4285f4; }
+    }
+  }
+}

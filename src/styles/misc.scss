@@ -72,8 +72,14 @@ ul {
 .selectable,
 %selectable {
   -webkit-user-drag: auto;
+  cursor: text;
   -webkit-user-select: auto;
   user-select: auto;
+}
+
+// Make things scrollable
+.scrollable {
+  overflow-y: auto;
 }
 
 // BUTTONS

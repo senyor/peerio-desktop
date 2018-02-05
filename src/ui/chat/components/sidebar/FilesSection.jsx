@@ -1,14 +1,13 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { List, ListItem } = require('~/peer-ui');
-const { IconMenu, MenuItem } = require('~/react-toolbox');
-const { chatStore, fileStore, User } = require('peerio-icebear');
+const { List, ListItem, Menu, MenuItem } = require('~/peer-ui');
+const { chatStore, fileStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const SideBarSection = require('./SideBarSection');
-const { downloadFile } = require('~/helpers/file');
-const { pickLocalFiles } = require('~/helpers/file');
+const { downloadFile, pickLocalFiles } = require('~/helpers/file');
+const moment = require('moment');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 
 @observer
@@ -44,25 +43,38 @@ class FilesSection extends React.Component {
         });
     };
 
-    get menu() {
+    menu(fileId) {
         return (
-            <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple
-                onClick={this.stopPropagation}>
-                <MenuItem caption={t('title_download')} icon="file_download" onClick={this.download} />
-                <MenuItem caption={t('button_share')} icon="reply" onClick={this.share} className="reverse-icon" />
-            </IconMenu>
+            <Menu
+                icon="more_vert"
+                position="bottom-right"
+                onClick={this.stopPropagation}
+                data-fileid={fileId}
+            >
+                <MenuItem
+                    caption={t('title_download')}
+                    icon="file_download"
+                    onClick={this.download}
+                />
+                <MenuItem
+                    caption={t('button_share')}
+                    icon="reply"
+                    onClick={this.share}
+                />
+            </Menu>
         );
     }
 
     renderFileItem = id => {
         const file = fileStore.getById(id);
         if (!file) return null;
+
         return (
             <ListItem key={id} data-fileid={id}
                 className="sidebar-file-container"
                 onClick={this.download}
-                leftContent={<FileSpriteIcon type={file.iconType} size="medium" />}
-                rightContent={this.menu}
+                leftContent={<FileSpriteIcon type={file.iconType} size="large" />}
+                rightContent={this.menu(id)}
             >
                 <div className="meta">
                     <div className="file-name-container">
@@ -71,14 +83,14 @@ class FilesSection extends React.Component {
                         </span>
                         <span className="file-ext">.{file.ext}</span>
                     </div>
-                    <span className="file-shared-by">
-                        {file.fileOwner === User.current.username
-                            ? <T k="title_fileFilterShared" />
-                            : <T k="title_fileSharedByUser">
-                                {{ user: file.fileOwner }}
-                            </T>
-                        }
-                    </span>
+                    <div className="file-shared-by">{file.fileOwner}</div>
+                    <div className="file-shared-date">
+                        {moment(file.uploadedAt).format(
+                            Date.now() - file.uploadedAt > 24 * 60 * 60 * 1000
+                                ? 'll'
+                                : 'll [|] h:mmA'
+                        )}
+                    </div>
                 </div>
             </ListItem>
         );
@@ -94,7 +106,7 @@ class FilesSection extends React.Component {
         };
         return (
             <SideBarSection title={t('title_recentFiles')} onToggle={this.props.onToggle} open={this.props.open}>
-                <div className="member-list">
+                <div className="member-list scrollable">
                     <List className="sidebar-file-list" clickable>
                         {chat.recentFiles.map(this.renderFileItem)}
                     </List>

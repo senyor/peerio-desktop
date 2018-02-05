@@ -7,41 +7,58 @@
   flex-direction: column;
   max-width: 100%;
 
-  .content {
-    width: 100%;
-  }
+  .sidebar-file-container {
+    position: relative;
+    height: 80px;
 
-  .file-sprite-icon {
-    min-width: 32px;
-  }
+    .left {
+      min-width: 48px;
+    }
 
-  .meta {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
+    .content {
+      width: 100%;
 
-  .file-name-container {
-    display: flex;
-  }
+      .meta {
+        @extend %hint-error-label;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
 
-  .file-name {
-    margin-right: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+      .file-name-container {
+        display: flex;
+      }
 
-  .file-ext {
-    margin-right: auto;
-  }
+      .file-name {
+        margin-right: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
-  .file-shared-by {
-    @extend %hint-error-label;
-    color: $text-dark-hint;
-  }
+      .file-ext {
+        margin-right: auto;
+      }
 
-  .rt-menu-iconMenu {
-    margin-left: $margin-small;
+      .file-shared-by,
+      .file-shared-date {
+        color: $text-dark-hint;
+      }
+    }
+
+    .right {
+      margin-left: $margin-small;
+    }
+
+    // Partial border-bottom
+    &:not(:last-of-type)::after {
+      content: ' ';
+      position: absolute;
+      height: 1px;
+      width: calc(100% - 80px); // full width - 48px icon width - 2x $margin-default
+      right: 0;
+      bottom: 0;
+      background-color: $divider-dark;
+    }
   }
 }

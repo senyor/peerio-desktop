@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog } = require('~/peer-ui');
-const { Switch } = require('~/react-toolbox');
+const { Button, Dialog, Switch } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 const { User } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
@@ -13,18 +12,18 @@ const config = require('~/config');
 class Account extends React.Component {
     @observable deleteAccountDialogActive = false;
 
-    onPromoSubscriptionChanged = (value) => {
-        User.current.settings.subscribeToPromoEmails = value;
+    onPromoSubscriptionChanged = (ev) => {
+        User.current.settings.subscribeToPromoEmails = ev.target.checked;
         User.current.saveSettings();
     }
 
-    onErrorTrackingChanged = (value) => {
-        User.current.settings.errorTracking = value;
+    onErrorTrackingChanged = (ev) => {
+        User.current.settings.errorTracking = ev.target.checked;
         User.current.saveSettings();
     }
 
-    onDataCollectionChanged = (value) => {
-        User.current.settings.dataCollection = value;
+    onDataCollectionChanged = (ev) => {
+        User.current.settings.dataCollection = ev.target.checked;
         User.current.saveSettings();
     }
 

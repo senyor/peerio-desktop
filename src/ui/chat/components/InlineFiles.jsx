@@ -1,7 +1,7 @@
 const React = require('react');
 const { fileStore, User } = require('peerio-icebear');
-const { Button, Dialog, MaterialIcon, RadioButtons } = require('~/peer-ui');
-const { ProgressBar } = require('~/react-toolbox');
+const { Button, Dialog, MaterialIcon, ProgressBar, RadioButtons } = require('~/peer-ui');
+const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const { downloadFile } = require('~/helpers/file');
 const { observable, reaction, when } = require('mobx');
 const { observer } = require('mobx-react');
@@ -271,9 +271,7 @@ class InlineFile extends React.Component {
                             <div className="container">
                                 <div className="clickable file-name-container" onClick={this.props.onDownload}>
                                     <div className="file-icon">
-                                        {file.isImage &&
-                                            <MaterialIcon icon="image" />
-                                        }
+                                        <FileSpriteIcon type={file.iconType} size="small" />
                                     </div>
                                     <div className="file-name">
                                         {file.nameWithoutExtension}
@@ -293,7 +291,9 @@ class InlineFile extends React.Component {
                                     shareable shareDisabled={!file.readyForDownload || !file.canShare}
                                     newFolderDisabled
                                     deleteable={file.fileOwner === User.current.username}
-                                    {...this.props} />
+                                    data-fileid={this.props.id}
+                                    {...this.props}
+                                />
                             </div>
                             {file.deleted ? <span>File deleted</span> : null}
                             {!file.deleted && !file.cachingFailed && file.downloading
@@ -392,7 +392,10 @@ class InlineFiles extends React.Component {
                             onDownload={this.download}
                             onDelete={this.deleteFile}
                             startTimer={this.startTimer}
-                            onImageLoaded={this.props.onImageLoaded} {...this.props} />)
+                            onImageLoaded={this.props.onImageLoaded}
+                            onMenuClick={this.handleMenuClick}
+                            {...this.props}
+                        />)
                     )
                 }
             </div>

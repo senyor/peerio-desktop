@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog, MaterialIcon } = require('~/peer-ui');
-const { Switch, ProgressBar } = require('~/react-toolbox');
+const { Button, Dialog, MaterialIcon, Switch, ProgressBar } = require('~/peer-ui');
 const { User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const autologin = require('~/helpers/autologin');
@@ -62,8 +61,8 @@ class SecuritySettings extends React.Component {
         await User.current.setAccountKeyBackedUp();
     };
 
-    onToggleAutologin(enable) {
-        enable ? autologin.enable() : autologin.disable();
+    onToggleAutologin(ev) {
+        ev.target.checked ? autologin.enable() : autologin.disable();
     }
 
     toggleQRCode = () => {

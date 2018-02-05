@@ -1,7 +1,6 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { Avatar, Button, List, ListItem, Tooltip } = require('~/peer-ui');
-const { ProgressBar } = require('~/react-toolbox');
+const { Avatar, Button, List, ListItem, ProgressBar, Tooltip } = require('~/peer-ui');
 const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
 const { chatStore, User, systemMessages, chatInviteStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');

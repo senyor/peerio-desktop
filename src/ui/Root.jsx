@@ -5,8 +5,7 @@ const config = require('~/config');
 const { setStringReplacement } = require('peerio-translator');
 const theme = require('~/react-toolbox/theme.js');
 const ThemeProvider = require('react-toolbox/lib/ThemeProvider').default;
-const { Button } = require('~/peer-ui');
-const { ProgressBar } = require('~/react-toolbox');
+const { Button, ProgressBar } = require('~/peer-ui');
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
 const { socket, clientApp, warnings } = require('peerio-icebear');
@@ -87,8 +86,6 @@ class Root extends React.Component {
             <ThemeProvider theme={theme}>
                 <div>
                     <div className={`status-bar ${this.showOfflineNotification ? 'visible' : ''}`}>
-
-                        {/* don't let invisible svg to always run */}
                         {this.showOfflineNotification ? <ProgressBar type="circular" mode="indeterminate" /> : null}
                         #{socket.reconnectAttempt}&nbsp;{t('error_connecting')}&nbsp;
                         {appState.isOnline && this.renderReconnectSection()}

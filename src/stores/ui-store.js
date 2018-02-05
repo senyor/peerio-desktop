@@ -47,7 +47,7 @@ class UIStore {
         externalContentEnabled: false,
         externalContentJustForFavs: false,
         peerioContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
-        peerioContentEnabled: true
+        peerioContentEnabled: false
     };
 
     // anything you add here will be stored with 'pref_' prefix in shared (system) tinydb

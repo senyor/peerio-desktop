@@ -1,23 +1,25 @@
 .message-view {
-  .send-error-container {
-    @extend %flex-row;
-    @extend %flex-align-center;
+  .send-error-menu {
+    margin-left: $margin-default;
 
-    cursor: pointer;
-    margin: $margin-tiny 0 0 $margin-default;
-
-    .send-error-menu-container {
-      // we need position: relative so that the react-toolbox <Menu>
-      // component is positioned relative to this container.
-      position: relative;
+    .p-button:hover {
+      background-color: inherit;
     }
 
-    .send-error-icon {
+    .send-error-text-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .material-icons {
       color: $red-error;
     }
 
     .send-error-message {
       @extend %hint-error-label;
+      margin-left: $margin-tiny;
+      font-weight: $font-weight-regular;
+      text-transform: none;
       color: $red-error;
     }
   }

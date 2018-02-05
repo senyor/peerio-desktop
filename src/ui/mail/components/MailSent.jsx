@@ -2,8 +2,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { Button, Dialog } = require('~/peer-ui');
-const { IconMenu, MenuDivider, MenuItem } = require('~/react-toolbox');
+const { Button, Dialog, Divider, Menu, MenuItem } = require('~/peer-ui');
 const MailSentSidebar = require('./MailSentSidebar');
 const InlineFiles = require('../../chat/components/InlineFiles');
 const { fileStore, warnings, ghostStore } = require('peerio-icebear');
@@ -55,10 +54,10 @@ class MailSent extends React.Component {
                             {this.props.ghost.files.length ?
                                 <div className="attached-files">
                                     {this.props.ghost.files.length}
-                                    <IconMenu icon="attachment">
+                                    <Menu icon="attachment">
                                         <MenuItem caption="Download all"
                                             icon="file_download" />
-                                        <MenuDivider />
+                                        <Divider />
                                         {this.props.ghost.files.map(f => {
                                             const file = fileStore.getById(f);
                                             return (
@@ -66,7 +65,7 @@ class MailSent extends React.Component {
                                                     caption={file.name}
                                                     icon="file_download" />);
                                         })}
-                                    </IconMenu>
+                                    </Menu>
                                 </div> : null
                             }
                         </div>

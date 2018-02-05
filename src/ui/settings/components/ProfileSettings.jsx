@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, List, ListItem, MaterialIcon } = require('~/peer-ui');
-const { ProgressBar } = require('~/react-toolbox');
+const { Button, List, ListItem, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const { User, contactStore, validation } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -120,7 +119,7 @@ class Profile extends React.Component {
             </section>);
         }
         return (
-            <section className="settings-container-profile">
+            <div className="settings-container-profile">
                 <div>
                     <div className="input-row">
                         <BetterInput onAccept={this.saveFirstName}
@@ -232,7 +231,7 @@ class Profile extends React.Component {
                         </div>
                         : null}
                 </div>
-            </section>
+            </div>
         );
     }
 }

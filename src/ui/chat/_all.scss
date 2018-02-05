@@ -76,7 +76,7 @@
       }
     }
 
-    .rt-progress_bar-circular {
+    .p-progress-bar.circular {
       height: 24px;
       width: 24px;
     }
@@ -178,7 +178,7 @@
     @extend %flex-align-center;
     height: 20px;
 
-    .rt-progress_bar-circular {
+    .p-progress-bar {
       height: 16px;
       width: 16px;
     }

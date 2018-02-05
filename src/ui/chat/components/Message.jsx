@@ -6,8 +6,7 @@ const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { systemMessages, User } = require('peerio-icebear');
-const { Avatar, Button, MaterialIcon } = require('~/peer-ui');
-const { Menu, MenuItem } = require('~/react-toolbox');
+const { Avatar, Button, MaterialIcon, Menu, MenuItem } = require('~/peer-ui');
 const { time } = require('~/helpers/formatter');
 const { chatSchema, Renderer } = require('~/helpers/chat/prosemirror/chat-schema');
 const urls = require('~/config').translator.urlMap;
@@ -260,28 +259,24 @@ class Message extends React.Component {
                         {/* m.inlineImages.map(url => (
                             <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />)) */}
                         {m.sendError ?
-                            <div
-                                className="send-error-container"
-                                onClick={action(() => { this.errorMenuVisible = true; })}>
-                                <div className="send-error-menu-container">
-                                    <Menu
-                                        position="auto"
-                                        ripple
-                                        active={this.errorMenuVisible}
-                                        onHide={action(() => { this.errorMenuVisible = false; })}>
-                                        <MenuItem
-                                            caption={t('button_retry')}
-                                            onClick={() => m.send()} />
-                                        <MenuItem
-                                            caption={t('button_delete')}
-                                            onClick={() => this.props.chat.removeMessage(m)} />
-                                    </Menu>
-                                </div>
-                                <MaterialIcon icon="error" className="send-error-icon" />
-                                <div className="send-error-message">
-                                    {t('error_messageSendFail')}
-                                </div>
-                            </div>
+                            <Menu
+                                className="send-error-menu"
+                                customButton={
+                                    <div className="send-error-text-container">
+                                        <MaterialIcon icon="error" />
+                                        <span className="send-error-message">
+                                            {t('error_messageSendFail')}
+                                        </span>
+                                    </div>
+                                }
+                                position="auto">
+                                <MenuItem
+                                    caption={t('button_retry')}
+                                    onClick={() => m.send()} />
+                                <MenuItem
+                                    caption={t('button_delete')}
+                                    onClick={() => this.props.chat.removeMessage(m)} />
+                            </Menu>
                             : null
                         }
                     </div>

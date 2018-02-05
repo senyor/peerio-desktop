@@ -57,23 +57,23 @@ class Button extends React.Component {
             )
         );
 
-        const buttonContent = (
-            <span>
-                {this.props.icon && <MaterialIcon icon={this.props.icon} />}
-                {this.props.customIcon && <CustomIcon icon={this.props.customIcon} />}
-
-                <span>{this.props.label || this.props.children}</span>
-
-                {this.props.tooltip
-                    ? <Tooltip
-                        text={this.props.tooltip}
-                        position={this.props.tooltipPosition || 'top'}
-                        size={this.props.tooltipSize}
-                    />
-                    : null
-                }
-            </span>
-        );
+        const buttonContent = [
+            (this.props.icon && <MaterialIcon key="material-icon" icon={this.props.icon} />),
+            (this.props.customIcon && <CustomIcon key="custom-icon" icon={this.props.customIcon} />),
+            (this.props.label || this.props.children
+                ? <span key="label" className="label">{this.props.label || this.props.children}</span>
+                : null
+            ),
+            (this.props.tooltip
+                ? <Tooltip
+                    key="tooltip"
+                    text={this.props.tooltip}
+                    position={this.props.tooltipPosition || 'top'}
+                    size={this.props.tooltipSize}
+                />
+                : null
+            )
+        ];
 
         if (this.props.href) {
             return (

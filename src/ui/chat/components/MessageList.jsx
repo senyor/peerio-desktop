@@ -1,8 +1,7 @@
 const React = require('react');
 const { reaction, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar } = require('~/peer-ui');
-const { ProgressBar } = require('~/react-toolbox');
+const { Avatar, ProgressBar } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const Message = require('./Message');
 const { chatStore, User, clientApp } = require('peerio-icebear');
@@ -229,7 +228,10 @@ class MessageList extends React.Component {
     render() {
         if (!chatStore.activeChat) return null;
         return (
-            <div className="messages-current" onScroll={this.handleScroll} ref={this.setContainerRef}>
+            <div className="messages-current scrollable"
+                onScroll={this.handleScroll}
+                ref={this.setContainerRef}
+            >
                 {this.renderChatStart()}
                 {chatStore.activeChat.loadingInitialPage
                     ? <ProgressBar type="circular" mode="indeterminate"

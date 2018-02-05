@@ -45,7 +45,9 @@ class Settings extends React.Component {
     ];
 
     ROUTES_MAP = this.buttons.reduce((map, button, index) => {
-        map[routerStore.ROUTES[button.route]] = index;
+        if (button) {
+            map[routerStore.ROUTES[button.route]] = index;
+        }
         return map;
     }, {});
 
@@ -53,6 +55,7 @@ class Settings extends React.Component {
     constructor() {
         super();
         this.buttons.forEach((button) => {
+            if (!button) return;
             const onClickFunction = this[`to${button.route[0].toUpperCase()}${button.route.slice(1)}`] = () => {
                 routerStore.navigateTo(routerStore.ROUTES[button.route]);
             };

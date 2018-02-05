@@ -122,6 +122,18 @@ class ChatView extends React.Component {
     // assumes active chat exists, don't render if it doesn't
     renderHeader() {
         const chat = chatStore.activeChat;
+        const participants = chat.participantUsernames;
+
+        let listMembers = participants[0];
+        for (let i = 1; i < participants.length; i++) {
+            if ((`${listMembers}, ${participants[i]}`).length < 100) {
+                listMembers += `, ${participants[i]}`;
+            } else {
+                listMembers += ' ...';
+                break;
+            }
+        }
+
         return (
             <div className="message-toolbar">
                 <div className="message-toolbar-inner" >
@@ -142,10 +154,10 @@ class ChatView extends React.Component {
                     <div className="meta-nav">
                         {chat.isChannel
                             ? <div className="member-count">
-                                <Button icon="person"
-                                    tooltip={t('title_Members')}
+                                <MaterialIcon icon="person"
+                                    tooltip={listMembers}
                                     tooltipPosition="bottom"
-                                    onClick={this.toggleSidebar} />
+                                />
                                 {chat.allParticipants.length || ''}
                             </div>
                             : (chat.changingFavState

@@ -100,6 +100,17 @@ if (process.platform === 'darwin') {
         {
             type: 'separator'
         },
+        // NOTE: if we support multiple accounts in one window,
+        // this can be removed in favour of account switcher
+        // that will trigger on Cmd+1, Cmd+2, etc.
+        {
+            label: 'Main Window',
+            accelerator: 'CmdOrCtrl+0',
+            click() { app.emit('activate'); }
+        },
+        {
+            type: 'separator'
+        },
         {
             label: 'Bring All to Front',
             role: 'front'

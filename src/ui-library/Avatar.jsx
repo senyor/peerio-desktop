@@ -12,7 +12,7 @@ const Tooltip = require('./Tooltip');
     PROPS           type        description
     ----------------------------------------
     className       string
-    size            string      tiny, small, medium (default), large
+    size            string      tiny, small, medium (default), large, full
     clickable       bool
     tooltip         bool
 

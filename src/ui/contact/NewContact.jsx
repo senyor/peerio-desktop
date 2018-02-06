@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable, action, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, MaterialIcon } = require('~/peer-ui');
-const { Input } = require('~/react-toolbox');
+const { Button, Input, MaterialIcon } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
@@ -54,7 +53,7 @@ class NewContact extends React.Component {
         this.suggestInviteEmail = '';
         this.notFound = false;
         this.legacyContactError = false;
-        const c = contactStore.getContact(this.query);
+        const c = contactStore.getContactAndSave(this.query);
         when(() => !c.loading, () => {
             if (c.notFound) {
                 this.notFound = true;
@@ -67,7 +66,6 @@ class NewContact extends React.Component {
                 }
             } else {
                 this.query = '';
-                contactStore.addContact(c);
             }
             this.waiting = false;
         });

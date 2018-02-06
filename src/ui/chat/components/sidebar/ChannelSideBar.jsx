@@ -54,7 +54,10 @@ class ChannelSideBar extends React.Component {
         this.chatPurposeEditorVisible = false;
     }
     chatPurposeEditorRef = ref => {
-        if (ref) ref.nameInput.focus();
+        if (ref) {
+            this.chatPurposeTextarea = ref;
+            this.resizeTextarea();
+        }
     };
 
     // todo: this needs to be made smarter when we have at least one more section
@@ -63,6 +66,22 @@ class ChannelSideBar extends React.Component {
             this.openSection = null;
         } else {
             this.openSection = section;
+        }
+    }
+
+    handleKeyDown = () => {
+        this.resizeTextarea();
+    }
+
+    resizeTextarea = () => {
+        const actualHeight = this.chatPurposeTextarea.getBoundingClientRect().height;
+        const scrollHeight = this.chatPurposeTextarea.scrollHeight;
+
+        if (scrollHeight > actualHeight) {
+            this.chatPurposeTextarea.style.height = `${scrollHeight}px`;
+        }
+        if (scrollHeight < actualHeight) {
+            this.chatPurposeTextarea.style.height = 'auto';
         }
     }
 
@@ -88,8 +107,9 @@ class ChannelSideBar extends React.Component {
                                         multiline
                                         readOnly={!canIAdmin}
                                         onBlur={this.hideChatPurposeEditor}
+                                        onKeyDown={this.handleKeyDown}
                                         className="purpose-editor"
-                                        ref={this.chatPurposeEditorRef} />
+                                        innerRef={this.chatPurposeEditorRef} />
                                     : <div className="purpose-container">
                                         {chat.chatHead && chat.chatHead.purpose
                                             ? [<T tag="div" k="title_purpose" className="purpose-label" key="1" />,

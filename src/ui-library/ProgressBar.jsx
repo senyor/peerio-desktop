@@ -34,6 +34,7 @@ class ProgressBar extends React.Component {
             */
             <div className={css(
                 'p-progress-bar',
+                this.props.className,
                 { circular: this.props.type === 'circular' }
             )}>
                 { this.props.type !== 'circular'

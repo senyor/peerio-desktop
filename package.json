@@ -15,7 +15,7 @@
     "start-latest": "git pull && npm install && npm run start",
     "start-dev": "(export NODE_ENV=development; npm run compile && run-p -l watch:* electron:run)",
     "=== COMPILATION ===": "",
-    "compile": "run-s -ln cleanup icebear-copy && run-p -ln compile:* static:copy react-toolbox",
+    "compile": "run-s -ln cleanup icebear-copy && run-p -ln compile:* static:copy",
     "compile:code": "babel --source-maps -q src -d app/build --ignore emojione.js",
     "compile:icebear": "babel --source-maps -q app/node_modules/peerio-icebear/src -d app/node_modules/peerio-icebear/dist",
     "compile:style": "node-sass src/styles/main.scss app/build/style.css",
@@ -43,7 +43,6 @@
     "fix:style": "stylelint --fix \"src/**/*.scss\"",
     "=== HELPERS ===": "",
     "check-links": "echo node_modules: && ls -la node_modules | grep peerio && echo app/node_modules: && ls -la app/node_modules | grep peerio",
-    "react-toolbox": "react-toolbox-themr",
     "electron:run": "electron ./app",
     "cleanup": "rm -rf app/build && mkdirp app/build",
     "dist": "npm run compile"
@@ -112,7 +111,6 @@
     "npm-run-all": "4.1.2",
     "opt-cli": "1.6.0",
     "react-addons-perf": "15.4.2",
-    "react-toolbox-themr": "github:react-toolbox/react-toolbox-themr",
     "require-global-node-module": "1.1.0",
     "spectron": "3.8.0",
     "standard-version": "github:PeerioTechnologies/standard-version",
@@ -122,21 +120,6 @@
     "stylelint-scss": "2.3.0",
     "validate-commit-msg": "2.14.0",
     "writefile": "0.2.8"
-  },
-  "reactToolbox": {
-    "customProperties": {
-      "color-primary": "rgb(44, 149, 207)",
-      "color-primary-dark": "var(--palette-indigo-700)",
-      "color-primary-light": "var(--palette-indigo-500)",
-      "color-accent": "rgb(246, 146, 35)",
-      "color-accent-dark": "var(--palette-pink-700)",
-      "color-primary-contrast": "var(--color-dark-contrast)",
-      "color-contrast": "var(--color-dark-contrast)",
-      "animation-duration": "0.3s"
-    },
-    "path": "app/node_modules/react-toolbox/lib",
-    "output": "./app/build/react-toolbox",
-    "fixed": true
   },
   "config": {
     "commitizen": {
@@ -174,10 +157,7 @@
       "!node_modules/cssman${/*}",
       "!node_modules/material-design-icons${/*}",
       "node_modules/material-design-icons/iconfont/*",
-      "!node_modules/react-toolbox${/*}",
       "!node_modules/buffer/bin${/*}",
-      "node_modules/react-toolbox/lib/**/{*.js,*.json,*.css}",
-      "node_modules/react-toolbox/package.json",
       "!node_modules/**/{example,examples,demo,demos,test,tests,__test?__,.vscode}${/*}",
       "!node_modules/**/{*.md,*.markdown,*.ts,*.flow,*.html,*.htm,*.map,*.test.js,*.watchr,*.coffee}",
       "!node_modules/**/{LICENSE,license,LICENSE.*,LICENSE-MIT,LICENSE-MIT.*,LICENCE,PATENTS,COPYING.txt}",

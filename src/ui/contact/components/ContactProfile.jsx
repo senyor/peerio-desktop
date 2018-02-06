@@ -60,7 +60,7 @@ class ContactProfile extends React.Component {
                     </div>
                     : null}
                 <div className="contact-avatar-info">
-                    <Avatar contact={c} size="large" />
+                    <Avatar contact={c} size="full" />
                     <div className="account-profile-container">
                         {c.isDeleted ? <T k="title_accountDeleted" className="deleted-account" tag="div" /> : null}
                         <div className="full-name selectable">{c.firstName} {c.lastName}</div>

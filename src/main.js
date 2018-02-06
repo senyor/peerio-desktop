@@ -4,13 +4,35 @@ if (process.env.NODE_ENV !== 'development') {
 
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
-const path = require('path');
 
 let mainWindow;
 
 process.on('uncaughtException', (error) => {
     console.error('uncaughtException in Node:', error);
 });
+
+const isDevEnv = require('~/helpers/is-dev-env');
+
+if (!isDevEnv && !process.argv.includes('--allow-multiple-instances')) {
+    // In production version, don't allow running more than one instance.
+    // This code must be executed as early as possible to prevent the second
+    // instance from initializing before it decides to quit.
+    const isAnotherInstance = app.makeSingleInstance(() => {
+        // Another instance launched, restore the current window.
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) {
+                mainWindow.restore();
+            }
+            mainWindow.focus();
+        }
+    });
+    if (isAnotherInstance) {
+        console.log('Another instance is already running, quitting.');
+        process.exit();
+    }
+}
+
+const path = require('path');
 
 // On Windows, change user data path from Electron's default
 // %APPDATA% to %LOCALAPPDATA%, since we don't want any of our
@@ -52,7 +74,6 @@ if (
     }
 }
 
-const isDevEnv = require('~/helpers/is-dev-env');
 // For dev builds we want to use separate user data directory
 if (isDevEnv) {
     app.setPath('userData', path.resolve(app.getPath('appData'), `${app.getName().toLowerCase()}_dev`));

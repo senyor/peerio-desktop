@@ -1,6 +1,6 @@
 
 const isDevEnv = require('~/helpers/is-dev-env');
-const { ipcMain } = require('electron');
+const { app, ipcMain } = require('electron');
 const TinyDb = require('peerio-icebear/dist/db/tiny-db');
 const autoUpdater = require('@peerio/updater')();
 
@@ -24,6 +24,7 @@ function start(mainWindow) {
         window = mainWindow;
         ipcMain.on('install-update', () => {
             console.log('Client approved update installation.');
+            app.releaseSingleInstance();
             autoUpdater.quitAndInstall();
         });
         if (!isDevEnv) {

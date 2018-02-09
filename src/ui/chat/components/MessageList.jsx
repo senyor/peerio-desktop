@@ -239,7 +239,7 @@ class MessageList extends React.Component {
                     ? <ProgressBar type="circular" mode="indeterminate"
                         theme="multicolor"
                         className="messages-progress-bar" />
-                    : null
+                    : this.renderMessages()
                 }
             </div>
         );

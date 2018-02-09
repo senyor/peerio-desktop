@@ -11,7 +11,7 @@ const ZeroChats = require('./chat/ZeroChats');
 const NewChat = require('./chat/NewChat');
 const ChatView = require('./chat/ChatView');
 const NewChannel = require('./chat/NewChannel');
-const ChannelInvites = require('./chat/ChannelInvites');
+const ChannelInvite = require('./chat/components/ChannelInvite');
 const Files = require('./files/Files');
 const ShareFiles = require('./files/ShareFiles');
 const Mail = require('./mail/Mail');
@@ -43,11 +43,11 @@ module.exports = (
             <IndexRoute component={Loading} />
             <Route path="chats" component={Chat}>
                 <IndexRoute component={ChatView} />
+                <Route path="channel-invite" component={ChannelInvite} />
                 <Route path="new-chat" component={NewChat} />
                 <Route path="new-channel" component={NewChannel} />
             </Route>
             <Route path="zero-chats" component={ZeroChats} />
-            <Route path="channel-invites" component={ChannelInvites} />
             <Route path="files" component={Files} />
             <Route path="onboarding" component={Onboarding} />
             <Route path="sharefiles" component={ShareFiles} />

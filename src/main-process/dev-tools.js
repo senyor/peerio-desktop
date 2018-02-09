@@ -22,14 +22,13 @@ if (isDevEnv) {
 
 function onAppReady(mainWindow) {
     if (!isDevEnv) return;
-    console.log('Initializing development tools.');
-    installExtensions();
     if (process.env.REMOTE_DEBUG_PORT === undefined) {
         mainWindow.openDevTools();
     }
 }
 
 function installExtensions() {
+    if (!isDevEnv) return Promise.resolve();
     console.log('installing extensions.');
     const devtron = require('devtron');
     devtron.install();
@@ -41,7 +40,8 @@ function installExtensions() {
         MOBX_DEVTOOLS
     } = require('electron-devtools-installer');
 
-    install([REACT_DEVELOPER_TOOLS, REACT_PERF, MOBX_DEVTOOLS])
+
+    return install([REACT_DEVELOPER_TOOLS, REACT_PERF, MOBX_DEVTOOLS])
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log('An error occurred: ', err));
 }
@@ -78,4 +78,4 @@ function extendContextMenu(menu, mainWindow, rightClickPos) {
     }));
 }
 
-module.exports = { onAppReady, extendContextMenu };
+module.exports = { onAppReady, extendContextMenu, installExtensions };

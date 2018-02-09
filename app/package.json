@@ -58,13 +58,14 @@
         "authy": "https://authy.com",
         "download": "https://peerio.com",
         "learnUrlTracking": "https://peerio.zendesk.com/hc/en-us/articles/115005090766",
-        "identityVerification": "https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-"
+        "identityVerification": "https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-",
+        "jitsiLink": "https://jitsi.org/"
       }
     }
   },
   "dependencies": {
-    "@peerio/updater": "0.8.2",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v4.5.1",
+    "@peerio/updater": "0.9.0",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v4.10.0",
     "autolinker": "1.4.4",
     "cheerio": "1.0.0-rc.2",
     "classnames": "2.2.5",
@@ -95,7 +96,6 @@
     "react-dom": "16.2.0",
     "react-flip-move": "3.0.0",
     "react-router": "3.2.0",
-    "react-toolbox": "2.0.0-beta.12",
     "sanitize-filename": "1.6.1",
     "zxcvbn": "4.4.2"
   }

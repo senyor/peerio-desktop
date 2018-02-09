@@ -47,7 +47,7 @@ class UIStore {
         externalContentEnabled: false,
         externalContentJustForFavs: false,
         peerioContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
-        peerioContentEnabled: true
+        peerioContentEnabled: false
     };
 
     // anything you add here will be stored with 'pref_' prefix in shared (system) tinydb
@@ -58,10 +58,13 @@ class UIStore {
     // initializes prefs and sharePrefs with stored data and subscribes to changes to persist them
     observePreference(key, dbName, localStore) {
         const prefKey = `pref_${key}`;
-        TinyDb[dbName].getValue(prefKey)
+        return TinyDb[dbName].getValue(prefKey)
             .then((loadedValue) => {
                 if (loadedValue || loadedValue === false) {
                     localStore[key] = loadedValue;
+                } else if (key === 'peerioContentEnabled') {
+                    // TODO: to be removed in next release after 2.108
+                    localStore[key] = null;
                 }
                 reaction(() => localStore[key], () => {
                     TinyDb[dbName].setValue(prefKey, localStore[key]);
@@ -71,13 +74,24 @@ class UIStore {
 
     // should be called only once, after user has been authenticated first time
     // currently authenticated app root component calls it on mount
-    init() {
-        Object.keys(this.prefs).forEach((key) => {
-            this.observePreference(key, 'user', this.prefs);
-        });
-        Object.keys(this.sharedPrefs).forEach((key) => {
-            this.observePreference(key, 'system', this.sharedPrefs);
-        });
+    async init() {
+        await Promise.all(
+            Object.keys(this.prefs).map(
+                key => this.observePreference(key, 'user', this.prefs)
+            ));
+        await Promise.all(
+            Object.keys(this.sharedPrefs).map(
+                key => this.observePreference(key, 'system', this.sharedPrefs)
+            ));
+
+        // TODO: to be removed
+        // Due to bug and changing defaults of peerioContentEnabled
+        // from true to false, if we have peerioContentEnabled undefined
+        // and peerioContentConsented set to true, that means user
+        // has expressed agreement to display content
+        if (this.prefs.peerioContentEnabled === null && this.prefs.peerioContentConsented) {
+            this.prefs.peerioContentEnabled = true;
+        }
 
         // clear user data and relaunch when user has been deleted
         reaction(() => User.current.deleted,

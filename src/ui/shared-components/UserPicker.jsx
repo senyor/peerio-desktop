@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar, Button, List, ListHeading, ListItem, MaterialIcon } = require('~/peer-ui');
-const { Chip, Input, ProgressBar } = require('~/react-toolbox');
+const { Avatar, Button, Chip, Input, List, ListHeading, ListItem, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('peerio-icebear');
 const css = require('classnames');
@@ -280,7 +279,7 @@ class UserPicker extends React.Component {
                                         <div className="chip-wrapper">
                                             {this.selected.map(c =>
                                                 (<Chip key={c.username}
-                                                    className={css('chip-label', { 'not-found': c.notFound })}
+                                                    className={css({ 'not-found': c.notFound })}
                                                     onDeleteClick={() => this.selected.remove(c)} deletable>
                                                     {c.loading
                                                         ? <ProgressBar type="linear" mode="indeterminate" />
@@ -306,7 +305,7 @@ class UserPicker extends React.Component {
                                             />
                                         }
                                         {(this.contactLoading || this._searchUsernameTimeout) &&
-                                            <ProgressBar type="circular" mode="indeterminate" />
+                                            <ProgressBar type="circular" mode="indeterminate" theme="small" />
                                         }
                                     </div>
                                 </div>

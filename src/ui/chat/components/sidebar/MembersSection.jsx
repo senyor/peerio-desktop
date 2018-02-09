@@ -1,7 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Avatar, List, ListHeading, ListItem } = require('~/peer-ui');
-const { IconMenu, MenuItem } = require('~/react-toolbox');
+const { Avatar, List, ListHeading, ListItem, Menu, MenuItem } = require('~/peer-ui');
 const { chatStore, contactStore, chatInviteStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -45,7 +44,56 @@ class MembersSection extends React.Component {
         ev.stopPropagation();
     }
 
-    renderJoinedParticipant = (c, chat, adminMenu, userMenu) => {
+    userMenu(username) {
+        return (
+            <Menu
+                icon="more_vert"
+                position="bottom-right"
+                onClick={this.stopPropagation}
+                data-username={username}
+            >
+                <MenuItem value="make_admin" icon="account_balance" caption={t('button_makeAdmin')}
+                    onClick={this.makeAdmin} />
+                <MenuItem value="delete" icon="remove_circle_outline" caption={t('button_remove')}
+                    onClick={this.deleteParticipant} />
+            </Menu>
+        );
+    }
+
+    adminMenu(username) {
+        return (
+            <Menu
+                icon="more_vert"
+                position="bottom-right"
+                onClick={this.stopPropagation}
+                data-username={username}
+            >
+                <MenuItem value="demote_admin" icon="highlight_off" caption={t('button_demoteAdmin')}
+                    onClick={this.demoteAdmin} />
+                <MenuItem value="delete" icon="remove_circle_outline" caption={t('button_remove')}
+                    onClick={this.deleteParticipant} />
+            </Menu>
+        );
+    }
+
+    inviteMenu(username) {
+        return (
+            <Menu
+                icon="more_vert"
+                position="bottom-right"
+                onClick={this.stopPropagation}
+                data-username={username}
+            >
+                <MenuItem
+                    icon="remove_circle_outline"
+                    caption={t('button_remove')}
+                    onClick={this.deleteInvite}
+                />
+            </Menu>
+        );
+    }
+
+    renderJoinedParticipant = (c, chat, showAdmin) => {
         return (
             <ListItem
                 data-username={c.username}
@@ -59,8 +107,11 @@ class MembersSection extends React.Component {
                 }
                 legend={c.fullName}
                 rightContent={
-                    (User.current.username !== c.username)
-                        ? (chat.isAdmin(c) ? adminMenu : userMenu)
+                    (showAdmin && User.current.username !== c.username)
+                        ? (chat.isAdmin(c)
+                            ? this.adminMenu(c.username)
+                            : this.userMenu(c.username)
+                        )
                         : null
                 }
                 onClick={this.openContact}
@@ -68,13 +119,13 @@ class MembersSection extends React.Component {
         );
     }
 
-    renderInvitedParticipant = (c, inviteMenu) => {
+    renderInvitedParticipant = (c, showAdmin) => {
         return (
             <ListItem
                 data-username={c.username}
                 key={`invited--${c.username}`}
                 caption={c.username}
-                rightContent={inviteMenu}
+                rightContent={showAdmin && this.inviteMenu(c.username)}
                 onClick={this.openContact}
             />
         );
@@ -85,44 +136,16 @@ class MembersSection extends React.Component {
         if (!chat) return null;
         const invited = chatInviteStore.sent.get(chat.id);
         const { isChannel, canIAdmin } = chat;
+        const showAdmin = isChannel && canIAdmin;
+
         if (!isChannel && !chat.otherParticipants.length) {
             // this removes member section from DM chat with self
             return null;
         }
-        const userMenu = [], adminMenu = [], inviteMenu = [];
-        if (isChannel && canIAdmin) {
-            userMenu.push(
-                <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
-                    <MenuItem value="make_admin" icon="account_balance" caption={t('button_makeAdmin')}
-                        onClick={this.makeAdmin} />
-                    <MenuItem value="delete" icon="delete" caption={t('button_remove')}
-                        onClick={this.deleteParticipant} />
-                </IconMenu>
-            );
-
-            adminMenu.push(
-                <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
-                    <MenuItem value="demote_admin" icon="highlight_off" caption={t('button_demoteAdmin')}
-                        onClick={this.demoteAdmin} />
-                    <MenuItem value="delete" icon="remove_circle_outline" caption={t('button_remove')}
-                        onClick={this.deleteParticipant} />
-                </IconMenu>
-            );
-
-            inviteMenu.push(
-                <IconMenu key="0" icon="more_vert" position="bottomRight" menuRipple onClick={this.stopPropagation}>
-                    <MenuItem value="delete"
-                        icon="remove_circle_outline"
-                        caption={t('button_remove')}
-                        onClick={this.deleteInvite}
-                    />
-                </IconMenu>
-            );
-        }
 
         return (
             <SideBarSection title={t('title_Members')} onToggle={this.props.onToggle} open={this.props.open}>
-                <div className={css('member-list', { 'with-admin-controls': isChannel && canIAdmin })}>
+                <div className={css('member-list', 'scrollable', { 'with-admin-controls': isChannel && canIAdmin })}>
                     {isChannel && canIAdmin
                         ? <List className="action-list" clickable>
                             <ListItem
@@ -135,13 +158,13 @@ class MembersSection extends React.Component {
                     }
                     <List clickable>
                         {chat.allJoinedParticipants.map(
-                            (c) => this.renderJoinedParticipant(c, chat, adminMenu, userMenu))
+                            (c) => this.renderJoinedParticipant(c, chat, showAdmin))
                         }
                         {invited && invited.length
                             ? <ListHeading caption={t('title_invited')} />
                             : null}
                         {invited
-                            ? invited.map((c) => this.renderInvitedParticipant(c, inviteMenu))
+                            ? invited.map((c) => this.renderInvitedParticipant(c, showAdmin))
                             : null}
                     </List>
                 </div>

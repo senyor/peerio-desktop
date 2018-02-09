@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, List, ListItem, MaterialIcon } = require('~/peer-ui');
-const { ProgressBar } = require('~/react-toolbox');
+const { Avatar, Button, List, ListItem, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const { User, contactStore, validation } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -120,7 +119,7 @@ class Profile extends React.Component {
             </section>);
         }
         return (
-            <section className="settings-container-profile">
+            <div className="settings-container-profile">
                 <div>
                     <div className="input-row">
                         <BetterInput onAccept={this.saveFirstName}
@@ -201,22 +200,8 @@ class Profile extends React.Component {
                     </div>
 
                 </div>
-                <div className={css('avatar-card', { 'has-avatar': this.contact.hasAvatar })}
-                    style={{
-                        backgroundColor: this.contact.color,
-                        backgroundImage: this.contact.hasAvatar ? `url(${this.contact.largeAvatarUrl})` : 'none'
-                    }}>
-                    <div className="avatar-card-user">
-                        <div className="avatar-card-display-name">
-                            {user.fullName}
-                        </div>
-                        <div className="avatar-card-username">
-                            @{user.username}
-                        </div>
-                    </div>
-                    <div className="avatar-card-initial">
-                        {this.contact.hasAvatar ? null : this.contact.letter}
-                    </div>
+                <div className="avatar-card">
+                    <Avatar contact={this.contact} size="full" />
                     <div className="card-footer">
                         <Button icon="delete"
                             className={css({ banish: !this.contact.hasAvatar })}
@@ -232,7 +217,7 @@ class Profile extends React.Component {
                         </div>
                         : null}
                 </div>
-            </section>
+            </div>
         );
     }
 }

@@ -42,6 +42,7 @@ class Tooltip extends React.Component {
             this.ref = ref;
             ref.parentElement.addEventListener('mouseenter', this.showTooltip, false);
             ref.parentElement.addEventListener('mouseleave', this.hideTooltip, false);
+            ref.parentElement.addEventListener('click', this.hideTooltip, false);
         }
     }
 
@@ -50,6 +51,7 @@ class Tooltip extends React.Component {
 
         this.ref.parentElement.removeEventListener('mouseenter', this.showTooltip);
         this.ref.parentElement.removeEventListener('mouseleave', this.hideTooltip);
+        this.ref.parentElement.removeEventListener('click', this.hideTooltip);
     }
 
     @action.bound showTooltip() {

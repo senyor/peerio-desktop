@@ -2,7 +2,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { validation } = require('peerio-icebear');
-const { Chip, Input } = require('~/react-toolbox');
+const { Chip, Input } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 
 const emailFormatFn = validation.validators.emailFormat.action;
@@ -43,7 +43,6 @@ const emailFormatFn = validation.validators.emailFormat.action;
             <div className="chip-wrapper">
                 {this.props.ghost.recipients.map((c, pos) =>
                     (<Chip key={c}
-                        className="chip-label"
                         deletable
                         onDeleteClick={() => this.props.ghost.recipients.splice(pos, 1)}>
                         {c}

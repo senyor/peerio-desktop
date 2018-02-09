@@ -9,8 +9,7 @@ const { observer } = require('mobx-react');
 
 const { t } = require('peerio-translator');
 const { fileStore, chatStore } = require('peerio-icebear');
-const { Button } = require('~/peer-ui');
-const { IconMenu, MenuItem } = require('~/react-toolbox');
+const { Button, Menu, MenuItem } = require('~/peer-ui');
 
 const FilePicker = require('~/ui/files/components/FilePicker');
 const Snackbar = require('~/ui/shared-components/Snackbar');
@@ -127,7 +126,11 @@ class MessageInput extends React.Component {
             <div className="message-input-wrapper" >
                 <Snackbar className="snackbar-chat" />
                 <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
-                    <IconMenu icon="add_circle_outline">
+                    <Menu
+                        position="bottom-left"
+                        icon="add_circle_outline"
+                        tooltip={t('title_shareToChat')}
+                    >
                         <MenuItem value="share"
                             caption={t('title_shareFromFiles')}
                             onClick={this.showFilePicker}
@@ -136,8 +139,7 @@ class MessageInput extends React.Component {
                             caption={t('title_uploadAndShare')}
                             onClick={this.activateUploadDialog}
                         />
-                        {/* TODO: add back Tooltip once Menu components are ready */ }
-                    </IconMenu>
+                    </Menu>
                     {this.props.readonly
                         ? <div className="message-editor-empty" >&nbsp;</div>
                         : <MessageInputProseMirror

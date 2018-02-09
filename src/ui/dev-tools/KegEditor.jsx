@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 const React = require('react');
-const { ProgressBar, Chip } = require('~/react-toolbox');
+const { ProgressBar } = require('~/peer-ui');
 const { User, socket } = require('peerio-icebear');
 const secret = require('peerio-icebear/dist/crypto/secret');
 const { observable, action } = require('mobx');
@@ -119,7 +119,9 @@ class KegEditor extends React.Component {
                 }
                 {
                     this.loading
-                        ? <div className="spinner-backdrop"><ProgressBar type="circular" multicolor /></div>
+                        ? <div className="spinner-backdrop">
+                            <ProgressBar type="circular" theme="multicolor" />
+                        </div>
                         : null
                 }
             </div>
@@ -146,11 +148,11 @@ function ChatInfo(props) {
     if (!props.c || !props.c.key) return <div>Loading chat metadata...</div>;
     return (
         <div className="selectable">
-            <Chip className="selectable">{props.c.id}</Chip><br />
+            <div className="keg-chip selectable">{props.c.id}</div><br />
             {
                 props.c.allParticipants
-                    ? props.c.allParticipants.map(p => <Chip key={p.username}>{p.username}</Chip>)
-                    : <Chip className="selectable">{User.current.username}</Chip>
+                    ? props.c.allParticipants.map(p => <div className="keg-chip" key={p.username}>{p.username}</div>)
+                    : <div className="keg-chip selectable">{User.current.username}</div>
             }
         </div>
     );

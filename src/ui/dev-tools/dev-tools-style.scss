@@ -14,8 +14,19 @@
     background-color: rgba(44, 149, 207, .3);
   }
 
-  .rt-app_bar-appBar {
+  .top-bar {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    height: 90px;
+    width: 100%;
+    top: 0;
+    padding: 24px;
     background-color: rgb(44, 149, 207);
+
+    .p-menu {
+      margin-right: auto;
+    }
 
     .material-icons {
       color: rgba(255, 255, 255, .7);
@@ -30,17 +41,9 @@
     }
   }
 
-  .rt-button-button > .rt-button-icon {
-    color: #fff;
-  }
-
   .menu {
     left: 25px;
     top: 45px;
-
-    .rt-menu-icon {
-      color: gray;
-    }
   }
 
   .separator {
@@ -124,6 +127,18 @@
 
     .keg-view {
       flex-shrink: 1;
+    }
+
+    .keg-chip {
+      display: inline-block;
+      padding: 8px 16px;
+      margin-bottom: 8px;
+      background-color: #eee;
+      border-radius: 24px;
+
+      &:first-of-type {
+        margin-top: 8px;
+      }
     }
   }
 }

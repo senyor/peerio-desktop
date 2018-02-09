@@ -1,8 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { Checkbox } = require('~/peer-ui');
-const { MaterialIcon } = require('~/peer-ui');
-const { Switch } = require('~/react-toolbox');
+const { MaterialIcon, Switch } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { User, chatStore } = require('peerio-icebear');
@@ -11,42 +10,42 @@ const { fileStore } = require('peerio-icebear');
 
 @observer
 class Preferences extends React.Component {
-    onMsgNotifChanged(value) {
-        User.current.settings.messageNotifications = value;
+    onMsgNotifChanged(ev) {
+        User.current.settings.messageNotifications = ev.target.checked;
         User.current.saveSettings();
     }
 
-    onErrorSoundsChanged(value) {
-        uiStore.prefs.errorSoundsEnabled = value;
+    onErrorSoundsChanged(ev) {
+        uiStore.prefs.errorSoundsEnabled = ev.target.checked;
     }
 
-    onMentionSoundsChanged(value) {
+    onMentionSoundsChanged(ev) {
         uiStore.prefs.messageSoundsEnabled = false;
-        uiStore.prefs.mentionSoundsEnabled = value;
+        uiStore.prefs.mentionSoundsEnabled = ev.target.checked;
     }
 
-    onMessageSoundsChanged(value) {
-        if (value === true) uiStore.prefs.mentionSoundsEnabled = false;
-        uiStore.prefs.messageSoundsEnabled = value;
+    onMessageSoundsChanged(ev) {
+        if (ev.target.checked === true) uiStore.prefs.mentionSoundsEnabled = false;
+        uiStore.prefs.messageSoundsEnabled = ev.target.checked;
     }
 
-    onMentionDesktopNotificationsChanged(value) {
+    onMentionDesktopNotificationsChanged(ev) {
         uiStore.prefs.messageDesktopNotificationsEnabled = false;
-        uiStore.prefs.mentionDesktopNotificationsEnabled = value;
+        uiStore.prefs.mentionDesktopNotificationsEnabled = ev.target.checked;
     }
 
-    onMessageDesktopNotificationsChanged(value) {
-        if (value === true) uiStore.prefs.mentionDesktopNotificationsEnabled = false;
-        uiStore.prefs.messageDesktopNotificationsEnabled = value;
+    onMessageDesktopNotificationsChanged(ev) {
+        if (ev.target.checked === true) uiStore.prefs.mentionDesktopNotificationsEnabled = false;
+        uiStore.prefs.messageDesktopNotificationsEnabled = ev.target.checked;
     }
 
-    onUnreadChatSorting(value) {
-        chatStore.unreadChatsAlwaysOnTop = value;
+    onUnreadChatSorting(ev) {
+        chatStore.unreadChatsAlwaysOnTop = ev.target.checked;
         User.current.saveSettings();
     }
 
-    onUrlPreviewToggle(value) {
-        uiStore.prefs.externalContentEnabled = value;
+    onUrlPreviewToggle(ev) {
+        uiStore.prefs.externalContentEnabled = ev.target.checked;
         if (!uiStore.prefs.externalContentConsented) {
             uiStore.prefs.externalContentConsented = true;
         }
@@ -59,12 +58,12 @@ class Preferences extends React.Component {
         }
     }
 
-    onPeerioContentPreviewToggle(value) {
-        uiStore.prefs.peerioContentEnabled = value;
+    onPeerioContentPreviewToggle(ev) {
+        uiStore.prefs.peerioContentEnabled = ev.target.checked;
     }
 
-    onInlineContentSizeLimitToggle(value) {
-        uiStore.prefs.limitInlineImageSize = !value;
+    onInlineContentSizeLimitToggle(ev) {
+        uiStore.prefs.limitInlineImageSize = !ev.target.checked;
     }
 
     render() {

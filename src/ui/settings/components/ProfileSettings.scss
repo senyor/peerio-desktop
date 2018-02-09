@@ -5,6 +5,7 @@
 
   .settings-container-profile {
     @extend %flex-row;
+    margin-top: 20px;
 
     .label-email {
       height: 24px;
@@ -31,9 +32,16 @@
       }
     }
 
-    .input-row:first-of-type .rt-input-input,
-    .flex-row .rt-input-input {
-      margin-top: 0;
+    .input-row {
+      display: flex;
+
+      .p-input:first-of-type {
+        margin-right: 1px;
+      }
+
+      .helper-text {
+        @extend %hint-error-label;
+      }
     }
 
     .peerio-id-container {
@@ -55,22 +63,23 @@
       background-size: 100%;
       border-radius: 8px;
 
-      &.has-avatar {
-        .avatar-card-user {
-          background-image: linear-gradient(to bottom, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0));
-        }
+      .p-avatar::before,
+      .p-avatar::after {
+        content: ' ';
+        position: absolute;
+        height: 48px;
+        width: 100%;
+        left: 0;
+      }
 
-        .avatar-card-display-name {
-          text-shadow: 0 0 4px rgba(0, 0, 0, .8);
-        }
+      .p-avatar::before {
+        top: 0;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0));
+      }
 
-        .avatar-card-username {
-          text-shadow: 0 0 4px rgba(0, 0, 0, .8), 1px 1px 1px rgba(0, 0, 0, .5);
-        }
-
-        .card-footer {
-          background-image: linear-gradient(to top, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0));
-        }
+      .p-avatar::after {
+        bottom: 0;
+        background-image: linear-gradient(to top, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0));
       }
 
       &-user {
@@ -103,10 +112,11 @@
         @extend %flex-row;
         @extend %flex-align-center;
         @extend %flex-shrink-0;
-        justify-content: flex-end;
+        position: absolute;
         height: 48px;
+        right: 0;
+        bottom: 0;
         padding-right: $padding-small;
-        margin-top: $margin-default;
 
         .material-icons {
           color: $icon-light-inactive;

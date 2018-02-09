@@ -1,9 +1,8 @@
 const React = require('react');
 const { autorunAsync, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar } = require('~/peer-ui');
-const { IconMenu, MenuItem, MenuDivider } = require('~/react-toolbox');
-const { User, contactStore, chatStore, fileStore } = require('peerio-icebear');
+const { Avatar, Divider, Menu, MenuItem } = require('~/peer-ui');
+const { User, contactStore, chatStore, chatInviteStore, fileStore } = require('peerio-icebear');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const SignoutDialog = require('~/ui/shared-components/SignoutDialog');
 const css = require('classnames');
@@ -105,41 +104,79 @@ class AppNav extends React.Component {
     render() {
         const contact = contactStore.getContact(User.current.username);
         const { primaryAddressConfirmed } = User.current;
+
         return (
             <div className="app-nav">
                 <div className="avatar-menu-wrapper">
                     <div className={css({ 'avatar-notify': !primaryAddressConfirmed })} />
-                    <IconMenu icon="">
-                        <MenuItem value="profile" icon="person" caption={t('title_settingsProfile')}
+                    <Menu
+                        customButton={<Avatar contact={contact} size="medium" />}
+                        position="top-left"
+                    >
+                        <MenuItem
+                            value="profile"
+                            icon="person"
+                            caption={t('title_settingsProfile')}
                             onClick={this.toProfile}
-                            className={css({ 'avatar-notify': !primaryAddressConfirmed })} />
-                        <MenuItem value="security" icon="security" caption={t('title_settingsSecurity')}
-                            onClick={this.toSecurity} />
-                        <MenuItem value="preferences" icon="settings" caption={t('title_settingsPreferences')}
-                            onClick={this.toPrefs} />
-                        <MenuItem value="account" icon="account_circle" caption={t('title_settingsAccount')}
-                            onClick={this.toAccount} />
-                        <MenuItem value="about" icon="info" caption="About"
-                            onClick={this.toAbout} />
-                        <MenuItem value="help" icon="help" caption="Help"
-                            onClick={this.toHelp} />
-                        {
-                            config.disablePayments || User.current.hasActivePlans ? null
-                                : <span><MenuDivider />
-                                    <MenuItem value="upgrade" icon="open_in_browser" caption={t('button_upgrade')}
-                                        onClick={this.toUpgrade} />
-                                </span>
+                            className={css({ 'avatar-notify': !primaryAddressConfirmed })}
+                        />
+                        <MenuItem
+                            value="security"
+                            icon="security"
+                            caption={t('title_settingsSecurity')}
+                            onClick={this.toSecurity}
+                        />
+                        <MenuItem
+                            value="preferences"
+                            icon="settings"
+                            caption={t('title_settingsPreferences')}
+                            onClick={this.toPrefs}
+                        />
+                        <MenuItem
+                            value="account"
+                            icon="account_circle"
+                            caption={t('title_settingsAccount')}
+                            onClick={this.toAccount}
+                        />
+                        <MenuItem
+                            value="about"
+                            icon="info"
+                            caption={t('title_About')}
+                            onClick={this.toAbout}
+                        />
+                        <MenuItem
+                            value="help"
+                            icon="help"
+                            caption={t('title_help')}
+                            onClick={this.toHelp}
+                        />
+                        {config.disablePayments || User.current.hasActivePlans
+                            ? null : (
+                                <div key="appnav-nested-container">
+                                    <Divider key="appnav-nested-divider" />
+                                    <MenuItem key="appnav-nested-menuitem"
+                                        value="upgrade"
+                                        icon="open_in_browser"
+                                        caption={t('button_upgrade')}
+                                        onClick={this.toUpgrade}
+                                    />
+                                </div>
+                            )
                         }
-                        <MenuDivider />
-                        <MenuItem value="signout" icon="power_settings_new" caption={t('button_logout')}
-                            onClick={this.signout} />
-                    </IconMenu>
-                    <Avatar contact={contact} size="medium" />
+                        <Divider />
+                        <MenuItem
+                            value="signout"
+                            icon="power_settings_new"
+                            caption={t('button_logout')}
+                            onClick={this.signout}
+                        />
+                    </Menu>
                 </div>
                 <div className="app-menu">
                     <AppNavButton tooltip={t('title_chats')} icon="forum"
                         active={routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)}
-                        showBadge={chatStore.unreadMessages > 0} badge={chatStore.unreadMessages}
+                        showBadge={chatStore.unreadMessages > 0 || chatInviteStore.received.length}
+                        badge={chatStore.unreadMessages + chatInviteStore.received.length}
                         onClick={this.toChats} />
 
                     <AppNavButton tooltip={t('title_files')} icon="folder"

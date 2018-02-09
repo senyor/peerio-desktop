@@ -1,4 +1,5 @@
 const React = require('react');
+const { action } = require('mobx');
 const { observer } = require('mobx-react');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const { chatStore, config } = require('peerio-icebear');
@@ -6,9 +7,14 @@ const { t } = require('peerio-translator');
 
 @observer
 class ChatNameEditor extends React.Component {
-    cancelNameEdit = () => {
-        console.log('Cancel name/purpose edit');
-    };
+    @action.bound setRef(ref) {
+        if (ref) this.inputRef = ref;
+        if (this.props.innerRef) this.props.innerRef(ref);
+    }
+
+    componentDidMount() {
+        if (this.inputRef) this.inputRef.focus();
+    }
 
     acceptNameEdit = (val) => {
         try {
@@ -20,10 +26,6 @@ class ChatNameEditor extends React.Component {
         } catch (err) {
             console.error(err);
         }
-    };
-
-    setNameInputRef = (ref) => {
-        this.nameInput = ref;
     };
 
     render() {
@@ -38,11 +40,12 @@ class ChatNameEditor extends React.Component {
             <BetterInput label={this.props.showLabel ? t(label) : null}
                 hint={t(hint)}
                 className={this.props.className}
-                onFocus={this.onFocus}
+                onFocus={this.props.onFocus}
                 onBlur={this.props.onBlur}
-                onReject={this.cancelNameEdit}
+                onReject={null}
                 onAccept={this.acceptNameEdit}
-                ref={this.setNameInputRef}
+                onKeyDown={this.props.onKeyDown}
+                innerRef={this.setRef}
                 value={value}
                 displayValue={displayValue}
                 tabIndex={this.props.tabIndex}

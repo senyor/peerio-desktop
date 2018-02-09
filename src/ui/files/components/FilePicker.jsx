@@ -2,8 +2,7 @@ const React = require('react');
 const { fileStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
 const { observable, computed, action } = require('mobx');
-const { Dialog } = require('~/peer-ui');
-const { ProgressBar } = require('~/react-toolbox');
+const { Dialog, ProgressBar } = require('~/peer-ui');
 const FileLine = require('./FileLine');
 const FolderLine = require('./FolderLine');
 const Search = require('~/ui/shared-components/Search');
@@ -54,6 +53,7 @@ class FilePicker extends React.Component {
 
     handleClose = () => {
         fileStore.clearSelection();
+        fileStore.clearFilter();
         this.props.onClose();
         this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     };
@@ -62,6 +62,7 @@ class FilePicker extends React.Component {
         const selected = fileStore.getSelectedFiles();
         if (!selected.length) return;
         this.props.onShare(selected);
+        fileStore.clearFilter();
     };
 
     handleSearch = val => {

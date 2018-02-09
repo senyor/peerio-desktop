@@ -36,12 +36,6 @@
 
   .terms-smallprint {
     font-size: 12px;
-
-    .rt-button-button {
-      min-width: 0;
-      padding: 0 0 4px;
-      font-size: 12px;
-    }
   }
 
   .private,
@@ -117,12 +111,24 @@
     margin-bottom: auto;
   }
 
-  .rt-input-error {
-    white-space: normal;
-  }
-
-  .rt-input-input {
+  .p-input {
     margin-top: $margin-xl;
+
+    input {
+      transition: border-color 250ms;
+      background-color: transparent;
+    }
+
+    &.has-error {
+      input {
+        border-color: $red-error;
+      }
+
+      .error {
+        color: $red-error;
+        border: 0;
+      }
+    }
   }
 
   @media (max-height: $minimum-screen-height) {

@@ -25,18 +25,6 @@
       & + .option {
         margin-left: 48px;
       }
-
-      .rt-button-button {
-        width: 168px;
-        line-height: 32px;
-        transition: 250ms;
-        background-color: $white-12;
-        border: 2px solid $white-12;
-
-        &:hover {
-          border-color: $white;
-        }
-      }
     }
   }
 }

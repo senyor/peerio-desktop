@@ -1,27 +1,75 @@
 const React = require('react');
-const { observable } = require('mobx');
+const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Tab, Tabs } = require('~/react-toolbox');
 const { User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
+const { Button } = require('~/peer-ui');
 const css = require('classnames');
 const appState = require('~/stores/app-state');
-
-const ROUTES = [
-    '/app/settings/profile',
-    '/app/settings/security',
-    '/app/settings/preferences',
-    '/app/settings/account',
-    '/app/settings/about',
-    '/app/settings/help',
-    '/app/settings/dev'
-];
-
-const ROUTES_MAP = ROUTES.reduce((map, route, ind) => { map[route] = ind; return map; }, {});
+const routerStore = require('~/stores/router-store');
 
 @observer
 class Settings extends React.Component {
-    @observable index = ROUTES_MAP[window.router.getCurrentLocation().pathname];
+    buttons = [
+        {
+            route: 'profile',
+            label: t('title_settingsProfile'),
+            className: css({ 'tab-notify': !User.current.primaryAddressConfirmed })
+        },
+        {
+            route: 'security',
+            label: t('title_settingsSecurity')
+        },
+        {
+            route: 'prefs',
+            label: t('title_settingsPreferences')
+        },
+        {
+            route: 'account',
+            label: t('title_settingsAccount')
+        },
+        {
+            route: 'about',
+            label: t('title_About')
+        },
+        {
+            route: 'help',
+            label: t('title_help')
+        },
+        appState.devModeEnabled
+            ? {
+                route: 'devSettings',
+                label: 'dev settings'
+            }
+            : null
+    ];
+
+    ROUTES_MAP = this.buttons.reduce((map, button, index) => {
+        if (button) {
+            map[routerStore.ROUTES[button.route]] = index;
+        }
+        return map;
+    }, {});
+
+    buttonElements = [];
+    constructor() {
+        super();
+        this.buttons.forEach((button) => {
+            if (!button) return;
+            const onClickFunction = this[`to${button.route[0].toUpperCase()}${button.route.slice(1)}`] = () => {
+                routerStore.navigateTo(routerStore.ROUTES[button.route]);
+            };
+
+            this.buttonElements.push(
+                <Button label={button.label}
+                    key={button.label}
+                    onClick={onClickFunction}
+                    className={button.className}
+                    theme="secondary"
+                />
+            );
+        });
+    }
 
     componentWillMount() {
         this.disposeRouterListener = window.router.listen(this.handleRouteChange);
@@ -31,37 +79,44 @@ class Settings extends React.Component {
         if (this.disposeRouterListener) this.disposeRouterListener();
     }
 
-    handleRouteChange = route => {
-        this.index = ROUTES_MAP[route.pathname];
-    };
+    @action.bound handleRouteChange(route) {
+        this.setActive(this.ROUTES_MAP[route.pathname]);
+    }
 
-    handleTabChange = (index) => {
-        window.router.push(ROUTES[index]);
-    };
+    buttonRefs = [];
+    setContainerRef = (ref) => {
+        if (ref) {
+            this.buttonRefs = Array.from(ref.childNodes);
+            this.setActive(this.ROUTES_MAP[routerStore.currentRoute]);
+        }
+    }
+
+    @observable indexOfActive;
+    @action.bound setActive(index) {
+        if (this.indexOfActive >= 0) {
+            this.buttonRefs[this.indexOfActive].disabled = false;
+        }
+
+        if (this.buttonRefs[index]) {
+            this.buttonRefs[index].disabled = true;
+            this.indexOfActive = index;
+        }
+    }
 
     render() {
-        const { primaryAddressConfirmed } = User.current;
-
         return (
             <div className="settings">
                 <div className="tab-wrapper">
                     <div className="headline">
                         {t('title_settings')}
                     </div>
-                    <Tabs index={this.index}
-                        onChange={this.handleTabChange}
-                        className="tabs">
-                        <Tab label={t('title_settingsProfile')}
-                            className={css({ 'tab-notify': !primaryAddressConfirmed })} />
-                        <Tab label={t('title_settingsSecurity')} />
-                        <Tab label={t('title_settingsPreferences')} />
-                        <Tab label={t('title_settingsAccount')} />
-                        <Tab label={t('title_About')} />
-                        <Tab label={t('title_help')} />
-                        {appState.devModeEnabled ? <Tab label="dev settings" /> : null}
-                    </Tabs>
-                    {this.props.children}
+                    <div className="tabs"
+                        ref={this.setContainerRef}
+                    >
+                        {this.buttonElements}
+                    </div>
                 </div>
+                {this.props.children}
             </div>
         );
     }

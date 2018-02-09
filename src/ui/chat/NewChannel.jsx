@@ -5,7 +5,7 @@ const { chatStore, User } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { ProgressBar, Input } = require('~/react-toolbox');
+const { Input, ProgressBar } = require('~/peer-ui');
 const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
 const config = require('~/config');
 
@@ -109,7 +109,7 @@ class NewChannel extends React.Component {
                             noHeader onlyPick noAutoFocus
                             onAccept={this.handleAccept}
                             noSubmit={
-                                !this.channelName.length || !this.upgradeDialog
+                                !this.channelName.length || !this.upgradeDialog || this.isLimitReached
                             }
                         />
                     </div>

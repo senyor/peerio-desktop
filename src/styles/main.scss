@@ -16,10 +16,6 @@
 @import './vars/transitions';
 @import './vars/_typography';
 
-// React Toolbox base themes
-@import './rt-base-theme';
-@import './rt-light-theme';
-
 // PeerUI components
 @import '../ui-library/_all';
 
@@ -103,8 +99,10 @@ section {
 }
 
 .global-update-progress {
-  .rt-progress_bar-linear {
-    position: fixed;
+  background: white;
+
+  .p-progress-bar {
+    position: relative;
     height: 2px;
   }
 }

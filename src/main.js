@@ -4,13 +4,35 @@ if (process.env.NODE_ENV !== 'development') {
 
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
-const path = require('path');
 
 let mainWindow;
 
 process.on('uncaughtException', (error) => {
     console.error('uncaughtException in Node:', error);
 });
+
+const isDevEnv = require('~/helpers/is-dev-env');
+
+if (!isDevEnv && !process.argv.includes('--allow-multiple-instances')) {
+    // In production version, don't allow running more than one instance.
+    // This code must be executed as early as possible to prevent the second
+    // instance from initializing before it decides to quit.
+    const isAnotherInstance = app.makeSingleInstance(() => {
+        // Another instance launched, restore the current window.
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) {
+                mainWindow.restore();
+            }
+            mainWindow.focus();
+        }
+    });
+    if (isAnotherInstance) {
+        console.log('Another instance is already running, quitting.');
+        process.exit();
+    }
+}
+
+const path = require('path');
 
 // On Windows, change user data path from Electron's default
 // %APPDATA% to %LOCALAPPDATA%, since we don't want any of our
@@ -52,7 +74,6 @@ if (
     }
 }
 
-const isDevEnv = require('~/helpers/is-dev-env');
 // For dev builds we want to use separate user data directory
 if (isDevEnv) {
     app.setPath('userData', path.resolve(app.getPath('appData'), `${app.getName().toLowerCase()}_dev`));
@@ -83,92 +104,111 @@ if (process.env.REMOTE_DEBUG_PORT !== undefined) {
     app.commandLine.appendSwitch('remote-debugging-port', process.env.REMOTE_DEBUG_PORT);
 }
 
-app.on('ready', () => {
+let mustCloseWindow = false;
+
+app.once('before-quit', () => {
+    mustCloseWindow = true;
+});
+
+app.on('ready', async () => {
     console.log('Electron ready event - Starting app.');
     buildGlobalShortcuts();
     setMainMenu();
     app.setAppUserModelId(config.appId);
-    config.FileStream.createTempCache()
-        .then(getSavedWindowState)
-        .then(windowState => {
-            const winConfig = Object.assign({
-                show: false,
-                center: true,
-                minWidth: 900,
-                minHeight: 728,
-                title: app.getName()
-            }, windowState);
 
-            if (isDevEnv) {
-                winConfig.title = `${winConfig.title} DEV`;
-                winConfig.icon = `${__dirname}/static/img/icon-dev.png`;
-            } else if (process.platform === 'linux') {
-                winConfig.icon = `${__dirname}/static/img/icon.png`;
-            }
+    await config.FileStream.createTempCache();
 
-            mainWindow = new BrowserWindow(winConfig);
-            mainWindow.loadURL(`file://${__dirname}/index.html`);
+    const windowState = await getSavedWindowState();
+    const winConfig = Object.assign({
+        show: false,
+        center: true,
+        minWidth: 900,
+        minHeight: 728,
+        title: app.getName()
+    }, windowState);
 
-            const rememberWindowState = () => {
-                if (mainWindow.isMaximized()) {
-                    windowState.isMaximized = true;
-                    return;
-                }
-                windowState.isMaximized = false;
-                if (mainWindow.isMinimized() || mainWindow.isFullScreen()) {
-                    // don't remember minimized or fullscreen state.
-                    return;
-                }
-                Object.assign(windowState, mainWindow.getBounds());
-            };
+    if (isDevEnv) {
+        winConfig.title = `${winConfig.title} DEV`;
+        winConfig.icon = `${__dirname}/static/img/icon-dev.png`;
+    } else if (process.platform === 'linux') {
+        winConfig.icon = `${__dirname}/static/img/icon.png`;
+    }
 
-            mainWindow.once('ready-to-show', () => {
-                mainWindow.show();
-                mainWindow.focus();
-                if (windowState.isMaximized) {
-                    mainWindow.maximize();
-                }
-            });
+    await devtools.installExtensions();
 
-            mainWindow.on('resize', () => {
-                rememberWindowState();
-            });
+    mainWindow = new BrowserWindow(winConfig);
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-            mainWindow.on('maximize', () => {
-                rememberWindowState();
-            });
+    const rememberWindowState = () => {
+        if (mainWindow.isMaximized()) {
+            windowState.isMaximized = true;
+            return;
+        }
+        windowState.isMaximized = false;
+        if (mainWindow.isMinimized() || mainWindow.isFullScreen()) {
+            // don't remember minimized or fullscreen state.
+            return;
+        }
+        Object.assign(windowState, mainWindow.getBounds());
+    };
 
-            mainWindow.on('unmaximize', () => {
-                rememberWindowState();
-            });
+    mainWindow.once('ready-to-show', () => {
+        mainWindow.show();
+        mainWindow.focus();
+        if (windowState.isMaximized) {
+            mainWindow.maximize();
+        }
+    });
 
-            mainWindow.on('restore', () => {
-                rememberWindowState();
-            });
+    mainWindow.on('resize', () => {
+        rememberWindowState();
+    });
 
-            mainWindow.on('minimize', () => {
-                rememberWindowState();
-            });
+    mainWindow.on('maximize', () => {
+        rememberWindowState();
+    });
 
-            mainWindow.once('close', async e => {
-                e.preventDefault();
-                try {
-                    await saveWindowState(windowState);
-                } catch (err) {
-                    console.error(err);
-                }
-                mainWindow.close();
-            });
+    mainWindow.on('unmaximize', () => {
+        rememberWindowState();
+    });
 
-            mainWindow.once('closed', () => {
-                mainWindow = null;
-            });
+    mainWindow.on('restore', () => {
+        rememberWindowState();
+    });
 
-            applyMiscHooks(mainWindow);
-            buildContextMenu(mainWindow);
-            devtools.onAppReady(mainWindow);
-            updater.start(mainWindow);
-        });
+    mainWindow.on('minimize', () => {
+        rememberWindowState();
+    });
+
+    mainWindow.on('close', async function handleClose(e) {
+        e.preventDefault();
+        try {
+            await saveWindowState(windowState);
+        } catch (err) {
+            console.error(err);
+        }
+        if (process.platform === 'darwin' && !mustCloseWindow) {
+            mainWindow.hide();
+        } else {
+            mainWindow.removeListener('close', handleClose);
+            mainWindow.close();
+        }
+    });
+
+    mainWindow.once('closed', () => {
+        mainWindow = null;
+    });
+
+    applyMiscHooks(mainWindow);
+    buildContextMenu(mainWindow);
+    devtools.onAppReady(mainWindow);
+    updater.start(mainWindow);
+});
+
+app.on('activate', () => {
+    if (mainWindow) {
+        mainWindow.show();
+    }
 });
 
 app.once('will-quit', async e => {

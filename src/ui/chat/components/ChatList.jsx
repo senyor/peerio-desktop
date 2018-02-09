@@ -18,6 +18,11 @@ class ChatList extends React.Component {
     componentDidMount() {
         this.emptyReaction = when(() => !chatStore.chats.length && !chatInviteStore.received.length,
             () => routerStore.navigateTo(routerStore.ROUTES.zeroChats));
+
+        if (chatInviteStore.activeInvite) {
+            routerStore.navigateTo(routerStore.ROUTES.channelInvite);
+        }
+
         // TODO: this won't be needed when SDK is there
         if (!chatStore.chats.length && chatInviteStore.received.length) {
             this.activateInvite(chatInviteStore.received[0].kegDbId);

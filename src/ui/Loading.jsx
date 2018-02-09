@@ -1,7 +1,7 @@
 const React = require('react');
 const { when } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, crypto } = require('peerio-icebear');
+const { chatStore, chatInviteStore, crypto } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { ProgressBar } = require('~/peer-ui');
 const routerStore = require('~/stores/router-store');
@@ -13,7 +13,8 @@ const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.len
 class Loading extends React.Component {
     componentDidMount() {
         this.dispose = when(() => chatStore.loaded, () => {
-            if (chatStore.chats.length) {
+            // TODO: refactor when SDK is there for chat invites
+            if (chatStore.chats.length || chatInviteStore.received.length) {
                 routerStore.navigateTo(routerStore.ROUTES.chats);
             } else {
                 routerStore.navigateTo(routerStore.ROUTES.zeroChats);

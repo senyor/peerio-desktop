@@ -212,11 +212,11 @@
 }
 
 @import './Chat';
-@import './ChannelInvites';
 @import './NewChannel';
 @import './NewChat';
 @import './ZeroChats';
 @import './components/_ChatComponentsCommon';
+@import './components/ChannelInvite';
 @import './components/ChannelUpgradeOffer';
 @import './components/ChatList';
 @import './components/ChatNameEditor';

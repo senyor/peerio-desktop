@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('~/peer-ui');
-const { chatStore } = require('peerio-icebear');
+const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
@@ -20,6 +20,7 @@ const UploadInChatProgress = require('./components/UploadInChatProgress');
 
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
+const { Dialog } = require('~/peer-ui');
 
 @observer
 class ChatView extends React.Component {
@@ -31,7 +32,8 @@ class ChatView extends React.Component {
             reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
         ];
 
-        if (!chatStore.chats.length) {
+        // TODO: refactor when SDK is there for chat invites
+        if (!chatStore.chats.length && !chatInviteStore.received.length) {
             routerStore.navigateTo(routerStore.ROUTES.zeroChats);
         }
     }
@@ -120,15 +122,34 @@ class ChatView extends React.Component {
         if (ref) ref.nameInput.focus();
     };
 
+    @observable jitsiDialogVisible = false;
+    toggleJitsiDialog = () => {
+        this.jitsiDialogVisible = !this.jitsiDialogVisible;
+    };
+
     postJitsiLink = () => {
         const jitsiLink = chatStore.generateJitsiUrl();
         this.selfNewMessageCounter++;
         chatStore.activeChat && chatStore.activeChat.createVideoCall(jitsiLink);
+
+        this.toggleJitsiDialog();
     };
 
     // assumes active chat exists, don't render if it doesn't
     renderHeader() {
         const chat = chatStore.activeChat;
+        const participants = chat.participantUsernames;
+
+        let listMembers = participants[0];
+        for (let i = 1; i < participants.length; i++) {
+            if ((`${listMembers}, ${participants[i]}`).length < 100) {
+                listMembers += `, ${participants[i]}`;
+            } else {
+                listMembers += ' ...';
+                break;
+            }
+        }
+
         return (
             <div className="message-toolbar">
                 <div className="message-toolbar-inner" >
@@ -137,7 +158,7 @@ class ChatView extends React.Component {
                             this.chatNameEditorVisible
                                 ? <ChatNameEditor showLabel={false} className="name-editor"
                                     readOnly={!chat.canIAdmin}
-                                    onBlur={this.hideChatNameEditor} ref={this.chatNameEditorRef} />
+                                    onBlur={this.hideChatNameEditor} />
                                 : <div className="name-editor-inner">
                                     {chat.canIAdmin && chat.isChannel ? <MaterialIcon icon="edit" /> : null}
                                     <div className="title-content">
@@ -149,10 +170,10 @@ class ChatView extends React.Component {
                     <div className="meta-nav">
                         {chat.isChannel
                             ? <div className="member-count">
-                                <Button icon="person"
-                                    tooltip={t('title_Members')}
+                                <MaterialIcon icon="person"
+                                    tooltip={listMembers}
                                     tooltipPosition="bottom"
-                                    onClick={this.toggleSidebar} />
+                                />
                                 {chat.allParticipants.length || ''}
                             </div>
                             : (chat.changingFavState
@@ -187,7 +208,7 @@ class ChatView extends React.Component {
                     <Button
                         icon="videocam"
                         disabled={!chat || !chat.canSendJitsi}
-                        onClick={this.postJitsiLink}
+                        onClick={this.toggleJitsiDialog}
                         tooltip={t('button_startVideoCall')}
                         tooltipPosition="bottom"
                         tooltipSize="small"
@@ -219,6 +240,11 @@ class ChatView extends React.Component {
 
         const chat = chatStore.activeChat;
         if (!chat) return null;
+
+        const jitsiActions = [
+            { label: t('button_cancel'), onClick: this.toggleJitsiDialog },
+            { label: t('button_startVideoCall'), onClick: this.postJitsiLink }
+        ];
 
         return (
             <div className="message-view">
@@ -260,6 +286,13 @@ class ChatView extends React.Component {
                     {this.sidebar}
                 </div>
                 {chat.leaving ? <FullCoverLoader show /> : null}
+                <Dialog
+                    active={this.jitsiDialogVisible}
+                    actions={jitsiActions}
+                    onCancel={this.toggleJitsiDialog}
+                    title={t('title_videoCall')}>
+                    {t('dialog_videoCall')}
+                </Dialog>
             </div>
         );
     }

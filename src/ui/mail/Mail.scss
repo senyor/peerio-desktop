@@ -5,16 +5,6 @@
   color: $text-dark-secondary;
   background-color: $white;
 
-  .rt-button-floating {
-    position: absolute;
-    left: 198px;
-    bottom: 32px;
-    background-color: $orange !important;
-
-    .material-icons {
-      color: $text-light-primary;
-    }
-  }
   // MAIL ITEM LIST
   &-list-wrapper {
     @extend %flex-grow-0;
@@ -58,14 +48,6 @@
       a {
         overflow: hidden;
         text-overflow: ellipsis;
-      }
-    }
-
-    .rt-button-button {
-      cursor: pointer;
-
-      .material-icons {
-        color: $blue;
       }
     }
   }

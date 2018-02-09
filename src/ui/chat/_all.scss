@@ -62,7 +62,7 @@
       padding: 0 $padding-small;
     }
 
-    .rt-input-input {
+    .p-input {
       flex-grow: 1;
       width: inherit;
       max-width: 100%;
@@ -139,9 +139,11 @@
 
       input {
         height: 24px;
+        width: 100%;
         padding: $padding-tiny $padding-small;
         margin: 0;
         line-height: 20px;
+        font-size: 14px;
         font-weight: $font-weight-bold;
         color: $text-dark-secondary;
         border: 1px solid rgba($blue, .54);
@@ -197,7 +199,10 @@
       @extend %flex-align-center;
       height: 20px;
       margin-left: -12px;
-      // border-left: 1px solid $divider-dark; TODO: add back if adding ability to "pin" rooms
+
+      .material-icons {
+        padding: $padding-small;
+      }
     }
   }
 
@@ -207,11 +212,11 @@
 }
 
 @import './Chat';
-@import './ChannelInvites';
 @import './NewChannel';
 @import './NewChat';
 @import './ZeroChats';
 @import './components/_ChatComponentsCommon';
+@import './components/ChannelInvite';
 @import './components/ChannelUpgradeOffer';
 @import './components/ChatList';
 @import './components/ChatNameEditor';

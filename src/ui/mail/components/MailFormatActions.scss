@@ -6,15 +6,6 @@
     height: 48px;
     background-color: $black-03;
 
-    .rt-button-neutral:not([disabled]).rt-button-flat:hover,
-    .rt-button-neutral:not([disabled]).rt-button-toggle:hover {
-      background-color: rgba($blue, .38);
-
-      .material-icons {
-        color: $text-light-primary;
-      }
-    }
-
     .counter {
       position: relative;
 
@@ -48,10 +39,6 @@
     padding: 0 10px;
     border-left: 1px solid $divider-dark;
     border-right: 1px solid $divider-dark;
-
-    .rt-button-button {
-      margin-right: $margin-small;
-    }
 
     .material-icons {
       color: $icon-dark-inactive;

@@ -1,31 +1,61 @@
 const React = require('react');
-const { t } = require('peerio-translator');
-const { Avatar, Button, List, ListItem, ProgressBar, Tooltip } = require('~/peer-ui');
-const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
-const { chatStore, User, systemMessages, chatInviteStore } = require('peerio-icebear');
+const { action, observable, when } = require('mobx');
 const { observer } = require('mobx-react');
+
+const T = require('~/ui/shared-components/T');
+const { t } = require('peerio-translator');
+const { chatStore, User, systemMessages, chatInviteStore } = require('peerio-icebear');
+const routerStore = require('~/stores/router-store');
+
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
-const routerStore = require('~/stores/router-store');
+const { Avatar, Button, List, ListItem, ProgressBar, Tooltip } = require('~/peer-ui');
+const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
+const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class ChatList extends React.Component {
-    activateChat(id) {
+    componentDidMount() {
+        this.emptyReaction = when(() => !chatStore.chats.length && !chatInviteStore.received.length,
+            () => routerStore.navigateTo(routerStore.ROUTES.zeroChats));
+        // TODO: this won't be needed when SDK is there
+        if (!chatStore.chats.length && chatInviteStore.received.length) {
+            this.activateInvite(chatInviteStore.received[0].kegDbId);
+        }
+    }
+
+    componentWillUnmount() {
+        this.emptyReaction();
+    }
+
+    activateChat = (ev) => {
+        chatInviteStore.deactivateInvite();
         routerStore.navigateTo(routerStore.ROUTES.chats);
+        const id = getAttributeInParentChain(ev.target, 'data-chatid');
         chatStore.activate(id);
     }
 
     newMessage = () => {
+        chatInviteStore.deactivateInvite();
         routerStore.navigateTo(routerStore.ROUTES.newChat);
     };
 
-    newChannel() {
+    newChannel = () => {
         chatStore.deactivateCurrentChat();
+        chatInviteStore.deactivateInvite();
         routerStore.navigateTo(routerStore.ROUTES.newChannel);
     }
 
-    goToChannelInvite() {
-        routerStore.navigateTo(routerStore.ROUTES.channelInvites);
+    inviteOptions(kegDbId) {
+        return (<div data-kegdbid={kegDbId}>
+            <Button label={t('button_accept')}
+                onClick={this.acceptInvite}
+                disabled={this.isLimitReached} />
+            <Button label={t('button_decline')}
+                onClick={this.rejectInvite}
+                theme="secondary" />
+        </div>
+        );
     }
 
     getProgressBar = loading => {
@@ -54,8 +84,31 @@ class ChatList extends React.Component {
         );
     }
 
+    @observable channelInviteActive;
+    @observable selectedInvite;
+
+    @action.bound activateInviteByEvent(ev) {
+        const kegDbId = getAttributeInParentChain(ev.target, 'data-kegdbid');
+        if (!kegDbId) return;
+        this.activateInvite(kegDbId);
+    }
+
+    @action.bound activateInvite(kegDbId) {
+        chatInviteStore.activateInvite(kegDbId);
+        if (chatInviteStore.activeInvite) {
+            chatStore.deactivateCurrentChat();
+            routerStore.navigateTo(routerStore.ROUTES.channelInvite);
+        }
+    }
+
     render() {
-        const newChatInvites = chatInviteStore.received.length;
+        const allRooms = chatInviteStore.received.concat(chatStore.channels);
+        allRooms.sort((a, b) => {
+            const first = a.name || a.channelName;
+            const second = b.name || b.channelName;
+            return first.localeCompare(second);
+        });
+
         return (
             <div className="feature-navigation-list">
                 {/* TODO: use a general full width progress bar instead of this one. */}
@@ -77,35 +130,53 @@ class ChatList extends React.Component {
                                 </div>
 
                                 <FlipMove duration={200} easing="ease-in-out" >
-                                    {newChatInvites > 0 &&
-                                        <li className="room-invites-button-container">
-                                            <Button key="room-invites"
-                                                label={t('title_viewChannelInvites')}
-                                                className="room-invites-button"
-                                                theme="affirmative"
-                                                onClick={this.goToChannelInvite}
-                                            />
-                                        </li>
-                                    }
                                     {routerStore.isNewChannel &&
                                         <ListItem key="new channel"
                                             className="room-item new-room-entry active"
                                             caption={`# ${t('title_newRoom')}`}
                                         />
                                     }
-                                    {chatStore.channels.map(c =>
-                                        (<ListItem key={c.id || c.tempId}
-                                            className={
-                                                css('room-item', { active: c.active, unread: c.unreadCount > 0 })
-                                            }
-                                            caption={`# ${c.name}`}
-                                            onClick={() => this.activateChat(c.id)}
-                                            rightContent={
-                                                ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
-                                                    ? this.getNotificationIcon(c)
-                                                    : null
-                                            } />
-                                        )
+                                    {allRooms.map(r =>
+                                        r.isChannel
+                                            ? (
+                                                <ListItem
+                                                    data-chatid={r.id}
+                                                    key={r.id || r.tempId}
+                                                    className={
+                                                        css('room-item',
+                                                            {
+                                                                active: r.active,
+                                                                unread: r.unreadCount > 0
+                                                            }
+                                                        )
+                                                    }
+                                                    caption={`# ${r.name}`}
+                                                    onClick={this.activateChat}
+                                                    rightContent={
+                                                        ((!r.active || r.newMessagesMarkerPos) && r.unreadCount > 0)
+                                                            ? this.getNotificationIcon(r)
+                                                            : null
+                                                    } />
+                                            )
+                                            : (
+                                                <ListItem
+                                                    data-kegdbid={r.kegDbId}
+                                                    key={/* needs different key here so it doesn't disappear
+                                                           on accept animation
+                                                        */
+                                                        `invite:${r.kegDbId}`}
+                                                    className={
+                                                        css('room-item', 'room-invite-item', 'unread',
+                                                            { active: chatInviteStore.activeInvite
+                                                                && chatInviteStore.activeInvite.kegDbId === r.kegDbId })
+                                                    }
+                                                    onClick={this.activateInviteByEvent}
+                                                    caption={`# ${r.channelName}`}
+                                                    rightContent={
+                                                        <T k="title_new" className="room-invite-notification-icon" />
+                                                    }
+                                                />
+                                            )
                                     )}
                                 </FlipMove>
                             </List>
@@ -132,7 +203,9 @@ class ChatList extends React.Component {
                                 }
                                 <FlipMove duration={200} easing="ease-in-out">
                                     {chatStore.directMessages.map(c =>
-                                        (<ListItem key={c.id || c.tempId}
+                                        (<ListItem
+                                            data-chatid={c.id}
+                                            key={c.id || c.tempId}
                                             className={css(
                                                 'dm-item',
                                                 {
@@ -155,7 +228,7 @@ class ChatList extends React.Component {
                                                 />
                                             }
 
-                                            onClick={() => this.activateChat(c.id)}
+                                            onClick={this.activateChat}
                                             rightContent={
                                                 ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
                                                     ? this.getNotificationIcon(c)

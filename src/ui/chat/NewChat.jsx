@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, Contact } = require('peerio-icebear');
+const { chatStore } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -16,9 +16,8 @@ class NewChat extends React.Component {
         chatStore.deactivateCurrentChat();
     }
 
-    handleAccept = async (selected) => {
+    handleAccept = (selected) => {
         this.waiting = true;
-        await Contact.ensureAllLoaded(selected);
         if (!selected.length || selected.filter(c => c.notFound).length) {
             this.waiting = false;
             return;
@@ -29,6 +28,7 @@ class NewChat extends React.Component {
             return;
         }
         when(() => chat.added === true, () => {
+            this.waiting = false;
             window.router.push('/app/chats');
         });
     };

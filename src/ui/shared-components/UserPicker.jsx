@@ -1,8 +1,7 @@
 const React = require('react');
 const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar, Button, Chip, List, ListHeading, ListItem, MaterialIcon, ProgressBar } = require('~/peer-ui');
-const { Input } = require('~/react-toolbox');
+const { Avatar, Button, Chip, Input, List, ListHeading, ListItem, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('peerio-icebear');
 const css = require('classnames');

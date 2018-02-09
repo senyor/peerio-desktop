@@ -12,6 +12,28 @@
     color: inherit;
   }
 
+  .p-input {
+    input {
+      box-shadow: $shadow-2;
+      background-color: $input-light;
+      border-color: transparent;
+      border-width: 0 0 4px;
+
+      &:hover {
+        box-shadow: $shadow-8;
+        background: $white;
+      }
+
+      &:focus {
+        background: $white;
+      }
+    }
+
+    .error {
+      color: $text-light-primary;
+    }
+  }
+
   .login-form {
     width: 275px;
     margin-top: 24px;
@@ -26,13 +48,9 @@
       right: 12px;
       top: 12px;
     }
-
-    .rt-input-inputElement {
-      padding-right: 40px;
-    }
   }
 
-  .title + .validated-input .rt-input-input {
+  .title + .validated-input .p-input {
     margin-top: $margin-default;
   }
 

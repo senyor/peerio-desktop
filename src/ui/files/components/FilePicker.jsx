@@ -53,6 +53,7 @@ class FilePicker extends React.Component {
 
     handleClose = () => {
         fileStore.clearSelection();
+        fileStore.clearFilter();
         this.props.onClose();
         this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     };
@@ -61,6 +62,7 @@ class FilePicker extends React.Component {
         const selected = fileStore.getSelectedFiles();
         if (!selected.length) return;
         this.props.onShare(selected);
+        fileStore.clearFilter();
     };
 
     handleSearch = val => {

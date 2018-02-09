@@ -155,7 +155,8 @@ class MessageList extends React.Component {
         if (chat.canGoUp) {
             ret.push(<div key="top-progress-bar" className="progress-wrapper">
                 {chat.loadingTopPage
-                    ? <ProgressBar type="circular" mode="indeterminate" multicolor
+                    ? <ProgressBar type="circular" mode="indeterminate"
+                        theme="multicolor"
                         className="messages-inline-progress-bar" />
                     : null}
             </div>);
@@ -190,7 +191,8 @@ class MessageList extends React.Component {
         if (chat.canGoDown) {
             ret.push(<div key="bot-progress-bar" className="progress-wrapper">
                 {chat.loadingBottomPage
-                    ? <ProgressBar type="circular" mode="indeterminate" multicolor
+                    ? <ProgressBar type="circular" mode="indeterminate"
+                        theme="multicolor"
                         className="messages-inline-progress-bar" />
                     : null}
             </div>);
@@ -235,8 +237,9 @@ class MessageList extends React.Component {
                 {this.renderChatStart()}
                 {chatStore.activeChat.loadingInitialPage
                     ? <ProgressBar type="circular" mode="indeterminate"
-                        multicolor className="messages-progress-bar" />
-                    : this.renderMessages()
+                        theme="multicolor"
+                        className="messages-progress-bar" />
+                    : null
                 }
             </div>
         );

@@ -174,7 +174,7 @@ class ChatView extends React.Component {
                                 {chat.allParticipants.length || ''}
                             </div>
                             : (chat.changingFavState
-                                ? <ProgressBar type="circular" mode="indeterminate" />
+                                ? <ProgressBar type="circular" mode="indeterminate" theme="small" />
                                 :
                                 <div
                                     onClick={chat.toggleFavoriteState}

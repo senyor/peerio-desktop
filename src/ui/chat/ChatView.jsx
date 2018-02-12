@@ -29,6 +29,10 @@ class ChatView extends React.Component {
             reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
         ];
 
+        if (chatInviteStore.activeInvite) {
+            routerStore.navigateTo(routerStore.ROUTES.channelInvite);
+        }
+
         // TODO: refactor when SDK is there for chat invites
         if (!chatStore.chats.length && !chatInviteStore.received.length) {
             routerStore.navigateTo(routerStore.ROUTES.zeroChats);

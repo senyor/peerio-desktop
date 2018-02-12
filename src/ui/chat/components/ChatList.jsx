@@ -1,5 +1,5 @@
 const React = require('react');
-const { action, observable, when } = require('mobx');
+const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
 
 const T = require('~/ui/shared-components/T');
@@ -16,21 +16,10 @@ const { getAttributeInParentChain } = require('~/helpers/dom');
 @observer
 class ChatList extends React.Component {
     componentDidMount() {
-        this.emptyReaction = when(() => !chatStore.chats.length && !chatInviteStore.received.length,
-            () => routerStore.navigateTo(routerStore.ROUTES.zeroChats));
-
-        if (chatInviteStore.activeInvite) {
-            routerStore.navigateTo(routerStore.ROUTES.channelInvite);
-        }
-
-        // TODO: this won't be needed when SDK is there
-        if (!chatStore.chats.length && chatInviteStore.received.length) {
+        // TODO: refactor when SDK is there for chat invites
+        if (!chatStore.chats.length && !chatInviteStore.activeInvite && chatInviteStore.received.length) {
             this.activateInvite(chatInviteStore.received[0].kegDbId);
         }
-    }
-
-    componentWillUnmount() {
-        this.emptyReaction();
     }
 
     activateChat = (ev) => {

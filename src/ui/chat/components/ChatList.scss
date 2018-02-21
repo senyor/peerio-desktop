@@ -1,4 +1,6 @@
-.p-list {
+.messages-list {
+  position: relative;
+
   .room-item {
     cursor: pointer;
     height: 26px;
@@ -66,6 +68,30 @@
       flex-direction: column;
       font-size: 32px;
       color: $white;
+    }
+  }
+
+  .unread-notification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    height: 48px;
+    width: $width-list;
+    bottom: 0;
+
+    color: $blue;
+    background-color: $background-root;
+    border: .25px solid $divider-light;
+
+    .material-icons {
+      color: $blue;
+    }
+
+    &.top {
+      top: 0;
+      bottom: auto;
     }
   }
 }

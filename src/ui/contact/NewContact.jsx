@@ -5,7 +5,7 @@ const { Button, Input, MaterialIcon } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
-const { contactStore, User } = require('peerio-icebear');
+const { contactStore, User, warnings } = require('peerio-icebear');
 const urls = require('peerio-icebear').config.translator.urlMap;
 const routerStore = require('~/stores/router-store');
 
@@ -66,6 +66,7 @@ class NewContact extends React.Component {
                 }
             } else {
                 this.query = '';
+                warnings.add(t('title_contactAdded', { name: c.fullNameAndUsername }));
             }
             this.waiting = false;
         });

@@ -26,9 +26,6 @@ class RouterStore {
 
     get isNewChat() { return this.currentRoute === this.ROUTES.newChat; }
     get isNewChannel() { return this.currentRoute === this.ROUTES.newChannel; }
-    get isRoomInvites() {
-        return this.currentRoute === this.ROUTES.channelInvites;
-    }
 
     get ROUTES() {
         return {
@@ -37,7 +34,7 @@ class RouterStore {
             zeroChats: '/app/zero-chats',
             newChat: '/app/chats/new-chat',
             newChannel: '/app/chats/new-channel',
-            channelInvites: '/app/channel-invites',
+            channelInvite: '/app/chats/channel-invite',
             onboarding: '/app/onboarding',
             mail: '/app/mail',
             files: '/app/files',

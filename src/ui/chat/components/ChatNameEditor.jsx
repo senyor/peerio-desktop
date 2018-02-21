@@ -13,7 +13,7 @@ class ChatNameEditor extends React.Component {
     }
 
     componentDidMount() {
-        this.inputRef.focus();
+        if (this.inputRef) this.inputRef.focus();
     }
 
     acceptNameEdit = (val) => {

@@ -1,7 +1,16 @@
 .p-progress-bar {
   display: flex;
-  height: 4px;
   width: 100%;
+
+  &.circular {
+    height: 50px;
+    width: 50px;
+
+    &.small {
+      height: 20px;
+      width: 20px;
+    }
+  }
 
   // Linear, adapted from https://codepen.io/holdencreative/pen/vEVbwv
   .progress-bar {
@@ -98,128 +107,136 @@
       }
     }
 
-    @keyframes backgroundColors {
-      0% { background-color: #4285f4; }
-      25% { background-color: #de3e35; }
-      50% { background-color: #f7c223; }
-      75% { background-color: #1b9a59; }
-      100% { background-color: #4285f4; }
-    }
-  }
+    @keyframes color {
+      100%,
+      0% {
+        background-color: $red-error;
+      }
 
-  // Circular, adapted from https://codepen.io/johnlouie04/pen/LEoOGV
-  &.circular {
-    /*
-      Spinner itself is actually a solid circle with other things occluding it to make it look like a line drawn in a circle.
-      This causes a permanent 1px outline (default blue) around the outside of the spinner. Bad.
-      In the original code, a white 2px border is used to occlude this outline. However, to allow background-colors to inherit properly, we can't use this.
-      So, instead we use this clip-path to cut off the outline.
-    */
-    clip-path: circle(48% at 50% 50%);
-
-    // Default dimensions of spinner. Can be scaled to any size, but *must* be square
-    height: 60px;
-    width: 60px;
-    background-color: $background-root;
-    border-radius: 100%;
-  }
-
-  .progress-spinner {
-    $spinner-width: 5px;
-
-    display: flex;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: inherit;
-    border-radius: 100%;
-
-    &::after {
-      content: "";
-      position: absolute;
-      height: calc(100% - #{$spinner-width * 2});
-      width: calc(100% - #{$spinner-width * 2});
-      left: $spinner-width;
-      top: $spinner-width;
-      background-color: inherit;
-      border-radius: 50%;
-    }
-
-    .rotator {
-      width: 100%;
-      overflow: hidden;
-      animation: rotate 2000ms infinite linear;
-      background-color: inherit;
-      border-radius: 100%;
-
-      &::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+      25% {
         background-color: $blue;
-        border-radius: 100%;
+      }
+
+      50% {
+        background-color: $green;
+      }
+
+      75% {
+        background-color: $yellow-warning;
+      }
+    }
+  }
+
+  // Circular, adapted from http://david.ingledow.co.uk/blog/google-material-designs-animated-loading-spinner-svg-and-css/
+  .progress-spinner {
+    .circular {
+      position: relative;
+      height: 50px;
+      width: 50px;
+      animation: rotate 2s linear infinite;
+    }
+
+    .path {
+      stroke-width: 4;
+      stroke-miterlimit: 10;
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+      stroke-linecap: round;
+      cx: 25;
+      cy: 25;
+      r: 20;
+      animation: dash 1.5s ease-in-out infinite;
+      fill: none;
+      stroke: $blue;
+    }
+
+    &.multicolor {
+      .path {
+        animation:
+          dash 1.5s ease-in-out infinite,
+          color 6s ease-in-out infinite;
       }
     }
 
-    // Multicolor
-    &.multicolor .rotator::before {
-      animation: backgroundColors (6s) ease-in-out infinite;
-    }
-
-    .inner-spin {
-      display: flex;
-      height: 100%;
-      width: 50%;
-
-      animation: rotate-left 2500ms infinite cubic-bezier(.445, .05, .55, .95);
-      transform-origin: 100% 50%;
-
-      background-color: inherit;
-
-      &:last-child {
-        margin-top: -100%;
-        float: right;
-        animation: rotate-right 2500ms infinite cubic-bezier(.445, .05, .55, .95);
-        transform-origin: 0 50%;
+    &.light {
+      .path {
+        stroke: $icon-light-active;
       }
     }
 
-    @keyframes rotate-left {
-      60%,
-      75%,
-      100% {
-        transform: rotate(360deg);
+    &.small {
+      .circular {
+        height: 20px;
+        width: 20px;
+      }
+
+      .path {
+        stroke-width: 2;
+        stroke-dasharray: 1, 80;
+        cx: 10;
+        cy: 10;
+        r: 6;
+        animation: dashSmall 1.5s ease-in-out infinite;
+      }
+    }
+
+    @keyframes color {
+      100%,
+      0% {
+        stroke: $red-error;
+      }
+
+      25% {
+        stroke: $blue;
+      }
+
+      50% {
+        stroke: $green;
+      }
+
+      75% {
+        stroke: $yellow-warning;
       }
     }
 
     @keyframes rotate {
-      0% { transform: rotate(0); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes rotate-right {
-      0%,
-      25%,
-      45% {
-        transform: rotate(0);
-      }
-
       100% {
         transform: rotate(360deg);
       }
     }
 
-    @keyframes colors {
-      0% { stroke: #4285f4; }
-      25% { stroke: #de3e35; }
-      50% { stroke: #f7c223; }
-      75% { stroke: #1b9a59; }
-      100% { stroke: #4285f4; }
+    @keyframes dash {
+      0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+      }
+
+      50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+      }
+
+      100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+      }
+    }
+
+    @keyframes dashSmall {
+      0% {
+        stroke-dasharray: 1, 80;
+        stroke-dashoffset: 0;
+      }
+
+      50% {
+        stroke-dasharray: 33, 80;
+        stroke-dashoffset: -12;
+      }
+
+      100% {
+        stroke-dasharray: 33, 80;
+        stroke-dashoffset: -41;
+      }
     }
   }
 }

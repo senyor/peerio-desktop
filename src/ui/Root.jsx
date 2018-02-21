@@ -83,7 +83,10 @@ class Root extends React.Component {
         return (
             <div>
                 <div className={`status-bar ${this.showOfflineNotification ? 'visible' : ''}`}>
-                    {this.showOfflineNotification ? <ProgressBar type="circular" mode="indeterminate" /> : null}
+                    {this.showOfflineNotification
+                        ? <ProgressBar type="circular" mode="indeterminate" theme="light small" />
+                        : null
+                    }
                     #{socket.reconnectAttempt}&nbsp;{t('error_connecting')}&nbsp;
                     {appState.isOnline && this.renderReconnectSection()}
                 </div>

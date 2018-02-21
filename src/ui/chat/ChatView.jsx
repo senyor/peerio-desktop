@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('~/peer-ui');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
-const { chatStore } = require('peerio-icebear');
+const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
@@ -29,7 +29,12 @@ class ChatView extends React.Component {
             reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
         ];
 
-        if (!chatStore.chats.length) {
+        if (chatInviteStore.activeInvite) {
+            routerStore.navigateTo(routerStore.ROUTES.channelInvite);
+        }
+
+        // TODO: refactor when SDK is there for chat invites
+        if (!chatStore.chats.length && !chatInviteStore.received.length) {
             routerStore.navigateTo(routerStore.ROUTES.zeroChats);
         }
     }
@@ -173,7 +178,7 @@ class ChatView extends React.Component {
                                 {chat.allParticipants.length || ''}
                             </div>
                             : (chat.changingFavState
-                                ? <ProgressBar type="circular" mode="indeterminate" />
+                                ? <ProgressBar type="circular" mode="indeterminate" theme="small" />
                                 :
                                 <div
                                     onClick={chat.toggleFavoriteState}

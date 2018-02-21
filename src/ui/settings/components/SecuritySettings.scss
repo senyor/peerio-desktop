@@ -10,12 +10,6 @@
 
   .twofa-container {
     @extend %flex-row;
-
-    .qr-code {
-      .p-progress-bar {
-        background-color: #f7f7f7;
-      }
-    }
   }
 
   .totp-input {

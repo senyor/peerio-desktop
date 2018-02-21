@@ -70,11 +70,11 @@ class ChannelInvite extends React.Component {
 
                     {User.current.channelsLeft > 0
                         ? <div className="buttons">
-                            <Button label={t('button_nay')}
+                            <Button label={t('button_decline')}
                                 theme="affirmative secondary"
                                 onClick={this.rejectInvite}
                             />
-                            <Button label={t('button_aye')}
+                            <Button label={t('button_accept')}
                                 theme="affirmative"
                                 onClick={this.acceptInvite}
                             />

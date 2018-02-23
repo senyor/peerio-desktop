@@ -54,6 +54,15 @@
     padding: $padding-small;
     text-align: right;
   }
+
+  // Themes
+  &.warning {
+    border-top: 8px solid $yellow-warning;
+  }
+
+  &.error {
+    border-top: 8px solid $red-error;
+  }
 }
 
 // Override HTML defaults

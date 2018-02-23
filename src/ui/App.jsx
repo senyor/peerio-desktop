@@ -71,13 +71,13 @@ class App extends React.Component {
 
     get migrationDialog() {
         const migrationDialogActions = [
-            { label: t('button_unshare'), onClick: this.unshare },
-            { label: t('button_continue'), onClick: this.continueMigration }
+            { label: t('button_no'), onClick: this.unshare },
+            { label: t('button_yes'), onClick: this.continueMigration }
         ];
 
         const unshareDialogActions = [
             { label: t('button_cancel'), onClick: this.cancelUnshare },
-            { label: t('button_continue'), onClick: this.continueUnshare }
+            { label: t('button_unshareAll'), onClick: this.continueUnshare }
         ];
 
         const textParser = {

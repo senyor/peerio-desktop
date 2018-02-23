@@ -2,10 +2,11 @@ const React = require('react');
 const AppNav = require('~/ui/AppNav');
 const uiStore = require('~/stores/ui-store');
 const { Dialog, ProgressBar } = require('~/peer-ui');
+const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { observer } = require('mobx-react');
-const { observable } = require('mobx');
+const { action, observable } = require('mobx');
 const { clientApp } = require('peerio-icebear');
 
 @observer
@@ -38,6 +39,44 @@ class App extends React.Component {
         );
     }
 
+    @observable migrationDialogVisible = true;
+    sharedFiles = {
+        fileId: '',
+        filename: 'filename.txt'
+    };
+
+    @action.bound unshare() {
+        this.migrationDialogVisible = false;
+    }
+
+    @action.bound continueMigration() {
+        this.migrationDialogVisible = false;
+    }
+
+    downloadFile = () => {
+        console.log('download file');
+    }
+
+    get migrationDialog() {
+        const migrationDialogActions = [
+            { label: t('button_unshare'), onClick: this.unshare },
+            { label: t('button_continue'), onClick: this.continueMigration }
+        ];
+
+        const textParser = {
+            downloadFile: () => <a className="clickable" onClick={this.downloadFile}>{this.sharedFiles.filename}</a>
+        };
+
+        return (
+            <Dialog active={this.migrationDialogVisible}
+                actions={migrationDialogActions}
+                title={t('dialog_migrationTitle')}
+            >
+                <T k="dialog_migrationText">{textParser}</T>
+            </Dialog>
+        );
+    }
+
     componentWillMount() {
         uiStore.init();
     }
@@ -66,6 +105,7 @@ class App extends React.Component {
                             : null
                     }
                 </Dialog>
+                {this.migrationDialog}
                 {this.signatureErrorDialog}
             </div>
         );

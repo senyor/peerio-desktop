@@ -7,7 +7,7 @@ const { t } = require('peerio-translator');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { observer } = require('mobx-react');
 const { action, observable } = require('mobx');
-const { clientApp } = require('peerio-icebear');
+const { clientApp, warnings } = require('peerio-icebear');
 
 @observer
 class App extends React.Component {
@@ -40,17 +40,29 @@ class App extends React.Component {
     }
 
     @observable migrationDialogVisible = true;
+    @observable unshareSelected = false;
+
     sharedFiles = {
         fileId: '',
         filename: 'filename.txt'
     };
 
     @action.bound unshare() {
-        this.migrationDialogVisible = false;
+        this.unshareSelected = true;
     }
 
     @action.bound continueMigration() {
         this.migrationDialogVisible = false;
+        warnings.add(t('warning_sharingHistory'));
+    }
+
+    @action.bound cancelUnshare() {
+        this.unshareSelected = false;
+    }
+
+    @action.bound continueUnshare() {
+        this.migrationDialogVisible = false;
+        warnings.add(t('warning_unsharedAll'));
     }
 
     downloadFile = () => {
@@ -63,16 +75,31 @@ class App extends React.Component {
             { label: t('button_continue'), onClick: this.continueMigration }
         ];
 
+        const unshareDialogActions = [
+            { label: t('button_cancel'), onClick: this.cancelUnshare },
+            { label: t('button_continue'), onClick: this.continueUnshare }
+        ];
+
         const textParser = {
             downloadFile: () => <a className="clickable" onClick={this.downloadFile}>{this.sharedFiles.filename}</a>
         };
 
         return (
             <Dialog active={this.migrationDialogVisible}
-                actions={migrationDialogActions}
-                title={t('dialog_migrationTitle')}
+                actions={this.unshareSelected
+                    ? unshareDialogActions
+                    : migrationDialogActions
+                }
+                title={this.unshareSelected
+                    ? t('dialog_unshareTitle')
+                    : t('dialog_migrationTitle')
+                }
+                theme="warning"
             >
-                <T k="dialog_migrationText">{textParser}</T>
+                {this.unshareSelected
+                    ? <T k="dialog_unshareText" />
+                    : <T k="dialog_migrationText">{textParser}</T>
+                }
             </Dialog>
         );
     }

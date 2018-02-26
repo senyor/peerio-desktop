@@ -267,8 +267,8 @@ class Files extends React.Component {
             : fileStore.folders.currentFolder.foldersAndFilesDefaultSorting;
     }
 
-    @computed get bulkActionsVisible() {
-        return fileStore.getSelectedFiles().length || fileStore.getSelectedFolders().length;
+    @computed get selectedFilesAndFolders() {
+        return fileStore.getSelectedFiles().length + fileStore.getSelectedFolders().length;
     }
 
     get breadCrumbsHeader() {
@@ -314,7 +314,7 @@ class Files extends React.Component {
                     onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
                 />
-                {this.bulkActionsVisible
+                {this.selectedFilesAndFolders > 0
                     ? <div className="buttons-container bulk-buttons">
                         {bulkButtons}
                     </div>

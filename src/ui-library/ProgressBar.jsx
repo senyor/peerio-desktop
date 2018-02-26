@@ -9,11 +9,10 @@ const css = require('classnames');
     className       string
     mode            string      determinate (default), indeterminate
     type            string      linear (default), circular
+    theme           string      multicolor, light, small
 
     value           int         (determinate) current progress value of the progress bar
     max             int         (determinate) max progress value of progress bar
-
-    multicolor      bool
     ----------------------------------------
 
     determinate + circular will not work (will default to indeterminate)
@@ -35,6 +34,7 @@ class ProgressBar extends React.Component {
             <div className={css(
                 'p-progress-bar',
                 this.props.className,
+                this.props.theme,
                 { circular: this.props.type === 'circular' }
             )}>
                 { this.props.type !== 'circular'
@@ -43,19 +43,19 @@ class ProgressBar extends React.Component {
                             className={css(
                                 this.props.type || 'linear',
                                 this.props.mode || 'determinate',
-                                { multicolor: this.props.multicolor }
+                                { multicolor: this.props.multicolor },
+                                this.props.theme
                             )}
                             style={style}
                         />
                     </div>
                     : <div className={css(
                         'progress-spinner',
-                        { multicolor: this.props.multicolor }
+                        this.props.theme
                     )}>
-                        <div className="rotator">
-                            <div className="inner-spin" />
-                            <div className="inner-spin" />
-                        </div>
+                        <svg className="circular">
+                            <circle className="path" />
+                        </svg>
                     </div>
                 }
             </div>

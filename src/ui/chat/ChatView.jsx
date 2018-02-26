@@ -32,6 +32,10 @@ class ChatView extends React.Component {
             reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
         ];
 
+        if (chatInviteStore.activeInvite) {
+            routerStore.navigateTo(routerStore.ROUTES.channelInvite);
+        }
+
         // TODO: refactor when SDK is there for chat invites
         if (!chatStore.chats.length && !chatInviteStore.received.length) {
             routerStore.navigateTo(routerStore.ROUTES.zeroChats);
@@ -177,7 +181,7 @@ class ChatView extends React.Component {
                                 {chat.allParticipants.length || ''}
                             </div>
                             : (chat.changingFavState
-                                ? <ProgressBar type="circular" mode="indeterminate" />
+                                ? <ProgressBar type="circular" mode="indeterminate" theme="small" />
                                 :
                                 <div
                                     onClick={chat.toggleFavoriteState}

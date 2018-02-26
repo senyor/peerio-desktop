@@ -13,7 +13,7 @@ const { pickLocalFiles } = require('~/helpers/file');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
-const { getFolderByEvent } = require('~/helpers/icebear-dom');
+const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -301,6 +301,11 @@ class Files extends React.Component {
         );
     }
 
+    @action.bound toggleSelect(ev) {
+        const file = getFileByEvent(ev);
+        file.selected = !file.selected;
+    }
+
     render() {
         if (!fileStore.files.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
@@ -315,17 +320,14 @@ class Files extends React.Component {
                     className={css({ 'share-in-progress': f.shareProgress > 0 })}
                     key={f.folderId}
                     folder={f}
-
                     moveable={fileStore.folders.root.folders.length > 0}
                     onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.deleteFolder}
                     onChangeFolder={this.changeFolder}
-
                     folderActions
                     folderDetails
                     checkboxPlaceholder
-
                     shareProgress={f.shareProgress}
                 /> :
                 <FileLine
@@ -336,6 +338,8 @@ class Files extends React.Component {
                     fileActions
                     fileDetails
                     checkbox
+                    onToggleSelect={this.toggleSelect}
+                    selected={f.selected}
                 />);
         }
         this.enqueueCheck();

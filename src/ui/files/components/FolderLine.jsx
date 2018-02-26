@@ -46,7 +46,7 @@ class FolderLine extends React.Component {
 
                 <div className="file-icon"
                     onClick={this.props.onChangeFolder} >
-                    <MaterialIcon icon="folder" />
+                    <MaterialIcon icon={folder.isShared ? 'folder_shared' : 'folder'} />
                 </div>
 
                 <div className="file-name clickable selectable"

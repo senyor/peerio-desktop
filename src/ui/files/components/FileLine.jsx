@@ -96,8 +96,8 @@ class FileLine extends React.Component {
         }
 
         const containerStyle = {
-            selected: this.checked,
-            'selected-row': file.selected,
+            selected: this.props.selected,
+            'selected-row': this.props.selected,
             'waiting-3rd-party': !file.uploading && !file.readyForDownload
         };
 

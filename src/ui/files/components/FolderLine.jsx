@@ -25,7 +25,8 @@ class FolderLine extends React.Component {
             <div data-folderid={folder.folderId}
                 className={css(
                     'row',
-                    this.props.className
+                    this.props.className,
+                    { 'selected-row': this.props.selected }
                 )}
                 onMouseEnter={this.onShowActions}
                 onMouseLeave={this.onHideActions}>

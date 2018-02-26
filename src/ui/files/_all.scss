@@ -25,10 +25,16 @@
   // Common class for FileLine/Folderline checkbox & checkbox placeholder
   // needed to maintain the table-style layout while using flex containers
   .file-checkbox {
+    visibility: hidden;
     width: 36px;
     min-width: 36px;
     margin-left: 24px;
     margin-right: 16px;
+  }
+
+  .row:hover .file-checkbox,
+  .row.selected-row .file-checkbox {
+    visibility: visible;
   }
 
   .file-icon {

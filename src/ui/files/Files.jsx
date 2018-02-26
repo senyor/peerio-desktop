@@ -301,9 +301,14 @@ class Files extends React.Component {
         );
     }
 
-    @action.bound toggleSelect(ev) {
+    toggleSelectFile(ev) {
         const file = getFileByEvent(ev);
         file.selected = !file.selected;
+    }
+
+    toggleSelectFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        folder.selected = !folder.selected;
     }
 
     render() {
@@ -327,7 +332,9 @@ class Files extends React.Component {
                     onChangeFolder={this.changeFolder}
                     folderActions
                     folderDetails
-                    checkboxPlaceholder
+                    checkbox
+                    onToggleSelect={this.toggleSelectFolder}
+                    selected={f.selected}
                     shareProgress={f.shareProgress}
                 /> :
                 <FileLine
@@ -338,7 +345,7 @@ class Files extends React.Component {
                     fileActions
                     fileDetails
                     checkbox
-                    onToggleSelect={this.toggleSelect}
+                    onToggleSelect={this.toggleSelectFile}
                     selected={f.selected}
                 />);
         }

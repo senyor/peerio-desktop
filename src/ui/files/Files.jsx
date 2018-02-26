@@ -267,7 +267,45 @@ class Files extends React.Component {
             : fileStore.folders.currentFolder.foldersAndFilesDefaultSorting;
     }
 
+    @computed get bulkActionsVisible() {
+        return fileStore.getSelectedFiles().length || fileStore.getSelectedFolders().length;
+    }
+
     get breadCrumbsHeader() {
+        const bulkShare = () => {
+            console.log('bulk share');
+        };
+
+        const bulkButtons = [
+            {
+                label: t('button_share'),
+                materialIcon: 'person_add',
+                onClick: bulkShare
+            },
+            {
+                label: t('button_download'),
+                materialIcon: 'file_download'
+            },
+            {
+                label: t('button_move'),
+                customIcon: 'move'
+            },
+            {
+                label: t('button_delete'),
+                materialIcon: 'delete'
+            }
+        ].map(a => {
+            return (
+                <Button
+                    key={a.label}
+                    label={a.label}
+                    icon={a.materialIcon}
+                    customIcon={a.customIcon}
+                    onClick={a.onClick}
+                />
+            );
+        });
+
         return (
             <div className="files-header" data-folderid={fileStore.folders.currentFolder.folderId}>
                 <Breadcrumb currentFolder={fileStore.folders.currentFolder}
@@ -276,17 +314,24 @@ class Files extends React.Component {
                     onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
                 />
-                <Button
-                    label={t('button_newFolder')}
-                    className="new-folder"
-                    onClick={this.showAddFolderPopup}
-                    theme="affirmative secondary"
-                />
-                <Button className="button-affirmative"
-                    label={t('button_upload')}
-                    onClick={this.handleUpload}
-                    theme="affirmative"
-                />
+                {this.bulkActionsVisible
+                    ? <div className="buttons-container bulk-buttons">
+                        {bulkButtons}
+                    </div>
+                    : <div className="buttons-container file-buttons">
+                        <Button
+                            label={t('button_newFolder')}
+                            className="new-folder"
+                            onClick={this.showAddFolderPopup}
+                            theme="affirmative secondary"
+                        />
+                        <Button className="button-affirmative"
+                            label={t('button_upload')}
+                            onClick={this.handleUpload}
+                            theme="affirmative"
+                        />
+                    </div>
+                }
             </div>
         );
     }

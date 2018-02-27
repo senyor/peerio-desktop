@@ -65,7 +65,8 @@ class FolderLine extends React.Component {
 
                 {this.props.folderDetails && <div className="file-size text-right" /> }
 
-                {this.props.folderActions &&
+                { /* TODO: use spread operator */
+                    this.props.folderActions &&
                     <div className="file-actions">
                         <FolderActions
                             onClick={this.props.onClick}
@@ -73,6 +74,7 @@ class FolderLine extends React.Component {
                             moveable={this.props.moveable}
                             onMove={this.props.onMoveFolder}
                             onDelete={this.props.onDeleteFolder}
+                            onShare={this.props.onShare}
                             data-folderid={folder.folderId}
                             disabled={this.props.selected}
                         />

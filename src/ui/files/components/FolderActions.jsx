@@ -14,6 +14,15 @@ class FolderActions extends React.Component {
                 disabled={this.props.disabled}
                 {...getDataProps(this.props)}
             >
+                {this.props.onShare
+                    ? <MenuItem caption={t('button_share')}
+                        icon="reply"
+                        onClick={this.props.onShare}
+                        className="reverse-icon"
+                        disabled={this.props.shareDisabled}
+                    />
+                    : null
+                }
                 {this.props.moveable &&
                 <MenuItem caption={t('button_move')}
                     customIcon="move"

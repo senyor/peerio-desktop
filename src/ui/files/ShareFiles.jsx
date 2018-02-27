@@ -19,6 +19,7 @@ class ShareFiles extends React.Component {
     };
 
     closeUserPicker = () => {
+        fileStore.clearSelection();
         window.router.goBack();
     };
 

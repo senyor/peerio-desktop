@@ -71,6 +71,11 @@ class Files extends React.Component {
         fileStore.folders.save();
     }
 
+    @action.bound shareFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        fileStore.folders.shareFolder(folder);
+    }
+
     @observable triggerAddFolderPopup = false;
     @observable addFolderPopupVisible = false;
     @observable triggerRenameFolderPopup = false;
@@ -383,6 +388,7 @@ class Files extends React.Component {
                     onToggleSelect={this.toggleSelectFolder}
                     selected={f.selected}
                     shareProgress={f.shareProgress}
+                    onShare={this.shareFolder}
                 /> :
                 <FileLine
                     key={f.fileId}

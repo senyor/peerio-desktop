@@ -21,6 +21,11 @@
     &:last-of-type {
       border-bottom: 0;
     }
+
+    // "Disabled" styles for when folder share in progress
+    &.disabled {
+      color: $text-dark-hint;
+    }
   }
 
   // Common class for FileLine/Folderline checkbox & checkbox placeholder

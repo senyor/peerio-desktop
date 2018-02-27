@@ -20,13 +20,17 @@ class FolderLine extends React.Component {
 
     render() {
         const { folder } = this.props;
+        console.log(folder);
 
         return (
             <div data-folderid={folder.folderId}
                 className={css(
                     'row',
                     this.props.className,
-                    { 'selected-row': this.props.selected }
+                    {
+                        'selected-row': this.props.selected,
+                        disabled: folder.isBlocked
+                    }
                 )}
                 onMouseEnter={this.onShowActions}
                 onMouseLeave={this.onHideActions}>
@@ -76,7 +80,7 @@ class FolderLine extends React.Component {
                             onDelete={this.props.onDeleteFolder}
                             onShare={this.props.onShare}
                             data-folderid={folder.folderId}
-                            disabled={this.props.selected}
+                            disabled={this.props.selected || folder.isBlocked}
                         />
                     </div>
                 }

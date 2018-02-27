@@ -29,6 +29,7 @@ const appRoot = document.getElementById('root');
     tooltipPosition string      default 'top'
 
     onClick         function    use this very rarely, e.g. to stopPropagation of other click events
+    disabled        bool        disables the button
     ----------------------------------------
 */
 
@@ -124,7 +125,7 @@ class Menu extends React.Component {
                     icon={this.props.icon}
                     customIcon={this.props.customIcon}
                     onClick={this.handleMenuClick}
-                    disabled={this.menuActive}
+                    disabled={this.menuActive || this.props.disabled}
                 >
                     {this.props.customButton}
                 </Button>

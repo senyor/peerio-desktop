@@ -377,7 +377,7 @@ class Files extends React.Component {
                     onChangeFolder={this.changeFolder}
                     folderActions
                     folderDetails
-                    checkbox
+                    checkbox={!f.isShared}
                     onToggleSelect={this.toggleSelectFolder}
                     selected={f.selected}
                     shareProgress={f.shareProgress}

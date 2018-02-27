@@ -42,7 +42,7 @@ class FolderLine extends React.Component {
                             checked={this.props.selected}
                             onChange={this.props.onToggleSelect}
                         />
-                        : this.props.checkboxPlaceholder ? <div className="file-checkbox" /> : null
+                        : <div className="file-checkbox" />
                 }
 
                 <div className="file-icon"
@@ -74,6 +74,7 @@ class FolderLine extends React.Component {
                             onMove={this.props.onMoveFolder}
                             onDelete={this.props.onDeleteFolder}
                             data-folderid={folder.folderId}
+                            disabled={this.props.selected}
                         />
                     </div>
                 }

@@ -11,6 +11,7 @@ class FolderActions extends React.Component {
                 icon="more_vert"
                 position="bottom-right"
                 onClick={this.props.onClick}
+                disabled={this.props.disabled}
                 {...getDataProps(this.props)}
             >
                 {this.props.moveable &&

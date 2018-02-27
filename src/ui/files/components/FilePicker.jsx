@@ -115,7 +115,7 @@ class FilePicker extends React.Component {
                     key={f.folderId}
                     folder={f}
                     onChangeFolder={this.changeFolder}
-                    checkbox
+                    checkbox={!f.isShared}
                     selected={f.selected}
                     onToggleSelect={this.toggleSelectFolder}
                 /> :

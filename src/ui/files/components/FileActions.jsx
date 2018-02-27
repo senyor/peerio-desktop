@@ -27,9 +27,8 @@ class FileActions extends React.Component {
             >
                 {this.props.shareable
                     ? <MenuItem caption={t('button_share')}
-                        icon="reply"
+                        icon="person_add"
                         onClick={this.props.onShare}
-                        className="reverse-icon"
                         disabled={this.props.shareDisabled}
                     />
                     : null

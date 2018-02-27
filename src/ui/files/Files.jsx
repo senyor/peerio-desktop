@@ -10,6 +10,7 @@ const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
 const ZeroScreen = require('./components/ZeroScreen');
 const { pickLocalFiles } = require('~/helpers/file');
+const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
@@ -63,11 +64,9 @@ class Files extends React.Component {
         fileStore.folderFilter = '';
     }
 
-    @action.bound deleteFolder(ev) {
-        const folder = getFolderByEvent(ev);
-        if (!confirm(t('title_deleteFolder', { folderName: folder.name }))) return;
-        fileStore.folders.currentFolder = folder.parent;
-        fileStore.folders.deleteFolder(folder);
+    @action.bound handleDeleteFolder() {
+        fileStore.folders.currentFolder = this.folderToDelete.parent;
+        fileStore.folders.deleteFolder(this.folderToDelete);
         fileStore.folders.save();
     }
 
@@ -80,9 +79,12 @@ class Files extends React.Component {
     @observable addFolderPopupVisible = false;
     @observable triggerRenameFolderPopup = false;
     @observable renameFolderPopupVisible = false;
+    @observable triggerDeleteFolderPopup = false;
+    @observable deleteFolderPopupVisible = false;
     @observable folderName = '';
     @observable folderToRename;
     @observable folderToMove;
+    @observable folderToDelete;
 
     @action.bound showAddFolderPopup() {
         this.folderName = '';
@@ -133,6 +135,11 @@ class Files extends React.Component {
         }
     }
 
+    @action.bound showDeleteFolderPopup(ev) {
+        this.triggerDeleteFolderPopup = true;
+        this.folderToDelete = getFolderByEvent(ev);
+    }
+
     onAddPopupRef = (ref) => {
         if (ref) this.addFolderPopupVisible = true;
     };
@@ -140,6 +147,10 @@ class Files extends React.Component {
     onRenamePopupRef = (ref) => {
         if (ref) this.renameFolderPopupVisible = true;
     };
+
+    onDeletePopupRef = (ref) => {
+        if (ref) this.deleteFolderPopupVisible = true;
+    }
 
     get addFolderPopup() {
         const hide = () => {
@@ -152,7 +163,7 @@ class Files extends React.Component {
         ];
         return (
             <Dialog title={t('button_newFolder')}
-                active={this.addFolderPopupVisible} type="small" ref={this.onAddPopupRef}
+                active={this.addFolderPopupVisible} theme="small" ref={this.onAddPopupRef}
                 actions={dialogActions}
                 onCancel={hide}
                 className="add-folder-popup">
@@ -175,7 +186,7 @@ class Files extends React.Component {
         ];
         return (
             <Dialog title={t('button_rename')}
-                active={this.renameFolderPopupVisible} type="small" ref={this.onRenamePopupRef}
+                active={this.renameFolderPopupVisible} theme="small" ref={this.onRenamePopupRef}
                 actions={dialogActions} onKeyDown={this.keyDownRenameFolder}
                 onCancel={hide}
                 className="add-folder-popup">
@@ -184,6 +195,32 @@ class Files extends React.Component {
                     onKeyDown={this.handleKeyDownRenameFolder}
                     autoFocus
                 />
+            </Dialog>);
+    }
+
+    get deleteFolderPopup() {
+        const hide = () => {
+            this.deleteFolderPopupVisible = false;
+            this.triggerDeleteFolderPopup = false;
+        };
+
+        const deleteClick = () => {
+            this.handleDeleteFolder();
+            hide();
+        };
+
+        const dialogActions = [
+            { label: t('button_cancel'), onClick: hide },
+            { label: t('button_delete'), onClick: deleteClick }
+        ];
+
+        return (
+            <Dialog title={t('dialog_deleteFolderTitle')}
+                active={this.deleteFolderPopupVisible} theme="small" ref={this.onDeletePopupRef}
+                actions={dialogActions}
+                onCancel={hide}
+                className="delete-folder-popup">
+                <T k="dialog_deleteFolderText" />
             </Dialog>);
     }
 
@@ -317,7 +354,7 @@ class Files extends React.Component {
                 <Breadcrumb currentFolder={fileStore.folders.currentFolder}
                     onSelectFolder={this.changeFolder}
                     onMove={this.moveFolder}
-                    onDelete={this.deleteFolder}
+                    onDelete={this.showDeleteFolderPopup}
                     onRename={this.showRenameFolderPopup}
                     bulkSelected={this.selectedCount}
                 />
@@ -380,7 +417,7 @@ class Files extends React.Component {
                     moveable={fileStore.folders.root.folders.length > 0}
                     onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
-                    onDeleteFolder={this.deleteFolder}
+                    onDeleteFolder={this.showDeleteFolderPopup}
                     onChangeFolder={this.changeFolder}
                     folderActions
                     folderDetails
@@ -436,6 +473,7 @@ class Files extends React.Component {
                 }
                 {this.triggerAddFolderPopup && this.addFolderPopup}
                 {this.triggerRenameFolderPopup && this.renameFolderPopup}
+                {this.triggerDeleteFolderPopup && this.deleteFolderPopup}
             </div>
         );
     }

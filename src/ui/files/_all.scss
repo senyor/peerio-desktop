@@ -33,7 +33,8 @@
   }
 
   .row:hover .file-checkbox,
-  .row.selected-row .file-checkbox {
+  .row.selected-row .file-checkbox,
+  .file-checkbox.folder-share-progress {
     visibility: visible;
   }
 

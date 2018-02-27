@@ -194,7 +194,7 @@ class Files extends React.Component {
         }));
     }
 
-    toggleSelection = val => {
+    toggleSelectAll = val => {
         if (val) {
             fileStore.selectAll();
         } else {
@@ -313,6 +313,7 @@ class Files extends React.Component {
                     onMove={this.moveFolder}
                     onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
+                    bulkSelected={this.selectedFilesAndFolders}
                 />
                 {this.selectedFilesAndFolders > 0
                     ? <div className="buttons-container bulk-buttons">

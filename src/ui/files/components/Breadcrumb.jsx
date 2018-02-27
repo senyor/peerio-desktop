@@ -2,6 +2,7 @@ const React = require('react');
 const { computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { MaterialIcon } = require('~/peer-ui');
+const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const FolderActions = require('./FolderActions');
 
@@ -132,23 +133,38 @@ class Breadcrumb extends React.Component {
         // TODO: add unique id for root folder
         return (
             <div className="breadcrumb-container">
-                <div className="breadcrumb">
-                    {this.folderPath.map((folder, i) => (
-                        <div key={`${folder.folderId}-${folder.name}`}
-                            data-folderid={folder.folderId || 'root'}
-                            className="breadcrumb-entry">
-                            <a className="folder-link clickable"
-                                onClick={this.props.onSelectFolder}>
-                                {i > this.foldersToEllipsize
-                                    ? folder.name || t('title_files')
-                                    : '...'
-                                }
-                            </a>
-                            {i !== folderPath.length - 1 && <MaterialIcon icon="keyboard_arrow_right" />}
+                {this.props.bulkSelected
+                    ? <div className="breadcrumb">
+                        <div className="breadcrumb-entry">
+                            <span className="folder-name">
+                                {this.props.currentFolder.name || t('title_files')}
+                            </span>
+                            <MaterialIcon icon="keyboard_arrow_right" />
                         </div>
-                    ))}
-                </div>
-                {!this.props.currentFolder.isRoot && !this.props.noActions &&
+                        <div className="breadcrumb-entry">
+                            <span className="folder-name">
+                                <T k="title_selected" tag="span" /> ({this.props.bulkSelected})
+                            </span>
+                        </div>
+                    </div>
+                    : <div className="breadcrumb">
+                        {this.folderPath.map((folder, i) => (
+                            <div key={`${folder.folderId}-${folder.name}`}
+                                data-folderid={folder.folderId || 'root'}
+                                className="breadcrumb-entry">
+                                <a className="folder-name clickable"
+                                    onClick={this.props.onSelectFolder}>
+                                    {i > this.foldersToEllipsize
+                                        ? folder.name || t('title_files')
+                                        : '...'
+                                    }
+                                </a>
+                                {i !== folderPath.length - 1 && <MaterialIcon icon="keyboard_arrow_right" />}
+                            </div>
+                        ))}
+                    </div>
+                }
+                {!this.props.currentFolder.isRoot && !this.props.noActions && !this.props.bulkSelected &&
                     <FolderActions
                         moveable
                         onMove={this.props.onMove}

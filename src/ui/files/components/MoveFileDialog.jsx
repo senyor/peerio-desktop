@@ -128,6 +128,7 @@ class MoveFileDialog extends React.Component {
                     active
                     title={t('title_moveToSharedFolder')}
                     className="move-file-confirm-share"
+                    theme="small"
                 >
                     <T k="title_moveToSharedFolderDescription" />
                     <div className="share-warning-toggle">

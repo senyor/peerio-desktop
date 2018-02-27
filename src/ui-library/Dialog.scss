@@ -38,6 +38,10 @@
   background-color: $background-root;
   border-radius: 8px;
 
+  &.small {
+    width: 360px;
+  }
+
   .body {
     flex-grow: 1;
     padding: 24px;

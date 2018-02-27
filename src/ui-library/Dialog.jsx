@@ -122,7 +122,8 @@ class Dialog extends React.Component {
                 <dialog open
                     className={css(
                         'p-dialog',
-                        this.props.className
+                        this.props.className,
+                        this.props.theme
                     )}
                 >
                     <div className="body">

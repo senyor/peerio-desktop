@@ -258,6 +258,7 @@ class Files extends React.Component {
             this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
             fileStore.folders.currentFolder = folder;
             fileStore.clearFilter();
+            fileStore.clearSelection();
         }
     }
 
@@ -267,7 +268,7 @@ class Files extends React.Component {
             : fileStore.folders.currentFolder.foldersAndFilesDefaultSorting;
     }
 
-    @computed get selectedFilesAndFolders() {
+    @computed get selectedCount() {
         return fileStore.getSelectedFiles().length + fileStore.getSelectedFolders().length;
     }
 
@@ -313,9 +314,9 @@ class Files extends React.Component {
                     onMove={this.moveFolder}
                     onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
-                    bulkSelected={this.selectedFilesAndFolders}
+                    bulkSelected={this.selectedCount}
                 />
-                {this.selectedFilesAndFolders > 0
+                {this.selectedCount > 0
                     ? <div className="buttons-container bulk-buttons">
                         {bulkButtons}
                     </div>

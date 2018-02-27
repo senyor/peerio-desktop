@@ -135,9 +135,15 @@ class Breadcrumb extends React.Component {
             <div className="breadcrumb-container">
                 {this.props.bulkSelected
                     ? <div className="breadcrumb">
+                        <div className="breadcrumb-entry" data-folderid="root">
+                            <a className="folder-name clickable" onClick={this.props.onSelectFolder}>
+                                {t('title_files')}
+                            </a>
+                            <MaterialIcon icon="keyboard_arrow_right" />
+                        </div>
                         <div className="breadcrumb-entry">
                             <span className="folder-name">
-                                {this.props.currentFolder.name || t('title_files')}
+                                ...
                             </span>
                             <MaterialIcon icon="keyboard_arrow_right" />
                         </div>

@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('~/peer-ui');
+const { Avatar, Dialog, List, ListItem, Button } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getContactByEvent } = require('~/helpers/icebear-dom');
@@ -46,11 +46,17 @@ class ModifyShareDialog extends React.Component {
         this.resolve = null;
     }
 
+    @action.bound share() {
+        // TODO: this may be different is the dialog invoked
+        // from different circumstances
+        this.close();
+    }
+
     render() {
         if (!this.visible) return false;
         const dialogActions = [
             { label: t('button_cancel'), onClick: this.close },
-            { label: t('button_share'), onClick: this.close }
+            { label: t('button_save'), onClick: this.close }
         ];
 
         return (
@@ -58,7 +64,7 @@ class ModifyShareDialog extends React.Component {
                 className="share-with-dialog"
                 actions={dialogActions}
                 onCancel={this.close}
-                title={t('title_shareWith')}>
+                title={t('title_sharedWith')}>
                 <div className="share-with-contents">
                     <div className="chat-list-container">
                         <div className="list-dms-container">
@@ -72,7 +78,7 @@ class ModifyShareDialog extends React.Component {
                         </div>
                     </div>
                     <div className="receipt-wrapper">
-                        <Button label="Share with others" />
+                        <Button icon="person_add" label={t('title_shareWithOthers')} onClick={this.share} />
                     </div>
                 </div>
             </Dialog>

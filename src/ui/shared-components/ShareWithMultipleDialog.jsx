@@ -56,6 +56,12 @@ class ShareWithMultipleDialog extends React.Component {
         this.resolve = null;
     }
 
+    @action.bound share() {
+        this.visible = false;
+        this.resolve(this.selectedUsers.values());
+        this.resolve = null;
+    }
+
     get sharedWithBlock() {
         return this.selectedUsers.keys().map(username => (
             <Avatar
@@ -78,7 +84,7 @@ class ShareWithMultipleDialog extends React.Component {
         if (!this.visible) return false;
         const dialogActions = [
             { label: t('button_cancel'), onClick: this.close },
-            { label: t('button_share'), onClick: this.close }
+            { label: t('button_share'), onClick: this.share }
         ];
 
         return (
@@ -112,7 +118,7 @@ class ShareWithMultipleDialog extends React.Component {
                         </div>
                         {!!this.selectedUsers.keys().length &&
                             <div className="receipt-wrapper">
-                                <Button label="View shared with" onClick={this.modifySharedWith} />
+                                <Button label={t('title_viewSharedWith')} onClick={this.modifySharedWith} />
                                 {this.sharedWithBlock}
                             </div>}
                     </div>

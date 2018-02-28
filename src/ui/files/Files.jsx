@@ -71,10 +71,12 @@ class Files extends React.Component {
         fileStore.folders.save();
     }
 
-    @action.bound shareFolder(ev) {
-        // const folder = getFolderByEvent(ev);
-        // fileStore.folders.shareFolder(folder);
-        this.shareWithMultipleDialog.show();
+    @action.bound async shareFolder(ev) {
+        // IMPORTANT: syntetic events are reused, so cache folder before await
+        const folder = getFolderByEvent(ev);
+        const contacts = await this.shareWithMultipleDialog.show();
+        if (!contacts) return;
+        fileStore.folders.shareFolder(folder, contacts);
     }
 
     @observable triggerAddFolderPopup = false;
@@ -313,7 +315,7 @@ class Files extends React.Component {
     }
 
     @computed get selectedCount() {
-        return fileStore.getSelectedFiles().length + fileStore.getSelectedFolders().length;
+        return fileStore.getSelectedFiles().length + fileStore.selectedFolders.length;
     }
 
     get breadCrumbsHeader() {

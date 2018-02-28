@@ -59,7 +59,7 @@ class FilePicker extends React.Component {
     };
 
     handleShare = () => {
-        const selected = fileStore.getSelectedFiles();
+        const selected = fileStore.selectedFilesOrFolders;
         if (!selected.length) return;
         this.props.onShare(selected);
         fileStore.clearFilter();
@@ -101,7 +101,7 @@ class FilePicker extends React.Component {
                 label: t('button_share'),
                 onClick: this.handleShare,
                 primary: true,
-                disabled: !fileStore.hasSelectedFiles
+                disabled: !fileStore.hasSelectedFilesOrFolders
             }
         ];
 
@@ -115,7 +115,7 @@ class FilePicker extends React.Component {
                     key={f.folderId}
                     folder={f}
                     onChangeFolder={this.changeFolder}
-                    checkbox={!f.isShared}
+                    checkbox
                     selected={f.selected}
                     onToggleSelect={this.toggleSelectFolder}
                 /> :

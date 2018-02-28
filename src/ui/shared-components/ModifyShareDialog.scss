@@ -10,4 +10,42 @@
   .list-chats li {
     padding-left: $smaller-padding;
   }
+
+  .list-chats {
+    padding: 0 $padding-default;
+
+    li {
+      align-items: flex-start;
+    }
+  }
+}
+
+// ModifyShareListItem component
+.modify-share-list-item {
+  .content {
+    padding-top: 6px;
+  }
+
+  .right a {
+    text-decoration: none;
+    text-transform: lowercase;
+    color: $red-error;
+  }
+
+  &:hover {
+    background-color: inherit;
+  }
+
+  // After "minus" button is clicked
+  &.expanded {
+    background-color: $black-06;
+  }
+
+  .remove-user-warning {
+    padding: $padding-default;
+    margin: $margin-tiny 0;
+    white-space: normal;
+    color: $text-dark-secondary;
+    border-left: 1px solid $divider-dark;
+  }
 }

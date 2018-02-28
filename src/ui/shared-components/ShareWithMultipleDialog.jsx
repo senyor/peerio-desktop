@@ -6,7 +6,7 @@ const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require(
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getContactByEvent } = require('~/helpers/icebear-dom');
-const ModifyShareDialog = require('./ModifyShareDialog');
+const { ModifyShareDialog } = require('./ModifyShareDialog');
 
 /**
  * onSelectContact

@@ -1,10 +1,12 @@
 const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar, Dialog, List, ListItem, Button } = require('~/peer-ui');
+
+const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getContactByEvent } = require('~/helpers/icebear-dom');
+const { Avatar, Dialog, List, ListItem, Button } = require('~/peer-ui');
 
 /**
  * onSelectContact
@@ -21,23 +23,6 @@ class ModifyShareDialog extends React.Component {
     @action.bound async onContactClick(ev) {
         const contact = await getContactByEvent(ev);
         this.selectedUsers.set(contact.username, contact);
-    }
-
-    renderContact = (c) => {
-        // caption={c.username}
-        // legend={c.fullName}
-
-        return (
-            <div data-username={c.username} key={c.username}>
-                <ListItem
-                    leftContent={<Avatar key="a" contact={c} size="small" />}
-                    onClick={this.onContactClick}
-                    rightContent="">
-                    <span className="full-name">{c.fullName}</span>
-                    <span className="username">@{c.username}</span>
-                </ListItem>
-            </div>
-        );
     }
 
     @action.bound show() {
@@ -77,8 +62,10 @@ class ModifyShareDialog extends React.Component {
                                 <T k="title_contacts" />
                             &nbsp;({this.contacts.length})
                             </div>
-                            <List className="list-chats list-dms" clickable>
-                                {this.contacts.map(this.renderContact)}
+                            <List className="list-chats list-dms">
+                                {this.contacts.map(c => {
+                                    return <ModifyShareListItem key={c.username} contact={c} />;
+                                })}
                             </List>
                         </div>
                     </div>
@@ -91,4 +78,47 @@ class ModifyShareDialog extends React.Component {
     }
 }
 
-module.exports = ModifyShareDialog;
+@observer
+class ModifyShareListItem extends ListItem {
+    @observable isClicked = false;
+
+    @action.bound triggerRemoveUserWarning() {
+        this.isClicked = true;
+    }
+
+    @action.bound removeUser() {
+        console.log('remove user');
+    }
+
+    render() {
+        const c = this.props.contact;
+
+        return (
+            <ListItem
+                className={css(
+                    'modify-share-list-item',
+                    { expanded: this.isClicked }
+                )}
+                leftContent={<Avatar key="a" contact={c} size="small" />}
+                rightContent={
+                    this.isClicked
+                        ? <a className="clickable" onClick={this.removeUser}>{t('button_remove')}</a>
+                        : <Button icon="remove_circle_outline" onClick={this.triggerRemoveUserWarning} />
+                }>
+                <div>
+                    <span className="full-name">{c.fullName}</span>
+                    <span className="username">@{c.username}</span>
+                </div>
+
+                {this.isClicked
+                    ? <T k="title_unshareUserWarning" tag="div" className="remove-user-warning">
+                        {{ fileCount: '28', user: c.firstName }}
+                    </T>
+                    : null
+                }
+            </ListItem>
+        );
+    }
+}
+
+module.exports = { ModifyShareDialog, ModifyShareListItem };

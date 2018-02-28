@@ -420,7 +420,7 @@ class Files extends React.Component {
                     className={css({ 'share-in-progress': f.shareProgress > 0 })}
                     key={f.folderId}
                     folder={f}
-                    moveable={fileStore.folders.root.folders.length > 0}
+                    moveable={fileStore.folders.root.hasNested}
                     onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.showDeleteFolderPopup}
@@ -437,7 +437,7 @@ class Files extends React.Component {
                     key={f.fileId}
                     file={f}
                     currentFolder={currentFolder}
-                    moveable={fileStore.folders.root.folders.length > 0}
+                    moveable={fileStore.folders.root.hasNested}
                     fileActions
                     fileDetails
                     checkbox

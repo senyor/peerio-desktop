@@ -1,0 +1,13 @@
+/*
+  This dialog uses the same basic styles as ShareWithDialog.
+  The rules in this file are overrides specific to ModifyShareDialog.
+*/
+
+.share-with-dialog.modify-shared-with {
+  $smaller-padding: 56px;
+
+  .p-list-heading,
+  .list-chats li {
+    padding-left: $smaller-padding;
+  }
+}

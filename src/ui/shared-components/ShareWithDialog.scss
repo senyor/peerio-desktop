@@ -91,3 +91,10 @@ $list-header-height: 48px;
     border-top: 1px solid $divider-dark;
   }
 }
+
+// 'Share folder' styles: ShareWithMultipleDialog & ModifyShareDialog
+.share-with-dialog.share-folder {
+  .p-list li .username {
+    color: $text-dark-secondary;
+  }
+}

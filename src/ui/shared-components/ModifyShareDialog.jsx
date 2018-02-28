@@ -24,13 +24,18 @@ class ModifyShareDialog extends React.Component {
     }
 
     renderContact = (c) => {
+        // caption={c.username}
+        // legend={c.fullName}
+
         return (
             <div data-username={c.username} key={c.username}>
                 <ListItem
-                    leftContent={<Avatar key="a" contact={c} size="medium" />}
-                    caption={c.username}
-                    legend={c.fullName}
-                    onClick={this.onContactClick} />
+                    leftContent={<Avatar key="a" contact={c} size="small" />}
+                    onClick={this.onContactClick}
+                    rightContent="">
+                    <span className="full-name">{c.fullName}</span>
+                    <span className="username">@{c.username}</span>
+                </ListItem>
             </div>
         );
     }
@@ -61,7 +66,7 @@ class ModifyShareDialog extends React.Component {
 
         return (
             <Dialog active noAnimation
-                className="share-with-dialog modify-shared-with"
+                className="share-with-dialog share-folder modify-shared-with"
                 actions={dialogActions}
                 onCancel={this.close}
                 title={t('title_sharedWith')}>

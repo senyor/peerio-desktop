@@ -36,10 +36,11 @@ class ShareWithMultipleDialog extends React.Component {
         return (
             <div data-username={c.username} key={c.username}>
                 <ListItem
-                    leftContent={<Avatar key="a" contact={c} size="medium" />}
-                    caption={c.username}
-                    legend={c.fullName}
-                    onClick={this.onContactClick} />
+                    leftContent={<Avatar key="a" contact={c} size="small" />}
+                    onClick={this.onContactClick}>
+                    <span className="full-name">{c.fullName}</span>
+                    <span className="username">@{c.username}</span>
+                </ListItem>
             </div>
         );
     }
@@ -91,7 +92,7 @@ class ShareWithMultipleDialog extends React.Component {
             <div>
                 <ModifyShareDialog ref={this.setModifyShareDialogRef} contacts={this.selectedUsers.values()} />
                 <Dialog active noAnimation
-                    className="share-with-dialog"
+                    className="share-with-dialog share-folder"
                     actions={dialogActions}
                     onCancel={this.close}
                     title={t('title_shareWith')}>

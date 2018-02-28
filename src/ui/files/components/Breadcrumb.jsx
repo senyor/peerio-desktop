@@ -151,7 +151,7 @@ class Breadcrumb extends React.Component {
                             : null
                         }
                         <div className="breadcrumb-entry">
-                            <span className="folder-name">
+                            <span className="folder-name selected-count">
                                 <T k="title_selected" tag="span" /> ({this.props.bulkSelected})
                             </span>
                         </div>

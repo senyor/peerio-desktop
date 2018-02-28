@@ -6,8 +6,6 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { Input, ProgressBar } = require('~/peer-ui');
-const ChannelUpgradeDialog = require('./components/ChannelUpgradeDialog');
-const config = require('~/config');
 
 @observer
 class NewChannel extends React.Component {
@@ -80,9 +78,6 @@ class NewChannel extends React.Component {
                     </div>
                     <div className="description">
                         <T k="title_createChannelDetails">{textParser}</T>
-                        {!(config.disablePayments || User.current.hasActivePlans) &&
-                            <T k="title_createChannelUpgradeOffer" />
-                        }
                     </div>
                 </div>
                 <div className="new-channel-inputs">
@@ -108,13 +103,11 @@ class NewChannel extends React.Component {
                         <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')}
                             noHeader onlyPick noAutoFocus
                             onAccept={this.handleAccept}
-                            noSubmit={
-                                !this.channelName.length || !this.upgradeDialog || this.isLimitReached
-                            }
+                            noSubmit={!this.channelName.length}
                         />
                     </div>
                 </div>
-                <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} />
+                {/* <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} /> */}
             </div>
         );
     }

@@ -38,10 +38,6 @@
   background-color: $background-root;
   border-radius: 8px;
 
-  &.small {
-    width: 360px;
-  }
-
   .body {
     flex-grow: 1;
     padding: 24px;
@@ -57,6 +53,19 @@
   .actions {
     padding: $padding-small;
     text-align: right;
+  }
+
+  // Themes
+  &.warning {
+    border-top: 8px solid $yellow-warning;
+  }
+
+  &.error {
+    border-top: 8px solid $red-error;
+  }
+
+  &.small {
+    width: 360px;
   }
 }
 

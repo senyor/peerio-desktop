@@ -66,6 +66,11 @@ class Files extends React.Component {
     }
 
     @action.bound handleDeleteFolder() {
+        if (this.folderToDelete.isShared) {
+            console.log('delete shared folder');
+            return;
+        }
+
         fileStore.folders.currentFolder = this.folderToDelete.parent;
         fileStore.folders.deleteFolder(this.folderToDelete);
         fileStore.folders.save();
@@ -203,6 +208,8 @@ class Files extends React.Component {
     }
 
     get deleteFolderPopup() {
+        const isShared = this.folderToDelete.isShared;
+
         const hide = () => {
             this.deleteFolderPopupVisible = false;
             this.triggerDeleteFolderPopup = false;
@@ -219,12 +226,14 @@ class Files extends React.Component {
         ];
 
         return (
-            <Dialog title={t('dialog_deleteFolderTitle')}
-                active={this.deleteFolderPopupVisible} theme="small" ref={this.onDeletePopupRef}
+            <Dialog title={isShared ? t('dialog_deleteSharedFolderTitle') : t('dialog_deleteFolderTitle')}
+                active={this.deleteFolderPopupVisible} ref={this.onDeletePopupRef}
                 actions={dialogActions}
                 onCancel={hide}
-                className="delete-folder-popup">
-                <T k="dialog_deleteFolderText" />
+                className="delete-folder-popup"
+                theme={isShared ? 'small warning' : 'small'}
+            >
+                <T k={isShared ? 'dialog_deleteSharedFolderText' : 'dialog_deleteFolderText'} />
             </Dialog>);
     }
 

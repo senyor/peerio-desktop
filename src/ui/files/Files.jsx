@@ -1,6 +1,6 @@
 const React = require('react');
 const css = require('classnames');
-const { Button, Dialog, Input } = require('~/peer-ui');
+const { Button, Checkbox, Dialog, Input } = require('~/peer-ui');
 const { observer } = require('mobx-react');
 const { observable, action, computed } = require('mobx');
 const { fileStore, clientApp } = require('peerio-icebear');
@@ -240,13 +240,31 @@ class Files extends React.Component {
         }));
     }
 
-    toggleSelectAll = val => {
-        if (val) {
-            fileStore.selectAll();
+    toggleSelectAll = ev => {
+        if (ev.target.checked) {
+            fileStore.folders.currentFolder.folders.forEach(folder => {
+                folder.selected = true;
+            });
+            fileStore.folders.currentFolder.files.forEach(file => {
+                file.selected = true;
+            });
         } else {
             fileStore.clearSelection();
         }
     };
+
+    @computed get allAreSelected() {
+        let count = 0;
+        fileStore.folders.currentFolder.folders.forEach(f => {
+            if (f.selected) count += 1;
+        });
+
+        fileStore.folders.currentFolder.files.forEach(f => {
+            if (f.selected) count += 1;
+        });
+
+        return count === fileStore.folders.currentFolder.folders.length + fileStore.folders.currentFolder.files.length;
+    }
 
     // todo: move to icebear
     handleBulkDelete = () => {
@@ -456,7 +474,11 @@ class Files extends React.Component {
                         onScroll={this.enqueueCheck}
                     >
                         <div className="file-table-header row">
-                            <div className="file-checkbox" />{/* blank space for file icon image */}
+                            <Checkbox
+                                className="file-checkbox"
+                                onChange={this.toggleSelectAll}
+                                checked={this.allAreSelected}
+                            />
                             <div className="file-icon" />{/* blank space for file icon image */}
                             <div className="file-name">{t('title_name')}</div>
                             <div className="file-owner">{t('title_owner')}</div>

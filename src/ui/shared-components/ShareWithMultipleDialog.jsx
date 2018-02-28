@@ -2,10 +2,11 @@ const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { contactStore } = require('peerio-icebear');
-const { Avatar, Dialog, Input, List, ListItem, MaterialIcon } = require('~/peer-ui');
+const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getContactByEvent } = require('~/helpers/icebear-dom');
+const ModifyShareDialog = require('./ModifyShareDialog');
 
 /**
  * onSelectContact
@@ -29,16 +30,6 @@ class ShareWithMultipleDialog extends React.Component {
     @action.bound async onContactClick(ev) {
         const contact = await getContactByEvent(ev);
         this.selectedUsers.set(contact.username, contact);
-    }
-
-    renderChannel = (c) => {
-        return (
-            <div data-channelid={c.id} key={c.id}>
-                <ListItem
-                    onClick={this.onChannelClick}
-                    caption={`# ${c.name}`} />
-            </div>
-        );
     }
 
     renderContact = (c) => {
@@ -77,6 +68,12 @@ class ShareWithMultipleDialog extends React.Component {
         ));
     }
 
+    @action.bound modifySharedWith() {
+        this.modifyShareDialog.show();
+    }
+
+    setModifyShareDialogRef = (ref) => { this.modifyShareDialog = ref; };
+
     render() {
         if (!this.visible) return false;
         const dialogActions = [
@@ -85,37 +82,42 @@ class ShareWithMultipleDialog extends React.Component {
         ];
 
         return (
-            <Dialog active noAnimation
-                className="share-with-dialog"
-                actions={dialogActions}
-                onCancel={this.close}
-                title={t('title_shareWith')}>
-                <div className="share-with-contents">
-                    <div className="user-search">
-                        <MaterialIcon icon="search" />
-                        <div className="chip-wrapper">
-                            <Input
-                                placeholder={t('title_userSearch')}
-                                value={this.query} onChange={this.handleTextChange}
-                                onKeyDown={this.handleKeyDown} />
-                        </div>
-                    </div>
-                    <div className="chat-list-container">
-                        <div className="list-dms-container">
-                            <div className="p-list-heading">
-                                <T k="title_contacts" />
-                            &nbsp;({this.contacts.length})
+            <div>
+                <ModifyShareDialog ref={this.setModifyShareDialogRef} contacts={this.selectedUsers.values()} />
+                <Dialog active noAnimation
+                    className="share-with-dialog"
+                    actions={dialogActions}
+                    onCancel={this.close}
+                    title={t('title_shareWith')}>
+                    <div className="share-with-contents">
+                        <div className="user-search">
+                            <MaterialIcon icon="search" />
+                            <div className="chip-wrapper">
+                                <Input
+                                    placeholder={t('title_userSearch')}
+                                    value={this.query} onChange={this.handleTextChange}
+                                    onKeyDown={this.handleKeyDown} />
                             </div>
-                            <List className="list-chats list-dms" clickable>
-                                {this.contacts.map(this.renderContact)}
-                            </List>
                         </div>
+                        <div className="chat-list-container">
+                            <div className="list-dms-container">
+                                <div className="p-list-heading">
+                                    <T k="title_contacts" />
+                                    &nbsp;({this.contacts.length})
+                                </div>
+                                <List className="list-chats list-dms" clickable>
+                                    {this.contacts.map(this.renderContact)}
+                                </List>
+                            </div>
+                        </div>
+                        {!!this.selectedUsers.keys().length &&
+                            <div className="receipt-wrapper">
+                                <Button label="View shared with" onClick={this.modifySharedWith} />
+                                {this.sharedWithBlock}
+                            </div>}
                     </div>
-                    <div className="receipt-wrapper">
-                        {this.sharedWithBlock}
-                    </div>
-                </div>
-            </Dialog>
+                </Dialog>
+            </div>
         );
     }
 }

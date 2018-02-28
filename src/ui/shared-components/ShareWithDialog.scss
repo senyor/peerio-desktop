@@ -83,6 +83,8 @@ $list-header-height: 48px;
 
   .receipt-wrapper {
     @extend %flex-row;
-    padding-left: $share-with-spacing;
+    align-items: center;
+    margin: 0 $margin-xl $margin-xl;
+    border-top: 1px solid $divider-dark;
   }
 }

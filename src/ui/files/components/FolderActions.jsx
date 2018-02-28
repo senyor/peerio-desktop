@@ -22,7 +22,7 @@ class FolderActions extends React.Component {
                     />
                     : null
                 }
-                {this.props.moveable &&
+                {this.props.onMove &&
                 <MenuItem caption={t('button_move')}
                     customIcon="move"
                     onClick={this.props.onMove}

@@ -73,8 +73,7 @@ class FolderLine extends React.Component {
                         <FolderActions
                             onClick={this.props.onClick}
                             onRename={this.props.onRenameFolder}
-                            moveable={this.props.moveable}
-                            onMove={this.props.onMoveFolder}
+                            onMove={folder.isShared ? null : this.props.onMoveFolder}
                             onDelete={this.props.onDeleteFolder}
                             onShare={this.props.onShare}
                             data-folderid={folder.folderId}

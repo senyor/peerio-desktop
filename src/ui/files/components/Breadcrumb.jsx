@@ -141,12 +141,15 @@ class Breadcrumb extends React.Component {
                             </a>
                             <MaterialIcon icon="keyboard_arrow_right" />
                         </div>
-                        <div className="breadcrumb-entry">
-                            <span className="folder-name">
-                                ...
-                            </span>
-                            <MaterialIcon icon="keyboard_arrow_right" />
-                        </div>
+                        {!this.props.currentFolder.isRoot
+                            ? <div className="breadcrumb-entry">
+                                <span className="folder-name">
+                                    ...
+                                </span>
+                                <MaterialIcon icon="keyboard_arrow_right" />
+                            </div>
+                            : null
+                        }
                         <div className="breadcrumb-entry">
                             <span className="folder-name">
                                 <T k="title_selected" tag="span" /> ({this.props.bulkSelected})

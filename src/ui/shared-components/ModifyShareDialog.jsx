@@ -61,7 +61,7 @@ class ModifyShareDialog extends React.Component {
 
         return (
             <Dialog active noAnimation
-                className="share-with-dialog"
+                className="share-with-dialog modify-shared-with"
                 actions={dialogActions}
                 onCancel={this.close}
                 title={t('title_sharedWith')}>

@@ -20,8 +20,6 @@ class FolderLine extends React.Component {
 
     render() {
         const { folder } = this.props;
-        console.log(folder);
-
         return (
             <div data-folderid={folder.folderId}
                 className={css(

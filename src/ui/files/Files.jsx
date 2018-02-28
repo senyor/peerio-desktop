@@ -14,6 +14,7 @@ const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
+const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
 const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
@@ -71,8 +72,9 @@ class Files extends React.Component {
     }
 
     @action.bound shareFolder(ev) {
-        const folder = getFolderByEvent(ev);
-        fileStore.folders.shareFolder(folder);
+        // const folder = getFolderByEvent(ev);
+        // fileStore.folders.shareFolder(folder);
+        this.shareWithMultipleDialog.show();
     }
 
     @observable triggerAddFolderPopup = false;
@@ -400,6 +402,8 @@ class Files extends React.Component {
         folder.selected = !folder.selected;
     }
 
+    refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
+
     render() {
         if (!fileStore.files.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
@@ -474,6 +478,7 @@ class Files extends React.Component {
                 {this.triggerAddFolderPopup && this.addFolderPopup}
                 {this.triggerRenameFolderPopup && this.renameFolderPopup}
                 {this.triggerDeleteFolderPopup && this.deleteFolderPopup}
+                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
             </div>
         );
     }

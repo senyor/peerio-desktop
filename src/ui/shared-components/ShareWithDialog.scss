@@ -80,4 +80,9 @@ $list-header-height: 48px;
       min-height: 24px;
     }
   }
+
+  .receipt-wrapper {
+    @extend %flex-row;
+    padding-left: $share-with-spacing;
+  }
 }

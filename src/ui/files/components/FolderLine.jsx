@@ -40,9 +40,9 @@ class FolderLine extends React.Component {
                     </div>
                     : this.props.checkbox
                         ? <Checkbox
-                            className="file-checkbox"
+                            className={css('file-checkbox', { disabled: this.props.disabledCheckbox })}
                             checked={this.props.selected}
-                            onChange={this.props.onToggleSelect}
+                            onChange={this.props.disabledCheckbox ? null : this.props.onToggleSelect}
                         />
                         : <div className="file-checkbox" />
                 }

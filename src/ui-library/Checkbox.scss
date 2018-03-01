@@ -19,4 +19,8 @@
   .p-checkbox-label {
     margin-left: $margin-small;
   }
+
+  &.disabled {
+    opacity: 0.5
+  }
 }

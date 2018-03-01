@@ -64,7 +64,12 @@
   }
 
   &.has-error {
-    &:not(.is-focused) .label {
+    input {
+      border-bottom: 4px solid $red-error;
+      border-color: $red-error;
+    }
+
+    .label {
       color: $red-error;
     }
 
@@ -73,9 +78,9 @@
       position: absolute;
       width: 100%;
       top: 100%;
-      color: $text-dark-secondary;
+      margin-top: $margin-tiny;
+      color: $red-error;
       opacity: 1;
-      border-top: 4px solid $red-error;
     }
   }
 }

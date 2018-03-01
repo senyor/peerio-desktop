@@ -208,7 +208,7 @@ class Files extends React.Component {
     }
 
     get deleteFolderPopup() {
-        const userIsAdmin = false; // TESTING VAR
+        const userIsAdmin = true; // TESTING VAR
 
         const isShared = this.folderToDelete.isShared;
 
@@ -231,18 +231,14 @@ class Files extends React.Component {
             <Dialog
                 title={
                     isShared
-                        ? userIsAdmin
-                            ? <T k="dialog_deleteSharedFolderTitle" />
-                            : <T k="dialog_deleteSharedFolderNonAdminTitle">
-                                {{ folderName: this.folderToDelete.name }}
-                            </T>
+                        ? <T k="dialog_deleteSharedFolderTitle">{{ folderName: this.folderToDelete.name }}</T>
                         : <T k="dialog_deleteFolderTitle" />
                 }
                 active={this.deleteFolderPopupVisible} ref={this.onDeletePopupRef}
                 actions={dialogActions}
                 onCancel={hide}
                 className="delete-folder-popup"
-                theme={isShared ? 'small warning' : 'small'}
+                theme="small warning"
             >
                 <T k={
                     isShared

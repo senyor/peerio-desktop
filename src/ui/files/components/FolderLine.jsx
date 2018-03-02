@@ -20,6 +20,7 @@ class FolderLine extends React.Component {
 
     render() {
         const { folder } = this.props;
+        const { progress, progressMax, progressPercentage } = folder;
         return (
             <div data-folderid={folder.folderId}
                 className={css(
@@ -33,10 +34,10 @@ class FolderLine extends React.Component {
                 onMouseEnter={this.onShowActions}
                 onMouseLeave={this.onHideActions}>
 
-                {this.props.shareProgress
+                {progressMax
                     ? <div className="file-checkbox folder-share-progress">
-                        {`${this.props.shareProgress}%`}
-                        <ProgressBar value={this.props.shareProgress} max={100} />
+                        {`${progressPercentage}%`}
+                        <ProgressBar value={progress} max={progressMax} />
                     </div>
                     : this.props.checkbox
                         ? <Checkbox

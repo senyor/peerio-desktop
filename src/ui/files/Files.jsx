@@ -460,7 +460,7 @@ class Files extends React.Component {
             const f = data[i];
             items.push(f.isFolder ?
                 <FolderLine
-                    className={css({ 'share-in-progress': f.shareProgress > 0 })}
+                    className={css({ 'share-in-progress': f.progress > 0 })}
                     key={f.folderId}
                     folder={f}
                     moveable={fileStore.folders.root.hasNested}
@@ -473,7 +473,6 @@ class Files extends React.Component {
                     checkbox={!f.isShared}
                     onToggleSelect={this.toggleSelectFolder}
                     selected={f.selected}
-                    shareProgress={f.shareProgress}
                     onShare={this.shareFolder}
                 /> :
                 <FileLine

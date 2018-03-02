@@ -12,10 +12,11 @@ class ShareFolderProgress extends React.Component {
     render() {
         const folder = fileStore.folders.root.folders[0] || {
             name: 'Folder name A',
-            shareProgress: 100
+            progress: 100,
+            progressMax: 100
         };
 
-        const progress = folder.shareProgress || 0;
+        const { progress, progressMax, progressPercentage } = folder;
 
         return (
             <div className="share-folder-progress">
@@ -29,16 +30,16 @@ class ShareFolderProgress extends React.Component {
                         */}
                     </div>
                     <div className="percent-progress">
-                        <span>{`${progress}%`}</span>
+                        <span>{`${progressPercentage}%`}</span>
                         <MaterialIcon icon="check"
                             className={css(
                                 'affirmative',
-                                { hide: progress < 100 }
+                                { hide: progress < progressMax }
                             )}
                         />
                     </div>
                 </div>
-                <ProgressBar value={progress} max="100" />
+                <ProgressBar value={progress} max={progressMax} />
             </div>
         );
     }

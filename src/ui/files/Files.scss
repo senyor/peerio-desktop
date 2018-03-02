@@ -66,6 +66,21 @@
   .waiting-3rd-party {
     background-color: $black-03;
   }
+
+  .removed-folder-notif {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 $padding-default;
+    margin-top: -1px;
+    color: $text-dark-secondary;
+    background-color: $black-06;
+    border-top: 4px solid #32cec3;
+
+    .p-button {
+      margin-left: auto;
+    }
+  }
 }
 
 .add-folder-popup {

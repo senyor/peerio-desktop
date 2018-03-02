@@ -10,6 +10,7 @@ const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
 const ZeroScreen = require('./components/ZeroScreen');
 const { pickLocalFiles } = require('~/helpers/file');
+const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
@@ -362,6 +363,21 @@ class Files extends React.Component {
         );
     }
 
+    @observable removedFolderNotifVisible = true;
+
+    @action.bound dismissRemovedFolderNotif() {
+        this.removedFolderNotifVisible = false;
+    }
+
+    get removedFolderNotif() {
+        return (
+            <div className="removed-folder-notif">
+                <T k="title_removedFromFolder">{{ folderName: 'Design files' }}</T>
+                <Button label="dismiss" onClick={this.dismissRemovedFolderNotif} />
+            </div>
+        );
+    }
+
     toggleSelectFile(ev) {
         const file = getFileByEvent(ev);
         file.selected = !file.selected;
@@ -436,6 +452,7 @@ class Files extends React.Component {
                             <div className="file-size text-right">{t('title_size')}</div>
                             <div className="file-actions" />
                         </div>
+                        {this.removedFolderNotifVisible && this.removedFolderNotif}
                         <div className="file-table-body">
                             {items}
                         </div>

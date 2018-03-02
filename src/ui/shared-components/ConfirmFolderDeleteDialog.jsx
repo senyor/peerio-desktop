@@ -37,11 +37,12 @@ class ConfirmFolderDeleteDialog extends React.Component {
             { label: t('button_delete'), onClick: this.confirm }
         ];
 
-        /* isShared
-        ? userIsOwner
-            ? 'dialog_deleteSharedFolderText'
-            : 'dialog_deleteSharedFolderNonOwnerText'
-        : 'dialog_deleteFolderText' */
+        let text = 'dialog_deleteFolderText';
+
+        const { isShared, isOwner } = this.folder;
+        if (isShared) {
+            text = isOwner ? 'dialog_deleteSharedFolderText' : 'dialog_deleteSharedFolderNonOwnerText';
+        }
 
         return (
             <Dialog
@@ -53,7 +54,7 @@ class ConfirmFolderDeleteDialog extends React.Component {
                 onCancel={this.close}
                 className="delete-folder-popup"
                 theme="small warning">
-                <T k="dialog_deleteFolderText" />
+                <T k={text} />
             </Dialog>
         );
     }

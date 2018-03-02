@@ -370,19 +370,22 @@ class Files extends React.Component {
             {
                 label: t('button_share'),
                 materialIcon: 'person_add',
-                onClick: bulkShare
+                onClick: fileStore.bulk.share
             },
             {
                 label: t('button_download'),
-                materialIcon: 'file_download'
+                materialIcon: 'file_download',
+                onClick: fileStore.bulk.download
             },
             {
                 label: t('button_move'),
-                customIcon: 'move'
+                customIcon: 'move',
+                onClick: fileStore.bulk.move
             },
             {
                 label: t('button_delete'),
-                materialIcon: 'delete'
+                materialIcon: 'delete',
+                onClick: fileStore.bulk.remove
             }
         ].map(a => {
             return (

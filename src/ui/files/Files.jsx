@@ -10,11 +10,11 @@ const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
 const ZeroScreen = require('./components/ZeroScreen');
 const { pickLocalFiles } = require('~/helpers/file');
-const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
 const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
+const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
 const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
@@ -65,17 +65,6 @@ class Files extends React.Component {
         fileStore.folderFilter = '';
     }
 
-    @action.bound handleDeleteFolder() {
-        if (this.folderToDelete.isShared) {
-            console.log('delete shared folder');
-            return;
-        }
-
-        fileStore.folders.currentFolder = this.folderToDelete.parent;
-        fileStore.folders.deleteFolder(this.folderToDelete);
-        fileStore.folders.save();
-    }
-
     @action.bound async shareFolder(ev) {
         // IMPORTANT: syntetic events are reused, so cache folder before await
         const folder = getFolderByEvent(ev);
@@ -88,8 +77,6 @@ class Files extends React.Component {
     @observable addFolderPopupVisible = false;
     @observable triggerRenameFolderPopup = false;
     @observable renameFolderPopupVisible = false;
-    @observable triggerDeleteFolderPopup = false;
-    @observable deleteFolderPopupVisible = false;
     @observable folderName = '';
     @observable folderToRename;
     @observable folderToMove;
@@ -144,9 +131,9 @@ class Files extends React.Component {
         }
     }
 
-    @action.bound showDeleteFolderPopup(ev) {
-        this.triggerDeleteFolderPopup = true;
-        this.folderToDelete = getFolderByEvent(ev);
+    @action.bound deleteFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        fileStore.bulk.removeOne(folder);
     }
 
     onAddPopupRef = (ref) => {
@@ -156,10 +143,6 @@ class Files extends React.Component {
     onRenamePopupRef = (ref) => {
         if (ref) this.renameFolderPopupVisible = true;
     };
-
-    onDeletePopupRef = (ref) => {
-        if (ref) this.deleteFolderPopupVisible = true;
-    }
 
     get addFolderPopup() {
         const hide = () => {
@@ -204,47 +187,6 @@ class Files extends React.Component {
                     onKeyDown={this.handleKeyDownRenameFolder}
                     autoFocus
                 />
-            </Dialog>);
-    }
-
-    get deleteFolderPopup() {
-        const userIsOwner = true; // TESTING VAR
-
-        const isShared = this.folderToDelete.isShared;
-
-        const hide = () => {
-            this.deleteFolderPopupVisible = false;
-            this.triggerDeleteFolderPopup = false;
-        };
-
-        const deleteClick = () => {
-            this.handleDeleteFolder();
-            hide();
-        };
-
-        const dialogActions = [
-            { label: t('button_cancel'), onClick: hide },
-            { label: t('button_delete'), onClick: deleteClick }
-        ];
-
-        return (
-            <Dialog
-                title={
-                    <T k="dialog_deleteSharedFolderTitle">{{ folderName: this.folderToDelete.name }}</T>
-                }
-                active={this.deleteFolderPopupVisible} ref={this.onDeletePopupRef}
-                actions={dialogActions}
-                onCancel={hide}
-                className="delete-folder-popup"
-                theme="small warning"
-            >
-                <T k={
-                    isShared
-                        ? userIsOwner
-                            ? 'dialog_deleteSharedFolderText'
-                            : 'dialog_deleteSharedFolderNonOwnerText'
-                        : 'dialog_deleteFolderText'
-                } />
             </Dialog>);
     }
 
@@ -362,10 +304,6 @@ class Files extends React.Component {
     }
 
     get breadCrumbsHeader() {
-        const bulkShare = () => {
-            console.log('bulk share');
-        };
-
         const bulkButtons = [
             {
                 label: t('button_share'),
@@ -404,7 +342,7 @@ class Files extends React.Component {
                 <Breadcrumb currentFolder={fileStore.folders.currentFolder}
                     onSelectFolder={this.changeFolder}
                     onMove={this.moveFolder}
-                    onDelete={this.showDeleteFolderPopup}
+                    onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
                     bulkSelected={this.selectedCount}
                 />
@@ -451,6 +389,7 @@ class Files extends React.Component {
     }
 
     refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
+    refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
 
     render() {
         if (!fileStore.files.length
@@ -469,7 +408,7 @@ class Files extends React.Component {
                     moveable={fileStore.folders.root.hasNested}
                     onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
-                    onDeleteFolder={this.showDeleteFolderPopup}
+                    onDeleteFolder={this.deleteFolder}
                     onChangeFolder={this.changeFolder}
                     folderActions
                     folderDetails
@@ -528,7 +467,7 @@ class Files extends React.Component {
                 }
                 {this.triggerAddFolderPopup && this.addFolderPopup}
                 {this.triggerRenameFolderPopup && this.renameFolderPopup}
-                {this.triggerDeleteFolderPopup && this.deleteFolderPopup}
+                <ConfirmFolderDeleteDialog ref={this.refConfirmFolderDeleteDialog} />
                 <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
             </div>
         );

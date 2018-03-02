@@ -35,12 +35,18 @@ class Files extends React.Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.enqueueCheck, false);
+        fileStore.bulk.deleteFilesConfirmator = (files, sharedFiles) => {
+            let msg = t('title_confirmRemoveFiles', { count: files.length });
+            if (sharedFiles.length) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
+            return confirm(msg);
+        };
     }
 
     componentWillUnmount() {
         clientApp.isInFilesView = false;
         window.removeEventListener('resize', this.enqueueCheck);
         fileStore.clearFilter();
+        fileStore.clearSelection();
     }
 
     handleSearch = val => {
@@ -232,28 +238,6 @@ class Files extends React.Component {
 
         return count === currentFilesAndFoldersCount;
     }
-
-    // todo: move to icebear
-    handleBulkDelete = () => {
-        const selected = fileStore.getSelectedFiles();
-        const hasSharedFiles = selected.some((f) => f.shared);
-        if (!selected.length) return;
-
-        let msg = t('title_confirmRemoveFiles', { count: selected.length });
-        if (hasSharedFiles) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
-
-        if (confirm(msg)) {
-            let i = 0;
-            const removeOne = () => {
-                const f = selected[i];
-                f.remove().then(() => {
-                    if (++i >= selected.length) return;
-                    setTimeout(removeOne, 250);
-                });
-            };
-            removeOne();
-        }
-    };
 
     handleFileShareIntent = () => {
         fileStore.deselectUnshareableFiles();

@@ -65,7 +65,6 @@
 
   &.has-error {
     input {
-      border-bottom: 4px solid $red-error;
       border-color: $red-error;
     }
 
@@ -78,7 +77,6 @@
       position: absolute;
       width: 100%;
       top: 100%;
-      margin-top: $margin-tiny;
       color: $red-error;
       opacity: 1;
     }

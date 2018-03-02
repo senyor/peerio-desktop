@@ -30,10 +30,11 @@
 
     &.has-error {
       input {
-        border-bottom-width: 4px;
+        border-bottom: 4px solid $red-error;
       }
 
       .error {
+        margin-top: $margin-tiny;
         color: $text-light-primary;
       }
     }

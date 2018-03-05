@@ -364,14 +364,22 @@ class Files extends React.Component {
     }
 
     @observable removedFolderNotifVisible = true;
+    @observable removedFolderNotifToHide = false;
 
     @action.bound dismissRemovedFolderNotif() {
-        this.removedFolderNotifVisible = false;
+        this.removedFolderNotifToHide = true;
+
+        setTimeout(() => {
+            this.removedFolderNotifVisible = false;
+        }, 250);
     }
 
     get removedFolderNotif() {
         return (
-            <div className="removed-folder-notif">
+            <div className={css(
+                'removed-folder-notif',
+                { 'hide-in-progress': this.removedFolderNotifToHide }
+            )}>
                 <T k="title_removedFromFolder">{{ folderName: 'Design files' }}</T>
                 <Button label="dismiss" onClick={this.dismissRemovedFolderNotif} />
             </div>

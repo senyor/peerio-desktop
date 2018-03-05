@@ -36,6 +36,13 @@ class Files extends React.Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.enqueueCheck, false);
+        // icebear will call this function to get who to share files with
+        fileStore.bulk.shareWithSelector = async (items) => {
+            const contacts = await this.shareWithMultipleDialog.show();
+            return contacts;
+        };
+
+        // icebear will call this function to confirm file deletion
         fileStore.bulk.deleteFilesConfirmator = (files, sharedFiles) => {
             let msg = t('title_confirmRemoveFiles', { count: files.length });
             if (sharedFiles.length) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
@@ -48,6 +55,10 @@ class Files extends React.Component {
         window.removeEventListener('resize', this.enqueueCheck);
         fileStore.clearFilter();
         fileStore.clearSelection();
+        // remove icebear hook for sharing selection
+        fileStore.bulk.shareWithSelector = null;
+        // remove icebear hook for deletion
+        fileStore.bulk.deleteFilesConfirmator = null;
     }
 
     handleSearch = val => {
@@ -210,16 +221,10 @@ class Files extends React.Component {
     }
 
     toggleSelectAll = ev => {
-        if (ev.target.checked) {
-            fileStore.folders.currentFolder.folders.forEach(folder => {
-                folder.selected = true;
-            });
-            fileStore.folders.currentFolder.files.forEach(file => {
-                file.selected = true;
-            });
-        } else {
-            fileStore.clearSelection();
-        }
+        const { items } = this;
+        items.forEach(item => {
+            item.selected = !!ev.target.checked;
+        });
     };
 
     @computed get allAreSelected() {
@@ -303,22 +308,19 @@ class Files extends React.Component {
             {
                 label: t('button_move'),
                 customIcon: 'move',
-                onClick: fileStore.bulk.move
+                onClick: fileStore.bulk.move,
+                disabled: !fileStore.bulk.canMove
             },
             {
                 label: t('button_delete'),
                 materialIcon: 'delete',
                 onClick: fileStore.bulk.remove
             }
-        ].map(a => {
+        ].map(props => {
             return (
                 <Button
-                    key={a.label}
-                    label={a.label}
-                    icon={a.materialIcon}
-                    customIcon={a.customIcon}
-                    onClick={a.onClick}
-                />
+                    key={props.label}
+                    {...props} />
             );
         });
 
@@ -420,7 +422,7 @@ class Files extends React.Component {
                     onChangeFolder={this.changeFolder}
                     folderActions
                     folderDetails
-                    checkbox={!f.isShared}
+                    checkbox
                     onToggleSelect={this.toggleSelectFolder}
                     selected={f.selected}
                     onShare={this.shareFolder}

@@ -13,6 +13,7 @@ const ShareConfirmDialog = require('./ShareConfirmDialog');
 
 @observer
 class MoveFileDialog extends React.Component {
+    @observable visible = false;
     @observable selectedFolder = null;
     @observable currentFolder = null;
 
@@ -46,8 +47,13 @@ class MoveFileDialog extends React.Component {
             return;
         }
 
-        target.moveInto(file || folder);
-        if (folder) fileStore.folders.save();
+        // TODO: needs refactoring
+        if (this.props.handleMove) {
+            this.props.handleMove(target);
+        } else {
+            target.moveInto(file || folder);
+            if (folder) fileStore.folders.save();
+        }
         onHide();
     }
 

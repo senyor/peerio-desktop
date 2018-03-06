@@ -74,6 +74,7 @@ class FolderLine extends React.Component {
                         <FolderActions
                             onClick={this.props.onClick}
                             onRename={this.props.onRenameFolder}
+                            onDownload={this.props.onDownload}
                             onMove={folder.isShared ? null : this.props.onMoveFolder}
                             onDelete={this.props.onDeleteFolder}
                             onShare={this.props.onShare}

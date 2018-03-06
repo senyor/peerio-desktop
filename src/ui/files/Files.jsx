@@ -36,7 +36,7 @@ class Files extends React.Component {
     componentDidMount() {
         window.addEventListener('resize', this.enqueueCheck, false);
         // icebear will call this function to get who to share files with
-        fileStore.bulk.shareWithSelector = async (items) => {
+        fileStore.bulk.shareWithSelector = async (/* items */) => {
             const contacts = await this.shareWithMultipleDialog.show();
             return contacts;
         };
@@ -82,6 +82,7 @@ class Files extends React.Component {
     @action.bound moveFolder(ev) {
         const folder = getFolderByEvent(ev);
         this.folderToMove = folder;
+        if (folder) folder.selected = true;
         this.moveFolderVisible = true;
     }
 
@@ -155,6 +156,13 @@ class Files extends React.Component {
         if (ev.key === 'Enter' && this.folderName.trim()) {
             this.handleRenameFolder();
         }
+    }
+
+    @action.bound async downloadFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        const path = await selectFolder();
+        if (!path) return;
+        fileStore.bulk.downloadOne(folder, path);
     }
 
     @action.bound deleteFolder(ev) {
@@ -302,7 +310,7 @@ class Files extends React.Component {
             {
                 label: t('button_move'),
                 customIcon: 'move',
-                onClick: fileStore.bulk.move,
+                onClick: this.moveFolder,
                 disabled: !fileStore.bulk.canMove
             },
             {
@@ -410,6 +418,7 @@ class Files extends React.Component {
                     key={f.folderId}
                     folder={f}
                     moveable={fileStore.folders.root.hasNested}
+                    onDownload={this.downloadFolder}
                     onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.deleteFolder}
@@ -464,6 +473,7 @@ class Files extends React.Component {
                 </div>
                 {this.moveFolderVisible &&
                     <MoveFileDialog
+                        handleMove={fileStore.bulk.move}
                         folder={this.folderToMove}
                         currentFolder={currentFolder.parent || currentFolder}
                         visible={this.moveFolderVisible}

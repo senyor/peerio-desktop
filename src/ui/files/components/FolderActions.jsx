@@ -22,6 +22,11 @@ class FolderActions extends React.Component {
                     />
                     : null
                 }
+                {this.props.onDownload && <MenuItem caption={t('title_download')}
+                    icon="file_download"
+                    onClick={this.props.onDownload}
+                    disabled={this.props.downloadDisabled}
+                />}
                 {this.props.onMove &&
                 <MenuItem caption={t('button_move')}
                     customIcon="move"

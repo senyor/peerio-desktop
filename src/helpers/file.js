@@ -4,11 +4,48 @@ const _ = require('lodash');
 const path = require('path');
 const sanitize = require('sanitize-filename');
 
+function selectFolder() {
+    return new Promise(resolve => {
+        const win = electron.getCurrentWindow();
+        electron.dialog.showOpenDialog(
+            win,
+            { properties: ['openDirectory'] },
+            folders => {
+                if (!folders || !folders.length) {
+                    resolve(null);
+                } else {
+                    resolve(folders[0]);
+                }
+            }
+        );
+    });
+}
+
+function pickSavePath(folderPath, nameWithoutExtension, extension = '') {
+    console.log(folderPath);
+    console.log(nameWithoutExtension);
+    console.log(extension);
+    let defaultPath = null;
+    let counter = 0;
+    do {
+        defaultPath = path.join(
+            folderPath,
+            sanitize(nameWithoutExtension, { replacement: '_' }).concat(
+                counter ? ` (${counter})` : '',
+                extension ? `.${extension}` : ''
+            )
+        );
+        ++counter;
+    } while (fs.existsSync(defaultPath));
+    return defaultPath;
+}
+
 function requestDownloadPath(fileName) {
     return new Promise((resolve, reject) => {
         let p = sanitize(fileName, { replacement: '_' });
         try {
             const downloadsDir = electron.app.getPath('downloads');
+            // TODO: maybe use path.join here?
             p = `${downloadsDir}/${p}`;
         } catch (err) {
             console.log(err);
@@ -99,4 +136,4 @@ function getListOfFiles(paths) {
     return ret;
 }
 
-module.exports = { downloadFile, pickLocalFiles, getListOfFiles };
+module.exports = { downloadFile, pickLocalFiles, getListOfFiles, selectFolder, pickSavePath };

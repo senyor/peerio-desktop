@@ -9,10 +9,9 @@ const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
 const ZeroScreen = require('./components/ZeroScreen');
-const { pickLocalFiles } = require('~/helpers/file');
+const { pickLocalFiles, getListOfFiles, selectFolder, pickSavePath } = require('~/helpers/file');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
 const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
 const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
@@ -48,6 +47,12 @@ class Files extends React.Component {
             if (sharedFiles.length) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
             return confirm(msg);
         };
+
+        // icebear will call this function to select folder for bulk save
+        fileStore.bulk.downloadFolderSelector = selectFolder;
+
+        // icebear will call this function trying to pick a file or folder name which doesn't overwrite existing file
+        fileStore.bulk.pickPathSelector = pickSavePath;
     }
 
     componentWillUnmount() {
@@ -59,6 +64,9 @@ class Files extends React.Component {
         fileStore.bulk.shareWithSelector = null;
         // remove icebear hook for deletion
         fileStore.bulk.deleteFilesConfirmator = null;
+        // remove icebear hook for bulk save
+        fileStore.bulk.downloadFolderSelector = null;
+        fileStore.bulk.pickPathSelector = null;
     }
 
     handleSearch = val => {
@@ -283,12 +291,12 @@ class Files extends React.Component {
         const bulkButtons = [
             {
                 label: t('button_share'),
-                materialIcon: 'person_add',
+                icon: 'person_add',
                 onClick: fileStore.bulk.share
             },
             {
                 label: t('button_download'),
-                materialIcon: 'file_download',
+                icon: 'file_download',
                 onClick: fileStore.bulk.download
             },
             {
@@ -299,7 +307,7 @@ class Files extends React.Component {
             },
             {
                 label: t('button_delete'),
-                materialIcon: 'delete',
+                icon: 'delete',
                 onClick: fileStore.bulk.remove
             }
         ].map(props => {

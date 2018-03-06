@@ -228,21 +228,7 @@ class Files extends React.Component {
     };
 
     @computed get allAreSelected() {
-        const currentFilesAndFoldersCount
-            = fileStore.folders.currentFolder.folders.length + fileStore.folders.currentFolder.files.length;
-
-        if (currentFilesAndFoldersCount === 0) return false;
-
-        let count = 0;
-        fileStore.folders.currentFolder.folders.forEach(f => {
-            if (f.selected) count += 1;
-        });
-
-        fileStore.folders.currentFolder.files.forEach(f => {
-            if (f.selected) count += 1;
-        });
-
-        return count === currentFilesAndFoldersCount;
+        return !this.items.some(i => !i.selected);
     }
 
     handleFileShareIntent = () => {

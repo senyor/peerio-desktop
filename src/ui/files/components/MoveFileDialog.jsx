@@ -51,8 +51,7 @@ class MoveFileDialog extends React.Component {
         if (this.props.handleMove) {
             this.props.handleMove(target);
         } else {
-            target.moveInto(file || folder);
-            if (folder) fileStore.folders.save();
+            fileStore.bulk.moveOne(file || folder, target);
         }
         onHide();
     }

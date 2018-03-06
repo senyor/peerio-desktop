@@ -86,6 +86,10 @@ class Files extends React.Component {
         this.moveFolderVisible = true;
     }
 
+    @action.bound moveToFolder() {
+        this.moveFolderVisible = true;
+    }
+
     @action.bound hideMoveFolder() {
         this.moveFolderVisible = false;
         this.folderToMove = null;
@@ -310,7 +314,7 @@ class Files extends React.Component {
             {
                 label: t('button_move'),
                 customIcon: 'move',
-                onClick: this.moveFolder,
+                onClick: this.moveToFolder,
                 disabled: !fileStore.bulk.canMove
             },
             {

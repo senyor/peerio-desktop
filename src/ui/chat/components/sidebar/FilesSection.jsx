@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { List, ListItem, Menu, MenuItem } = require('~/peer-ui');
-const { chatStore, fileStore } = require('peerio-icebear');
+const { chatStore, fileStore, prombservable: { asPromise } } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -12,20 +12,25 @@ const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 
 @observer
 class FilesSection extends React.Component {
-    share(ev) {
+    async share(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
-        const file = fileStore.getById(fileId);
-        if (!file) return;
+        const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
+        await asPromise(file, 'loaded', true);
+        if (this.isUnmounted || file.deleted) return;
         fileStore.clearSelection();
         file.selected = true;
         window.router.push('/app/sharefiles');
     }
 
+    componentWillUnmount() {
+        this.isUnmounted = true;
+    }
+
     download(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
-        const file = fileStore.getById(fileId);
+        const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
         if (!file) return;
         downloadFile(file);
     }

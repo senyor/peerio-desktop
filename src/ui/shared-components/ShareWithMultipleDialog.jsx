@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
-const { contactStore } = require('peerio-icebear');
+const { contactStore, User } = require('peerio-icebear');
 const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
@@ -23,7 +23,10 @@ class ShareWithMultipleDialog extends React.Component {
     }
 
     @computed get contacts() {
-        return contactStore.filter(this.query, null, true).filter(c => !c.isDeleted)
+        return contactStore
+            .filter(this.query, null, true)
+            .filter(c => !c.isDeleted)
+            .filter(c => c.username !== User.current.username)
             .sort((c1, c2) => c1.username.localeCompare(c2.username));
     }
 

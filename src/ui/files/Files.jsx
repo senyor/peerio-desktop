@@ -248,7 +248,7 @@ class Files extends React.Component {
     };
 
     @computed get allAreSelected() {
-        return !this.items.some(i => !i.selected);
+        return this.items.length && !this.items.some(i => !i.selected);
     }
 
     handleFileShareIntent = () => {
@@ -408,7 +408,7 @@ class Files extends React.Component {
     refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
 
     render() {
-        if (!this.items.length
+        if (!fileStore.files.length && !fileStore.virtualFolders.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
         const { currentFolder } = fileStore.folders;
@@ -469,7 +469,7 @@ class Files extends React.Component {
                             <div className="file-size text-right">{t('title_size')}</div>
                             <div className="file-actions" />
                         </div>
-                        {this.removedFolderNotifVisible && this.removedFolderNotif}
+                        {currentFolder.isRoot && this.removedFolderNotifVisible && this.removedFolderNotif}
                         <div className={css(
                             'file-table-body',
                             { 'hide-checkboxes': this.selectedCount === 0 }

@@ -3,7 +3,7 @@ const css = require('classnames');
 const { Button, Checkbox, Dialog, Input } = require('~/peer-ui');
 const { observer } = require('mobx-react');
 const { observable, action, computed } = require('mobx');
-const { fileStore, clientApp } = require('peerio-icebear');
+const { fileStore, volumeStore, clientApp } = require('peerio-icebear');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
@@ -101,7 +101,7 @@ class Files extends React.Component {
         const folder = getFolderByEvent(ev);
         const contacts = await this.shareWithMultipleDialog.show();
         if (!contacts) return;
-        fileStore.folders.shareFolder(folder, contacts);
+        await volumeStore.shareFolder(folder, contacts);
     }
 
     @observable triggerAddFolderPopup = false;
@@ -408,7 +408,7 @@ class Files extends React.Component {
     refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
 
     render() {
-        if (!fileStore.files.length
+        if (!this.items.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
         const { currentFolder } = fileStore.folders;

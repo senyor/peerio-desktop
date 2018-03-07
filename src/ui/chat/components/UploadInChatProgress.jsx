@@ -8,10 +8,10 @@ const ShareFolderProgress = require('./ShareFolderProgress');
 class UploadInChatProgress extends React.Component {
     render() {
         if (!this.props.queue || !this.props.queue.length) return null;
-        const file = this.props.queue[0];
+        const item = this.props.queue[0];
         const queued = this.props.queue.length - 1;
         return (
-            file.isFolder ? <ShareFolderProgress /> : <UploadFileProgress file={file} remaining={queued} />
+            item.isFolder ? <ShareFolderProgress folder={item} /> : <UploadFileProgress file={item} remaining={queued} />
         );
     }
 }

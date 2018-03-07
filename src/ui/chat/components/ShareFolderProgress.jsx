@@ -10,11 +10,7 @@ const { MaterialIcon, ProgressBar } = require('~/peer-ui');
 @observer
 class ShareFolderProgress extends React.Component {
     render() {
-        const folder = fileStore.folders.root.folders[0] || {
-            name: 'Folder name A',
-            progress: 100,
-            progressMax: 100
-        };
+        const folder = this.props.folder;
 
         const { progress, progressMax, progressPercentage } = folder;
 
@@ -24,7 +20,7 @@ class ShareFolderProgress extends React.Component {
                     <MaterialIcon icon="folder" />
                     <div className="text">
                         <T k="title_sharing" tag="span" />&nbsp;
-                        <span>{folder.name}</span>&nbsp;
+                        <span><i>{folder.name}</i></span>&nbsp;
                         {/*
                             <span className="items-left">({t('title_itemsLeft', { number: 4 })})</span>
                         */}

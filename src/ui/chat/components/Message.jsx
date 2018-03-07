@@ -127,6 +127,24 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
+        // TODO: move it to files
+        if (m.systemData.action === 'folder') {
+            const { folderName, folderId } = m.systemData;
+            return (
+                <div className="inline-files-container" data-id={folderId}>
+                    <div className="inline-files">
+                        <div className="shared-file">
+                            <div className="container">
+                                <p>
+                                    <MaterialIcon icon="folder" className="file-icon" />
+                                    <span>{folderName}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
         if (m.systemData.action === 'videoCall' && m.systemData.link) {
             const { link } = m.systemData;
             const shortLink = link.replace('https://', '');

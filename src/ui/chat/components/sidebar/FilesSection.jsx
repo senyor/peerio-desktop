@@ -1,7 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { List, ListItem, Menu, MenuItem } = require('~/peer-ui');
-const { chatStore, fileStore, prombservable: { asPromise } } = require('peerio-icebear');
+const { chatStore, fileStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -16,7 +16,7 @@ class FilesSection extends React.Component {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
         const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
-        await asPromise(file, 'loaded', true);
+        await file.ensureLoaded();
         if (this.isUnmounted || file.deleted) return;
         fileStore.clearSelection();
         file.selected = true;

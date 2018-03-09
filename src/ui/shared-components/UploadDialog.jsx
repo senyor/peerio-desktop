@@ -44,6 +44,7 @@ class UploadDialog extends React.Component {
     }
 
     @computed get fileExt() {
+        if (!this.currentFile) return '';
         return fileHelpers.getFileExtension(fileHelpers.getFileName(this.currentFile));
     }
 
@@ -191,7 +192,7 @@ class UploadDialog extends React.Component {
                 title={this.dialogTitle}>
                 <div className="upload-dialog-contents">
                     <div className={css('image-or-icon', { 'icon-container': this.fileType !== 'img' })}>
-                        { this.fileType === 'img'
+                        {this.fileType === 'img'
                             ? <div className="thumbnail"><img src={this.currentFile} alt="" /></div>
                             : <div className="icon-inner">
                                 <FileSpriteIcon type={this.fileType} size="xlarge" />

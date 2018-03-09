@@ -235,7 +235,6 @@ class InlineFile extends React.Component {
             </div>
         );
     }
-
     renderOversizeCutoffWarning() {
         return (
             <div className="image-over-limit-warning">

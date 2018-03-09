@@ -470,7 +470,10 @@ class Files extends React.Component {
                             <div className="file-actions" />
                         </div>
                         {this.removedFolderNotifVisible && this.removedFolderNotif}
-                        <div className="file-table-body">
+                        <div className={css(
+                            'file-table-body',
+                            { 'hide-checkboxes': this.selectedCount === 0 }
+                        )}>
                             {items}
                         </div>
                     </div>

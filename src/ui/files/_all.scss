@@ -32,10 +32,15 @@
   // needed to maintain the table-style layout while using flex containers
   .file-checkbox {
     justify-content: flex-end;
-    visibility: hidden;
     width: 32px;
     min-width: 32px;
     margin-right: 16px;
+  }
+
+  // Finicky show/hide rules for checkboxes
+
+  .hide-checkboxes .file-checkbox {
+    visibility: hidden;
   }
 
   .row:hover .file-checkbox,

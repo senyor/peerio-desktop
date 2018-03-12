@@ -273,11 +273,13 @@ class InlineFile extends React.Component {
                                         theme="no-hover"
                                     />
                                 }
-                                <FileActions downloadDisabled={this.downloadDisabled}
-                                    shareable shareDisabled={this.shareDisabled}
-                                    newFolderDisabled
+                                <FileActions shareable newFolderDisabled
                                     deleteable={this.deleteable}
-                                    file={this.props.file}
+                                    downloadDisabled={this.downloadDisabled}
+                                    shareDisabled={this.shareDisabled}
+                                    onDownload={this.download}
+                                    onShare={this.share}
+                                    onDelete={this.deleteFile}
                                     {...this.props}
                                 />
                             </div>

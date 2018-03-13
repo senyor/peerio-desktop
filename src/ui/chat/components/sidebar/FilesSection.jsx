@@ -1,4 +1,5 @@
 const React = require('react');
+const { action } = require('mobx');
 const { observer } = require('mobx-react');
 const { List, ListItem, Menu, MenuItem } = require('~/peer-ui');
 const { chatStore, fileStore } = require('peerio-icebear');
@@ -12,7 +13,7 @@ const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 
 @observer
 class FilesSection extends React.Component {
-    async share(ev) {
+    @action.bound async share(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
         const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
@@ -27,11 +28,12 @@ class FilesSection extends React.Component {
         this.isUnmounted = true;
     }
 
-    download(ev) {
+    @action.bound async download(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
         const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
-        if (!file) return;
+        await file.ensureLoaded();
+        if (file.deleted) return;
         downloadFile(file);
     }
 
@@ -71,8 +73,8 @@ class FilesSection extends React.Component {
     }
 
     renderFileItem = id => {
-        const file = fileStore.getById(id);
-        if (!file) return null;
+        const file = fileStore.getByIdInChat(id, chatStore.activeChat.id);
+        if (!file.loaded || file.deleted) return null;
 
         return (
             <ListItem key={id} data-fileid={id}

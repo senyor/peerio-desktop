@@ -16,6 +16,7 @@ const appRoot = document.getElementById('root');
     active          bool
     noAnimation     bool
     title                       usually string but any HTML allowed
+    theme           string      error (red), warning (yellow)
 
     onCancel        function    behaviour for Esc key and overlay click
     actions         array       each element is an object corresponding to 1 button in dialog
@@ -122,7 +123,8 @@ class Dialog extends React.Component {
                 <dialog open
                     className={css(
                         'p-dialog',
-                        this.props.className
+                        this.props.className,
+                        this.props.theme
                     )}
                 >
                     <div className="body">

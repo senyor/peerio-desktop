@@ -60,7 +60,7 @@ class FolderLine extends React.Component {
 
                 {this.props.folderDetails &&
                     <div className="file-owner">
-                        {t('title_you')}
+                        {folder.owner ? folder.owner : t('title_you')}
                     </div>
                 }
 

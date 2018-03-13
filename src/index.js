@@ -26,17 +26,32 @@ window.ice = require('peerio-icebear');
 // shortcut to use with promises
 window.clog = console.log.bind(console);
 window.cerr = console.error.bind(console);
-// !!!! DEBUG. !!!!!!!!!!!!!!!!!!!!!!!!!
+/* eslint-disable */
 window.spamCounter = 0;
 window.spam = (interval = 1000, words = 10) => {
     if (window.spamInterval) return;
-    const ice = require('peerio-icebear');
     window.spamInterval = setInterval(() => {
         if (!ice.chatStore.activeChat) return;
         ice.chatStore.activeChat.sendMessage(
             `${window.spamCounter++} ${ice.PhraseDictionary.current.getPassphrase(words)}`);
     }, interval);
 };
+window.findMessage = async (text) => {
+    const chat = ice.chatStore.activeChat;
+    if (!chat) return;
+    text = text.toUpperCase()
+    while (chat.canGoUp) {
+        chat.loadPreviousPage();
+        await ice.prombservable.asPromise(chat, 'loadingTopPage', false);
+        for (let m of chat.messages) {
+            if (m.text && m.text.toUpperCase().includes(text)) {
+                console.log(m.text, m);
+                return;
+            }
+        }
+    }
+};
+/* eslint-enable */
 
 window.stopSpam = () => {
     if (!window.spamInterval) return;

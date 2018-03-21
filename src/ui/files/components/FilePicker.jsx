@@ -1,5 +1,5 @@
 const React = require('react');
-const { fileStore } = require('peerio-icebear');
+const { fileStore, chatStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
 const { observable, computed, action } = require('mobx');
 const { Dialog, ProgressBar } = require('~/peer-ui');
@@ -59,9 +59,10 @@ class FilePicker extends React.Component {
     };
 
     handleShare = () => {
-        const selected = fileStore.getSelectedFiles();
+        const selected = fileStore.selectedFilesOrFolders;
         if (!selected.length) return;
         this.props.onShare(selected);
+        fileStore.clearSelection();
         fileStore.clearFilter();
     };
 
@@ -101,13 +102,14 @@ class FilePicker extends React.Component {
                 label: t('button_share'),
                 onClick: this.handleShare,
                 primary: true,
-                disabled: !fileStore.hasSelectedFiles
+                disabled: !fileStore.hasSelectedFilesOrFolders
             }
         ];
 
         const { currentFolder } = this;
         const items = [];
         const data = this.items;
+        const canShareFolder = chatStore.activeChat && !chatStore.activeChat.isChannel;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             items.push(f.isFolder ?
@@ -115,7 +117,10 @@ class FilePicker extends React.Component {
                     key={f.folderId}
                     folder={f}
                     onChangeFolder={this.changeFolder}
-                    checkboxPlaceholder
+                    checkbox
+                    disabledCheckbox={!canShareFolder}
+                    selected={f.selected}
+                    onToggleSelect={this.toggleSelectFolder}
                 /> :
                 <FileLine
                     key={f.fileId}
@@ -161,6 +166,11 @@ class FilePicker extends React.Component {
         const folder = getFolderByEvent(ev);
         this.currentFolder = folder;
         fileStore.clearFilter();
+    }
+
+    @action.bound toggleSelectFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        folder.selected = !folder.selected;
     }
 
     @action.bound toggleSelect(ev) {

@@ -63,6 +63,10 @@
   &.error {
     border-top: 8px solid $red-error;
   }
+
+  &.small {
+    width: 360px;
+  }
 }
 
 // Override HTML defaults

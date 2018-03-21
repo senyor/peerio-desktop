@@ -1,18 +1,21 @@
 const React = require('react');
-const { Button, Dialog, Input } = require('~/peer-ui');
+const css = require('classnames');
+const { Button, Checkbox, Dialog, Input } = require('~/peer-ui');
 const { observer } = require('mobx-react');
 const { observable, action, computed } = require('mobx');
-const { fileStore, clientApp } = require('peerio-icebear');
+const { fileStore, volumeStore, clientApp } = require('peerio-icebear');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
 const ZeroScreen = require('./components/ZeroScreen');
-const { pickLocalFiles } = require('~/helpers/file');
+const { pickLocalFiles, getListOfFiles, selectFolder, pickSavePath } = require('~/helpers/file');
+const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { getListOfFiles } = require('~/helpers/file');
 const MoveFileDialog = require('./components/MoveFileDialog');
-const { getFolderByEvent } = require('~/helpers/icebear-dom');
+const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
+const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
+const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -32,12 +35,38 @@ class Files extends React.Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.enqueueCheck, false);
+        // icebear will call this function to get who to share files with
+        fileStore.bulk.shareWithSelector = async (/* items */) => {
+            const contacts = await this.shareWithMultipleDialog.show();
+            return contacts;
+        };
+
+        // icebear will call this function to confirm file deletion
+        fileStore.bulk.deleteFilesConfirmator = (files, sharedFiles) => {
+            let msg = t('title_confirmRemoveFiles', { count: files.length });
+            if (sharedFiles.length) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
+            return confirm(msg);
+        };
+
+        // icebear will call this function to select folder for bulk save
+        fileStore.bulk.downloadFolderSelector = selectFolder;
+
+        // icebear will call this function trying to pick a file or folder name which doesn't overwrite existing file
+        fileStore.bulk.pickPathSelector = pickSavePath;
     }
 
     componentWillUnmount() {
         clientApp.isInFilesView = false;
         window.removeEventListener('resize', this.enqueueCheck);
         fileStore.clearFilter();
+        fileStore.clearSelection();
+        // remove icebear hook for sharing selection
+        fileStore.bulk.shareWithSelector = null;
+        // remove icebear hook for deletion
+        fileStore.bulk.deleteFilesConfirmator = null;
+        // remove icebear hook for bulk save
+        fileStore.bulk.downloadFolderSelector = null;
+        fileStore.bulk.pickPathSelector = null;
     }
 
     handleSearch = val => {
@@ -53,6 +82,11 @@ class Files extends React.Component {
     @action.bound moveFolder(ev) {
         const folder = getFolderByEvent(ev);
         this.folderToMove = folder;
+        if (folder) folder.selected = true;
+        this.moveFolderVisible = true;
+    }
+
+    @action.bound moveToFolder() {
         this.moveFolderVisible = true;
     }
 
@@ -62,12 +96,12 @@ class Files extends React.Component {
         fileStore.folderFilter = '';
     }
 
-    @action.bound deleteFolder(ev) {
+    @action.bound async shareFolder(ev) {
+        // IMPORTANT: syntetic events are reused, so cache folder before await
         const folder = getFolderByEvent(ev);
-        if (!confirm(t('title_deleteFolder', { folderName: folder.name }))) return;
-        fileStore.folders.currentFolder = folder.parent;
-        fileStore.folders.deleteFolder(folder);
-        fileStore.folders.save();
+        const contacts = await this.shareWithMultipleDialog.show();
+        if (!contacts) return;
+        await volumeStore.shareFolder(folder, contacts);
     }
 
     @observable triggerAddFolderPopup = false;
@@ -77,6 +111,7 @@ class Files extends React.Component {
     @observable folderName = '';
     @observable folderToRename;
     @observable folderToMove;
+    @observable folderToDelete;
 
     @action.bound showAddFolderPopup() {
         this.folderName = '';
@@ -127,6 +162,18 @@ class Files extends React.Component {
         }
     }
 
+    @action.bound async downloadFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        const path = await selectFolder();
+        if (!path) return;
+        fileStore.bulk.downloadOne(folder, path);
+    }
+
+    @action.bound deleteFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        fileStore.bulk.removeOne(folder);
+    }
+
     onAddPopupRef = (ref) => {
         if (ref) this.addFolderPopupVisible = true;
     };
@@ -146,7 +193,7 @@ class Files extends React.Component {
         ];
         return (
             <Dialog title={t('button_newFolder')}
-                active={this.addFolderPopupVisible} type="small" ref={this.onAddPopupRef}
+                active={this.addFolderPopupVisible} theme="small" ref={this.onAddPopupRef}
                 actions={dialogActions}
                 onCancel={hide}
                 className="add-folder-popup">
@@ -169,7 +216,7 @@ class Files extends React.Component {
         ];
         return (
             <Dialog title={t('button_rename')}
-                active={this.renameFolderPopupVisible} type="small" ref={this.onRenamePopupRef}
+                active={this.renameFolderPopupVisible} theme="small" ref={this.onRenamePopupRef}
                 actions={dialogActions} onKeyDown={this.keyDownRenameFolder}
                 onCancel={hide}
                 className="add-folder-popup">
@@ -193,35 +240,16 @@ class Files extends React.Component {
         }));
     }
 
-    toggleSelection = val => {
-        if (val) {
-            fileStore.selectAll();
-        } else {
-            fileStore.clearSelection();
-        }
+    toggleSelectAll = ev => {
+        const { items } = this;
+        items.forEach(item => {
+            item.selected = !!ev.target.checked;
+        });
     };
 
-    // todo: move to icebear
-    handleBulkDelete = () => {
-        const selected = fileStore.getSelectedFiles();
-        const hasSharedFiles = selected.some((f) => f.shared);
-        if (!selected.length) return;
-
-        let msg = t('title_confirmRemoveFiles', { count: selected.length });
-        if (hasSharedFiles) msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
-
-        if (confirm(msg)) {
-            let i = 0;
-            const removeOne = () => {
-                const f = selected[i];
-                f.remove().then(() => {
-                    if (++i >= selected.length) return;
-                    setTimeout(removeOne, 250);
-                });
-            };
-            removeOne();
-        }
-    };
+    @computed get allAreSelected() {
+        return this.items.length && !this.items.some(i => !i.selected);
+    }
 
     handleFileShareIntent = () => {
         fileStore.deselectUnshareableFiles();
@@ -257,6 +285,7 @@ class Files extends React.Component {
             this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
             fileStore.folders.currentFolder = folder;
             fileStore.clearFilter();
+            fileStore.clearSelection();
         }
     }
 
@@ -266,7 +295,41 @@ class Files extends React.Component {
             : fileStore.folders.currentFolder.foldersAndFilesDefaultSorting;
     }
 
+    @computed get selectedCount() {
+        return fileStore.getSelectedFiles().length + fileStore.selectedFolders.length;
+    }
+
     get breadCrumbsHeader() {
+        const bulkButtons = [
+            {
+                label: t('button_share'),
+                icon: 'person_add',
+                onClick: fileStore.bulk.share
+            },
+            {
+                label: t('button_download'),
+                icon: 'file_download',
+                onClick: fileStore.bulk.download
+            },
+            {
+                label: t('button_move'),
+                customIcon: 'move',
+                onClick: this.moveToFolder,
+                disabled: !fileStore.bulk.canMove
+            },
+            {
+                label: t('button_delete'),
+                icon: 'delete',
+                onClick: fileStore.bulk.remove
+            }
+        ].map(props => {
+            return (
+                <Button
+                    key={props.label}
+                    {...props} />
+            );
+        });
+
         return (
             <div className="files-header" data-folderid={fileStore.folders.currentFolder.folderId}>
                 <Breadcrumb currentFolder={fileStore.folders.currentFolder}
@@ -274,18 +337,26 @@ class Files extends React.Component {
                     onMove={this.moveFolder}
                     onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
+                    bulkSelected={this.selectedCount}
                 />
-                <Button
-                    label={t('button_newFolder')}
-                    className="new-folder"
-                    onClick={this.showAddFolderPopup}
-                    theme="affirmative secondary"
-                />
-                <Button className="button-affirmative"
-                    label={t('button_upload')}
-                    onClick={this.handleUpload}
-                    theme="affirmative"
-                />
+                {this.selectedCount > 0
+                    ? <div className="buttons-container bulk-buttons">
+                        {bulkButtons}
+                    </div>
+                    : <div className="buttons-container file-buttons">
+                        <Button
+                            label={t('button_newFolder')}
+                            className="new-folder"
+                            onClick={this.showAddFolderPopup}
+                            theme="affirmative secondary"
+                        />
+                        <Button className="button-affirmative"
+                            label={t('button_upload')}
+                            onClick={this.handleUpload}
+                            theme="affirmative"
+                        />
+                    </div>
+                }
             </div>
         );
     }
@@ -300,8 +371,44 @@ class Files extends React.Component {
         );
     }
 
+    @observable removedFolderNotifVisible = true;
+    @observable removedFolderNotifToHide = false;
+
+    @action.bound dismissRemovedFolderNotif() {
+        this.removedFolderNotifToHide = true;
+
+        setTimeout(() => {
+            this.removedFolderNotifVisible = false;
+        }, 250);
+    }
+
+    get removedFolderNotif() {
+        return (
+            <div className={css(
+                'removed-folder-notif',
+                { 'hide-in-progress': this.removedFolderNotifToHide }
+            )}>
+                <T k="title_removedFromFolder">{{ folderName: 'Design files' }}</T>
+                <Button label="dismiss" onClick={this.dismissRemovedFolderNotif} />
+            </div>
+        );
+    }
+
+    toggleSelectFile(ev) {
+        const file = getFileByEvent(ev);
+        file.selected = !file.selected;
+    }
+
+    toggleSelectFolder(ev) {
+        const folder = getFolderByEvent(ev);
+        folder.selected = !folder.selected;
+    }
+
+    refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
+    refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
+
     render() {
-        if (!fileStore.files.length
+        if (!fileStore.files.length && !fileStore.virtualFolders.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
         const { currentFolder } = fileStore.folders;
@@ -311,23 +418,32 @@ class Files extends React.Component {
             const f = data[i];
             items.push(f.isFolder ?
                 <FolderLine
+                    className={css({ 'share-in-progress': f.progress > 0 })}
                     key={f.folderId}
                     folder={f}
-                    moveable={fileStore.folders.root.folders.length > 0}
+                    moveable={fileStore.folders.root.hasNested}
+                    onDownload={this.downloadFolder}
                     onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
                     onDeleteFolder={this.deleteFolder}
                     onChangeFolder={this.changeFolder}
                     folderActions
                     folderDetails
+                    checkbox
+                    onToggleSelect={this.toggleSelectFolder}
+                    selected={f.selected}
+                    onShare={this.shareFolder}
                 /> :
                 <FileLine
                     key={f.fileId}
                     file={f}
                     currentFolder={currentFolder}
-                    moveable={fileStore.folders.root.folders.length > 0}
+                    moveable={fileStore.folders.root.hasNested}
                     fileActions
                     fileDetails
+                    checkbox
+                    onToggleSelect={this.toggleSelectFile}
+                    selected={f.selected}
                 />);
         }
         this.enqueueCheck();
@@ -341,7 +457,11 @@ class Files extends React.Component {
                         onScroll={this.enqueueCheck}
                     >
                         <div className="file-table-header row">
-                            <div className="loading-icon" />{/* blank space for download-in-progress icon */}
+                            <Checkbox
+                                className="file-checkbox"
+                                onChange={this.toggleSelectAll}
+                                checked={this.allAreSelected}
+                            />
                             <div className="file-icon" />{/* blank space for file icon image */}
                             <div className="file-name">{t('title_name')}</div>
                             <div className="file-owner">{t('title_owner')}</div>
@@ -349,13 +469,18 @@ class Files extends React.Component {
                             <div className="file-size text-right">{t('title_size')}</div>
                             <div className="file-actions" />
                         </div>
-                        <div className="file-table-body">
+                        {currentFolder.isRoot && this.removedFolderNotifVisible && this.removedFolderNotif}
+                        <div className={css(
+                            'file-table-body',
+                            { 'hide-checkboxes': this.selectedCount === 0 }
+                        )}>
                             {items}
                         </div>
                     </div>
                 </div>
                 {this.moveFolderVisible &&
                     <MoveFileDialog
+                        handleMove={fileStore.bulk.move}
                         folder={this.folderToMove}
                         currentFolder={currentFolder.parent || currentFolder}
                         visible={this.moveFolderVisible}
@@ -364,6 +489,8 @@ class Files extends React.Component {
                 }
                 {this.triggerAddFolderPopup && this.addFolderPopup}
                 {this.triggerRenameFolderPopup && this.renameFolderPopup}
+                <ConfirmFolderDeleteDialog ref={this.refConfirmFolderDeleteDialog} />
+                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
             </div>
         );
     }

@@ -4,10 +4,8 @@ const { observer } = require('mobx-react');
 const { Avatar, ProgressBar } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const Message = require('./Message');
-const { chatStore, User, clientApp } = require('peerio-icebear');
+const { chatStore, clientApp } = require('peerio-icebear');
 const { t } = require('peerio-translator');
-const urls = require('~/config').translator.urlMap;
-const config = require('~/config');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 
 @observer

@@ -15,22 +15,38 @@
   .row {
     display: flex;
     align-items: center;
+    padding: 0 24px;
     border-bottom: 1px solid $divider-dark;
-  }
 
-  .loading-icon {
-    min-width: 48px;
-    padding-left: $padding-large;
+    &:last-of-type {
+      border-bottom: 0;
+    }
+
+    // "Disabled" styles for when folder share in progress
+    &.disabled {
+      color: $text-dark-hint;
+    }
   }
 
   // Common class for FileLine/Folderline checkbox & checkbox placeholder
   // needed to maintain the table-style layout while using flex containers
   .file-checkbox {
-    width: 24px;
-    min-width: 24px;
-    padding: 0;
-    margin-left: auto;
-    margin-right: $margin-default;
+    justify-content: flex-end;
+    width: 32px;
+    min-width: 32px;
+    margin-right: 16px;
+  }
+
+  // Finicky show/hide rules for checkboxes
+
+  .hide-checkboxes .file-checkbox {
+    visibility: hidden;
+  }
+
+  .row:hover .file-checkbox,
+  .row.selected-row .file-checkbox,
+  .file-checkbox.folder-share-progress {
+    visibility: visible;
   }
 
   .file-icon {
@@ -45,27 +61,17 @@
   }
 
   .file-name {
-    cursor: pointer;
     width: 100%;
     overflow: hidden;
     font-weight: $font-weight-semibold;
     text-overflow: ellipsis;
     white-space: nowrap;
     transition: 150ms;
-
-    &:hover {
-      color: $blue;
-    }
   }
 
   .file-owner {
-    cursor: pointer;
     min-width: 20%;
     margin-left: auto;
-
-    &:hover {
-      color: $blue;
-    }
   }
 
   .file-uploaded {
@@ -77,11 +83,12 @@
   }
 
   .file-actions {
-    min-width: 48px;
-    margin-right: $margin-large;
+    width: 24px;
+    min-width: 24px;
 
     .item-actions {
-      min-width: 48px;
+      width: 24px;
+      min-width: 24px;
       text-align: center;
     }
   }
@@ -89,13 +96,18 @@
   .file-table-header {
     height: 56px;
     min-height: 56px;
+    background-color: $black-03;
 
     > div {
-      padding-right: $padding-large;
+      padding-right: 24px;
       font-size: 12px;
       font-weight: $font-weight-semibold;
       text-align: left;
       color: $text-dark-secondary;
+    }
+
+    .file-checkbox {
+      visibility: visible;
     }
   }
 
@@ -108,6 +120,7 @@
         background: rgba($blue, .12);
       }
 
+      &.share-in-progress,
       &:hover {
         background: rgba($blue, .12);
       }
@@ -117,7 +130,19 @@
       }
 
       > div {
-        padding-right: $padding-large;
+        padding-right: 24px;
+      }
+
+      .folder-share-progress {
+        text-align: right;
+        color: $text-dark-secondary;
+
+        .p-progress-bar {
+          position: absolute;
+          left: 0;
+          top: 100%;
+          margin-top: -2px;
+        }
       }
 
       .loading {

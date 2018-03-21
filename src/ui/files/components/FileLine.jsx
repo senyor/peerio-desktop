@@ -12,7 +12,6 @@ const uiStore = require('~/stores/ui-store');
 const { Checkbox, ProgressBar } = require('~/peer-ui');
 
 const FileActions = require('./FileActions');
-const FileLoading = require('./FileLoading');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const MoveFileDialog = require('./MoveFileDialog');
 
@@ -97,8 +96,8 @@ class FileLine extends React.Component {
         }
 
         const containerStyle = {
-            selected: this.checked,
-            'selected-row': file.selected,
+            selected: this.props.selected,
+            'selected-row': this.props.selected,
             'waiting-3rd-party': !file.uploading && !file.readyForDownload
         };
 
@@ -109,21 +108,13 @@ class FileLine extends React.Component {
                 onMouseEnter={this.onShowActions}
                 onMouseLeave={this.onHideActions}>
 
-                {this.props.checkbox &&
+                {this.props.checkbox ?
                     <Checkbox
                         className="file-checkbox"
                         checked={this.props.selected}
                         onChange={this.props.onToggleSelect}
                     />
-                }
-
-                {this.props.fileDetails &&
-                    <div className="loading-icon">
-                        {(file.downloading || file.uploading)
-                            && <FileLoading loading={file.downloading ? 'file_download' : 'file_upload'}
-                                onCancel={this.cancelUploadOrDownload} />
-                        }
-                    </div>
+                    : <div className="file-checkbox" />
                 }
 
                 <div className="file-icon selectable"
@@ -163,7 +154,7 @@ class FileLine extends React.Component {
                 }
 
                 {this.props.fileActions &&
-                    <div className="file-actions text-right">
+                    <div className="file-actions">
                         <FileActions
                             downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
                             shareable shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.share}
@@ -172,6 +163,7 @@ class FileLine extends React.Component {
                             moveable={this.props.moveable}
                             onMove={this.moveFile}
                             deleteable onDelete={this.deleteFile}
+                            disabled={this.props.selected}
                         />
                         {this.moveFileVisible && this.props.currentFolder &&
                             <MoveFileDialog

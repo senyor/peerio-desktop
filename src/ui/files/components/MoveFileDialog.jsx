@@ -9,11 +9,17 @@ const Search = require('~/ui/shared-components/Search');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const css = require('classnames');
 const { getFolderByEvent } = require('~/helpers/icebear-dom');
+const ShareConfirmDialog = require('./ShareConfirmDialog');
 
 @observer
 class MoveFileDialog extends React.Component {
+    @observable visible = false;
     @observable selectedFolder = null;
     @observable currentFolder = null;
+
+    @action.bound toggleShareWarning() {
+        this.shareWarningDisabled = !this.shareWarningDisabled;
+    }
 
     componentWillMount() {
         this.currentFolder = this.props.currentFolder;
@@ -33,11 +39,20 @@ class MoveFileDialog extends React.Component {
         this.currentFolder = this.getFolder(ev);
     }
 
-    @action.bound handleMove() {
+    @action.bound async handleMove() {
         const { file, folder, onHide } = this.props;
         const target = this.selectedFolder || this.currentFolder;
-        target.moveInto(file || folder);
-        if (folder) fileStore.folders.save();
+
+        if (target.isShared && !await this.shareConfirmDialog.check()) {
+            return;
+        }
+
+        // TODO: needs refactoring
+        if (this.props.handleMove) {
+            this.props.handleMove(target);
+        } else {
+            fileStore.bulk.moveOne(file || folder, target);
+        }
         onHide();
     }
 
@@ -71,7 +86,7 @@ class MoveFileDialog extends React.Component {
                 theme="small"
                 selected={this.selectedFolder === folder}
             />
-            <MaterialIcon icon="folder" className="folder-icon" />
+            <MaterialIcon icon={folder.isShared ? 'folder_shared' : 'folder'} className="folder-icon" />
             <div className={css('file-info', { clickable: hasFolders })}
                 onClick={this.setCurrentFolder}
             >
@@ -87,6 +102,8 @@ class MoveFileDialog extends React.Component {
         </div>);
     };
 
+    refShareConfirmDialog = ref => { this.shareConfirmDialog = ref; };
+
     render() {
         const { onHide, visible } = this.props;
 
@@ -99,25 +116,28 @@ class MoveFileDialog extends React.Component {
             .map(this.getFolderRow);
 
         return (
-            <Dialog
-                actions={actions}
-                onCancel={onHide}
-                active={visible}
-                title={t('title_moveFileTo')}
-                className="move-file-dialog">
-                <Search
-                    onChange={this.handleSearch}
-                    query={fileStore.folderFilter}
-                />
-                <Breadcrumb
-                    currentFolder={this.currentFolder}
-                    onSelectFolder={this.changeCurrentFolder}
-                    noActions
-                />
-                <div className="move-folders-container">
-                    {folders}
-                </div>
-            </Dialog>
+            <div>
+                <ShareConfirmDialog ref={this.refShareConfirmDialog} />
+                <Dialog
+                    actions={actions}
+                    onCancel={onHide}
+                    active={visible}
+                    title={t('title_moveFileTo')}
+                    className="move-file-dialog">
+                    <Search
+                        onChange={this.handleSearch}
+                        query={fileStore.folderFilter}
+                    />
+                    <Breadcrumb
+                        currentFolder={this.currentFolder}
+                        onSelectFolder={this.changeCurrentFolder}
+                        noActions
+                    />
+                    <div className="move-folders-container">
+                        {folders}
+                    </div>
+                </Dialog>
+            </div>
         );
     }
 }

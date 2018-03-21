@@ -2,19 +2,21 @@ const React = require('react');
 const { observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('~/peer-ui');
-const MessageInput = require('./components/MessageInput');
-const MessageList = require('./components/MessageList');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
-const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
 const css = require('classnames');
+
+const MessageInput = require('./components/MessageInput');
+const MessageList = require('./components/MessageList');
 const MessageSideBar = require('./components/sidebar/MessageSideBar');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
+const UploadInChatProgress = require('./components/UploadInChatProgress');
+
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const { Dialog } = require('~/peer-ui');
@@ -79,9 +81,9 @@ class ChatView extends React.Component {
         }
     }
 
-    shareFiles = (files) => {
+    shareFilesAndFolders = (filesAndFolders) => {
         try {
-            chatStore.activeChat.shareFiles(files)
+            chatStore.activeChat.shareFilesAndFolders(filesAndFolders)
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
@@ -263,11 +265,7 @@ class ChatView extends React.Component {
                             </div>
                             : <div className="messages-container">
                                 {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}
-                                {
-                                    chat && chat.uploadQueue.length
-                                        ? <UploadInChatProgress queue={chat.uploadQueue} />
-                                        : null
-                                }
+                                {!!chat && <UploadInChatProgress queue={chat.uploadQueue} />}
                                 <MessageInput
                                     readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
                                     placeholder={
@@ -279,7 +277,7 @@ class ChatView extends React.Component {
                                     }
                                     onSend={this.sendRichTextMessage}
                                     onAck={this.sendAck}
-                                    onFileShare={this.shareFiles}
+                                    onFileShare={this.shareFilesAndFolders}
                                 />
                             </div>
                     }

@@ -1,8 +1,9 @@
 const React = require('react');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
+const css = require('classnames');
 const FolderActions = require('./FolderActions');
-const { MaterialIcon } = require('~/peer-ui');
+const { Checkbox, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 
 @observer
@@ -19,23 +20,37 @@ class FolderLine extends React.Component {
 
     render() {
         const { folder } = this.props;
-
+        const { progress, progressMax, progressPercentage } = folder;
         return (
             <div data-folderid={folder.folderId}
-                className="row"
+                className={css(
+                    'row',
+                    this.props.className,
+                    {
+                        'selected-row': this.props.selected,
+                        disabled: folder.isBlocked
+                    }
+                )}
                 onMouseEnter={this.onShowActions}
                 onMouseLeave={this.onHideActions}>
-                {this.props.folderDetails &&
-                    <div className="loading-icon" />
-                }
 
-                {this.props.checkboxPlaceholder &&
-                    <div className="file-checkbox" />
+                {progressMax
+                    ? <div className="file-checkbox folder-share-progress">
+                        {`${progressPercentage}%`}
+                        <ProgressBar value={progress} max={progressMax} />
+                    </div>
+                    : this.props.checkbox
+                        ? <Checkbox
+                            className={css('file-checkbox', { disabled: this.props.disabledCheckbox })}
+                            checked={this.props.selected}
+                            onChange={this.props.disabledCheckbox ? null : this.props.onToggleSelect}
+                        />
+                        : <div className="file-checkbox" />
                 }
 
                 <div className="file-icon"
                     onClick={this.props.onChangeFolder} >
-                    <MaterialIcon icon="folder" />
+                    <MaterialIcon icon={folder.isShared ? 'folder_shared' : 'folder'} />
                 </div>
 
                 <div className="file-name clickable selectable"
@@ -45,7 +60,7 @@ class FolderLine extends React.Component {
 
                 {this.props.folderDetails &&
                     <div className="file-owner">
-                        {t('title_you')}
+                        {folder.owner ? folder.owner : t('title_you')}
                     </div>
                 }
 
@@ -53,15 +68,18 @@ class FolderLine extends React.Component {
 
                 {this.props.folderDetails && <div className="file-size text-right" /> }
 
-                {this.props.folderActions &&
-                    <div className="file-actions text-right">
+                { /* TODO: use spread operator */
+                    this.props.folderActions &&
+                    <div className="file-actions">
                         <FolderActions
                             onClick={this.props.onClick}
                             onRename={this.props.onRenameFolder}
-                            moveable={this.props.moveable}
-                            onMove={this.props.onMoveFolder}
+                            onDownload={this.props.onDownload}
+                            onMove={folder.isShared ? null : this.props.onMoveFolder}
                             onDelete={this.props.onDeleteFolder}
+                            onShare={this.props.onShare}
                             data-folderid={folder.folderId}
+                            disabled={this.props.selected || folder.isBlocked}
                         />
                     </div>
                 }

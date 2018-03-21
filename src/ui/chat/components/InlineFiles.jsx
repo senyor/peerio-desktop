@@ -185,9 +185,8 @@ class InlineFile extends React.Component {
                             theme="small"
                         />
                         <Button caption={t('button_share')}
-                            icon="reply"
+                            icon="person_add"
                             onClick={this.share}
-                            className={css('reverse-icon')}
                             disabled={this.shareDisabled}
                             theme="small"
                         />

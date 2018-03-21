@@ -65,7 +65,7 @@ class FilesSection extends React.Component {
                 />
                 <MenuItem
                     caption={t('button_share')}
-                    icon="reply"
+                    icon="person_add"
                     onClick={this.share}
                 />
             </Menu>

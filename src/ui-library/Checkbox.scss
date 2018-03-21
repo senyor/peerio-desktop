@@ -19,4 +19,9 @@
   .p-checkbox-label {
     margin-left: $margin-small;
   }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: .5;
+  }
 }

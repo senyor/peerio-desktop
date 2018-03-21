@@ -25,11 +25,19 @@ class FileActions extends React.Component {
                 disabled={this.props.disabled}
                 {...getDataProps(this.props)}
             >
+                {this.props.limitedActions
+                    ? <MenuItem caption={t('button_learnMore')}
+                        icon="info"
+                        onClick={this.props.onClickMoreInfo}
+                    />
+                    : null
+                }
+
                 {this.props.shareable
                     ? <MenuItem caption={t('button_share')}
                         icon="person_add"
                         onClick={this.props.onShare}
-                        disabled={this.props.shareDisabled}
+                        disabled={this.props.shareDisabled || this.props.limitedActions}
                     />
                     : null
                 }
@@ -42,6 +50,7 @@ class FileActions extends React.Component {
                     ? <MenuItem caption={t('button_move')}
                         customIcon="move"
                         onClick={this.props.onMove}
+                        disabled={this.props.limitedActions}
                     />
                     : null
                 }
@@ -49,6 +58,7 @@ class FileActions extends React.Component {
                     ? <MenuItem caption={t('button_rename')}
                         icon="mode_edit"
                         onClick={this.props.onRename}
+                        disabled={this.props.limitedActions}
                     />
                     : null
                 }

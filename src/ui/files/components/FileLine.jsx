@@ -167,6 +167,8 @@ class FileLine extends React.Component {
                             onMove={this.moveFile}
                             deleteable onDelete={this.deleteFile}
                             disabled={this.props.selected}
+                            limitedActions={file.isLegacy}
+                            onClickMoreInfo={this.props.onClickMoreInfo}
                         />
                         {this.moveFileVisible && this.props.currentFolder &&
                             <MoveFileDialog

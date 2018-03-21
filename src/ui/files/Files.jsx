@@ -15,6 +15,7 @@ const { t } = require('peerio-translator');
 const MoveFileDialog = require('./components/MoveFileDialog');
 const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
 const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
+const LimitedActionsDialog = require('~/ui/shared-components/LimitedActionsDialog');
 const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
@@ -404,8 +405,14 @@ class Files extends React.Component {
         folder.selected = !folder.selected;
     }
 
+    @observable limitedActionsDialogVisible = false;
+    @action.bound openLimitedActions() {
+        this.limitedActionsDialog.show();
+    }
+
     refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
     refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
+    refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
 
     render() {
         if (!fileStore.files && !fileStore.files.length && !fileStore.virtualFolders.length
@@ -444,6 +451,7 @@ class Files extends React.Component {
                     checkbox
                     onToggleSelect={this.toggleSelectFile}
                     selected={f.selected}
+                    onClickMoreInfo={this.openLimitedActions}
                 />);
         }
         this.enqueueCheck();
@@ -489,6 +497,7 @@ class Files extends React.Component {
                 }
                 {this.triggerAddFolderPopup && this.addFolderPopup}
                 {this.triggerRenameFolderPopup && this.renameFolderPopup}
+                <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
                 <ConfirmFolderDeleteDialog ref={this.refConfirmFolderDeleteDialog} />
                 <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
             </div>

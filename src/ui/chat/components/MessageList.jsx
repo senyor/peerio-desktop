@@ -216,12 +216,6 @@ class MessageList extends React.Component {
                         chatName: chat.name
                     }}
                 </T>
-                {config.disablePayments || User.current.hasActivePlans ? null
-                    : <div className="archive-link">
-                        {t('title_chatArchive')}
-                        &nbsp;<a href={urls.upgrade}>{t('button_upgradeForArchive')}</a>
-                    </div>
-                }
                 <IdentityVerificationNotice />
             </div>
         );

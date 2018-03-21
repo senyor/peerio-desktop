@@ -145,7 +145,7 @@ class FileLine extends React.Component {
                 {this.props.fileDetails &&
                     <div className="file-uploaded" title={uploadedAtTooltip}>
                         {uploadedAt}
-                        {// file.isLegacy &&
+                        {file.isLegacy &&
                             <div className="badge-old-version">Old version</div>
                         }
                     </div>

@@ -4,9 +4,12 @@
     pointer-events: none;
     color: $icon-dark-inactive;
 
-    .material-icons,
-    .p-custom-icon {
+    .material-icons {
       color: $icon-dark-inactive;
+    }
+
+    .p-custom-icon {
+      opacity: .7;
     }
   }
 }

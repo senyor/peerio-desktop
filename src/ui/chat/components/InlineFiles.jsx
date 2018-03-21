@@ -3,7 +3,7 @@ const { fileStore, User, chatStore } = require('peerio-icebear');
 const { Button, Dialog, MaterialIcon, ProgressBar, RadioButtons } = require('~/peer-ui');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const { downloadFile } = require('~/helpers/file');
-const { observable, when } = require('mobx');
+const { action, observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -11,6 +11,7 @@ const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
 const css = require('classnames');
 const FileActions = require('~/ui/files/components/FileActions');
+const LimitedActionsDialog = require('~/ui/shared-components/LimitedActionsDialog');
 
 const ALL_IMAGES = 'all_images';
 const UNDER_LIMIT_ONLY = 'under_limit_only';
@@ -260,6 +261,13 @@ class InlineFile extends React.Component {
     settingsLinkSegment = {
         toSettings: text => <a className="clickable" onClick={this.goToSettings}>{text}</a>
     };
+
+    @observable limitedActionsDialogVisible = false;
+    @action.bound openLimitedActions() {
+        this.limitedActionsDialog.show();
+    }
+    refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
+
     render() {
         const file = this.props.file;
         return (
@@ -295,6 +303,8 @@ class InlineFile extends React.Component {
                                     onShare={this.share}
                                     onDelete={this.deleteFile}
                                     onUnshare={this.unshareFile}
+                                    limitedActions={file.isLegacy}
+                                    onClickMoreInfo={this.openLimitedActions}
                                     {...this.props}
                                 />
                             </div>
@@ -347,6 +357,7 @@ class InlineFile extends React.Component {
                         </div>
                     }
                 </div>
+                <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
             </div>
         );
     }

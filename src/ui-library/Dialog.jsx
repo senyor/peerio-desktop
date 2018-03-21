@@ -16,7 +16,7 @@ const appRoot = document.getElementById('root');
     active          bool
     noAnimation     bool
     title                       usually string but any HTML allowed
-    theme           string      error (red), warning (yellow)
+    theme           string      error (red), warning (yellow), primary (brand color e.g. blue)
 
     onCancel        function    behaviour for Esc key and overlay click
     actions         array       each element is an object corresponding to 1 button in dialog

@@ -64,6 +64,10 @@
     border-top: 8px solid $red-error;
   }
 
+  &.primary {
+    border-top: 8px solid $blue;
+  }
+
   &.small {
     width: 360px;
   }

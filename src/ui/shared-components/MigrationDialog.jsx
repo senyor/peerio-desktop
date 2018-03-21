@@ -6,34 +6,30 @@ const { warnings } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 
-const { Dialog } = require('~/peer-ui');
+const { Dialog, ProgressBar } = require('~/peer-ui');
 
 @observer
 class MigrationDialog extends React.Component {
     @observable migrationDialogVisible = true;
-    @observable unshareSelected = false;
+    @observable updateInProgress = false;
 
+    // Testing vars
+    @observable migrationProgress = 50;
+    @observable migrationMax = 100;
+    @observable userHasSharedFiles = false;
     sharedFiles = {
         fileId: '',
         filename: 'filename.txt'
-    };
-
-    @action.bound unshare() {
-        this.unshareSelected = true;
-    }
+    }; //
 
     @action.bound continueMigration() {
-        this.migrationDialogVisible = false;
-        warnings.add(t('warning_sharingHistory'));
+        this.updateInProgress = true;
     }
 
-    @action.bound cancelUnshare() {
-        this.unshareSelected = false;
-    }
-
-    @action.bound continueUnshare() {
+    @action.bound completeMigration() {
+        this.updateInProgress = false;
         this.migrationDialogVisible = false;
-        warnings.add(t('warning_unsharedAll'));
+        warnings.add('title_fileUpdateComplete');
     }
 
     downloadFile = () => {
@@ -42,34 +38,47 @@ class MigrationDialog extends React.Component {
 
     render() {
         const migrationDialogActions = [
-            { label: t('button_unshare'), onClick: this.unshare },
-            { label: t('button_continue'), onClick: this.continueMigration }
-        ];
-
-        const unshareDialogActions = [
-            { label: t('button_cancel'), onClick: this.cancelUnshare },
-            { label: t('button_unshareAll'), onClick: this.continueUnshare }
+            { label: t('button_update'), onClick: this.continueMigration }
         ];
 
         const textParser = {
-            downloadFile: () => <a className="clickable" onClick={this.downloadFile}>{this.sharedFiles.filename}</a>
+            download: text => <a className="clickable" onClick={this.downloadFile}>{text}</a>
         };
 
         return (
             <Dialog active={this.migrationDialogVisible}
-                actions={this.unshareSelected
-                    ? unshareDialogActions
+                className="migration-dialog"
+                actions={this.updateInProgress
+                    ? null
                     : migrationDialogActions
                 }
-                title={this.unshareSelected
-                    ? t('dialog_unshareTitle')
-                    : t('dialog_migrationTitle')
+                title={this.updateInProgress
+                    ? t('title_fileUpdateProgress')
+                    : this.userHasSharedFiles
+                        ? t('title_upgradeFileSystem')
+                        : t('title_newFeatureSharedFolders')
                 }
-                theme="warning"
+                theme="primary"
             >
-                {this.unshareSelected
-                    ? <T k="dialog_unshareText" />
-                    : <T k="dialog_migrationText">{textParser}</T>
+                {this.updateInProgress
+                    ? <div className="update-in-progress">
+                        <ProgressBar mode="determinate" value={this.migrationProgress} max={100} />
+                        <div className="info">
+                            <span className="percent">{this.migrationProgress}%</span>
+                            <T k="title_fileUpdateProgressDescription" tag="span" className="text" />
+                        </div>
+                        <div>TESTING ONLY:
+                            <a className="clickable" onClick={this.completeMigration}>click close dialog</a>
+                        </div>
+                    </div>
+                    : <div>
+                        <T k="title_upgradeFileSystemDescription1" tag="p" />
+                        <T k="title_upgradeFileSystemDescription2" tag="p" />
+                        {this.userHasSharedFiles
+                            ? <T k="title_upgradeFileSystemDescription3" tag="p">{textParser}</T>
+                            : null
+                        }
+                    </div>
                 }
             </Dialog>
         );

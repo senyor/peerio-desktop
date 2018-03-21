@@ -64,9 +64,9 @@ class FolderLine extends React.Component {
                     </div>
                 }
 
-                {this.props.folderDetails && <div className="file-uploaded text-right" /> }
+                {this.props.folderDetails && <div className="file-uploaded" /> }
 
-                {this.props.folderDetails && <div className="file-size text-right" /> }
+                {this.props.folderDetails && <div className="file-size" /> }
 
                 { /* TODO: use spread operator */
                     this.props.folderActions &&

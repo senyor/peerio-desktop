@@ -465,8 +465,8 @@ class Files extends React.Component {
                             <div className="file-icon" />{/* blank space for file icon image */}
                             <div className="file-name">{t('title_name')}</div>
                             <div className="file-owner">{t('title_owner')}</div>
-                            <div className="file-uploaded text-right">{t('title_uploaded')}</div>
-                            <div className="file-size text-right">{t('title_size')}</div>
+                            <div className="file-uploaded">{t('title_uploaded')}</div>
+                            <div className="file-size">{t('title_size')}</div>
                             <div className="file-actions" />
                         </div>
                         {currentFolder.isRoot && this.removedFolderNotifVisible && this.removedFolderNotif}

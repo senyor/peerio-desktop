@@ -52,11 +52,18 @@ class FileActions extends React.Component {
                     />
                     : null
                 }
-                {this.props.deleteable ? <Divider /> : null }
+                {this.props.deleteable ? <Divider /> : null}
                 {this.props.deleteable
                     ? <MenuItem caption={t('button_delete')}
                         icon="delete"
                         onClick={this.props.onDelete}
+                    />
+                    : null
+                }
+                {this.props.unshareable
+                    ? <MenuItem caption={t('button_unshare')}
+                        icon="delete"
+                        onClick={this.props.onUnshare}
                     />
                     : null
                 }

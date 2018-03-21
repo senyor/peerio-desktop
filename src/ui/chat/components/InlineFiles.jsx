@@ -89,7 +89,9 @@ class InlineFile extends React.Component {
     }
 
     deleteFile = () => {
-        const file = this.props.file;
+        const id = this.props.file.fileId;
+        const file = fileStore.getById(id);
+        if (!file) return;
         let msg = t('title_confirmRemoveFilename', { name: file.name });
         if (file.shared) {
             msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
@@ -97,6 +99,10 @@ class InlineFile extends React.Component {
         if (confirm(msg)) {
             file.remove();
         }
+    }
+
+    unshareFile = () => {
+        this.props.file.remove();
     }
 
     onSelectedModeChange = (value) => {
@@ -193,6 +199,14 @@ class InlineFile extends React.Component {
                                 theme="small"
                             />
                         }
+                        {this.deleteable &&
+                            <Button
+                                caption={t('button_unshare')}
+                                icon="delete"
+                                onClick={this.unshareFile}
+                                theme="small"
+                            />
+                        }
                     </div>
                 </div>
             </Dialog>);
@@ -275,11 +289,13 @@ class InlineFile extends React.Component {
                                 }
                                 <FileActions shareable newFolderDisabled
                                     deleteable={this.deleteable}
+                                    unshareable={this.deleteable}
                                     downloadDisabled={this.downloadDisabled}
                                     shareDisabled={this.shareDisabled}
                                     onDownload={this.download}
                                     onShare={this.share}
                                     onDelete={this.deleteFile}
+                                    onUnshare={this.unshareFile}
                                     {...this.props}
                                 />
                             </div>

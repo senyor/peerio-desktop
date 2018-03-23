@@ -262,11 +262,22 @@ class InlineFile extends React.Component {
         toSettings: text => <a className="clickable" onClick={this.goToSettings}>{text}</a>
     };
 
-    @observable limitedActionsDialogVisible = false;
+    @observable limitedActionsDialogRendered = false;
+
+    refLimitedActionsDialog = ref => {
+        if (ref) {
+            this.limitedActionsRef = ref;
+            ref.show();
+        }
+    };
+
     @action.bound openLimitedActions() {
-        this.limitedActionsDialog.show();
+        if (this.limitedActionsRef) {
+            this.limitedActionsRef.show();
+        } else {
+            this.limitedActionsDialogRendered = true;
+        }
     }
-    refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
 
     render() {
         const file = this.props.file;
@@ -303,7 +314,7 @@ class InlineFile extends React.Component {
                                     onShare={this.share}
                                     onDelete={this.deleteFile}
                                     onUnshare={this.unshareFile}
-                                    limitedActions={file.isLegacy}
+                                    limitedActions
                                     onClickMoreInfo={this.openLimitedActions}
                                     {...this.props}
                                 />
@@ -357,7 +368,9 @@ class InlineFile extends React.Component {
                         </div>
                     }
                 </div>
-                <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
+                {this.limitedActionsDialogRendered &&
+                    <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
+                }
             </div>
         );
     }

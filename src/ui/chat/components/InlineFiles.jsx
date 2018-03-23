@@ -262,11 +262,10 @@ class InlineFile extends React.Component {
         toSettings: text => <a className="clickable" onClick={this.goToSettings}>{text}</a>
     };
 
-    @observable limitedActionsDialogVisible = false;
+    refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
     @action.bound openLimitedActions() {
         this.limitedActionsDialog.show();
     }
-    refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
 
     render() {
         const file = this.props.file;

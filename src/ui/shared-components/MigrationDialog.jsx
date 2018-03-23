@@ -63,10 +63,9 @@ class MigrationDialog extends React.Component {
                 {this.updateInProgress
                     ? <div className="update-in-progress">
                         <ProgressBar mode="determinate" value={this.migrationProgress} max={100} />
-                        <div className="info">
-                            <span className="percent">{this.migrationProgress}%</span>
-                            <T k="title_fileUpdateProgressDescription" tag="span" className="text" />
-                        </div>
+                        <div className="percent">{this.migrationProgress}%</div>
+                        <T k="title_fileUpdateProgressDescription" tag="p" className="text" />
+
                         <div>TESTING ONLY:
                             <a className="clickable" onClick={this.completeMigration}>click close dialog</a>
                         </div>

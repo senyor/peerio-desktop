@@ -4,12 +4,13 @@
       height: 8px;
     }
 
-    .info {
-      display: flex;
+    .percent {
+      text-align: right;
     }
 
-    .text {
-      margin-left: auto;
+    p {
+      margin-bottom: 0;
+      text-align: center;
     }
   }
 }

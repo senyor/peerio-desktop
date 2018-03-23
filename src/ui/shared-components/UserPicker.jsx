@@ -18,7 +18,6 @@ class UserPicker extends React.Component {
     @observable showNotFoundError;
     @observable userAlreadyAdded = '';
     @observable foundContact;
-    legacyContactError = false; // not observable bcs changes only with showNotFoundError
     @observable contactLoading = false;
     @observable _searchUsernameTimeout = false;
 
@@ -73,7 +72,6 @@ class UserPicker extends React.Component {
     }
 
     reset() {
-        this.legacyContactError = false;
         this.showNotFoundError = false;
         this.userAlreadyAdded = '';
         this.suggestInviteEmail = '';
@@ -145,7 +143,6 @@ class UserPicker extends React.Component {
             const isEmail = atInd > -1 && atInd === q.lastIndexOf('@');
             this.userNotFound = c.notFound ? q : '';
             this.suggestInviteEmail = (c.notFound && isEmail && !this.props.noInvite) ? q : '';
-            this.legacyContactError = c.isLegacy;
             this.showNotFoundError = c.notFound;
             this.foundContact = !c.notFound && c;
             this.contactLoading = false;
@@ -338,8 +335,7 @@ class UserPicker extends React.Component {
                                                 </T>
                                             }
                                             {this.showNotFoundError && !this.suggestInviteEmail &&
-                                                <T k={this.legacyContactError ?
-                                                    'title_inviteLegacy' : 'error_userNotFoundTryEmail'} tag="div">
+                                                <T k="error_userNotFoundTryEmail" tag="div">
                                                     {{ user: this.userNotFound }}
                                                 </T>
                                             }

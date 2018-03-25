@@ -408,7 +408,7 @@ class Files extends React.Component {
     refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
 
     render() {
-        if (!fileStore.files.length && !fileStore.virtualFolders.length
+        if (!fileStore.files.length && !fileStore.folders.root.virtualFolders.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
         const { currentFolder } = fileStore.folders;

@@ -50,7 +50,6 @@ class FileActions extends React.Component {
                     ? <MenuItem caption={t('button_move')}
                         customIcon="move"
                         onClick={this.props.onMove}
-                        disabled={this.props.limitedActions}
                     />
                     : null
                 }
@@ -58,7 +57,6 @@ class FileActions extends React.Component {
                     ? <MenuItem caption={t('button_rename')}
                         icon="mode_edit"
                         onClick={this.props.onRename}
-                        disabled={this.props.limitedActions}
                     />
                     : null
                 }

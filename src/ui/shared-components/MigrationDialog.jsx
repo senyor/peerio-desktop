@@ -1,80 +1,60 @@
 const React = require('react');
 const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
-
-const { warnings } = require('peerio-icebear');
+const { warnings, fileStore } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-
 const { Dialog, ProgressBar } = require('~/peer-ui');
+const electron = require('electron').remote;
+const fs = require('fs');
 
 @observer
 class MigrationDialog extends React.Component {
-    @observable migrationDialogVisible = true;
-    @observable updateInProgress = false;
-
-    // Testing vars
-    @observable migrationProgress = 50;
-    @observable migrationMax = 100;
-    @observable userHasSharedFiles = false;
-    sharedFiles = {
-        fileId: '',
-        filename: 'filename.txt'
-    }; //
-
-    @action.bound continueMigration() {
-        this.updateInProgress = true;
-    }
-
-    @action.bound completeMigration() {
-        this.updateInProgress = false;
-        this.migrationDialogVisible = false;
-        warnings.add('title_fileUpdateComplete');
-    }
-
     downloadFile = () => {
-        console.log('download file');
+        const win = electron.getCurrentWindow();
+        electron.dialog.showSaveDialog(win, { defaultPath: 'files.txt' }, this.saveFile);
+    };
+
+    saveFile(filePath) {
+        if (!filePath) return;
+        fs.writeFileSync(filePath, fileStore.getLegacySharedFilesText());
+    }
+
+    textParser = {
+        download: text => <a className="clickable" onClick={this.downloadFile}>{text}</a>
     }
 
     render() {
         const migrationDialogActions = [
-            { label: t('button_update'), onClick: this.continueMigration }
+            { label: t('button_update'), onClick: fileStore.confirmMigration }
         ];
 
-        const textParser = {
-            download: text => <a className="clickable" onClick={this.downloadFile}>{text}</a>
-        };
-
         return (
-            <Dialog active={this.migrationDialogVisible}
+            <Dialog active={fileStore.migrationPending}
                 className="migration-dialog"
-                actions={this.updateInProgress
+                actions={fileStore.migrationStarted
                     ? null
                     : migrationDialogActions
                 }
-                title={this.updateInProgress
+                title={fileStore.migrationStarted
                     ? t('title_fileUpdateProgress')
-                    : this.userHasSharedFiles
+                    : fileStore.hasLegacySharedFiles
                         ? t('title_upgradeFileSystem')
                         : t('title_newFeatureSharedFolders')
                 }
                 theme="primary"
             >
-                {this.updateInProgress
+                {fileStore.migrationStarted
                     ? <div className="update-in-progress">
-                        <ProgressBar mode="determinate" value={this.migrationProgress} max={100} />
-                        <div className="percent">{this.migrationProgress}%</div>
+                        <ProgressBar mode="determinate" value={fileStore.migrationProgress} max={100} />
+                        <div className="percent">{fileStore.migrationProgress}%</div>
                         <T k="title_fileUpdateProgressDescription" tag="p" className="text" />
-
-                        <div>TESTING ONLY:
-                            <a className="clickable" onClick={this.completeMigration}>click close dialog</a>
-                        </div>
                     </div>
                     : <div>
                         <T k="title_upgradeFileSystemDescription1" tag="p" />
                         <T k="title_upgradeFileSystemDescription2" tag="p" />
-                        {this.userHasSharedFiles
-                            ? <T k="title_upgradeFileSystemDescription3" tag="p">{textParser}</T>
+                        {fileStore.hasLegacySharedFiles
+                            ? <T k="title_upgradeFileSystemDescription3" tag="p">{this.textParser}</T>
                             : null
                         }
                     </div>

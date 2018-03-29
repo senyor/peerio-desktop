@@ -6,6 +6,7 @@ const { fileStore, User } = require('peerio-icebear');
 const { downloadFile } = require('~/helpers/file');
 const moment = require('moment');
 const css = require('classnames');
+const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const uiStore = require('~/stores/ui-store');
 
@@ -146,7 +147,7 @@ class FileLine extends React.Component {
                     <div className="file-uploaded" title={uploadedAtTooltip}>
                         {uploadedAt}
                         {file.isLegacy &&
-                            <div className="badge-old-version">Old version</div>
+                            <T k="title_pending" className="badge-old-version" />
                         }
                     </div>
                 }

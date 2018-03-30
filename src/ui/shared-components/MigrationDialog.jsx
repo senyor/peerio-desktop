@@ -24,6 +24,11 @@ class MigrationDialog extends React.Component {
     }
 
     render() {
+        // don't show migration progress if user has no shared files
+        if (fileStore.migrationStarted && !fileStore.hasLegacySharedFiles) {
+            return null;
+        }
+
         const migrationDialogActions = [
             { label: t('button_update'), onClick: fileStore.confirmMigration }
         ];

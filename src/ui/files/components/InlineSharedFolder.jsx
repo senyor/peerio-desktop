@@ -4,6 +4,8 @@ const { getFolderByEvent } = require('~/helpers/icebear-dom');
 const { fileStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 
+const FolderActions = require('./FolderActions');
+
 class InlineSharedFolder extends React.Component {
     click = (ev) => {
         const folder = getFolderByEvent(ev);
@@ -18,12 +20,17 @@ class InlineSharedFolder extends React.Component {
         return (
             <div className="inline-files-container" data-folderid={folderId}>
                 <div className="inline-files">
-                    <div className="shared-file">
-                        <div className="container clickable">
-                            <p>
-                                <MaterialIcon icon="folder_shared" className="file-icon" onClick={this.click} />
-                                <span className="clickable" onClick={this.click}>{folderName}</span>
-                            </p>
+                    <div className="shared-file inline-files-topbar">
+                        <div className="container">
+                            <div className="file-name-container clickable"
+                                onClick={this.click}
+                            >
+                                <div className="file-icon">
+                                    <MaterialIcon icon="folder_shared" className="file-icon" />
+                                </div>
+                                <div className="file-name">{folderName}</div>
+                            </div>
+                            <FolderActions />
                         </div>
                     </div>
                 </div>

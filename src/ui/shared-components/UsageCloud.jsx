@@ -9,15 +9,15 @@ class UsageCloud extends React.Component {
         const cloudFillPercent = 22 + (79 - 22) * (User.current.fileQuotaUsedPercent / 100);
         return (
             <div className="usage">
-                <Button style={{
-                    position: 'absolute',
-                    clipPath: `polygon(0 0, ${cloudFillPercent}% 0, ${cloudFillPercent}% 100%, 0% 100%)`
-                }} icon="cloud" theme="no-hover" />
                 <Button
                     onClick={this.props.onClick}
                     tooltip={`${User.current.fileQuotaUsedFmt} / ${User.current.fileQuotaTotalFmt}`}
                     tooltipPosition="right"
                     icon="cloud_queue" />
+                <Button style={{
+                    position: 'absolute',
+                    clipPath: `polygon(0 0, ${cloudFillPercent}% 0, ${cloudFillPercent}% 100%, 0% 100%)`
+                }} icon="cloud" />
                 <div>{User.current.fileQuotaUsedPercent}%</div>
             </div>
         );

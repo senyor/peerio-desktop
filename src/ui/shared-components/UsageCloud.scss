@@ -4,10 +4,19 @@
     @extend %hint-error-label;
     margin: auto 0 32px;
     text-align: center;
-    color: $text-light-secondary;
+    color: $text-light-inactive;
 
-    .material-icons {
-      color: $icon-light-active;
+    .p-button {
+      .material-icons {
+        color: $icon-light-active;
+      }
+
+      &:hover,
+      &:hover + .p-button {
+        .material-icons {
+          color: $color-affirmative;
+        }
+      }
     }
   }
 }

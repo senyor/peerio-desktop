@@ -12,10 +12,6 @@
     height: 100%;
     margin-top: 64px;
 
-    .display-1 {
-      color: $blue;
-    }
-
     .usage-cloud-container {
       margin: auto;
       text-align: center;
@@ -32,6 +28,15 @@
 
     .done-container {
       @extend %flex-row;
+      pointer-events: none;
+
+      .chat-item-add-icon {
+        display: none;
+      }
+
+      a {
+        text-decoration: none;
+      }
     }
 
     .extraclass-container {
@@ -54,7 +59,8 @@
     }
 
     .title {
-      color: $blue;
+      font-weight: $font-weight-regular;
+      color: $peerio-blue;
     }
 
     .flex-col {
@@ -87,7 +93,7 @@
       }
 
       .material-icons {
-        color: $green-affirmative;
+        color: $color-confirmation;
       }
 
       a {

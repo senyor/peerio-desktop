@@ -23,6 +23,24 @@ class MigrationDialog extends React.Component {
         download: text => <a className="clickable" onClick={this.downloadFile}>{text}</a>
     }
 
+    renderProgress() {
+        if (fileStore.migrationPerformedByAnotherClient) {
+            return (
+                <div className="update-in-progress">
+                    <ProgressBar mode="indeterminate" />
+                    <T k="title_fileUpdateProgressDescription" tag="p" className="text" />
+                </div>
+            );
+        }
+        return (
+            <div className="update-in-progress">
+                <ProgressBar mode="determinate" value={fileStore.migrationProgress} max={100} />
+                <div className="percent">{fileStore.migrationProgress}%</div>
+                <T k="title_fileUpdateProgressDescription" tag="p" className="text" />
+            </div>
+        );
+    }
+
     render() {
         // don't show migration progress if user has no shared files
         if (fileStore.migrationStarted && !fileStore.hasLegacySharedFiles) {
@@ -36,11 +54,11 @@ class MigrationDialog extends React.Component {
         return (
             <Dialog active={fileStore.migrationPending}
                 className="migration-dialog"
-                actions={fileStore.migrationStarted
+                actions={fileStore.migrationStarted || fileStore.migrationPerformedByAnotherClient
                     ? null
                     : migrationDialogActions
                 }
-                title={fileStore.migrationStarted
+                title={fileStore.migrationStarted || fileStore.migrationPerformedByAnotherClient
                     ? t('title_fileUpdateProgress')
                     : fileStore.hasLegacySharedFiles
                         ? t('title_upgradeFileSystem')
@@ -48,12 +66,8 @@ class MigrationDialog extends React.Component {
                 }
                 theme="primary"
             >
-                {fileStore.migrationStarted
-                    ? <div className="update-in-progress">
-                        <ProgressBar mode="determinate" value={fileStore.migrationProgress} max={100} />
-                        <div className="percent">{fileStore.migrationProgress}%</div>
-                        <T k="title_fileUpdateProgressDescription" tag="p" className="text" />
-                    </div>
+                {fileStore.migrationStarted || fileStore.migrationPerformedByAnotherClient
+                    ? this.renderProgress()
                     : <div>
                         <T k="title_upgradeFileSystemDescription1" tag="p" />
                         <T k="title_upgradeFileSystemDescription2" tag="p" />

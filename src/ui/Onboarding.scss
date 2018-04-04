@@ -15,6 +15,23 @@
     .usage-cloud-container {
       margin: auto;
       text-align: center;
+
+      .usage-cloud {
+        color: $text-dark-default;
+      }
+
+      .p-button {
+        .material-icons {
+          color: $icon-dark-active;
+        }
+
+        &:hover,
+        &:hover + .p-button {
+          .material-icons {
+            color: $icon-dark-active;
+          }
+        }
+      }
     }
   }
 

@@ -17,6 +17,7 @@ const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipl
 const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
 const LimitedActionsDialog = require('~/ui/shared-components/LimitedActionsDialog');
 const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
+const { getAttributeInParentChain } = require('~/helpers/dom');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -103,6 +104,14 @@ class Files extends React.Component {
         const contacts = await this.shareWithMultipleDialog.show();
         if (!contacts) return;
         await volumeStore.shareFolder(folder, contacts);
+    }
+
+    @action.bound async shareFile(ev) {
+        fileStore.clearSelection();
+        const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
+        const file = fileStore.getById(fileId);
+        file.selected = true;
+        fileStore.bulk.share();
     }
 
     @observable triggerAddFolderPopup = false;
@@ -251,12 +260,6 @@ class Files extends React.Component {
     @computed get allAreSelected() {
         return this.items.length && !this.items.some(i => !i.selected);
     }
-
-    handleFileShareIntent = () => {
-        fileStore.deselectUnshareableFiles();
-        if (!fileStore.selectedCount) return;
-        window.router.push('/app/sharefiles');
-    };
 
     checkScrollPosition = () => {
         if (!this.container) return;
@@ -452,6 +455,7 @@ class Files extends React.Component {
                     onToggleSelect={this.toggleSelectFile}
                     selected={f.selected}
                     onClickMoreInfo={this.openLimitedActions}
+                    onShare={this.shareFile}
                 />);
         }
         this.enqueueCheck();

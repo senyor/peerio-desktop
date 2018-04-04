@@ -2,7 +2,7 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 
-const { fileStore, User } = require('peerio-icebear');
+const { User } = require('peerio-icebear');
 const { downloadFile } = require('~/helpers/file');
 const moment = require('moment');
 const css = require('classnames');
@@ -45,12 +45,6 @@ class FileLine extends React.Component {
     goToFolder = () => {
         // navigate to clicked folder
     }
-
-    share = () => {
-        fileStore.clearSelection();
-        this.props.file.selected = true;
-        window.router.push('/app/sharefiles');
-    };
 
     renameFile = () => {
 
@@ -160,8 +154,10 @@ class FileLine extends React.Component {
                 {this.props.fileActions &&
                     <div className="file-actions">
                         <FileActions
+                            data-fileid={file.fileId}
                             downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
-                            shareable shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.share}
+                            shareable
+                            shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.props.onShare}
                             newFolderDisabled
                             onRename={this.renameFile}
                             moveable={this.props.moveable}

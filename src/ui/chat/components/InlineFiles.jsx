@@ -12,6 +12,7 @@ const routerStore = require('~/stores/router-store');
 const css = require('classnames');
 const FileActions = require('~/ui/files/components/FileActions');
 const LimitedActionsDialog = require('~/ui/shared-components/LimitedActionsDialog');
+const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
 
 const ALL_IMAGES = 'all_images';
 const UNDER_LIMIT_ONLY = 'under_limit_only';
@@ -81,12 +82,6 @@ class InlineFile extends React.Component {
     download = () => {
         if (this.downloadDisabled) return;
         downloadFile(this.props.file);
-    }
-
-    share = () => {
-        fileStore.clearSelection();
-        this.props.file.selected = true;
-        window.router.push('/app/sharefiles');
     }
 
     deleteFile = () => {
@@ -267,6 +262,17 @@ class InlineFile extends React.Component {
         this.limitedActionsDialog.show();
     }
 
+    refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
+    @action.bound share() {
+        fileStore.clearSelection();
+        this.props.file.selected = true;
+        fileStore.bulk.shareWithSelector = async () => {
+            const contacts = await this.shareWithMultipleDialog.show();
+            return contacts;
+        };
+        fileStore.bulk.share();
+    }
+
     render() {
         const file = this.props.file;
         return (
@@ -357,6 +363,7 @@ class InlineFile extends React.Component {
                     }
                 </div>
                 <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
+                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
             </div>
         );
     }

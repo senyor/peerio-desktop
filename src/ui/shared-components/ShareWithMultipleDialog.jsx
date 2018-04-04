@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
-const { contactStore, User } = require('peerio-icebear');
+const { contactStore, fileStore, User } = require('peerio-icebear');
 const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
@@ -58,6 +58,7 @@ class ShareWithMultipleDialog extends React.Component {
         this.visible = false;
         this.resolve(null);
         this.resolve = null;
+        fileStore.clearSelection();
     }
 
     @action.bound share() {

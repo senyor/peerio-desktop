@@ -10,9 +10,11 @@ const SideBarSection = require('./SideBarSection');
 const { downloadFile, pickLocalFiles } = require('~/helpers/file');
 const moment = require('moment');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
+const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
 
 @observer
 class FilesSection extends React.Component {
+    refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
     @action.bound async share(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
@@ -21,7 +23,11 @@ class FilesSection extends React.Component {
         if (this.isUnmounted || file.deleted) return;
         fileStore.clearSelection();
         file.selected = true;
-        window.router.push('/app/sharefiles');
+        fileStore.bulk.shareWithSelector = async () => {
+            const contacts = await this.shareWithMultipleDialog.show();
+            return contacts;
+        };
+        fileStore.bulk.share();
     }
 
     componentWillUnmount() {
@@ -123,6 +129,7 @@ class FilesSection extends React.Component {
                         <T k="title_noRecentFiles">{textParser}</T>
                     </div>
                 }
+                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
             </SideBarSection>
         );
     }

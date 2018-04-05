@@ -48,6 +48,7 @@ class FileActions extends React.Component {
                 />
                 {this.props.moveable
                     ? <MenuItem caption={t('button_move')}
+                        className="custom-icon-hover-container"
                         customIcon="move"
                         onClick={this.props.onMove}
                     />

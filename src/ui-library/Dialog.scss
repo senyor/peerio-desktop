@@ -57,15 +57,15 @@
 
   // Themes
   &.warning {
-    border-top: 8px solid $yellow-warning;
+    border-top: 8px solid $color-warning;
   }
 
   &.error {
-    border-top: 8px solid $red-error;
+    border-top: 8px solid $color-error;
   }
 
   &.primary {
-    border-top: 8px solid $blue;
+    border-top: 8px solid $peerio-blue;
   }
 
   &.small {

@@ -29,6 +29,7 @@ class FolderActions extends React.Component {
                 />}
                 {this.props.onMove &&
                 <MenuItem caption={t('button_move')}
+                    className="custom-icon-hover-container"
                     customIcon="move"
                     onClick={this.props.onMove}
                 />

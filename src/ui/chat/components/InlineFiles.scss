@@ -61,16 +61,16 @@
 
     .material-icons {
       font-size: 16px;
-      color: $green-affirmative;
+      color: $color-confirmation;
     }
 
     .text {
       margin-left: $margin-small;
-      color: $text-dark-secondary;
+      color: $text-dark-inactive;
 
       a {
         text-decoration: underline;
-        color: $text-dark-secondary;
+        color: $text-dark-inactive;
       }
     }
   }
@@ -81,7 +81,7 @@
     margin-left: $margin-default;
     font-weight: $font-weight-bold;
     transition: 250ms;
-    color: $text-dark-secondary;
+    color: $text-dark-inactive;
     background: $white;
     border: 1px solid $divider-dark;
     border-radius: 2px;
@@ -102,11 +102,11 @@
       @extend %flex-justify-end;
 
       .notnow {
-        color: $text-dark-secondary;
+        color: $text-dark-inactive;
       }
 
       .save {
-        color: $blue;
+        color: $peerio-blue;
       }
     }
   }
@@ -186,7 +186,7 @@
   }
 
   .invalid-file {
-    color: rgba($red-error, .6);
+    color: rgba($color-error, .6);
     border-color: currentColor;
 
     .container {
@@ -196,7 +196,7 @@
 
     .material-icons {
       margin-right: $padding-tiny;
-      color: rgba($red-error, .6);
+      color: rgba($color-error, .6);
     }
   }
 
@@ -221,7 +221,7 @@
       font-weight: $font-weight-regular;
       text-align: left;
       text-transform: none;
-      color: $blue;
+      color: $peerio-blue;
       background: none;
       border: 0;
 
@@ -295,7 +295,7 @@
   .p-button {
     &:hover {
       .material-icons {
-        color: $blue;
+        color: $peerio-blue;
       }
     }
 

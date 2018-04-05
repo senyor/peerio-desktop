@@ -37,12 +37,12 @@
       }
 
       a.folder-name {
-        color: $blue;
+        color: $peerio-blue;
       }
 
       &:last-of-type a {
         cursor: default;
-        color: $text-dark-secondary;
+        color: $text-dark-inactive;
       }
     }
   }

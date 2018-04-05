@@ -97,8 +97,8 @@
       font-size: 11px;
       font-weight: $font-weight-semibold;
       white-space: nowrap;
-      color: rgba(255, 255, 255, .87);
-      background-color: $icon-dark-active;
+      color: $text-dark-secondary;
+      background-color: $background-neutral;
       border-radius: 5px;
     }
   }
@@ -122,7 +122,6 @@
   .file-table-header {
     height: 56px;
     min-height: 56px;
-    background-color: $black-03;
 
     > div {
       padding-right: 24px;
@@ -145,7 +144,7 @@
       height: 48px;
 
       &.selected-row {
-        background: $background-selected;
+        background: $background-hover-accent;
       }
 
       &.share-in-progress,

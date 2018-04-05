@@ -24,6 +24,11 @@
 
     .buttons-container {
       display: flex;
+
+      &.bulk-buttons .p-button {
+        padding: 0 $padding-small;
+        margin: 0;
+      }
     }
 
     button {
@@ -78,8 +83,8 @@
 
     transition: max-height 250ms, min-height 250ms, border-top 250ms;
     color: $text-dark-secondary;
-    background-color: $black-06;
-    border-top: 4px solid #32cec3;
+    background-color: $background-neutral;
+    border-top: 4px solid $color-confirmation;
 
     .p-button {
       margin-left: auto;

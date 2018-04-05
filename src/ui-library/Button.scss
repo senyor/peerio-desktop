@@ -42,7 +42,11 @@
     color: $text-dark-hint;
 
     .material-icons {
-      color: $text-dark-hint;
+      color: $icon-dark-inactive;
+    }
+
+    .p-custom-icon {
+      opacity: .12;
     }
   }
 

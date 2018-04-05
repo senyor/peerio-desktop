@@ -50,13 +50,20 @@
   }
 
   .file-icon {
+    display: flex;
+    align-items: center;
     cursor: pointer;
     min-width: 48px;
-    padding-right: $padding-small;
+    padding-right: $padding-small !important;
 
     .material-icons {
       display: block;
       font-size: 32px;
+    }
+
+    .p-custom-icon {
+      height: 32px;
+      width: 32px;
     }
   }
 

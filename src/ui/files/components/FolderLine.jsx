@@ -3,7 +3,7 @@ const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const FolderActions = require('./FolderActions');
-const { Checkbox, MaterialIcon, ProgressBar } = require('~/peer-ui');
+const { Checkbox, CustomIcon, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 
 @observer
@@ -25,6 +25,7 @@ class FolderLine extends React.Component {
             <div data-folderid={folder.folderId}
                 className={css(
                     'row',
+                    'custom-icon-hover-container',
                     this.props.className,
                     {
                         'selected-row': this.props.selected,
@@ -50,7 +51,10 @@ class FolderLine extends React.Component {
 
                 <div className="file-icon"
                     onClick={this.props.onChangeFolder} >
-                    <MaterialIcon icon={folder.isShared ? 'folder_shared' : 'folder'} />
+                    {folder.isShared
+                        ? <CustomIcon icon="folder-shared" hover selected={this.props.selected} />
+                        : <MaterialIcon icon="folder" />
+                    }
                 </div>
 
                 <div className="file-name clickable selectable"

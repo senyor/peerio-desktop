@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { fileStore } = require('peerio-icebear');
+const { User, fileStore } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { Dialog, ProgressBar } = require('~/peer-ui');
@@ -11,12 +11,14 @@ const fs = require('fs');
 class MigrationDialog extends React.Component {
     downloadFile = () => {
         const win = electron.getCurrentWindow();
-        electron.dialog.showSaveDialog(win, { defaultPath: 'files.txt' }, this.saveFile);
+        electron.dialog.showSaveDialog(win, {
+            defaultPath: `${User.current.username}-Peerio-shared-files-list.txt`
+        }, this.saveFile);
     };
 
-    saveFile(filePath) {
+    async saveFile(filePath) {
         if (!filePath) return;
-        fs.writeFileSync(filePath, fileStore.getLegacySharedFilesText());
+        fs.writeFileSync(filePath, await fileStore.getLegacySharedFilesText());
     }
 
     textParser = {

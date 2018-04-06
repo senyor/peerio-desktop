@@ -1,6 +1,6 @@
 {
   "name": "peerio-2",
-  "description": "Peerio",
+  "description": "Peerio 2",
   "version": "2.110.2",
   "scripts": {
     "=== HOOKS ===": "",
@@ -148,7 +148,7 @@
   },
   "build": {
     "appId": "com.peerio.desktop",
-    "productName": "Peerio",
+    "productName": "Peerio 2",
     "artifactName": "${productName}-${arch}-${version}.${ext}",
     "npmSkipBuildFromSource": true,
     "directories": {

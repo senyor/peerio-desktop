@@ -28,7 +28,8 @@
     cursor: pointer;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: $background-selected;
   }
 
@@ -99,7 +100,8 @@
       color: $icon-dark-active;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: transparent;
 
       .material-icons {
@@ -130,7 +132,8 @@
     min-width: 0;
     padding: 0;
 
-    &:hover {
+    &:hover,
+    &:focus {
       // box-shadow: none;
       background-color: inherit;
     }
@@ -170,7 +173,8 @@
   }
 
   // "No-hover" theme
-  &.no-hover:hover {
+  &.no-hover:hover,
+  &.no-hover:focus {
     background-color: inherit;
   }
 }

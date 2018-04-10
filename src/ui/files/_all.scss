@@ -6,7 +6,6 @@
   position: relative;
   height: calc(100vh - 144px);
   width: 100%;
-  padding-bottom: $padding-default;
   overflow-x: hidden;
   overflow-y: auto;
   background: $white;
@@ -15,12 +14,8 @@
   .row {
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    padding: 0 24px 0 48px;
     border-bottom: 1px solid $divider-dark;
-
-    &:last-of-type {
-      border-bottom: 0;
-    }
 
     // "Disabled" styles for when folder share in progress
     &.disabled {
@@ -31,7 +26,7 @@
   // Common class for FileLine/Folderline checkbox & checkbox placeholder
   // needed to maintain the table-style layout while using flex containers
   .file-checkbox {
-    justify-content: flex-end;
+    justify-content: flex-start;
     width: 32px;
     min-width: 32px;
     margin-right: 16px;
@@ -123,6 +118,10 @@
       width: 24px;
       min-width: 24px;
       text-align: center;
+
+      .icon {
+        width: 24px;
+      }
     }
   }
 

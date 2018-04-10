@@ -393,7 +393,7 @@ class Files extends React.Component {
                 { 'hide-in-progress': this.removedFolderNotifToHide }
             )}>
                 <T k="title_removedFromFolder">{{ folderName: 'Design files' }}</T>
-                <Button label="dismiss" onClick={this.dismissRemovedFolderNotif} />
+                <Button icon="close" onClick={this.dismissRemovedFolderNotif} />
             </div>
         );
     }
@@ -490,6 +490,7 @@ class Files extends React.Component {
                         )}>
                             {items}
                         </div>
+                        <div className="file-bottom-filler" />
                     </div>
                 </div>
                 {this.moveFolderVisible &&

@@ -77,16 +77,16 @@
     max-height: 48px;
     min-height: 48px;
 
-    padding: 0 $padding-default;
+    padding: 0 24px 0 48px;
     margin-top: -1px;
     overflow: hidden;
 
     transition: max-height 250ms, min-height 250ms, border-top 250ms;
-    color: $text-dark-secondary;
-    background-color: #e6e7ec;
+    background-color: rgba(4, 11, 65, .15);
     border-top: 4px solid $color-confirmation;
 
     .p-button {
+      width: 24px;
       margin-left: auto;
     }
 
@@ -95,6 +95,12 @@
       min-height: 0;
       border-top: 0;
     }
+  }
+
+  .file-bottom-filler {
+    display: flex;
+    flex-grow: 1;
+    background-color: $background-hover-default;
   }
 }
 

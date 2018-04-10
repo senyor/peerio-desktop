@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-const { action, observable, reaction } = require('mobx');
+const { action, computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 
 const css = require('classnames');
@@ -50,6 +50,7 @@ class Dialog extends React.Component {
     componentWillUnmount() {
         this.activeReaction();
         window.removeEventListener('keyup', this.handleEscKey);
+        window.removeEventListener('keydown', this.handleTabKey);
     }
 
     @action.bound setActive() {
@@ -59,6 +60,8 @@ class Dialog extends React.Component {
         }
         this.dialogRendered = true;
         window.addEventListener('keyup', this.handleEscKey, false);
+
+        this.restrictFocus();
 
         this.mountTimeout = setTimeout(() => {
             this.dialogVisible = true;
@@ -73,6 +76,7 @@ class Dialog extends React.Component {
         }
         this.dialogVisible = false;
         window.removeEventListener('keyup', this.handleEscKey);
+        window.removeEventListener('keydown', this.handleTabKey);
 
         this.unmountTimeout = setTimeout(() => {
             this.dialogRendered = false;
@@ -80,10 +84,55 @@ class Dialog extends React.Component {
         }, 200);
     }
 
+    @action.bound setDialogRef(ref) {
+        if (ref) {
+            this.dialogRef = ref;
+            ref.focus();
+        }
+    }
+
+    @computed get focusableElements() {
+        return this.dialogRef.querySelectorAll('input:not(:disabled), textarea:not(:disabled), button:not(:disabled)');
+    }
+
+    @action.bound restrictFocus() {
+        window.addEventListener('keydown', this.handleTabKey, false);
+    }
+
     @action.bound handleEscKey(ev) {
         if (!this.dialogVisible || !this.dialogRendered) return;
         if (ev.keyCode === 27) {
             this.props.onCancel();
+        }
+    }
+
+    /*
+        We need to restrict focus to the dialog when it's visible.
+        Clicking outside dialog closes it, so that's OK, but it's still possible to use Tab to escape.
+        For a11y we need to keep Tab key functionality, but restrict it to the contents of the dialog.
+        This function makes Tab jump back to first focusable element if the last one is currently focused,
+        or to the last element if Shift+Tab while the first is focused.
+    */
+    @action.bound handleTabKey(ev) {
+        if (!this.dialogVisible || !this.dialogRendered) return;
+
+        if (ev.keyCode === 9) {
+            if (this.focusableElements.length === 0) {
+                ev.preventDefault();
+            } else {
+                const first = this.focusableElements[0];
+                const last = this.focusableElements[this.focusableElements.length - 1];
+
+                if (ev.shiftKey && document.activeElement === first) {
+                    ev.preventDefault();
+                    last.focus();
+                }
+
+                if (!ev.shiftKey && document.activeElement === last) {
+                    ev.preventDefault();
+                    first.focus();
+                }
+            }
         }
     }
 
@@ -107,12 +156,15 @@ class Dialog extends React.Component {
             }
         }
 
+        /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
         const dialogContent = (
             <div
                 className={css(
                     'p-dialog-wrapper',
                     { visible: this.props.noAnimation || this.dialogVisible }
                 )}
+                tabIndex={0}
+                ref={this.setDialogRef}
             >
 
                 <div
@@ -142,6 +194,7 @@ class Dialog extends React.Component {
                 </dialog>
             </div>
         );
+        /* eslint-enable jsx-a11y/no-noninteractive-tabindex */
 
 
         return ReactDOM.createPortal(

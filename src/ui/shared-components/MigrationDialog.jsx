@@ -18,7 +18,7 @@ class MigrationDialog extends React.Component {
 
     async saveFile(filePath) {
         if (!filePath) return;
-        fs.writeFileSync(filePath, await fileStore.getLegacySharedFilesText());
+        fs.writeFileSync(filePath, await fileStore.migration.getLegacySharedFilesText());
     }
 
     textParser = {
@@ -26,7 +26,7 @@ class MigrationDialog extends React.Component {
     }
 
     renderProgress() {
-        if (fileStore.migrationPerformedByAnotherClient) {
+        if (fileStore.migration.performedByAnotherClient) {
             return (
                 <div className="update-in-progress">
                     <ProgressBar mode="indeterminate" />
@@ -36,8 +36,8 @@ class MigrationDialog extends React.Component {
         }
         return (
             <div className="update-in-progress">
-                <ProgressBar mode="determinate" value={fileStore.migrationProgress} max={100} />
-                <div className="percent">{fileStore.migrationProgress}%</div>
+                <ProgressBar mode="determinate" value={fileStore.migration.progress} max={100} />
+                <div className="percent">{fileStore.migration.progress}%</div>
                 <T k="title_fileUpdateProgressDescription" tag="p" className="text" />
             </div>
         );
@@ -45,7 +45,7 @@ class MigrationDialog extends React.Component {
 
     render() {
         // don't show migration progress if user has no shared files
-        if (fileStore.migrationStarted && !fileStore.hasLegacySharedFiles) {
+        if (fileStore.migration.started && !fileStore.migration.hasLegacySharedFiles) {
             return null;
         }
 
@@ -54,26 +54,26 @@ class MigrationDialog extends React.Component {
         ];
 
         return (
-            <Dialog active={fileStore.migrationPending}
+            <Dialog active={fileStore.migration.pending}
                 className="migration-dialog"
-                actions={fileStore.migrationStarted || fileStore.migrationPerformedByAnotherClient
+                actions={fileStore.migration.started || fileStore.migration.performedByAnotherClient
                     ? null
                     : migrationDialogActions
                 }
-                title={fileStore.migrationStarted || fileStore.migrationPerformedByAnotherClient
+                title={fileStore.migration.started || fileStore.migration.performedByAnotherClient
                     ? t('title_fileUpdateProgress')
-                    : fileStore.hasLegacySharedFiles
+                    : fileStore.migration.hasLegacySharedFiles
                         ? t('title_upgradeFileSystem')
                         : t('title_newFeatureSharedFolders')
                 }
                 theme="primary"
             >
-                {fileStore.migrationStarted || fileStore.migrationPerformedByAnotherClient
+                {fileStore.migration.started || fileStore.migration.performedByAnotherClient
                     ? this.renderProgress()
                     : <div>
                         <T k="title_upgradeFileSystemDescription1" tag="p" />
                         <T k="title_upgradeFileSystemDescription2" tag="p" />
-                        {fileStore.hasLegacySharedFiles
+                        {fileStore.migration.hasLegacySharedFiles
                             ? <T k="title_upgradeFileSystemDescription3" tag="p">{this.textParser}</T>
                             : null
                         }

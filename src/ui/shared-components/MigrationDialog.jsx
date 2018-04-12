@@ -50,7 +50,7 @@ class MigrationDialog extends React.Component {
         }
 
         const migrationDialogActions = [
-            { label: t('button_update'), onClick: fileStore.confirmMigration }
+            { label: t('button_update'), onClick: fileStore.migration.confirmMigration }
         ];
 
         return (

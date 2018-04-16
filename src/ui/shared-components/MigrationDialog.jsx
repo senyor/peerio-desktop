@@ -49,9 +49,10 @@ class MigrationDialog extends React.Component {
             return null;
         }
 
-        const migrationDialogActions = [
-            { label: t('button_update'), onClick: fileStore.migration.confirmMigration }
-        ];
+        const migrationDialogActions = [{
+            label: fileStore.migration.hasLegacySharedFiles ? t('button_update') : t('button_ok'),
+            onClick: fileStore.migration.confirmMigration
+        }];
 
         return (
             <Dialog active={fileStore.migration.pending}

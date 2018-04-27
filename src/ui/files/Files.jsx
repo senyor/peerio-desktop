@@ -374,7 +374,7 @@ class Files extends React.Component {
         );
     }
 
-    @observable removedFolderNotifVisible = true;
+    @observable removedFolderNotifVisible = false;
     @observable removedFolderNotifToHide = false;
 
     @action.bound dismissRemovedFolderNotif() {

@@ -99,7 +99,7 @@ class Files extends React.Component {
     }
 
     @action.bound async shareFolder(ev) {
-        // IMPORTANT: syntetic events are reused, so cache folder before await
+        // IMPORTANT: synthetic events are reused, so cache folder before await
         const folder = getFolderByEvent(ev);
         const contacts = await this.shareWithMultipleDialog.show();
         if (!contacts) return;
@@ -251,8 +251,7 @@ class Files extends React.Component {
     }
 
     toggleSelectAll = ev => {
-        const { items } = this;
-        items.forEach(item => {
+        this.items.forEach(item => {
             item.selected = !!ev.target.checked;
         });
     };

@@ -107,7 +107,6 @@ class UploadDialog extends React.Component {
         try {
             if (targetContact) {
                 this.targetChat = await chatStore.startChat([targetContact]);
-                chatStore.activate(this.targetChat.id);
             }
             this.targetChat.uploadAndShareFile(this.currentFile, this.parsedFileName, null, null, this.messageText);
         } catch (err) {

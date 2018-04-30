@@ -38,7 +38,7 @@ class About extends React.Component {
 
                 </section>
                 <section>
-                    {config.whiteLabelBuild
+                    {config.whiteLabelBuild.active
                         ? null
                         : <span>&copy; 2017 Peerio Technologies, Inc. All rights reserved.</span>
                     }

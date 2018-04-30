@@ -40,7 +40,9 @@ class FolderActions extends React.Component {
                 <Divider />
                 <MenuItem caption={t('button_delete')}
                     icon="delete"
-                    onClick={this.props.onDelete} />
+                    onClick={this.props.onDelete}
+                    disabled={this.props.deleteDisabled}
+                />
             </Menu>
         );
     }

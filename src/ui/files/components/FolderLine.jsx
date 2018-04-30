@@ -81,9 +81,10 @@ class FolderLine extends React.Component {
                             onDownload={this.props.onDownload}
                             onMove={folder.isShared ? null : this.props.onMoveFolder}
                             onDelete={this.props.onDeleteFolder}
+                            deleteDisabled={folder.isBlocked}
                             onShare={this.props.onShare}
                             data-folderid={folder.folderId}
-                            disabled={this.props.selected || folder.isBlocked}
+                            disabled={this.props.selected}
                         />
                     </div>
                 }

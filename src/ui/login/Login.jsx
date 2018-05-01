@@ -221,7 +221,7 @@ class LoginStore extends OrderedFormStore {
                         theme="affirmative"
                     />
 
-                    {!config.whiteLabelBuild.isMedcryptor && (<div>
+                    {!config.whiteLabel.name === "medcryptor" && (<div>
                         {t('title_newUser')} &nbsp; <Link to="/signup">{t('button_CreateAccount')}</Link>
                     </div>)}
                 </div>

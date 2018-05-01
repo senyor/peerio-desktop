@@ -30,7 +30,7 @@
     "ghostFrontendUrl": "https://mail.peerio.com",
     "disablePayments": false,
     "whiteLabel": {
-      "name: ""
+      "name": ""
     },
     "contacts": {
       "supportUser": "support",

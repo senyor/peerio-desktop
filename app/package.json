@@ -29,9 +29,8 @@
     "socketServerUrl": "",
     "ghostFrontendUrl": "https://mail.peerio.com",
     "disablePayments": false,
-    "whiteLabelBuild": {
-      "active": false,
-      "isMedcryptor": false
+    "whiteLabel": {
+      "name: ""
     },
     "contacts": {
       "supportUser": "support",

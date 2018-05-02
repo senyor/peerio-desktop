@@ -28,8 +28,7 @@ class FolderLine extends React.Component {
                     'custom-icon-hover-container',
                     this.props.className,
                     {
-                        'selected-row': this.props.selected,
-                        disabled: folder.isBlocked
+                        'selected-row': this.props.selected
                     }
                 )}
                 onMouseEnter={this.onShowActions}
@@ -68,9 +67,9 @@ class FolderLine extends React.Component {
                     </div>
                 }
 
-                {this.props.folderDetails && <div className="file-uploaded" /> }
+                {this.props.folderDetails && <div className="file-uploaded" />}
 
-                {this.props.folderDetails && <div className="file-size" /> }
+                {this.props.folderDetails && <div className="file-size" />}
 
                 { /* TODO: use spread operator */
                     this.props.folderActions &&
@@ -81,7 +80,6 @@ class FolderLine extends React.Component {
                             onDownload={this.props.onDownload}
                             onMove={folder.isShared ? null : this.props.onMoveFolder}
                             onDelete={this.props.onDeleteFolder}
-                            deleteDisabled={folder.isBlocked}
                             onShare={this.props.onShare}
                             data-folderid={folder.folderId}
                             disabled={this.props.selected}

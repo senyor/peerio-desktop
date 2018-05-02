@@ -39,6 +39,7 @@ class ConfirmFolderDeleteDialog extends React.Component {
 
         let text = 'dialog_deleteFolderText';
 
+        // TODO: isOwner property is removed, I don't like it, need to change this after some refactor // anri
         const { isShared, isOwner } = this.folder;
         if (isShared) {
             text = isOwner ? 'dialog_deleteSharedFolderText' : 'dialog_deleteSharedFolderNonOwnerText';

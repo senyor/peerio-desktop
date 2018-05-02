@@ -417,7 +417,7 @@ class Files extends React.Component {
     refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
 
     render() {
-        if (!fileStore.files && !fileStore.files.length && !fileStore.folders.root.virtualFolders.length
+        if (!fileStore.files && !fileStore.files.length && !fileStore.folders.root.folders.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
         const { currentFolder } = fileStore.folders;

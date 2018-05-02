@@ -43,7 +43,7 @@
         "tfaDetail": "https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-",
         "msgSignature": "https://peerio.zendesk.com/hc/en-us/articles/204394135",
         "socialShareUrl": "https://www.peerio.com/",
-        "socialShareImage": "https://www.peerio.com/img/favicons/icon300.png",
+        "socialShareImage": "https://www.peerio.com/imgs/favicons/icon300.png",
         "upgrade": "https://www.peerio.com/pricing.html",
         "proWelcome": "https://peerio.zendesk.com/hc/en-us/articles/208395556",
         "proAccount": "https://account.peerio.com",
@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@peerio/updater": "0.9.0",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v4.15.3",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v4.16.4",
     "autolinker": "1.4.4",
     "cheerio": "1.0.0-rc.2",
     "classnames": "2.2.5",

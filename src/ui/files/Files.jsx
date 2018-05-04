@@ -1,6 +1,6 @@
 const React = require('react');
 const css = require('classnames');
-const { Button, Checkbox, Dialog, Input } = require('~/peer-ui');
+const { Button, Checkbox, Dialog, Input, ProgressBar } = require('~/peer-ui');
 const { observer } = require('mobx-react');
 const { observable, action, computed } = require('mobx');
 const { fileStore, volumeStore, clientApp } = require('peerio-icebear');
@@ -416,6 +416,10 @@ class Files extends React.Component {
     refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
     refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
 
+
+    @observable isConvertingToVolume; // if user is in the regular folder that is being converted to volume
+    @observable isVolumeInProgress; // if user is in the new volume that is being created from a folder
+
     render() {
         if (!fileStore.files && !fileStore.files.length && !fileStore.folders.root.folders.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
@@ -427,7 +431,6 @@ class Files extends React.Component {
             const f = data[i];
             items.push(f.isFolder ?
                 <FolderLine
-                    className={css({ 'share-in-progress': f.progress > 0 })}
                     key={f.folderId}
                     folder={f}
                     moveable={fileStore.folders.root.hasNested}
@@ -457,6 +460,30 @@ class Files extends React.Component {
                     onShare={this.shareFile}
                 />);
         }
+
+        // TESTING: array of files that are in queue to be converted to this volume
+        const incomingFiles = [
+            { name: 'file name', progress: 50, progressMax: 100 },
+            { name: 'file name', progress: 90, progressMax: 100 },
+            { name: 'file name', progress: 70, progressMax: 100 }
+        ];
+        incomingFiles.forEach(f => {
+            items.push(
+                <div className="row-container placeholder-file">
+                    <div className="row">
+                        <div className="file-checkbox" />
+                        <div className="file-icon"><div className="placeholder-square" /></div>
+                        <div className="file-name"><div className="placeholder-square" /></div>
+                        <div className="file-owner"><div className="placeholder-square" /></div>
+                        <div className="file-uploaded"><div className="placeholder-square" /></div>
+                        <div className="file-size"><div className="placeholder-square" /></div>
+                        <div className="file-actions"><div className="placeholder-square" /></div>
+                    </div>
+                    <ProgressBar value={f.progress} max={f.progressMax} />
+                </div>
+            );
+        });
+
         this.enqueueCheck();
         return (
             <div className="files">
@@ -469,7 +496,7 @@ class Files extends React.Component {
                         ref={this.setContainerRef}
                         onScroll={this.enqueueCheck}
                     >
-                        <div className="file-table-header row">
+                        <div className="file-table-header row-container">
                             <Checkbox
                                 className="file-checkbox"
                                 onChange={this.toggleSelectAll}
@@ -483,6 +510,35 @@ class Files extends React.Component {
                             <div className="file-actions" />
                         </div>
                         {currentFolder.isRoot && this.removedFolderNotifVisible && this.removedFolderNotif}
+                        {this.isVolumeInProgress || this.isConvertingToVolume &&
+                            <div className={css(
+                                'file-ui-subheader',
+                                'row',
+                                {
+                                    'volume-in-progress': this.isVolumeInProgress,
+                                    'converting-to-volume': this.isConvertingToVolume
+                                }
+                            )}>
+                                <div className="file-checkbox percent-in-progress">
+                                    {this.isVolumeInProgress && '68%'}
+                                </div>
+
+                                <div className="file-share-info">
+                                    {this.isVolumeInProgress &&
+                                        <T k="title_convertingFolderNameToShared">
+                                            {{ folderName: fileStore.folders.currentFolder.name }}
+                                        </T>
+                                    }
+                                    {this.isConvertingToVolume &&
+                                        <span>
+                                            <T k="title_filesInQueue" tag="span" />&nbsp;
+                                            (34 <T k="title_filesLeftCount" tag="span" />)
+                                        </span>
+                                    }
+                                </div>
+                                <ProgressBar value={68} max={100} />
+                            </div>
+                        }
                         <div className={css(
                             'file-table-body',
                             { 'hide-checkboxes': this.selectedCount === 0 }

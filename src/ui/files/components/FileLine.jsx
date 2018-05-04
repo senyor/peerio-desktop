@@ -90,100 +90,109 @@ class FileLine extends React.Component {
             }
         }
 
-        const containerStyle = {
-            selected: this.props.selected,
-            'selected-row': this.props.selected,
-            'waiting-3rd-party': !file.uploading && !file.readyForDownload
-        };
-
         return (
-            <div
-                data-fileid={file.fileId}
-                className={css('row', containerStyle)}
-                onMouseEnter={this.onShowActions}
-                onMouseLeave={this.onHideActions}>
-
-                {this.props.checkbox ?
-                    <Checkbox
-                        className="file-checkbox"
-                        checked={this.props.selected}
-                        onChange={this.props.onToggleSelect}
-                    />
-                    : <div className="file-checkbox" />
+            /*
+                This superfluous row-container is needed to make styles consistent with FolderLine,
+                which *does* need the container to hold elements other than .row
+            */
+            <div className={css(
+                'row-container',
+                'file-row-container',
+                this.props.className,
+                {
+                    selected: this.props.selected,
+                    'selected-row': this.props.selected,
+                    'waiting-3rd-party': !file.uploading && !file.readyForDownload
                 }
+            )}>
+                <div
+                    data-fileid={file.fileId}
+                    className="row"
+                    onMouseEnter={this.onShowActions}
+                    onMouseLeave={this.onHideActions}>
 
-                <div className="file-icon selectable"
-                    onClick={this.props.clickToSelect
-                        ? this.props.onToggleSelect
-                        : this.download
-                    } >
-                    <FileSpriteIcon
-                        type={file.iconType}
-                        size="medium"
-                    />
-                </div>
-
-                <div className="file-name selectable"
-                    onClick={this.props.clickToSelect
-                        ? this.props.onToggleSelect
-                        : this.download
-                    } >
-                    {file.name}
-                </div>
-
-                {this.props.fileDetails &&
-                    <div className="file-owner" onClick={this.openContactDialog}>
-                        {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
-                    </div>
-                }
-
-                {this.props.fileDetails &&
-                    <div className="file-uploaded" title={uploadedAtTooltip}>
-                        {uploadedAt}
-                        {file.isLegacy &&
-                            <T k="title_pending" className="badge-old-version" />
-                        }
-                    </div>
-                }
-
-                {this.props.fileDetails &&
-
-                    <div className="file-size">{file.sizeFormatted}</div>
-                }
-
-                {this.props.fileActions &&
-                    <div className="file-actions">
-                        <FileActions
-                            data-fileid={file.fileId}
-                            downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
-                            shareable
-                            shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.props.onShare}
-                            newFolderDisabled
-                            onRename={this.renameFile}
-                            moveable={this.props.moveable}
-                            onMove={this.moveFile}
-                            deleteable onDelete={this.deleteFile}
-                            disabled={this.props.selected}
-                            limitedActions={file.isLegacy}
-                            onClickMoreInfo={this.props.onClickMoreInfo}
+                    {this.props.checkbox ?
+                        <Checkbox
+                            className="file-checkbox"
+                            checked={this.props.selected}
+                            onChange={this.props.onToggleSelect}
                         />
-                        {this.moveFileVisible && this.props.currentFolder &&
-                            <MoveFileDialog
-                                file={file}
-                                currentFolder={this.props.currentFolder}
-                                visible={this.moveFileVisible}
-                                onHide={this.hideMoveFile}
-                            />
-                        }
-                    </div>
-                }
+                        : <div className="file-checkbox" />
+                    }
 
-                {(file.downloading || file.uploading)
-                    ? <div className="loading">
-                        <ProgressBar type="linear" mode="determinate" value={file.progress}
-                            max={file.progressMax} />
+                    <div className="file-icon selectable"
+                        onClick={this.props.clickToSelect
+                            ? this.props.onToggleSelect
+                            : this.download
+                        } >
+                        <FileSpriteIcon
+                            type={file.iconType}
+                            size="medium"
+                        />
                     </div>
-                    : null}
+
+                    <div className="file-name selectable"
+                        onClick={this.props.clickToSelect
+                            ? this.props.onToggleSelect
+                            : this.download
+                        } >
+                        {file.name}
+                    </div>
+
+                    {this.props.fileDetails &&
+                        <div className="file-owner" onClick={this.openContactDialog}>
+                            {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
+                        </div>
+                    }
+
+                    {this.props.fileDetails &&
+                        <div className="file-uploaded" title={uploadedAtTooltip}>
+                            {uploadedAt}
+                            {file.isLegacy &&
+                                <T k="title_pending" className="badge-old-version" />
+                            }
+                        </div>
+                    }
+
+                    {this.props.fileDetails &&
+
+                        <div className="file-size">{file.sizeFormatted}</div>
+                    }
+
+                    {this.props.fileActions &&
+                        <div className="file-actions">
+                            <FileActions
+                                data-fileid={file.fileId}
+                                downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
+                                shareable
+                                shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.props.onShare}
+                                newFolderDisabled
+                                onRename={this.renameFile}
+                                moveable={this.props.moveable}
+                                onMove={this.moveFile}
+                                deleteable onDelete={this.deleteFile}
+                                disabled={this.props.selected}
+                                limitedActions={file.isLegacy}
+                                onClickMoreInfo={this.props.onClickMoreInfo}
+                            />
+                            {this.moveFileVisible && this.props.currentFolder &&
+                                <MoveFileDialog
+                                    file={file}
+                                    currentFolder={this.props.currentFolder}
+                                    visible={this.moveFileVisible}
+                                    onHide={this.hideMoveFile}
+                                />
+                            }
+                        </div>
+                    }
+
+                    {(file.downloading || file.uploading)
+                        ? <div className="loading">
+                            <ProgressBar type="linear" mode="determinate" value={file.progress}
+                                max={file.progressMax} />
+                        </div>
+                        : null}
+                </div>
             </div>
         );
     }

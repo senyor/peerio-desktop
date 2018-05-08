@@ -27,7 +27,7 @@ class MoveFileDialog extends React.Component {
 
     getFolder(ev) {
         const id = getAttributeInParentChain(ev.target, 'data-folderid');
-        const folder = fileStore.folders.getById(id);
+        const folder = fileStore.folderStore.getById(id);
         return folder;
     }
 
@@ -73,7 +73,7 @@ class MoveFileDialog extends React.Component {
     getFolderRow = (folder) => {
         if (folder === this.props.folder) return null;
 
-        const hasFolders = fileStore.folders.getById(folder.folderId).folders.length > 0;
+        const hasFolders = fileStore.folderStore.getById(folder.folderId).folders.length > 0;
 
         return (<div
             key={`folder-${folder.folderId}`}
@@ -92,7 +92,7 @@ class MoveFileDialog extends React.Component {
             >
                 <div className="file-name clickable">{folder.name}</div>
             </div>
-            { hasFolders &&
+            {hasFolders &&
                 <Button
                     onClick={this.setCurrentFolder}
                     icon="keyboard_arrow_right"

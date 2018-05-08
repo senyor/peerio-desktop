@@ -19,7 +19,7 @@ class InlineSharedFolder extends React.Component {
     click = (ev) => {
         const folder = getFolderByEvent(ev);
         if (folder) {
-            fileStore.folders.currentFolder = folder;
+            fileStore.folderStore.currentFolder = folder;
             routerStore.navigateTo(routerStore.ROUTES.files);
         }
     }

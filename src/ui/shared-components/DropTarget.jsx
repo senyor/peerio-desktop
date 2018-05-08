@@ -26,7 +26,7 @@ class DropTarget extends React.Component {
         }
         let folder = null;
         if (routerStore.currentRoute === routerStore.ROUTES.files) {
-            folder = fileStore.folders.currentFolder;
+            folder = fileStore.folderStore.currentFolder;
         }
         this.justUpload(folder);
     };

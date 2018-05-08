@@ -144,8 +144,8 @@ class Files extends React.Component {
         this.triggerAddFolderPopup = false;
         const { folderName } = this;
         if (folderName && folderName.trim()) {
-            fileStore.folders.createFolder(folderName, fileStore.folders.currentFolder);
-            fileStore.folders.save();
+            fileStore.folderStore.createFolder(folderName, fileStore.folderStore.currentFolder);
+            fileStore.folderStore.save();
         }
         this.folderName = '';
     }
@@ -163,7 +163,7 @@ class Files extends React.Component {
         this.folderName = '';
         this.folderToRename = null;
         folderToRename.rename(folderName);
-        fileStore.folders.save();
+        fileStore.folderStore.save();
     }
 
     handleKeyDownRenameFolder = (ev) => {
@@ -245,7 +245,8 @@ class Files extends React.Component {
         if (!list.success.length) return;
         await Promise.all(list.success.map(path => {
             return fileStore.upload(
-                path, null, fileStore.folders.currentFolder.isRoot ? null : fileStore.folders.currentFolder.folderId
+                path, null,
+                fileStore.folderStore.currentFolder.isRoot ? null : fileStore.folderStore.currentFolder.folderId
             );
         }));
     }
@@ -284,9 +285,9 @@ class Files extends React.Component {
 
     @action.bound changeFolder(ev) {
         const folder = getFolderByEvent(ev);
-        if (folder !== fileStore.folders.currentFolder) {
+        if (folder !== fileStore.folderStore.currentFolder) {
             this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
-            fileStore.folders.currentFolder = folder;
+            fileStore.folderStore.currentFolder = folder;
             fileStore.clearFilter();
             fileStore.clearSelection();
         }
@@ -295,7 +296,7 @@ class Files extends React.Component {
     @computed get items() {
         return fileStore.currentFilter ?
             fileStore.visibleFilesAndFolders
-            : fileStore.folders.currentFolder.foldersAndFilesDefaultSorting;
+            : fileStore.folderStore.currentFolder.foldersAndFilesDefaultSorting;
     }
 
     @computed get selectedCount() {
@@ -334,8 +335,8 @@ class Files extends React.Component {
         });
 
         return (
-            <div className="files-header" data-folderid={fileStore.folders.currentFolder.folderId}>
-                <Breadcrumb currentFolder={fileStore.folders.currentFolder}
+            <div className="files-header" data-folderid={fileStore.folderStore.currentFolder.folderId}>
+                <Breadcrumb currentFolder={fileStore.folderStore.currentFolder}
                     onSelectFolder={this.changeFolder}
                     onMove={this.moveFolder}
                     onDelete={this.deleteFolder}
@@ -421,10 +422,10 @@ class Files extends React.Component {
     @observable isVolumeInProgress; // if user is in the new volume that is being created from a folder
 
     render() {
-        if (!fileStore.files && !fileStore.files.length && !fileStore.folders.root.folders.length
+        if (!fileStore.files && !fileStore.files.length && !fileStore.folderStore.root.folders.length
             && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
 
-        const { currentFolder } = fileStore.folders;
+        const currentFolder = fileStore.folderStore.currentFolder;
         const items = [];
         const data = this.items;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
@@ -433,7 +434,7 @@ class Files extends React.Component {
                 <FolderLine
                     key={f.folderId}
                     folder={f}
-                    moveable={fileStore.folders.root.hasNested}
+                    moveable={fileStore.folderStore.root.hasNested}
                     onDownload={this.downloadFolder}
                     onMoveFolder={this.moveFolder}
                     onRenameFolder={this.showRenameFolderPopup}
@@ -450,7 +451,7 @@ class Files extends React.Component {
                     key={f.fileId}
                     file={f}
                     currentFolder={currentFolder}
-                    moveable={fileStore.folders.root.hasNested}
+                    moveable={fileStore.folderStore.root.hasNested}
                     fileActions
                     fileDetails
                     checkbox
@@ -461,28 +462,20 @@ class Files extends React.Component {
                 />);
         }
 
-        // TESTING: array of files that are in queue to be converted to this volume
-        const incomingFiles = [
-            { name: 'file name', progress: 50, progressMax: 100 },
-            { name: 'file name', progress: 90, progressMax: 100 },
-            { name: 'file name', progress: 70, progressMax: 100 }
-        ];
-        incomingFiles.forEach(f => {
-            items.push(
-                <div className="row-container placeholder-file">
-                    <div className="row">
-                        <div className="file-checkbox" />
-                        <div className="file-icon"><div className="placeholder-square" /></div>
-                        <div className="file-name"><div className="placeholder-square" /></div>
-                        <div className="file-owner"><div className="placeholder-square" /></div>
-                        <div className="file-uploaded"><div className="placeholder-square" /></div>
-                        <div className="file-size"><div className="placeholder-square" /></div>
-                        <div className="file-actions"><div className="placeholder-square" /></div>
-                    </div>
-                    <ProgressBar value={f.progress} max={f.progressMax} />
+        items.push(
+            <div className="row-container placeholder-file" key="placeholder1">
+                <div className="row">
+                    <div className="file-checkbox" />
+                    <div className="file-icon"><div className="placeholder-square" /></div>
+                    <div className="file-name"><div className="placeholder-square" /></div>
+                    <div className="file-owner"><div className="placeholder-square" /></div>
+                    <div className="file-uploaded"><div className="placeholder-square" /></div>
+                    <div className="file-size"><div className="placeholder-square" /></div>
+                    <div className="file-actions"><div className="placeholder-square" /></div>
+                    <ProgressBar mode="indeterminate" />
                 </div>
-            );
-        });
+            </div>
+        );
 
         this.enqueueCheck();
         return (
@@ -526,7 +519,7 @@ class Files extends React.Component {
                                 <div className="file-share-info">
                                     {this.isVolumeInProgress &&
                                         <T k="title_convertingFolderNameToShared">
-                                            {{ folderName: fileStore.folders.currentFolder.name }}
+                                            {{ folderName: fileStore.folderStore.currentFolder.name }}
                                         </T>
                                     }
                                     {this.isConvertingToVolume &&

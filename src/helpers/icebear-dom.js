@@ -5,7 +5,7 @@ const { when } = require('mobx');
 function getFolderByEvent(ev) {
     const folderId = getAttributeInParentChain(ev.target, 'data-folderid');
     // TODO: add unique id for root folder
-    return folderId === 'root' ? fileStore.folders.root : fileStore.folders.getById(folderId);
+    return folderId === 'root' ? fileStore.folderStore.root : fileStore.folderStore.getById(folderId);
 }
 
 function getFileByEvent(ev) {

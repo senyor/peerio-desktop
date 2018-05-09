@@ -19,7 +19,7 @@
     padding-top: 12px; // padding is 20px this + the 8px from rtb list padding.
     overflow: auto;
     color: $text-light-inactive;
-    background-color: $darkblue;
+    background-color: $background-list;
 
     .p-list-item:hover {
       background-color: rgba($white, .15);

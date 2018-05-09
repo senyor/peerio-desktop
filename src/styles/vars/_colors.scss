@@ -30,7 +30,7 @@ $black-03: rgba(0, 0, 0, .03);
 //// BACKGROUNDS
 // Background colors
 $background-root: $white;
-$background-hover-default: rgba($darkblue, .05);
+$background-hover-default: $black-06;//rgba($darkblue, .05);
 $background-hover-default-solid: #f2f2f5;
 $background-selected: rgba($peerio-blue, .15);
 $background-neutral: $black-12;
@@ -42,8 +42,8 @@ $text-dark-default: $black;
 $text-dark-secondary: $black-54;
 $text-dark-inactive: $black-54;
 $text-dark-hint: $black-38;
-$text-light-default: $white;
-$text-light-inactive: $white-70;
+$text-light-default: $black;
+$text-light-inactive: $black;//$white-70;
 $text-light-disabled: $white-38;
 
 // Icons
@@ -59,3 +59,5 @@ $divider-accent: $peerio-teal;
 //// INPUTS
 $input-inactive: $white-70;
 $input-border: $black-38;
+
+$background-list: $black-03;

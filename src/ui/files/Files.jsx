@@ -253,12 +253,13 @@ class Files extends React.Component {
 
     toggleSelectAll = ev => {
         this.items.forEach(item => {
+            if (item.isShared) return;
             item.selected = !!ev.target.checked;
         });
     };
 
     @computed get allAreSelected() {
-        return this.items.length && !this.items.some(i => !i.selected);
+        return this.items.length && !this.items.some(i => !i.selected && !i.isShared);
     }
 
     checkScrollPosition = () => {

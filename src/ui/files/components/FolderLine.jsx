@@ -28,6 +28,7 @@ class FolderLine extends React.Component {
 
     render() {
         const { folder } = this.props;
+        const selectDisabled = this.props.disabledCheckbox || folder.isShared;
         const { progress, progressMax, progressPercentage } = folder;
         const shareInProgress = !!progressMax;
         return (
@@ -53,9 +54,9 @@ class FolderLine extends React.Component {
                         </div>
                         : this.props.checkbox
                             ? <Checkbox
-                                className={css('file-checkbox', { disabled: this.props.disabledCheckbox })}
+                                className={css('file-checkbox', { disabled: selectDisabled })}
                                 checked={this.props.selected}
-                                onChange={this.props.disabledCheckbox ? null : this.props.onToggleSelect}
+                                onChange={selectDisabled ? null : this.props.onToggleSelect}
                             />
                             : <div className="file-checkbox" />
                     }
@@ -74,17 +75,17 @@ class FolderLine extends React.Component {
                     </div>
 
                     {this.props.folderDetails &&
-                    <div className="file-owner">
-                        {shareInProgress
-                            ? <T k="title_convertingToShared" />
-                            : folder.owner ? folder.owner : t('title_you')
-                        }
-                    </div>
+                        <div className="file-owner">
+                            {shareInProgress
+                                ? <T k="title_convertingToShared" />
+                                : folder.owner ? folder.owner : t('title_you')
+                            }
+                        </div>
                     }
 
-                    {this.props.folderDetails && <div className="file-uploaded" /> }
+                    {this.props.folderDetails && <div className="file-uploaded" />}
 
-                    {this.props.folderDetails && <div className="file-size" /> }
+                    {this.props.folderDetails && <div className="file-size" />}
 
                     { /* TODO: use spread operator */
                         this.props.folderActions &&
@@ -104,7 +105,7 @@ class FolderLine extends React.Component {
                     }
                 </div>
 
-                { shareInProgress &&
+                {shareInProgress &&
                     <div className="row sub-row">
                         <div className="file-checkbox" />
 
@@ -126,7 +127,7 @@ class FolderLine extends React.Component {
                     </div>
                 }
 
-                { shareInProgress && <ProgressBar value={progress} max={progressMax} /> }
+                {shareInProgress && <ProgressBar value={progress} max={progressMax} />}
             </div>
         );
     }

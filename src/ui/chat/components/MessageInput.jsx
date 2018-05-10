@@ -124,7 +124,7 @@ class MessageInput extends React.Component {
     }
 
     @computed get jumpToBottomVisible() {
-        return this.props.messageListScrolledUp ||
+        return this.props.messageListScrolledUp || chatStore.activeChat.canGoDown ||
             (!clientApp.isReadingNewestMessages && chatStore.activeChat.unreadCount > 0);
     }
 

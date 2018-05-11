@@ -5,7 +5,7 @@ const { observer } = require('mobx-react');
 const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
-const { systemMessages, User } = require('peerio-icebear');
+const { contactStore, systemMessages, User } = require('peerio-icebear');
 const { Avatar, Button, MaterialIcon, Menu, MenuItem } = require('~/peer-ui');
 const { time } = require('~/helpers/formatter');
 const { chatSchema, Renderer } = require('~/helpers/chat/prosemirror/chat-schema');
@@ -170,7 +170,7 @@ class Message extends React.Component {
             if (r.receipt.signatureError) continue;
             renderMe.push(<Avatar
                 key={r.username}
-                username={r.username}
+                contact={contactStore.getContact(r.username)}
                 size="tiny"
                 clickable
                 tooltip

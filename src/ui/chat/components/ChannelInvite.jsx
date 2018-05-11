@@ -57,6 +57,7 @@ class ChannelInvite extends React.Component {
         const { activeInvite } = chatInviteStore;
         if (!activeInvite) return null;
         const { channelName, username } = activeInvite;
+        const contact = contactStore.getContact(username);
         return (
             <div className={css('channel-invite', this.props.className)}>
                 <div className="invite-content">
@@ -100,10 +101,10 @@ class ChannelInvite extends React.Component {
                         <div className="participant-list">
                             <span>
                                 <T k="title_hostedBy" className="hosted-by" tag="span" />&nbsp;
-                                <span className="host-username">{contactStore.getContact(username).fullName}</span>
+                                <span className="host-username">{contact.fullName}</span>
                             </span>
                             <div className="avatars">
-                                <Avatar username={username} clickable tooltip />
+                                <Avatar contact={contact} clickable tooltip />
                             </div>
                         </div>
                     </div>

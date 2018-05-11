@@ -130,12 +130,11 @@ class Breadcrumb extends React.Component {
 
     render() {
         const { folderPath } = this;
-        // TODO: add unique id for root folder
         return (
             <div className="breadcrumb-container">
                 {this.props.bulkSelected
                     ? <div className="breadcrumb">
-                        <div className="breadcrumb-entry" data-folderid="root">
+                        <div className="breadcrumb-entry" data-storeid="main" data-folderid="root">
                             <a className="folder-name clickable" onClick={this.props.onSelectFolder}>
                                 {t('title_files')}
                             </a>
@@ -159,7 +158,8 @@ class Breadcrumb extends React.Component {
                     : <div className="breadcrumb">
                         {this.folderPath.map((folder, i) => (
                             <div key={`${folder.folderId}-${folder.name}`}
-                                data-folderid={folder.folderId || 'root'}
+                                data-folderid={folder.folderId}
+                                data-storeid={folder.store.id}
                                 className="breadcrumb-entry">
                                 <a className="folder-name clickable"
                                     onClick={this.props.onSelectFolder}>
@@ -176,6 +176,7 @@ class Breadcrumb extends React.Component {
                 {!this.props.currentFolder.isRoot && !this.props.noActions && !this.props.bulkSelected &&
                     <FolderActions
                         data-folderid={this.props.currentFolder.folderId}
+                        data-storeid={this.props.currentFolder.store.id}
                         moveable
                         onMove={this.props.onMove}
                         onDelete={this.props.onDelete}

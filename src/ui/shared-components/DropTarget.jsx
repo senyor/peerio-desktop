@@ -33,7 +33,7 @@ class DropTarget extends React.Component {
 
     justUpload = (folder) => {
         this._files.success.forEach(
-            f => fileStore.upload(f, null, folder ? folder.folderId : null)
+            f => fileStore.upload(f, null, folder)
         );
         this.dialogActive = false;
     };

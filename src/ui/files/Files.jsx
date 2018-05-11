@@ -17,7 +17,6 @@ const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipl
 const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
 const LimitedActionsDialog = require('~/ui/shared-components/LimitedActionsDialog');
 const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
-const { getAttributeInParentChain } = require('~/helpers/dom');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -108,8 +107,7 @@ class Files extends React.Component {
 
     @action.bound async shareFile(ev) {
         fileStore.clearSelection();
-        const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
-        const file = fileStore.getById(fileId);
+        const file = getFileByEvent(ev);
         file.selected = true;
         fileStore.bulk.share();
     }
@@ -144,8 +142,7 @@ class Files extends React.Component {
         this.triggerAddFolderPopup = false;
         const { folderName } = this;
         if (folderName && folderName.trim()) {
-            fileStore.folderStore.createFolder(folderName, fileStore.folderStore.currentFolder);
-            fileStore.folderStore.save();
+            fileStore.folderStore.currentFolder.createFolder(folderName);
         }
         this.folderName = '';
     }
@@ -163,7 +160,6 @@ class Files extends React.Component {
         this.folderName = '';
         this.folderToRename = null;
         folderToRename.rename(folderName);
-        fileStore.folderStore.save();
     }
 
     handleKeyDownRenameFolder = (ev) => {
@@ -246,7 +242,7 @@ class Files extends React.Component {
         await Promise.all(list.success.map(path => {
             return fileStore.upload(
                 path, null,
-                fileStore.folderStore.currentFolder.isRoot ? null : fileStore.folderStore.currentFolder.folderId
+                fileStore.folderStore.currentFolder
             );
         }));
     }
@@ -336,7 +332,9 @@ class Files extends React.Component {
         });
 
         return (
-            <div className="files-header" data-folderid={fileStore.folderStore.currentFolder.folderId}>
+            <div className="files-header"
+                data-folderid={fileStore.folderStore.currentFolder.folderId}
+                data-storeid={fileStore.folderStore.currentFolder.store.id}>
                 <Breadcrumb currentFolder={fileStore.folderStore.currentFolder}
                     onSelectFolder={this.changeFolder}
                     onMove={this.moveFolder}
@@ -463,20 +461,20 @@ class Files extends React.Component {
                 />);
         }
 
-        items.push(
-            <div className="row-container placeholder-file" key="placeholder1">
-                <div className="row">
-                    <div className="file-checkbox" />
-                    <div className="file-icon"><div className="placeholder-square" /></div>
-                    <div className="file-name"><div className="placeholder-square" /></div>
-                    <div className="file-owner"><div className="placeholder-square" /></div>
-                    <div className="file-uploaded"><div className="placeholder-square" /></div>
-                    <div className="file-size"><div className="placeholder-square" /></div>
-                    <div className="file-actions"><div className="placeholder-square" /></div>
-                    <ProgressBar mode="indeterminate" />
-                </div>
-            </div>
-        );
+        // items.push(
+        //     <div className="row-container placeholder-file" key="placeholder1">
+        //         <div className="row">
+        //             <div className="file-checkbox" />
+        //             <div className="file-icon"><div className="placeholder-square" /></div>
+        //             <div className="file-name"><div className="placeholder-square" /></div>
+        //             <div className="file-owner"><div className="placeholder-square" /></div>
+        //             <div className="file-uploaded"><div className="placeholder-square" /></div>
+        //             <div className="file-size"><div className="placeholder-square" /></div>
+        //             <div className="file-actions"><div className="placeholder-square" /></div>
+        //             <ProgressBar mode="indeterminate" />
+        //         </div>
+        //     </div>
+        // );
 
         this.enqueueCheck();
         return (

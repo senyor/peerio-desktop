@@ -107,6 +107,7 @@ class FileLine extends React.Component {
             )}>
                 <div
                     data-fileid={file.fileId}
+                    data-storeid={file.store.id}
                     className="row"
                     onMouseEnter={this.onShowActions}
                     onMouseLeave={this.onHideActions}>
@@ -163,6 +164,7 @@ class FileLine extends React.Component {
                         <div className="file-actions">
                             <FileActions
                                 data-fileid={file.fileId}
+                                data-storeid={file.store.id}
                                 downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
                                 shareable
                                 shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.props.onShare}

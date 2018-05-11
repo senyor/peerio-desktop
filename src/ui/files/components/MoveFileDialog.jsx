@@ -6,7 +6,6 @@ const { Button, Dialog, MaterialIcon } = require('~/peer-ui');
 const { fileStore } = require('peerio-icebear');
 const Breadcrumb = require('./Breadcrumb');
 const Search = require('~/ui/shared-components/Search');
-const { getAttributeInParentChain } = require('~/helpers/dom');
 const css = require('classnames');
 const { getFolderByEvent } = require('~/helpers/icebear-dom');
 const ShareConfirmDialog = require('./ShareConfirmDialog');
@@ -25,18 +24,13 @@ class MoveFileDialog extends React.Component {
         this.currentFolder = this.props.currentFolder;
     }
 
-    getFolder(ev) {
-        const id = getAttributeInParentChain(ev.target, 'data-folderid');
-        const folder = fileStore.folderStore.getById(id);
-        return folder;
-    }
 
     @action.bound selectionChange(ev) {
-        this.selectedFolder = this.getFolder(ev);
+        this.selectedFolder = getFolderByEvent(ev);
     }
 
     @action.bound setCurrentFolder(ev) {
-        this.currentFolder = this.getFolder(ev);
+        this.currentFolder = getFolderByEvent(ev);
     }
 
     @action.bound async handleMove() {
@@ -73,11 +67,12 @@ class MoveFileDialog extends React.Component {
     getFolderRow = (folder) => {
         if (folder === this.props.folder) return null;
 
-        const hasFolders = fileStore.folderStore.getById(folder.folderId).folders.length > 0;
+        const hasFolders = folder.folders.length > 0;
 
         return (<div
             key={`folder-${folder.folderId}`}
             data-folderid={folder.folderId}
+            data-storeid={folder.store.id}
             className="move-file-row">
             <Button
                 icon={this.selectedFolder === folder ?

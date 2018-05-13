@@ -56,13 +56,13 @@ class FilesSection extends React.Component {
         });
     };
 
-    menu(fileId) {
+    menu(file) {
         return (
             <Menu
                 icon="more_vert"
                 position="bottom-right"
                 onClick={this.stopPropagation}
-                data-fileid={fileId}
+                data-fileid={file.fileId}
             >
                 <MenuItem
                     caption={t('title_download')}
@@ -73,6 +73,7 @@ class FilesSection extends React.Component {
                     caption={t('button_share')}
                     icon="person_add"
                     onClick={this.share}
+                    disabled={!file.canShare}
                 />
             </Menu>
         );
@@ -87,7 +88,7 @@ class FilesSection extends React.Component {
                 className="sidebar-file-container"
                 onClick={this.download}
                 leftContent={<FileSpriteIcon type={file.iconType} size="large" />}
-                rightContent={this.menu(id)}
+                rightContent={this.menu(file)}
             >
                 <div className="meta">
                     <div className="file-name-container">

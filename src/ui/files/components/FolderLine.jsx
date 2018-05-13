@@ -6,6 +6,7 @@ const FolderActions = require('./FolderActions');
 const { Checkbox, CustomIcon, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
+const { User } = require('peerio-icebear');
 
 // TESTING
 const { volumeStore } = require('peerio-icebear');
@@ -79,7 +80,7 @@ class FolderLine extends React.Component {
                         <div className="file-owner">
                             {shareInProgress
                                 ? <T k="title_convertingToShared" />
-                                : folder.owner ? folder.owner : t('title_you')
+                                : folder.owner === User.current.username ? t('title_you') : folder.owner
                             }
                         </div>
                     }

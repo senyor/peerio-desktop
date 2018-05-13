@@ -421,8 +421,8 @@ class Files extends React.Component {
     @observable isVolumeInProgress; // if user is in the new volume that is being created from a folder
 
     render() {
-        if (!fileStore.files && !fileStore.files.length && !fileStore.folderStore.root.folders.length
-            && !fileStore.loading) return <ZeroScreen onUpload={this.handleUpload} />;
+        if (!fileStore.files.length && !fileStore.folderStore.root.folders.length
+            && fileStore.loaded) return <ZeroScreen onUpload={this.handleUpload} />;
 
         const currentFolder = fileStore.folderStore.currentFolder;
         const items = [];

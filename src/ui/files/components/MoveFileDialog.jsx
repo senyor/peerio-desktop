@@ -70,8 +70,8 @@ class MoveFileDialog extends React.Component {
         const hasFolders = folder.folders.length > 0;
 
         return (<div
-            key={`folder-${folder.folderId}`}
-            data-folderid={folder.folderId}
+            key={`folder-${folder.id}`}
+            data-folderid={folder.id}
             data-storeid={folder.store.id}
             className="move-file-row">
             <Button

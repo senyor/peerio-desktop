@@ -114,7 +114,7 @@ class FilePicker extends React.Component {
             const f = data[i];
             items.push(f.isFolder ?
                 <FolderLine
-                    key={f.folderId}
+                    key={f.id}
                     folder={f}
                     onChangeFolder={this.changeFolder}
                     checkbox

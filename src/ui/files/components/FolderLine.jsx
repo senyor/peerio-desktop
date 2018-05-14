@@ -33,7 +33,7 @@ class FolderLine extends React.Component {
         const { progress, progressMax, progressPercentage } = folder;
         const shareInProgress = !!progressMax;
         return (
-            <div data-folderid={folder.folderId}
+            <div data-folderid={folder.id}
                 data-storeid={folder.store.id}
                 className={css(
                     'row-container',
@@ -100,7 +100,7 @@ class FolderLine extends React.Component {
                                 onDelete={this.props.onDeleteFolder}
                                 deleteDisabled={folder.isBlocked}
                                 onShare={this.props.onShare}
-                                data-folderid={folder.folderId}
+                                data-folderid={folder.id}
                                 data-storeid={folder.store.id}
                                 disabled={this.props.selected}
                             />

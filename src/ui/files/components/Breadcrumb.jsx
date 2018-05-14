@@ -157,8 +157,8 @@ class Breadcrumb extends React.Component {
                     </div>
                     : <div className="breadcrumb">
                         {this.folderPath.map((folder, i) => (
-                            <div key={`${folder.folderId}-${folder.name}`}
-                                data-folderid={folder.folderId}
+                            <div key={`${folder.id}-${folder.name}`}
+                                data-folderid={folder.id}
                                 data-storeid={folder.store.id}
                                 className="breadcrumb-entry">
                                 <a className="folder-name clickable"
@@ -175,7 +175,7 @@ class Breadcrumb extends React.Component {
                 }
                 {!this.props.currentFolder.isRoot && !this.props.noActions && !this.props.bulkSelected &&
                     <FolderActions
-                        data-folderid={this.props.currentFolder.folderId}
+                        data-folderid={this.props.currentFolder.id}
                         data-storeid={this.props.currentFolder.store.id}
                         moveable
                         onMove={this.props.onMove}

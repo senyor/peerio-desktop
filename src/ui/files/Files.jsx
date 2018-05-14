@@ -333,7 +333,7 @@ class Files extends React.Component {
 
         return (
             <div className="files-header"
-                data-folderid={fileStore.folderStore.currentFolder.folderId}
+                data-folderid={fileStore.folderStore.currentFolder.id}
                 data-storeid={fileStore.folderStore.currentFolder.store.id}>
                 <Breadcrumb currentFolder={fileStore.folderStore.currentFolder}
                     onSelectFolder={this.changeFolder}
@@ -432,7 +432,7 @@ class Files extends React.Component {
             const f = data[i];
             items.push(f.isFolder ?
                 <FolderLine
-                    key={f.folderId}
+                    key={f.id}
                     folder={f}
                     moveable={fileStore.folderStore.root.hasNested}
                     onDownload={this.downloadFolder}

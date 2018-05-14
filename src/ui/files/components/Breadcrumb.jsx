@@ -181,6 +181,7 @@ class Breadcrumb extends React.Component {
                         onMove={this.props.onMove}
                         onDelete={this.props.onDelete}
                         onRename={this.props.onRename}
+                        onShare={this.props.onShare}
                         position="top-right"
                     />
                 }

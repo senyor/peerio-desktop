@@ -66,7 +66,7 @@ class ChatList extends React.Component {
                         onClick={this.activateChat}
                         rightContent={
                             ((!r.active || r.newMessagesMarkerPos) && r.unreadCount > 0)
-                                ? <div className="notification">{r.unreadCount}</div>
+                                ? <div className="notification">{r.unreadCount < 100 ? r.unreadCount : '99+'}</div>
                                 : null
                         }
                     />
@@ -122,7 +122,7 @@ class ChatList extends React.Component {
                     onClick={this.activateChat}
                     rightContent={
                         ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
-                            ? <div className="notification">{c.unreadCount}</div>
+                            ? <div className="notification">{c.unreadCount < 100 ? c.unreadCount : '99+'}</div>
                             : null
                     }
                 >

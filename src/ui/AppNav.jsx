@@ -188,12 +188,11 @@ class AppNav extends React.Component {
                     <AppNavButton tooltip={t('title_chats')} icon="forum"
                         active={routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)}
                         showBadge={chatStore.unreadMessages > 0 || chatInviteStore.received.length}
-                        badge={chatStore.unreadMessages + chatInviteStore.received.length}
                         onClick={this.toChats} />
 
                     <AppNavButton tooltip={t('title_files')} icon="folder"
                         active={routerStore.currentRoute.startsWith(routerStore.ROUTES.files)}
-                        showBadge={fileStore.unreadFiles > 0} badge={fileStore.unreadFiles}
+                        showBadge={fileStore.unreadFiles > 0}
                         onClick={this.toFiles} />
 
                     <AppNavButton tooltip={t('title_contacts')} icon="people"

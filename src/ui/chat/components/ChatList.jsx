@@ -98,7 +98,7 @@ class ChatList extends React.Component {
                 rightContent = <T k="title_new" className="badge-new" />;
                 contact = c.contact;
             } else if ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0) {
-                rightContent = <div className="notification">{c.unreadCount}</div>;
+                rightContent = <div className="notification">{c.unreadCount < 100 ? c.unreadCount : '99+'}</div>;
             }
             return (
                 <ListItem

@@ -31,7 +31,7 @@ class FolderLine extends React.Component {
         const { folder } = this.props;
         const selectDisabled = this.props.disabledCheckbox || folder.isShared;
         const { progress, progressMax, progressPercentage } = folder;
-        const shareInProgress = !!progressMax;
+        const shareInProgress = folder.convertingToVolume || folder.convertingFromFolder;
         return (
             <div data-folderid={folder.id}
                 data-storeid={folder.store.id}
@@ -121,7 +121,7 @@ class FolderLine extends React.Component {
                         </div>
 
                         <div className="file-owner">
-                            <T k="title_sharingCount">{{ count: '120' }}</T>
+                            <T k="title_sharingCount">{{ count: 'X' }}</T>
                         </div>
 
                         <div className="file-uploaded" />

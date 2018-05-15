@@ -514,12 +514,12 @@ class Files extends React.Component {
                                 </div>
 
                                 <div className="file-share-info">
-                                    {this.isVolumeInProgress &&
+                                    {currentFolder.convertingFromFolder &&
                                         <T k="title_convertingFolderNameToShared">
                                             {{ folderName: currentFolder.name }}
                                         </T>
                                     }
-                                    {this.isConvertingToVolume &&
+                                    {currentFolder.convertingToVolume &&
                                         <span>
                                             <T k="title_filesInQueue" tag="span" />&nbsp;
                                             {/* } (34 <T k="title_filesLeftCount" tag="span" />) */}

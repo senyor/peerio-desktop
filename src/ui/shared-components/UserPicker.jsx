@@ -305,7 +305,7 @@ class UserPicker extends React.Component {
                                             />
                                         }
                                         {(this.contactLoading || this._searchUsernameTimeout) &&
-                                            <ProgressBar type="circular" mode="indeterminate" theme="small" />
+                                            <ProgressBar type="circular" mode="indeterminate" size="small" />
                                         }
                                     </div>
                                 </div>

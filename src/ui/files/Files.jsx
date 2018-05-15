@@ -418,9 +418,6 @@ class Files extends React.Component {
     refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
 
 
-    @observable isConvertingToVolume; // if user is in the regular folder that is being converted to volume
-    @observable isVolumeInProgress; // if user is in the new volume that is being created from a folder
-
     render() {
         if (!fileStore.files.length && !fileStore.folderStore.root.folders.length
             && fileStore.loaded) return <ZeroScreen onUpload={this.handleUpload} />;
@@ -503,33 +500,33 @@ class Files extends React.Component {
                             <div className="file-actions" />
                         </div>
                         {currentFolder.isRoot && this.removedFolderNotifVisible && this.removedFolderNotif}
-                        {this.isVolumeInProgress || this.isConvertingToVolume &&
+                        {(currentFolder.isConvertingToVolume || currentFolder.isConvertingFromFolder) &&
                             <div className={css(
                                 'file-ui-subheader',
                                 'row',
                                 {
-                                    'volume-in-progress': this.isVolumeInProgress,
-                                    'converting-to-volume': this.isConvertingToVolume
+                                    'volume-in-progress': currentFolder.convertingFromFolder,
+                                    'converting-to-volume': currentFolder.convertingToVolume
                                 }
                             )}>
                                 <div className="file-checkbox percent-in-progress">
-                                    {this.isVolumeInProgress && '68%'}
+                                    {currentFolder.progressPercentage}
                                 </div>
 
                                 <div className="file-share-info">
                                     {this.isVolumeInProgress &&
                                         <T k="title_convertingFolderNameToShared">
-                                            {{ folderName: fileStore.folderStore.currentFolder.name }}
+                                            {{ folderName: currentFolder.name }}
                                         </T>
                                     }
                                     {this.isConvertingToVolume &&
                                         <span>
                                             <T k="title_filesInQueue" tag="span" />&nbsp;
-                                            (34 <T k="title_filesLeftCount" tag="span" />)
+                                            {/* } (34 <T k="title_filesLeftCount" tag="span" />) */}
                                         </span>
                                     }
                                 </div>
-                                <ProgressBar value={68} max={100} />
+                                <ProgressBar value={currentFolder.progress} max={currentFolder.progressMax} />
                             </div>
                         }
                         <div className={css(

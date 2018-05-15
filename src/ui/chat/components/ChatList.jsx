@@ -11,6 +11,7 @@ const css = require('classnames');
 const FlipMove = require('react-flip-move');
 const _ = require('lodash');
 const { Avatar, Button, List, ListItem, MaterialIcon, ProgressBar, Tooltip } = require('~/peer-ui');
+const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 
@@ -79,7 +80,7 @@ class ChatList extends React.Component {
                         onClick={this.activateInviteByEvent}
                         caption={`# ${r.channelName}`}
                         rightContent={
-                            <T k="title_new" className="room-invite-notification-icon" />
+                            <T k="title_new" className="badge-new" />
                         }
                     />
                 );
@@ -89,6 +90,16 @@ class ChatList extends React.Component {
     // Building the DM list
     @computed get dmMap() {
         return chatStore.directMessages.map(c => {
+            let rightContent = null;
+            let contact = c.otherParticipants.length > 0
+                ? c.otherParticipants[0]
+                : c.allParticipants[0];
+            if (c.isInvite) {
+                rightContent = <T k="title_new" className="badge-new" />;
+                contact = c.contact;
+            } else if ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0) {
+                rightContent = <div className="notification">{c.unreadCount}</div>;
+            }
             return (
                 <ListItem
                     data-chatid={c.id}
@@ -104,11 +115,7 @@ class ChatList extends React.Component {
                     leftContent={
                         <Avatar
                             key="a"
-                            contact={
-                                c.otherParticipants.length > 0
-                                    ? c.otherParticipants[0]
-                                    : c.allParticipants[0]
-                            }
+                            contact={contact}
                             size="small"
                             clickable
                             tooltip
@@ -116,11 +123,7 @@ class ChatList extends React.Component {
                     }
 
                     onClick={this.activateChat}
-                    rightContent={
-                        ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0)
-                            ? <div className="notification">{c.unreadCount < 100 ? c.unreadCount : '99+'}</div>
-                            : null
-                    }
+                    rightContent={rightContent}
                 >
                     {c.name}
                 </ListItem>
@@ -256,10 +259,10 @@ class ChatList extends React.Component {
     }
 
     // Room, DM, and button click events
-    activateChat = (ev) => {
+    activateChat = async (ev) => {
         chatInviteStore.deactivateInvite();
-        routerStore.navigateTo(routerStore.ROUTES.chats);
         const id = getAttributeInParentChain(ev.target, 'data-chatid');
+        routerStore.navigateTo(routerStore.ROUTES.chats);
         chatStore.activate(id);
     }
 
@@ -302,12 +305,8 @@ class ChatList extends React.Component {
                             <MaintenanceWarning />
                             <List>
                                 <div>
-                                    <div className="chat-item-add" onClick={this.newChannel} >
-                                        <div className="chat-item-title">{t('title_channels')}</div>
-                                        <div className="chat-item-add-icon" />
-                                    </div>
-                                    <Tooltip text={t('title_addRoom')}
-                                        position="right" />
+                                    <PlusIcon onClick={this.newChannel} label={t('title_channels')} />
+                                    <Tooltip text={t('title_addRoom')} position="right" />
                                 </div>
 
                                 <FlipMove duration={200} easing="ease-in-out" >
@@ -322,12 +321,8 @@ class ChatList extends React.Component {
                             </List>
                             <List clickable>
                                 <div>
-                                    <div className="chat-item-add" onClick={this.newMessage}>
-                                        <div className="chat-item-title">{t('title_directMessages')}</div>
-                                        <div className="chat-item-add-icon" />
-                                    </div>
-                                    <Tooltip text={t('title_addDirectMessage')}
-                                        position="right" />
+                                    <PlusIcon onClick={this.newMessage} label={t('title_directMessages')} />
+                                    <Tooltip text={t('title_addDirectMessage')} position="right" />
                                 </div>
                                 {routerStore.isNewChat &&
                                     <ListItem key="new chat"

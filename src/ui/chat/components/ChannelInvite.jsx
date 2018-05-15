@@ -12,6 +12,7 @@ const { t } = require('peerio-translator');
 const { Avatar, Button, Divider } = require('~/peer-ui');
 const routerStore = require('~/stores/router-store');
 const { ProgressBar } = require('~/peer-ui');
+const EmojiImage = require('~/ui/emoji/Image');
 
 @observer
 class ChannelInvite extends React.Component {
@@ -53,7 +54,7 @@ class ChannelInvite extends React.Component {
         return (
             <div className={css('channel-invite', this.props.className)}>
                 <div className="invite-content decline-content">
-                    <div className="emoji-double emojione-32-diversity _270c-1f3fc" alt="✌️" title=":v:" />
+                    <EmojiImage emoji="v" size="large" />
                     <div className="text">
                         {t('title_userOut', { name: User.current.username })}
                     </div>
@@ -108,7 +109,7 @@ class ChannelInvite extends React.Component {
         return (
             <div className={css('channel-invite', this.props.className)}>
                 <div className="invite-content">
-                    <div className="emoji-double emojione-32-objects _1f389" alt="🎉" title=":tada:" />
+                    <EmojiImage emoji="tada" size="large" />
                     <div className="text">
                         <T k="title_roomInviteHeading" />&nbsp;
                         <span className="channel-name"># {channelName}</span>

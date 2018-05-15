@@ -124,7 +124,7 @@ class MessageInput extends React.Component {
     }
 
     @computed get jumpToBottomVisible() {
-        return this.props.messageListScrolledUp ||
+        return this.props.messageListScrolledUp || chatStore.activeChat.canGoDown ||
             (!clientApp.isReadingNewestMessages && chatStore.activeChat.unreadCount > 0);
     }
 
@@ -137,7 +137,9 @@ class MessageInput extends React.Component {
                 { 'snackbar-visible': this.snackbarVisible }
             )}>
                 <Button icon="keyboard_arrow_down" onClick={this.props.onJumpToBottom} />
-                {chat.unreadCount > 0 && <div className="unread-badge">{chat.unreadCount}</div>}
+                {chat.unreadCount > 0 &&
+                    <div className="unread-badge">{chat.unreadCount < 100 ? chat.unreadCount : '99+'}</div>
+                }
             </div>
         );
     }

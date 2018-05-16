@@ -17,6 +17,7 @@ const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
+const PendingDM = require('./components/PendingDM');
 const { Dialog } = require('~/peer-ui');
 
 @observer
@@ -27,13 +28,17 @@ class ChatView extends React.Component {
     componentDidMount() {
         this.reactionsToDispose = [
             reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
+
+            // TODO: refactor when SDK is there for chat invites
+            // reaction(() => !chatStore.chats.length && !chatInviteStore.received.length, () => {
+            //     routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+            // }, true)
         ];
 
         if (chatInviteStore.activeInvite) {
             routerStore.navigateTo(routerStore.ROUTES.channelInvite);
         }
 
-        // TODO: refactor when SDK is there for chat invites
         if (!chatStore.chats.length && !chatInviteStore.received.length) {
             routerStore.navigateTo(routerStore.ROUTES.zeroChats);
         }
@@ -267,6 +272,12 @@ class ChatView extends React.Component {
 
         const chat = chatStore.activeChat;
         if (!chat) return null;
+
+        if (chat.isInvite) {
+            return (
+                <PendingDM />
+            );
+        }
 
         const jitsiActions = [
             { label: t('button_cancel'), onClick: this.toggleJitsiDialog },

@@ -109,6 +109,7 @@ class MessageInput extends React.Component {
                 active={this.filePickerActive}
                 onClose={this.handleFilePickerClose}
                 onShare={this.shareFiles}
+                hideLegacy
             />
         );
     }

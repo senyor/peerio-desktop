@@ -112,6 +112,8 @@ class FilePicker extends React.Component {
         const canShareFolder = chatStore.activeChat && !chatStore.activeChat.isChannel;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
+            if (f.isLegacy && this.props.hideLegacy) continue;
+
             items.push(f.isFolder ?
                 <FolderLine
                     key={f.id}

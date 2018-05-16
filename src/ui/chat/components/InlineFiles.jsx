@@ -142,7 +142,7 @@ class InlineFile extends React.Component {
         const file = fileStore.getById(this.props.id);
         if (!file) return null; // just in case
         return (
-            <Dialog active={this.imagePopupVisible} type="large" ref={this.onPopupRef}
+            <Dialog active={this.imagePopupVisible} ref={this.onPopupRef}
                 onCancel={this.hideImagePopup}
                 className="image-popup">
                 <img src={this.currentImageSrc} />

@@ -146,7 +146,7 @@ class Files extends React.Component {
         ];
         return (
             <Dialog title={t('button_newFolder')}
-                active={this.addFolderPopupVisible} type="small" ref={this.onAddPopupRef}
+                active={this.addFolderPopupVisible} ref={this.onAddPopupRef}
                 actions={dialogActions}
                 onCancel={hide}
                 className="add-folder-popup">
@@ -169,7 +169,7 @@ class Files extends React.Component {
         ];
         return (
             <Dialog title={t('button_rename')}
-                active={this.renameFolderPopupVisible} type="small" ref={this.onRenamePopupRef}
+                active={this.renameFolderPopupVisible} ref={this.onRenamePopupRef}
                 actions={dialogActions} onKeyDown={this.keyDownRenameFolder}
                 onCancel={hide}
                 className="add-folder-popup">

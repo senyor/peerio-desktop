@@ -96,34 +96,31 @@ $zero-chats-break: 984px;
 
   // ~~~~~~ BUTTONS ~~~~~~
   // buttons for Create Room and Create Direct Messages
-  // modified from common component chat-item-add.scss
-  .chat-item-add {
-    padding: 0;
+  // modified from common component PlusIcon
+  .plus-icon-container {
+    .label {
+      @extend %display-1;
+      color: $peerio-blue;
+    }
 
-    .chat-item-add-icon {
+    .plus-icon {
       display: flex;
       align-items: center;
+      position: absolute;
       height: 40px;
       width: 40px;
       margin-left: -56px; // 40px + margin-default
       margin-right: $margin-default;
+      line-height: 40px;
+      font-size: 40px;
+      color: $peerio-blue;
       border-color: $peerio-blue;
       border-radius: 6px;
       border-width: 3px;
-
-      &::after {
-        height: 40px;
-        width: 40px;
-        line-height: 40px;
-        font-size: 40px;
-        color: $peerio-blue;
-      }
     }
 
-    .chat-item-title {
-      @extend %display-1;
+    &:hover .label {
       color: $peerio-blue;
-      border: none;
     }
   }
 

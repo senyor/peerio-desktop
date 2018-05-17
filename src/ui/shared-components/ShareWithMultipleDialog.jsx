@@ -118,18 +118,18 @@ class ShareWithMultipleDialog extends React.Component {
                             <div className="list-dms-container">
                                 <div className="p-list-heading">
                                     <T k="title_contacts" />
-                                    &nbsp;({this.contacts.length})
+                                    &nbsp;({this.contacts.length || ''})
                                 </div>
                                 <List className="list-chats list-dms" clickable>
                                     {this.contacts.map(this.renderContact)}
                                 </List>
                             </div>
                         </div>
-                        {this.usersSelected &&
+                        {this.usersSelected ?
                             <div className="receipt-wrapper">
                                 <Button label={t('title_viewSharedWith')} onClick={this.modifySharedWith} />
                                 {this.sharedWithBlock}
-                            </div>}
+                            </div> : null}
                     </div>
                 </Dialog>
             </div>

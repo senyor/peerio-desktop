@@ -121,7 +121,7 @@ class FolderLine extends React.Component {
                         </div>
 
                         <div className="file-owner">
-                            <T k="title_sharingCount">{{ count: 'X' }}</T>
+                            <T k="title_sharingFiles" />
                         </div>
 
                         <div className="file-uploaded" />

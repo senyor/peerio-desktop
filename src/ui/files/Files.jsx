@@ -500,7 +500,7 @@ class Files extends React.Component {
                             <div className="file-actions" />
                         </div>
                         {currentFolder.isRoot && this.removedFolderNotifVisible && this.removedFolderNotif}
-                        {(currentFolder.isConvertingToVolume || currentFolder.isConvertingFromFolder) &&
+                        {(currentFolder.convertingToVolume || currentFolder.convertingFromFolder) &&
                             <div className={css(
                                 'file-ui-subheader',
                                 'row',

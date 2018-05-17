@@ -2,6 +2,7 @@ const React = require('react');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
+const uiStore = require('~/stores/ui-store');
 const FolderActions = require('./FolderActions');
 const { Checkbox, CustomIcon, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const { t } = require('peerio-translator');
@@ -25,6 +26,10 @@ class FolderLine extends React.Component {
 
     testClick = () => {
         volumeStore.mockProgress(this.props.folder);
+    }
+
+    openContactDialog = () => {
+        uiStore.contactDialogUsername = this.props.folder.owner;
     }
 
     render() {
@@ -77,7 +82,7 @@ class FolderLine extends React.Component {
                     </div>
 
                     {this.props.folderDetails &&
-                        <div className="file-owner">
+                        <div className="file-owner" onClick={this.openContactDialog}>
                             {shareInProgress
                                 ? <T k="title_convertingToShared" />
                                 : folder.owner === User.current.username ? t('title_you') : folder.owner

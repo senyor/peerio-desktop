@@ -65,7 +65,7 @@ class FolderLine extends React.Component {
 
                     <div className="file-icon"
                         onClick={this.props.onChangeFolder} >
-                        {folder.isShared
+                        {folder.isShared || folder.store.folderStore.root.isShared
                             ? <CustomIcon icon="folder-shared" hover selected={this.props.selected} />
                             : <MaterialIcon icon="folder" />
                         }

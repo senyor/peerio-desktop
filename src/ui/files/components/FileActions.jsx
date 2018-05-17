@@ -71,7 +71,7 @@ class FileActions extends React.Component {
                 }
                 {this.props.unshareable
                     ? <MenuItem caption={t('button_unshare')}
-                        icon="delete"
+                        icon="remove"
                         onClick={this.props.onUnshare}
                     />
                     : null

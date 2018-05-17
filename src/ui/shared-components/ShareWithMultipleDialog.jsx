@@ -83,13 +83,17 @@ class ShareWithMultipleDialog extends React.Component {
         this.modifyShareDialog.show();
     }
 
+    get usersSelected() {
+        return this.selectedUsers.keys().length;
+    }
+
     setModifyShareDialogRef = (ref) => { this.modifyShareDialog = ref; };
 
     render() {
         if (!this.visible) return false;
         const dialogActions = [
             { label: t('button_cancel'), onClick: this.close },
-            { label: t('button_share'), onClick: this.share }
+            { label: t('button_share'), onClick: this.share, disabled: !this.usersSelected }
         ];
 
         return (
@@ -121,7 +125,7 @@ class ShareWithMultipleDialog extends React.Component {
                                 </List>
                             </div>
                         </div>
-                        {!!this.selectedUsers.keys().length &&
+                        {this.usersSelected &&
                             <div className="receipt-wrapper">
                                 <Button label={t('title_viewSharedWith')} onClick={this.modifySharedWith} />
                                 {this.sharedWithBlock}

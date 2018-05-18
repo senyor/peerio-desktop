@@ -37,7 +37,7 @@
     background-color: $background-list;
 
     .p-list-item:hover {
-      background-color: rgba($white, .15);
+      background-color: $hoverBg;
     }
   }
 

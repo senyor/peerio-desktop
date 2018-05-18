@@ -4,7 +4,7 @@ $darkblue: $color-ui-1;   // 040b40
 $darkteal: $color-ui-2;   // 004e69
 
 // brand colours
-$peerio-blue: $color-brand-1;    // 408cff
+$peerio-blue: $color-brand-2;    // 408cff
 // $peerio-purple: rgba($color-brand-2, .45);  // 5461cc
 $peerio-purple: $color-brand-2;  // 5461cc
 $peerio-teal: $color-brand-3;    // 02cedb
@@ -65,4 +65,8 @@ $input-border: $black-38;
 
 $background-list: $black-03;
 
+//Whitelabel
 $badgeColor: $black; //$darkblue;
+$badgeBgColor: $color-confirmation; //$peerio-blue;
+$unreadColor: $white; //$darkblue;
+$hoverBg: rgba($color-brand-2, .15) //rgba($white, .15);

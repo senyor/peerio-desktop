@@ -4,9 +4,8 @@ $darkblue: $color-ui-1;   // 040b40
 $darkteal: $color-ui-2;   // 004e69
 
 // brand colours
-$peerio-blue: $color-brand-2;    // 408cff
-// $peerio-purple: rgba($color-brand-2, .45);  // 5461cc
-$peerio-purple: $color-brand-2;  // 5461cc
+$peerio-blue: $color-brand-1;    // 408cff
+$peerio-purple: rgba($color-brand-2, .45);  // 5461cc
 $peerio-teal: $color-brand-3;    // 02cedb
 
 // status and accent colours
@@ -31,11 +30,11 @@ $black-03: rgba(0, 0, 0, .03);
 //// BACKGROUNDS
 // Background colors
 $background-root: $white;
-$background-hover-default: $black-06;//rgba($darkblue, .05);
+$background-hover-default: rgba($darkblue, .05);
 $background-hover-default-solid: #f2f2f5;
 $background-selected: rgba($peerio-blue, .15);
 $background-neutral: $black-12;
-$background-overlay: $black-06;
+$background-overlay: rgba($darkblue, .3);
 
 //// FONT COLORS
 // Text
@@ -44,7 +43,7 @@ $text-dark-secondary: $black-54;
 $text-dark-inactive: $black-54;
 $text-dark-hint: $black-38;
 $text-light-default: $white;
-$text-light-inactive: $black-54;//$white-70;
+$text-light-inactive: $white-70;
 $text-light-disabled: $white-38;
 $text-header: rgba($black, .87);
 // $text-header: $text-light-default;
@@ -56,17 +55,16 @@ $icon-light-active: $white;
 $icon-light-inactive: $white-70;
 
 //// DIVIDERS
-$divider-dark: $black-06;
-$divider-accent: $black-54;
+$divider-dark: rgba($darkblue, .12);
+$divider-accent: $peerio-teal;
 
 //// INPUTS
 $input-inactive: $white-70;
 $input-border: $black-38;
 
-$background-list: $black-03;
-
-//Whitelabel
-$badgeColor: $black; //$darkblue;
-$badgeBgColor: $color-confirmation; //$peerio-blue;
-$unreadColor: $white; //$darkblue;
-$hoverBg: rgba($color-brand-2, .15) //rgba($white, .15);
+// WHITELABEL
+$background-list: $darkblue;
+$badgeColor: $darkblue;
+$badgeBgColor: $peerio-blue;
+$unreadColor: $darkblue;
+$hoverBg: rgba($white, .15);

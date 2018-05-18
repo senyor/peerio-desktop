@@ -45,8 +45,6 @@ $text-dark-hint: $black-38;
 $text-light-default: $white;
 $text-light-inactive: $white-70;
 $text-light-disabled: $white-38;
-$text-header: rgba($black, .87);
-// $text-header: $text-light-default;
 
 // Icons
 $icon-dark-active: $black-54;
@@ -63,6 +61,7 @@ $input-inactive: $white-70;
 $input-border: $black-38;
 
 // WHITELABEL
+$text-header: rgba($black, .87);
 $background-list: $darkblue;
 $badgeColor: $darkblue;
 $badgeBgColor: $peerio-blue;

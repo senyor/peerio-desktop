@@ -323,38 +323,37 @@ class UserPicker extends React.Component {
                                 </div>
                             }
                         </div>
-                        <div className="user-list-container">
-                            {this.showSearchError &&
-                                <div className="user-search-error-container">
-                                    <div className="user-search-error">
-                                        <div className="search-error-text">
-                                            <MaterialIcon icon="help_outline" />
-                                            {this.suggestInviteEmail &&
-                                                <T k="title_inviteContactByEmail">
-                                                    {{ email: this.suggestInviteEmail }}
-                                                </T>
-                                            }
-                                            {this.showNotFoundError && !this.suggestInviteEmail &&
-                                                <T k="error_userNotFoundTryEmail" tag="div">
-                                                    {{ user: this.userNotFound }}
-                                                </T>
-                                            }
-                                            {this.userAlreadyAdded &&
-                                                <T k="error_userAlreadyAdded" tag="div">
-                                                    {{ user: this.userAlreadyAdded }}
-                                                </T>
-                                            }
-                                        </div>
+                        {this.showSearchError &&
+                            <div className="user-search-error-container">
+                                <div className="user-search-error">
+                                    <div className="search-error-text">
+                                        <MaterialIcon icon="help_outline" />
                                         {this.suggestInviteEmail &&
-                                            <Button
-                                                onClick={this.invite}
-                                                label={t('button_send')}
-                                                theme="affirmative"
-                                            />
+                                            <T k="title_inviteContactByEmail">
+                                                {{ email: this.suggestInviteEmail }}
+                                            </T>
+                                        }
+                                        {this.showNotFoundError && !this.suggestInviteEmail &&
+                                            <T k="error_userNotFoundTryEmail" tag="div">
+                                                {{ user: this.userNotFound }}
+                                            </T>
+                                        }
+                                        {this.userAlreadyAdded &&
+                                            <T k="error_userAlreadyAdded" tag="div">
+                                                {{ user: this.userAlreadyAdded }}
+                                            </T>
                                         }
                                     </div>
+                                    {this.suggestInviteEmail &&
+                                        <Button
+                                            onClick={this.invite}
+                                            label={t('button_send')}
+                                        />
+                                    }
                                 </div>
-                            }
+                            </div>
+                        }
+                        <div className="user-list-container">
                             <List theme="large" clickable>
                                 {this.foundContact && this.renderList(null, [this.foundContact])}
                                 {!this.foundContact

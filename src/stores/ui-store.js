@@ -100,7 +100,7 @@ class UIStore {
             async (deleted) => {
                 if (!deleted) return;
                 await autologin.disable();
-                await User.current.clearFromTinyDb();
+                // await User.current.clearFromTinyDb();
                 appControl.relaunch();
             });
 

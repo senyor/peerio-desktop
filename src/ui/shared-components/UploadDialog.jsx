@@ -15,7 +15,7 @@ class UploadDialog extends React.Component {
         deactivate()    function    deactivate this dialog
         files           array       files that are being uploaded
     */
-    @action componentWillMount() {
+    componentWillMount() {
         this.targetChat = chatStore.activeChat;
         this.previewNextFile();
     }
@@ -28,7 +28,6 @@ class UploadDialog extends React.Component {
     // if we selected a contact in our list, we should
     // find an existing chat with them or start a new one
     @observable targetContact = null;
-
     /**
      * Multiple files may be shared
      */

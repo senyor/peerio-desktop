@@ -9,7 +9,7 @@ const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
 const ZeroScreen = require('./components/ZeroScreen');
-const { pickLocalFiles, getListOfFiles, selectFolder, pickSavePath } = require('~/helpers/file');
+const { pickLocalFiles, getFileTree, selectFolder, pickSavePath } = require('~/helpers/file');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const MoveFileDialog = require('./components/MoveFileDialog');
@@ -237,14 +237,16 @@ class Files extends React.Component {
     async handleUpload() {
         const paths = await pickLocalFiles();
         if (!paths || !paths.length) return;
-        const list = getListOfFiles(paths);
-        if (!list.success.length) return;
-        await Promise.all(list.success.map(path => {
-            return fileStore.upload(
-                path, null,
-                fileStore.folderStore.currentFolder
-            );
-        }));
+        const trees = paths.map(getFileTree);
+        await Promise.map(trees, tree => {
+            if (typeof tree === 'string') {
+                return fileStore.upload(
+                    tree, null,
+                    fileStore.folderStore.currentFolder
+                );
+            }
+            return fileStore.uploadFolder(tree, fileStore.folderStore.currentFolder);
+        });
     }
 
     toggleSelectAll = ev => {

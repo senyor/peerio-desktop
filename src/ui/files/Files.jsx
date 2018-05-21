@@ -307,7 +307,8 @@ class Files extends React.Component {
             {
                 label: t('button_share'),
                 icon: 'person_add',
-                onClick: fileStore.bulk.share
+                onClick: fileStore.bulk.share,
+                disabled: !fileStore.bulk.canShare
             },
             {
                 label: t('button_download'),

@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { User, fileStore } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { Dialog, ProgressBar } = require('~/peer-ui');
+const { Button, Dialog, ProgressBar } = require('~/peer-ui');
 const EmojiImage = require('~/ui/emoji/Image');
 const electron = require('electron').remote;
 const fs = require('fs');
@@ -64,10 +64,6 @@ class MigrationDialog extends React.Component {
     async saveFile(filePath) {
         if (!filePath) return;
         fs.writeFileSync(filePath, await fileStore.migration.getLegacySharedFilesText());
-    }
-
-    textParser = {
-        download: text => <a className="clickable" onClick={this.downloadFile}>{text}</a>
     }
 
     @observable count = -1;
@@ -148,7 +144,13 @@ class MigrationDialog extends React.Component {
                         <T k="title_upgradeFileSystemDescription1" tag="p" />
                         <T k="title_upgradeFileSystemDescription2" tag="p" />
                         {fileStore.migration.hasLegacySharedFiles
-                            ? <T k="title_upgradeFileSystemDescription3" tag="p">{this.textParser}</T>
+                            ? (<p>
+                                <T k="title_upgradeFileSystemDescription3a" />
+                                <Button theme="link" onClick={this.downloadFile}>
+                                    <T k="title_upgradeFileSystemLink" />
+                                </Button>
+                                <T k="title_upgradeFileSystemDescription3b" />
+                            </p>)
                             : null
                         }
                     </div>

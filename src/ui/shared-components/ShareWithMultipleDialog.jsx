@@ -22,23 +22,44 @@ class ShareWithMultipleDialog extends React.Component {
         this.query = newVal;
     }
 
+    filterExisting = (c) => {
+        return !this.props.existingUsers.find(u => u.username === c.username);
+    }
     @computed get contacts() {
-        return contactStore
+        const selectedUsernames = this.selectedUsers.keys();
+        let ret = contactStore
             .filter(this.query, null, true)
             .filter(c => !c.isDeleted)
             .filter(c => c.username !== User.current.username)
             .sort((c1, c2) => c1.username.localeCompare(c2.username));
+
+        if (this.props.existingUsers && this.props.existingUsers.length > 0) {
+            ret = ret.filter(this.filterExisting);
+        }
+
+
+        selectedUsernames.forEach(username => {
+            if (!ret.find(c => c.username === username)) {
+                ret.push(this.selectedUsers.get(username));
+            }
+        });
+        return ret;
     }
 
     @action.bound async onContactClick(ev) {
         const contact = await getContactByEvent(ev);
-        this.selectedUsers.set(contact.username, contact);
+        if (this.selectedUsers.has(contact.username)) {
+            this.selectedUsers.delete(contact.username);
+        } else {
+            this.selectedUsers.set(contact.username, contact);
+        }
     }
 
     renderContact = (c) => {
         return (
             <div data-username={c.username} key={c.username}>
                 <ListItem
+                    leftIcon={this.selectedUsers.has(c.username) ? 'check_box' : 'check_box_outline_blank'}
                     leftContent={<Avatar key="a" contact={c} size="small" />}
                     onClick={this.onContactClick}>
                     <span className="full-name">{c.fullName}</span>
@@ -59,6 +80,7 @@ class ShareWithMultipleDialog extends React.Component {
         this.resolve(null);
         this.resolve = null;
         this.query = '';
+        this.selectedUsers.clear();
     }
 
     @action.bound share() {
@@ -70,10 +92,10 @@ class ShareWithMultipleDialog extends React.Component {
     }
 
     get sharedWithBlock() {
-        return this.selectedUsers.keys().map(username => (
+        return this.props.existingUsers.map(c => (
             <Avatar
-                key={username}
-                username={username}
+                key={c.username}
+                username={c.username}
                 size="tiny"
                 clickable
                 tooltip
@@ -86,7 +108,7 @@ class ShareWithMultipleDialog extends React.Component {
     }
 
     get usersSelected() {
-        return this.selectedUsers.keys().length;
+        return this.selectedUsers.size;
     }
 
     setModifyShareDialogRef = (ref) => { this.modifyShareDialog = ref; };
@@ -100,7 +122,8 @@ class ShareWithMultipleDialog extends React.Component {
 
         return (
             <div>
-                <ModifyShareDialog ref={this.setModifyShareDialogRef} contacts={this.selectedUsers.values()} />
+                <ModifyShareDialog ref={this.setModifyShareDialogRef} contacts={this.props.existingUsers}
+                    getFileCount={this.props.getFileCount} onRemove={this.props.onRemove} owner={this.props.owner} />
                 <Dialog active noAnimation
                     className="share-with-dialog share-folder"
                     actions={dialogActions}
@@ -112,7 +135,8 @@ class ShareWithMultipleDialog extends React.Component {
                             <div className="chip-wrapper">
                                 <Input
                                     placeholder={t('title_userSearch')}
-                                    value={this.query} onChange={this.handleTextChange}
+                                    value={this.query}
+                                    onChange={this.handleTextChange}
                                     onKeyDown={this.handleKeyDown} />
                             </div>
                         </div>
@@ -127,7 +151,7 @@ class ShareWithMultipleDialog extends React.Component {
                                 </List>
                             </div>
                         </div>
-                        {this.usersSelected ?
+                        {this.props.existingUsers && this.props.existingUsers.length ?
                             <div className="receipt-wrapper">
                                 <Button label={t('title_viewSharedWith')} onClick={this.modifySharedWith} />
                                 {this.sharedWithBlock}

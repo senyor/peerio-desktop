@@ -45,8 +45,7 @@ class ModifyShareDialog extends React.Component {
     render() {
         if (!this.visible) return false;
         const dialogActions = [
-            { label: t('button_cancel'), onClick: this.close },
-            { label: t('button_save'), onClick: this.close }
+            { label: t('button_close'), onClick: this.close }
         ];
 
         return (
@@ -60,11 +59,14 @@ class ModifyShareDialog extends React.Component {
                         <div className="list-dms-container">
                             <div className="p-list-heading">
                                 <T k="title_contacts" />
-                            &nbsp;({this.contacts.length})
+                                &nbsp;({this.contacts.length})
                             </div>
                             <List className="list-chats list-dms">
                                 {this.contacts.map(c => {
-                                    return <ModifyShareListItem key={c.username} contact={c} />;
+                                    return (<ModifyShareListItem key={c.username}
+                                        isOwner={this.props.owner === c.username}
+                                        contact={c} getFileCount={this.props.getFileCount}
+                                        onRemove={this.props.onRemove} />);
                                 })}
                             </List>
                         </div>
@@ -86,8 +88,8 @@ class ModifyShareListItem extends ListItem {
         this.isClicked = true;
     }
 
-    @action.bound removeUser() {
-        console.log('remove user');
+    @action.bound handleRemove() {
+        this.props.onRemove(this.props.contact.username);
     }
 
     render() {
@@ -102,8 +104,12 @@ class ModifyShareListItem extends ListItem {
                 leftContent={<Avatar key="a" contact={c} size="small" />}
                 rightContent={
                     this.isClicked
-                        ? <a className="clickable" onClick={this.removeUser}>{t('button_remove')}</a>
-                        : <Button icon="remove_circle_outline" onClick={this.triggerRemoveUserWarning} />
+                        ? <a className="clickable" onClick={this.handleRemove}>{t('button_remove')}</a>
+                        : (
+                            this.props.isOwner
+                                ? <T k="title_owner" className="badge-old-version" />
+                                : <Button icon="remove_circle_outline" onClick={this.triggerRemoveUserWarning} />
+                        )
                 }>
                 <div>
                     <span className="full-name">{c.fullName}</span>
@@ -112,7 +118,7 @@ class ModifyShareListItem extends ListItem {
 
                 {this.isClicked
                     ? <T k="title_unshareUserWarning" tag="div" className="remove-user-warning">
-                        {{ fileCount: '28', user: c.firstName }}
+                        {{ fileCount: this.props.getFileCount(c.username), user: c.firstName }}
                     </T>
                     : null
                 }

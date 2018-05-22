@@ -26,6 +26,8 @@ class Files extends React.Component {
         super();
         this.handleUpload = this.handleUpload.bind(this);
     }
+    // to pass to shareWithMultipleDialog
+    @observable.ref currentDialogFolder;
 
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
@@ -100,9 +102,19 @@ class Files extends React.Component {
     @action.bound async shareFolder(ev) {
         // IMPORTANT: synthetic events are reused, so cache folder before await
         const folder = getFolderByEvent(ev);
+        if (folder.isShared) {
+            this.currentDialogFolder = folder;
+        } else {
+            this.currentDialogFolder = null;
+        }
+
         const contacts = await this.shareWithMultipleDialog.show();
         if (!contacts) return;
-        await volumeStore.shareFolder(folder, contacts);
+        if (folder.isShared) {
+            folder.addParticipants(contacts);
+        } else {
+            await volumeStore.shareFolder(folder, contacts);
+        }
     }
 
     @action.bound async shareFile(ev) {
@@ -415,6 +427,15 @@ class Files extends React.Component {
     @action.bound openLimitedActions() {
         this.limitedActionsDialog.show();
     }
+    @action.bound getVolumeUserFileCount(username) {
+        if (!this.currentDialogFolder) return null;
+        return this.currentDialogFolder.store.getFilesSharedBy(username).length;
+    }
+
+    @action.bound removeVolumeUser(username) {
+        if (!this.currentDialogFolder) return;
+        this.currentDialogFolder.removeParticipant(username);
+    }
 
     refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
     refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
@@ -554,7 +575,11 @@ class Files extends React.Component {
                 {this.triggerRenameFolderPopup && this.renameFolderPopup}
                 <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
                 <ConfirmFolderDeleteDialog ref={this.refConfirmFolderDeleteDialog} />
-                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
+                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog}
+                    existingUsers={this.currentDialogFolder && this.currentDialogFolder.otherParticipants}
+                    getFileCount={this.getVolumeUserFileCount}
+                    owner={this.currentDialogFolder && this.currentDialogFolder.owner}
+                    onRemove={this.removeVolumeUser} />
             </div>
         );
     }

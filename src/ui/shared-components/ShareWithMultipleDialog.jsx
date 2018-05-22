@@ -59,12 +59,15 @@ class ShareWithMultipleDialog extends React.Component {
         this.resolve(null);
         this.resolve = null;
         fileStore.clearSelection();
+        this.query = '';
     }
 
     @action.bound share() {
         this.visible = false;
         this.resolve(this.selectedUsers.values());
         this.resolve = null;
+        fileStore.clearSelection();
+        this.query = '';
     }
 
     get sharedWithBlock() {

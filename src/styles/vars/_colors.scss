@@ -35,6 +35,9 @@ $background-hover-default-solid: #f2f2f5;
 $background-selected: rgba($peerio-blue, .15);
 $background-neutral: $black-12;
 $background-overlay: rgba($darkblue, .3);
+$hover-bg: rgba($white, .15);
+$background-list: $darkblue;
+$badge-bg-color: $peerio-blue;
 
 //// FONT COLORS
 // Text
@@ -45,6 +48,9 @@ $text-dark-hint: $black-38;
 $text-light-default: $white;
 $text-light-inactive: $white-70;
 $text-light-disabled: $white-38;
+$text-header: $text-light-default;
+$text-unread-color: $darkblue;
+$text-badge-color: $darkblue;
 
 // Icons
 $icon-dark-active: $black-54;
@@ -59,11 +65,3 @@ $divider-accent: $peerio-teal;
 //// INPUTS
 $input-inactive: $white-70;
 $input-border: $black-38;
-
-// WHITELABEL
-$text-header: $text-light-default;
-$background-list: $darkblue;
-$badge-color: $darkblue;
-$badge-bg-color: $peerio-blue;
-$unread-color: $darkblue;
-$hover-bg: rgba($white, .15);

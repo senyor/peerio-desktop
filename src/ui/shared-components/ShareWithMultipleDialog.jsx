@@ -58,7 +58,6 @@ class ShareWithMultipleDialog extends React.Component {
         this.visible = false;
         this.resolve(null);
         this.resolve = null;
-        fileStore.clearSelection();
         this.query = '';
     }
 

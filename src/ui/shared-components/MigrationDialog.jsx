@@ -144,13 +144,13 @@ class MigrationDialog extends React.Component {
                         <T k="title_upgradeFileSystemDescription1" tag="p" />
                         <T k="title_upgradeFileSystemDescription2" tag="p" />
                         {fileStore.migration.hasLegacySharedFiles
-                            ? (<p>
+                            ? <p>
                                 <T k="title_upgradeFileSystemDescription3a" />
                                 <Button theme="link" onClick={this.downloadFile}>
                                     <T k="title_upgradeFileSystemLink" />
                                 </Button>
                                 <T k="title_upgradeFileSystemDescription3b" />
-                            </p>)
+                            </p>
                             : null
                         }
                     </div>

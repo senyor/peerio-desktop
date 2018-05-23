@@ -84,10 +84,13 @@ class InlineFile extends React.Component {
         downloadFile(this.props.file);
     }
 
-    deleteFile = () => {
+    deleteFile = async () => {
         const id = this.props.file.fileId;
-        const file = fileStore.getById(id);
-        if (!file) return;
+        let file = fileStore.getById(id);
+        if (!file) {
+            file = await fileStore.loadKegByFileId(id);
+            if (!file) return;
+        }
         let msg = t('title_confirmRemoveFilename', { name: file.name });
         if (file.shared) {
             msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;

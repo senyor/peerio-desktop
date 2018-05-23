@@ -100,8 +100,12 @@ class MigrationDialog extends React.Component {
 
         return (
             <div className="update-in-progress">
-                <ProgressBar mode="determinate" value={fileStore.migration.progress} max={100} />
-                <div className="percent">{fileStore.migration.progress}%</div>
+                <ProgressBar
+                    mode="determinate"
+                    value={fileStore.migration.progress ? fileStore.migration.progress : 1}
+                    max={100}
+                />
+                <div className="percent">{fileStore.migration.progress ? fileStore.migration.progress : 1}%</div>
                 <p className="text">
                     {this.count >= 0
                         ? this.currentMessage

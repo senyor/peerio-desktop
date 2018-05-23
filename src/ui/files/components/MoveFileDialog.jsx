@@ -12,7 +12,6 @@ const ShareConfirmDialog = require('./ShareConfirmDialog');
 
 @observer
 class MoveFileDialog extends React.Component {
-    @observable visible = false;
     @observable selectedFolder = null;
     @observable currentFolder = null;
 

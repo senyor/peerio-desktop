@@ -19,7 +19,7 @@
   // Active/selected colouring
   &.active {
     font-weight: $font-weight-semibold;
-    background: $peerio-purple;
+    background: $background-highlighted;
 
     .content {
       color: $text-light-default;

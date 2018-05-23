@@ -12,6 +12,7 @@ const ShareConfirmDialog = require('./ShareConfirmDialog');
 
 @observer
 class MoveFileDialog extends React.Component {
+    @observable shareConfirmDialogVisible = false;
     @observable selectedFolder = null;
     @observable currentFolder = null;
 
@@ -22,7 +23,6 @@ class MoveFileDialog extends React.Component {
     componentWillMount() {
         this.currentFolder = this.props.currentFolder;
     }
-
 
     @action.bound selectionChange(ev) {
         this.selectedFolder = getFolderByEvent(ev);
@@ -36,7 +36,10 @@ class MoveFileDialog extends React.Component {
         const { file, folder, onHide } = this.props;
         const target = this.selectedFolder || this.currentFolder;
 
+        this.shareConfirmDialogVisible = true;
+
         if (target.isShared && !await this.shareConfirmDialog.check()) {
+            this.shareConfirmDialogVisible = false;
             return;
         }
 
@@ -46,6 +49,7 @@ class MoveFileDialog extends React.Component {
         } else {
             fileStore.bulk.moveOne(file || folder, target);
         }
+
         onHide();
     }
 
@@ -115,7 +119,7 @@ class MoveFileDialog extends React.Component {
                 <Dialog
                     actions={actions}
                     onCancel={onHide}
-                    active={visible}
+                    active={visible && !this.shareConfirmDialogVisible}
                     title={t('title_moveFileTo')}
                     className="move-file-dialog">
                     <Search

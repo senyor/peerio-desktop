@@ -77,8 +77,8 @@
     }
 
     &:disabled {
-      color: $text-light-disabled;
-      background-color: transparent;
+      color: $text-light-default;
+      background-color: $background-disabled;
     }
   }
 

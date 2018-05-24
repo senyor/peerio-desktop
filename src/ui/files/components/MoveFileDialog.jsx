@@ -12,7 +12,6 @@ const ShareConfirmDialog = require('./ShareConfirmDialog');
 
 @observer
 class MoveFileDialog extends React.Component {
-    @observable shareConfirmDialogVisible = false;
     @observable selectedFolder = null;
     @observable currentFolder = null;
 
@@ -36,11 +35,15 @@ class MoveFileDialog extends React.Component {
         const { file, folder, onHide } = this.props;
         const target = this.selectedFolder || this.currentFolder;
 
-        this.shareConfirmDialogVisible = true;
-
-        if (target.isShared && !await this.shareConfirmDialog.check()) {
-            this.shareConfirmDialogVisible = false;
-            return;
+        if (target.isShared) {
+            // we hide folder selection dialog immediately to prevent flicker
+            this.dialog.hideWithoutAnimation();
+            if (!await this.shareConfirmDialog.check()) {
+                // if user pressed cancel on confirmation, we show our dialog immediately
+                // to prevent flicker again
+                this.dialog.showWithoutAnimation();
+                return;
+            }
         }
 
         // TODO: needs refactoring
@@ -102,6 +105,8 @@ class MoveFileDialog extends React.Component {
 
     refShareConfirmDialog = ref => { this.shareConfirmDialog = ref; };
 
+    refDialog = ref => { this.dialog = ref; };
+
     render() {
         const { onHide, visible } = this.props;
 
@@ -117,9 +122,10 @@ class MoveFileDialog extends React.Component {
             <div>
                 <ShareConfirmDialog ref={this.refShareConfirmDialog} />
                 <Dialog
+                    ref={this.refDialog}
                     actions={actions}
                     onCancel={onHide}
-                    active={visible && !this.shareConfirmDialogVisible}
+                    active={visible}
                     title={t('title_moveFileTo')}
                     className="move-file-dialog">
                     <Search

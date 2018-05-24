@@ -96,6 +96,8 @@ class Files extends React.Component {
     @action.bound hideMoveFolder() {
         this.moveFolderVisible = false;
         this.folderToMove = null;
+        // to re-enable sandwich action bars
+        fileStore.clearSelection();
         fileStore.folderFilter = '';
     }
 
@@ -562,15 +564,13 @@ class Files extends React.Component {
                         <div className="file-bottom-filler" />
                     </div>
                 </div>
-                {this.moveFolderVisible &&
-                    <MoveFileDialog
-                        handleMove={fileStore.bulk.move}
-                        folder={this.folderToMove}
-                        currentFolder={currentFolder.parent || currentFolder}
-                        visible={this.moveFolderVisible}
-                        onHide={this.hideMoveFolder}
-                    />
-                }
+                <MoveFileDialog
+                    handleMove={fileStore.bulk.move}
+                    folder={this.folderToMove}
+                    currentFolder={currentFolder.parent || currentFolder}
+                    visible={this.moveFolderVisible}
+                    onHide={this.hideMoveFolder}
+                />
                 {this.triggerAddFolderPopup && this.addFolderPopup}
                 {this.triggerRenameFolderPopup && this.renameFolderPopup}
                 <LimitedActionsDialog ref={this.refLimitedActionsDialog} />

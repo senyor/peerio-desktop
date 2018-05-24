@@ -53,6 +53,24 @@ class Dialog extends React.Component {
         window.removeEventListener('keydown', this.handleTabKey);
     }
 
+    /**
+     * Renders and shows dialog immediately
+     * Note: be careful when using it together with "visible" property
+     */
+    @action.bound showWithoutAnimation() {
+        this.dialogRendered = true;
+        this.dialogVisible = true;
+    }
+
+    /**
+     * Unrenders dialog immediately
+     * Note: be careful when using it together with "visible" property
+     */
+    @action.bound hideWithoutAnimation() {
+        this.dialogRendered = false;
+        this.dialogVisible = false;
+    }
+
     @action.bound setActive() {
         if (this.unmountTimeout) {
             clearTimeout(this.unmountTimeout);

@@ -6,7 +6,8 @@ const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { contactStore, systemMessages, User } = require('peerio-icebear');
-const { Avatar, Button, MaterialIcon, Menu, MenuItem } = require('peer-ui');
+const { Button, MaterialIcon, Menu, MenuItem } = require('peer-ui');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const { time } = require('~/helpers/formatter');
 const { chatSchema, Renderer } = require('~/helpers/chat/prosemirror/chat-schema');
 const urls = require('~/config').translator.urlMap;
@@ -168,11 +169,10 @@ class Message extends React.Component {
         for (let i = 0; i < limit && m.receipts.length > i; i++) {
             const r = m.receipts[i];
             if (r.receipt.signatureError) continue;
-            renderMe.push(<Avatar
+            renderMe.push(<AvatarWithPopup
                 key={r.username}
                 contact={contactStore.getContact(r.username)}
                 size="tiny"
-                clickable
                 tooltip
             />);
         }
@@ -210,7 +210,7 @@ class Message extends React.Component {
                 <div className="message-content-wrapper-inner">
                     {this.props.light
                         ? <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div>
-                        : <Avatar contact={m.sender} size="medium" tooltip clickable />}
+                        : <AvatarWithPopup contact={m.sender} size="medium" tooltip />}
                     <div className="message-content">
                         {
                             this.props.light

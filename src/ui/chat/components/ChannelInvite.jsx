@@ -9,7 +9,8 @@ const urls = require('~/config').translator.urlMap;
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { Avatar, Button, Divider } = require('peer-ui');
+const { Button, Divider } = require('peer-ui');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const routerStore = require('~/stores/router-store');
 const { ProgressBar } = require('peer-ui');
 const EmojiImage = require('~/ui/emoji/Image');
@@ -77,7 +78,7 @@ class ChannelInvite extends React.Component {
             const participant = participants[i];
 
             if (participant !== username && participant !== User.current.username) {
-                participantsToShow.push(<Avatar key={participant} username={participant} clickable tooltip />);
+                participantsToShow.push(<AvatarWithPopup key={participant} username={participant} tooltip />);
             }
         }
 
@@ -153,7 +154,7 @@ class ChannelInvite extends React.Component {
                                 <span className="host-username">{contact.fullName}</span>
                             </span>
                             <div className="avatars">
-                                <Avatar contact={contact} clickable tooltip />
+                                <AvatarWithPopup contact={contact} tooltip />
                             </div>
                         </div>
                         {this.renderParticipants}

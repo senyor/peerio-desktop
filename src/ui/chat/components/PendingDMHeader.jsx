@@ -2,7 +2,7 @@ const React = require('react');
 
 const T = require('~/ui/shared-components/T');
 
-const { Avatar } = require('peer-ui');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const EmojiImage = require('~/ui/emoji/Image');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 
@@ -22,7 +22,7 @@ class PendingDMHeader extends React.Component {
                 </T>
 
                 <div className="user-profile-container">
-                    <Avatar username={this.props.contact.username} size="large" clickable />
+                    <AvatarWithPopup username={this.props.contact.username} size="large" />
                     <div className="username">@{this.props.contact.username}</div>
                 </div>
 

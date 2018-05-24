@@ -111,6 +111,7 @@
     "node-sass": "4.7.2",
     "npm-run-all": "4.1.2",
     "opt-cli": "1.6.0",
+    "peer-ui": "github:PeerioTechnologies/ui-library#master",
     "react-addons-perf": "15.4.2",
     "require-global-node-module": "1.1.0",
     "spectron": "3.8.0",
@@ -119,7 +120,6 @@
     "stylelint-config-standard": "18.2.0",
     "stylelint-order": "0.8.1",
     "stylelint-scss": "2.5.0",
-    "peer-ui": "github:PeerioTechnologies/ui-library#master",
     "validate-commit-msg": "2.14.0",
     "writefile": "0.2.8"
   },

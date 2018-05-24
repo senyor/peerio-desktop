@@ -30,8 +30,11 @@ class AvatarWithPopup extends React.Component {
         const avatar = (
             <Avatar
                 key={`avatarwithpopup-avatar-${this.props.contact}`}
+                contact={this.props.contact}
+                size={this.props.size}
+                tooltip={this.props.tooltip}
+                clickable
                 onClick={this.openPopup}
-                {...this.props}
             />
         );
 

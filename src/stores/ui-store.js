@@ -9,8 +9,6 @@ const appControl = require('~/helpers/app-control');
  * Every time you remove something from here - you're getting smarter.
  */
 class UIStore {
-    @observable contactDialogUsername;
-
     // Message object to show in sidebar when clicking on receipts
     @observable selectedMessage;
 

@@ -1,5 +1,4 @@
 const React = require('react');
-const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Avatar, Button, ProgressBar } = require('peer-ui');
 const { contactStore, chatStore } = require('peerio-icebear');
@@ -9,13 +8,8 @@ const T = require('~/ui/shared-components/T');
 
 @observer
 class ContactProfile extends React.Component {
-    @observable contact;
-    componentWillMount() {
-        this.contact = contactStore.getContact(this.props.username);
-    }
-    componentWillReceiveProps(next) {
-        this.contact = contactStore.getContact(next.username);
-    }
+    contact = this.props.contact;
+
     startChat = () => {
         chatStore.startChat([this.contact]);
         routerStore.navigateTo(routerStore.ROUTES.chats);

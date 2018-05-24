@@ -17,7 +17,7 @@
 @import './vars/_typography';
 
 // PeerUI components
-@import '../ui-library/_all';
+@import 'node_modules/peer-ui/src/components/_all';
 
 // Components that get reused between views
 @import './components/grid';

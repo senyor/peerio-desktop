@@ -10,7 +10,7 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { fileStore, chatStore, clientApp } = require('peerio-icebear');
-const { Button, Menu, MenuItem } = require('~/peer-ui');
+const { Button, Menu, MenuItem } = require('peer-ui');
 
 const FilePicker = require('~/ui/files/components/FilePicker');
 const Snackbar = require('~/ui/shared-components/Snackbar');

@@ -1,7 +1,7 @@
 const React = require('react');
 const { action, computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('~/peer-ui');
+const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('peer-ui');
 const MessageInput = require('./components/MessageInput');
 const MessageList = require('./components/MessageList');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
@@ -18,7 +18,7 @@ const ChatNameEditor = require('./components/ChatNameEditor');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const PendingDM = require('./components/PendingDM');
-const { Dialog } = require('~/peer-ui');
+const { Dialog } = require('peer-ui');
 
 @observer
 class ChatView extends React.Component {

@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Avatar, List, ListHeading, ListItem, Menu, MenuItem } = require('~/peer-ui');
+const { Avatar, List, ListHeading, ListItem, Menu, MenuItem } = require('peer-ui');
 const { chatStore, contactStore, chatInviteStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');

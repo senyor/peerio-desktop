@@ -119,6 +119,7 @@
     "stylelint-config-standard": "18.2.0",
     "stylelint-order": "0.8.1",
     "stylelint-scss": "2.5.0",
+    "peer-ui": "github:PeerioTechnologies/ui-library#master",
     "validate-commit-msg": "2.14.0",
     "writefile": "0.2.8"
   },

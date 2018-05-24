@@ -9,7 +9,7 @@ const css = require('classnames');
 const { t } = require('peerio-translator');
 const uiStore = require('~/stores/ui-store');
 
-const { Checkbox, ProgressBar } = require('~/peer-ui');
+const { Checkbox, ProgressBar } = require('peer-ui');
 
 const FileActions = require('./FileActions');
 const FileLoading = require('./FileLoading');

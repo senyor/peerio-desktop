@@ -9,9 +9,9 @@ const urls = require('~/config').translator.urlMap;
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { Avatar, Button, Divider } = require('~/peer-ui');
+const { Avatar, Button, Divider } = require('peer-ui');
 const routerStore = require('~/stores/router-store');
-const { ProgressBar } = require('~/peer-ui');
+const { ProgressBar } = require('peer-ui');
 const EmojiImage = require('~/ui/emoji/Image');
 
 @observer

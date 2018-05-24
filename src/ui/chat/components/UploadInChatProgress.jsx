@@ -2,7 +2,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { MaterialIcon, Button, ProgressBar } = require('~/peer-ui');
+const { MaterialIcon, Button, ProgressBar } = require('peer-ui');
 
 @observer
 class UploadInChatProgress extends React.Component {

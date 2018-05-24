@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button, Dialog, Input } = require('~/peer-ui');
+const { Button, Dialog, Input } = require('peer-ui');
 const { observer } = require('mobx-react');
 const { observable, action, computed } = require('mobx');
 const { fileStore, clientApp } = require('peerio-icebear');

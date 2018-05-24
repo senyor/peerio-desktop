@@ -1,6 +1,6 @@
 const React = require('react');
 const T = require('~/ui/shared-components/T');
-const { MaterialIcon } = require('~/peer-ui');
+const { MaterialIcon } = require('peer-ui');
 const css = require('classnames');
 
 class IdentityVerificationNotice extends React.Component {

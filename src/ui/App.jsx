@@ -1,7 +1,7 @@
 const React = require('react');
 const AppNav = require('~/ui/AppNav');
 const uiStore = require('~/stores/ui-store');
-const { Dialog, ProgressBar } = require('~/peer-ui');
+const { Dialog, ProgressBar } = require('peer-ui');
 const { t } = require('peerio-translator');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { observer } = require('mobx-react');

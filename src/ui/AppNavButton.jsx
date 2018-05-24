@@ -1,5 +1,5 @@
 const React = require('react');
-const { Button } = require('~/peer-ui');
+const { Button } = require('peer-ui');
 const css = require('classnames');
 const { observer } = require('mobx-react');
 

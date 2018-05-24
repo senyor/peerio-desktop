@@ -2,7 +2,7 @@ const React = require('react');
 
 const T = require('~/ui/shared-components/T');
 
-const { Avatar } = require('~/peer-ui');
+const { Avatar } = require('peer-ui');
 const EmojiImage = require('~/ui/emoji/Image');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 

@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const FolderActions = require('./FolderActions');
-const { MaterialIcon } = require('~/peer-ui');
+const { MaterialIcon } = require('peer-ui');
 const { t } = require('peerio-translator');
 
 @observer

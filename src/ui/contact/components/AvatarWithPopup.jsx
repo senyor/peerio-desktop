@@ -15,8 +15,8 @@ class AvatarWithPopup extends React.Component {
     render() {
         const popup = (
             <Dialog
-                active={this.popupVisible}
                 key={`avatarwithpopup-dialog-${this.props.contact}`}
+                active={this.popupVisible}
                 onCancel={this.closePopup}
                 actions={[{ label: t('button_ok'), onClick: () => this.closePopup() }]}
             >

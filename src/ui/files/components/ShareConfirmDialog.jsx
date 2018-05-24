@@ -46,7 +46,6 @@ class ShareConfirmDialog extends React.Component {
                 ref={this.dialogRef}
                 actions={shareConfirmActions}
                 onCancel={this.cancel}
-                rendered={this.rendered}
                 title={t('title_moveToSharedFolder')}
                 className="move-file-confirm-share">
                 <T k="title_moveToSharedFolderDescription" />

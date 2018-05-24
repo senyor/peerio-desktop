@@ -3,7 +3,7 @@ const css = require('classnames');
 const { Button, Checkbox, Dialog, Input, ProgressBar } = require('~/peer-ui');
 const { observer } = require('mobx-react');
 const { observable, action, computed } = require('mobx');
-const { fileStore, volumeStore, clientApp } = require('peerio-icebear');
+const { fileStore, volumeStore, clientApp, chatStore } = require('peerio-icebear');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
@@ -38,12 +38,6 @@ class Files extends React.Component {
 
     componentDidMount() {
         window.addEventListener('resize', this.enqueueCheck, false);
-        // icebear will call this function to get who to share files with
-        fileStore.bulk.shareWithSelector = async (/* items */) => {
-            const contacts = await this.shareWithMultipleDialog.show();
-            return contacts;
-        };
-
         // icebear will call this function to confirm file deletion
         fileStore.bulk.deleteFilesConfirmator = (files, sharedFiles) => {
             let msg = t('title_confirmRemoveFiles', { count: files.length });
@@ -111,7 +105,8 @@ class Files extends React.Component {
         }
 
         const contacts = await this.shareWithMultipleDialog.show();
-        if (!contacts) return;
+        this.currentDialogFolder = null;
+        if (!contacts || !contacts.length) return;
         if (folder.isShared) {
             folder.addParticipants(contacts);
         } else {
@@ -120,10 +115,18 @@ class Files extends React.Component {
     }
 
     @action.bound async shareFile(ev) {
-        fileStore.clearSelection();
         const file = getFileByEvent(ev);
-        file.selected = true;
-        fileStore.bulk.share();
+        const contacts = await this.shareWithMultipleDialog.show();
+        if (!contacts || !contacts.length) return;
+        contacts.forEach(c => chatStore.startChatAndShareFiles([c], file));
+    }
+
+    @action.bound async shareSelected() {
+        const contacts = await this.shareWithMultipleDialog.show();
+        if (!contacts || !contacts.length) return;
+        contacts.forEach(c => chatStore.startChatAndShareFiles([c], fileStore.selectedFiles.slice()));
+        fileStore.selectedFolders.forEach(f => f.canShare && volumeStore.shareFolder(f, contacts));
+        fileStore.clearSelection();
     }
 
     @observable triggerAddFolderPopup = false;
@@ -313,7 +316,7 @@ class Files extends React.Component {
     }
 
     @computed get selectedCount() {
-        return fileStore.getSelectedFiles().length + fileStore.selectedFolders.length;
+        return fileStore.selectedFilesOrFolders.length;
     }
 
     get breadCrumbsHeader() {
@@ -321,7 +324,7 @@ class Files extends React.Component {
             {
                 label: t('button_share'),
                 icon: 'person_add',
-                onClick: fileStore.bulk.share,
+                onClick: this.shareSelected,
                 disabled: !fileStore.bulk.canShare
             },
             {
@@ -429,15 +432,7 @@ class Files extends React.Component {
     @action.bound openLimitedActions() {
         this.limitedActionsDialog.show();
     }
-    @action.bound getVolumeUserFileCount(username) {
-        if (!this.currentDialogFolder) return null;
-        return this.currentDialogFolder.store.getFilesSharedBy(username).length;
-    }
 
-    @action.bound removeVolumeUser(username) {
-        if (!this.currentDialogFolder) return;
-        this.currentDialogFolder.removeParticipant(username);
-    }
 
     refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
     refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
@@ -576,10 +571,7 @@ class Files extends React.Component {
                 <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
                 <ConfirmFolderDeleteDialog ref={this.refConfirmFolderDeleteDialog} />
                 <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog}
-                    existingUsers={this.currentDialogFolder && this.currentDialogFolder.otherParticipants}
-                    getFileCount={this.getVolumeUserFileCount}
-                    owner={this.currentDialogFolder && this.currentDialogFolder.owner}
-                    onRemove={this.removeVolumeUser} />
+                    item={this.currentDialogFolder} />
             </div>
         );
     }

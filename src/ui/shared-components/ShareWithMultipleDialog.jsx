@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
-const { contactStore, fileStore, User } = require('peerio-icebear');
+const { contactStore, User } = require('peerio-icebear');
 const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
@@ -22,8 +22,12 @@ class ShareWithMultipleDialog extends React.Component {
         this.query = newVal;
     }
 
+    get existingUsers() {
+        return this.props.item ? this.props.item.otherParticipants : [];
+    }
+
     filterExisting = (c) => {
-        return !this.props.existingUsers.find(u => u.username === c.username);
+        return !this.existingUsers.find(u => u.username === c.username);
     }
     @computed get contacts() {
         const selectedUsernames = this.selectedUsers.keys();
@@ -33,7 +37,7 @@ class ShareWithMultipleDialog extends React.Component {
             .filter(c => c.username !== User.current.username)
             .sort((c1, c2) => c1.username.localeCompare(c2.username));
 
-        if (this.props.existingUsers && this.props.existingUsers.length > 0) {
+        if (this.existingUsers && this.existingUsers.length > 0) {
             ret = ret.filter(this.filterExisting);
         }
 
@@ -87,12 +91,12 @@ class ShareWithMultipleDialog extends React.Component {
         this.visible = false;
         this.resolve(this.selectedUsers.values());
         this.resolve = null;
-        fileStore.clearSelection();
         this.query = '';
+        this.selectedUsers.clear();
     }
 
     get sharedWithBlock() {
-        return this.props.existingUsers.map(c => (
+        return this.existingUsers.map(c => (
             <Avatar
                 key={c.username}
                 username={c.username}
@@ -119,11 +123,15 @@ class ShareWithMultipleDialog extends React.Component {
             { label: t('button_cancel'), onClick: this.close },
             { label: t('button_share'), onClick: this.share, disabled: !this.usersSelected }
         ];
+        const item = this.props.item;
 
         return (
             <div>
-                <ModifyShareDialog ref={this.setModifyShareDialogRef} contacts={this.props.existingUsers}
-                    getFileCount={this.props.getFileCount} onRemove={this.props.onRemove} owner={this.props.owner} />
+                {
+                    item && item.isFolder
+                        ? <ModifyShareDialog ref={this.setModifyShareDialogRef} folder={item} />
+                        : null
+                }
                 <Dialog active noAnimation
                     className="share-with-dialog share-folder"
                     actions={dialogActions}
@@ -151,7 +159,7 @@ class ShareWithMultipleDialog extends React.Component {
                                 </List>
                             </div>
                         </div>
-                        {this.props.existingUsers && this.props.existingUsers.length ?
+                        {item && item.isFolder && this.existingUsers.length ?
                             <div className="receipt-wrapper">
                                 <Button label={t('title_viewSharedWith')} onClick={this.modifySharedWith} />
                                 {this.sharedWithBlock}

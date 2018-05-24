@@ -64,9 +64,8 @@ class ModifyShareDialog extends React.Component {
                             <List className="list-chats list-dms">
                                 {this.contacts.map(c => {
                                     return (<ModifyShareListItem key={c.username}
-                                        isOwner={this.props.owner === c.username}
-                                        contact={c} getFileCount={this.props.getFileCount}
-                                        onRemove={this.props.onRemove} />);
+                                        contact={c} folder={this.props.folder}
+                                    />);
                                 })}
                             </List>
                         </div>
@@ -89,7 +88,7 @@ class ModifyShareListItem extends ListItem {
     }
 
     @action.bound handleRemove() {
-        this.props.onRemove(this.props.contact.username);
+        this.props.folder.removeParticipant(this.props.contact.username);
     }
 
     render() {
@@ -106,7 +105,7 @@ class ModifyShareListItem extends ListItem {
                     this.isClicked
                         ? <a className="clickable" onClick={this.handleRemove}>{t('button_remove')}</a>
                         : (
-                            this.props.isOwner
+                            this.props.folder.owner === c.username
                                 ? <T k="title_owner" className="badge-old-version" />
                                 : <Button icon="remove_circle_outline" onClick={this.triggerRemoveUserWarning} />
                         )
@@ -118,7 +117,7 @@ class ModifyShareListItem extends ListItem {
 
                 {this.isClicked
                     ? <T k="title_unshareUserWarning" tag="div" className="remove-user-warning">
-                        {{ fileCount: this.props.getFileCount(c.username), user: c.firstName }}
+                        {{ fileCount: this.props.folder.store.getFilesSharedBy(c.username).length, user: c.firstName }}
                     </T>
                     : null
                 }

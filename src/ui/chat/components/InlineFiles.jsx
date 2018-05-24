@@ -200,7 +200,7 @@ class InlineFile extends React.Component {
                         {this.deleteable &&
                             <Button
                                 caption={t('button_unshare')}
-                                icon="delete"
+                                icon="remove_circle_outline"
                                 onClick={this.unshareFile}
                                 theme="small"
                             />
@@ -272,15 +272,11 @@ class InlineFile extends React.Component {
     }
 
     refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
-    @action.bound share() {
-        fileStore.clearSelection();
-        this.props.file.selected = true;
-        fileStore.bulk.shareWithSelector = async () => {
-            const contacts = await this.shareWithMultipleDialog.show();
-            return contacts;
-        };
-        fileStore.bulk.share();
-    }
+    share = async () => {
+        const contacts = await this.shareWithMultipleDialog.show();
+        if (!contacts || !contacts.length) return;
+        contacts.forEach(c => chatStore.startChatAndShareFiles([c], this.props.file));
+    };
 
     render() {
         const file = this.props.file;

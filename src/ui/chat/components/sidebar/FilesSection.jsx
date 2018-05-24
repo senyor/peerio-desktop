@@ -15,19 +15,16 @@ const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipl
 @observer
 class FilesSection extends React.Component {
     refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
+
     @action.bound async share(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
         const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
         await file.ensureLoaded();
         if (this.isUnmounted || file.deleted) return;
-        fileStore.clearSelection();
-        file.selected = true;
-        fileStore.bulk.shareWithSelector = async () => {
-            const contacts = await this.shareWithMultipleDialog.show();
-            return contacts;
-        };
-        fileStore.bulk.share();
+        const contacts = await this.shareWithMultipleDialog.show();
+        if (!contacts || !contacts.length) return;
+        contacts.forEach(c => chatStore.startChatAndShareFiles([c], file));
     }
 
     componentWillUnmount() {

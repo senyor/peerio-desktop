@@ -1,5 +1,5 @@
 const React = require('react');
-const { observable, action, computed } = require('mobx');
+const { observable, action, computed, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const { Button, Dialog, MaterialIcon } = require('~/peer-ui');
@@ -21,6 +21,13 @@ class MoveFileDialog extends React.Component {
 
     componentWillMount() {
         this.currentFolder = this.props.currentFolder;
+        this.deleteReaction = reaction(() => this.currentFolder.isDeleted, isDeleted => {
+            if (isDeleted) this.currentFolder = fileStore.folderStore.root;
+        });
+    }
+
+    componentWillUnmount() {
+        this.deleteReaction();
     }
 
     @action.bound selectionChange(ev) {

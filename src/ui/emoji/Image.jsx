@@ -8,7 +8,7 @@ const { emojiByCanonicalShortname } = require('~/helpers/chat/emoji');
 class EmojiImage extends React.Component {
     render() {
         return (
-            <div
+            <span
                 className={css(
                     'emoji-image',
                     this.props.size,

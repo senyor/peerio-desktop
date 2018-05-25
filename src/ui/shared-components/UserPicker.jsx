@@ -235,7 +235,7 @@ class UserPicker extends React.Component {
     }
 
     render() {
-        const selectedFiles = fileStore.getSelectedFiles();
+        const selectedFiles = fileStore.selectedFiles;
 
         return (
             <div className="user-picker">

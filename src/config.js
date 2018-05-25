@@ -55,6 +55,7 @@ cfg.nodeLogFolder = path.join(app.getPath('userData'), 'logs');
 if (isDevEnv) {
     try {
         cfg.devAutologin = require('../../autologin.json'); // eslint-disable-line
+        cfg.debug = cfg.devAutologin.debug || cfg.debug;
     } catch (err) {
         // don't care
     }
@@ -65,6 +66,7 @@ if (isDevEnv) {
 if (isDevEnv && process.env.PEERIO_STAGING_SOCKET_SERVER) {
     cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
 }
+cfg.socketServerUrl = 'wss://treetrunks.peerio.com'; // process.env.PEERIO_STAGING_SOCKET_SERVER;
 
 // --- DIAGNOSTIC STARTUP LOG
 try {

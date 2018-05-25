@@ -59,7 +59,8 @@
         "download": "https://peerio.com",
         "learnUrlTracking": "https://peerio.zendesk.com/hc/en-us/articles/115005090766",
         "identityVerification": "https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-",
-        "jitsiLink": "https://jitsi.org/"
+        "jitsiLink": "https://jitsi.org/",
+        "limitedActions": "https://www.peerio.com/blog/posts/new-filesystem/"
       }
     }
   },
@@ -91,9 +92,9 @@
     "prosemirror-transform": "1.0.1",
     "prosemirror-view": "1.0.1",
     "qrcode": "1.2.0",
-    "react": "16.2.0",
+    "react": "16.3.2",
     "react-addons-css-transition-group": "15.6.2",
-    "react-dom": "16.2.0",
+    "react-dom": "16.3.2",
     "react-flip-move": "3.0.1",
     "react-router": "3.2.0",
     "sanitize-filename": "1.6.1",

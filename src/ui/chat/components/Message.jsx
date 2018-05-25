@@ -15,6 +15,7 @@ const InlineFiles = require('./InlineFiles');
 const UrlPreview = require('./UrlPreview');
 const UrlPreviewConsent = require('./UrlPreviewConsent');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
+const InlineSharedFolder = require('../../files/components/InlineSharedFolder');
 
 
 /** @type {
@@ -127,6 +128,10 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
+        // !! move it to files
+        if (m.systemData.action === 'folder') {
+            return <InlineSharedFolder {...m.systemData} />;
+        }
         if (m.systemData.action === 'videoCall' && m.systemData.link) {
             const { link } = m.systemData;
             const shortLink = link.replace('https://', '');

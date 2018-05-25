@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "@peerio/updater": "0.9.0",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#newfs",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#dev",
     "autolinker": "1.4.4",
     "cheerio": "1.0.0-rc.2",
     "classnames": "2.2.5",

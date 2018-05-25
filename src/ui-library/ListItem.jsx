@@ -39,12 +39,13 @@ class ListItem extends React.Component {
                     ? <div className="side-content left icon">
                         <MaterialIcon icon={this.props.leftIcon} />
                     </div>
-                    : (this.props.leftContent
-                        ? <div className="side-content left">
-                            {this.props.leftContent}
-                        </div>
-                        : null
-                    )
+                    : null
+                }
+                {this.props.leftContent
+                    ? <div className="side-content left">
+                        {this.props.leftContent}
+                    </div>
+                    : null
                 }
 
                 {this.props.caption

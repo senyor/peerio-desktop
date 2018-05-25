@@ -54,6 +54,23 @@
     padding: $padding-small;
     text-align: right;
   }
+
+  // Themes
+  &.warning {
+    border-top: 8px solid $color-warning;
+  }
+
+  &.error {
+    border-top: 8px solid $color-error;
+  }
+
+  &.primary {
+    border-top: 8px solid $peerio-blue;
+  }
+
+  &.small {
+    width: 360px;
+  }
 }
 
 // Override HTML defaults

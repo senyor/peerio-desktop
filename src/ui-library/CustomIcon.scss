@@ -14,18 +14,7 @@
   }
 
   img.hover {
-    display: none;
     opacity: 1;
-  }
-
-  &.hovered {
-    img.default {
-      display: none;
-    }
-
-    img.hover {
-      display: block;
-    }
   }
 
   // Active state

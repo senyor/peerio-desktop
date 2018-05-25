@@ -17,24 +17,27 @@ class DropTarget extends React.Component {
         dragStore.onFilesDropped(this.fileDropHandler);
     }
 
-    fileDropHandler = (list) => {
+    fileDropHandler = (list, trees) => {
         if (this.dialogActive || list.success.length === 0) return;
-        this._files = list;
+        this._files = list.success;
         if (routerStore.currentRoute === routerStore.ROUTES.chats && chatStore.activeChat) {
             this.dialogActive = true;
             return;
         }
         let folder = null;
         if (routerStore.currentRoute === routerStore.ROUTES.files) {
-            folder = fileStore.folders.currentFolder;
+            folder = fileStore.folderStore.currentFolder;
         }
-        this.justUpload(folder);
+        this.justUpload(trees, folder);
     };
 
-    justUpload = (folder) => {
-        this._files.success.forEach(
-            f => fileStore.upload(f, null, folder ? folder.folderId : null)
-        );
+    justUpload = async (trees, folder) => {
+        await Promise.map(trees, tree => {
+            if (typeof tree === 'string') {
+                return fileStore.upload(tree, null, folder);
+            }
+            return fileStore.uploadFolder(tree, folder);
+        });
         this.dialogActive = false;
     };
 
@@ -48,7 +51,7 @@ class DropTarget extends React.Component {
             return (
                 <UploadDialog
                     deactivate={() => this.dialogDeactivate()}
-                    files={this._files.success}
+                    files={this._files}
                 />
             );
         }

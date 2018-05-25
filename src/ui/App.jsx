@@ -1,12 +1,14 @@
 const React = require('react');
-const AppNav = require('~/ui/AppNav');
-const uiStore = require('~/stores/ui-store');
-const { Dialog, ProgressBar } = require('~/peer-ui');
-const { t } = require('peerio-translator');
-const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { observer } = require('mobx-react');
 const { observable } = require('mobx');
+
+const uiStore = require('~/stores/ui-store');
 const { clientApp } = require('peerio-icebear');
+const { t } = require('peerio-translator');
+const { Dialog, ProgressBar } = require('~/peer-ui');
+const AppNav = require('~/ui/AppNav');
+const ContactProfile = require('~/ui/contact/components/ContactProfile');
+const MigrationDialog = require('~/ui/shared-components/MigrationDialog');
 
 @observer
 class App extends React.Component {
@@ -66,6 +68,7 @@ class App extends React.Component {
                             : null
                     }
                 </Dialog>
+                <MigrationDialog />
                 {this.signatureErrorDialog}
             </div>
         );

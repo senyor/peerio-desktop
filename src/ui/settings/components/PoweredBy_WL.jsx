@@ -1,9 +1,17 @@
 const React = require('react');
 
 class PoweredBy extends React.Component {
+    style = {
+        display: 'block'
+    };
+
     render() {
         return (
-            <img alt="Powered by Peerio" src="static/img/poweredByPeerio_colour.png" />
+            <img
+                style={this.style}
+                alt="Powered by Peerio"
+                src="static/img/poweredByPeerio_colour.png"
+            />
         );
     }
 }

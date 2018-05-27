@@ -14,6 +14,7 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
 const autologin = require('~/helpers/autologin');
 const routerStore = require('~/stores/router-store');
+const SignupLink = require('~/whitelabel/components').SignupLink;
 
 const { validators } = validation; // use common validation from core
 
@@ -221,9 +222,7 @@ class LoginStore extends OrderedFormStore {
                         theme="affirmative"
                     />
 
-                    {!config.whiteLabel.name === 'medcryptor' && (<div>
-                        {t('title_newUser')} &nbsp; <Link to="/signup">{t('button_CreateAccount')}</Link>
-                    </div>)}
+                    <SignupLink />
                 </div>
             </div>
         );

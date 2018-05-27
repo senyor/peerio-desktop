@@ -1,22 +1,25 @@
 const React = require('react');
-const { observable, reaction } = require('mobx');
+const { action, computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('~/peer-ui');
-const MessageInput = require('./components/MessageInput');
-const MessageList = require('./components/MessageList');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
-const UploadInChatProgress = require('./components/UploadInChatProgress');
 const { t } = require('peerio-translator');
 const css = require('classnames');
+
+const MessageInput = require('./components/MessageInput');
+const MessageList = require('./components/MessageList');
 const MessageSideBar = require('./components/sidebar/MessageSideBar');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
+const UploadInChatProgress = require('./components/UploadInChatProgress');
+
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
+const PendingDM = require('./components/PendingDM');
 const { Dialog } = require('~/peer-ui');
 
 @observer
@@ -27,13 +30,17 @@ class ChatView extends React.Component {
     componentDidMount() {
         this.reactionsToDispose = [
             reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
+
+            // TODO: refactor when SDK is there for chat invites
+            // reaction(() => !chatStore.chats.length && !chatInviteStore.received.length, () => {
+            //     routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+            // }, true)
         ];
 
         if (chatInviteStore.activeInvite) {
             routerStore.navigateTo(routerStore.ROUTES.channelInvite);
         }
 
-        // TODO: refactor when SDK is there for chat invites
         if (!chatStore.chats.length && !chatInviteStore.received.length) {
             routerStore.navigateTo(routerStore.ROUTES.zeroChats);
         }
@@ -79,9 +86,9 @@ class ChatView extends React.Component {
         }
     }
 
-    shareFiles = (files) => {
+    shareFilesAndFolders = (filesAndFolders) => {
         try {
-            chatStore.activeChat.shareFiles(files)
+            chatStore.activeChat.shareFilesAndFolders(filesAndFolders)
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
@@ -240,11 +247,39 @@ class ChatView extends React.Component {
             <ChatSideBar open={uiStore.prefs.chatSideBarIsOpen} />;
     }
 
+    @observable messageListRef;
+    @action.bound setMessageListRef(ref) {
+        if (ref) this.messageListRef = ref;
+    }
+
+    jumpToBottom = () => {
+        const chat = chatStore.activeChat;
+
+        if (chat.canGoDown) {
+            chat.reset();
+            return;
+        }
+
+        if (this.messageListRef) {
+            this.messageListRef.scrollToBottom();
+        }
+    }
+
+    @computed get pageScrolledUp() {
+        return this.messageListRef && this.messageListRef.pageScrolledUp;
+    }
+
     render() {
         if (!chatStore.chats.length) return null;
 
         const chat = chatStore.activeChat;
         if (!chat) return null;
+
+        if (chat.isInvite) {
+            return (
+                <PendingDM />
+            );
+        }
 
         const jitsiActions = [
             { label: t('button_cancel'), onClick: this.toggleJitsiDialog },
@@ -266,7 +301,10 @@ class ChatView extends React.Component {
                                     title={t('title_addParticipants')} noDeleted />
                             </div>
                             : <div className="messages-container">
-                                {chatStore.chats.length === 0 && !chatStore.loading ? null : <MessageList />}
+                                {chatStore.chats.length === 0 && !chatStore.loading
+                                    ? null
+                                    : <MessageList ref={this.setMessageListRef} />
+                                }
                                 {
                                     chat && chat.uploadQueue.length
                                         ? <UploadInChatProgress queue={chat.uploadQueue} />
@@ -283,7 +321,9 @@ class ChatView extends React.Component {
                                     }
                                     onSend={this.sendRichTextMessage}
                                     onAck={this.sendAck}
-                                    onFileShare={this.shareFiles}
+                                    onFileShare={this.shareFilesAndFolders}
+                                    messageListScrolledUp={this.pageScrolledUp}
+                                    onJumpToBottom={this.jumpToBottom}
                                 />
                             </div>
                     }

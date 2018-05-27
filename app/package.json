@@ -1,7 +1,7 @@
 {
   "name": "peerio-2",
   "productName": "Peerio 2",
-  "version": "2.110.2",
+  "version": "2.114.0",
   "description": "Peerio desktop client",
   "main": "build/main.js",
   "repository": {
@@ -61,13 +61,14 @@
         "download": "https://peerio.com",
         "learnUrlTracking": "https://peerio.zendesk.com/hc/en-us/articles/115005090766",
         "identityVerification": "https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-",
-        "jitsiLink": "https://jitsi.org/"
+        "jitsiLink": "https://jitsi.org/",
+        "limitedActions": "https://www.peerio.com/blog/posts/new-filesystem/"
       }
     }
   },
   "dependencies": {
     "@peerio/updater": "0.9.0",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#dev",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#medcryptor-base",
     "autolinker": "1.4.4",
     "cheerio": "1.0.0-rc.2",
     "classnames": "2.2.5",
@@ -93,9 +94,9 @@
     "prosemirror-transform": "1.0.1",
     "prosemirror-view": "1.0.1",
     "qrcode": "1.2.0",
-    "react": "16.2.0",
+    "react": "16.3.2",
     "react-addons-css-transition-group": "15.6.2",
-    "react-dom": "16.2.0",
+    "react-dom": "16.3.2",
     "react-flip-move": "3.0.1",
     "react-router": "3.2.0",
     "sanitize-filename": "1.6.1",

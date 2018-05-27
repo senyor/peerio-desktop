@@ -19,7 +19,7 @@
   // Active/selected colouring
   &.active {
     font-weight: $font-weight-semibold;
-    background: rgba($peerio-purple, .45);
+    background: $background-highlighted;
 
     .content {
       color: $text-light-default;
@@ -30,7 +30,6 @@
   .side-content {
     display: flex;
     align-items: center;
-    min-width: 32px;
 
     &.left {
       margin-right: $margin-default;
@@ -51,6 +50,11 @@
 
     .legend {
       color: $text-dark-inactive;
+    }
+
+    .caption {
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

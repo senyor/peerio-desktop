@@ -16,13 +16,13 @@ class NewChat extends React.Component {
         chatStore.deactivateCurrentChat();
     }
 
-    handleAccept = (selected) => {
+    handleAccept = async (selected) => {
         this.waiting = true;
         if (!selected.length || selected.filter(c => c.notFound).length) {
             this.waiting = false;
             return;
         }
-        const chat = chatStore.startChat(selected);
+        const chat = await chatStore.startChat(selected);
         if (!chat) {
             this.waiting = false;
             return;

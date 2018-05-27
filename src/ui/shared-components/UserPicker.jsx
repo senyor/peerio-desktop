@@ -2,6 +2,7 @@ const React = require('react');
 const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Avatar, Button, Chip, Input, List, ListHeading, ListItem, MaterialIcon, ProgressBar } = require('~/peer-ui');
+const UserSearchError = require('~/whitelabel/components').UserSearchError;
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('peerio-icebear');
 const css = require('classnames');
@@ -18,7 +19,6 @@ class UserPicker extends React.Component {
     @observable showNotFoundError;
     @observable userAlreadyAdded = '';
     @observable foundContact;
-    legacyContactError = false; // not observable bcs changes only with showNotFoundError
     @observable contactLoading = false;
     @observable _searchUsernameTimeout = false;
 
@@ -73,7 +73,6 @@ class UserPicker extends React.Component {
     }
 
     reset() {
-        this.legacyContactError = false;
         this.showNotFoundError = false;
         this.userAlreadyAdded = '';
         this.suggestInviteEmail = '';
@@ -145,7 +144,6 @@ class UserPicker extends React.Component {
             const isEmail = atInd > -1 && atInd === q.lastIndexOf('@');
             this.userNotFound = c.notFound ? q : '';
             this.suggestInviteEmail = (c.notFound && isEmail && !this.props.noInvite) ? q : '';
-            this.legacyContactError = c.isLegacy;
             this.showNotFoundError = c.notFound;
             this.foundContact = !c.notFound && c;
             this.contactLoading = false;
@@ -212,8 +210,8 @@ class UserPicker extends React.Component {
         });
     };
 
-    invite = () => {
-        contactStore.invite(this.suggestInviteEmail);
+    invite = (context) => {
+        contactStore.invite(this.suggestInviteEmail, context);
         this.query = '';
         this.reset();
     }
@@ -237,7 +235,7 @@ class UserPicker extends React.Component {
     }
 
     render() {
-        const selectedFiles = fileStore.getSelectedFiles();
+        const selectedFiles = fileStore.selectedFiles;
 
         return (
             <div className="user-picker">
@@ -326,39 +324,20 @@ class UserPicker extends React.Component {
                                 </div>
                             }
                         </div>
+                        {this.showSearchError &&
+                            <div className="user-search-error-container">
+                                <UserSearchError
+                                    userAlreadyAdded={this.userAlreadyAdded}
+                                    userNotFound={
+                                        (this.showNotFoundError && !this.suggestInviteEmail) ? this.userNotFound : null
+                                    }
+                                    suggestInviteEmail={this.suggestInviteEmail}
+                                    invite={this.invite}
+                                    isChannel={routerStore.isNewChannel}
+                                />
+                            </div>
+                        }
                         <div className="user-list-container">
-                            {this.showSearchError &&
-                                <div className="user-search-error-container">
-                                    <div className="user-search-error">
-                                        <div className="search-error-text">
-                                            <MaterialIcon icon="help_outline" />
-                                            {this.suggestInviteEmail &&
-                                                <T k="title_inviteContactByEmail">
-                                                    {{ email: this.suggestInviteEmail }}
-                                                </T>
-                                            }
-                                            {this.showNotFoundError && !this.suggestInviteEmail &&
-                                                <T k={this.legacyContactError ?
-                                                    'title_inviteLegacy' : 'error_userNotFoundTryEmail'} tag="div">
-                                                    {{ user: this.userNotFound }}
-                                                </T>
-                                            }
-                                            {this.userAlreadyAdded &&
-                                                <T k="error_userAlreadyAdded" tag="div">
-                                                    {{ user: this.userAlreadyAdded }}
-                                                </T>
-                                            }
-                                        </div>
-                                        {this.suggestInviteEmail &&
-                                            <Button
-                                                onClick={this.invite}
-                                                label={t('button_send')}
-                                                theme="affirmative"
-                                            />
-                                        }
-                                    </div>
-                                </div>
-                            }
                             <List theme="large" clickable>
                                 {this.foundContact && this.renderList(null, [this.foundContact])}
                                 {!this.foundContact

@@ -14,6 +14,7 @@ const { getParentWithClass } = require('~/helpers/dom');
 
     hover       bool        default false. set true to enable hover icon.
                             * Requires parent w/ .custom-icon-hover-container
+    selected    bool
 
     active      bool        default. set to true to force "active" style (opacity: 1)
     ----------------------------------------
@@ -59,10 +60,9 @@ class CustomIcon extends React.Component {
                 )}
                 ref={this.props.hover ? this.setIconRef : null}
             >
-                <img className="default" src={`./static/custom-icons/${this.props.icon}.svg`} />
-                {this.props.hover
+                {(this.props.hover && this.hovered) || this.props.selected
                     ? <img className="hover" src={`./static/custom-icons/${this.props.icon}-hover.svg`} />
-                    : null
+                    : <img className="default" src={`./static/custom-icons/${this.props.icon}.svg`} />
                 }
             </div>
         );

@@ -3,7 +3,6 @@
   align-items: center;
   justify-content: center;
   height: 36px;
-  min-width: 90px;
   padding: 0 $padding-default;
   vertical-align: middle;
   font-family: $font-stack;
@@ -28,7 +27,8 @@
     cursor: pointer;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: $background-selected;
   }
 
@@ -42,7 +42,11 @@
     color: $text-dark-hint;
 
     .material-icons {
-      color: $text-dark-hint;
+      color: $icon-dark-inactive;
+    }
+
+    .p-custom-icon {
+      opacity: .12;
     }
   }
 
@@ -78,8 +82,8 @@
     }
 
     &:disabled {
-      color: $text-light-disabled;
-      background-color: transparent;
+      color: $text-light-default;
+      background-color: $background-disabled;
     }
   }
 
@@ -87,7 +91,6 @@
   &.icon {
     height: 36px;
     width: 36px;
-    min-width: 0;
     padding: 0;
     border-radius: 100%;
 
@@ -95,7 +98,8 @@
       color: $icon-dark-active;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: transparent;
 
       .material-icons {
@@ -123,10 +127,10 @@
   &.small {
     height: auto;
     width: auto;
-    min-width: 0;
     padding: 0;
 
-    &:hover {
+    &:hover,
+    &:focus {
       // box-shadow: none;
       background-color: inherit;
     }
@@ -155,18 +159,19 @@
     display: inline;
     height: auto;
     width: auto;
-    min-width: 0;
     padding: 0;
     vertical-align: baseline;
     font-size: inherit;
+    font-weight: 400;
     text-decoration: underline;
     text-transform: none;
-    color: inherit;
+    color: $peerio-blue;
     background-color: transparent;
   }
 
   // "No-hover" theme
-  &.no-hover:hover {
+  &.no-hover:hover,
+  &.no-hover:focus {
     background-color: inherit;
   }
 }

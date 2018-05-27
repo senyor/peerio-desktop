@@ -1,11 +1,12 @@
 const React = require('react');
-const { observable, action, when } = require('mobx');
+const { observable, action, when, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Input, MaterialIcon } = require('~/peer-ui');
+const { Button, Input, MaterialIcon, ProgressBar } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const { contactStore, User, warnings } = require('peerio-icebear');
+const UserSearchError = require('~/whitelabel/components').UserSearchError;
 const urls = require('peerio-icebear').config.translator.urlMap;
 const routerStore = require('~/stores/router-store');
 
@@ -13,10 +14,13 @@ const routerStore = require('~/stores/router-store');
 class NewContact extends React.Component {
     @observable query = '';
     @observable notFound = false;
-    @observable legacyContactError = false;
     @observable suggestInviteEmail = '';
     @observable waiting = false;
     @observable isInviteView = false;
+
+    @computed get showSearchError() {
+        return this.notFound || !!this.suggestInviteEmail;
+    }
 
     // same component is used for add and invite,
     // when on invited zero state view - we want to render it slightly different
@@ -38,7 +42,6 @@ class NewContact extends React.Component {
 
     @action.bound handleTextChange(newVal) {
         this.notFound = false;
-        this.legacyContactError = false;
         this.query = newVal.toLocaleLowerCase().trim();
     }
 
@@ -52,12 +55,10 @@ class NewContact extends React.Component {
         this.waiting = true;
         this.suggestInviteEmail = '';
         this.notFound = false;
-        this.legacyContactError = false;
         const c = contactStore.getContactAndSave(this.query);
         when(() => !c.loading, () => {
             if (c.notFound) {
                 this.notFound = true;
-                this.legacyContactError = c.isLegacy;
                 const atInd = this.query.indexOf('@');
                 const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
                 if (isEmail) {
@@ -138,21 +139,19 @@ class NewContact extends React.Component {
                                     onClick={this.isInviteView ? this.invite : this.tryAdd}
                                     theme="affirmative"
                                 />
+                                {this.waiting &&
+                                    <ProgressBar type="circular" mode="indeterminate" theme="small" />
+                                }
                             </div>
-                            {this.notFound
-                                ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'}
-                                    tag="div" className="error-search" />
+                            {this.showSearchError
+                                ? <UserSearchError
+                                    userNotFound={this.notFound ? this.query : null}
+                                    suggestInviteEmail={this.suggestInviteEmail}
+                                    invite={this.invite}
+                                    isChannel={routerStore.isNewChannel}
+                                />
                                 : null
                             }
-                            {this.suggestInviteEmail ?
-                                <div className="email-invite-container">
-                                    <div className="email-invite">{this.suggestInviteEmail}</div>
-                                    <Button
-                                        onClick={this.invite}
-                                        label={t('button_inviteEmailContact')}
-                                    />
-                                </div>
-                                : null}
                         </div>
                         <div className="invite-elsewhere">
                             <T k="title_shareSocial" tag="strong" />

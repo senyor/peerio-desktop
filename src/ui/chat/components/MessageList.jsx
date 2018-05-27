@@ -1,11 +1,12 @@
 const React = require('react');
-const { reaction, computed } = require('mobx');
+const { reaction, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Avatar, ProgressBar } = require('~/peer-ui');
 const T = require('~/ui/shared-components/T');
 const Message = require('./Message');
 const { chatStore, clientApp } = require('peerio-icebear');
 const { t } = require('peerio-translator');
+const PendingDMHeader = require('~/ui/chat/components/PendingDMHeader');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 
 @observer
@@ -13,6 +14,7 @@ class MessageList extends React.Component {
     loadTriggerDistance = 20;
     stickDistance = 50;
     lastRenderedChatId = null;
+    @observable pageScrolledUp = false;
 
     @computed get displayParticipants() {
         const chat = chatStore.activeChat;
@@ -22,7 +24,7 @@ class MessageList extends React.Component {
     }
 
     componentWillMount() {
-        this.stickToBottom = true;
+        clientApp.isReadingNewestMessages = true;
         // reaction to fix scroll position when scrolling up
         this._topLoadReaction = reaction(() => chatStore.activeChat && chatStore.activeChat.loadingTopPage,
             (loading) => {
@@ -48,7 +50,7 @@ class MessageList extends React.Component {
         this._initialLoadReaction = reaction(
             () => chatStore.activeChat && chatStore.activeChat.loadingInitialPage,
             () => {
-                this.stickToBottom = true;
+                clientApp.isReadingNewestMessages = true;
                 this.lastTopElement = null;
             }
         );
@@ -96,21 +98,21 @@ class MessageList extends React.Component {
 
     scrollToBottomIfNeeded() {
         if (!chatStore.activeChat) {
-            this.stickToBottom = true;
+            clientApp.isReadingNewestMessages = true;
             return;
         }
         // check if chat has changed since last render
         if (this.lastRenderedChatId !== chatStore.activeChat.id) {
             this.lastRenderedChatId = chatStore.activeChat.id;
-            this.stickToBottom = true;
+            clientApp.isReadingNewestMessages = true;
             this.instantlyScrollToBottom();
             return;
         }
-        if (this.stickToBottom) setTimeout(this.scrollToBottom);
+        if (clientApp.isReadingNewestMessages) setTimeout(this.scrollToBottom);
     }
 
     onImageLoaded = () => {
-        if (this.stickToBottom && !chatStore.activeChat.canGoDown) this.scrollToBottom();
+        if (clientApp.isReadingNewestMessages && !chatStore.activeChat.canGoDown) this.scrollToBottom();
     }
 
     // todo: investigate why throttling causes lags when scrolling with trackpad at big velocity
@@ -124,8 +126,14 @@ class MessageList extends React.Component {
                 - this.containerRef.clientHeight;
             const distanceToTop = this.containerRef.scrollTop;
             // console.log(distanceToTop, distanceToBottom);
+
             // detecting sticking state
-            this.stickToBottom = distanceToBottom < this.stickDistance && !chatStore.activeChat.canGoDown;
+            clientApp.isReadingNewestMessages =
+                distanceToBottom < this.stickDistance && !chatStore.activeChat.canGoDown;
+
+            // detecting if we have scrolled up by one "page" or more
+            this.pageScrolledUp = distanceToBottom > this.containerRef.clientHeight;
+
             // triggering page load
             if (distanceToBottom < this.loadTriggerDistance) {
                 //  console.log('TRIGGER');
@@ -201,6 +209,18 @@ class MessageList extends React.Component {
 
     renderChatStart() {
         const chat = chatStore.activeChat;
+
+        if (chat.isChatCreatedFromPendingDM) {
+            return (
+                <div className="messages-start">
+                    <PendingDMHeader
+                        isNewUser={chat.isNewUserFromInvite}
+                        contact={this.displayParticipants[0]}
+                    />
+                </div>
+            );
+        }
+
         if (chat.canGoUp || !chat.initialPageLoaded) return null;
         return (
             <div className="messages-start">

@@ -7,7 +7,7 @@ const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
 const { socket } = require('peerio-icebear');
 const config = require('~/config');
-const Copyright = require('~/whitelabel/components').Copyright;
+const { Copyright, PoweredBySettings } = require('~/whitelabel/components');
 
 
 @observer
@@ -30,6 +30,7 @@ class About extends React.Component {
             <div>
                 <section className="section-divider">
                     <img className="logo" src="static/img/logo-withtext.svg" />
+                    <PoweredBySettings />
                     <p>
                         {t('title_version')} <strong>{version}</strong>
                     </p>

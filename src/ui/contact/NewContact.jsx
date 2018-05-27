@@ -8,6 +8,7 @@ const css = require('classnames');
 const { contactStore, User, warnings } = require('peerio-icebear');
 const UserSearchError = require('~/whitelabel/components').UserSearchError;
 const urls = require('peerio-icebear').config.translator.urlMap;
+
 const routerStore = require('~/stores/router-store');
 
 @observer
@@ -73,8 +74,8 @@ class NewContact extends React.Component {
         });
     };
 
-    invite = () => {
-        contactStore.invite(this.isInviteView ? this.query : this.suggestInviteEmail);
+    invite = (context) => {
+        contactStore.invite(this.isInviteView ? this.query : this.suggestInviteEmail, context);
         this.suggestInviteEmail = '';
         if (this.isInviteView) this.query = '';
     };

@@ -7,3 +7,5 @@ class SignupLink extends React.Component {
         );
     }
 }
+
+module.exports = SignupLink;

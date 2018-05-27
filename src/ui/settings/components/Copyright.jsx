@@ -8,3 +8,5 @@ class Copyright extends React.Component {
         );
     }
 }
+
+module.exports = Copyright;

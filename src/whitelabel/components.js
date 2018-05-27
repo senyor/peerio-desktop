@@ -14,7 +14,7 @@ if (config.whiteLabel.name) {
 }
 
 // Medcryptor
-if (config.appLabel === 'medcryptor') {
+if (config.whiteLabel.name === 'medcryptor') {
     UserSearchError = require('~/ui/shared-components/UserSearchError_medcryptor');
     SignupLink = require('~/ui/login/SignupLink_medcryptor');
 }

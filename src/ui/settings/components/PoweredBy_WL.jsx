@@ -2,7 +2,8 @@ const React = require('react');
 
 class PoweredBy extends React.Component {
     style = {
-        display: 'block'
+        display: 'block',
+        width: '30%'
     };
 
     render() {

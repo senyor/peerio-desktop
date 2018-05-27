@@ -66,7 +66,7 @@ if (isDevEnv) {
 if (isDevEnv && process.env.PEERIO_STAGING_SOCKET_SERVER) {
     cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
 }
-cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
+cfg.socketServerUrl = 'wss://hocuspocus.peerio.com'; //process.env.PEERIO_STAGING_SOCKET_SERVER;
 
 // --- DIAGNOSTIC STARTUP LOG
 try {

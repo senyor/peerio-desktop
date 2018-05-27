@@ -6,9 +6,7 @@ const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
 const Terms = require('~/ui/shared-components/Terms');
 const { socket } = require('peerio-icebear');
-const config = require('~/config');
 const { Copyright, PoweredBySettings } = require('~/whitelabel/components');
-
 
 @observer
 class About extends React.Component {

@@ -6,7 +6,6 @@ const { config, socket, User, validation, warnings } = require('peerio-icebear')
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { Link } = require('react-router');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const T = require('~/ui/shared-components/T');

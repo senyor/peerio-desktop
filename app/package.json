@@ -25,11 +25,13 @@
   },
   "peerio": {
     "appId": "com.peerio.desktop",
-    "whiteLabelBuild": false,
     "keychainService": "PeerioMessenger",
     "socketServerUrl": "",
     "ghostFrontendUrl": "https://mail.peerio.com",
     "disablePayments": false,
+    "whiteLabel": {
+      "name": ""
+    },
     "contacts": {
       "supportUser": "support",
       "supportEmail": "support@peerio.com",

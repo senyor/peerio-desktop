@@ -14,6 +14,7 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
 const autologin = require('~/helpers/autologin');
 const routerStore = require('~/stores/router-store');
+const { SignupLink, PoweredByLogin } = require('~/whitelabel/components');
 
 const { validators } = validation; // use common validation from core
 
@@ -175,6 +176,7 @@ class LoginStore extends OrderedFormStore {
                 <FullCoverLoader show={this.loginStore.busy} />
                 <div className="login">
                     <img alt="Peerio logo" className="logo" src="static/img/logo-mark.svg" />
+                    <PoweredByLogin />
                     {this.loginStore.lastAuthenticatedUser ? this.getWelcomeBlock() : ''}
                     <div className="login-form">
                         <div className={css('title', { banish: this.loginStore.lastAuthenticatedUser })}>
@@ -221,9 +223,7 @@ class LoginStore extends OrderedFormStore {
                         theme="affirmative"
                     />
 
-                    <div>
-                        {t('title_newUser')} &nbsp; <Link to="/signup">{t('button_CreateAccount')}</Link>
-                    </div>
+                    <SignupLink />
                 </div>
             </div>
         );

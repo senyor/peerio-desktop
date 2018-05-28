@@ -49,9 +49,7 @@ class MigrationDialog extends React.Component {
 
     componentWillUnmount() {
         this.clearTimer();
-        this.reactionsToDispose.forEach(dispose => {
-            if (dispose) dispose();
-        });
+        if (this.dispose) this.dispose();
     }
 
     downloadFile = () => {

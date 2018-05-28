@@ -126,7 +126,7 @@ class MigrationDialog extends React.Component {
         }];
 
         return (
-            <Dialog active
+            <Dialog active={fileStore.migration.pending}
                 className="migration-dialog"
                 actions={fileStore.migration.started || fileStore.migration.performedByAnotherClient
                     ? null

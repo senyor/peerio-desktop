@@ -6,13 +6,22 @@ const Onboarding = require('./Onboarding');
 const Login = require('./login/Login');
 const Signup = require('./signup/Signup');
 const Loading = require('./Loading');
-const Chat = require('./chat/Chat');
+
+// TODO: is it clunky for the entire Chat to be routed via whitelabel/components.js?
+const { Chat } = require('~/whitelabel/components');
+
 const ZeroChats = require('./chat/ZeroChats');
 const NewChat = require('./chat/NewChat');
 const ChatView = require('./chat/ChatView');
 const NewChannel = require('./chat/NewChannel');
 const ChannelInvite = require('./chat/components/ChannelInvite');
 const PendingDMDismissed = require('./chat/components/PendingDMDismissed');
+
+// TODO: this can either be whitelabel components folder,
+// or put these components with regular Chat and route via whitelabel/components.js
+const Patient = require('./whitelabel/medcryptor/Patient');
+const PatientView = require('./whitelabel/medcryptor/PatientView');
+
 const Files = require('./files/Files');
 const Mail = require('./mail/Mail');
 const Settings = require('./settings/Settings');
@@ -47,6 +56,9 @@ module.exports = (
                 <Route path="new-chat" component={NewChat} />
                 <Route path="new-channel" component={NewChannel} />
                 <Route path="pending-dm-dismissed" component={PendingDMDismissed} />
+                <Route path="patients" component={Patient}>
+                    <IndexRoute component={PatientView} />
+                </Route>
             </Route>
             <Route path="zero-chats" component={ZeroChats} />
             <Route path="files" component={Files} />

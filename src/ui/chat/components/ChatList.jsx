@@ -6,6 +6,7 @@ const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
+const config = require('~/config');
 
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
@@ -85,6 +86,20 @@ class ChatList extends React.Component {
                     />
                 );
         });
+    }
+
+    // Buildling patient list
+    // TODO: this will throw off `this.unreadPositions`!
+    @computed get patientsMap() {
+        return (
+            <ListItem
+                className={css(
+                    'room-item', 'patient-item'
+                )}
+                onClick={this.testActivatePatient}
+                caption="Patient Name"
+            />
+        );
     }
 
     // Building the DM list
@@ -271,6 +286,21 @@ class ChatList extends React.Component {
         routerStore.navigateTo(routerStore.ROUTES.newChat);
     };
 
+    newPatient = () => {
+        console.log('new patient');
+
+        chatStore.deactivateCurrentChat();
+        chatInviteStore.deactivateInvite();
+        // routerStore.navigateTo(routerStore.ROUTES.newPatient);
+    }
+
+    // TODO: remove after done testing
+    testActivatePatient = () => {
+        chatStore.deactivateCurrentChat();
+        chatInviteStore.deactivateInvite();
+        routerStore.navigateTo(routerStore.ROUTES.patients);
+    }
+
     newChannel = () => {
         chatStore.deactivateCurrentChat();
         chatInviteStore.deactivateInvite();
@@ -319,6 +349,20 @@ class ChatList extends React.Component {
                                     {this.allRoomsMap}
                                 </FlipMove>
                             </List>
+
+                            {config.whiteLabel.name === 'medcryptor'
+                                ? <List>
+                                    <div>
+                                        <PlusIcon onClick={this.newPatient} label={t('mcr_button_addPatient')} />
+                                        <Tooltip text={t('mcr_button_addPatient')} position="right" />
+                                    </div>
+                                    <FlipMove duration={200} easing="ease-in-out">
+                                        {this.patientsMap}
+                                    </FlipMove>
+                                </List>
+                                : null
+                            }
+
                             <List clickable>
                                 <div>
                                     <PlusIcon onClick={this.newMessage} label={t('title_directMessages')} />

@@ -77,6 +77,7 @@ class NewContact extends React.Component {
     invite = (context) => {
         contactStore.invite(this.isInviteView ? this.query : this.suggestInviteEmail, context);
         this.suggestInviteEmail = '';
+        this.notFound = false;
         if (this.isInviteView) this.query = '';
     };
 

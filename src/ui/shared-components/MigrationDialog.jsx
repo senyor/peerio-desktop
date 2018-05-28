@@ -11,7 +11,7 @@ const fs = require('fs');
 
 const migrationInProgressMessages = [];
 const MIGRATION_MESSAGES_COUNT = 10;
-const MESSAGE_SPEED = 8000;
+const MESSAGE_SPEED = 10000;
 
 for (let i = 1; i <= MIGRATION_MESSAGES_COUNT; i++) {
     const random = Math.floor(Math.random() * migrationInProgressMessages.length);

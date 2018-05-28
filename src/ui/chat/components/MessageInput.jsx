@@ -14,7 +14,7 @@ const { Button, Menu, MenuItem } = require('peer-ui');
 
 const FilePicker = require('~/ui/files/components/FilePicker');
 const Snackbar = require('~/ui/shared-components/Snackbar');
-const { pickLocalFiles } = require('~/helpers/file');
+const { pickLocalFiles, getFileList } = require('~/helpers/file');
 const UploadDialog = require('~/ui/shared-components/UploadDialog');
 
 const MessageInputProseMirror = require('./MessageInputProseMirror');
@@ -40,6 +40,7 @@ class MessageInput extends React.Component {
         if (!chat) return;
         pickLocalFiles()
             .then(paths => {
+                paths = getFileList(paths).success; // eslint-disable-line
                 if (!paths || !paths.length) return;
                 this.selectedFiles = paths;
                 this.uploadDialogActive = true;
@@ -109,6 +110,7 @@ class MessageInput extends React.Component {
                 active={this.filePickerActive}
                 onClose={this.handleFilePickerClose}
                 onShare={this.shareFiles}
+                hideLegacy
             />
         );
     }

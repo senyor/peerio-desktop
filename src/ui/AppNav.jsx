@@ -27,7 +27,7 @@ function startDockNotifications() {
     if (dockNotifsStarted) return;
     dockNotifsStarted = true;
     autorunAsync(() => {
-        const unreadItems = chatStore.unreadMessages + fileStore.unreadFiles;
+        const unreadItems = chatStore.unreadMessages;
         // mac
         if (app.setBadgeCount && app.dock && app.dock.bounce) {
             if (app.setBadgeCount) app.setBadgeCount(unreadItems);
@@ -44,7 +44,7 @@ function startTaskbarOverlay() {
     if (taskbarOverlayStarted) return;
     taskbarOverlayStarted = true;
     autorunAsync(() => {
-        const unreadItems = chatStore.unreadMessages + fileStore.unreadFiles;
+        const unreadItems = chatStore.unreadMessages;
         // windows
         if (typeof remote.getCurrentWindow().setOverlayIcon === 'function') {
             const overlay = nativeImage.createFromPath(

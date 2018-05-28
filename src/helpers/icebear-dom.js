@@ -1,15 +1,19 @@
-const { fileStore, contactStore, chatStore } = require('peerio-icebear');
+const { contactStore, chatStore, fileStore } = require('peerio-icebear');
 const { getAttributeInParentChain } = require('./dom');
 const { when } = require('mobx');
 
 function getFolderByEvent(ev) {
     const folderId = getAttributeInParentChain(ev.target, 'data-folderid');
-    // TODO: add unique id for root folder
-    return folderId === 'root' ? fileStore.folders.root : fileStore.folders.getById(folderId);
+    const storeId = getAttributeInParentChain(ev.target, 'data-storeid');
+    const store = fileStore.getFileStoreById(storeId);
+    return folderId === 'root' ? store.folderStore.root : store.folderStore.getById(folderId);
 }
 
 function getFileByEvent(ev) {
-    return fileStore.getById(getAttributeInParentChain(ev.target, 'data-fileid'));
+    const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
+    const storeId = getAttributeInParentChain(ev.target, 'data-storeid');
+    const store = fileStore.getFileStoreById(storeId);
+    return store.getById(fileId);
 }
 
 async function getChannelByEvent(ev) {

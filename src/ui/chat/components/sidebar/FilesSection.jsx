@@ -1,4 +1,5 @@
 const React = require('react');
+const { action } = require('mobx');
 const { observer } = require('mobx-react');
 const { List, ListItem, Menu, MenuItem } = require('peer-ui');
 const { chatStore, fileStore } = require('peerio-icebear');
@@ -9,24 +10,33 @@ const SideBarSection = require('./SideBarSection');
 const { downloadFile, pickLocalFiles } = require('~/helpers/file');
 const moment = require('moment');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
+const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
 
 @observer
 class FilesSection extends React.Component {
-    share(ev) {
+    refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
+
+    @action.bound async share(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
-        const file = fileStore.getById(fileId);
-        if (!file) return;
-        fileStore.clearSelection();
-        file.selected = true;
-        window.router.push('/app/sharefiles');
+        const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
+        await file.ensureLoaded();
+        if (this.isUnmounted || file.deleted) return;
+        const contacts = await this.shareWithMultipleDialog.show();
+        if (!contacts || !contacts.length) return;
+        contacts.forEach(c => chatStore.startChatAndShareFiles([c], file));
     }
 
-    download(ev) {
+    componentWillUnmount() {
+        this.isUnmounted = true;
+    }
+
+    @action.bound async download(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
-        const file = fileStore.getById(fileId);
-        if (!file) return;
+        const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
+        await file.ensureLoaded();
+        if (file.deleted) return;
         downloadFile(file);
     }
 
@@ -43,13 +53,13 @@ class FilesSection extends React.Component {
         });
     };
 
-    menu(fileId) {
+    menu(file) {
         return (
             <Menu
                 icon="more_vert"
                 position="bottom-right"
                 onClick={this.stopPropagation}
-                data-fileid={fileId}
+                data-fileid={file.fileId}
             >
                 <MenuItem
                     caption={t('title_download')}
@@ -58,23 +68,24 @@ class FilesSection extends React.Component {
                 />
                 <MenuItem
                     caption={t('button_share')}
-                    icon="reply"
+                    icon="person_add"
                     onClick={this.share}
+                    disabled={!file.canShare}
                 />
             </Menu>
         );
     }
 
     renderFileItem = id => {
-        const file = fileStore.getById(id);
-        if (!file) return null;
+        const file = fileStore.getByIdInChat(id, chatStore.activeChat.id);
+        if (!file.loaded || file.deleted) return null;
 
         return (
             <ListItem key={id} data-fileid={id}
                 className="sidebar-file-container"
                 onClick={this.download}
                 leftContent={<FileSpriteIcon type={file.iconType} size="large" />}
-                rightContent={this.menu(id)}
+                rightContent={this.menu(file)}
             >
                 <div className="meta">
                     <div className="file-name-container">
@@ -116,6 +127,7 @@ class FilesSection extends React.Component {
                         <T k="title_noRecentFiles">{textParser}</T>
                     </div>
                 }
+                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
             </SideBarSection>
         );
     }

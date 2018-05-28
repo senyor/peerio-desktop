@@ -5,6 +5,7 @@ const { Dialog, ProgressBar } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { observer } = require('mobx-react');
 const { clientApp } = require('peerio-icebear');
+const MigrationDialog = require('~/ui/shared-components/MigrationDialog');
 
 @observer
 class App extends React.Component {
@@ -38,6 +39,7 @@ class App extends React.Component {
                     : null}
 
                 {this.props.children}
+                <MigrationDialog />
                 {this.signatureErrorDialog}
             </div>
         );

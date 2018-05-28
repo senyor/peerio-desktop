@@ -13,7 +13,6 @@ const routerStore = require('~/stores/router-store');
 class NewContact extends React.Component {
     @observable query = '';
     @observable notFound = false;
-    @observable legacyContactError = false;
     @observable suggestInviteEmail = '';
     @observable waiting = false;
     @observable isInviteView = false;
@@ -38,7 +37,6 @@ class NewContact extends React.Component {
 
     @action.bound handleTextChange(newVal) {
         this.notFound = false;
-        this.legacyContactError = false;
         this.query = newVal.toLocaleLowerCase().trim();
     }
 
@@ -52,12 +50,10 @@ class NewContact extends React.Component {
         this.waiting = true;
         this.suggestInviteEmail = '';
         this.notFound = false;
-        this.legacyContactError = false;
         const c = contactStore.getContactAndSave(this.query);
         when(() => !c.loading, () => {
             if (c.notFound) {
                 this.notFound = true;
-                this.legacyContactError = c.isLegacy;
                 const atInd = this.query.indexOf('@');
                 const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
                 if (isEmail) {
@@ -140,7 +136,7 @@ class NewContact extends React.Component {
                                 />
                             </div>
                             {this.notFound
-                                ? <T k={this.legacyContactError ? 'title_inviteLegacy' : 'error_userNotFound'}
+                                ? <T k="error_userNotFound"
                                     tag="div" className="error-search" />
                                 : null
                             }

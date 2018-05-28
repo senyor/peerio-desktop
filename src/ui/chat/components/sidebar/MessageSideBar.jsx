@@ -88,9 +88,7 @@ class MessageSideBar extends React.Component {
                     <List theme="large no-hover">
                         <div className="title">
                             <T k="title_messageInfo" tag="div" className="p-list-heading" />
-                            <div className="close-button">
-                                <Button icon="close" onClick={this.close} />
-                            </div>
+                            <Button icon="close" onClick={this.close} />
                         </div>
                         <ListItem
                             leftContent={

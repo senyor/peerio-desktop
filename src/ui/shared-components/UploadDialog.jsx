@@ -15,7 +15,7 @@ class UploadDialog extends React.Component {
         deactivate()    function    deactivate this dialog
         files           array       files that are being uploaded
     */
-    @action componentWillMount() {
+    componentWillMount() {
         this.targetChat = chatStore.activeChat;
         this.previewNextFile();
     }
@@ -28,7 +28,6 @@ class UploadDialog extends React.Component {
     // if we selected a contact in our list, we should
     // find an existing chat with them or start a new one
     @observable targetContact = null;
-
     /**
      * Multiple files may be shared
      */
@@ -44,6 +43,7 @@ class UploadDialog extends React.Component {
     }
 
     @computed get fileExt() {
+        if (!this.currentFile) return '';
         return fileHelpers.getFileExtension(fileHelpers.getFileName(this.currentFile));
     }
 
@@ -106,9 +106,8 @@ class UploadDialog extends React.Component {
         try {
             if (targetContact) {
                 this.targetChat = await chatStore.startChat([targetContact]);
-                chatStore.activate(this.targetChat.id);
             }
-            this.targetChat.uploadAndShareFile(this.currentFile, this.parsedFileName, null, null, this.messageText);
+            this.targetChat.uploadAndShareFile(this.currentFile, this.parsedFileName, null, this.messageText);
         } catch (err) {
             console.error(err);
         }
@@ -191,7 +190,7 @@ class UploadDialog extends React.Component {
                 title={this.dialogTitle}>
                 <div className="upload-dialog-contents">
                     <div className={css('image-or-icon', { 'icon-container': this.fileType !== 'img' })}>
-                        { this.fileType === 'img'
+                        {this.fileType === 'img'
                             ? <div className="thumbnail"><img src={this.currentFile} alt="" /></div>
                             : <div className="icon-inner">
                                 <FileSpriteIcon type={this.fileType} size="xlarge" />

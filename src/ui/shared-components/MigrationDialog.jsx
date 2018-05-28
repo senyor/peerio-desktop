@@ -49,9 +49,7 @@ class MigrationDialog extends React.Component {
 
     componentWillUnmount() {
         this.clearTimer();
-        this.reactionsToDispose.forEach(dispose => {
-            if (dispose) dispose();
-        });
+        if (this.dispose) this.dispose();
     }
 
     downloadFile = () => {
@@ -118,9 +116,9 @@ class MigrationDialog extends React.Component {
 
     render() {
         // don't show migration progress if user has no shared files
-        if (fileStore.migration.started && !fileStore.migration.hasLegacySharedFiles) {
-            return null;
-        }
+        // if (fileStore.migration.started && !fileStore.migration.hasLegacySharedFiles) {
+        //     return null;
+        // }
 
         const migrationDialogActions = [{
             label: fileStore.migration.hasLegacySharedFiles ? t('button_update') : t('button_ok'),
@@ -128,7 +126,7 @@ class MigrationDialog extends React.Component {
         }];
 
         return (
-            <Dialog active={fileStore.migration.pending}
+            <Dialog active
                 className="migration-dialog"
                 actions={fileStore.migration.started || fileStore.migration.performedByAnotherClient
                     ? null

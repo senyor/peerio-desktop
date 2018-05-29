@@ -3,7 +3,7 @@ const { observer } = require('mobx-react');
 
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { Button, MaterialIcon } = require('~/peer-ui');
+const { Button, MaterialIcon } = require('peer-ui');
 
 @observer
 class UserSearchError extends React.Component {

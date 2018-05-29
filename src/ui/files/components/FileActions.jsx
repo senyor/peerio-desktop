@@ -1,6 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Divider, Menu, MenuItem } = require('~/peer-ui');
+const { Divider, Menu, MenuItem } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { getDataProps } = require('~/helpers/dom');
 

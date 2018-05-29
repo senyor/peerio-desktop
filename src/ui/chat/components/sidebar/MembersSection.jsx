@@ -1,6 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Avatar, List, ListHeading, ListItem, Menu, MenuItem } = require('~/peer-ui');
+const { List, ListHeading, ListItem, Menu, MenuItem } = require('peer-ui');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const { chatStore, contactStore, chatInviteStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -98,7 +99,7 @@ class MembersSection extends React.Component {
             <ListItem
                 data-username={c.username}
                 key={c.username}
-                leftContent={<Avatar key="a" contact={c} size="small" clickable />}
+                leftContent={<AvatarWithPopup key="a" contact={c} size="small" />}
                 caption={
                     <div className="user-caption">
                         <span className="username">{c.username}</span>

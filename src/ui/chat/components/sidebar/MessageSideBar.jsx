@@ -3,7 +3,8 @@ const { reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, systemMessages, contactStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
-const { Avatar, Button, List, ListItem } = require('~/peer-ui');
+const { Button, List, ListItem } = require('peer-ui');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -54,7 +55,7 @@ class MessageSideBar extends React.Component {
             : <ListItem
                 data-username={entry[0].username}
                 key={entry[0].username}
-                leftContent={<Avatar key="a" contact={entry[0]} size="small" clickable />}
+                leftContent={<AvatarWithPopup key="a" contact={entry[0]} size="small" />}
                 caption={entry[0].username}
                 legend={entry[0].fullName}
                 onClick={this.openContact}
@@ -91,7 +92,7 @@ class MessageSideBar extends React.Component {
                         </div>
                         <ListItem
                             leftContent={
-                                <Avatar key="a" contact={msg.sender} size="small" clickable tooltip />
+                                <AvatarWithPopup key="a" contact={msg.sender} size="small" tooltip />
                             }
                             caption={msg.sender.fullName}
                             legend={this.renderMessage(msg)}

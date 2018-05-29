@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 const React = require('react');
 const { Component } = require('react');
-const { Button } = require('~/peer-ui');
+const { Button } = require('peer-ui');
 const { config, socket, User, validation, warnings } = require('peerio-icebear');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');

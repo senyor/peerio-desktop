@@ -11,7 +11,8 @@ const config = require('~/config');
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
 const _ = require('lodash');
-const { Avatar, Button, List, ListItem, MaterialIcon, ProgressBar, Tooltip } = require('~/peer-ui');
+const { Button, List, ListItem, MaterialIcon, ProgressBar, Tooltip } = require('peer-ui');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -128,7 +129,7 @@ class ChatList extends React.Component {
                         }
                     )}
                     leftContent={
-                        <Avatar
+                        <AvatarWithPopup
                             key="a"
                             contact={contact}
                             size="small"

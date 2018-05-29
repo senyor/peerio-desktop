@@ -1,5 +1,5 @@
 const React = require('react');
-const { Menu, MenuItem, Divider } = require('~/peer-ui');
+const { Menu, MenuItem, Divider } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { getDataProps } = require('~/helpers/dom');
 

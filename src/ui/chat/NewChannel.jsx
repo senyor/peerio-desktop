@@ -5,7 +5,7 @@ const { chatStore, config, User } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { Input, ProgressBar } = require('~/peer-ui');
+const { Input, ProgressBar } = require('peer-ui');
 
 @observer
 class NewChannel extends React.Component {

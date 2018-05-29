@@ -9,9 +9,10 @@ const urls = require('~/config').translator.urlMap;
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { Avatar, Button, Divider } = require('~/peer-ui');
+const { Button, Divider } = require('peer-ui');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const routerStore = require('~/stores/router-store');
-const { ProgressBar } = require('~/peer-ui');
+const { ProgressBar } = require('peer-ui');
 const EmojiImage = require('~/ui/emoji/Image');
 
 @observer
@@ -77,7 +78,7 @@ class ChannelInvite extends React.Component {
             const participant = participants[i];
 
             if (participant !== username && participant !== User.current.username) {
-                participantsToShow.push(<Avatar key={participant} username={participant} clickable tooltip />);
+                participantsToShow.push(<AvatarWithPopup key={participant} username={participant} tooltip />);
             }
         }
 
@@ -106,6 +107,7 @@ class ChannelInvite extends React.Component {
         const { activeInvite } = chatInviteStore;
         if (!activeInvite) return null;
         const { channelName, username } = activeInvite;
+        const contact = contactStore.getContact(username);
         return (
             <div className={css('channel-invite', this.props.className)}>
                 <div className="invite-content">
@@ -149,10 +151,10 @@ class ChannelInvite extends React.Component {
                         <div className="participant-list">
                             <span>
                                 <T k="title_hostedBy" className="hosted-by" tag="span" />&nbsp;
-                                <span className="host-username">{contactStore.getContact(username).fullName}</span>
+                                <span className="host-username">{contact.fullName}</span>
                             </span>
                             <div className="avatars">
-                                <Avatar username={username} clickable tooltip />
+                                <AvatarWithPopup contact={contact} tooltip />
                             </div>
                         </div>
                         {this.renderParticipants}

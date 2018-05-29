@@ -1,7 +1,7 @@
 const React = require('react');
 const { action, computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('~/peer-ui');
+const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('peer-ui');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const sounds = require('~/helpers/sounds');
@@ -20,7 +20,7 @@ const UploadInChatProgress = require('./components/UploadInChatProgress');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const PendingDM = require('./components/PendingDM');
-const { Dialog } = require('~/peer-ui');
+const { Dialog } = require('peer-ui');
 
 @observer
 class ChatView extends React.Component {
@@ -185,7 +185,7 @@ class ChatView extends React.Component {
                                 {chat.allParticipants.length || ''}
                             </div>
                             : (chat.changingFavState
-                                ? <ProgressBar type="circular" mode="indeterminate" theme="small" />
+                                ? <ProgressBar type="circular" mode="indeterminate" size="small" />
                                 :
                                 <div
                                     onClick={chat.toggleFavoriteState}

@@ -34,7 +34,7 @@ class FolderLine extends React.Component {
 
     render() {
         const { folder } = this.props;
-        const selectDisabled = this.props.disabledCheckbox || folder.isShared;
+        const selectDisabled = this.props.disabledCheckbox;
         const { progress, progressMax, progressPercentage } = folder;
         const shareInProgress = folder.convertingToVolume || folder.convertingFromFolder;
         return (

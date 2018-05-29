@@ -28,13 +28,14 @@ class SharedFolderActions extends React.Component {
                     disabled={this.props.downloadDisabled}
                 />}
                 <Divider />
-                <MenuItem caption={t('button_unshare')}
+                {this.props.onUnshare && <MenuItem caption={t('button_unshare')}
                     icon="remove_circle_outline"
                     onClick={this.props.onUnshare}
-                />
-                <MenuItem caption={t('button_delete')}
+                />}
+                {this.props.onDelete && <MenuItem caption={t('button_delete')}
                     icon="delete"
                     onClick={this.props.onDelete} />
+                }
             </Menu>
         );
     }

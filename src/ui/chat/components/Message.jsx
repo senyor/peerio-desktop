@@ -128,10 +128,7 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
-        // !! move it to files
-        if (m.systemData.action === 'folder') {
-            return <InlineSharedFolder {...m.systemData} />;
-        }
+
         if (m.systemData.action === 'videoCall' && m.systemData.link) {
             const { link } = m.systemData;
             const shortLink = link.replace('https://', '');
@@ -231,14 +228,23 @@ class Message extends React.Component {
                                 </div>
                         }
                         <div className="message-body">
-                            {m.systemData || m.files
+                            {m.systemData || m.files || m.folders
                                 ? null
                                 : MessageComponent}
-                            {m.files && m.files.length ? (
+                            {m.files || m.folders ? (
                                 <div className="inline-files-and-optional-message">
-                                    <InlineFiles
-                                        files={m.files}
-                                        onImageLoaded={this.props.onImageLoaded} />
+                                    {m.folders
+                                        ? m.folders.map(f => {
+                                            return (<InlineSharedFolder
+                                                key={f} folderId={f}
+                                                sharedByMe={m.sender.username === User.current.username} />);
+                                        })
+                                        : null}
+                                    {m.files ?
+                                        <InlineFiles
+                                            files={m.files}
+                                            onImageLoaded={this.props.onImageLoaded} />
+                                        : null}
                                     {!!m.text &&
                                         <div className="optional-message">
                                             {MessageComponent}

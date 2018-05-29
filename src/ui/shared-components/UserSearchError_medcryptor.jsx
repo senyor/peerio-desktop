@@ -12,6 +12,11 @@ const PATIENT = 'patient';
 
 @observer
 class UserSearchError extends React.Component {
+    /*
+        This component has a unique behaviour on MC specifically in the NewChannel view.
+        It's less standard but in this case I feel better about checking the route inside this component
+        than having an additional UserPicker prop that isn't used anywhere else in the app.
+    */
     get inviteDisabled() { return routerStore.currentRoute === routerStore.ROUTES.newChannel; }
 
     options = [

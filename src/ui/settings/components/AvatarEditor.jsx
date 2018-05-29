@@ -1,7 +1,7 @@
 const React = require('react');
 const Croppie = require('croppie');
 const { observable } = require('mobx');
-const { Button } = require('~/peer-ui');
+const { Button } = require('peer-ui');
 const electron = require('electron').remote;
 const { t } = require('peerio-translator');
 

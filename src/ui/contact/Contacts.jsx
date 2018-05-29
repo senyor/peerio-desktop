@@ -1,6 +1,6 @@
 const React = require('react');
 const { t } = require('peerio-translator');
-const { List, ListItem, Tooltip } = require('~/peer-ui');
+const { List, ListItem, Tooltip } = require('peer-ui');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const { action } = require('mobx');
 const { observer } = require('mobx-react');

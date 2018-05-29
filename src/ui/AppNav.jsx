@@ -1,7 +1,7 @@
 const React = require('react');
 const { autorunAsync, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar, Divider, Menu, MenuItem } = require('~/peer-ui');
+const { Avatar, Divider, Menu, MenuItem } = require('peer-ui');
 const { User, contactStore, chatStore, fileStore } = require('peerio-icebear');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const SignoutDialog = require('~/ui/shared-components/SignoutDialog');

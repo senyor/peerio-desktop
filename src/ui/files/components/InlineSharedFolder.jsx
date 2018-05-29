@@ -8,7 +8,7 @@ const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 
-const { Button, MaterialIcon } = require('~/peer-ui');
+const { Button, MaterialIcon } = require('peer-ui');
 const SharedFolderActions = require('./SharedFolderActions');
 
 @observer

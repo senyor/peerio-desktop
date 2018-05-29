@@ -3,7 +3,7 @@ const languageStore = require('~/stores/language-store');
 const isDevEnv = require('~/helpers/is-dev-env');
 const config = require('~/config');
 const { setStringReplacement } = require('peerio-translator');
-const { Button, ProgressBar } = require('~/peer-ui');
+const { Button, ProgressBar } = require('peer-ui');
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
 const { socket, clientApp, warnings } = require('peerio-icebear');
@@ -84,7 +84,7 @@ class Root extends React.Component {
             <div>
                 <div className={`status-bar ${this.showOfflineNotification ? 'visible' : ''}`}>
                     {this.showOfflineNotification
-                        ? <ProgressBar type="circular" mode="indeterminate" theme="light small" />
+                        ? <ProgressBar type="circular" mode="indeterminate" theme="light" size="small" />
                         : null
                     }
                     #{socket.reconnectAttempt}&nbsp;{t('error_connecting')}&nbsp;

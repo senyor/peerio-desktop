@@ -1,6 +1,6 @@
 const React = require('react');
 const { fileStore, User, chatStore } = require('peerio-icebear');
-const { Button, Dialog, MaterialIcon, ProgressBar, RadioButtons } = require('~/peer-ui');
+const { Button, Dialog, MaterialIcon, ProgressBar, RadioButtons } = require('peer-ui');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const { downloadFile } = require('~/helpers/file');
 const { action, observable, when } = require('mobx');
@@ -166,7 +166,7 @@ class InlineFile extends React.Component {
         const file = this.props.file;
 
         return (
-            <Dialog active={this.imagePopupVisible} type="large" ref={this.onPopupRef}
+            <Dialog active={this.imagePopupVisible} ref={this.onPopupRef}
                 onCancel={this.hideImagePopup}
                 className="image-popup">
                 <img src={this.currentImageSrc} />

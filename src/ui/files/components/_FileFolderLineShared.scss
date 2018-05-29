@@ -89,19 +89,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     transition: 150ms;
-
-    &:hover {
-      color: $peerio-blue;
-    }
   }
 
   .file-owner {
     min-width: 20%;
     margin-left: auto;
-
-    &:hover {
-      color: $peerio-blue;
-    }
   }
 
   .file-uploaded {

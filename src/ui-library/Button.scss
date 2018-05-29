@@ -27,7 +27,8 @@
     cursor: pointer;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: $background-selected;
   }
 
@@ -41,7 +42,11 @@
     color: $text-dark-hint;
 
     .material-icons {
-      color: $text-dark-hint;
+      color: $icon-dark-inactive;
+    }
+
+    .p-custom-icon {
+      opacity: .12;
     }
   }
 
@@ -77,8 +82,8 @@
     }
 
     &:disabled {
-      color: $text-light-disabled;
-      background-color: transparent;
+      color: $text-light-default;
+      background-color: $background-disabled;
     }
   }
 
@@ -93,7 +98,8 @@
       color: $icon-dark-active;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: transparent;
 
       .material-icons {
@@ -123,7 +129,8 @@
     width: auto;
     padding: 0;
 
-    &:hover {
+    &:hover,
+    &:focus {
       // box-shadow: none;
       background-color: inherit;
     }
@@ -155,14 +162,16 @@
     padding: 0;
     vertical-align: baseline;
     font-size: inherit;
+    font-weight: 400;
     text-decoration: underline;
     text-transform: none;
-    color: inherit;
+    color: $peerio-blue;
     background-color: transparent;
   }
 
   // "No-hover" theme
-  &.no-hover:hover {
+  &.no-hover:hover,
+  &.no-hover:focus {
     background-color: inherit;
   }
 }

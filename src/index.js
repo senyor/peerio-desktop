@@ -21,28 +21,7 @@ if (isDevEnv) {
 // configure logging
 require('../build/helpers/logging');
 
-// debug aid global vars
-window.ice = require('peerio-icebear');
-// shortcut to use with promises
-window.clog = console.log.bind(console);
-window.cerr = console.error.bind(console);
-// !!!! DEBUG. !!!!!!!!!!!!!!!!!!!!!!!!!
-window.spamCounter = 0;
-window.spam = (interval = 1000, words = 10) => {
-    if (window.spamInterval) return;
-    const ice = require('peerio-icebear');
-    window.spamInterval = setInterval(() => {
-        if (!ice.chatStore.activeChat) return;
-        ice.chatStore.activeChat.sendMessage(
-            `${window.spamCounter++} ${ice.PhraseDictionary.current.getPassphrase(words)}`);
-    }, interval);
-};
-
-window.stopSpam = () => {
-    if (!window.spamInterval) return;
-    clearInterval(window.spamInterval);
-    window.spamInterval = null;
-};
+require('./debug-tools');
 
 document.addEventListener('DOMContentLoaded', () => {
     if (navigator.platform.startsWith('Linux')) {

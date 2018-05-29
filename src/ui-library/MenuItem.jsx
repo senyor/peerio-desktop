@@ -22,8 +22,13 @@ const MaterialIcon = require('./MaterialIcon');
 
 @observer
 class MenuItem extends React.Component {
+    clickHandler = (ev) => {
+        ev.stopPropagation();
+        if (!this.props.disabled) this.props.onClick(ev);
+    }
+
     render() {
-        const { value, icon, customIcon, caption, className, onClick } = this.props;
+        const { value, icon, customIcon, caption, className } = this.props;
         return (
             <div
                 value={value}
@@ -36,7 +41,7 @@ class MenuItem extends React.Component {
                         selected: this.props.selected
                     }
                 )}
-                onClick={onClick}
+                onClick={this.clickHandler}
             >
                 {icon
                     ? <MaterialIcon

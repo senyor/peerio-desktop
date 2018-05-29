@@ -21,9 +21,9 @@ class NewChannel extends React.Component {
         return User.current.channelsLeft === 0;
     }
 
-    handleAccept = () => {
+    handleAccept = async () => {
         this.waiting = true;
-        const chat = chatStore.startChat(this.userPicker.selected, true, this.channelName, this.purpose);
+        const chat = await chatStore.startChat(this.userPicker.selected, true, this.channelName, this.purpose);
         if (!chat) {
             this.waiting = false;
             return;

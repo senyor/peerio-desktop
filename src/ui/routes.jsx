@@ -14,7 +14,6 @@ const NewChannel = require('./chat/NewChannel');
 const ChannelInvite = require('./chat/components/ChannelInvite');
 const PendingDMDismissed = require('./chat/components/PendingDMDismissed');
 const Files = require('./files/Files');
-const ShareFiles = require('./files/ShareFiles');
 const Mail = require('./mail/Mail');
 const Settings = require('./settings/Settings');
 const Profile = require('./settings/components/ProfileSettings');
@@ -52,7 +51,6 @@ module.exports = (
             <Route path="zero-chats" component={ZeroChats} />
             <Route path="files" component={Files} />
             <Route path="onboarding" component={Onboarding} />
-            <Route path="sharefiles" component={ShareFiles} />
             <Route path="contacts" component={Contacts} >
                 <IndexRoute component={ContactList} />
                 <Route path="invited" component={InvitedContacts} />

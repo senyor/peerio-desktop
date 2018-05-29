@@ -8,7 +8,7 @@ const { Button, MaterialIcon } = require('peer-ui');
 @observer
 class UserSearchError extends React.Component {
     invite = () => {
-        this.props.invite();
+        this.props.onInvite();
     }
 
     render() {

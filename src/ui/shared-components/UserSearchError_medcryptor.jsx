@@ -2,6 +2,7 @@ const React = require('react');
 const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
 
+const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { Button, MaterialIcon, RadioButtons } = require('peer-ui');
@@ -11,6 +12,8 @@ const PATIENT = 'patient';
 
 @observer
 class UserSearchError extends React.Component {
+    get inviteDisabled() { return routerStore.currentRoute === routerStore.ROUTES.newChannel; }
+
     options = [
         { value: DOCTOR_OR_ADMIN, label: t('title_inviteDoctorOrAdmin') },
         { value: PATIENT, label: t('title_invitePatient') }
@@ -23,9 +26,9 @@ class UserSearchError extends React.Component {
 
     invite = () => {
         if (this.selected === DOCTOR_OR_ADMIN) {
-            this.props.invite('medcryptor-doctor');
+            this.props.onInvite('medcryptor-doctor');
         } else {
-            this.props.invite('medcryptor-patient');
+            this.props.onInvite('medcryptor-patient');
         }
     }
 
@@ -43,13 +46,13 @@ class UserSearchError extends React.Component {
                         : null
                     }
                     {this.props.suggestInviteEmail
-                        ? this.props.isChannel
+                        ? this.inviteDisabled
                             ? <T k="error_emailNotFound">{{ email: this.props.suggestInviteEmail }}</T>
                             : <T k="title_inviteContactByEmailGeneric">{{ email: this.props.suggestInviteEmail }}</T>
                         : null
                     }
                 </div>
-                {this.props.suggestInviteEmail && !this.props.isChannel
+                {this.props.suggestInviteEmail && !this.inviteDisabled
                     ? <div className="radio-container">
                         <RadioButtons
                             value={this.selected}

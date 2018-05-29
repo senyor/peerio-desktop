@@ -71,7 +71,7 @@ class PatientSidebar extends React.Component {
             id: 'id',
             name: 'Jennifer Fredrikson',
             otherParticipants: [],
-            isEmpty: true,
+            isEmpty: false,
             isNew: true
         }];
 
@@ -98,18 +98,12 @@ class PatientSidebar extends React.Component {
                             pinned: c.isFavorite
                         }
                     )}
-                    leftContent={
-                        c.isEmpty
-                            ? <div className="new-dm-avatar material-icons">help_outline</div>
-                            : null
-                        // <AvatarWithPopup
-                        //     key="a"
-                        //     contact="contact"
-                        //     size="small"
-                        //     clickable
-                        //     tooltip
-                        // />
-                    }
+                    leftContent={<div className="new-dm-avatar material-icons">
+                        {c.isEmpty
+                            ? 'help_outline'
+                            : 'people'
+                        }
+                    </div>}
 
                     onClick={this.activateChat}
                     rightContent={rightContent}

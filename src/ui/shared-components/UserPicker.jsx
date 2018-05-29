@@ -334,8 +334,7 @@ class UserPicker extends React.Component {
                                         (this.showNotFoundError && !this.suggestInviteEmail) ? this.userNotFound : null
                                     }
                                     suggestInviteEmail={this.suggestInviteEmail}
-                                    invite={this.invite}
-                                    isChannel={routerStore.isNewChannel}
+                                    onInvite={this.invite}
                                 />
                             </div>
                         }

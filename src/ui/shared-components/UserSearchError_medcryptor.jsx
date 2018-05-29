@@ -2,6 +2,7 @@ const React = require('react');
 const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
 
+const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { Button, MaterialIcon, RadioButtons } = require('peer-ui');
@@ -11,6 +12,13 @@ const PATIENT = 'patient';
 
 @observer
 class UserSearchError extends React.Component {
+    /*
+        This component has a unique behaviour on MC specifically in the NewChannel view.
+        It's less standard but in this case I feel better about checking the route inside this component
+        than having an additional UserPicker prop that isn't used anywhere else in the app.
+    */
+    get inviteDisabled() { return routerStore.currentRoute === routerStore.ROUTES.newChannel; }
+
     options = [
         { value: DOCTOR_OR_ADMIN, label: t('title_inviteDoctorOrAdmin') },
         { value: PATIENT, label: t('title_invitePatient') }
@@ -23,9 +31,9 @@ class UserSearchError extends React.Component {
 
     invite = () => {
         if (this.selected === DOCTOR_OR_ADMIN) {
-            this.props.invite('medcryptor-doctor');
+            this.props.onInvite('medcryptor-doctor');
         } else {
-            this.props.invite('medcryptor-patient');
+            this.props.onInvite('medcryptor-patient');
         }
     }
 
@@ -43,13 +51,13 @@ class UserSearchError extends React.Component {
                         : null
                     }
                     {this.props.suggestInviteEmail
-                        ? this.props.isChannel
+                        ? this.inviteDisabled
                             ? <T k="error_emailNotFound">{{ email: this.props.suggestInviteEmail }}</T>
                             : <T k="title_inviteContactByEmailGeneric">{{ email: this.props.suggestInviteEmail }}</T>
                         : null
                     }
                 </div>
-                {this.props.suggestInviteEmail && !this.props.isChannel
+                {this.props.suggestInviteEmail && !this.inviteDisabled
                     ? <div className="radio-container">
                         <RadioButtons
                             value={this.selected}

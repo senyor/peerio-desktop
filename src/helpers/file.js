@@ -11,7 +11,7 @@ function selectFolder() {
         const win = electron.getCurrentWindow();
         electron.dialog.showOpenDialog(
             win,
-            { properties: ['openDirectory'] },
+            { properties: ['openDirectory', 'treatPackageAsDirectory'] },
             folders => {
                 if (!folders || !folders.length) {
                     resolve(null);
@@ -98,9 +98,11 @@ function downloadFile(file) {
 
 function pickLocalFiles() {
     return new Promise(resolve => {
+        const props = ['openFile', 'multiSelections', 'treatPackageAsDirectory'];
+        if (process.platform !== 'linux') props.push('openDirectory');
         const win = electron.getCurrentWindow();
         electron.dialog.showOpenDialog(win, {
-            properties: ['openFile', 'multiSelections', 'openDirectory']
+            properties: ['openFile', 'multiSelections', 'openDirectory', 'treatPackageAsDirectory']
         }, resolve);
     });
 }
@@ -133,7 +135,6 @@ function getFileList(paths) {
                 return;
             }
             if (stat.isDirectory()) {
-                if (!validateDirectory(p)) return;
                 // going into recursion
                 const namesInDir = fs.readdirSync(p);
                 for (let i = 0; i < namesInDir.length; i++) namesInDir[i] = path.join(p, namesInDir[i]);
@@ -163,7 +164,6 @@ function getFileTree(filePath) {
             return filePath;
         }
         if (stat.isDirectory()) {
-            if (!validateDirectory(filePath)) return null;
             const folder = {
                 name: fileHelpers.getFileName(filePath),
                 folders: [],
@@ -191,12 +191,6 @@ function getFileTree(filePath) {
     }
 }
 
-function validateDirectory(p) {
-    if (process.platform === 'darwin' && p.substr(-4).toLowerCase() === '.app') {
-        return false;
-    }
-    return true;
-}
 
 module.exports = {
     downloadFile,

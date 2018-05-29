@@ -120,7 +120,7 @@ class FilePicker extends React.Component {
                     folder={f}
                     onChangeFolder={this.changeFolder}
                     checkbox
-                    disabledCheckbox={!canShareFolder}
+                    disabledCheckbox={!f.isShared || !canShareFolder}
                     selected={f.selected}
                     onToggleSelect={this.toggleSelectFolder}
                 /> :

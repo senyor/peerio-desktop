@@ -38,6 +38,8 @@ class RouterStore {
             pendingDMDismissed: '/app/chats/pending-dm-dismissed',
 
             patients: '/app/patients',
+            newInternalRoom: '/app/chats/new-internal-room',
+            newPatientRoom: '/app/chats/new-patient-room',
 
             onboarding: '/app/onboarding',
             mail: '/app/mail',

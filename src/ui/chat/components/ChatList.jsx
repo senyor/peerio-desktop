@@ -98,7 +98,7 @@ class ChatList extends React.Component {
                     'room-item', 'patient-item'
                 )}
                 onClick={this.testActivatePatient}
-                caption="Patient Name"
+                caption="Fredrickson, Jennifer"
             />
         );
     }
@@ -354,7 +354,7 @@ class ChatList extends React.Component {
                             {config.whiteLabel.name === 'medcryptor'
                                 ? <List>
                                     <div>
-                                        <PlusIcon onClick={this.newPatient} label={t('mcr_button_addPatient')} />
+                                        <PlusIcon onClick={this.newPatient} label={t('mcr_title_patientFiles')} />
                                         <Tooltip text={t('mcr_button_addPatient')} position="right" />
                                     </div>
                                     <FlipMove duration={200} easing="ease-in-out">

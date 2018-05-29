@@ -3,7 +3,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 
-const ChatList = require('~/ui/chat/components/ChatList');
 const PatientSidebar = require('./PatientSidebar');
 
 @observer

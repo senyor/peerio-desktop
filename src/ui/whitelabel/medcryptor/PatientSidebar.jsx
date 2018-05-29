@@ -1,53 +1,170 @@
 const React = require('react');
+const { computed } = require('mobx');
 const { observer } = require('mobx-react');
 
 const routerStore = require('~/stores/router-store');
 
 const css = require('classnames');
 const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T');
 const FlipMove = require('react-flip-move');
-const { Button, List, ListItem, Tooltip } = require('~/peer-ui');
+const { Button, List, ListItem } = require('peer-ui');
+// const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 
 @observer
 class PatientSidebar extends React.Component {
+    get isNewInternalRoom() { return routerStore.currentRoute === routerStore.ROUTES.newInternalRoom; }
+    get isNewPatientRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
+
     goBack() {
         routerStore.navigateTo(routerStore.ROUTES.chats);
     }
 
+    newInternalRoom() {
+        console.log('new internal room');
+    }
+
+    newPatientRoom() {
+        console.log('new patient room');
+    }
+
+    activateChat() {
+        console.log('activate chat');
+    }
+
+    @computed get internalRoomMap() {
+        // placeholder internal rooms objectArray
+        const rooms = [{ id: 'id', name: 'general' }];
+
+        return rooms.map(r => {
+            return (
+                <ListItem
+                    data-chatid={r.id}
+                    key={r.id || r.tempId}
+                    className={
+                        css('room-item',
+                            {
+                                active: r.active,
+                                unread: r.unreadCount > 0
+                            }
+                        )
+                    }
+                    caption={`# ${r.name}`}
+                    onClick={this.activateChat}
+                    rightContent={
+                        ((!r.active || r.newMessagesMarkerPos) && r.unreadCount > 0)
+                            ? <div className="notification">{r.unreadCount < 100 ? r.unreadCount : '99+'}</div>
+                            : null
+                    }
+                />
+            );
+        });
+    }
+
+    @computed get patientRoomMap() {
+        // placeholder patient rooms objectArray
+        const patients = [{
+            id: 'id',
+            name: 'Jennifer Fredrikson',
+            otherParticipants: []
+        }];
+
+        return patients.map(c => {
+            let rightContent = null;
+            // let contact = c.otherParticipants.length > 0
+            //     ? c.otherParticipants[0]
+            //     : c.allParticipants[0];
+            if (c.isInvite) {
+                rightContent = <T k="title_new" className="badge-new" />;
+                // contact = c.contact;
+            } else if ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0) {
+                rightContent = <div className="notification">{c.unreadCount < 100 ? c.unreadCount : '99+'}</div>;
+            }
+            return (
+                <ListItem
+                    data-chatid={c.id}
+                    key={c.id || c.tempId}
+                    className={css(
+                        'dm-item',
+                        {
+                            active: c.active,
+                            unread: c.unreadCount > 0,
+                            pinned: c.isFavorite
+                        }
+                    )}
+                    // leftContent={
+                    //     <AvatarWithPopup
+                    //         key="a"
+                    //         contact={contact}
+                    //         size="small"
+                    //         clickable
+                    //         tooltip
+                    //     />
+                    // }
+
+                    onClick={this.activateChat}
+                    rightContent={rightContent}
+                >
+                    {c.name}
+                </ListItem>
+            );
+        });
+    }
+
+
     render() {
         return (
-            <div className="feature-navigation-list patient-sidebar">
+            <div className="feature-navigation-list messages-list patient-sidebar">
                 <div className="list">
-                    <div className="navigation"><Button onClick={this.goBack} icon="arrow_back" /></div>
+                    <div className="navigate-back"><Button onClick={this.goBack} icon="arrow_back" /></div>
                     <div className="patient-name">Fredrikson, Jennifer</div>
 
-                    {/* from ChatList <List clickable>
+                    <List clickable>
                         <div>
-                            <PlusIcon onClick={this.newInternalRoom} label={t('title_directMessages')} />
-                            <Tooltip text={t('title_addDirectMessage')} position="right" />
+                            <PlusIcon onClick={this.newInternalRoom} label={t('mcr_title_internalRooms')} />
+                            {/* <Tooltip text={t('title_addDirectMessage')} position="right" /> */}
                         </div>
-                        {routerStore.isNewChat &&
+                        {this.isNewInternalRoom &&
                             <ListItem key="new chat"
                                 className={css(
-                                    'dm-item', 'new-dm-list-entry', { active: routerStore.isNewChat }
+                                    'room-item', 'new-room-list-entry',
+                                    { active: this.isNewInternalRoom }
                                 )}
                                 leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
                             >
                                 <i>{t('title_newDirectMessage')}</i>
-                                <Tooltip text={t('title_newDirectMessage')}
-                                    position="right" />
                             </ListItem>
                         }
                         <FlipMove duration={200} easing="ease-in-out">
-                            {this.dmMap}
+                            {this.internalRoomMap}
                         </FlipMove>
-                    </List> */}
+                    </List>
+
+                    <List clickable>
+                        <div>
+                            <PlusIcon onClick={this.newPatientRoom} label={t('mcr_title_patientRooms')} />
+                            {/* <Tooltip text={t('title_addDirectMessage')} position="right" /> */}
+                        </div>
+                        {this.isNewPatientRoom &&
+                            <ListItem key="new chat"
+                                className={css(
+                                    'dm-item', 'new-dm-list-entry',
+                                    { active: this.isNewPatientRoom }
+                                )}
+                                leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
+                            >
+                                <i>{t('title_newDirectMessage')}</i>
+                            </ListItem>
+                        }
+                        <FlipMove duration={200} easing="ease-in-out">
+                            {this.patientRoomMap}
+                        </FlipMove>
+                    </List>
                 </div>
             </div>
         );
     }
 }
-
 
 module.exports = PatientSidebar;

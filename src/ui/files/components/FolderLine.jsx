@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 const uiStore = require('~/stores/ui-store');
 const FolderActions = require('./FolderActions');
-const { Checkbox, CustomIcon, MaterialIcon, ProgressBar } = require('~/peer-ui');
+const { Checkbox, CustomIcon, MaterialIcon, ProgressBar } = require('peer-ui');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { User } = require('peerio-icebear');
@@ -34,7 +34,7 @@ class FolderLine extends React.Component {
 
     render() {
         const { folder } = this.props;
-        const selectDisabled = this.props.disabledCheckbox || folder.isShared;
+        const selectDisabled = this.props.disabledCheckbox;
         const { progress, progressMax, progressPercentage } = folder;
         const shareInProgress = folder.convertingToVolume || folder.convertingFromFolder;
         return (

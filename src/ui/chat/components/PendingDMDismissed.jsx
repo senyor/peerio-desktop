@@ -6,7 +6,7 @@ const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
 
-const { Button } = require('~/peer-ui');
+const { Button } = require('peer-ui');
 const EmojiImage = require('~/ui/emoji/Image');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 

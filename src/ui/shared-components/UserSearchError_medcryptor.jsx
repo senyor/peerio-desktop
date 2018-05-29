@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { Button, MaterialIcon, RadioButtons } = require('~/peer-ui');
+const { Button, MaterialIcon, RadioButtons } = require('peer-ui');
 
 const DOCTOR_OR_ADMIN = 'doctor_or_admin';
 const PATIENT = 'patient';

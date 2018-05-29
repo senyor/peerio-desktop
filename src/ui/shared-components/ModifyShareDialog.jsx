@@ -6,7 +6,7 @@ const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getContactByEvent } = require('~/helpers/icebear-dom');
-const { Avatar, Dialog, List, ListItem, Button } = require('~/peer-ui');
+const { Avatar, Dialog, List, ListItem, Button } = require('peer-ui');
 
 /**
  * onSelectContact

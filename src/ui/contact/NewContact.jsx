@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, action, when, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Input, MaterialIcon, ProgressBar } = require('~/peer-ui');
+const { Button, Input, MaterialIcon, ProgressBar } = require('peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');

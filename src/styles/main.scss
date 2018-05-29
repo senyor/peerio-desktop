@@ -5,20 +5,21 @@
 @import './static/emoji/sprites/emojione.css';
 
 // Brand/identity
-@import './vars/_branding';
+@import 'node_modules/peer-ui/src/scss/_branding';
+@import './font';
 @import './whitelabel'; // variable overrides for whitelabel releases
 
 // Variables
-@import './vars/_colors';
+@import 'node_modules/peer-ui/src/scss/_colors';
 @import './vars/_colors-white-label'; // variable overrides for whitelabel releases
-@import './vars/_grid';
-@import './vars/_layout';
-@import './vars/_shadows';
-@import './vars/transitions';
-@import './vars/_typography';
+@import 'node_modules/peer-ui/src/scss/_grid';
+@import 'node_modules/peer-ui/src/scss/_layout';
+@import 'node_modules/peer-ui/src/scss/_shadows';
+@import 'node_modules/peer-ui/src/scss/_transitions';
+@import 'node_modules/peer-ui/src/scss/_typography';
 
 // PeerUI components
-@import '../ui-library/_all';
+@import 'node_modules/peer-ui/src/components/_all';
 
 // Components that get reused between views
 @import './components/grid';

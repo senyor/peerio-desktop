@@ -2,7 +2,7 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const T = require('~/ui/shared-components/T');
 const css = require('classnames');
-const { MaterialIcon, ProgressBar } = require('~/peer-ui');
+const { MaterialIcon, ProgressBar } = require('peer-ui');
 
 @observer
 class ShareFolderProgress extends React.Component {

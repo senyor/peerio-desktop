@@ -5,8 +5,9 @@ const { observer } = require('mobx-react');
 const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
-const { systemMessages, User } = require('peerio-icebear');
-const { Avatar, Button, MaterialIcon, Menu, MenuItem } = require('~/peer-ui');
+const { contactStore, systemMessages, User } = require('peerio-icebear');
+const { Button, MaterialIcon, Menu, MenuItem } = require('peer-ui');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const { time } = require('~/helpers/formatter');
 const { chatSchema, Renderer } = require('~/helpers/chat/prosemirror/chat-schema');
 const urls = require('~/config').translator.urlMap;
@@ -128,10 +129,7 @@ class Message extends React.Component {
     renderSystemData(m) {
         // !! SECURITY: sanitize if you move this to something that renders dangerouslySetInnerHTML
         if (!m.systemData) return null;
-        // !! move it to files
-        if (m.systemData.action === 'folder') {
-            return <InlineSharedFolder {...m.systemData} />;
-        }
+
         if (m.systemData.action === 'videoCall' && m.systemData.link) {
             const { link } = m.systemData;
             const shortLink = link.replace('https://', '');
@@ -173,11 +171,10 @@ class Message extends React.Component {
         for (let i = 0; i < limit && m.receipts.length > i; i++) {
             const r = m.receipts[i];
             if (r.receipt.signatureError) continue;
-            renderMe.push(<Avatar
+            renderMe.push(<AvatarWithPopup
                 key={r.username}
-                username={r.username}
+                contact={contactStore.getContact(r.username)}
                 size="tiny"
-                clickable
                 tooltip
             />);
         }
@@ -215,7 +212,7 @@ class Message extends React.Component {
                 <div className="message-content-wrapper-inner">
                     {this.props.light
                         ? <div className="timestamp">{time.format(m.timestamp).split(' ')[0]}</div>
-                        : <Avatar contact={m.sender} size="medium" tooltip clickable />}
+                        : <AvatarWithPopup contact={m.sender} size="medium" tooltip />}
                     <div className="message-content">
                         {
                             this.props.light
@@ -231,14 +228,23 @@ class Message extends React.Component {
                                 </div>
                         }
                         <div className="message-body">
-                            {m.systemData || m.files
+                            {m.systemData || m.files || m.folders
                                 ? null
                                 : MessageComponent}
-                            {m.files && m.files.length ? (
+                            {m.files || m.folders ? (
                                 <div className="inline-files-and-optional-message">
-                                    <InlineFiles
-                                        files={m.files}
-                                        onImageLoaded={this.props.onImageLoaded} />
+                                    {m.folders
+                                        ? m.folders.map(f => {
+                                            return (<InlineSharedFolder
+                                                key={f} folderId={f}
+                                                sharedByMe={m.sender.username === User.current.username} />);
+                                        })
+                                        : null}
+                                    {m.files ?
+                                        <InlineFiles
+                                            files={m.files}
+                                            onImageLoaded={this.props.onImageLoaded} />
+                                        : null}
                                     {!!m.text &&
                                         <div className="optional-message">
                                             {MessageComponent}

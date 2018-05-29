@@ -5,7 +5,7 @@ const routerStore = require('~/stores/router-store');
 const { chatStore } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 
-const { Button } = require('~/peer-ui');
+const { Button } = require('peer-ui');
 const PendingDMHeader = require('./PendingDMHeader');
 
 @observer

@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { CustomIcon, List, ListItem } = require('~/peer-ui');
+const { CustomIcon, List, ListItem } = require('peer-ui');
 const { chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const css = require('classnames');

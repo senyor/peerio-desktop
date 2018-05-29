@@ -2,6 +2,12 @@ const { contactStore, chatStore, fileStore } = require('peerio-icebear');
 const { getAttributeInParentChain } = require('./dom');
 const { when } = require('mobx');
 
+function getVolumeByEvent(ev) {
+    const folderId = getAttributeInParentChain(ev.target, 'data-folderid');
+    const volume = fileStore.folderStore.getById(folderId);
+    return volume;
+}
+
 function getFolderByEvent(ev) {
     const folderId = getAttributeInParentChain(ev.target, 'data-folderid');
     const storeId = getAttributeInParentChain(ev.target, 'data-storeid');
@@ -25,4 +31,4 @@ async function getContactByEvent(ev) {
     return new Promise(resolve => when(() => !contact.loading, () => resolve(contact)));
 }
 
-module.exports = { getFolderByEvent, getFileByEvent, getChannelByEvent, getContactByEvent };
+module.exports = { getVolumeByEvent, getFolderByEvent, getFileByEvent, getChannelByEvent, getContactByEvent };

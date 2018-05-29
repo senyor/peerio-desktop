@@ -35,9 +35,16 @@ class PatientSidebar extends React.Component {
 
     @computed get internalRoomMap() {
         // placeholder internal rooms objectArray
-        const rooms = [{ id: 'id', name: 'general' }];
+        const rooms = [{ id: 'id', name: 'general', isNew: true }];
 
         return rooms.map(r => {
+            let rightContent = null;
+            if (r.isNew) {
+                rightContent = <T k="title_new" className="badge-new" />;
+            } else if ((!r.active || r.newMessagesMarkerPos) && r.unreadCount > 0) {
+                rightContent = <div className="notification">{r.unreadCount < 100 ? r.unreadCount : '99+'}</div>;
+            }
+
             return (
                 <ListItem
                     data-chatid={r.id}
@@ -52,11 +59,7 @@ class PatientSidebar extends React.Component {
                     }
                     caption={`# ${r.name}`}
                     onClick={this.activateChat}
-                    rightContent={
-                        ((!r.active || r.newMessagesMarkerPos) && r.unreadCount > 0)
-                            ? <div className="notification">{r.unreadCount < 100 ? r.unreadCount : '99+'}</div>
-                            : null
-                    }
+                    rightContent={rightContent}
                 />
             );
         });
@@ -67,7 +70,9 @@ class PatientSidebar extends React.Component {
         const patients = [{
             id: 'id',
             name: 'Jennifer Fredrikson',
-            otherParticipants: []
+            otherParticipants: [],
+            isEmpty: true,
+            isNew: true
         }];
 
         return patients.map(c => {
@@ -75,7 +80,7 @@ class PatientSidebar extends React.Component {
             // let contact = c.otherParticipants.length > 0
             //     ? c.otherParticipants[0]
             //     : c.allParticipants[0];
-            if (c.isInvite) {
+            if (c.isNew) {
                 rightContent = <T k="title_new" className="badge-new" />;
                 // contact = c.contact;
             } else if ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0) {
@@ -93,20 +98,26 @@ class PatientSidebar extends React.Component {
                             pinned: c.isFavorite
                         }
                     )}
-                    // leftContent={
-                    //     <AvatarWithPopup
-                    //         key="a"
-                    //         contact={contact}
-                    //         size="small"
-                    //         clickable
-                    //         tooltip
-                    //     />
-                    // }
+                    leftContent={
+                        c.isEmpty
+                            ? <div className="new-dm-avatar material-icons">help_outline</div>
+                            : null
+                        // <AvatarWithPopup
+                        //     key="a"
+                        //     contact="contact"
+                        //     size="small"
+                        //     clickable
+                        //     tooltip
+                        // />
+                    }
 
                     onClick={this.activateChat}
                     rightContent={rightContent}
                 >
-                    {c.name}
+                    {c.isEmpty
+                        ? <T k="title_noParticipants" />
+                        : c.name
+                    }
                 </ListItem>
             );
         });

@@ -56,9 +56,9 @@ module.exports = (
                 <Route path="new-chat" component={NewChat} />
                 <Route path="new-channel" component={NewChannel} />
                 <Route path="pending-dm-dismissed" component={PendingDMDismissed} />
-                <Route path="patients" component={Patient}>
-                    <IndexRoute component={PatientView} />
-                </Route>
+            </Route>
+            <Route path="patients" component={Patient}>
+                <IndexRoute component={PatientView} />
             </Route>
             <Route path="zero-chats" component={ZeroChats} />
             <Route path="files" component={Files} />

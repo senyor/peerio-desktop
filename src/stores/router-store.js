@@ -37,7 +37,7 @@ class RouterStore {
             channelInvite: '/app/chats/channel-invite',
             pendingDMDismissed: '/app/chats/pending-dm-dismissed',
 
-            patients: '/app/chats/patients',
+            patients: '/app/patients',
 
             onboarding: '/app/onboarding',
             mail: '/app/mail',

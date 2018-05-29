@@ -2,13 +2,14 @@ const React = require('react');
 const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Avatar, Button, Chip, Input, List, ListHeading, ListItem, MaterialIcon, ProgressBar } = require('~/peer-ui');
-const UserSearchError = require('~/whitelabel/components').UserSearchError;
+const { UserSearchError } = require('~/whitelabel/components');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('peerio-icebear');
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const routerStore = require('~/stores/router-store');
+const { getContactInContext } = require('~/whitelabel/functions');
 
 @observer
 class UserPicker extends React.Component {
@@ -133,7 +134,8 @@ class UserPicker extends React.Component {
 
     searchUsername(q) {
         if (!q) return null;
-        const c = contactStore.getContact(q);
+        const c = getContactInContext(q, this.props.context);
+
         if (this.isExcluded(c)) {
             this.userAlreadyAdded = this.query;
             return null;

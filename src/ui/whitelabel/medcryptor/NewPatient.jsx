@@ -1,7 +1,7 @@
 const React = require('react');
-const { observable, when } = require('mobx');
+const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, config, User } = require('peerio-icebear');
+const { config, User } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');

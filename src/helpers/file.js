@@ -6,12 +6,15 @@ const sanitize = require('sanitize-filename');
 const { t } = require('peerio-translator');
 const { fileHelpers } = require('peerio-icebear');
 
-function selectFolder() {
+function selectDownloadFolder() {
     return new Promise(resolve => {
         const win = electron.getCurrentWindow();
         electron.dialog.showOpenDialog(
             win,
-            { properties: ['openDirectory', 'treatPackageAsDirectory'] },
+            {
+                buttonLabel: t('button_download'),
+                properties: ['openDirectory', 'treatPackageAsDirectory', 'createDirectory']
+            },
             folders => {
                 if (!folders || !folders.length) {
                     resolve(null);
@@ -196,7 +199,7 @@ module.exports = {
     downloadFile,
     pickLocalFiles,
     getFileList,
-    selectFolder,
+    selectDownloadFolder,
     pickSavePath,
     getFileTree
 };

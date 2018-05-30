@@ -9,7 +9,7 @@ const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
 const ZeroScreen = require('./components/ZeroScreen');
-const { pickLocalFiles, getFileTree, selectFolder, pickSavePath } = require('~/helpers/file');
+const { pickLocalFiles, getFileTree, selectDownloadFolder, pickSavePath } = require('~/helpers/file');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const MoveFileDialog = require('./components/MoveFileDialog');
@@ -187,7 +187,7 @@ class Files extends React.Component {
 
     @action.bound async downloadFolder(ev) {
         const folder = getFolderByEvent(ev);
-        const path = await selectFolder();
+        const path = await selectDownloadFolder();
         if (!path) return;
         fileStore.bulk.downloadOne(folder, path);
     }

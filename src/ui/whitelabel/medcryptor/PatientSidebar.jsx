@@ -91,9 +91,9 @@ class PatientSidebar extends React.Component {
     }
 
     @computed get patientRoomMap() {
-        const patients = this.space.patientRooms;
+        const patientRooms = this.space.patientRooms;
 
-        return patients.map(c => {
+        return patientRooms.map(c => {
             c.isNew = true;
             c.isEmpty = false;
             let rightContent = null;

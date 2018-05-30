@@ -449,6 +449,7 @@ class Files extends React.Component {
         const data = this.items;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
+            if (f.isFolder && currentFolder.isRoot && !currentFolder.isShared && f.convertingToVolume) continue;
             items.push(f.isFolder ?
                 <FolderLine
                     key={f.id}

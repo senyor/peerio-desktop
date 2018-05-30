@@ -181,26 +181,44 @@ $zero-chats-break: 984px;
 }
 /* stylelint-enable */
 
+// Specific to Medcryptor zero state
 .zero-chats-container.medcryptor {
-  position: relative;
+  .zero-chats-content {
+    position: relative;
+  }
 
   .images {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    $zero-header-height: 120px;
     position: absolute;
     z-index: -1;
-    height: 100vh;
+    height: calc(100vh - #{$zero-header-height} - #{$padding-large});
     width: 50%;
     right: 0;
-    padding-top: $padding-xxl;
-    padding-bottom: $padding-large;
+    top: 0;
+    margin-top: $zero-header-height;
+    margin-bottom: $padding-large;
 
     img {
-      // display: block;
-      max-height: 100%;
-      max-width: 100%;
+      position: absolute;
+      height: 50%;
+      width: auto;
+      right: 0;
+      bottom: 0;
+
+      &:first-child {
+        top: 0;
+        bottom: auto;
+      }
+    }
+  }
+
+  .instructions {
+    padding: $padding-default 0;
+    margin-bottom: 0;
+
+    &.create-dms {
+      justify-content: flex-start;
+      margin-top: 0;
     }
   }
 }

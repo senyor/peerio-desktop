@@ -12,6 +12,7 @@ const { Button, List, ListItem } = require('peer-ui');
 // const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
+const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class PatientSidebar extends React.Component {
@@ -31,8 +32,11 @@ class PatientSidebar extends React.Component {
         console.log('new patient room');
     }
 
-    activateChat() {
-        console.log('activate chat');
+    activateChat = async (ev) => {
+        chatInviteStore.deactivateInvite();
+        const id = getAttributeInParentChain(ev.target, 'data-chatid');
+        routerStore.navigateTo(routerStore.ROUTES.chats);
+        chatStore.activate(id);
     }
 
     @computed get internalRoomMap() {

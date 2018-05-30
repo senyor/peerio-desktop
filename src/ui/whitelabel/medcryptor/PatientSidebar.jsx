@@ -68,16 +68,11 @@ class PatientSidebar extends React.Component {
     }
 
     @computed get patientRoomMap() {
-        // placeholder patient rooms objectArray
-        const patients = [{
-            id: 'id',
-            name: 'Jennifer Fredrikson',
-            otherParticipants: [],
-            isEmpty: false,
-            isNew: true
-        }];
+        const patients = this.space.patientRooms;
 
         return patients.map(c => {
+            c.isNew = true;
+            c.isEmpty = false;
             let rightContent = null;
             // let contact = c.otherParticipants.length > 0
             //     ? c.otherParticipants[0]

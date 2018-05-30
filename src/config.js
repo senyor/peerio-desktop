@@ -62,9 +62,15 @@ if (isDevEnv) {
 }
 
 // FOR DEV ENVIRONMENT ONLY
-// DEV MACHINE OVERRIDES SOCKET SERVER VALUE WITH THIS
-if (isDevEnv && process.env.PEERIO_STAGING_SOCKET_SERVER) {
-    cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
+if (isDevEnv) {
+    // DEV MACHINE OVERRIDES SOCKET SERVER VALUE WITH THIS
+    if (process.env.PEERIO_STAGING_SOCKET_SERVER) {
+        cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
+    }
+    // Allow overridding of whitelabel config.
+    if (process.env.PEERIO_WHITELABEL) {
+        cfg.whiteLabel.name = process.env.PEERIO_WHITELABEL;
+    }
 }
 
 // --- DIAGNOSTIC STARTUP LOG
@@ -77,6 +83,5 @@ try {
 } catch (err) {
     console.log(err);
 }
-
 
 module.exports = cfg;

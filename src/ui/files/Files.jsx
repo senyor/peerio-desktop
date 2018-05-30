@@ -46,7 +46,7 @@ class Files extends React.Component {
         };
 
         // icebear will call this function to select folder for bulk save
-        fileStore.bulk.downloadFolderSelector = selectFolder;
+        fileStore.bulk.downloadFolderSelector = selectDownloadFolder;
 
         // icebear will call this function trying to pick a file or folder name which doesn't overwrite existing file
         fileStore.bulk.pickPathSelector = pickSavePath;

@@ -11,9 +11,11 @@ const FlipMove = require('react-flip-move');
 const { Button, List, ListItem } = require('peer-ui');
 // const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
+const { chatStore, chatInviteStore } = require('peerio-icebear');
 
 @observer
 class PatientSidebar extends React.Component {
+    get space() { console.log(chatStore.spaces[0]); return chatStore.spaces[0]; }
     get isNewInternalRoom() { return routerStore.currentRoute === routerStore.ROUTES.newInternalRoom; }
     get isNewPatientRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
 
@@ -123,7 +125,7 @@ class PatientSidebar extends React.Component {
             <div className="feature-navigation-list messages-list patient-sidebar">
                 <div className="list">
                     <div className="navigate-back"><Button onClick={this.goBack} icon="arrow_back" /></div>
-                    <div className="patient-name">Fredrikson, Jennifer</div>
+                    <div className="patient-name">{this.space.spaceName}</div>
 
                     <List clickable>
                         <div>

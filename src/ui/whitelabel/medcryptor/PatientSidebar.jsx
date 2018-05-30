@@ -55,7 +55,6 @@ class PatientSidebar extends React.Component {
     activateChat = async (ev) => {
         chatInviteStore.deactivateInvite();
         const id = getAttributeInParentChain(ev.target, 'data-chatid');
-        routerStore.navigateTo(routerStore.ROUTES.chats);
         chatStore.activate(id);
     }
 

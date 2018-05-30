@@ -15,7 +15,7 @@ const { chatStore, chatInviteStore } = require('peerio-icebear');
 
 @observer
 class PatientSidebar extends React.Component {
-    get space() { console.log(chatStore.spaces[0]); return chatStore.spaces[0]; }
+    get space() { return chatStore.spaces.find(x => x.spaceId === chatStore.activeSpace); }
     get isNewInternalRoom() { return routerStore.currentRoute === routerStore.ROUTES.newInternalRoom; }
     get isNewPatientRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
 

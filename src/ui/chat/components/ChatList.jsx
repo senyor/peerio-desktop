@@ -95,6 +95,7 @@ class ChatList extends React.Component {
         return chatStore.spaces.map(space => {
             return (
                 <ListItem
+                    data-chatid={space.spaceId}
                     className={css(
                         'room-item', 'patient-item'
                     )}
@@ -299,9 +300,12 @@ class ChatList extends React.Component {
     }
 
     // TODO: remove after done testing
-    testActivatePatient = () => {
+    testActivatePatient = (ev) => {
         chatStore.deactivateCurrentChat();
         chatInviteStore.deactivateInvite();
+
+        const spaceId = getAttributeInParentChain(ev.target, 'data-chatid');
+        chatStore.activeSpace = spaceId;
         routerStore.navigateTo(routerStore.ROUTES.patients);
     }
 

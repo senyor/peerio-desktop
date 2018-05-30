@@ -47,10 +47,6 @@ class NewPatient extends React.Component {
         this.userPicker = ref;
     };
 
-    setUpgradeDialogRef = ref => {
-        this.upgradeDialog = ref;
-    };
-
     setNameInputRef = ref => {
         if (!ref) return;
         ref.focus();

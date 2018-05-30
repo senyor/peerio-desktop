@@ -6,6 +6,7 @@ let SignupLink = require('~/ui/login/SignupLink');
 let Copyright = require('~/ui/settings/components/Copyright');
 let PoweredByLogin = require('~/ui/login/PoweredBy');
 let PoweredBySettings = require('~/ui/login/PoweredBy');
+let ZeroChats = require('~/ui/chat/ZeroChats');
 
 // All whitelabels
 if (config.whiteLabel.name) {
@@ -19,6 +20,7 @@ if (config.whiteLabel.name === 'medcryptor') {
     Chat = require('~/ui/chat/Chat_medcryptor');
     UserSearchError = require('~/ui/shared-components/UserSearchError_medcryptor');
     SignupLink = require('~/ui/login/SignupLink_medcryptor');
+    ZeroChats = require('~/ui/chat/ZeroChats_medcryptor');
 }
 
 module.exports = {
@@ -27,5 +29,6 @@ module.exports = {
     SignupLink,
     Copyright,
     PoweredByLogin,
-    PoweredBySettings
+    PoweredBySettings,
+    ZeroChats
 };

@@ -10,7 +10,7 @@
     "commitmsg": "validate-commit-msg",
     "postinstall": "./scripts/postinstall.sh",
     "=== MAIN COMMANDS ===": "",
-    "start": "PEERIO_STAGING_SOCKET_SERVER=\"wss://hocuspocus.peerio.com\" npm run start-dev",
+    "start": "PEERIO_STAGING_SOCKET_SERVER=\"wss://treetrunks.peerio.com\" npm run start-dev",
     "start-medcryptor": "PEERIO_WHITELABEL=medcryptor npm start",
     "start-debug": "REMOTE_DEBUG_PORT=9222 npm run start",
     "start-latest": "git pull && npm install && npm run start",

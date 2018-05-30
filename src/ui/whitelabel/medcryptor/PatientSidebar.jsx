@@ -40,10 +40,9 @@ class PatientSidebar extends React.Component {
     }
 
     @computed get internalRoomMap() {
-        // placeholder internal rooms objectArray
-        const rooms = [{ id: 'id', name: 'general', isNew: true }];
+        const internalRooms = this.space.internalRooms;
 
-        return rooms.map(r => {
+        return internalRooms.map(r => {
             let rightContent = null;
             if (r.isNew) {
                 rightContent = <T k="title_new" className="badge-new" />;

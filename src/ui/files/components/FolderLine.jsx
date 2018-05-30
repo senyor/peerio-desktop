@@ -70,9 +70,9 @@ class FolderLine extends React.Component {
 
                     <div className="file-icon"
                         onClick={this.props.onChangeFolder} >
-                        {!folder.canShare
-                            ? <CustomIcon icon="folder-shared" hover selected={this.props.selected} />
-                            : <MaterialIcon icon="folder" />
+                        {folder.canShare
+                            ? <MaterialIcon icon="folder" />
+                            : <CustomIcon icon="folder-shared" hover selected={this.props.selected} />
                         }
                     </div>
 
@@ -104,7 +104,7 @@ class FolderLine extends React.Component {
                                 onMove={folder.isShared ? null : this.props.onMoveFolder}
                                 onDelete={this.props.onDeleteFolder}
                                 deleteDisabled={folder.isBlocked}
-                                onShare={folder.canShare ? this.props.onShare : null}
+                                onShare={(folder.isShared || folder.canShare) ? this.props.onShare : null}
                                 data-folderid={folder.id}
                                 data-storeid={folder.store.id}
                                 disabled={this.props.selected}

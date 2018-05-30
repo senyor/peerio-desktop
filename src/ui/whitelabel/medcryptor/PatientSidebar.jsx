@@ -11,9 +11,12 @@ const FlipMove = require('react-flip-move');
 const { Button, List, ListItem } = require('peer-ui');
 // const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
+const { chatStore, chatInviteStore } = require('peerio-icebear');
+const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class PatientSidebar extends React.Component {
+    get space() { return chatStore.spaces.find(x => x.spaceId === chatStore.activeSpace); }
     get isNewInternalRoom() { return routerStore.currentRoute === routerStore.ROUTES.newInternalRoom; }
     get isNewPatientRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
 
@@ -21,23 +24,44 @@ class PatientSidebar extends React.Component {
         routerStore.navigateTo(routerStore.ROUTES.chats);
     }
 
-    newInternalRoom() {
-        console.log('new internal room');
+    getSpaceForNewRoom = () => {
+        return {
+            spaceId: this.space.spaceId,
+            spaceName: this.space.spaceName,
+            spaceDescription: this.space.spaceDescription
+        };
     }
 
-    newPatientRoom() {
-        console.log('new patient room');
+    newInternalRoom = () => {
+        const roomSpace = this.getSpaceForNewRoom();
+        roomSpace.spaceRoomType = 'internal';
+
+        const newRoomParticipants = [];
+        const newRoomName = 'test-space-1';
+        const newRoomDescription = 'test-space-1';
+        return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
     }
 
-    activateChat() {
-        console.log('activate chat');
+    newPatientRoom = () => {
+        const roomSpace = this.getSpaceForNewRoom();
+        roomSpace.spaceRoomType = 'patient';
+
+        const newRoomParticipants = [];
+        const newRoomName = 'test-space-2';
+        const newRoomDescription = 'test-space-2';
+        return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
+    }
+
+    activateChat = async (ev) => {
+        chatInviteStore.deactivateInvite();
+        const id = getAttributeInParentChain(ev.target, 'data-chatid');
+        chatStore.activate(id);
     }
 
     @computed get internalRoomMap() {
-        // placeholder internal rooms objectArray
-        const rooms = [{ id: 'id', name: 'general', isNew: true }];
+        const internalRooms = this.space.internalRooms;
 
-        return rooms.map(r => {
+        return internalRooms.map(r => {
             let rightContent = null;
             if (r.isNew) {
                 rightContent = <T k="title_new" className="badge-new" />;
@@ -66,16 +90,11 @@ class PatientSidebar extends React.Component {
     }
 
     @computed get patientRoomMap() {
-        // placeholder patient rooms objectArray
-        const patients = [{
-            id: 'id',
-            name: 'Jennifer Fredrikson',
-            otherParticipants: [],
-            isEmpty: false,
-            isNew: true
-        }];
+        const patientRooms = this.space.patientRooms;
 
-        return patients.map(c => {
+        return patientRooms.map(c => {
+            c.isNew = true;
+            c.isEmpty = false;
             let rightContent = null;
             // let contact = c.otherParticipants.length > 0
             //     ? c.otherParticipants[0]
@@ -123,7 +142,7 @@ class PatientSidebar extends React.Component {
             <div className="feature-navigation-list messages-list patient-sidebar">
                 <div className="list">
                     <div className="navigate-back"><Button onClick={this.goBack} icon="arrow_back" /></div>
-                    <div className="patient-name">Fredrikson, Jennifer</div>
+                    <div className="patient-name">{this.space.spaceName}</div>
 
                     <List clickable>
                         <div>

@@ -92,15 +92,19 @@ class ChatList extends React.Component {
     // Buildling patient list
     // TODO: this will throw off `this.unreadPositions`!
     @computed get patientsMap() {
-        return (
-            <ListItem
-                className={css(
-                    'room-item', 'patient-item'
-                )}
-                onClick={this.testActivatePatient}
-                caption="Fredrickson, Jennifer"
-            />
-        );
+        return chatStore.spaces.map(space => {
+            return (
+                <ListItem
+                    data-chatid={space.spaceId}
+                    className={css(
+                        'room-item', 'patient-item'
+                    )}
+                    onClick={this.testActivatePatient}
+                    caption={space.spaceName}
+                    key={space.spaceName}
+                />
+            );
+        });
     }
 
     // Building the DM list
@@ -296,9 +300,12 @@ class ChatList extends React.Component {
     }
 
     // TODO: remove after done testing
-    testActivatePatient = () => {
+    testActivatePatient = (ev) => {
         chatStore.deactivateCurrentChat();
         chatInviteStore.deactivateInvite();
+
+        const spaceId = getAttributeInParentChain(ev.target, 'data-chatid');
+        chatStore.activeSpace = spaceId;
         routerStore.navigateTo(routerStore.ROUTES.patients);
     }
 

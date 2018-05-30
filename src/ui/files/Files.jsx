@@ -361,6 +361,7 @@ class Files extends React.Component {
                     onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
                     onShare={this.shareFolder}
+                    onDownload={this.downloadFolder}
                     bulkSelected={this.selectedCount}
                 />
                 {this.selectedCount > 0

@@ -15,7 +15,6 @@ class Breadcrumb extends React.Component {
             folderPath.unshift(iterator);
             iterator = iterator.parent;
         } while (iterator);
-        console.log('folderpath', folderPath);
         return folderPath;
     }
 

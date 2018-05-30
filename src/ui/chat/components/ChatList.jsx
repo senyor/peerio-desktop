@@ -92,15 +92,18 @@ class ChatList extends React.Component {
     // Buildling patient list
     // TODO: this will throw off `this.unreadPositions`!
     @computed get patientsMap() {
-        return (
-            <ListItem
-                className={css(
-                    'room-item', 'patient-item'
-                )}
-                onClick={this.testActivatePatient}
-                caption="Fredrickson, Jennifer"
-            />
-        );
+        return chatStore.spaces.map(space => {
+            return (
+                <ListItem
+                    className={css(
+                        'room-item', 'patient-item'
+                    )}
+                    onClick={this.testActivatePatient}
+                    caption={space.spaceName}
+                    key={space.spaceName}
+                />
+            );
+        });
     }
 
     // Building the DM list

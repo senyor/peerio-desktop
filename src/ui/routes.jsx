@@ -6,11 +6,7 @@ const Onboarding = require('./Onboarding');
 const Login = require('./login/Login');
 const Signup = require('./signup/Signup');
 const Loading = require('./Loading');
-
-// TODO: is it clunky for the entire Chat to be routed via whitelabel/components.js?
-const { Chat } = require('~/whitelabel/components');
-
-const ZeroChats = require('./chat/ZeroChats');
+const { Chat, ZeroChats } = require('~/whitelabel/components');
 const NewChat = require('./chat/NewChat');
 const ChatView = require('./chat/ChatView');
 const NewChannel = require('./chat/NewChannel');

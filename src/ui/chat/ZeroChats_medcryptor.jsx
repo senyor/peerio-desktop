@@ -28,13 +28,18 @@ class ZeroChats extends React.Component {
         routerStore.navigateTo(routerStore.ROUTES.newChat);
     }
 
+    goToAddPatient() {
+        console.log('add patient');
+        // routerStore.navigateTo(routerStore.ROUTES.newPatient);
+    }
+
     goToAddChannel() {
         routerStore.navigateTo(routerStore.ROUTES.newChannel);
     }
 
     render() {
         return (
-            <div className="zero-chats-container">
+            <div className="zero-chats-container medcryptor">
                 <div className="zero-chats-content">
                     <div className="header">
                         <T k="title_zeroChat" tag="div" className="welcome-title" />
@@ -48,34 +53,40 @@ class ZeroChats extends React.Component {
                                     <PlusIcon onClick={this.goToAddChannel} label={t('button_createRooms')} />
                                 </div>
                                 <div className="text-description">
-                                    <T k="title_roomsDescription1" tag="div" className="description-large" />
-                                    <T k="title_roomsDescription2" tag="div" className="description-small" />
-                                    <T k="title_roomsDescription3" tag="div" className="description-small" />
+                                    <T k="mcr_title_roomsDescription1" tag="div" className="description-large" />
+                                    <T k="mcr_title_roomsDescription2" tag="div" className="description-small" />
                                 </div>
                             </div>
-                            <div className="image">
-                                <img src="./static/img/zero-state-rooms.png" />
-                                <img src="./static/img/zero-state-bg-rooms.png" className="background" />
+                        </div>
+
+                        <div className="instructions add-patient">
+                            <div className="text">
+                                <div className="text-header">
+                                    <PlusIcon onClick={this.goToAddPatient} label={t('mcr_button_addPatient')} />
+                                </div>
+                                <div className="text-description">
+                                    <T k="mcr_title_addPatientDescription1" tag="div" className="description-large" />
+                                    <T k="mcr_title_addPatientDescription2" tag="div" className="description-small" />
+                                </div>
                             </div>
                         </div>
 
                         <div className="instructions create-dms">
-                            <div className="image">
-                                <img src="./static/img/zero-state-dms.png" />
-                                <img src="./static/img/zero-state-bg-dms.png" className="background" />
-                            </div>
                             <div className="text">
                                 <div className="text-header">
                                     <PlusIcon onClick={this.goToAddChat} label={t('button_createDMs')} />
                                 </div>
                                 <div className="text-description">
-                                    <T k="title_dmDescription1" tag="div" className="description-large" />
-                                    <T k="title_dmDescription2" tag="div" className="description-small" />
-                                    <T k="title_dmDescription3" tag="div" className="description-small" />
+                                    <T k="mcr_title_dmDescription1" tag="div" className="description-large" />
+                                    <T k="mcr_title_dmDescription2" tag="div" className="description-small" />
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="images">
+                    <img src="./static/img/zero-state-rooms.png" />
+                    <img src="./static/img/zero-state-dms.png" />
                 </div>
             </div>
         );

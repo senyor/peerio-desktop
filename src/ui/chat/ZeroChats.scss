@@ -180,3 +180,27 @@ $zero-chats-break: 984px;
   }
 }
 /* stylelint-enable */
+
+.zero-chats-container.medcryptor {
+  position: relative;
+
+  .images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: -1;
+    height: 100vh;
+    width: 50%;
+    right: 0;
+    padding-top: $padding-xxl;
+    padding-bottom: $padding-large;
+
+    img {
+      // display: block;
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+}

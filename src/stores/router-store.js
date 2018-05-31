@@ -26,7 +26,9 @@ class RouterStore {
 
     get isNewChat() { return this.currentRoute === this.ROUTES.newChat; }
     get isNewChannel() { return this.currentRoute === this.ROUTES.newChannel; }
-    get isNewPatient() { return this.currentRoute === this.ROUTES.newPatient; }
+    get isPatientSpace() {
+        return this.currentRoute === this.ROUTES.newPatient || this.currentRoute.startsWith('/app/patients');
+    }
 
     get ROUTES() {
         return {
@@ -38,9 +40,8 @@ class RouterStore {
             channelInvite: '/app/chats/channel-invite',
             pendingDMDismissed: '/app/chats/pending-dm-dismissed',
 
-            newPatient: 'app/chats/new-patient',
+            newPatient: '/app/chats/new-patient',
             patients: '/app/patients',
-            patientZeroChats: '/app/patients/patient-zero-chats',
             newInternalRoom: '/app/patients/new-internal-room',
             newPatientRoom: '/app/patients/new-patient-room',
 

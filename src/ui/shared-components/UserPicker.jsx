@@ -290,7 +290,7 @@ class UserPicker extends React.Component {
                                                 placeholder={
                                                     routerStore.isNewChannel
                                                         ? t('title_Members')
-                                                        : routerStore.isNewPatient
+                                                        : routerStore.isPatientSpace
                                                             ? t('mcr_title_newPatientRecord')
                                                             : t('title_userSearch')
                                                 }
@@ -311,13 +311,13 @@ class UserPicker extends React.Component {
                                         }
                                     </div>
                                 </div>
-                                {(routerStore.isNewChannel || routerStore.isNewPatient) &&
+                                {(routerStore.isNewChannel || routerStore.isPatientSpace) &&
                                     <div className="helper-text">
                                         <T k="title_userSearch" />. <T k="title_optional" />
                                     </div>
                                 }
                             </div>
-                            {(routerStore.isNewChannel || routerStore.isNewPatient) &&
+                            {(routerStore.isNewChannel || routerStore.isPatientSpace) &&
                                 <div className="new-channel-button-container">
                                     <Button
                                         label={t('button_open')}

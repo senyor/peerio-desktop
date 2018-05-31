@@ -18,7 +18,7 @@ const { getAttributeInParentChain } = require('~/helpers/dom');
 class PatientSidebar extends React.Component {
     get space() { return chatStore.spaces.find(x => x.spaceId === chatStore.activeSpace); }
     get isNewInternalRoom() { return routerStore.currentRoute === routerStore.ROUTES.newInternalRoom; }
-    get isNewPatientRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
+    get isPatientSpaceRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
 
     goBack() {
         routerStore.navigateTo(routerStore.ROUTES.chats);
@@ -170,11 +170,11 @@ class PatientSidebar extends React.Component {
                             <PlusIcon onClick={this.newPatientRoom} label={t('mcr_title_patientRooms')} />
                             {/* <Tooltip text={t('title_addDirectMessage')} position="right" /> */}
                         </div>
-                        {this.isNewPatientRoom &&
+                        {this.isPatientSpaceRoom &&
                             <ListItem key="new chat"
                                 className={css(
                                     'dm-item', 'new-dm-list-entry',
-                                    { active: this.isNewPatientRoom }
+                                    { active: this.isPatientSpaceRoom }
                                 )}
                                 leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
                             >

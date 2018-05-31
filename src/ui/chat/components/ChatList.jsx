@@ -363,7 +363,7 @@ class ChatList extends React.Component {
                                         <Tooltip text={t('mcr_button_addPatient')} position="right" />
                                     </div>
                                     <FlipMove duration={200} easing="ease-in-out">
-                                        {routerStore.isNewPatient &&
+                                        {routerStore.isPatientSpace &&
                                             <ListItem key="new patient"
                                                 className="room-item new-room-entry active"
                                                 caption={`# ${t('mcr_title_newPatient')}`}

@@ -56,6 +56,8 @@ module.exports = (
             </Route>
             <Route path="patients" component={Patient}>
                 <IndexRoute component={ChatView} />
+                <Route path="new-internal-room" component={NewChannel} />
+                <Route path="new-patient-room" component={NewChannel} />
             </Route>
             <Route path="zero-chats" component={ZeroChats} />
             <Route path="files" component={Files} />

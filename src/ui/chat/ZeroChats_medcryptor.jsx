@@ -3,6 +3,7 @@ const { when } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
+const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
@@ -38,10 +39,16 @@ class ZeroChats extends React.Component {
 
     render() {
         return (
-            <div className="zero-chats-container medcryptor">
+            <div className={css(
+                'zero-chats-container', 'medcryptor',
+                { condensed: this.props.condensed }
+            )}>
                 <div className="zero-chats-content">
                     <div className="header">
-                        <T k="title_zeroChat" tag="div" className="welcome-title" />
+                        <T k={this.props.condensed ? 'title_startConversations' : 'title_zeroChat'}
+                            tag="div"
+                            className="welcome-title"
+                        />
                         <T k="title_zeroChatSubtitle" tag="div" className="subtitle" />
                     </div>
 
@@ -82,10 +89,13 @@ class ZeroChats extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="images">
-                        <img src="./static/img/zero-state-rooms.png" />
-                        <img src="./static/img/zero-state-dms.png" />
-                    </div>
+                    {this.props.condensed
+                        ? null
+                        : <div className="images">
+                            <img src="./static/img/zero-state-rooms.png" />
+                            <img src="./static/img/zero-state-dms.png" />
+                        </div>
+                    }
                 </div>
             </div>
         );

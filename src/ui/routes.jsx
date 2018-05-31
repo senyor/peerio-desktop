@@ -18,6 +18,7 @@ const PendingDMDismissed = require('./chat/components/PendingDMDismissed');
 const Patient = require('./whitelabel/medcryptor/Patient');
 const PatientView = require('./whitelabel/medcryptor/PatientView');
 const NewPatient = require('./whitelabel/medcryptor/NewPatient');
+const PatientZeroChats = require('./whitelabel/medcryptor/PatientZeroChats');
 
 const Files = require('./files/Files');
 const Mail = require('./mail/Mail');
@@ -57,6 +58,7 @@ module.exports = (
             </Route>
             <Route path="patients" component={Patient}>
                 <IndexRoute component={PatientView} />
+                <Route path="patient-zero-chats" component={PatientZeroChats} />
             </Route>
             <Route path="zero-chats" component={ZeroChats} />
             <Route path="files" component={Files} />

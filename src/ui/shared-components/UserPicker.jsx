@@ -9,7 +9,6 @@ const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const routerStore = require('~/stores/router-store');
-const { getContactInContext } = require('~/whitelabel/functions');
 
 @observer
 class UserPicker extends React.Component {
@@ -134,7 +133,7 @@ class UserPicker extends React.Component {
 
     searchUsername(q) {
         if (!q) return null;
-        const c = getContactInContext(q, this.props.context);
+        const c = contactStore.whitelabel.getContact(q, this.props.context);
 
         if (this.isExcluded(c)) {
             this.userAlreadyAdded = this.query;

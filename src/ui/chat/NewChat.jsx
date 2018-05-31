@@ -62,6 +62,7 @@ class NewChat extends React.Component {
                         onAccept={this.handleAccept}
                         onClose={this.handleClose}
                         isDM
+                        context="newchat"
                     />
                 </div>
                 <FullCoverLoader show={this.waiting} />

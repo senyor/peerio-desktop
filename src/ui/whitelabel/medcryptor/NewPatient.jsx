@@ -43,7 +43,7 @@ class NewPatient extends React.Component {
             this.waiting = false;
             return;
         }
-        
+
         when(() => internalRoom.added && patientRoom.added, () => {
             window.router.push('/app/chats'); //  should go to patient space zero screen
         });

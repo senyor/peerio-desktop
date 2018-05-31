@@ -39,11 +39,11 @@ class NewPatient extends React.Component {
         // const chat = await chatStore.startChat(this.userPicker.selected, true, this.spaceName, this.purpose);
         const patientRoom = await chatStore.startChat([], true, this.patientRoomName, '', true, newSpace);
 
-        if (!internalRoom && !patientRoom) {
+        if (!internalRoom && patientRoom) {
             this.waiting = false;
             return;
         }
-
+        
         when(() => internalRoom.added && patientRoom.added, () => {
             window.router.push('/app/chats'); //  should go to patient space zero screen
         });

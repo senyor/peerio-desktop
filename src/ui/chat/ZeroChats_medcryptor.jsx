@@ -29,8 +29,7 @@ class ZeroChats extends React.Component {
     }
 
     goToAddPatient() {
-        console.log('add patient');
-        // routerStore.navigateTo(routerStore.ROUTES.newPatient);
+        routerStore.navigateTo(routerStore.ROUTES.newPatient);
     }
 
     goToAddChannel() {
@@ -83,10 +82,10 @@ class ZeroChats extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="images">
-                    <img src="./static/img/zero-state-rooms.png" />
-                    <img src="./static/img/zero-state-dms.png" />
+                    <div className="images">
+                        <img src="./static/img/zero-state-rooms.png" />
+                        <img src="./static/img/zero-state-dms.png" />
+                    </div>
                 </div>
             </div>
         );

@@ -99,7 +99,7 @@ class ChatList extends React.Component {
                     className={css(
                         'room-item', 'patient-item'
                     )}
-                    onClick={this.testActivatePatient}
+                    onClick={this.activatePatient}
                     caption={space.spaceName}
                     key={space.spaceName}
                 />
@@ -292,15 +292,13 @@ class ChatList extends React.Component {
     };
 
     newPatient = () => {
-        console.log('new patient');
-
         chatStore.deactivateCurrentChat();
         chatInviteStore.deactivateInvite();
-        // routerStore.navigateTo(routerStore.ROUTES.newPatient);
+        routerStore.navigateTo(routerStore.ROUTES.newPatient);
     }
 
     // TODO: remove after done testing
-    testActivatePatient = (ev) => {
+    activatePatient = (ev) => {
         chatStore.deactivateCurrentChat();
         chatInviteStore.deactivateInvite();
 
@@ -365,6 +363,12 @@ class ChatList extends React.Component {
                                         <Tooltip text={t('mcr_button_addPatient')} position="right" />
                                     </div>
                                     <FlipMove duration={200} easing="ease-in-out">
+                                        {routerStore.isNewPatient &&
+                                            <ListItem key="new patient"
+                                                className="room-item new-room-entry active"
+                                                caption={`# ${t('mcr_title_newPatient')}`}
+                                            />
+                                        }
                                         {this.patientsMap}
                                     </FlipMove>
                                 </List>

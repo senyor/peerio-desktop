@@ -290,7 +290,9 @@ class UserPicker extends React.Component {
                                                 placeholder={
                                                     routerStore.isNewChannel
                                                         ? t('title_Members')
-                                                        : t('title_userSearch')
+                                                        : routerStore.isNewPatient
+                                                            ? t('mcr_title_newPatientRecord')
+                                                            : t('title_userSearch')
                                                 }
                                                 value={this.query} onChange={this.handleTextChange}
                                                 onKeyDown={this.handleKeyDown} />
@@ -309,13 +311,13 @@ class UserPicker extends React.Component {
                                         }
                                     </div>
                                 </div>
-                                {routerStore.isNewChannel &&
+                                {(routerStore.isNewChannel || routerStore.isNewPatient) &&
                                     <div className="helper-text">
                                         <T k="title_userSearch" />. <T k="title_optional" />
                                     </div>
                                 }
                             </div>
-                            {routerStore.isNewChannel &&
+                            {(routerStore.isNewChannel || routerStore.isNewPatient) &&
                                 <div className="new-channel-button-container">
                                     <Button
                                         label={t('button_open')}

@@ -40,6 +40,7 @@ class RouterStore {
 
             newPatient: 'app/chats/new-patient',
             patients: '/app/patients',
+            patientZeroChats: '/app/patients/patient-zero-chats',
             newInternalRoom: '/app/patients/new-internal-room',
             newPatientRoom: '/app/patients/new-patient-room',
 

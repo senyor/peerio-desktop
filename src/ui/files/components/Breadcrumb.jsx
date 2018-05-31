@@ -130,6 +130,7 @@ class Breadcrumb extends React.Component {
 
     render() {
         const { folderPath } = this;
+        const currentFolder = this.props.currentFolder;
         return (
             <div className="breadcrumb-container">
                 {this.props.bulkSelected
@@ -140,14 +141,14 @@ class Breadcrumb extends React.Component {
                             </a>
                             <MaterialIcon icon="keyboard_arrow_right" />
                         </div>
-                        {!this.props.currentFolder.isRoot
-                            ? <div className="breadcrumb-entry">
+                        {currentFolder.isRoot && !currentFolder.isShared
+                            ? null
+                            : <div className="breadcrumb-entry">
                                 <span className="folder-name">
                                     ...
                                 </span>
                                 <MaterialIcon icon="keyboard_arrow_right" />
                             </div>
-                            : null
                         }
                         <div className="breadcrumb-entry">
                             <span className="folder-name selected-count">
@@ -173,15 +174,17 @@ class Breadcrumb extends React.Component {
                         ))}
                     </div>
                 }
-                {!this.props.currentFolder.isRoot && !this.props.noActions && !this.props.bulkSelected &&
-                    <FolderActions
-                        data-folderid={this.props.currentFolder.id}
-                        data-storeid={this.props.currentFolder.store.id}
+                {(currentFolder.isRoot && !currentFolder.isShared) || this.props.noActions || this.props.bulkSelected
+                    ? null
+                    : <FolderActions
+                        data-folderid={currentFolder.id}
+                        data-storeid={currentFolder.store.id}
                         moveable
-                        onMove={this.props.onMove}
+                        onMove={currentFolder.isShared ? null : this.props.onMoveFolder}
                         onDelete={this.props.onDelete}
                         onRename={this.props.onRename}
-                        onShare={this.props.onShare}
+                        onShare={(currentFolder.isShared || currentFolder.canShare) ? this.props.onShare : null}
+                        onDownload={this.props.onDownload}
                         position="top-right"
                     />
                 }

@@ -8,6 +8,7 @@ const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerific
 
 class PendingDMHeader extends React.Component {
     render() {
+        const c = this.props.contact;
         return (
             <div className="pending-dm-header">
                 <EmojiImage emoji="tada" size="large" />
@@ -18,12 +19,12 @@ class PendingDMHeader extends React.Component {
                         : 'title_dmInviteHeading'
                     }
                 >
-                    {{ contactName: this.props.contact.fullName }}
+                    {{ contactName: c.fullName }}
                 </T>
 
                 <div className="user-profile-container">
-                    <AvatarWithPopup username={this.props.contact.username} size="large" />
-                    <div className="username">@{this.props.contact.username}</div>
+                    <AvatarWithPopup contact={c} size="large" />
+                    <div className="username">@{c.username}</div>
                 </div>
 
                 <IdentityVerificationNotice />

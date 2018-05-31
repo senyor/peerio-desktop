@@ -17,7 +17,6 @@ class Chat extends React.Component {
     }
 
     render() {
-        console.log(chatStore.activeChat);
         return (
             <div className="messages">
                 <ChatList />

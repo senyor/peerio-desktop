@@ -1,16 +1,19 @@
 const React = require('react');
-const { observable } = require('mobx');
+const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { config, User } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { Input, ProgressBar } = require('peer-ui');
+const { chatStore } = require('peerio-icebear');
 
 @observer
 class NewPatient extends React.Component {
     @observable waiting = false;
     @observable spaceName = '';
+    internalRoomName = 'general';
+    patientRoomName = 'No participants';
 
     componentDidMount() {
         if (this.isLimitReached) this.upgradeDialog.show();
@@ -22,17 +25,28 @@ class NewPatient extends React.Component {
 
     handleAccept = async () => {
         this.waiting = true;
-        console.log('handleAccept()');
 
-        // // From NewChannel.jsx
+        const newSpace = {
+            spaceId: null,
+            spaceName: this.spaceName,
+            spaceDescription: ''
+        };
+
+        newSpace.spaceRoomType = 'internal';
+        const internalRoom = await chatStore.startChat([], true, this.internalRoomName, '', true, newSpace);
+
+        newSpace.spaceRoomType = 'patient';
         // const chat = await chatStore.startChat(this.userPicker.selected, true, this.spaceName, this.purpose);
-        // if (!chat) {
-        //     this.waiting = false;
-        //     return;
-        // }
-        // when(() => chat.added === true, () => {
-        //     window.router.push('/app/chats');
-        // });
+        const patientRoom = await chatStore.startChat([], true, this.patientRoomName, '', true, newSpace);
+
+        if (!internalRoom && patientRoom) {
+            this.waiting = false;
+            return;
+        }
+        
+        when(() => internalRoom.added && patientRoom.added, () => {
+            window.router.push('/app/chats'); //  should go to patient space zero screen
+        });
     };
 
     gotoNewChannel() {

@@ -9,7 +9,6 @@ const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const FlipMove = require('react-flip-move');
 const { Button, List, ListItem } = require('peer-ui');
-// const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -96,12 +95,8 @@ class PatientSidebar extends React.Component {
             c.isNew = true;
             c.isEmpty = false;
             let rightContent = null;
-            // let contact = c.otherParticipants.length > 0
-            //     ? c.otherParticipants[0]
-            //     : c.allParticipants[0];
             if (c.isNew) {
                 rightContent = <T k="title_new" className="badge-new" />;
-                // contact = c.contact;
             } else if ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0) {
                 rightContent = <div className="notification">{c.unreadCount < 100 ? c.unreadCount : '99+'}</div>;
             }

@@ -78,7 +78,9 @@ class ChannelInvite extends React.Component {
             const participant = participants[i];
 
             if (participant !== username && participant !== User.current.username) {
-                participantsToShow.push(<AvatarWithPopup key={participant} username={participant} tooltip />);
+                participantsToShow.push(
+                    <AvatarWithPopup key={participant} contact={contactStore.getContact(participant)} tooltip />
+                );
             }
         }
 

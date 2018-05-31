@@ -99,7 +99,7 @@ class ShareWithMultipleDialog extends React.Component {
         return this.existingUsers.map(c => (
             <Avatar
                 key={c.username}
-                username={c.username}
+                contact={c}
                 size="tiny"
                 clickable
                 tooltip
@@ -129,7 +129,8 @@ class ShareWithMultipleDialog extends React.Component {
             <div>
                 {
                     item && item.isFolder
-                        ? <ModifyShareDialog ref={this.setModifyShareDialogRef} folder={item} />
+                        ? <ModifyShareDialog ref={this.setModifyShareDialogRef} folder={item}
+                            contacts={this.existingUsers} />
                         : null
                 }
                 <Dialog active noAnimation

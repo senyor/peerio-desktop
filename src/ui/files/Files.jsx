@@ -9,7 +9,7 @@ const Breadcrumb = require('./components/Breadcrumb');
 const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
 const ZeroScreen = require('./components/ZeroScreen');
-const { pickLocalFiles, getFileTree, selectFolder, pickSavePath } = require('~/helpers/file');
+const { pickLocalFiles, getFileTree, selectDownloadFolder, pickSavePath } = require('~/helpers/file');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const MoveFileDialog = require('./components/MoveFileDialog');
@@ -46,7 +46,7 @@ class Files extends React.Component {
         };
 
         // icebear will call this function to select folder for bulk save
-        fileStore.bulk.downloadFolderSelector = selectFolder;
+        fileStore.bulk.downloadFolderSelector = selectDownloadFolder;
 
         // icebear will call this function trying to pick a file or folder name which doesn't overwrite existing file
         fileStore.bulk.pickPathSelector = pickSavePath;
@@ -187,7 +187,7 @@ class Files extends React.Component {
 
     @action.bound async downloadFolder(ev) {
         const folder = getFolderByEvent(ev);
-        const path = await selectFolder();
+        const path = await selectDownloadFolder();
         if (!path) return;
         fileStore.bulk.downloadOne(folder, path);
     }
@@ -361,6 +361,7 @@ class Files extends React.Component {
                     onDelete={this.deleteFolder}
                     onRename={this.showRenameFolderPopup}
                     onShare={this.shareFolder}
+                    onDownload={this.downloadFolder}
                     bulkSelected={this.selectedCount}
                 />
                 {this.selectedCount > 0
@@ -448,6 +449,7 @@ class Files extends React.Component {
         const data = this.items;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
+            if (f.isFolder && currentFolder.isRoot && !currentFolder.isShared && f.convertingToVolume) continue;
             items.push(f.isFolder ?
                 <FolderLine
                     key={f.id}

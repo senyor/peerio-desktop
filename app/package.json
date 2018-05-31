@@ -82,6 +82,7 @@
     "mobx-react": "4.4.2",
     "normalize.css": "7.0.0",
     "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
+    "peer-ui": "github:PeerioTechnologies/ui-library#master",
     "prosemirror-commands": "1.0.1",
     "prosemirror-dropcursor": "1.0.0",
     "prosemirror-gapcursor": "1.0.0",

@@ -16,7 +16,6 @@ const PendingDMDismissed = require('./chat/components/PendingDMDismissed');
 // TODO: this can either be whitelabel components folder,
 // or put these components with regular Chat and route via whitelabel/components.js
 const Patient = require('./whitelabel/medcryptor/Patient');
-const PatientView = require('./whitelabel/medcryptor/PatientView');
 const NewPatient = require('./whitelabel/medcryptor/NewPatient');
 const PatientZeroChats = require('./whitelabel/medcryptor/PatientZeroChats');
 
@@ -57,7 +56,7 @@ module.exports = (
                 <Route path="new-patient" component={NewPatient} />
             </Route>
             <Route path="patients" component={Patient}>
-                <IndexRoute component={PatientView} />
+                <IndexRoute component={ChatView} />
                 <Route path="patient-zero-chats" component={PatientZeroChats} />
             </Route>
             <Route path="zero-chats" component={ZeroChats} />

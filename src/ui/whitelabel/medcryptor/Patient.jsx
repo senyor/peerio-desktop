@@ -9,7 +9,7 @@ const PatientSidebar = require('./PatientSidebar');
 class Patient extends React.Component {
     render() {
         return (
-            <div className="messages">
+            <div className="messages patient-space">
                 <PatientSidebar />
                 {this.props.children}
             </div>

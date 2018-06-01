@@ -33,29 +33,34 @@ class PatientSidebar extends React.Component {
     }
 
     newInternalRoom = () => {
-        const roomSpace = this.getSpaceForNewRoom();
-        roomSpace.spaceRoomType = 'internal';
+        chatStore.deactivateCurrentChat();
+        routerStore.navigateTo(routerStore.ROUTES.newInternalRoom);
 
-        const newRoomParticipants = [];
-        const newRoomName = 'test-space-1';
-        const newRoomDescription = 'test-space-1';
-        return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
+        // const roomSpace = this.getSpaceForNewRoom();
+        // roomSpace.spaceRoomType = 'internal';
+        // const newRoomParticipants = [];
+        // const newRoomName = 'test-space-1';
+        // const newRoomDescription = 'test-space-1';
+        // return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
     }
 
     newPatientRoom = () => {
-        const roomSpace = this.getSpaceForNewRoom();
-        roomSpace.spaceRoomType = 'patient';
+        chatStore.deactivateCurrentChat();
+        routerStore.navigateTo(routerStore.ROUTES.newPatientRoom);
 
-        const newRoomParticipants = [];
-        const newRoomName = 'test-space-2';
-        const newRoomDescription = 'test-space-2';
-        return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
+        // const roomSpace = this.getSpaceForNewRoom();
+        // roomSpace.spaceRoomType = 'patient';
+        // const newRoomParticipants = [];
+        // const newRoomName = 'test-space-2';
+        // const newRoomDescription = 'test-space-2';
+        // return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
     }
 
     activateChat = async (ev) => {
         chatInviteStore.deactivateInvite();
         const id = getAttributeInParentChain(ev.target, 'data-chatid');
         chatStore.activate(id);
+        routerStore.navigateTo(routerStore.ROUTES.patients);
     }
 
     @computed get internalRoomMap() {
@@ -145,18 +150,18 @@ class PatientSidebar extends React.Component {
                             <PlusIcon onClick={this.newInternalRoom} label={t('mcr_title_internalRooms')} />
                             {/* <Tooltip text={t('title_addDirectMessage')} position="right" /> */}
                         </div>
-                        {this.isNewInternalRoom &&
-                            <ListItem key="new chat"
-                                className={css(
-                                    'room-item', 'new-room-list-entry',
-                                    { active: this.isNewInternalRoom }
-                                )}
-                                leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
-                            >
-                                <i>{t('title_newDirectMessage')}</i>
-                            </ListItem>
-                        }
                         <FlipMove duration={200} easing="ease-in-out">
+                            {this.isNewInternalRoom &&
+                                <ListItem key="new chat"
+                                    className={css(
+                                        'room-item', 'new-room-list-entry',
+                                        { active: this.isNewInternalRoom }
+                                    )}
+                                    leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
+                                >
+                                    <i>{t('title_newDirectMessage')}</i>
+                                </ListItem>
+                            }
                             {this.internalRoomMap}
                         </FlipMove>
                     </List>
@@ -166,18 +171,18 @@ class PatientSidebar extends React.Component {
                             <PlusIcon onClick={this.newPatientRoom} label={t('mcr_title_patientRooms')} />
                             {/* <Tooltip text={t('title_addDirectMessage')} position="right" /> */}
                         </div>
-                        {this.isPatientSpaceRoom &&
-                            <ListItem key="new chat"
-                                className={css(
-                                    'dm-item', 'new-dm-list-entry',
-                                    { active: this.isPatientSpaceRoom }
-                                )}
-                                leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
-                            >
-                                <i>{t('title_newDirectMessage')}</i>
-                            </ListItem>
-                        }
                         <FlipMove duration={200} easing="ease-in-out">
+                            {this.isPatientSpaceRoom &&
+                                <ListItem key="new chat"
+                                    className={css(
+                                        'dm-item', 'new-dm-list-entry',
+                                        { active: this.isPatientSpaceRoom }
+                                    )}
+                                    leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
+                                >
+                                    <i>{t('title_newDirectMessage')}</i>
+                                </ListItem>
+                            }
                             {this.patientRoomMap}
                         </FlipMove>
                     </List>

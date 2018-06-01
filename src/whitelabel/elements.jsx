@@ -3,8 +3,13 @@ const config = require('~/config');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
 const STRINGS = require('./strings');
+const { currentSpace } = require('./functions');
 
 class ELEMENTS {
+    get space() {
+        return currentSpace();
+    }
+
     get currentView() {
         return routerStore.ROUTES_INVERSE[routerStore.currentRoute];
     }
@@ -35,6 +40,9 @@ class ELEMENTS {
 
     get newChannel() {
         const obj = {
+            title: (
+                <T k={STRINGS.newChannel.title} tag="span" />
+            ),
             description: [
                 <T key="new-channel-description" k={STRINGS.newChannel.description} />,
                 <T key="new-channel-offer-dm" k={STRINGS.newChannel.offerDM}>{this.textParser}</T>
@@ -43,9 +51,24 @@ class ELEMENTS {
 
         if (config.whiteLabel.name === 'medcryptor') {
             if (this.currentView === 'newPatient') {
-                obj.description = [
-                    <T key="new-channel-offer-room" k={STRINGS.newChannel.offerDM}>{this.textParser}</T>
-                ];
+                obj.description = (
+                    <T k={STRINGS.newChannel.offerDM}>{this.textParser}</T>
+                );
+            }
+
+            if (this.currentView === 'newInternalRoom') {
+                obj.description = (
+                    <T k={STRINGS.newChannel.description} />
+                );
+            }
+
+            if (this.currentView === 'newPatientRoom') {
+                obj.title = (
+                    <T k={STRINGS.newChannel.title} tag="span">{{ patientName: this.space.spaceName }}</T>
+                );
+                obj.description = (
+                    <T k={STRINGS.newChannel.description} />
+                );
             }
         }
 

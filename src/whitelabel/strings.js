@@ -24,6 +24,16 @@ class STRINGS {
                 obj.title = 'mcr_button_addPatient';
                 obj.offerDM = 'mcr_title_newPatientDescription';
             }
+
+            if (this.currentView === 'newInternalRoom') {
+                obj.title = 'mcr_title_newInternalRoom';
+                obj.description = 'mcr_title_newInternalRoomDescription';
+            }
+
+            if (this.currentView === 'newPatientRoom') {
+                obj.title = 'mcr_title_newPatientRoom';
+                obj.description = 'mcr_title_newPatientRoomDescription';
+            }
         }
 
         return obj;

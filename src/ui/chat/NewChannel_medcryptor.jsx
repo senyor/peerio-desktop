@@ -13,6 +13,7 @@ const T = require('~/ui/shared-components/T');
 const { Input, ProgressBar } = require('peer-ui');
 const ELEMENTS = require('~/whitelabel/elements');
 const STRINGS = require('~/whitelabel/strings');
+const routerStore = require('~/stores/router-store');
 
 @observer
 class NewChannel extends React.Component {
@@ -96,7 +97,7 @@ class NewChannel extends React.Component {
             <div className="new-channel create-new-chat">
                 <div className="chat-creation-header">
                     <div className="title">
-                        <T k={STRINGS.newChannel.title} tag="span" />
+                        {ELEMENTS.newChannel.title}
                     </div>
                     <div className="description">
                         {ELEMENTS.newChannel.description}
@@ -115,18 +116,21 @@ class NewChannel extends React.Component {
                         </div>
                         <div className="helper-text" />
                     </div>
-                    <div className="message-search-wrapper-new-channel message-search-wrapper">
-                        <div className="new-chat-search">
-                            <div className="chip-wrapper">
-                                <Input placeholder={t(STRINGS.newChannel.channelPurpose)}
-                                    value={this.purpose}
-                                    onChange={this.handlePurposeChange}
-                                    maxLength={config.chat.maxChatPurposeLength}
-                                />
+                    {routerStore.isPatientSpace
+                        ? null
+                        : <div className="message-search-wrapper-new-channel message-search-wrapper">
+                            <div className="new-chat-search">
+                                <div className="chip-wrapper">
+                                    <Input placeholder={t(STRINGS.newChannel.channelPurpose)}
+                                        value={this.purpose}
+                                        onChange={this.handlePurposeChange}
+                                        maxLength={config.chat.maxChatPurposeLength}
+                                    />
+                                </div>
                             </div>
+                            <T k={STRINGS.newChannel.purposeHelper} tag="div" className="helper-text" />
                         </div>
-                        <T k={STRINGS.newChannel.purposeHelper} tag="div" className="helper-text" />
-                    </div>
+                    }
                     <div className="user-picker-container">
                         <UserPicker ref={this.setUserPickerRef} title={t(STRINGS.newChannel.userPickerTitle)}
                             noHeader onlyPick noAutoFocus

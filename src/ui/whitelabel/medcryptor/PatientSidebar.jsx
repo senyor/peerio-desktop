@@ -20,6 +20,7 @@ class PatientSidebar extends React.Component {
     get isPatientSpaceRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
 
     goBack() {
+        chatStore.deactivateCurrentChat();
         routerStore.navigateTo(routerStore.ROUTES.chats);
     }
 

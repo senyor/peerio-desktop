@@ -154,6 +154,7 @@ class NewChannel extends React.Component {
                             noHeader onlyPick noAutoFocus
                             onAccept={this.handleAccept}
                             noSubmit={!this.channelName.length}
+                            context="newpatientspace"
                         />
                     </div>
                 </div>

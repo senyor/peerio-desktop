@@ -55,15 +55,16 @@ class NewChannel extends React.Component {
         // const chat = await chatStore.startChat(this.userPicker.selected, true, this.spaceName, this.purpose);
         const patientRoom = await chatStore.startChat([], true, this.patientRoomName, '', true, newSpace);
 
-        if (!internalRoom && patientRoom) {
+        if (!internalRoom || !patientRoom) {
             this.waiting = false;
-            // return;
+            return;
         }
 
         // TODO: according to mocks, don't navigate to patient, but keep UserPicker open + show "new" badge in sidebar
-        // when(() => internalRoom.added && patientRoom.added, () => {
-        //     routerStore.navigateTo(routerStore.ROUTES.patients);
-        // });
+        when(() => internalRoom.added && patientRoom.added, () => {
+            this.waiting = false;
+            //     routerStore.navigateTo(routerStore.ROUTES.patients);
+        });
     }
 
     createNewInternalRoom = () => { this.createRoomInPatientSpace('internal'); }

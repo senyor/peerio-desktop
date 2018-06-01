@@ -14,8 +14,8 @@ const css = require('classnames');
 const autologin = require('~/helpers/autologin');
 const routerStore = require('~/stores/router-store');
 
+const PoweredByLogin = require('~/whitelabel/components/PoweredByLogin');
 const SignupLink = require('~/whitelabel/components/SignupLink');
-const { PoweredByLogin } = require('~/whitelabel/components');
 
 const { validators } = validation; // use common validation from core
 

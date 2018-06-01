@@ -13,7 +13,9 @@ const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
 const autologin = require('~/helpers/autologin');
 const routerStore = require('~/stores/router-store');
-const { SignupLink, PoweredByLogin } = require('~/whitelabel/components');
+
+const SignupLink = require('~/whitelabel/components/SignupLink');
+const { PoweredByLogin } = require('~/whitelabel/components');
 
 const { validators } = validation; // use common validation from core
 

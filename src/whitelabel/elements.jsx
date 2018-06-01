@@ -3,37 +3,46 @@ const config = require('~/config');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
 
-const { NEW_CHAT_STRINGS } = require('./strings');
+const currentView = routerStore.ROUTES_INVERSE[routerStore.currentRoute];
+const STRINGS = require('./strings');
 
-const parserCreateRoom = {
-    toCreateRoom: text => {
-        return (
-            <a className="clickable" onClick={() => routerStore.navigateTo(routerStore.ROUTES.newChannel)}>{text}</a>
-        );
+class ELEMENTS {
+    parserCreateRoom = {
+        toCreateRoom: text => {
+            return (
+                <a className="clickable" onClick={() => routerStore.navigateTo(routerStore.ROUTES.newChannel)}>
+                    {text}
+                </a>
+            );
+        }
+    };
+
+    parserCreatePatient = {
+        toCreatePatient: text => {
+            return (
+                <a className="clickable" onClick={() => routerStore.navigateTo(routerStore.ROUTES.newPatient)}>
+                    {text}
+                </a>
+            );
+        }
+    };
+
+    get newChatElements() {
+        const obj = {
+            description: [
+                <T key="new-chat-desc" k="title_newDirectMessageDescription" />,
+                <T key="new-chat-offer-room" k={STRINGS.newChat.offerRoom}>{this.parserCreateRoom}</T>
+            ]
+        };
+
+        if (config.whiteLabel.name === 'medcryptor') {
+            obj.description.splice(1, 0,
+                <T key="new-chat-offer-patient" k="mcr_title_offerNewPatient">{this.parserCreatePatient}</T>
+            );
+        }
+
+        return obj;
     }
-};
-
-const parserCreatePatient = {
-    toCreatePatient: text => {
-        return (
-            <a className="clickable" onClick={() => routerStore.navigateTo(routerStore.ROUTES.newPatient)}>{text}</a>
-        );
-    }
-};
-
-const newChatElements = {
-    description: [
-        <T key="new-chat-desc" k="title_newDirectMessageDescription" />,
-        <T key="new-chat-offer-room" k={NEW_CHAT_STRINGS.offerRoom}>{parserCreateRoom}</T>
-    ]
-};
-if (config.whiteLabel.name === 'medcryptor') {
-    newChatElements.description.splice(1, 0,
-        <T key="new-chat-offer-patient" k="mcr_title_offerNewPatient">{parserCreatePatient}</T>
-    );
 }
 
-
-module.exports = {
-    newChatElements
-};
+module.exports = new ELEMENTS();

@@ -62,7 +62,7 @@ class RouterStore {
         };
     }
 
-    get inverseROUTES() {
+    get ROUTES_INVERSE() {
         const routesArray = Object.keys(this.ROUTES);
         const obj = {};
 

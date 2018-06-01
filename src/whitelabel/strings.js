@@ -1,23 +1,38 @@
 const config = require('~/config');
+const routerStore = require('~/stores/router-store');
 
-const NEW_CHANNEL_STRINGS = {
-    title: 'title_createChannel',
-    description: 'title_createChannelDetails',
-    offerDM: 'title_offerNewDM',
-    channelName: 'title_channelName',
-    channelPurpose: 'title_purpose',
-    purposeHelper: 'title_optional',
-    userPickerTitle: 'title_chatWith'
-};
+const currentView = routerStore.ROUTES_INVERSE[routerStore.currentRoute];
 
-const NEW_CHAT_STRINGS = {
-    offerRoom: 'title_offerNewRoom'
-};
-if (config.whiteLabel.name === 'medcryptor') {
-    NEW_CHAT_STRINGS.offerRoom = 'mcr_title_offerNewRoom';
+class STRINGS {
+    get newChannel() {
+        const obj = {
+            title: 'title_createChannel',
+            description: 'title_createChannelDetails',
+            offerDM: 'title_offerNewDM',
+            channelName: 'title_channelName',
+            channelPurpose: 'title_purpose',
+            purposeHelper: 'title_optional',
+            userPickerTitle: 'title_chatWith'
+        };
+
+        if (config.whiteLabel.name === 'medcryptor') {
+            obj.title = 'mcr_title_newRoom';
+        }
+
+        return obj;
+    }
+
+    get newChat() {
+        const obj = {
+            offerRoom: 'title_offerNewRoom'
+        };
+
+        if (config.whiteLabel.name === 'medcryptor') {
+            obj.offerRoom = 'mcr_title_offerNewRoom';
+        }
+
+        return obj;
+    }
 }
 
-module.exports = {
-    NEW_CHANNEL_STRINGS,
-    NEW_CHAT_STRINGS
-};
+module.exports = new STRINGS();

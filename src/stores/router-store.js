@@ -61,6 +61,17 @@ class RouterStore {
             devSettings: '/app/settings/dev'
         };
     }
+
+    get inverseROUTES() {
+        const routesArray = Object.keys(this.ROUTES);
+        const obj = {};
+
+        for (const k in routesArray) {
+            obj[this.ROUTES[routesArray[k]]] = routesArray[k];
+        }
+
+        return obj;
+    }
 }
 
 module.exports = new RouterStore();

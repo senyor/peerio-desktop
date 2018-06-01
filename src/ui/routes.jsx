@@ -6,18 +6,12 @@ const Onboarding = require('./Onboarding');
 const Login = require('./login/Login');
 const Signup = require('./signup/Signup');
 const Loading = require('./Loading');
-const { Chat, ZeroChats } = require('~/whitelabel/components');
+const { Chat, NewChannel, ZeroChats } = require('~/whitelabel/components');
 const NewChat = require('./chat/NewChat');
 const ChatView = require('./chat/ChatView');
-const NewChannel = require('./chat/NewChannel');
 const ChannelInvite = require('./chat/components/ChannelInvite');
 const PendingDMDismissed = require('./chat/components/PendingDMDismissed');
-
-// TODO: this can either be whitelabel components folder,
-// or put these components with regular Chat and route via whitelabel/components.js
 const Patient = require('./whitelabel/medcryptor/Patient');
-const NewPatient = require('./whitelabel/medcryptor/NewPatient');
-
 const Files = require('./files/Files');
 const Mail = require('./mail/Mail');
 const Settings = require('./settings/Settings');
@@ -52,7 +46,7 @@ module.exports = (
                 <Route path="new-chat" component={NewChat} />
                 <Route path="new-channel" component={NewChannel} />
                 <Route path="pending-dm-dismissed" component={PendingDMDismissed} />
-                <Route path="new-patient" component={NewPatient} />
+                <Route path="new-patient" component={NewChannel} />
             </Route>
             <Route path="patients" component={Patient}>
                 <IndexRoute component={ChatView} />

@@ -1,9 +1,11 @@
 const config = require('~/config');
 const routerStore = require('~/stores/router-store');
 
-const currentView = routerStore.ROUTES_INVERSE[routerStore.currentRoute];
-
 class STRINGS {
+    get currentView() {
+        return routerStore.ROUTES_INVERSE[routerStore.currentRoute];
+    }
+
     get newChannel() {
         const obj = {
             title: 'title_createChannel',
@@ -17,6 +19,11 @@ class STRINGS {
 
         if (config.whiteLabel.name === 'medcryptor') {
             obj.title = 'mcr_title_newRoom';
+
+            if (this.currentView === 'newPatient') {
+                obj.title = 'mcr_button_addPatient';
+                obj.offerDM = 'mcr_title_newPatientDescription';
+            }
         }
 
         return obj;

@@ -3,6 +3,7 @@
 const React = require('react');
 const { computed } = require('mobx');
 const { observer } = require('mobx-react');
+
 const { chatStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const ChatList = require('./components/ChatList');

@@ -6,11 +6,12 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, config, User } = require('peerio-icebear');
+const { chatStore, config } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { Input, ProgressBar } = require('peer-ui');
+const ELEMENTS = require('~/whitelabel/elements');
 const STRINGS = require('~/whitelabel/strings');
 
 @observer
@@ -80,22 +81,12 @@ class NewChannel extends React.Component {
         this.userPicker = ref;
     };
 
-    setUpgradeDialogRef = ref => {
-        this.upgradeDialog = ref;
-    };
-
     setNameInputRef = ref => {
         if (!ref) return;
         ref.focus();
     };
 
     render() {
-        const textParser = {
-            toCreateDM: text => (
-                <a className="clickable" onClick={this.gotoNewChat}>{text}</a>
-            )
-        };
-
         if (this.waiting) {
             return (<div className="new-channel create-new-chat">
                 <div className="create-channel-loading"><ProgressBar type="circular" /></div>
@@ -108,8 +99,7 @@ class NewChannel extends React.Component {
                         <T k={STRINGS.newChannel.title} tag="span" />
                     </div>
                     <div className="description">
-                        <T k={STRINGS.newChannel.description} />
-                        <T k={STRINGS.newChannel.offerDM}>{textParser}</T>
+                        {ELEMENTS.newChannel.description}
                     </div>
                 </div>
                 <div className="new-channel-inputs">
@@ -145,7 +135,6 @@ class NewChannel extends React.Component {
                         />
                     </div>
                 </div>
-                {/* <ChannelUpgradeDialog ref={this.setUpgradeDialogRef} /> */}
             </div>
         );
     }

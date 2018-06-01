@@ -4,9 +4,8 @@ const { observer } = require('mobx-react');
 const { chatStore } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
-const { newChatElements } = require('~/whitelabel/elements');
+const ELEMENTS = require('~/whitelabel/elements');
 
 @observer
 class NewChat extends React.Component {
@@ -44,7 +43,7 @@ class NewChat extends React.Component {
                 <div className="user-picker-container">
                     <UserPicker
                         title={t('title_newDirectMessage')}
-                        description={newChatElements.description}
+                        description={ELEMENTS.newChat.description}
                         limit={1}
                         onAccept={this.handleAccept}
                         onClose={this.handleClose}

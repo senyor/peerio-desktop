@@ -139,6 +139,7 @@ class PatientSidebar extends React.Component {
 
 
     render() {
+        console.log(routerStore.inverseROUTES);
         return (
             <div className="feature-navigation-list messages-list patient-sidebar">
                 <div className="list">

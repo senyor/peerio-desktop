@@ -24,36 +24,14 @@ class PatientSidebar extends React.Component {
         routerStore.navigateTo(routerStore.ROUTES.chats);
     }
 
-    getSpaceForNewRoom = () => {
-        return {
-            spaceId: this.space.spaceId,
-            spaceName: this.space.spaceName,
-            spaceDescription: this.space.spaceDescription
-        };
-    }
-
     newInternalRoom = () => {
         chatStore.deactivateCurrentChat();
         routerStore.navigateTo(routerStore.ROUTES.newInternalRoom);
-
-        // const roomSpace = this.getSpaceForNewRoom();
-        // roomSpace.spaceRoomType = 'internal';
-        // const newRoomParticipants = [];
-        // const newRoomName = 'test-space-1';
-        // const newRoomDescription = 'test-space-1';
-        // return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
     }
 
     newPatientRoom = () => {
         chatStore.deactivateCurrentChat();
         routerStore.navigateTo(routerStore.ROUTES.newPatientRoom);
-
-        // const roomSpace = this.getSpaceForNewRoom();
-        // roomSpace.spaceRoomType = 'patient';
-        // const newRoomParticipants = [];
-        // const newRoomName = 'test-space-2';
-        // const newRoomDescription = 'test-space-2';
-        // return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
     }
 
     activateChat = async (ev) => {
@@ -139,7 +117,6 @@ class PatientSidebar extends React.Component {
 
 
     render() {
-        console.log(routerStore.inverseROUTES);
         return (
             <div className="feature-navigation-list messages-list patient-sidebar">
                 <div className="list">

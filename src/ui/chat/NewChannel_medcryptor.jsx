@@ -23,6 +23,8 @@ class NewChannel extends React.Component {
     internalRoomName = t('mcr_title_general');
     patientRoomName = t('mcr_title_noParticipants');
 
+    get space() { return chatStore.spaces.find(x => x.spaceId === chatStore.activeSpace); }
+
     handleAccept = () => {
         this.waiting = true;
         this[ELEMENTS.newChannel.acceptFunction]();
@@ -55,12 +57,38 @@ class NewChannel extends React.Component {
 
         if (!internalRoom && patientRoom) {
             this.waiting = false;
-            return;
+            // return;
         }
 
-        when(() => internalRoom.added && patientRoom.added, () => {
+        // TODO: according to mocks, don't navigate to patient, but keep UserPicker open + show "new" badge in sidebar
+        // when(() => internalRoom.added && patientRoom.added, () => {
+        //     routerStore.navigateTo(routerStore.ROUTES.patients);
+        // });
+    }
+
+    createNewInternalRoom = () => { this.createRoomInPatientSpace('internal'); }
+    createNewPatientRoom = () => { this.createRoomInPatientSpace('patient'); }
+
+    createRoomInPatientSpace = async (type) => {
+        const roomSpace = this.getSpaceForNewRoom();
+        roomSpace.spaceRoomType = type;
+
+        const chat = await chatStore.startChat(this.userPicker.selected, true, this.channelName, '', true, roomSpace);
+        if (!chat) {
+            this.waiting = false;
+            return;
+        }
+        when(() => chat.added === true, () => {
             routerStore.navigateTo(routerStore.ROUTES.patients);
         });
+    }
+
+    getSpaceForNewRoom = () => {
+        return {
+            spaceId: this.space.spaceId,
+            spaceName: this.space.spaceName,
+            spaceDescription: this.space.spaceDescription
+        };
     }
 
     handleNameChange = val => {

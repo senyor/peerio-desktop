@@ -63,15 +63,20 @@ class ELEMENTS {
                 obj.description = (
                     <T k={STRINGS.newChannel.description} />
                 );
+
+                obj.acceptFunction = 'createNewInternalRoom';
             }
 
             if (this.currentView === 'newPatientRoom') {
                 obj.title = (
                     <T k={STRINGS.newChannel.title} tag="span">{{ patientName: this.space.spaceName }}</T>
                 );
+
                 obj.description = (
                     <T k={STRINGS.newChannel.description} />
                 );
+
+                obj.acceptFunction = 'createNewPatientRoom';
             }
         }
 

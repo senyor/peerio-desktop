@@ -311,13 +311,13 @@ class UserPicker extends React.Component {
                                         }
                                     </div>
                                 </div>
-                                {(routerStore.isNewChannel || routerStore.isPatientSpace) &&
+                                {(routerStore.isNewChannel || routerStore.isPatientSpace || routerStore.isNewPatient) &&
                                     <div className="helper-text">
                                         <T k="title_userSearch" />. <T k="title_optional" />
                                     </div>
                                 }
                             </div>
-                            {(routerStore.isNewChannel || routerStore.isPatientSpace) &&
+                            {(routerStore.isNewChannel || routerStore.isPatientSpace || routerStore.isNewPatient) &&
                                 <div className="new-channel-button-container">
                                     <Button
                                         label={t('button_open')}

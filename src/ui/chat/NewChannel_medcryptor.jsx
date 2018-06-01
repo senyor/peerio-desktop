@@ -70,8 +70,12 @@ class NewChannel extends React.Component {
     createNewPatientRoom = () => { this.createRoomInPatientSpace('patient'); }
 
     createRoomInPatientSpace = async (type) => {
-        const roomSpace = this.getSpaceForNewRoom();
-        roomSpace.spaceRoomType = type;
+        const roomSpace = {
+            spaceId: this.space.spaceId,
+            spaceName: this.space.spaceName,
+            spaceDescription: this.space.spaceDescription,
+            spaceRoomType: type
+        };
 
         const chat = await chatStore.startChat(this.userPicker.selected, true, this.channelName, '', true, roomSpace);
         if (!chat) {
@@ -81,14 +85,6 @@ class NewChannel extends React.Component {
         when(() => chat.added === true, () => {
             routerStore.navigateTo(routerStore.ROUTES.patients);
         });
-    }
-
-    getSpaceForNewRoom = () => {
-        return {
-            spaceId: this.space.spaceId,
-            spaceName: this.space.spaceName,
-            spaceDescription: this.space.spaceDescription
-        };
     }
 
     handleNameChange = val => {

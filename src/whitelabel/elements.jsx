@@ -27,7 +27,6 @@ const newChatElements = {
         <T key="new-chat-offer-room" k={NEW_CHAT_STRINGS.offerRoom}>{parserCreateRoom}</T>
     ]
 };
-
 if (config.whiteLabel.name === 'medcryptor') {
     newChatElements.description.splice(1, 0,
         <T key="new-chat-offer-patient" k="mcr_title_offerNewPatient">{parserCreatePatient}</T>

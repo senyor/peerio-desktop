@@ -13,7 +13,6 @@ const NEW_CHANNEL_STRINGS = {
 const NEW_CHAT_STRINGS = {
     offerRoom: 'title_offerNewRoom'
 };
-
 if (config.whiteLabel.name === 'medcryptor') {
     NEW_CHAT_STRINGS.offerRoom = 'mcr_title_offerNewRoom';
 }

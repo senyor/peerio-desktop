@@ -6,7 +6,7 @@ const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 const { contactStore, User, warnings } = require('peerio-icebear');
-const UserSearchError = require('~/whitelabel/components').UserSearchError;
+const UserSearchError = require('~/whitelabel/components/UserSearchError');
 const urls = require('peerio-icebear').config.translator.urlMap;
 
 const routerStore = require('~/stores/router-store');

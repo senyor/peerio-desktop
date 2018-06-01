@@ -22,7 +22,6 @@ cfg.appVersion = app.getVersion();
 cfg.platform = 'electron';
 cfg.arch = os.arch();
 cfg.os = os.type();
-cfg.whiteLabel.name = 'medcryptor';
 
 setUrlMap(cfg.translator.urlMap);
 for (const name in tagHandlers) {

@@ -76,8 +76,10 @@ class ChatList extends React.Component {
                         key={`invite:${r.kegDbId}`}
                         className={
                             css('room-item', 'room-invite-item', 'unread',
-                                { active: chatInviteStore.activeInvite
-                                    && chatInviteStore.activeInvite.kegDbId === r.kegDbId })
+                                {
+                                    active: chatInviteStore.activeInvite
+                                        && chatInviteStore.activeInvite.kegDbId === r.kegDbId
+                                })
                         }
                         onClick={this.activateInviteByEvent}
                         caption={`# ${r.channelName}`}
@@ -363,7 +365,7 @@ class ChatList extends React.Component {
                                         <Tooltip text={t('mcr_button_addPatient')} position="right" />
                                     </div>
                                     <FlipMove duration={200} easing="ease-in-out">
-                                        {routerStore.isPatientSpace &&
+                                        {routerStore.isNewPatient &&
                                             <ListItem key="new patient"
                                                 className="room-item new-room-entry active"
                                                 caption={`# ${t('mcr_title_newPatient')}`}

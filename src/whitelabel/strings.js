@@ -28,11 +28,13 @@ class STRINGS {
             if (this.currentView === 'newInternalRoom') {
                 obj.title = 'mcr_title_newInternalRoom';
                 obj.description = 'mcr_title_newInternalRoomDescription';
+                obj.channelName = 'title_nameOfRoom';
             }
 
             if (this.currentView === 'newPatientRoom') {
                 obj.title = 'mcr_title_newPatientRoom';
                 obj.description = 'mcr_title_newPatientRoomDescription';
+                obj.channelName = 'title_nameOfRoom';
             }
         }
 

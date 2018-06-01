@@ -1,13 +1,13 @@
 const React = require('react');
 const config = require('~/config');
+const { chatStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
 const STRINGS = require('./strings');
-const { currentSpace } = require('./functions');
 
 class ELEMENTS {
     get space() {
-        return currentSpace();
+        return chatStore.spaces.find(x => x.spaceId === chatStore.activeSpace);
     }
 
     get currentView() {
@@ -46,7 +46,8 @@ class ELEMENTS {
             description: [
                 <T key="new-channel-description" k={STRINGS.newChannel.description} />,
                 <T key="new-channel-offer-dm" k={STRINGS.newChannel.offerDM}>{this.textParser}</T>
-            ]
+            ],
+            acceptFunction: 'createNewChannel'
         };
 
         if (config.whiteLabel.name === 'medcryptor') {
@@ -54,6 +55,8 @@ class ELEMENTS {
                 obj.description = (
                     <T k={STRINGS.newChannel.offerDM}>{this.textParser}</T>
                 );
+
+                obj.acceptFunction = 'createNewPatientSpace';
             }
 
             if (this.currentView === 'newInternalRoom') {

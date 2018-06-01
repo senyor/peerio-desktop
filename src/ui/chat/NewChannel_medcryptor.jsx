@@ -25,10 +25,7 @@ class NewChannel extends React.Component {
 
     handleAccept = () => {
         this.waiting = true;
-
-        // TODO:
-        // this.createNewChannel();
-        // this.createNewPatientSpace();
+        this[ELEMENTS.newChannel.acceptFunction]();
     };
 
     createNewChannel = async () => {
@@ -38,7 +35,7 @@ class NewChannel extends React.Component {
             return;
         }
         when(() => chat.added === true, () => {
-            window.router.push('/app/chats');
+            routerStore.navigateTo(routerStore.ROUTES.chats);
         });
     }
 
@@ -62,12 +59,8 @@ class NewChannel extends React.Component {
         }
 
         when(() => internalRoom.added && patientRoom.added, () => {
-            window.router.push('/app/patients');
+            routerStore.navigateTo(routerStore.ROUTES.patients);
         });
-    }
-
-    gotoNewChat() {
-        window.router.push('/app/chats/new-chat');
     }
 
     handleNameChange = val => {
@@ -116,7 +109,7 @@ class NewChannel extends React.Component {
                         </div>
                         <div className="helper-text" />
                     </div>
-                    {routerStore.isPatientSpace
+                    {routerStore.isPatientSpace || routerStore.isNewPatient
                         ? null
                         : <div className="message-search-wrapper-new-channel message-search-wrapper">
                             <div className="new-chat-search">

@@ -1,4 +1,4 @@
-const { chatStore, contactStore } = require('peerio-icebear');
+const { contactStore } = require('peerio-icebear');
 
 function getContactInContext(query, context) {
     const c = contactStore.getContact(query);
@@ -10,11 +10,6 @@ function getContactInContext(query, context) {
     return c;
 }
 
-function currentSpace() {
-    return chatStore.spaces.find(x => x.spaceId === chatStore.activeSpace);
-}
-
 module.exports = {
-    getContactInContext,
-    currentSpace
+    getContactInContext
 };

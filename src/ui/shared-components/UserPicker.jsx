@@ -288,9 +288,9 @@ class UserPicker extends React.Component {
                                             )}
                                             <Input innerRef={this.onInputMount}
                                                 placeholder={
-                                                    routerStore.isNewChannel
+                                                    routerStore.isNewChannel || routerStore.isPatientSpace
                                                         ? t('title_Members')
-                                                        : routerStore.isPatientSpace
+                                                        : routerStore.isNewPatient
                                                             ? t('mcr_title_newPatientRecord')
                                                             : t('title_userSearch')
                                                 }

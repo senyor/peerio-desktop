@@ -26,9 +26,8 @@ class RouterStore {
 
     get isNewChat() { return this.currentRoute === this.ROUTES.newChat; }
     get isNewChannel() { return this.currentRoute === this.ROUTES.newChannel; }
-    get isPatientSpace() {
-        return this.currentRoute === this.ROUTES.newPatient || this.currentRoute.startsWith('/app/patients');
-    }
+    get isPatientSpace() { return this.currentRoute.startsWith('/app/patients'); }
+    get isNewPatient() { return this.currentRoute === this.ROUTES.newPatient; }
 
     get ROUTES() {
         return {

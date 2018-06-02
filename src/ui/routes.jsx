@@ -6,20 +6,14 @@ const Onboarding = require('./Onboarding');
 const Login = require('./login/Login');
 const Signup = require('./signup/Signup');
 const Loading = require('./Loading');
-const { Chat, ZeroChats } = require('~/whitelabel/components');
-const NewChat = require('./chat/NewChat');
+const Chat = require('~/whitelabel/components/Chat');
 const ChatView = require('./chat/ChatView');
-const NewChannel = require('./chat/NewChannel');
+const NewChannel = require('~/whitelabel/components/NewChannel');
+const NewChat = require('./chat/NewChat');
 const ChannelInvite = require('./chat/components/ChannelInvite');
 const PendingDMDismissed = require('./chat/components/PendingDMDismissed');
-
-// TODO: this can either be whitelabel components folder,
-// or put these components with regular Chat and route via whitelabel/components.js
 const Patient = require('./whitelabel/medcryptor/Patient');
-const PatientView = require('./whitelabel/medcryptor/PatientView');
-const NewPatient = require('./whitelabel/medcryptor/NewPatient');
-const PatientZeroChats = require('./whitelabel/medcryptor/PatientZeroChats');
-
+const ZeroChats = require('~/whitelabel/components/ZeroChats');
 const Files = require('./files/Files');
 const Mail = require('./mail/Mail');
 const Settings = require('./settings/Settings');
@@ -54,11 +48,12 @@ module.exports = (
                 <Route path="new-chat" component={NewChat} />
                 <Route path="new-channel" component={NewChannel} />
                 <Route path="pending-dm-dismissed" component={PendingDMDismissed} />
-                <Route path="new-patient" component={NewPatient} />
+                <Route path="new-patient" component={NewChannel} />
             </Route>
             <Route path="patients" component={Patient}>
-                <IndexRoute component={PatientView} />
-                <Route path="patient-zero-chats" component={PatientZeroChats} />
+                <IndexRoute component={ChatView} />
+                <Route path="new-internal-room" component={NewChannel} />
+                <Route path="new-patient-room" component={NewChannel} />
             </Route>
             <Route path="zero-chats" component={ZeroChats} />
             <Route path="files" component={Files} />

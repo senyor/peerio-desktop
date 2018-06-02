@@ -9,7 +9,6 @@ const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const FlipMove = require('react-flip-move');
 const { Button, List, ListItem } = require('peer-ui');
-// const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -18,44 +17,28 @@ const { getAttributeInParentChain } = require('~/helpers/dom');
 class PatientSidebar extends React.Component {
     get space() { return chatStore.spaces.find(x => x.spaceId === chatStore.activeSpace); }
     get isNewInternalRoom() { return routerStore.currentRoute === routerStore.ROUTES.newInternalRoom; }
-    get isNewPatientRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
+    get isPatientSpaceRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
 
     goBack() {
+        chatStore.deactivateCurrentChat();
         routerStore.navigateTo(routerStore.ROUTES.chats);
     }
 
-    getSpaceForNewRoom = () => {
-        return {
-            spaceId: this.space.spaceId,
-            spaceName: this.space.spaceName,
-            spaceDescription: this.space.spaceDescription
-        };
-    }
-
     newInternalRoom = () => {
-        const roomSpace = this.getSpaceForNewRoom();
-        roomSpace.spaceRoomType = 'internal';
-
-        const newRoomParticipants = [];
-        const newRoomName = 'test-space-1';
-        const newRoomDescription = 'test-space-1';
-        return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
+        chatStore.deactivateCurrentChat();
+        routerStore.navigateTo(routerStore.ROUTES.newInternalRoom);
     }
 
     newPatientRoom = () => {
-        const roomSpace = this.getSpaceForNewRoom();
-        roomSpace.spaceRoomType = 'patient';
-
-        const newRoomParticipants = [];
-        const newRoomName = 'test-space-2';
-        const newRoomDescription = 'test-space-2';
-        return chatStore.startChat(newRoomParticipants, true, newRoomName, newRoomDescription, false, roomSpace);
+        chatStore.deactivateCurrentChat();
+        routerStore.navigateTo(routerStore.ROUTES.newPatientRoom);
     }
 
     activateChat = async (ev) => {
         chatInviteStore.deactivateInvite();
         const id = getAttributeInParentChain(ev.target, 'data-chatid');
         chatStore.activate(id);
+        routerStore.navigateTo(routerStore.ROUTES.patients);
     }
 
     @computed get internalRoomMap() {
@@ -96,12 +79,8 @@ class PatientSidebar extends React.Component {
             c.isNew = true;
             c.isEmpty = false;
             let rightContent = null;
-            // let contact = c.otherParticipants.length > 0
-            //     ? c.otherParticipants[0]
-            //     : c.allParticipants[0];
             if (c.isNew) {
                 rightContent = <T k="title_new" className="badge-new" />;
-                // contact = c.contact;
             } else if ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0) {
                 rightContent = <div className="notification">{c.unreadCount < 100 ? c.unreadCount : '99+'}</div>;
             }
@@ -149,18 +128,18 @@ class PatientSidebar extends React.Component {
                             <PlusIcon onClick={this.newInternalRoom} label={t('mcr_title_internalRooms')} />
                             {/* <Tooltip text={t('title_addDirectMessage')} position="right" /> */}
                         </div>
-                        {this.isNewInternalRoom &&
-                            <ListItem key="new chat"
-                                className={css(
-                                    'room-item', 'new-room-list-entry',
-                                    { active: this.isNewInternalRoom }
-                                )}
-                                leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
-                            >
-                                <i>{t('title_newDirectMessage')}</i>
-                            </ListItem>
-                        }
                         <FlipMove duration={200} easing="ease-in-out">
+                            {this.isNewInternalRoom &&
+                                <ListItem key="new chat"
+                                    className={css(
+                                        'room-item', 'new-room-list-entry',
+                                        { active: this.isNewInternalRoom }
+                                    )}
+                                    leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
+                                >
+                                    <i>{t('title_newDirectMessage')}</i>
+                                </ListItem>
+                            }
                             {this.internalRoomMap}
                         </FlipMove>
                     </List>
@@ -170,18 +149,18 @@ class PatientSidebar extends React.Component {
                             <PlusIcon onClick={this.newPatientRoom} label={t('mcr_title_patientRooms')} />
                             {/* <Tooltip text={t('title_addDirectMessage')} position="right" /> */}
                         </div>
-                        {this.isNewPatientRoom &&
-                            <ListItem key="new chat"
-                                className={css(
-                                    'dm-item', 'new-dm-list-entry',
-                                    { active: this.isNewPatientRoom }
-                                )}
-                                leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
-                            >
-                                <i>{t('title_newDirectMessage')}</i>
-                            </ListItem>
-                        }
                         <FlipMove duration={200} easing="ease-in-out">
+                            {this.isPatientSpaceRoom &&
+                                <ListItem key="new chat"
+                                    className={css(
+                                        'dm-item', 'new-dm-list-entry',
+                                        { active: this.isPatientSpaceRoom }
+                                    )}
+                                    leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
+                                >
+                                    <i>{t('title_newDirectMessage')}</i>
+                                </ListItem>
+                            }
                             {this.patientRoomMap}
                         </FlipMove>
                     </List>

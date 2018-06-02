@@ -2,14 +2,13 @@ const React = require('react');
 const { observable, computed, when, transaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Avatar, Button, Chip, Input, List, ListHeading, ListItem, MaterialIcon, ProgressBar } = require('peer-ui');
-const { UserSearchError } = require('~/whitelabel/components');
+const UserSearchError = require('~/whitelabel/components/UserSearchError');
 const { t } = require('peerio-translator');
 const { fileStore, contactStore, User } = require('peerio-icebear');
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const routerStore = require('~/stores/router-store');
-const { getContactInContext } = require('~/whitelabel/functions');
 
 @observer
 class UserPicker extends React.Component {
@@ -134,7 +133,7 @@ class UserPicker extends React.Component {
 
     searchUsername(q) {
         if (!q) return null;
-        const c = getContactInContext(q, this.props.context);
+        const c = contactStore.whitelabel.getContact(q, this.props.context);
 
         if (this.isExcluded(c)) {
             this.userAlreadyAdded = this.query;
@@ -288,7 +287,7 @@ class UserPicker extends React.Component {
                                             )}
                                             <Input innerRef={this.onInputMount}
                                                 placeholder={
-                                                    routerStore.isNewChannel
+                                                    routerStore.isNewChannel || routerStore.isPatientSpace
                                                         ? t('title_Members')
                                                         : routerStore.isNewPatient
                                                             ? t('mcr_title_newPatientRecord')
@@ -311,13 +310,13 @@ class UserPicker extends React.Component {
                                         }
                                     </div>
                                 </div>
-                                {(routerStore.isNewChannel || routerStore.isNewPatient) &&
+                                {(routerStore.isNewChannel || routerStore.isPatientSpace || routerStore.isNewPatient) &&
                                     <div className="helper-text">
                                         <T k="title_userSearch" />. <T k="title_optional" />
                                     </div>
                                 }
                             </div>
-                            {(routerStore.isNewChannel || routerStore.isNewPatient) &&
+                            {(routerStore.isNewChannel || routerStore.isPatientSpace || routerStore.isNewPatient) &&
                                 <div className="new-channel-button-container">
                                     <Button
                                         label={t('button_open')}

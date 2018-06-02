@@ -26,6 +26,7 @@ class RouterStore {
 
     get isNewChat() { return this.currentRoute === this.ROUTES.newChat; }
     get isNewChannel() { return this.currentRoute === this.ROUTES.newChannel; }
+    get isPatientSpace() { return this.currentRoute.startsWith('/app/patients'); }
     get isNewPatient() { return this.currentRoute === this.ROUTES.newPatient; }
 
     get ROUTES() {
@@ -38,9 +39,8 @@ class RouterStore {
             channelInvite: '/app/chats/channel-invite',
             pendingDMDismissed: '/app/chats/pending-dm-dismissed',
 
-            newPatient: 'app/chats/new-patient',
+            newPatient: '/app/chats/new-patient',
             patients: '/app/patients',
-            patientZeroChats: '/app/patients/patient-zero-chats',
             newInternalRoom: '/app/patients/new-internal-room',
             newPatientRoom: '/app/patients/new-patient-room',
 
@@ -59,6 +59,17 @@ class RouterStore {
             help: '/app/settings/help',
             devSettings: '/app/settings/dev'
         };
+    }
+
+    get ROUTES_INVERSE() {
+        const routesArray = Object.keys(this.ROUTES);
+        const obj = {};
+
+        for (const k in routesArray) {
+            obj[this.ROUTES[routesArray[k]]] = routesArray[k];
+        }
+
+        return obj;
     }
 }
 

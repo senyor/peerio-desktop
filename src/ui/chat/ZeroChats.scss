@@ -178,17 +178,44 @@ $zero-chats-break: 984px;
       z-index: 2;
     }
   }
+
+  // `condensed` version e.g. ZeroChats with ChatList. less horizontal room so hide images, adjust spacing, etc.
+  &.condensed {
+    .instructions-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .instructions {
+        width: 456px;
+      }
+    }
+  }
 }
 /* stylelint-enable */
 
 // Specific to Medcryptor zero state
 .zero-chats-container.medcryptor {
+  .header {
+    .welcome-title {
+      margin-bottom: $margin-small;
+      font-size: 45px;
+      font-weight: $font-weight-semibold;
+      color: $text-dark-secondary;
+    }
+
+    .subtitle {
+      @extend %headline;
+      font-weight: $font-weight-regular;
+    }
+  }
+
   .zero-chats-content {
     position: relative;
   }
 
   .images {
-    $zero-header-height: 120px;
+    $zero-header-height: 148px;
     position: absolute;
     z-index: -1;
     height: calc(100vh - #{$zero-header-height} - #{$padding-large});

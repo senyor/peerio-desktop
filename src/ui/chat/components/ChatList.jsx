@@ -6,7 +6,6 @@ const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
-const config = require('~/config');
 
 const css = require('classnames');
 const FlipMove = require('react-flip-move');
@@ -16,6 +15,7 @@ const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const PatientList = require('~/whitelabel/components/PatientList');
 
 // Variables to calculate position-in-window of unread messages
 const paddingTop = 20;
@@ -76,8 +76,10 @@ class ChatList extends React.Component {
                         key={`invite:${r.kegDbId}`}
                         className={
                             css('room-item', 'room-invite-item', 'unread',
-                                { active: chatInviteStore.activeInvite
-                                    && chatInviteStore.activeInvite.kegDbId === r.kegDbId })
+                                {
+                                    active: chatInviteStore.activeInvite
+                                        && chatInviteStore.activeInvite.kegDbId === r.kegDbId
+                                })
                         }
                         onClick={this.activateInviteByEvent}
                         caption={`# ${r.channelName}`}
@@ -86,24 +88,6 @@ class ChatList extends React.Component {
                         }
                     />
                 );
-        });
-    }
-
-    // Buildling patient list
-    // TODO: this will throw off `this.unreadPositions`!
-    @computed get patientsMap() {
-        return chatStore.spaces.map(space => {
-            return (
-                <ListItem
-                    data-chatid={space.spaceId}
-                    className={css(
-                        'room-item', 'patient-item'
-                    )}
-                    onClick={this.activatePatient}
-                    caption={space.spaceName}
-                    key={space.spaceName}
-                />
-            );
         });
     }
 
@@ -152,6 +136,7 @@ class ChatList extends React.Component {
     }
 
     // Calculating the positions of unread messages relative to scroll container
+    // TODO: this will be thrown off by PatientList
     @computed get unreadPositions() {
         const positionsArray = [];
 
@@ -291,22 +276,6 @@ class ChatList extends React.Component {
         routerStore.navigateTo(routerStore.ROUTES.newChat);
     };
 
-    newPatient = () => {
-        chatStore.deactivateCurrentChat();
-        chatInviteStore.deactivateInvite();
-        routerStore.navigateTo(routerStore.ROUTES.newPatient);
-    }
-
-    // TODO: remove after done testing
-    activatePatient = (ev) => {
-        chatStore.deactivateCurrentChat();
-        chatInviteStore.deactivateInvite();
-
-        const spaceId = getAttributeInParentChain(ev.target, 'data-chatid');
-        chatStore.activeSpace = spaceId;
-        routerStore.navigateTo(routerStore.ROUTES.patients);
-    }
-
     newChannel = () => {
         chatStore.deactivateCurrentChat();
         chatInviteStore.deactivateInvite();
@@ -356,24 +325,7 @@ class ChatList extends React.Component {
                                 </FlipMove>
                             </List>
 
-                            {config.whiteLabel.name === 'medcryptor'
-                                ? <List>
-                                    <div>
-                                        <PlusIcon onClick={this.newPatient} label={t('mcr_title_patientFiles')} />
-                                        <Tooltip text={t('mcr_button_addPatient')} position="right" />
-                                    </div>
-                                    <FlipMove duration={200} easing="ease-in-out">
-                                        {routerStore.isNewPatient &&
-                                            <ListItem key="new patient"
-                                                className="room-item new-room-entry active"
-                                                caption={`# ${t('mcr_title_newPatient')}`}
-                                            />
-                                        }
-                                        {this.patientsMap}
-                                    </FlipMove>
-                                </List>
-                                : null
-                            }
+                            <PatientList />
 
                             <List clickable>
                                 <div>

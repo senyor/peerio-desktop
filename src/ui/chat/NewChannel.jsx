@@ -77,7 +77,8 @@ class NewChannel extends React.Component {
                         <T k="title_createChannel" tag="span" />
                     </div>
                     <div className="description">
-                        <T k="title_createChannelDetails">{textParser}</T>
+                        <T k="title_createChannelDetails" />
+                        <T k="title_offerNewDM">{textParser}</T>
                     </div>
                 </div>
                 <div className="new-channel-inputs">

@@ -48,12 +48,18 @@ class NewChannel extends React.Component {
             spaceDescription: ''
         };
 
+        newSpace.spaceRoomType = 'patient';
+        const patientRoom = await chatStore.startChat(
+            this.userPicker.selected,
+            true,
+            this.patientRoomName,
+            '',
+            true,
+            newSpace
+        );
+
         newSpace.spaceRoomType = 'internal';
         const internalRoom = await chatStore.startChat([], true, this.internalRoomName, '', true, newSpace);
-
-        newSpace.spaceRoomType = 'patient';
-        // const chat = await chatStore.startChat(this.userPicker.selected, true, this.spaceName, this.purpose);
-        const patientRoom = await chatStore.startChat([], true, this.patientRoomName, '', true, newSpace);
 
         if (!internalRoom || !patientRoom) {
             this.waiting = false;

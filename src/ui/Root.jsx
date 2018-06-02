@@ -20,8 +20,10 @@ const appControl = require('~/helpers/app-control');
 @observer
 class Root extends React.Component {
     @computed get snackbarVisible() {
-        return !routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)
+        let render = !routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)
             || routerStore.currentRoute.startsWith(routerStore.ROUTES.newChat);
+        if (routerStore.currentRoute.startsWith(routerStore.ROUTES.patients)) render = false;
+        return render;
     }
 
     @observable showOfflineNotification = false;

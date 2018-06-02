@@ -43,9 +43,6 @@ class ChatList extends React.Component {
 
     // Building the rooms & invites list
     @computed get allRooms() {
-        if (config.whiteLabel.name === 'medcryptor') {
-            return chatStore.allNonSpaceRooms;
-        }
         return chatStore.allRooms;
     }
 

@@ -70,6 +70,8 @@ class NewChannel extends React.Component {
         when(() => internalRoom.added && patientRoom.added, () => {
             this.waiting = false;
             //     routerStore.navigateTo(routerStore.ROUTES.patients);
+            const created = chatStore.spaces.find(x => x.spaceName === newSpace.spaceName);
+            created.isNew = true;
         });
     }
 

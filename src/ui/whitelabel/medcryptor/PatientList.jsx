@@ -11,6 +11,7 @@ const FlipMove = require('react-flip-move');
 const { List, ListItem, Tooltip } = require('peer-ui');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const T = require('~/ui/shared-components/T');
 
 @observer
 class PatientList extends React.Component {
@@ -33,6 +34,12 @@ class PatientList extends React.Component {
     // TODO: this will throw off `this.unreadPositions`!
     @computed get patientsMap() {
         return chatStore.spaces.map(space => {
+            let rightContent = null;
+            if (space.isNew) {
+                rightContent = <T k="title_new" className="badge-new" />;
+            } else if (space.unreadCount > 0) {
+                rightContent = <div className="notification">{space.unreadCount < 100 ? space.unreadCount : '99+'}</div>;
+            }
             return (
                 <ListItem
                     data-chatid={space.spaceId}
@@ -42,6 +49,7 @@ class PatientList extends React.Component {
                     onClick={this.activatePatient}
                     caption={space.spaceName}
                     key={space.spaceName}
+                    rightContent={rightContent}
                 />
             );
         });

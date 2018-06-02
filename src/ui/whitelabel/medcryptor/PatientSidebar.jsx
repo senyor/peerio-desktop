@@ -36,6 +36,7 @@ class PatientSidebar extends React.Component {
 
     goBack() {
         chatStore.deactivateCurrentChat();
+        chatStore.activeSpace = null;
         routerStore.navigateTo(routerStore.ROUTES.chats);
     }
 

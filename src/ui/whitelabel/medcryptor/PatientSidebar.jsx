@@ -77,7 +77,7 @@ class PatientSidebar extends React.Component {
 
         return patientRooms.map(c => {
             c.isNew = true;
-            c.isEmpty = false;
+            c.isEmpty = c.otherParticipants.length === 0;
             let rightContent = null;
             if (c.isNew) {
                 rightContent = <T k="title_new" className="badge-new" />;

@@ -68,7 +68,7 @@ class NewChannel extends React.Component {
 
         when(() => internalRoom.added && patientRoom.added, () => {
             this.waiting = false;
-            
+
             const created = chatStore.spaces.find(x => x.spaceName === newSpace.spaceName);
             created.isNew = true;
             internalRoom.isNew = true;

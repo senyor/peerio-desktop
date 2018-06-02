@@ -57,17 +57,21 @@ class PatientSidebar extends React.Component {
         routerStore.navigateTo(routerStore.ROUTES.patients);
     }
 
+    calculateRightContent = (r) => {
+        let rightContent = null;
+        if (r.isNew) {
+            rightContent = <T k="title_new" className="badge-new" />;
+        } else if ((!r.active || r.newMessagesMarkerPos) && r.unreadCount > 0) {
+            rightContent = <div className="notification">{r.unreadCount < 100 ? r.unreadCount : '99+'}</div>;
+        }
+
+        return rightContent;
+    }
+
     @computed get internalRoomMap() {
         const internalRooms = this.space.internalRooms;
 
         return internalRooms.map(r => {
-            let rightContent = null;
-            if (r.isNew) {
-                rightContent = <T k="title_new" className="badge-new" />;
-            } else if ((!r.active || r.newMessagesMarkerPos) && r.unreadCount > 0) {
-                rightContent = <div className="notification">{r.unreadCount < 100 ? r.unreadCount : '99+'}</div>;
-            }
-
             return (
                 <ListItem
                     data-chatid={r.id}
@@ -82,7 +86,7 @@ class PatientSidebar extends React.Component {
                     }
                     caption={`# ${r.name}`}
                     onClick={this.activateChat}
-                    rightContent={rightContent}
+                    rightContent={this.calculateRightContent}
                 />
             );
         });
@@ -93,12 +97,6 @@ class PatientSidebar extends React.Component {
 
         return patientRooms.map(c => {
             c.isEmpty = c.otherParticipants.length === 0;
-            let rightContent = null;
-            if (c.isNew) {
-                rightContent = <T k="title_new" className="badge-new" />;
-            } else if ((!c.active || c.newMessagesMarkerPos) && c.unreadCount > 0) {
-                rightContent = <div className="notification">{c.unreadCount < 100 ? c.unreadCount : '99+'}</div>;
-            }
             return (
                 <ListItem
                     data-chatid={c.id}
@@ -119,7 +117,7 @@ class PatientSidebar extends React.Component {
                     </div>}
 
                     onClick={this.activateChat}
-                    rightContent={rightContent}
+                    rightContent={this.calculateRightContent}
                 >
                     {c.isEmpty
                         ? <T k="title_noParticipants" />

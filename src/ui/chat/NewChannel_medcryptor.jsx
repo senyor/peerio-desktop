@@ -71,6 +71,8 @@ class NewChannel extends React.Component {
             
             const created = chatStore.spaces.find(x => x.spaceName === newSpace.spaceName);
             created.isNew = true;
+            internalRoom.isNew = true;
+            patientRoom.isNew = true;
         });
     }
 

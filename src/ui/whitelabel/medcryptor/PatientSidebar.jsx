@@ -37,6 +37,7 @@ class PatientSidebar extends React.Component {
     activateChat = async (ev) => {
         chatInviteStore.deactivateInvite();
         const id = getAttributeInParentChain(ev.target, 'data-chatid');
+        chatStore.chats.find(x => x.id === id).isNew = false;
         chatStore.activate(id);
         routerStore.navigateTo(routerStore.ROUTES.patients);
     }
@@ -76,7 +77,6 @@ class PatientSidebar extends React.Component {
         const patientRooms = this.space.patientRooms;
 
         return patientRooms.map(c => {
-            c.isNew = true;
             c.isEmpty = c.otherParticipants.length === 0;
             let rightContent = null;
             if (c.isNew) {

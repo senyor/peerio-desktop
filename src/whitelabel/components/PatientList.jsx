@@ -7,7 +7,7 @@ class PatientList extends React.Component {
         if (config.whiteLabel.name === 'medcryptor') {
             return <PatientListComponent />;
         }
-        return <div />;
+        return null;
     }
 }
 

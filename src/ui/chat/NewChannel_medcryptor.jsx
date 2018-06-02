@@ -66,10 +66,9 @@ class NewChannel extends React.Component {
             return;
         }
 
-        // TODO: according to mocks, don't navigate to patient, but keep UserPicker open + show "new" badge in sidebar
         when(() => internalRoom.added && patientRoom.added, () => {
             this.waiting = false;
-            //     routerStore.navigateTo(routerStore.ROUTES.patients);
+            
             const created = chatStore.spaces.find(x => x.spaceName === newSpace.spaceName);
             created.isNew = true;
         });

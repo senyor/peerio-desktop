@@ -115,6 +115,11 @@ class PatientSidebar extends React.Component {
         });
     }
 
+    componentDidMount() {
+        if (this.space.isNew) {
+            this.space.isNew = false;
+        }
+    }
 
     render() {
         return (

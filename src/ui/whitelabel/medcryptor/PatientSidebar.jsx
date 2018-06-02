@@ -58,14 +58,13 @@ class PatientSidebar extends React.Component {
     }
 
     calculateRightContent = (r) => {
-        let rightContent = null;
         if (r.isNew) {
-            rightContent = <T k="title_new" className="badge-new" />;
+            return (<T k="title_new" className="badge-new" />);
         } else if ((!r.active || r.newMessagesMarkerPos) && r.unreadCount > 0) {
-            rightContent = <div className="notification">{r.unreadCount < 100 ? r.unreadCount : '99+'}</div>;
+            return (<div className="notification">{r.unreadCount < 100 ? r.unreadCount : '99+'}</div>);
         }
 
-        return rightContent;
+        return null;
     }
 
     @computed get internalRoomMap() {
@@ -86,7 +85,7 @@ class PatientSidebar extends React.Component {
                     }
                     caption={`# ${r.name}`}
                     onClick={this.activateChat}
-                    rightContent={this.calculateRightContent}
+                    rightContent={this.calculateRightContent(r)}
                 />
             );
         });
@@ -117,7 +116,7 @@ class PatientSidebar extends React.Component {
                     </div>}
 
                     onClick={this.activateChat}
-                    rightContent={this.calculateRightContent}
+                    rightContent={this.calculateRightContent(c)}
                 >
                     {c.isEmpty
                         ? <T k="title_noParticipants" />

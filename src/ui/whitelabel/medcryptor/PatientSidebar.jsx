@@ -1,5 +1,5 @@
 const React = require('react');
-const { computed } = require('mobx');
+const { computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 
 const routerStore = require('~/stores/router-store');
@@ -15,6 +15,21 @@ const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class PatientSidebar extends React.Component {
+    componentWillMount() {
+        if (this.space.isNew) {
+            this.space.isNew = false;
+        }
+        this.disposer = when(() => this.spaceDeleted, this.goBack);
+    }
+
+    componentWillUnmount() {
+        this.disposer();
+    }
+
+    @computed get spaceDeleted() {
+        return !this.space;
+    }
+
     get space() { return chatStore.spaces.find(x => x.spaceId === chatStore.activeSpace); }
     get isNewInternalRoom() { return routerStore.currentRoute === routerStore.ROUTES.newInternalRoom; }
     get isPatientSpaceRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
@@ -113,12 +128,6 @@ class PatientSidebar extends React.Component {
                 </ListItem>
             );
         });
-    }
-
-    componentDidMount() {
-        if (this.space.isNew) {
-            this.space.isNew = false;
-        }
     }
 
     render() {

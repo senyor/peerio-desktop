@@ -49,17 +49,25 @@ class NewChannel extends React.Component {
         };
 
         newSpace.spaceRoomType = 'patient';
+        newSpace.nameInSpace = this.patientRoomName;
         const patientRoom = await chatStore.startChat(
             this.userPicker.selected,
             true,
-            this.patientRoomName,
+            `${this.patientRoomName} - ${newSpace.spaceName}`,
             '',
             true,
             newSpace
         );
 
         newSpace.spaceRoomType = 'internal';
-        const internalRoom = await chatStore.startChat([], true, this.internalRoomName, '', true, newSpace);
+        newSpace.nameInSpace = this.internalRoomName;
+        const internalRoom = await chatStore.startChat(
+            [],
+            true,
+            `${this.internalRoomName} - ${newSpace.spaceName}`,
+            '',
+            true,
+            newSpace);
 
         if (!internalRoom || !patientRoom) {
             this.waiting = false;
@@ -83,11 +91,13 @@ class NewChannel extends React.Component {
         const roomSpace = {
             spaceId: this.space.spaceId,
             spaceName: this.space.spaceName,
+            nameInSpace: this.channelName,
             spaceDescription: this.space.spaceDescription,
             spaceRoomType: type
         };
 
-        const chat = await chatStore.startChat(this.userPicker.selected, true, this.channelName, '', true, roomSpace);
+        const name = `${this.channelName} - ${roomSpace.spaceName}`;
+        const chat = await chatStore.startChat(this.userPicker.selected, true, name, '', true, roomSpace);
         if (!chat) {
             this.waiting = false;
             return;

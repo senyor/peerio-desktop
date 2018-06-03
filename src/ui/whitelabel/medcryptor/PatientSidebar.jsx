@@ -84,7 +84,7 @@ class PatientSidebar extends React.Component {
                             }
                         )
                     }
-                    caption={`# ${r.name}`}
+                    caption={`# ${r.chatHead.nameInSpace}`}
                     onClick={this.activateChat}
                     rightContent={this.calculateRightContent(r)}
                 />
@@ -121,7 +121,7 @@ class PatientSidebar extends React.Component {
                 >
                     {c.isEmpty
                         ? <T k="title_noParticipants" />
-                        : c.name
+                        : c.chatHead.nameInSpace
                     }
                 </ListItem>
             );

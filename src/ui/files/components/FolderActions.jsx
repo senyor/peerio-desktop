@@ -2,6 +2,7 @@ const React = require('react');
 const { Menu, MenuItem, Divider } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { getDataProps } = require('~/helpers/dom');
+const config = require('~/config');
 
 class FolderActions extends React.Component {
     render() {
@@ -14,7 +15,7 @@ class FolderActions extends React.Component {
                 disabled={this.props.disabled}
                 {...getDataProps(this.props)}
             >
-                {this.props.onShare
+                {this.props.onShare && config.enableVolumes
                     ? <MenuItem caption={t('button_share')}
                         icon="person_add"
                         onClick={this.props.onShare}
@@ -28,11 +29,11 @@ class FolderActions extends React.Component {
                     disabled={this.props.downloadDisabled}
                 />}
                 {this.props.onMove &&
-                <MenuItem caption={t('button_move')}
-                    className="custom-icon-hover-container"
-                    customIcon="move"
-                    onClick={this.props.onMove}
-                />
+                    <MenuItem caption={t('button_move')}
+                        className="custom-icon-hover-container"
+                        customIcon="move"
+                        onClick={this.props.onMove}
+                    />
                 }
                 <MenuItem caption={t('button_rename')}
                     icon="mode_edit"

@@ -78,5 +78,6 @@ try {
     console.log(err);
 }
 
+cfg.enableVolumes = false;
 
 module.exports = cfg;

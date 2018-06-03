@@ -17,6 +17,7 @@ const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipl
 const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
 const LimitedActionsDialog = require('~/ui/shared-components/LimitedActionsDialog');
 const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
+const config = require('~/config');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -320,13 +321,7 @@ class Files extends React.Component {
     }
 
     get breadCrumbsHeader() {
-        const bulkButtons = [
-            {
-                label: t('button_share'),
-                icon: 'person_add',
-                onClick: this.shareSelected,
-                disabled: !fileStore.bulk.canShare
-            },
+        let bulkButtons = [
             {
                 label: t('button_download'),
                 icon: 'file_download',
@@ -343,7 +338,17 @@ class Files extends React.Component {
                 icon: 'delete',
                 onClick: fileStore.bulk.remove
             }
-        ].map(props => {
+        ];
+        if (config.enableVolumes) {
+            bulkButtons.unshift(
+                {
+                    label: t('button_share'),
+                    icon: 'person_add',
+                    onClick: this.shareSelected,
+                    disabled: !fileStore.bulk.canShare
+                });
+        }
+        bulkButtons = bulkButtons.map(props => {
             return (
                 <Button
                     key={props.label}

@@ -18,6 +18,7 @@ const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderD
 const LimitedActionsDialog = require('~/ui/shared-components/LimitedActionsDialog');
 const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
 const config = require('~/config');
+const _ = require('lodash');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -291,9 +292,9 @@ class Files extends React.Component {
         }
     };
 
-    enqueueCheck = () => {
+    enqueueCheck = _.debounce(() => {
         window.requestAnimationFrame(this.checkScrollPosition);
-    };
+    }, 100, { leading: true, maxWait: 400 });
 
     setContainerRef = (ref) => {
         this.container = ref;

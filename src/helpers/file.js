@@ -101,12 +101,10 @@ function downloadFile(file) {
 
 function pickLocalFiles() {
     return new Promise(resolve => {
-        const props = ['openFile', 'multiSelections', 'treatPackageAsDirectory'];
-        if (process.platform !== 'linux') props.push('openDirectory');
+        const properties = ['openFile', 'multiSelections', 'treatPackageAsDirectory'];
+        if (process.platform === 'darwin') properties.push('openDirectory');
         const win = electron.getCurrentWindow();
-        electron.dialog.showOpenDialog(win, {
-            properties: ['openFile', 'multiSelections', 'openDirectory', 'treatPackageAsDirectory']
-        }, resolve);
+        electron.dialog.showOpenDialog(win, { properties }, resolve);
     });
 }
 

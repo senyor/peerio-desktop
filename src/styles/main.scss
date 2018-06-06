@@ -5,20 +5,20 @@
 @import './static/emoji/sprites/emojione.css';
 
 // Brand/identity
-@import 'node_modules/peer-ui/src/scss/_branding';
+@import 'app/node_modules/peer-ui/src/scss/_branding';
 @import './font';
 @import './whitelabel'; // variable overrides for whitelabel releases
 
 // Variables
-@import 'node_modules/peer-ui/src/scss/_colors';
-@import 'node_modules/peer-ui/src/scss/_grid';
-@import 'node_modules/peer-ui/src/scss/_layout';
-@import 'node_modules/peer-ui/src/scss/_shadows';
-@import 'node_modules/peer-ui/src/scss/_transitions';
-@import 'node_modules/peer-ui/src/scss/_typography';
+@import 'app/node_modules/peer-ui/src/scss/_colors';
+@import 'app/node_modules/peer-ui/src/scss/_grid';
+@import 'app/node_modules/peer-ui/src/scss/_layout';
+@import 'app/node_modules/peer-ui/src/scss/_shadows';
+@import 'app/node_modules/peer-ui/src/scss/_transitions';
+@import 'app/node_modules/peer-ui/src/scss/_typography';
 
 // PeerUI components
-@import 'node_modules/peer-ui/src/components/_all';
+@import 'app/node_modules/peer-ui/src/components/_all';
 
 // Components that get reused between views
 @import './components/grid';

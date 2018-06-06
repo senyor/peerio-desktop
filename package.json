@@ -113,7 +113,6 @@
     "node-sass": "4.8.3",
     "npm-run-all": "4.1.2",
     "opt-cli": "1.6.0",
-    "peer-ui": "github:PeerioTechnologies/ui-library#v1.0.1",
     "react-addons-perf": "15.4.2",
     "require-global-node-module": "1.1.0",
     "spectron": "3.8.0",

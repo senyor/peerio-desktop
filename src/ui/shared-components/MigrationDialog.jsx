@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 const { User, fileStore } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { Button, Dialog, ProgressBar } = require('peer-ui');
+const { Dialog, ProgressBar } = require('peer-ui');
 const EmojiImage = require('~/ui/emoji/Image');
 const electron = require('electron').remote;
 const fs = require('fs');
@@ -16,14 +16,15 @@ const MESSAGE_SPEED = 10000;
 for (let i = 1; i <= MIGRATION_MESSAGES_COUNT; i++) {
     const random = Math.floor(Math.random() * migrationInProgressMessages.length);
 
-    if (i === 3) {
-        migrationInProgressMessages.splice(random, 0, (
-            <span>
-                <T k={`title_migrationInProgressMessage${i}`} />&nbsp;
-                <EmojiImage emoji="smile_cat" />
-            </span>
-        ));
-    } else if (i === 5) {
+    if (i === 2) {
+        // TODO: re-enable 2nd message once shared folders are added
+        // migrationInProgressMessages.splice(random, 0, (
+        //     <span>
+        //         <T k={`title_migrationInProgressMessage${i}`} />&nbsp;
+        //         <EmojiImage emoji="smile_cat" />
+        //     </span>
+        // ));
+    } else if (i === 4) {
         migrationInProgressMessages.splice(random, 0, (
             <span>
                 <T k={`title_migrationInProgressMessage${i}a`} />&nbsp;
@@ -104,12 +105,13 @@ class MigrationDialog extends React.Component {
                     max={100}
                 />
                 <div className="percent">{fileStore.migration.progress ? fileStore.migration.progress : 1}%</div>
-                <p className="text">
-                    {this.count >= 0
-                        ? this.currentMessage
-                        : <T k="title_fileUpdateProgressDescription" />
-                    }
-                </p>
+                {this.count >= 0
+                    ? <div className="text">
+                        <T k="title_migrationInProgressStaticMessage" tag="p" />
+                        <p>{this.currentMessage}</p>
+                    </div>
+                    : <T k="title_fileUpdateProgressDescription" tag="div" className="text" />
+                }
             </div>
         );
     }
@@ -125,6 +127,12 @@ class MigrationDialog extends React.Component {
             onClick: fileStore.migration.confirmMigration
         }];
 
+        const textParser = {
+            download: text => (
+                <a className="clickable" onClick={this.downloadFile}>{text}</a>
+            )
+        };
+
         return (
             <Dialog active={fileStore.migration.pending}
                 className="migration-dialog"
@@ -134,9 +142,7 @@ class MigrationDialog extends React.Component {
                 }
                 title={fileStore.migration.started || fileStore.migration.performedByAnotherClient
                     ? t('title_fileUpdateProgress')
-                    : fileStore.migration.hasLegacySharedFiles
-                        ? t('title_upgradeFileSystem')
-                        : t('title_newFeatureSharedFolders')
+                    : t('title_upgradeFileSystem')
                 }
                 theme="primary"
             >
@@ -146,13 +152,7 @@ class MigrationDialog extends React.Component {
                         <T k="title_upgradeFileSystemDescription1" tag="p" />
                         <T k="title_upgradeFileSystemDescription2" tag="p" />
                         {fileStore.migration.hasLegacySharedFiles
-                            ? <p>
-                                <T k="title_upgradeFileSystemDescription3a" />
-                                <Button theme="link" onClick={this.downloadFile}>
-                                    <T k="title_upgradeFileSystemLink" />
-                                </Button>
-                                <T k="title_upgradeFileSystemDescription3b" />
-                            </p>
+                            ? <T k="title_upgradeFileSystemDescription3" tag="p">{textParser}</T>
                             : null
                         }
                     </div>

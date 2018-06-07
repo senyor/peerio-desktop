@@ -127,7 +127,7 @@ class FilesSection extends React.Component {
                         <T k="title_noRecentFiles">{textParser}</T>
                     </div>
                 }
-                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
+                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} context="sharefiles" />
             </SideBarSection>
         );
     }

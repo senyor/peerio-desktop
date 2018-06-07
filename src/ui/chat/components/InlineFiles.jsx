@@ -368,7 +368,7 @@ class InlineFile extends React.Component {
                     }
                 </div>
                 <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
-                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} />
+                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} context="sharefiles" />
             </div>
         );
     }

@@ -21,6 +21,7 @@ const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const PendingDM = require('./components/PendingDM');
 const { Dialog } = require('peer-ui');
+const ELEMENTS = require('~/whitelabel/helpers/elements');
 
 @observer
 class ChatView extends React.Component {
@@ -169,9 +170,7 @@ class ChatView extends React.Component {
                                     onBlur={this.hideChatNameEditor} />
                                 : <div className="name-editor-inner">
                                     {chat.canIAdmin && chat.isChannel ? <MaterialIcon icon="edit" /> : null}
-                                    <div className="title-content">
-                                        {chat.name}
-                                    </div>
+                                    {ELEMENTS.chatView.title(ELEMENTS.chatEditor.displayName(chat))}
                                 </div>
                         }
                     </div>
@@ -298,7 +297,10 @@ class ChatView extends React.Component {
                                     onClose={this.closeUserPicker}
                                     onAccept={this.addParticipants}
                                     exceptContacts={chat.allParticipants}
-                                    title={t('title_addParticipants')} noDeleted />
+                                    title={t('title_addParticipants')}
+                                    noDeleted
+                                    context={ELEMENTS.chatView.currentContext}
+                                />
                             </div>
                             : <div className="messages-container">
                                 {chatStore.chats.length === 0 && !chatStore.loading

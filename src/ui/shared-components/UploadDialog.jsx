@@ -178,6 +178,7 @@ class UploadDialog extends React.Component {
                     onSelectContact={this.changeToContact}
                     onSelectChannel={this.changeToChannel}
                     deactivate={this.hideShareWithDialog}
+                    context="sharefiles"
                 />
             );
         }

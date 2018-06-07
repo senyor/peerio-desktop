@@ -9,6 +9,7 @@ const { getAttributeInParentChain } = require('~/helpers/dom');
 const T = require('~/ui/shared-components/T');
 const SideBarSection = require('./SideBarSection');
 const css = require('classnames');
+const ELEMENTS = require('~/whitelabel/helpers/elements');
 
 @observer
 class MembersSection extends React.Component {
@@ -50,7 +51,25 @@ class MembersSection extends React.Component {
         ev.stopPropagation();
     }
 
+    handleClickUserMenu = () => {
+
+    }
+
     userMenu(username) {
+        const menuItems = [];
+
+        ELEMENTS.membersSection.userMenuItems(username).forEach(item => {
+            menuItems.push(
+                <MenuItem
+                    key={item.key}
+                    value={item.value}
+                    icon={item.icon}
+                    caption={t(item.caption)}
+                    onClick={this[item.onClick]}
+                />
+            );
+        });
+
         return (
             <Menu
                 icon="more_vert"
@@ -58,10 +77,7 @@ class MembersSection extends React.Component {
                 onClick={this.stopPropagation}
                 data-username={username}
             >
-                <MenuItem value="make_admin" icon="account_balance" caption={t('button_makeAdmin')}
-                    onClick={this.makeAdmin} />
-                <MenuItem value="delete" icon="remove_circle_outline" caption={t('button_remove')}
-                    onClick={this.deleteParticipant} />
+                {menuItems}
             </Menu>
         );
     }

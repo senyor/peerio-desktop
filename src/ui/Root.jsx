@@ -5,7 +5,7 @@ const { setStringReplacement } = require('peerio-translator');
 const { Button, ProgressBar } = require('peer-ui');
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
-const { socket, clientApp, warnings } = require('peerio-icebear');
+const { socket, clientApp, warnings, chatStore } = require('peerio-icebear');
 const { computed, reaction, observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -15,15 +15,13 @@ const Snackbar = require('~/ui/shared-components/Snackbar');
 const UpdateFailedDialog = require('./updater/UpdateFailedDialog');
 const InstallingUpdateDialog = require('./updater/InstallingUpdateDialog');
 const ReadyToInstallUpdateDialog = require('./updater/ReadyToInstallUpdateDialog');
-const routerStore = require('~/stores/router-store');
 const appState = require('~/stores/app-state');
 const appControl = require('~/helpers/app-control');
 
 @observer
 class Root extends React.Component {
     @computed get snackbarVisible() {
-        return !routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)
-            || routerStore.currentRoute.startsWith(routerStore.ROUTES.newChat);
+        return !chatStore.activeChat;
     }
 
     @observable showOfflineNotification = false;

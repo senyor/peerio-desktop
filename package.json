@@ -12,6 +12,7 @@
     "postinstall": "./scripts/postinstall.sh",
     "=== MAIN COMMANDS ===": "",
     "start": "PEERIO_STAGING_SOCKET_SERVER=\"wss://hocuspocus.peerio.com\" npm run start-dev",
+    "start-medcryptor": "PEERIO_WHITELABEL=medcryptor npm start",
     "start-debug": "REMOTE_DEBUG_PORT=9222 npm run start",
     "start-latest": "git pull && npm install && npm run start",
     "start-dev": "(export NODE_ENV=development; npm run compile && run-p -l watch:* electron:run)",
@@ -60,7 +61,7 @@
   },
   "homepage": "https://github.com/PeerioTechnologies/peerio-desktop#readme",
   "devDependencies": {
-    "@peerio/desktop-release-builder": "6.12.3",
+    "@peerio/desktop-release-builder": "6.13.2",
     "@types/chai": "4.1.2",
     "@types/chai-as-promised": "7.1.0",
     "@types/lodash": "4.14.107",

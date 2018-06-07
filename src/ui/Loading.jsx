@@ -15,6 +15,9 @@ class Loading extends React.Component {
         this.dispose = when(() => chatStore.loaded, () => {
             // TODO: refactor when SDK is there for chat invites
             if (chatStore.chats.length || chatInviteStore.received.length) {
+                // To avoid UI confusion (due to nested patient menu),
+                // if activeChat is in patient space, deactivate on app load, show zero state
+                if (chatStore.activeChat.isInSpace) chatStore.deactivateCurrentChat();
                 routerStore.navigateTo(routerStore.ROUTES.chats);
             } else {
                 routerStore.navigateTo(routerStore.ROUTES.zeroChats);

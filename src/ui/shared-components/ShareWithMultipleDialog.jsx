@@ -32,7 +32,7 @@ class ShareWithMultipleDialog extends React.Component {
     @computed get contacts() {
         const selectedUsernames = this.selectedUsers.keys();
         let ret = contactStore
-            .filter(this.query, null, true)
+            .whitelabel.filter(this.query, this.props.context)
             .filter(c => !c.isDeleted)
             .filter(c => c.username !== User.current.username)
             .sort((c1, c2) => c1.username.localeCompare(c2.username));

@@ -2,13 +2,11 @@ const React = require('react');
 const { reaction, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { ProgressBar } = require('peer-ui');
-const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
-const T = require('~/ui/shared-components/T');
 const Message = require('./Message');
 const { chatStore, clientApp } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const PendingDMHeader = require('~/ui/chat/components/PendingDMHeader');
-const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
+const ChatHeader = require('~/whitelabel/components/ChatHeader');
 
 @observer
 class MessageList extends React.Component {
@@ -224,19 +222,7 @@ class MessageList extends React.Component {
 
         if (chat.canGoUp || !chat.initialPageLoaded) return null;
         return (
-            <div className="messages-start">
-                <div className="avatars">
-                    {this.displayParticipants.map(
-                        c => <AvatarWithPopup size="large" key={c.username} contact={c} tooltip />
-                    )}
-                </div>
-                <T k={chat.isChannel ? 'title_chatBeginningRoom' : 'title_chatBeginning'} tag="div" className="title">
-                    {{
-                        chatName: chat.name
-                    }}
-                </T>
-                <IdentityVerificationNotice />
-            </div>
+            <ChatHeader />
         );
     }
 

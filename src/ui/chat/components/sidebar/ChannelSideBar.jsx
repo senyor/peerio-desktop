@@ -9,6 +9,7 @@ const ChatNameEditor = require('~/ui/chat/components/ChatNameEditor');
 const T = require('~/ui/shared-components/T');
 const MembersSection = require('./MembersSection');
 const FilesSection = require('./FilesSection');
+const ELEMENTS = require('~/whitelabel/helpers/elements');
 
 const MEMBERS = 'members';
 const FILES = 'files';
@@ -88,7 +89,8 @@ class ChannelSideBar extends React.Component {
     render() {
         const chat = chatStore.activeChat;
         if (!chat) return null;
-        const { canIAdmin, canILeave } = chat;
+        const { canIAdmin } = chat;
+        const canILeave = ELEMENTS.channelSideBar.canILeave(chat.canILeave);
         const hasFiles = chat.recentFiles.length;
 
         return (

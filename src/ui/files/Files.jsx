@@ -2,7 +2,7 @@ const React = require('react');
 const css = require('classnames');
 const { Button, Checkbox, Dialog, Input, ProgressBar } = require('peer-ui');
 const { observer } = require('mobx-react');
-const { observable, action, computed } = require('mobx');
+const { observable, action, computed, reaction } = require('mobx');
 const { fileStore, volumeStore, clientApp, chatStore } = require('peerio-icebear');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./components/Breadcrumb');
@@ -21,6 +21,8 @@ const config = require('~/config');
 const _ = require('lodash');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
+const CONTEXT_FILES = 'sharefiles';
+const CONTEXT_FOLDERS = 'sharefolders';
 
 @observer
 class Files extends React.Component {
@@ -34,8 +36,19 @@ class Files extends React.Component {
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
 
+    @observable shareContext = '';
+
     componentWillMount() {
         clientApp.isInFilesView = true;
+        this.disposer = reaction(() => fileStore.selectedFolders.length, length => {
+            if (length > 0) {
+                this.shareContext = CONTEXT_FOLDERS;
+            } else {
+                this.shareContext = fileStore.selectedFiles.length > 0
+                    ? CONTEXT_FILES
+                    : '';
+            }
+        });
     }
 
     componentDidMount() {
@@ -66,6 +79,7 @@ class Files extends React.Component {
         // remove icebear hook for bulk save
         fileStore.bulk.downloadFolderSelector = null;
         fileStore.bulk.pickPathSelector = null;
+        this.disposer();
     }
 
     handleSearch = val => {
@@ -106,7 +120,9 @@ class Files extends React.Component {
             this.currentDialogFolder = null;
         }
 
+        this.shareContext = CONTEXT_FOLDERS;
         const contacts = await this.shareWithMultipleDialog.show();
+
         this.currentDialogFolder = null;
         if (!contacts || !contacts.length) return;
         if (folder.isShared) {
@@ -114,13 +130,20 @@ class Files extends React.Component {
         } else {
             await volumeStore.shareFolder(folder, contacts);
         }
+
+        this.shareContext = '';
     }
 
     @action.bound async shareFile(ev) {
         const file = getFileByEvent(ev);
+
+        this.shareContext = CONTEXT_FILES;
+
         const contacts = await this.shareWithMultipleDialog.show();
         if (!contacts || !contacts.length) return;
         contacts.forEach(c => chatStore.startChatAndShareFiles([c], file));
+
+        this.shareContext = '';
     }
 
     @action.bound async shareSelected() {
@@ -579,7 +602,9 @@ class Files extends React.Component {
                 <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
                 <ConfirmFolderDeleteDialog ref={this.refConfirmFolderDeleteDialog} />
                 <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog}
-                    item={this.currentDialogFolder} />
+                    item={this.currentDialogFolder}
+                    context={this.shareContext}
+                />
             </div>
         );
     }

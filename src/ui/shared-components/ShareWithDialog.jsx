@@ -21,7 +21,7 @@ class ShareWithDialog extends React.Component {
 
     @computed get contacts() {
         return contactStore
-            .filter(this.query, null, true)
+            .whitelabel.filter(this.query, this.props.context)
             .filter(c => c.username !== User.current.username)
             .sort((c1, c2) => c1.username.localeCompare(c2.username));
     }
@@ -102,7 +102,7 @@ class ShareWithDialog extends React.Component {
                         <div className="list-dms-container">
                             <div className="p-list-heading">
                                 <T k="title_contacts" />
-                            &nbsp;({this.contacts.length})
+                                &nbsp;({this.contacts.length})
                             </div>
                             <List className="list-chats list-dms" clickable>
                                 {this.contacts.map(this.renderContact)}

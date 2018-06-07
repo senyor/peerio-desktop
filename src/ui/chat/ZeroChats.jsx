@@ -5,7 +5,6 @@ const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const css = require('classnames');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 
 @observer
@@ -35,7 +34,7 @@ class ZeroChats extends React.Component {
 
     render() {
         return (
-            <div className={css('zero-chats-container')}>
+            <div className="zero-chats-container">
                 <div className="zero-chats-content">
                     <div className="header">
                         <T k="title_zeroChat" tag="div" className="welcome-title" />

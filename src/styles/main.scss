@@ -11,6 +11,7 @@
 
 // Variables
 @import 'app/node_modules/peer-ui/src/scss/_colors';
+@import './vars/_colors-white-label'; // variable overrides for whitelabel releases
 @import 'app/node_modules/peer-ui/src/scss/_grid';
 @import 'app/node_modules/peer-ui/src/scss/_layout';
 @import 'app/node_modules/peer-ui/src/scss/_shadows';
@@ -44,6 +45,9 @@
 @import '../ui/settings/_all';
 @import '../ui/signup/_all';
 @import '../ui/updater/_all';
+
+// Whitelabel component styles
+@import '../ui/whitelabel/_all';
 
 // General styles and overrides
 @import './misc';

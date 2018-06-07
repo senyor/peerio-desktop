@@ -15,6 +15,8 @@ const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const MaintenanceWarning = require('~/ui/shared-components/MaintenanceWarning');
 const { getAttributeInParentChain } = require('~/helpers/dom');
+const PatientList = require('~/whitelabel/components/PatientList');
+const ELEMENTS = require('~/whitelabel/helpers/elements');
 
 // Variables to calculate position-in-window of unread messages
 const paddingTop = 20;
@@ -42,7 +44,7 @@ class ChatList extends React.Component {
 
     // Building the rooms & invites list
     @computed get allRooms() {
-        return chatStore.allRooms;
+        return ELEMENTS.chatList.allRooms;
     }
 
     @computed get allRoomsMap() {
@@ -75,8 +77,10 @@ class ChatList extends React.Component {
                         key={`invite:${r.kegDbId}`}
                         className={
                             css('room-item', 'room-invite-item', 'unread',
-                                { active: chatInviteStore.activeInvite
-                                    && chatInviteStore.activeInvite.kegDbId === r.kegDbId })
+                                {
+                                    active: chatInviteStore.activeInvite
+                                        && chatInviteStore.activeInvite.kegDbId === r.kegDbId
+                                })
                         }
                         onClick={this.activateInviteByEvent}
                         caption={`# ${r.channelName}`}
@@ -133,6 +137,7 @@ class ChatList extends React.Component {
     }
 
     // Calculating the positions of unread messages relative to scroll container
+    // TODO: this will be thrown off by PatientList
     @computed get unreadPositions() {
         const positionsArray = [];
 
@@ -320,6 +325,9 @@ class ChatList extends React.Component {
                                     {this.allRoomsMap}
                                 </FlipMove>
                             </List>
+
+                            <PatientList />
+
                             <List clickable>
                                 <div>
                                     <PlusIcon onClick={this.newMessage} label={t('title_directMessages')} />

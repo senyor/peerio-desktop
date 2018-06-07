@@ -2,12 +2,12 @@ const React = require('react');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const uiStore = require('~/stores/ui-store');
 const FolderActions = require('./FolderActions');
 const { Checkbox, CustomIcon, MaterialIcon, ProgressBar } = require('peer-ui');
+const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { User } = require('peerio-icebear');
+const { contactStore, User } = require('peerio-icebear');
 
 // TESTING
 const { volumeStore } = require('peerio-icebear');
@@ -28,8 +28,14 @@ class FolderLine extends React.Component {
         volumeStore.mockProgress(this.props.folder);
     }
 
-    openContactDialog = () => {
-        uiStore.contactDialogUsername = this.props.folder.owner;
+    setContactProfileRef = (ref) => {
+        if (ref) this.contactProfileRef = ref;
+    }
+
+    @observable clickedContact;
+    @action.bound openContact() {
+        this.clickedContact = contactStore.getContact(this.props.folder.owner);
+        this.contactProfileRef.openDialog();
     }
 
     render() {
@@ -82,7 +88,7 @@ class FolderLine extends React.Component {
                     </div>
 
                     {this.props.folderDetails &&
-                        <div className="file-owner" onClick={this.openContactDialog}>
+                        <div className="file-owner clickable" onClick={this.openContact}>
                             {shareInProgress
                                 ? <T k="title_convertingToShared" />
                                 : folder.owner === User.current.username ? t('title_you') : folder.owner
@@ -136,6 +142,12 @@ class FolderLine extends React.Component {
                 }
 
                 {shareInProgress && <ProgressBar value={progress} max={progressMax} />}
+                {this.props.folderDetails &&
+                    <ContactProfile
+                        ref={this.setContactProfileRef}
+                        contact={this.clickedContact}
+                    />
+                }
             </div>
         );
     }

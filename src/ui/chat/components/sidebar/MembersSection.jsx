@@ -1,20 +1,25 @@
 const React = require('react');
+const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { List, ListHeading, ListItem, Menu, MenuItem } = require('peer-ui');
-const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
+const { Avatar, List, ListHeading, ListItem, Menu, MenuItem } = require('peer-ui');
+const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { chatStore, contactStore, chatInviteStore, User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const { getAttributeInParentChain } = require('~/helpers/dom');
-const uiStore = require('~/stores/ui-store');
 const T = require('~/ui/shared-components/T');
 const SideBarSection = require('./SideBarSection');
 const css = require('classnames');
 
 @observer
 class MembersSection extends React.Component {
-    openContact(ev) {
-        const username = getAttributeInParentChain(ev.target, 'data-username');
-        uiStore.contactDialogUsername = username;
+    setContactProfileRef = (ref) => {
+        if (ref) this.contactProfileRef = ref;
+    }
+
+    @observable clickedContact;
+    @action.bound openContact(ev) {
+        this.clickedContact = contactStore.getContact(ev.currentTarget.attributes['data-username'].value);
+        this.contactProfileRef.openDialog();
     }
 
     deleteInvite(ev) {
@@ -99,7 +104,7 @@ class MembersSection extends React.Component {
             <ListItem
                 data-username={c.username}
                 key={c.username}
-                leftContent={<AvatarWithPopup key="a" contact={c} size="small" />}
+                leftContent={<Avatar key="a" contact={c} size="small" clickable />}
                 caption={
                     <div className="user-caption">
                         <span className="username">{c.username}</span>
@@ -169,6 +174,10 @@ class MembersSection extends React.Component {
                             : null}
                     </List>
                 </div>
+                <ContactProfile
+                    ref={this.setContactProfileRef}
+                    contact={this.clickedContact}
+                />
             </SideBarSection>
         );
     }

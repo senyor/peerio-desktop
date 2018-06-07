@@ -1,8 +1,8 @@
 const React = require('react');
-const { observable } = require('mobx');
+const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
 
-const { User } = require('peerio-icebear');
+const { contactStore, User } = require('peerio-icebear');
 const { downloadFile } = require('~/helpers/file');
 const moment = require('moment');
 const css = require('classnames');
@@ -12,6 +12,7 @@ const uiStore = require('~/stores/ui-store');
 
 const { Checkbox, ProgressBar } = require('peer-ui');
 
+const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const FileActions = require('./FileActions');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const MoveFileDialog = require('./MoveFileDialog');
@@ -67,9 +68,15 @@ class FileLine extends React.Component {
         this.showActions = false;
     };
 
-    openContactDialog = () => {
-        uiStore.contactDialogUsername = this.props.file.fileOwner;
-    };
+    setContactProfileRef = (ref) => {
+        if (ref) this.contactProfileRef = ref;
+    }
+
+    @observable clickedContact;
+    @action.bound openContact() {
+        this.clickedContact = contactStore.getContact(this.props.file.fileOwner);
+        this.contactProfileRef.openDialog();
+    }
 
     render() {
         const { file } = this.props;
@@ -141,7 +148,7 @@ class FileLine extends React.Component {
                     </div>
 
                     {this.props.fileDetails &&
-                        <div className="file-owner" onClick={this.openContactDialog}>
+                        <div className="file-owner clickable" onClick={this.openContact}>
                             {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
                         </div>
                     }
@@ -195,6 +202,13 @@ class FileLine extends React.Component {
                         </div>
                         : null}
                 </div>
+
+                {this.props.fileDetails &&
+                    <ContactProfile
+                        ref={this.setContactProfileRef}
+                        contact={this.clickedContact}
+                    />
+                }
             </div>
         );
     }

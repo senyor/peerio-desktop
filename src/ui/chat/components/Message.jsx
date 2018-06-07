@@ -8,6 +8,7 @@ const { t } = require('peerio-translator');
 const { contactStore, systemMessages, User } = require('peerio-icebear');
 const { Button, MaterialIcon, Menu, MenuItem } = require('peer-ui');
 const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
+const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { time } = require('~/helpers/formatter');
 const { chatSchema, Renderer } = require('~/helpers/chat/prosemirror/chat-schema');
 const urls = require('~/config').translator.urlMap;
@@ -64,10 +65,14 @@ class Message extends React.Component {
         if (this.timer) clearTimeout(this.timer);
     }
 
+    setContactProfileRef = (ref) => {
+        if (ref) this.contactProfileRef = ref;
+    }
 
-    @action
-    onClickContact(ev) {
-        uiStore.contactDialogUsername = ev.target.attributes['data-username'].value;
+    @observable clickedContact;
+    @action.bound onClickContact(ev) {
+        this.clickedContact = contactStore.getContact(ev.target.attributes['data-username'].value);
+        this.contactProfileRef.openDialog();
     }
 
     /**
@@ -307,6 +312,11 @@ class Message extends React.Component {
                 }
 
                 {this.allowShowSendingState && m.sending ? <div className="sending-overlay" /> : null}
+
+                <ContactProfile
+                    ref={this.setContactProfileRef}
+                    contact={this.clickedContact}
+                />
             </div>
         );
     }

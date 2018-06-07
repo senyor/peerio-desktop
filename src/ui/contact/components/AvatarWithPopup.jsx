@@ -1,40 +1,37 @@
 const React = require('react');
-const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
 
-const { Avatar, Dialog } = require('peer-ui');
+const { Avatar } = require('peer-ui');
 const ContactProfile = require('./ContactProfile');
-const { t } = require('peerio-translator');
 
 @observer
 class AvatarWithPopup extends React.Component {
-    @observable popupVisible;
-    @action.bound openPopup() { this.popupVisible = true; }
-    @action.bound closePopup() { this.popupVisible = false; }
+    setDialogRef = (ref) => {
+        if (ref) this.dialogRef = ref;
+    }
+
+    openDialog = (ev) => {
+        ev.stopPropagation();
+        this.dialogRef.openDialog();
+    }
 
     render() {
         const popup = (
-            <Dialog
-                key={`avatarwithpopup-dialog-${this.props.contact}`}
-                active={this.popupVisible}
-                onCancel={this.closePopup}
-                actions={[{ label: t('button_ok'), onClick: () => this.closePopup() }]}
-            >
-                <ContactProfile
-                    contact={this.props.contact}
-                    onClose={this.closePopup}
-                />
-            </Dialog>
+            <ContactProfile
+                key={`avatarwithpopup-dialog-${this.props.contact.username}`}
+                ref={this.setDialogRef}
+                contact={this.props.contact}
+            />
         );
 
         const avatar = (
             <Avatar
-                key={`avatarwithpopup-avatar-${this.props.contact}`}
+                key={`avatarwithpopup-avatar-${this.props.contact.username}`}
                 contact={this.props.contact}
                 size={this.props.size}
                 tooltip={this.props.tooltip}
                 clickable
-                onClick={this.openPopup}
+                onClick={this.openDialog}
             />
         );
 

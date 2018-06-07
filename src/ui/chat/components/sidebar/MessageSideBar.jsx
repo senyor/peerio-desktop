@@ -1,13 +1,13 @@
 const React = require('react');
-const { reaction } = require('mobx');
+const { action, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, systemMessages, contactStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
-const { Button, List, ListItem } = require('peer-ui');
+const { Avatar, Button, List, ListItem } = require('peer-ui');
 const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
+const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
-const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer
 class MessageSideBar extends React.Component {
@@ -29,10 +29,16 @@ class MessageSideBar extends React.Component {
         this.reactionsToDispose.forEach(d => d());
     }
 
-    openContact(ev) {
-        const username = getAttributeInParentChain(ev.target, 'data-username');
-        uiStore.contactDialogUsername = username;
+    setContactProfileRef = (ref) => {
+        if (ref) this.contactProfileRef = ref;
     }
+
+    @observable clickedContact;
+    @action.bound openContact(ev) {
+        this.clickedContact = contactStore.getContact(ev.currentTarget.attributes['data-username'].value);
+        this.contactProfileRef.openDialog();
+    }
+
     close() {
         setTimeout(() => {
             uiStore.selectedMessage = null;
@@ -55,7 +61,7 @@ class MessageSideBar extends React.Component {
             : <ListItem
                 data-username={entry[0].username}
                 key={entry[0].username}
-                leftContent={<AvatarWithPopup key="a" contact={entry[0]} size="small" />}
+                leftContent={<Avatar key="a" contact={entry[0]} size="small" clickable />}
                 caption={entry[0].username}
                 legend={entry[0].fullName}
                 onClick={this.openContact}
@@ -104,6 +110,11 @@ class MessageSideBar extends React.Component {
                 <List className="receipts" clickable>
                     {this.getReceipts(msg)}
                 </List>
+
+                <ContactProfile
+                    ref={this.setContactProfileRef}
+                    contact={this.clickedContact}
+                />
             </div>
         );
     }

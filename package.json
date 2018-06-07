@@ -2,7 +2,6 @@
   "name": "peerio-2",
   "description": "Peerio 2",
   "version": "2.114.0",
-  "lastMandatoryUpdateVersion": "2.114.4",
   "scripts": {
     "=== HOOKS ===": "",
     "postcheckout": "opt --in npm-install --exec \"npm install\"",

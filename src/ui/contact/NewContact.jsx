@@ -57,7 +57,7 @@ class NewContact extends React.Component {
         this.suggestInviteEmail = '';
         this.notFound = false;
 
-        const c = await contactStore.whitelabel.getContact(this.query, 'newcontact');
+        const c = await contactStore.whitelabel.getContact(this.query, 'addcontact');
 
         if (c.notFound || c.isHidden) {
             this.notFound = true;

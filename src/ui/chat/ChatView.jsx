@@ -170,7 +170,10 @@ class ChatView extends React.Component {
                                     onBlur={this.hideChatNameEditor} />
                                 : <div className="name-editor-inner">
                                     {chat.canIAdmin && chat.isChannel ? <MaterialIcon icon="edit" /> : null}
-                                    {ELEMENTS.chatView.title(ELEMENTS.chatEditor.displayName(chat))}
+                                    {chat.isChannel
+                                        ? ELEMENTS.chatView.title(ELEMENTS.chatEditor.displayName(chat))
+                                        : <div className="title-content">{chat.name}</div>
+                                    }
                                 </div>
                         }
                     </div>

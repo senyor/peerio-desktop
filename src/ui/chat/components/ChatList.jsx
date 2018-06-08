@@ -49,6 +49,7 @@ class ChatList extends React.Component {
 
     @computed get allRoomsMap() {
         return this.allRooms.map((r) => {
+            if (!r.metaLoaded) return null;
             return r.isChannel
                 ? (
                     <ListItem
@@ -95,6 +96,7 @@ class ChatList extends React.Component {
     // Building the DM list
     @computed get dmMap() {
         return chatStore.directMessages.map(c => {
+            if (!c.metaLoaded) return null;
             let rightContent = null;
             let contact = c.otherParticipants.length > 0
                 ? c.otherParticipants[0]

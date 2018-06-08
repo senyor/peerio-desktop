@@ -17,11 +17,26 @@ const InstallingUpdateDialog = require('./updater/InstallingUpdateDialog');
 const ReadyToInstallUpdateDialog = require('./updater/ReadyToInstallUpdateDialog');
 const appState = require('~/stores/app-state');
 const appControl = require('~/helpers/app-control');
+const routerStore = require('~/stores/router-store');
 
 @observer
 class Root extends React.Component {
+    /*
+        Snackbar exists in root because snackbar warnings appears everywhere in app.
+        However, root snackbar interferes with MessageInput in any currently active chat.
+        So we need to only show root snackbar on non-chat screens.
+
+        The rule is:
+            * show if not in either `/app/chats/` or `/app/patients/` view
+            * or, show snackbar if there is no current activeChat.
+                This covers the case where we are in `chats` or `patients` view but without MessageInput
+                e.g. zero states, new DM, new room
+    */
     @computed get snackbarVisible() {
-        return !chatStore.activeChat;
+        return (
+            !routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)
+            && !routerStore.currentRoute.startsWith(routerStore.ROUTES.patients)
+        ) || !chatStore.activeChat;
     }
 
     @observable showOfflineNotification = false;

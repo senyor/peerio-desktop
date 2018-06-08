@@ -150,7 +150,7 @@ class NewContact extends React.Component {
                                 ? <UserSearchError
                                     userNotFound={this.notFound ? this.query : null}
                                     suggestInviteEmail={this.suggestInviteEmail}
-                                    invite={this.invite}
+                                    onInvite={this.invite}
                                     isChannel={routerStore.isNewChannel}
                                 />
                                 : null

@@ -1,11 +1,12 @@
 const React = require('react');
-
+const { observer } = require('mobx-react');
 const T = require('~/ui/shared-components/T');
 
 const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const EmojiImage = require('~/ui/emoji/Image');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 
+@observer
 class PendingDMHeader extends React.Component {
     render() {
         const c = this.props.contact;

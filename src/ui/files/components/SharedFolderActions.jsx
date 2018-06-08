@@ -1,8 +1,10 @@
 const React = require('react');
+const { observer } = require('mobx-react');
 const { Menu, MenuItem, Divider } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { getDataProps } = require('~/helpers/dom');
 
+@observer
 class SharedFolderActions extends React.Component {
     render() {
         return (

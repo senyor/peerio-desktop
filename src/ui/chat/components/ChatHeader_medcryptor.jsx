@@ -1,5 +1,6 @@
 const React = require('react');
 const { computed } = require('mobx');
+const { observer } = require('mobx-react');
 const { chatStore } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { MaterialIcon } = require('peer-ui');
@@ -7,6 +8,7 @@ const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
 const SPACE = require('~/whitelabel/helpers/space');
 
+@observer
 class ChatHeader extends React.Component {
     @computed get displayParticipants() {
         const chat = chatStore.activeChat;

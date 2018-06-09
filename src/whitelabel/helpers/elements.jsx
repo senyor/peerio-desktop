@@ -108,17 +108,27 @@ class ELEMENTS {
 
     get chatEditor() {
         const page = {
-            displayName: (chat) => chat.chatHead.chatName,
-            saveNameChanges: (val) => chatStore.activeChat.rename(val)
+            displayName: (chat) => {
+                return chat.name;
+            },
+            saveNameChanges: (val) => {
+                if (!chatStore.activeChat) return Promise.resolve();
+                return chatStore.activeChat.rename(val);
+            }
         };
 
         if (config.whiteLabel.name === 'medcryptor') {
             if (chatStore.activeChat.isInSpace && SPACE.isMCAdmin) {
-                page.displayName = (chat) => chat.chatHead.nameInSpace;
+                page.displayName = (chat) => {
+                    return chat.nameInSpace;
+                };
 
-                page.saveNameChanges = (val) => {
-                    chatStore.activeChat.renameInSpace(val);
-                    chatStore.activeChat.rename(`${chatStore.activeChat.chatHead.spaceName} - ${val}`);
+                page.saveNameChanges = async (val) => {
+                    if (!chatStore.activeChat) return Promise.resolve();
+                    return Promise.all([
+                        chatStore.activeChat.renameInSpace(val),
+                        chatStore.activeChat.rename(`${chatStore.activeChat.chatHead.spaceName} - ${val}`)
+                    ]);
                 };
             }
         }

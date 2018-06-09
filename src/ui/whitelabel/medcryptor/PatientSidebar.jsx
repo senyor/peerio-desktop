@@ -149,7 +149,7 @@ class PatientSidebar extends React.Component {
                                     )}
                                     leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
                                 >
-                                    <i>{t('title_newDirectMessage')}</i>
+                                    <i>{t('mcr_title_newInternalRoomPlaceholder')}</i>
                                 </ListItem>
                             }
                             {this.internalRoomMap}
@@ -170,7 +170,7 @@ class PatientSidebar extends React.Component {
                                     )}
                                     leftContent={<div className="new-dm-avatar material-icons">help_outline</div>}
                                 >
-                                    <i>{t('title_newDirectMessage')}</i>
+                                    <i>{t('mcr_title_newPatientRoomPlaceholder')}</i>
                                 </ListItem>
                             }
                             {this.patientRoomMap}

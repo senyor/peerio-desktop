@@ -4,10 +4,12 @@ const React = require('react');
 const { computed } = require('mobx');
 const { observer } = require('mobx-react');
 
+const css = require('classnames');
 const { chatStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const PatientSidebar = require('./PatientSidebar');
 const PatientZeroChats = require('./PatientZeroChats');
+const SPACE = require('~/whitelabel/helpers/space');
 
 @observer
 class Patient extends React.Component {
@@ -19,7 +21,11 @@ class Patient extends React.Component {
 
     render() {
         return (
-            <div className="messages patient-space">
+            <div className={css(
+                'messages',
+                'patient-space',
+                { 'patient-room': SPACE.isPatientRoomOpen }
+            )}>
                 <PatientSidebar />
                 {this.zeroState ? <PatientZeroChats /> : null}
                 {this.props.children}

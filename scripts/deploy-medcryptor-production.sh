@@ -14,5 +14,5 @@ peerio-desktop-release --key ~/.peerio-updater/secret.key \
                        --shared ~/Win \
                        --repository PeerioTechnologies/peerio-desktop \
                        --overrides PeerioTechnologies/medcryptor-desktop \
-                       --tag medcryptor-base \
+                       --tag master \
                        --publish

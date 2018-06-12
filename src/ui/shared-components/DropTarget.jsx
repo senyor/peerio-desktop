@@ -2,7 +2,7 @@ const React = require('react');
 const dragStore = require('~/stores/drag-drop-store');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { MaterialIcon } = require('peer-ui');
+const { MaterialIcon, ProgressBar } = require('peer-ui');
 const { fileStore, chatStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
@@ -53,6 +53,18 @@ class DropTarget extends React.Component {
                     deactivate={() => this.dialogDeactivate()}
                     files={this._files}
                 />
+            );
+        }
+
+        if (dragStore.processing) {
+            return (
+                <div className="global-drop-target">
+                    <div className="drop-content">
+                        <div className="drop-progress">
+                            <ProgressBar type="circular" mode="indeterminate" />
+                        </div>
+                    </div>
+                </div>
             );
         }
 

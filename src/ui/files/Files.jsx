@@ -271,7 +271,10 @@ class Files extends React.Component {
     async handleUpload() {
         const paths = await pickLocalFiles();
         if (!paths || !paths.length) return;
-        const trees = paths.map(getFileTree);
+        const trees = [];
+        for (let i = 0; i < paths.length; i++) {
+            trees.push(await getFileTree(paths[i]));
+        }
         await Promise.map(trees, tree => {
             if (typeof tree === 'string') {
                 return fileStore.upload(

@@ -10,7 +10,8 @@ const _ = require('lodash');
 // until it's fixed
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 class DragDropStore {
-    @observable hovering;
+    @observable processing = false;
+    @observable hovering = false;
     @observable hoveringFileCount = 0;
     @observable hoveringFileSize = 0;
     _counter = 0;
@@ -34,7 +35,7 @@ class DragDropStore {
         this._counter++;
         if (this._counter === 1) {
             // let list = Array.prototype.slice.call(ev.dataTransfer.files);
-            // list = list.map(this._extractPath).map(getFileTree);
+            // list = list.map(this._extractPath).map(getFileTree); // TODO: getFileTree is now async
             // console.debug(`Hovering ${list.success.length} files of ${list.successBytes} bytes`);
             this.hovering = true;
             // this.hoveringFileCount = list.success.length;
@@ -54,7 +55,7 @@ class DragDropStore {
         }
     };
 
-    _onDrop = (ev) => {
+    _onDrop = async (ev) => {
         // console.log('drop', this._counter, ev.dataTransfer.files.length);
         ev.preventDefault();
         if (!User.current) return;
@@ -62,17 +63,20 @@ class DragDropStore {
         this.hovering = false;
         this.hoveringFileCount = 0;
         this.hoveringFileSize = 0;
-        if (this._subscribers.length) {
-            // this._subscribers.forEach(handler => { handler(this._hoveringFiles); });
-            // restore this line ^ after electron bug is fixed
-            this._subscribers.forEach(handler => {
+        this.processing = true;
+        try {
+            if (this._subscribers.length) {
                 const paths = Array.prototype.slice.call(ev.dataTransfer.files).map(this._extractPath);
-                const list = getFileList(paths);
-                const trees = paths.map(getFileTree);
+                const list = await getFileList(paths);
+                const trees = [];
+                for (let i = 0; i < paths.length; i++) {
+                    trees.push(await getFileTree(paths[i]));
+                }
                 _.remove(trees, item => !item);
-                handler(list, trees);
-            });
-            // remove this line ^ after electron bug is fixed
+                this._subscribers.forEach(handler => { handler(list, trees); });
+            }
+        } finally {
+            this.processing = false;
         }
     };
 

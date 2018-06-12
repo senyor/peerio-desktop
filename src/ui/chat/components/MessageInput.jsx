@@ -39,10 +39,10 @@ class MessageInput extends React.Component {
         const chat = chatStore.activeChat;
         if (!chat) return;
         pickLocalFiles()
+            .then(getFileList)
             .then(paths => {
-                paths = getFileList(paths).success; // eslint-disable-line
-                if (!paths || !paths.length) return;
-                this.selectedFiles = paths;
+                if (!paths || !paths.success || !paths.success.length) return;
+                this.selectedFiles = paths.success;
                 this.uploadDialogActive = true;
             });
     }

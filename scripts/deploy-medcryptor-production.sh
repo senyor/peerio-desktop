@@ -8,11 +8,10 @@ case "$choice" in
   * ) exit;;
 esac
 
-# TODO(dchest): remove --tag medcryptor-base one we're ready to build from master.
-
 peerio-desktop-release --key ~/.peerio-updater/secret.key \
                        --shared ~/Win \
                        --repository PeerioTechnologies/peerio-desktop \
                        --overrides PeerioTechnologies/medcryptor-desktop \
                        --tag master \
+                       --versioning \
                        --publish

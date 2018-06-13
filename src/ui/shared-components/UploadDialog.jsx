@@ -38,6 +38,14 @@ class UploadDialog extends React.Component {
         return this.props.files[this.currentFileIndex];
     }
 
+    /**
+     * Returns current file name with a random query string added to
+     * prevent Chromium caching.
+     */
+    @computed get currentFileForceNoCache() {
+        return `${this.currentFile}?${Math.random()}`;
+    }
+
     @action.bound onFileNameChange(val) {
         this.fileName = val;
     }
@@ -192,7 +200,7 @@ class UploadDialog extends React.Component {
                 <div className="upload-dialog-contents">
                     <div className={css('image-or-icon', { 'icon-container': this.fileType !== 'img' })}>
                         {this.fileType === 'img'
-                            ? <div className="thumbnail"><img src={this.currentFile} alt="" /></div>
+                            ? <div className="thumbnail"><img src={this.currentFileForceNoCache} alt="" /></div>
                             : <div className="icon-inner">
                                 <FileSpriteIcon type={this.fileType} size="xlarge" />
                                 <T k="title_previewUnavailable" tag="div" className="preview-unavailable" />

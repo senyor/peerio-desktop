@@ -68,7 +68,6 @@
   },
   "dependencies": {
     "@peerio/updater": "0.14.1",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#dev",
     "autolinker": "1.4.4",
     "cheerio": "1.0.0-rc.2",
     "classnames": "2.2.5",
@@ -82,7 +81,8 @@
     "mobx-react": "4.4.2",
     "normalize.css": "7.0.0",
     "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
-    "peer-ui": "github:PeerioTechnologies/ui-library#v1.0.4",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#dev",
+    "peer-ui": "github:PeerioTechnologies/ui-library#v1.1.0",
     "prosemirror-commands": "1.0.1",
     "prosemirror-dropcursor": "1.0.0",
     "prosemirror-gapcursor": "1.0.0",

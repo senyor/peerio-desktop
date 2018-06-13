@@ -64,13 +64,13 @@ class MoveFileDialog extends React.Component {
     }
 
     @computed get visibleFolders() {
-        return fileStore.folderFilter ?
-            fileStore.visibleFolders
+        return fileStore.searchQuery ?
+            fileStore.foldersSearchResult
             : this.currentFolder.foldersSortedByName;
     }
 
     @action.bound handleSearch(query) {
-        fileStore.folderFilter = query;
+        fileStore.searchQuery = query;
     }
 
     @action.bound changeCurrentFolder(ev) {
@@ -137,7 +137,7 @@ class MoveFileDialog extends React.Component {
                     className="move-file-dialog">
                     <Search
                         onChange={this.handleSearch}
-                        query={fileStore.folderFilter}
+                        query={fileStore.searchQuery}
                     />
                     <Breadcrumb
                         currentFolder={this.currentFolder}

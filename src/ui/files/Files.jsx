@@ -70,7 +70,7 @@ class Files extends React.Component {
     componentWillUnmount() {
         clientApp.isInFilesView = false;
         window.removeEventListener('resize', this.enqueueCheck);
-        fileStore.clearFilter();
+        fileStore.searchQuery = '';
         fileStore.clearSelection();
         // remove icebear hook for sharing selection
         fileStore.bulk.shareWithSelector = null;
@@ -82,13 +82,9 @@ class Files extends React.Component {
         this.disposer();
     }
 
-    handleSearch = val => {
-        if (val === '') {
-            fileStore.clearFilter();
-            return;
-        }
-        fileStore.filterByName(val);
-    };
+    @action handleSearch(val) {
+        fileStore.searchQuery = val;
+    }
 
     @observable moveFolderVisible = false;
 
@@ -108,7 +104,7 @@ class Files extends React.Component {
         this.folderToMove = null;
         // to re-enable sandwich action bars
         fileStore.clearSelection();
-        fileStore.folderFilter = '';
+        fileStore.searchQuery = '';
     }
 
     @action.bound async shareFolder(ev) {
@@ -325,15 +321,15 @@ class Files extends React.Component {
         if (folder !== fileStore.folderStore.currentFolder) {
             this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
             fileStore.folderStore.currentFolder = folder;
-            fileStore.clearFilter();
+            fileStore.searchQuery = '';
             fileStore.clearSelection();
         }
     }
 
     @computed get items() {
-        return fileStore.currentFilter ?
-            fileStore.visibleFilesAndFolders
-            : fileStore.folderStore.currentFolder.foldersAndFilesDefaultSorting;
+        return fileStore.searchQuery ?
+            fileStore.filesAndFoldersSearchResult
+            : fileStore.folderStore.currentFolder.filesAndFoldersDefaultSorting;
     }
 
     @computed get selectedCount() {
@@ -526,8 +522,8 @@ class Files extends React.Component {
         return (
             <div className="files">
                 <div className="files-header-container">
-                    <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
-                    {fileStore.currentFilter ? this.searchResultsHeader : this.breadCrumbsHeader}
+                    <Search onChange={this.handleSearch} query={fileStore.searchQuery} />
+                    {fileStore.searchQuery ? this.searchResultsHeader : this.breadCrumbsHeader}
                 </div>
                 <div className="file-wrapper">
                     <div className="file-table-wrapper scrollable"

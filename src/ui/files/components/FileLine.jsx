@@ -80,7 +80,6 @@ class FileLine extends React.Component {
 
     render() {
         const { file } = this.props;
-        if (!file.show) return null;
 
         // We want relative timestamp in case it's not older then 1 day.
         // In case of relative timestamp we also want to re-render periodically to update it

@@ -20,7 +20,7 @@ class FilePicker extends React.Component {
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
 
     componentWillUnmount() {
-        fileStore.clearFilter();
+        fileStore.searchQuery = '';
     }
 
     checkScrollPosition = () => {
@@ -53,7 +53,7 @@ class FilePicker extends React.Component {
 
     handleClose = () => {
         fileStore.clearSelection();
-        fileStore.clearFilter();
+        fileStore.searchQuery = '';
         this.props.onClose();
         this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     };
@@ -63,15 +63,11 @@ class FilePicker extends React.Component {
         if (!selected.length) return;
         this.props.onShare(selected);
         fileStore.clearSelection();
-        fileStore.clearFilter();
+        fileStore.searchQuery = '';
     };
 
     handleSearch = val => {
-        if (val === '') {
-            fileStore.clearFilter();
-            return;
-        }
-        fileStore.filterByName(val);
+        fileStore.searchQuery = val;
     };
 
     get breadCrumbsHeader() {
@@ -90,9 +86,9 @@ class FilePicker extends React.Component {
     }
 
     @computed get items() {
-        return fileStore.currentFilter ?
-            fileStore.visibleFilesAndFolders
-            : this.currentFolder.foldersAndFilesDefaultSorting;
+        return fileStore.searchQuery ?
+            fileStore.filesAndFoldersSearchResult
+            : this.currentFolder.filesAndFoldersDefaultSorting;
     }
 
     render() {
@@ -143,8 +139,8 @@ class FilePicker extends React.Component {
                 onCancel={this.handleClose}>
                 {!fileStore.loading && this.props.active ?
                     <div className="file-picker-body">
-                        <Search onChange={this.handleSearch} query={fileStore.currentFilter} />
-                        {fileStore.currentFilter ? this.searchResultsHeader : this.breadCrumbsHeader}
+                        <Search onChange={this.handleSearch} query={fileStore.searchQuery} />
+                        {fileStore.searchQuery ? this.searchResultsHeader : this.breadCrumbsHeader}
                         <div ref={this.setScrollerRef} className="file-table-wrapper">
                             <div className="file-table-body">
                                 {items}
@@ -167,7 +163,7 @@ class FilePicker extends React.Component {
     @action.bound changeFolder(ev) {
         const folder = getFolderByEvent(ev);
         this.currentFolder = folder;
-        fileStore.clearFilter();
+        fileStore.searchQuery = '';
     }
 
     @action.bound toggleSelectFolder(ev) {

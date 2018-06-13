@@ -44,10 +44,10 @@ class NewChannel extends React.Component {
             spaceId: null,
             spaceName: this.channelName,
             spaceDescription: '',
-            nameInSpace: this.channelName
+            spaceRoomType: 'patient',
+            nameInSpace: t('mcr_title_consultation')
         };
 
-        newSpaceProperties.spaceRoomType = 'patient';
         const patientRoom = await chatStore.startChat(
             this.userPicker.selected,
             true,

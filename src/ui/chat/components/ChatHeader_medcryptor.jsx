@@ -53,7 +53,7 @@ class ChatHeader extends React.Component {
                             {{ patientName: SPACE.currentSpace.spaceName }}
                         </T>
                         : <T k="mcr_title_chatHeaderInternalRoom" tag="div" className="title">
-                            {{ roomName: chat.chatHead.nameInSpace }}
+                            {{ roomName: chat.nameInSpace }}
                         </T>
                     : <T
                         k={chat.isChannel

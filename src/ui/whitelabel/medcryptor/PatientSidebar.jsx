@@ -84,7 +84,7 @@ class PatientSidebar extends React.Component {
                             }
                         )
                     }
-                    caption={`# ${r.chatHead.nameInSpace}`}
+                    caption={`# ${r.nameInSpace}`}
                     onClick={this.activateChat}
                     rightContent={this.calculateRightContent(r)}
                 />
@@ -96,7 +96,6 @@ class PatientSidebar extends React.Component {
         const patientRooms = SPACE.currentSpace.patientRooms;
 
         return patientRooms.map(c => {
-            c.isEmpty = c.otherParticipants.length === 0;
             return (
                 <ListItem
                     data-chatid={c.id}
@@ -109,20 +108,12 @@ class PatientSidebar extends React.Component {
                             pinned: c.isFavorite
                         }
                     )}
-                    leftContent={<div className="new-dm-avatar material-icons">
-                        {c.isEmpty
-                            ? 'help_outline'
-                            : 'people'
-                        }
-                    </div>}
+                    leftContent={<div className="new-dm-avatar material-icons">people</div>}
 
                     onClick={this.activateChat}
                     rightContent={this.calculateRightContent(c)}
                 >
-                    {c.isEmpty
-                        ? <T k="mcr_title_noParticipants" />
-                        : c.chatHead.nameInSpace
-                    }
+                    {c.nameInSpace}
                 </ListItem>
             );
         });

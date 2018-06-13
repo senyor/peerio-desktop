@@ -127,7 +127,7 @@ class ELEMENTS {
                     if (!chatStore.activeChat) return Promise.resolve();
                     return Promise.all([
                         chatStore.activeChat.renameInSpace(val),
-                        chatStore.activeChat.rename(`${chatStore.activeChat.chatHead.spaceName} - ${val}`)
+                        chatStore.activeChat.rename(`${SPACE.currentSpace.spaceName} - ${val}`)
                     ]);
                 };
             }

@@ -31,8 +31,7 @@ class ChatNameEditor extends React.Component {
 
         const hint = this.props.purpose ? 'title_chatPurposeHint' : 'title_chatNameHint';
         const label = this.props.purpose ? 'title_purpose' : 'title_title';
-        const value = this.props.purpose ? chat.chatHead.purpose : ELEMENTS.chatEditor.displayName(chat);
-        const displayValue = this.props.purpose ? chat.purpose : ELEMENTS.chatEditor.displayName(chat);
+        const value = this.props.purpose ? chat.purpose : ELEMENTS.chatEditor.displayName(chat);
         return (
             <BetterInput label={this.props.showLabel ? t(label) : null}
                 hint={t(hint)}
@@ -44,7 +43,6 @@ class ChatNameEditor extends React.Component {
                 onKeyDown={this.props.onKeyDown}
                 innerRef={this.setRef}
                 value={value}
-                displayValue={displayValue}
                 tabIndex={this.props.tabIndex}
                 readOnly={this.props.readOnly}
                 multiline={this.props.multiline}

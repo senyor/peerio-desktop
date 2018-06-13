@@ -113,9 +113,9 @@ class ChannelSideBar extends React.Component {
                                         className="purpose-editor"
                                         innerRef={this.chatPurposeEditorRef} />
                                     : <div className="purpose-container">
-                                        {chat.chatHead && chat.chatHead.purpose
+                                        {chat.purpose
                                             ? [<T tag="div" k="title_purpose" className="purpose-label" key="1" />,
-                                                <div key="2" className="purpose-text">{chat.chatHead.purpose}</div>]
+                                                <div key="2" className="purpose-text">{chat.purpose}</div>]
                                             : <T tag="div" k="title_purpose" className="purpose-label-big" />}
                                     </div>
                             }

@@ -125,11 +125,7 @@ class Files extends React.Component {
 
         this.currentDialogFolder = null;
         if (!contacts || !contacts.length) return;
-        if (folder.isShared) {
-            folder.addParticipants(contacts);
-        } else {
-            await volumeStore.shareFolder(folder, contacts);
-        }
+        await volumeStore.shareFolder(folder, contacts);
 
         this.shareContext = '';
     }

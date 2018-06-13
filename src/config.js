@@ -5,7 +5,7 @@ const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env');
 const FileStream = require('peerio-icebear/dist/models/files/node-file-stream');
 const StorageEngine = require('peerio-icebear/dist/models/storage/node-json-storage');
-const { setUrlMap, setTagHandler } = require('peerio-translator');
+const { setUrlMap, setTagHandler, setStringReplacement } = require('peerio-translator');
 const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
 
 const packageJson = require(path.join(app.getAppPath(), 'package.json'));
@@ -27,6 +27,11 @@ setUrlMap(cfg.translator.urlMap);
 for (const name in tagHandlers) {
     setTagHandler(name, tagHandlers[name]);
 }
+
+// replace config-specific strings
+cfg.translator.stringReplacements.forEach((replacementObject) => {
+    setStringReplacement(replacementObject.original, replacementObject.replacement);
+});
 
 // --- PLATFORM SPECIFIC IMPLEMENTATIONS
 cfg.FileStream = FileStream;

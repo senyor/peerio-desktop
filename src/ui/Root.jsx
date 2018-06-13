@@ -1,7 +1,5 @@
 const React = require('react');
 const isDevEnv = require('~/helpers/is-dev-env');
-const config = require('~/config');
-const { setStringReplacement } = require('peerio-translator');
 const { Button, ProgressBar } = require('peer-ui');
 const DropTarget = require('./shared-components/DropTarget');
 const { ipcRenderer } = require('electron');
@@ -47,10 +45,6 @@ class Root extends React.Component {
             appState.devModeEnabled = true;
         }
 
-        // replace config-specific strings
-        config.translator.stringReplacements.forEach((replacementObject) => {
-            setStringReplacement(replacementObject.original, replacementObject.replacement);
-        });
         // events from main process
         ipcRenderer.on('warning', (ev, key) => warnings.add(key)); // TODO: not needed anymore?
         ipcRenderer.on('console_log', (ev, arg) => console.log(arg));

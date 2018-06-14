@@ -6,6 +6,10 @@
 const { chatStore, contactStore, User } = require('peerio-icebear');
 
 class SPACE {
+    get currentSpaceDeleted() {
+        return !this.currentSpace;
+    }
+
     get currentSpace() {
         if (!chatStore.spaces || !chatStore.activeSpace) return null;
         return chatStore.spaces.find(x => x.spaceId === chatStore.activeSpace);

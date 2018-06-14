@@ -27,10 +27,6 @@ class PatientSidebar extends React.Component {
         this.disposer();
     }
 
-    @computed get spaceDeleted() {
-        return !SPACE.currentSpace;
-    }
-
     get isNewInternalRoom() { return routerStore.currentRoute === routerStore.ROUTES.newInternalRoom; }
     get isPatientSpaceRoom() { return routerStore.currentRoute === routerStore.ROUTES.newPatientRoom; }
 

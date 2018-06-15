@@ -89,6 +89,6 @@ try {
     console.log(err);
 }
 
-cfg.enableVolumes = true;
+cfg.enableVolumes = false;
 
 module.exports = cfg;

@@ -108,6 +108,7 @@ class AppNav extends React.Component {
 
     render() {
         const contact = contactStore.getContact(User.current.username);
+        const { currentRoute, ROUTES } = routerStore;
         const { primaryAddressConfirmed } = User.current;
 
         return (
@@ -125,42 +126,42 @@ class AppNav extends React.Component {
                             caption={t('title_settingsProfile')}
                             onClick={this.toProfile}
                             className={css({ 'avatar-notify': !primaryAddressConfirmed })}
-                            selected={routerStore.currentRoute === routerStore.ROUTES.profile}
+                            selected={currentRoute === ROUTES.profile}
                         />
                         <MenuItem
                             value="security"
                             icon="security"
                             caption={t('title_settingsSecurity')}
                             onClick={this.toSecurity}
-                            selected={routerStore.currentRoute === routerStore.ROUTES.security}
+                            selected={currentRoute === ROUTES.security}
                         />
                         <MenuItem
                             value="preferences"
                             icon="settings"
                             caption={t('title_settingsPreferences')}
                             onClick={this.toPrefs}
-                            selected={routerStore.currentRoute === routerStore.ROUTES.prefs}
+                            selected={currentRoute === ROUTES.prefs}
                         />
                         <MenuItem
                             value="account"
                             icon="account_circle"
                             caption={t('title_settingsAccount')}
                             onClick={this.toAccount}
-                            selected={routerStore.currentRoute === routerStore.ROUTES.account}
+                            selected={currentRoute === ROUTES.account}
                         />
                         <MenuItem
                             value="about"
                             icon="info"
                             caption={t('title_About')}
                             onClick={this.toAbout}
-                            selected={routerStore.currentRoute === routerStore.ROUTES.about}
+                            selected={currentRoute === ROUTES.about}
                         />
                         <MenuItem
                             value="help"
                             icon="help"
                             caption={t('title_help')}
                             onClick={this.toHelp}
-                            selected={routerStore.currentRoute === routerStore.ROUTES.help}
+                            selected={currentRoute === ROUTES.help}
                         />
                         {config.disablePayments || User.current.hasActivePlans
                             ? null : (
@@ -186,18 +187,18 @@ class AppNav extends React.Component {
                 </div>
                 <div className="app-menu">
                     <AppNavButton tooltip={t('title_chats')} icon="forum"
-                        active={routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)}
+                        active={currentRoute.startsWith(ROUTES.chats) || currentRoute.startsWith(ROUTES.patients)}
                         showBadge={chatStore.badgeCount > 0}
                         badge={chatStore.badgeCount}
                         onClick={this.toChats} />
 
                     <AppNavButton tooltip={t('title_files')} icon="folder"
-                        active={routerStore.currentRoute.startsWith(routerStore.ROUTES.files)}
+                        active={currentRoute.startsWith(ROUTES.files)}
                         showBadge={fileStore.unreadFiles > 0}
                         onClick={this.toFiles} />
 
                     <AppNavButton tooltip={t('title_contacts')} icon="people"
-                        active={routerStore.currentRoute.startsWith(routerStore.ROUTES.contacts)}
+                        active={currentRoute.startsWith(ROUTES.contacts)}
                         onClick={this.toContacts} />
 
                     <UsageCloud onClick={this.toOnboarding} />

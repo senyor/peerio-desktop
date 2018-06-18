@@ -139,7 +139,8 @@ class ELEMENTS {
     get chatView() {
         const obj = {
             title: (name) => <div className="title-content">{name}</div>,
-            currentContext: null
+            currentContext: null,
+            checkActiveSpace: () => { return null; }
         };
 
         if (config.whiteLabel.name === 'medcryptor') {
@@ -158,6 +159,12 @@ class ELEMENTS {
             if (chatStore.activeChat.isInSpace) {
                 obj.currentContext = SPACE.roomType;
             }
+
+            obj.checkActiveSpace = () => {
+                if (chatStore.activeSpace && routerStore.currentRoute === routerStore.ROUTES.chats) {
+                    routerStore.navigateTo(routerStore.ROUTES.patients);
+                }
+            };
         }
 
         return obj;
@@ -217,6 +224,31 @@ class ELEMENTS {
                     return [itemDeleteMember];
                 }
                 return [itemMakeAdmin, itemDeleteMember];
+            };
+        }
+
+        return obj;
+    }
+
+    get loading() {
+        const obj = {
+            // Ordinarily, just go to the chats view to see the activeChat
+            goToActiveChat: () => {
+                routerStore.navigateTo(routerStore.ROUTES.chats);
+            }
+        };
+
+        if (config.whiteLabel.name === 'medcryptor') {
+            // In MC, need to check if activeChat is in patient space, and activate that space if so.
+            obj.goToActiveChat = () => {
+                if (chatStore.activeChat && chatStore.activeChat.isInSpace) {
+                    chatStore.activeSpace = chatStore.activeChat.chatHead.spaceId;
+                    routerStore.navigateTo(routerStore.ROUTES.patients);
+                } else if (chatStore.activeSpace) {
+                    routerStore.navigateTo(routerStore.ROUTES.patients);
+                } else {
+                    routerStore.navigateTo(routerStore.ROUTES.chats);
+                }
             };
         }
 

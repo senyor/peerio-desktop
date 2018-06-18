@@ -45,6 +45,8 @@ class ChatView extends React.Component {
         if (!chatStore.chats.length && !chatInviteStore.received.length) {
             routerStore.navigateTo(routerStore.ROUTES.zeroChats);
         }
+
+        ELEMENTS.chatView.checkActiveSpace();
     }
 
     componentWillUnmount() {

@@ -5,6 +5,7 @@ const { chatStore, chatInviteStore, crypto } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { ProgressBar } = require('peer-ui');
 const routerStore = require('~/stores/router-store');
+const ELEMENTS = require('~/whitelabel/helpers/elements');
 
 const messages = ['title_randomMessage1', 'title_randomMessage2', 'title_randomMessage3', 'title_randomMessage4'];
 const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
@@ -15,10 +16,7 @@ class Loading extends React.Component {
         this.dispose = when(() => chatStore.loaded, () => {
             // TODO: refactor when SDK is there for chat invites
             if (chatStore.chats.length || chatInviteStore.received.length) {
-                // To avoid UI confusion (due to nested patient menu),
-                // if activeChat is in patient space, deactivate on app load, show zero state
-                if (chatStore.activeChat.isInSpace) chatStore.deactivateCurrentChat();
-                routerStore.navigateTo(routerStore.ROUTES.chats);
+                ELEMENTS.loading.goToActiveChat();
             } else {
                 routerStore.navigateTo(routerStore.ROUTES.zeroChats);
             }

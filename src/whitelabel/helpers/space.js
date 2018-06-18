@@ -37,15 +37,15 @@ class SPACE {
     }
 
     checkMCAdmin(username) {
-        const c = contactStore.whitelabel.getContact(username);
-        if (!c || !c.props.mcrRoles) return null;
-        return c.props.mcrRoles.some(x => x.includes('admin'));
+        const c = contactStore.getContact(username);
+        if (!c || !c.mcrRoles) return null;
+        return c.mcrRoles.some(x => x.includes('admin'));
     }
 
     checkMCDoctor(username) {
-        const c = contactStore.whitelabel.getContact(username);
-        if (!c || !c.props.mcrRoles) return null;
-        return c.props.mcrRoles.includes('doctor');
+        const c = contactStore.getContact(username);
+        if (!c || !c.mcrRoles) return null;
+        return c.mcrRoles.includes('doctor');
     }
 }
 

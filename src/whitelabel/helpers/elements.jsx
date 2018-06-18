@@ -213,7 +213,7 @@ class ELEMENTS {
 
         if (config.whiteLabel.name === 'medcryptor' && SPACE.isMCAdmin && routerStore.isPatientSpace) {
             obj.userMenuItems = (username) => {
-                if (SPACE.checkMCDoctor(username) && !SPACE.checkMCAdmin(username)) {
+                if (SPACE.checkMCDoctor(username)) {
                     return [itemDeleteMember];
                 }
                 return [itemMakeAdmin, itemDeleteMember];

@@ -88,7 +88,7 @@ class ChannelSideBar extends React.Component {
 
     render() {
         const chat = chatStore.activeChat;
-        if (!chat) return null;
+        if (!chat || !chatStore.loaded) return null;
         const { canIAdmin } = chat;
         const canILeave = ELEMENTS.channelSideBar.canILeave(chat.canILeave);
         const hasFiles = chat.recentFiles.length;
@@ -148,7 +148,7 @@ class ChannelSideBar extends React.Component {
                 {hasFiles
                     ? <FilesSection onToggle={() => this.onToggleSection(FILES)}
                         open={this.openSection === FILES} />
-                    : null }
+                    : null}
             </div>
         );
     }

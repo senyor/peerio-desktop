@@ -76,12 +76,9 @@ class FilesSection extends React.Component {
         );
     }
 
-    renderFileItem = id => {
-        const file = fileStore.getByIdInChat(id, chatStore.activeChat.id);
-        if (!file.loaded || file.deleted) return null;
-
+    renderFileItem = file => {
         return (
-            <ListItem key={id} data-fileid={id}
+            <ListItem key={file.fileId} data-fileid={file.fileId}
                 className="sidebar-file-container"
                 onClick={this.download}
                 leftContent={<FileSpriteIcon type={file.iconType} size="large" />}
@@ -96,8 +93,8 @@ class FilesSection extends React.Component {
                     </div>
                     <div className="file-shared-by">{file.fileOwner}</div>
                     <div className="file-shared-date">
-                        {moment(file.uploadedAt).format(
-                            Date.now() - file.uploadedAt > 24 * 60 * 60 * 1000
+                        {moment(file.kegCreatedAt).format(
+                            Date.now() - file.kegCreatedAt > 24 * 60 * 60 * 1000
                                 ? 'll'
                                 : 'll [|] h:mmA'
                         )}
@@ -122,7 +119,7 @@ class FilesSection extends React.Component {
                         {chat.recentFiles.map(this.renderFileItem)}
                     </List>
                 </div>
-                {!chat.recentFiles || !chat.recentFiles.length &&
+                {!chat.recentFiles.length &&
                     <div className="sidebar-zero-files">
                         <T k="title_noRecentFiles">{textParser}</T>
                     </div>

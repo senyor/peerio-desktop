@@ -2,7 +2,7 @@ const React = require('react');
 const { action } = require('mobx');
 const { observer } = require('mobx-react');
 
-const { fileStore, chatStore } = require('peerio-icebear');
+const { fileStore, chatStore, volumeStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
@@ -38,7 +38,18 @@ class InlineSharedFolder extends React.Component {
 
     render() {
         const volume = this.volume;
-        if (!volume) return null;
+        if (!volume) {
+            if (volumeStore.loaded) {
+                return (
+                    <div className="inline-files-container inline-shared-folder-container">
+                        <div className="unknown-file">
+                            {t('title_folderUnshared')}
+                        </div>
+                    </div>
+                );
+            }
+            return null;
+        }
         return (
             <div
                 className={css(

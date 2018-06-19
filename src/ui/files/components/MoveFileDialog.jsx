@@ -42,7 +42,7 @@ class MoveFileDialog extends React.Component {
         const { file, folder, onHide } = this.props;
         const target = this.selectedFolder || this.currentFolder;
 
-        if (target.isShared) {
+        if (target.root.isShared) {
             // we hide folder selection dialog immediately to prevent flicker
             this.dialog.hideWithoutAnimation();
             if (!await this.shareConfirmDialog.check()) {

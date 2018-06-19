@@ -53,7 +53,6 @@ class FolderLine extends React.Component {
                     this.props.className,
                     {
                         'selected-row': this.props.selected,
-                        disabled: folder.isBlocked,
                         'share-in-progress': shareInProgress
                     }
                 )}
@@ -109,7 +108,7 @@ class FolderLine extends React.Component {
                                 onDownload={this.props.onDownload}
                                 onMove={folder.isShared ? null : this.props.onMoveFolder}
                                 onDelete={this.props.onDeleteFolder}
-                                deleteDisabled={folder.isBlocked}
+                                deleteDisabled={shareInProgress}
                                 onShare={(folder.isShared || folder.canShare) ? this.props.onShare : null}
                                 data-folderid={folder.id}
                                 data-storeid={folder.store.id}

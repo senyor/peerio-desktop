@@ -18,15 +18,18 @@ $snackbar-min-width: 288px;
   }
 }
 
+// Specific rules for snackbar inside chat (MessageInput component)
 .snackbar-chat {
   position: absolute;
   bottom: 0;
 
-  &.show {
+  &.show.share-in-progress {
     bottom: 100%;
+    margin-bottom: 48px;
   }
 }
 
+// General snackbar styles
 .snackbar {
   @extend %flex-row;
   align-items: center;

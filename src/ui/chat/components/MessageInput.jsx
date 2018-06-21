@@ -136,7 +136,10 @@ class MessageInput extends React.Component {
         return (
             <div className={css(
                 'jump-to-bottom',
-                { 'snackbar-visible': this.snackbarVisible }
+                {
+                    'snackbar-visible': this.snackbarVisible,
+                    'share-in-progress': this.props.shareInProgress
+                }
             )}>
                 <Button icon="keyboard_arrow_down" onClick={this.props.onJumpToBottom} />
                 {chat.unreadCount > 0 &&
@@ -158,7 +161,8 @@ class MessageInput extends React.Component {
         const chat = chatStore.activeChat;
         return (
             <div className="message-input-wrapper" >
-                <Snackbar className="snackbar-chat" ref={this.setSnackbarRef} />
+                <Snackbar className={css('snackbar-chat', { 'share-in-progress': this.props.shareInProgress })}
+                    ref={this.setSnackbarRef} />
                 <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
                     <Menu
                         position="bottom-left"

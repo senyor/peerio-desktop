@@ -15,7 +15,7 @@ const MessageSideBar = require('./components/sidebar/MessageSideBar');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
 const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
 const ChatNameEditor = require('./components/ChatNameEditor');
-const UploadInChatProgress = require('./components/UploadInChatProgress');
+const ShareToChatProgress = require('./components/ShareToChatProgress');
 
 const UserPicker = require('~/ui/shared-components/UserPicker');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
@@ -154,6 +154,14 @@ class ChatView extends React.Component {
 
         this.toggleJitsiDialog();
     };
+
+    @computed get shareInProgress() {
+        const chat = chatStore.activeChat;
+        if (!chat) return false;
+        return (
+            (chat.uploadQueue && chat.uploadQueue.length) || (chat.folderShareQueue && chat.folderShareQueue.length)
+        );
+    }
 
     // assumes active chat exists, don't render if it doesn't
     renderHeader() {
@@ -320,8 +328,9 @@ class ChatView extends React.Component {
                                     : <MessageList ref={this.setMessageListRef} />
                                 }
                                 {
-                                    chat && chat.uploadQueue.length
-                                        ? <UploadInChatProgress queue={chat.uploadQueue} />
+                                    this.shareInProgress
+                                        ? <ShareToChatProgress uploadQueue={chat.uploadQueue}
+                                            folderShareQueue={chat.folderShareQueue} />
                                         : null
                                 }
                                 <MessageInput
@@ -338,6 +347,7 @@ class ChatView extends React.Component {
                                     onFileShare={this.shareFilesAndFolders}
                                     messageListScrolledUp={this.pageScrolledUp}
                                     onJumpToBottom={this.jumpToBottom}
+                                    shareInProgress={this.shareInProgress}
                                 />
                             </div>
                     }

@@ -67,6 +67,10 @@
     &.snackbar-visible {
       margin-bottom: 56px; // snackbar height + margin-default
     }
+
+    &.share-in-progress {
+      padding-bottom: 48px; // add height of share-to-chat bar
+    }
   }
 
   // RANDOM MESSAGES

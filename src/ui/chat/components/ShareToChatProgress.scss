@@ -1,4 +1,4 @@
-.share-folder-progress {
+.share-to-chat-progress {
   display: flex;
   align-items: center;
   position: relative;
@@ -29,7 +29,7 @@
   .percent-progress {
     margin-left: auto;
 
-    .material-icons {
+    .right-icon {
       margin-left: $margin-default;
     }
   }

@@ -53,6 +53,12 @@ class ChatView extends React.Component {
         this.reactionsToDispose.forEach(dispose => dispose());
     }
 
+    scrollToBottom() {
+        if (this.messageListRef) {
+            this.messageListRef.scrollToBottom();
+        }
+    }
+
     /**
      * Create a new Message keg with the given plaintext and send it to server as part of this chat.
      * @param {string} text The plaintext of the message.
@@ -71,8 +77,9 @@ class ChatView extends React.Component {
      * @param {Object} richText A ProseMirror document tree, in JSON.
      * @param {string} legacyText The rendered HTML of the rich text, for back-compat with older clients
      */
-    sendRichTextMessage(richText, legacyText) {
+    @action.bound sendRichTextMessage(richText, legacyText) {
         try {
+            this.scrollToBottom();
             chatStore.activeChat.sendRichTextMessage(richText, legacyText)
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
@@ -80,8 +87,9 @@ class ChatView extends React.Component {
         }
     }
 
-    sendAck() {
+    @action.bound sendAck() {
         try {
+            this.scrollToBottom();
             chatStore.activeChat.sendAck()
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
@@ -89,14 +97,15 @@ class ChatView extends React.Component {
         }
     }
 
-    shareFilesAndFolders = (filesAndFolders) => {
+    @action.bound shareFilesAndFolders(filesAndFolders) {
         try {
+            this.scrollToBottom();
             chatStore.activeChat.shareFilesAndFolders(filesAndFolders)
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
         }
-    };
+    }
 
     addParticipants = (contacts) => {
         chatStore.activeChat.addParticipants(contacts);
@@ -264,9 +273,7 @@ class ChatView extends React.Component {
             return;
         }
 
-        if (this.messageListRef) {
-            this.messageListRef.scrollToBottom();
-        }
+        this.scrollToBottom();
     }
 
     @computed get pageScrolledUp() {

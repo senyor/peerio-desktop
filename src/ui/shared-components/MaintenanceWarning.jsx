@@ -40,7 +40,8 @@ class MaintenanceWarning extends React.Component {
                         <div className="maintenance-title">{t('title_maintenance')}</div>
                         <MaterialIcon icon="info" className="maintenance-icon" />
                     </div>
-                    <Dialog className="dialog-maintenance" active={this.showDialog}
+                    <Dialog active={this.showDialog}
+                        theme="error"
                         title={t('dialog_scheduledMaintenance')}
                         onCancel={this.dismiss}
                         actions={[{ label: t('button_dismiss'), onClick: this.dismiss }]}>

@@ -29,7 +29,8 @@ const config = require('~/config');
         if (!updaterStore.lastUpdateFailed) return null;
 
         return (
-            <Dialog className="dialog-warning dialog-update-failed"
+            <Dialog className="dialog-update-failed"
+                theme="error"
                 active={updaterStore.lastUpdateFailed && !updaterStore.installing}
                 title={t('title_updateFailed')}
                 actions={[

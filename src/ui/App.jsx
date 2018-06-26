@@ -20,7 +20,7 @@ class App extends React.Component {
                 actions={dialogActions}
                 onCancel={hide}
                 title={t('title_invalidFileSignature')}
-                className="dialog-warning">
+                theme="error">
                 <p>{t('error_invalidFileSignatureLong')}</p>
             </Dialog>
         );

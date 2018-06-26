@@ -16,7 +16,7 @@ class SystemWarningDialog extends WarningDisplayBase {
         const w = warnings.current;
 
         return (
-            <Dialog className="dialog-warning"
+            <Dialog theme="warning"
                 active={this.isVisible}
                 title={w ? t(w.title) : ''}
                 actions={[{ label: t('button_ok'), onClick: this.dismiss }]}>

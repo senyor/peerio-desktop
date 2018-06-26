@@ -336,8 +336,8 @@ class Files extends React.Component {
         return fileStore.selectedFilesOrFolders.length;
     }
 
-    get breadCrumbsHeader() {
-        let bulkButtons = [
+    get bulkActionButtons() {
+        const buttonItems = [
             {
                 label: t('button_download'),
                 icon: 'file_download',
@@ -356,7 +356,7 @@ class Files extends React.Component {
             }
         ];
         if (config.enableVolumes) {
-            bulkButtons.unshift(
+            buttonItems.unshift(
                 {
                     label: t('button_share'),
                     icon: 'person_add',
@@ -364,14 +364,16 @@ class Files extends React.Component {
                     disabled: !fileStore.bulk.canShare
                 });
         }
-        bulkButtons = bulkButtons.map(props => {
+        return buttonItems.map(props => {
             return (
                 <Button
                     key={props.label}
                     {...props} />
             );
         });
+    }
 
+    get breadCrumbsHeader() {
         return (
             <div className="files-header"
                 data-folderid={fileStore.folderStore.currentFolder.id}
@@ -387,7 +389,7 @@ class Files extends React.Component {
                 />
                 {this.selectedCount > 0
                     ? <div className="buttons-container bulk-buttons">
-                        {bulkButtons}
+                        {this.bulkActionButtons}
                     </div>
                     : <div className="buttons-container file-buttons">
                         <Button
@@ -413,6 +415,12 @@ class Files extends React.Component {
                 <div className="search-results-header">
                     {t('title_searchResults')}
                 </div>
+                {this.selectedCount > 0
+                    ? <div className="buttons-container bulk-buttons">
+                        {this.bulkActionButtons}
+                    </div>
+                    : null
+                }
             </div>
         );
     }
@@ -503,21 +511,6 @@ class Files extends React.Component {
                 />);
         }
 
-        // items.push(
-        //     <div className="row-container placeholder-file" key="placeholder1">
-        //         <div className="row">
-        //             <div className="file-checkbox" />
-        //             <div className="file-icon"><div className="placeholder-square" /></div>
-        //             <div className="file-name"><div className="placeholder-square" /></div>
-        //             <div className="file-owner"><div className="placeholder-square" /></div>
-        //             <div className="file-uploaded"><div className="placeholder-square" /></div>
-        //             <div className="file-size"><div className="placeholder-square" /></div>
-        //             <div className="file-actions"><div className="placeholder-square" /></div>
-        //             <ProgressBar mode="indeterminate" />
-        //         </div>
-        //     </div>
-        // );
-
         this.enqueueCheck();
         return (
             <div className="files">
@@ -532,7 +525,10 @@ class Files extends React.Component {
                     >
                         <div className="file-table-header row-container">
                             <Checkbox
-                                className="file-checkbox"
+                                className={css(
+                                    'file-checkbox',
+                                    { hide: this.selectedCount === 0 }
+                                )}
                                 onChange={this.toggleSelectAll}
                                 checked={this.allAreSelected}
                             />

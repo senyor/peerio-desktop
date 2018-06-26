@@ -22,6 +22,7 @@ class FileActions extends React.Component {
                 icon="more_vert"
                 position="bottom-right"
                 onClick={this.props.onMenuClick}
+                onHide={this.props.onMenuHide}
                 disabled={this.props.disabled}
                 {...getDataProps(this.props)}
             >

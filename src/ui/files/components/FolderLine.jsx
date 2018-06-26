@@ -14,15 +14,9 @@ const { volumeStore } = require('peerio-icebear');
 
 @observer
 class FolderLine extends React.Component {
-    @observable showActions = false;
-
-    @action.bound onShowActions() {
-        this.showActions = true;
-    }
-
-    @action.bound onHideActions() {
-        this.showActions = false;
-    }
+    @observable hovered;
+    @action.bound onMenuClick() { this.hovered = true; }
+    @action.bound onMenuHide() { this.hovered = false; }
 
     testClick = () => {
         volumeStore.mockProgress(this.props.folder);
@@ -52,12 +46,12 @@ class FolderLine extends React.Component {
                     'custom-icon-hover-container',
                     this.props.className,
                     {
+                        hover: this.hovered,
                         'selected-row': this.props.selected,
                         'share-in-progress': shareInProgress
                     }
                 )}
-                onMouseEnter={this.onShowActions}
-                onMouseLeave={this.onHideActions}>
+            >
 
                 <div className="row">
                     {shareInProgress
@@ -103,7 +97,8 @@ class FolderLine extends React.Component {
                         this.props.folderActions &&
                         <div className="file-actions">
                             <FolderActions
-                                onClick={this.props.onClick}
+                                onMenuClick={this.onMenuClick}
+                                onMenuHide={this.onMenuHide}
                                 onRename={this.props.onRenameFolder}
                                 onDownload={this.props.onDownload}
                                 onMove={folder.isShared ? null : this.props.onMoveFolder}
@@ -112,7 +107,6 @@ class FolderLine extends React.Component {
                                 onShare={(folder.isShared || folder.canShare) ? this.props.onShare : null}
                                 data-folderid={folder.id}
                                 data-storeid={folder.store.id}
-                                disabled={this.props.selected}
                             />
                         </div>
                     }
@@ -140,7 +134,8 @@ class FolderLine extends React.Component {
                     </div>
                 }
 
-                {shareInProgress && <ProgressBar value={progress} max={progressMax} />}
+                {shareInProgress && <ProgressBar type="linear" mode="determinate" value={progress} max={progressMax} />}
+
                 {this.props.folderDetails &&
                     <ContactProfile
                         ref={this.setContactProfileRef}

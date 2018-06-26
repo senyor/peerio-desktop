@@ -4,7 +4,7 @@
 
 // Image for hover/active/selected state
 .row.selected-row,
-.row:hover,
+.row-container:hover,
 .p-list-item:hover {
   .file-sprite-icon {
     background-image: url(./static/sprites/thumb-files-hoverSelected.svg);

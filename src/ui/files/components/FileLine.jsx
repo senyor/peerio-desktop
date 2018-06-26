@@ -10,7 +10,7 @@ const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const uiStore = require('~/stores/ui-store');
 
-const { Checkbox, ProgressBar } = require('peer-ui');
+const { Checkbox, ProgressBar, Tooltip } = require('peer-ui');
 
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const FileActions = require('./FileActions');
@@ -22,7 +22,9 @@ class FileLine extends React.Component {
     // 21 hour limit for displaying relative timestamp (because moment.js says '1 day' starting from 21h)
     static relativeTimeDisplayLimit = 21 * 60 * 60 * 1000;
 
-    @observable showActions = false;
+    @observable hovered;
+    @action.bound onMenuClick() { this.hovered = true; }
+    @action.bound onMenuHide() { this.hovered = false; }
 
     deleteFile = () => {
         let msg = t('title_confirmRemoveFilename', { name: this.props.file.name });
@@ -59,14 +61,6 @@ class FileLine extends React.Component {
     hideMoveFile = () => {
         this.moveFileVisible = false;
     }
-
-    onShowActions = () => {
-        this.showActions = true;
-    };
-
-    onHideActions = () => {
-        this.showActions = false;
-    };
 
     setContactProfileRef = (ref) => {
         if (ref) this.contactProfileRef = ref;
@@ -106,6 +100,7 @@ class FileLine extends React.Component {
                 'file-row-container',
                 this.props.className,
                 {
+                    hover: this.hovered,
                     selected: this.props.selected,
                     'selected-row': this.props.selected,
                     'waiting-3rd-party': !file.uploading && !file.readyForDownload
@@ -114,9 +109,7 @@ class FileLine extends React.Component {
                 <div
                     data-fileid={file.fileId}
                     data-storeid={file.store.id}
-                    className="row"
-                    onMouseEnter={this.onShowActions}
-                    onMouseLeave={this.onHideActions}>
+                    className="row">
 
                     {this.props.checkbox ?
                         <Checkbox
@@ -156,7 +149,10 @@ class FileLine extends React.Component {
                         <div className="file-uploaded" title={uploadedAtTooltip}>
                             {uploadedAt}
                             {file.isLegacy &&
-                                <T k="title_pending" className="badge-old-version" />
+                                <div className="badge-old-version">
+                                    <T k="title_pending" />
+                                    <Tooltip text={t('title_oldVersionTooltip')} />
+                                </div>
                             }
                         </div>
                     }
@@ -179,9 +175,10 @@ class FileLine extends React.Component {
                                 moveable={this.props.moveable}
                                 onMove={this.moveFile}
                                 deleteable onDelete={this.deleteFile}
-                                disabled={this.props.selected}
                                 limitedActions={file.isLegacy}
                                 onClickMoreInfo={this.props.onClickMoreInfo}
+                                onMenuClick={this.onMenuClick}
+                                onMenuHide={this.onMenuHide}
                             />
                             {this.moveFileVisible && this.props.currentFolder &&
                                 <MoveFileDialog
@@ -193,14 +190,12 @@ class FileLine extends React.Component {
                             }
                         </div>
                     }
-
-                    {(file.downloading || file.uploading)
-                        ? <div className="loading">
-                            <ProgressBar type="linear" mode="determinate" value={file.progress}
-                                max={file.progressMax} />
-                        </div>
-                        : null}
                 </div>
+
+                {(file.downloading || file.uploading)
+                    ? <ProgressBar type="linear" mode="determinate" value={file.progress}
+                        max={file.progressMax} />
+                    : null}
 
                 {this.props.fileDetails &&
                     <ContactProfile

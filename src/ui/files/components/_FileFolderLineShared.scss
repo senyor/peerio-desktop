@@ -23,13 +23,6 @@
       align-items: center;
     }
 
-    .p-progress-bar {
-      position: absolute;
-      left: 0;
-      top: 100%;
-      margin-top: -2px;
-    }
-
     // "Disabled" styles for when folder share in progress
     &.disabled {
       color: $text-dark-hint;
@@ -154,10 +147,6 @@
       text-align: left;
       color: $text-dark-inactive;
     }
-
-    .file-checkbox {
-      visibility: visible;
-    }
   }
 
   .file-table-body {
@@ -174,26 +163,24 @@
     }
   }
 
-  .row {
-    .loading {
-      position: absolute;
-      height: 4px;
-      width: 100%;
-      left: 0;
-      right: 0;
-      top: 100%;
-      padding: 0;
-      margin: 0;
-      margin-top: -4px;
-      line-height: 0;
-    }
+  .p-progress-bar {
+    position: absolute;
+    height: 4px;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    padding: 0;
+    margin: 0;
+    margin-top: -2px;
+    line-height: 0;
   }
 
   .selected-row {
     background: $background-hover-accent;
   }
 
-  .row-container:hover {
+  .row-container:hover,
+  .row-container.hover {
     background: $background-selected;
 
     .material-icons {

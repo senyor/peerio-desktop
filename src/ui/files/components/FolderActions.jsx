@@ -13,7 +13,8 @@ class FolderActions extends React.Component {
                 className="item-actions"
                 icon="more_vert"
                 position={this.props.position || 'bottom-right'}
-                onClick={this.props.onClick}
+                onClick={this.props.onMenuClick}
+                onHide={this.props.onMenuHide}
                 disabled={this.props.disabled}
                 {...getDataProps(this.props)}
             >

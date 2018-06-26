@@ -12,7 +12,7 @@ $list-header-height: 48px;
     padding: 0;
 
     .title {
-      margin: $margin-large $margin-xl $margin-default;
+      margin: $margin-large $margin-large $margin-default;
     }
   }
 
@@ -23,8 +23,8 @@ $list-header-height: 48px;
 
   .user-search {
     flex-shrink: 0;
-    width: calc(100% - 64px); // 2x $margin-xl
-    margin: 0 $margin-xl $margin-large;
+    width: calc(100% - 48px); // 2x $margin-large
+    margin: 0 $margin-large $margin-large;
   }
 
   .chat-list-container {
@@ -89,6 +89,16 @@ $list-header-height: 48px;
     padding: $padding-default 0;
     margin-left: $margin-xl;
     border-top: 1px solid $divider-dark;
+  }
+
+  .move-to-root-notif {
+    justify-content: flex-end;
+    padding-right: $padding-large;
+    background-color: $background-hover-default;
+
+    .material-icons {
+      margin-right: $margin-small;
+    }
   }
 }
 

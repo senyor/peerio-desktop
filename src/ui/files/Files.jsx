@@ -32,6 +32,7 @@ class Files extends React.Component {
     }
     // to pass to shareWithMultipleDialog
     @observable.ref currentDialogFolder;
+    @observable.ref currentDialogFile;
 
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
@@ -110,11 +111,7 @@ class Files extends React.Component {
     @action.bound async shareFolder(ev) {
         // IMPORTANT: synthetic events are reused, so cache folder before await
         const folder = getFolderByEvent(ev);
-        if (folder.isShared) {
-            this.currentDialogFolder = folder;
-        } else {
-            this.currentDialogFolder = null;
-        }
+        this.currentDialogFolder = folder;
 
         this.shareContext = CONTEXT_FOLDERS;
         const contacts = await this.shareWithMultipleDialog.show();
@@ -128,10 +125,12 @@ class Files extends React.Component {
 
     @action.bound async shareFile(ev) {
         const file = getFileByEvent(ev);
+        this.currentDialogFile = file;
 
         this.shareContext = CONTEXT_FILES;
-
         const contacts = await this.shareWithMultipleDialog.show();
+
+        this.currentDialogFile = null;
         if (!contacts || !contacts.length) return;
         contacts.forEach(c => chatStore.startChatAndShareFiles([c], file));
 
@@ -493,7 +492,7 @@ class Files extends React.Component {
                     folderDetails
                     checkbox
                     onToggleSelect={this.toggleSelectFolder}
-                    selected={f.selected}
+                    selected={f.selected || f === this.currentDialogFolder}
                     onShare={this.shareFolder}
                 /> :
                 <FileLine
@@ -505,7 +504,7 @@ class Files extends React.Component {
                     fileDetails
                     checkbox
                     onToggleSelect={this.toggleSelectFile}
-                    selected={f.selected}
+                    selected={f.selected || f === this.currentDialogFile}
                     onClickMoreInfo={this.openLimitedActions}
                     onShare={this.shareFile}
                 />);

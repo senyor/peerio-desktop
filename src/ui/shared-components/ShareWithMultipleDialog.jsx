@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { contactStore, User } = require('peerio-icebear');
-const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('peer-ui');
+const { Avatar, Checkbox, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getContactByEvent } = require('~/helpers/icebear-dom');
@@ -63,7 +63,7 @@ class ShareWithMultipleDialog extends React.Component {
         return (
             <div data-username={c.username} key={c.username}>
                 <ListItem
-                    leftIcon={this.selectedUsers.has(c.username) ? 'check_box' : 'check_box_outline_blank'}
+                    leftIcon={<Checkbox checked={this.selectedUsers.has(c.username)} />}
                     leftContent={<Avatar key="a" contact={c} size="small" />}
                     onClick={this.onContactClick}>
                     <span className="full-name">{c.fullName}</span>
@@ -128,7 +128,7 @@ class ShareWithMultipleDialog extends React.Component {
         return (
             <div>
                 {
-                    item && item.isFolder
+                    item && item.isFolder && item.isShared
                         ? <ModifyShareDialog ref={this.setModifyShareDialogRef} folder={item}
                             contacts={this.existingUsers} />
                         : null
@@ -160,11 +160,19 @@ class ShareWithMultipleDialog extends React.Component {
                                 </List>
                             </div>
                         </div>
-                        {item && item.isFolder && this.existingUsers.length ?
+                        {item && item.isFolder && item.isShared && this.existingUsers.length ?
                             <div className="receipt-wrapper">
                                 <Button label={t('title_viewSharedWith')} onClick={this.modifySharedWith} />
                                 {this.sharedWithBlock}
-                            </div> : null}
+                            </div> : null
+                        }
+                        {item && item.isFolder && !item.isShared && !item.parent.isRoot
+                            ? <div className="move-to-root-notif p-list-heading">
+                                <MaterialIcon icon="info" />
+                                <T k="title_shareWillMoveToRoot" />
+                            </div>
+                            : null
+                        }
                     </div>
                 </Dialog>
             </div>

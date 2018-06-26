@@ -1,7 +1,7 @@
 const React = require('react');
 const { autorunAsync, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar, Divider, Menu, MenuItem } = require('peer-ui');
+const { Avatar, Divider, Menu, MenuHeader, MenuItem } = require('peer-ui');
 const { User, contactStore, chatStore, fileStore } = require('peerio-icebear');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const SignoutDialog = require('~/ui/shared-components/SignoutDialog');
@@ -118,17 +118,28 @@ class AppNav extends React.Component {
                     <Menu
                         customButton={<Avatar contact={contact} size="medium" />}
                         position="top-left"
-                        theme="wide"
+                        theme="wide app-nav-menu"
                     >
+                        <MenuHeader
+                            leftContent={<Avatar contact={contact} size="medium" onClick={this.toProfile} clickable />}
+                            caption={contact.fullName}
+                            legend={contact.username}
+                        />
+                        <Divider />
                         <MenuItem
                             value="profile"
-                            icon="person"
+                            customIcon="public-profile"
                             caption={t('title_settingsProfile')}
                             onClick={this.toProfile}
-                            className={css({ 'avatar-notify': !primaryAddressConfirmed })}
+                            className={css(
+                                'profile',
+                                'custom-icon-hover-container',
+                                { 'avatar-notify': !primaryAddressConfirmed }
+                            )}
                             selected={currentRoute === ROUTES.profile}
                         />
                         <MenuItem
+                            className="security"
                             value="security"
                             icon="security"
                             caption={t('title_settingsSecurity')}
@@ -136,13 +147,15 @@ class AppNav extends React.Component {
                             selected={currentRoute === ROUTES.security}
                         />
                         <MenuItem
+                            className="preferences custom-icon-hover-container"
                             value="preferences"
-                            icon="settings"
+                            customIcon="preferences"
                             caption={t('title_settingsPreferences')}
                             onClick={this.toPrefs}
                             selected={currentRoute === ROUTES.prefs}
                         />
                         <MenuItem
+                            className="account"
                             value="account"
                             icon="account_circle"
                             caption={t('title_settingsAccount')}
@@ -150,6 +163,7 @@ class AppNav extends React.Component {
                             selected={currentRoute === ROUTES.account}
                         />
                         <MenuItem
+                            className="about"
                             value="about"
                             icon="info"
                             caption={t('title_About')}
@@ -157,6 +171,7 @@ class AppNav extends React.Component {
                             selected={currentRoute === ROUTES.about}
                         />
                         <MenuItem
+                            className="help"
                             value="help"
                             icon="help"
                             caption={t('title_help')}
@@ -164,20 +179,22 @@ class AppNav extends React.Component {
                             selected={currentRoute === ROUTES.help}
                         />
                         {config.disablePayments || User.current.hasActivePlans
-                            ? null : (
-                                <div key="appnav-nested-container">
-                                    <Divider key="appnav-nested-divider" />
-                                    <MenuItem key="appnav-nested-menuitem"
-                                        value="upgrade"
-                                        icon="open_in_browser"
-                                        caption={t('button_upgrade')}
-                                        onClick={this.toUpgrade}
-                                    />
-                                </div>
-                            )
+                            ? null
+                            : <Divider key="appnav-nested-divider" />
+                        }
+                        {config.disablePayments || User.current.hasActivePlans
+                            ? null
+                            : <MenuItem key="appnav-nested-menuitem"
+                                className="upgrade"
+                                value="upgrade"
+                                icon="open_in_browser"
+                                caption={t('button_upgrade')}
+                                onClick={this.toUpgrade}
+                            />
                         }
                         <Divider />
                         <MenuItem
+                            className="signout"
                             value="signout"
                             icon="power_settings_new"
                             caption={t('button_logout')}

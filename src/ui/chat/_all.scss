@@ -3,11 +3,6 @@
   @extend %flex-row;
   width: 100%;
   background: $background-root;
-
-  .starred,
-  .starred .material-icons {
-    color: $yellow;
-  }
 }
 
 // reused components

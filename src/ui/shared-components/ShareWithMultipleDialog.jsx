@@ -101,7 +101,6 @@ class ShareWithMultipleDialog extends React.Component {
                 key={c.username}
                 contact={c}
                 size="tiny"
-                clickable
                 tooltip
             />
         ));

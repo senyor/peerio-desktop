@@ -7,20 +7,20 @@
   color: $icon-light-inactive;
 
   .p-button {
-    .material-icons {
-      color: $icon-light-active;
-    }
+    color: $icon-light-active;
 
     &.cloud-in-progress {
       position: absolute;
       pointer-events: none;
     }
 
+    &:focus {
+      color: $icon-light-active;
+    }
+
     &:hover,
     &:hover + .p-button {
-      .material-icons {
-        color: $color-affirmative;
-      }
+      color: $color-affirmative;
     }
   }
 }

@@ -30,7 +30,6 @@ class AvatarWithPopup extends React.Component {
                 contact={this.props.contact}
                 size={this.props.size}
                 tooltip={this.props.tooltip}
-                clickable
                 onClick={this.openDialog}
             />
         );

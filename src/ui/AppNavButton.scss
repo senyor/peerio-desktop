@@ -31,37 +31,22 @@
     .p-button {
       height: 48px;
       width: 48px;
-
-      &:hover {
-        background: transparent;
-      }
-    }
-
-    // TODO transition variables
-    .material-icons {
-      transition: color 150ms;
+      transition: color 150ms; // TODO transition variables
       color: $icon-light-inactive;
     }
 
     &[disabled] {
       pointer-events: none;
 
-      .material-icons {
+      .p-button {
         color: $text-light-disabled;
-
-        &:hover {
-          .material-icons {
-            color: $text-light-disabled;
-          }
-        }
       }
     }
 
     &.active,
     &:hover {
-      .material-icons {
+      .p-button {
         color: $icon-light-active;
-        background: tranparent;
       }
     }
   }

@@ -114,17 +114,16 @@
   }
 
   .invalid-file {
-    color: rgba($color-error, .6);
-    border-color: currentColor;
-
-    .container {
-      @extend %flex-row;
-      @extend %flex-align-center;
-    }
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: $margin-default;
+    color: $color-error;
 
     .material-icons {
-      margin-right: $padding-tiny;
-      color: rgba($color-error, .6);
+      margin-right: $margin-tiny;
+      color: $color-error;
     }
   }
 

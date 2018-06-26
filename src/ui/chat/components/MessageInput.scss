@@ -16,7 +16,7 @@
     background-color: $background-root;
     border-top: 1px solid $divider-dark;
 
-    .thumbs-up .material-icons {
+    .thumbs-up {
       color: $color-affirmative;
     }
   }
@@ -38,17 +38,9 @@
       border: 1px solid $black-12;
       border-radius: 18px;
 
-      .material-icons {
-        color: inherit;
-      }
-
       &:hover {
         color: $white;
         background-color: $peerio-blue;
-
-        .material-icons {
-          color: inherit;
-        }
       }
     }
 

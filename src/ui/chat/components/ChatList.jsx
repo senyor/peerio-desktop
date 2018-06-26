@@ -124,7 +124,6 @@ class ChatList extends React.Component {
                             key="a"
                             contact={contact}
                             size="small"
-                            clickable
                             tooltip
                         />
                     }

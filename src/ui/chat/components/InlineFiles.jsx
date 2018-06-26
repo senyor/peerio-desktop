@@ -396,9 +396,9 @@ class InlineFiles extends React.Component {
 
     renderNoSignature(fileId) {
         return (
-            <div className="invalid-file" key={fileId}
+            <div className="inline-files-container" key={fileId}
                 onClick={uiStore.showFileSignatureErrorDialog}>
-                <div className="container">
+                <div className="invalid-file">
                     <MaterialIcon icon="info_outline" />
                     <div className="file-name">{t('error_invalidFileSignature')}</div>
                 </div>

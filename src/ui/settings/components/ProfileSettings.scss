@@ -136,16 +136,13 @@
         padding-right: $padding-small;
         padding-bottom: $padding-small;
 
-        .material-icons {
+        .p-button {
           color: $icon-light-inactive;
         }
 
         .p-button:hover {
+          color: $icon-light-active;
           background-color: $white-12;
-
-          .material-icons {
-            color: $icon-light-active;
-          }
         }
       }
 

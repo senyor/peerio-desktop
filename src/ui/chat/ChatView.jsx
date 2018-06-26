@@ -213,8 +213,7 @@ class ChatView extends React.Component {
                                     className={css(
                                         'pin-toggle',
                                         'clickable',
-                                        'custom-icon-hover-container',
-                                        { starred: chat.isFavorite }
+                                        'custom-icon-hover-container'
                                     )}
                                 >
                                     <CustomIcon

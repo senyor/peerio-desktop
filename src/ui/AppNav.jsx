@@ -121,7 +121,7 @@ class AppNav extends React.Component {
                         theme="wide app-nav-menu"
                     >
                         <MenuHeader
-                            leftContent={<Avatar contact={contact} size="medium" onClick={this.toProfile} clickable />}
+                            leftContent={<Avatar contact={contact} size="medium" onClick={this.toProfile} />}
                             caption={contact.fullName}
                             legend={contact.username}
                         />

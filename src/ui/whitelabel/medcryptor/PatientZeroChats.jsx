@@ -1,9 +1,9 @@
 const React = require('react');
 const { observer } = require('mobx-react');
+const { chatStore } = require('peerio-icebear');
 
 const T = require('~/ui/shared-components/T');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
-const SPACE = require('~/whitelabel/helpers/space');
 
 @observer
 class PatientZeroChats extends React.Component {
@@ -11,7 +11,7 @@ class PatientZeroChats extends React.Component {
         return (
             <div className="patient-zero-chats">
                 <div className="patient-name-header">
-                    <T k="mcr_title_patient" />: {SPACE.currentSpace.spaceName}
+                    <T k="mcr_title_patient" />: {chatStore.spaces.currentSpaceName}
                 </div>
                 <div className="content">
                     <section>

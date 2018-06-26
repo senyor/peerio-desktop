@@ -12,7 +12,6 @@ const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { Input, ProgressBar } = require('peer-ui');
 const ELEMENTS = require('~/whitelabel/helpers/elements');
-const SPACE = require('~/whitelabel/helpers/space');
 const STRINGS = require('~/whitelabel/helpers/strings');
 const routerStore = require('~/stores/router-store');
 
@@ -21,51 +20,44 @@ class NewChannel extends React.Component {
     @observable waiting = false;
     @observable channelName = '';
     @observable purpose = '';
-    internalRoomName = t('mcr_title_general');
 
     handleAccept = () => {
         this.waiting = true;
         this[ELEMENTS.newChannel.acceptFunction]();
     };
 
-    createNewChannel = async () => {
-        const chat = await chatStore.startChat(this.userPicker.selected, true, this.channelName, this.purpose);
+    navigateWhenReady = (chat, route) => {
         if (!chat) {
             this.waiting = false;
             return;
         }
         when(() => chat.added === true, () => {
-            routerStore.navigateTo(routerStore.ROUTES.chats);
+            routerStore.navigateTo(route);
         });
+    }
+
+    createNewChannel = async () => {
+        const chat = await chatStore.startChat(this.userPicker.selected, true, this.channelName, this.purpose);
+        this.navigateWhenReady(chat, routerStore.ROUTES.chats);
     }
 
     createNewPatientSpace = async () => {
         const newSpaceProperties = {
             spaceId: null,
             spaceName: this.channelName,
-            spaceDescription: '',
-            spaceRoomType: 'patient',
-            nameInSpace: t('mcr_title_consultation')
+            spaceDescription: ''
         };
 
-        const patientRoom = await chatStore.startChat(
-            this.userPicker.selected,
-            true,
-            `${this.channelName} - ${t('mcr_title_consultation')}`,
-            '',
-            true,
-            newSpaceProperties
-        );
-
-        newSpaceProperties.spaceRoomType = 'internal';
-        newSpaceProperties.nameInSpace = this.internalRoomName;
-        const internalRoom = await chatStore.startChat(
-            [],
-            true,
-            `${this.channelName} - ${this.internalRoomName}`,
-            '',
-            true,
-            newSpaceProperties);
+        const patientRoom = await chatStore.spaces.createRoomInSpace(
+            newSpaceProperties,
+            t('mcr_title_consultation'),
+            'patient',
+            this.userPicker.selected);
+        const internalRoom = await chatStore.spaces.createRoomInSpace(
+            newSpaceProperties,
+            t('mcr_title_general'),
+            'internal',
+            []);
 
         if (!internalRoom || !patientRoom) {
             this.waiting = false;
@@ -75,7 +67,7 @@ class NewChannel extends React.Component {
         when(() => internalRoom.added && patientRoom.added, () => {
             this.waiting = false;
 
-            const created = chatStore.spaces.find(x => x.spaceName === newSpaceProperties.spaceName);
+            const created = chatStore.spaces.spacesList.find(x => x.spaceName === newSpaceProperties.spaceName);
             created.isNew = true;
             internalRoom.isNew = true;
             patientRoom.isNew = true;
@@ -86,23 +78,12 @@ class NewChannel extends React.Component {
     createNewPatientRoom = () => { this.createRoomInPatientSpace('patient'); }
 
     createRoomInPatientSpace = async (type) => {
-        const roomSpaceProperties = {
-            spaceId: SPACE.currentSpace.spaceId,
-            spaceName: SPACE.currentSpace.spaceName,
-            nameInSpace: this.channelName,
-            spaceDescription: SPACE.currentSpace.spaceDescription,
-            spaceRoomType: type
-        };
-
-        const name = `${SPACE.currentSpace.spaceName} - ${this.channelName}`;
-        const chat = await chatStore.startChat(this.userPicker.selected, true, name, '', true, roomSpaceProperties);
-        if (!chat) {
-            this.waiting = false;
-            return;
-        }
-        when(() => chat.added === true, () => {
-            routerStore.navigateTo(routerStore.ROUTES.patients);
-        });
+        const chat = await chatStore.spaces.createRoomInSpace(
+            chatStore.spaces.currentSpace,
+            this.channelName,
+            type,
+            this.userPicker.selected);
+        this.navigateWhenReady(chat, routerStore.ROUTES.patients);
     }
 
     handleNameChange = val => {

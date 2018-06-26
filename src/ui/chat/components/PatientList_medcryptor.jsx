@@ -26,14 +26,14 @@ class PatientList extends React.Component {
         chatInviteStore.deactivateInvite();
 
         const spaceId = getAttributeInParentChain(ev.target, 'data-chatid');
-        chatStore.activeSpace = spaceId;
+        chatStore.spaces.activeSpaceId = spaceId;
         routerStore.navigateTo(routerStore.ROUTES.patients);
     }
 
     // Buildling patient list
     // TODO: this will throw off `this.unreadPositions`!
     @computed get patientsMap() {
-        return chatStore.spaces.map(space => {
+        return chatStore.spaces.spacesList.map(space => {
             let rightContent = null;
             if (space.isNew) {
                 rightContent = <T k="title_new" className="badge-new" />;

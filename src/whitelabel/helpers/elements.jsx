@@ -5,10 +5,9 @@
 
 const React = require('react');
 const config = require('~/config');
-const { chatStore } = require('peerio-icebear');
+const { contactStore, chatStore, User } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
-const SPACE = require('./space');
 const STRINGS = require('./strings');
 
 class ELEMENTS {
@@ -73,7 +72,7 @@ class ELEMENTS {
 
             if (this.currentView === 'newPatientRoom') {
                 obj.title = (
-                    <T k={STRINGS.newChannel.title} tag="span">{{ patientName: SPACE.currentSpace.spaceName }}</T>
+                    <T k={STRINGS.newChannel.title} tag="span">{{ patientName: chatStore.spaces.currentSpaceName }}</T>
                 );
 
                 obj.description = (
@@ -118,7 +117,7 @@ class ELEMENTS {
         };
 
         if (config.whiteLabel.name === 'medcryptor') {
-            if (chatStore.activeChat.isInSpace && SPACE.isMCAdmin) {
+            if (chatStore.activeChat.isInSpace && User.current.isMCAdmin) {
                 page.displayName = (chat) => {
                     return chat.nameInSpace;
                 };
@@ -127,7 +126,7 @@ class ELEMENTS {
                     if (!chatStore.activeChat) return Promise.resolve();
                     return Promise.all([
                         chatStore.activeChat.renameInSpace(val),
-                        chatStore.activeChat.rename(`${SPACE.currentSpace.spaceName} - ${val}`)
+                        chatStore.activeChat.rename(`${chatStore.spaces.currentSpaceName} - ${val}`)
                     ]);
                 };
             }
@@ -145,23 +144,25 @@ class ELEMENTS {
 
         if (config.whiteLabel.name === 'medcryptor') {
             // MC admin sees room type in brackets next to room namem, at the top of ChatView
-            if (chatStore.activeChat.isInSpace && SPACE.isMCAdmin) {
+            if (chatStore.activeChat && chatStore.activeChat.isInSpace && User.current.isMCAdmin) {
                 obj.title = (name) => {
                     return (
                         <div className="title-content">
                             {name}&nbsp;
-                            (<T k={SPACE.isPatientRoomOpen ? 'mcr_title_patientRoom' : 'mcr_title_internalRoom'} />)
+                            (<T k={chatStore.spaces.isPatientRoomOpen ?
+                                'mcr_title_patientRoom' :
+                                'mcr_title_internalRoom'} />)
                         </div>
                     );
                 };
             }
 
-            if (chatStore.activeChat.isInSpace) {
-                obj.currentContext = SPACE.roomType;
+            if (chatStore.activeChat && chatStore.activeChat.isInSpace) {
+                obj.currentContext = chatStore.spaces.currentRoomType;
             }
 
             obj.checkActiveSpace = () => {
-                if (chatStore.activeSpace && routerStore.currentRoute === routerStore.ROUTES.chats) {
+                if (chatStore.spaces.activeSpaceId && routerStore.currentRoute === routerStore.ROUTES.chats) {
                     routerStore.navigateTo(routerStore.ROUTES.patients);
                 }
             };
@@ -187,7 +188,7 @@ class ELEMENTS {
             canILeave: (chatCanILeave) => chatCanILeave
         };
 
-        if (config.whiteLabel.name === 'medcryptor' && SPACE.isMCAdmin && routerStore.isPatientSpace) {
+        if (config.whiteLabel.name === 'medcryptor' && User.current.isMCAdmin && routerStore.isPatientSpace) {
             obj.canILeave = () => false;
         }
 
@@ -218,9 +219,9 @@ class ELEMENTS {
             ]
         };
 
-        if (config.whiteLabel.name === 'medcryptor' && SPACE.isMCAdmin && routerStore.isPatientSpace) {
+        if (config.whiteLabel.name === 'medcryptor' && User.current.isMCAdmin && routerStore.isPatientSpace) {
             obj.userMenuItems = (username) => {
-                if (SPACE.checkMCDoctor(username)) {
+                if (contactStore.whitelabel.checkMCDoctor(username)) {
                     return [itemDeleteMember];
                 }
                 return [itemMakeAdmin, itemDeleteMember];
@@ -242,9 +243,9 @@ class ELEMENTS {
             // In MC, need to check if activeChat is in patient space, and activate that space if so.
             obj.goToActiveChat = () => {
                 if (chatStore.activeChat && chatStore.activeChat.isInSpace) {
-                    chatStore.activeSpace = chatStore.activeChat.chatHead.spaceId;
+                    chatStore.spaces.activeSpaceId = chatStore.activeChat.chatHead.spaceId;
                     routerStore.navigateTo(routerStore.ROUTES.patients);
-                } else if (chatStore.activeSpace) {
+                } else if (chatStore.spaces.activeSpaceId) {
                     routerStore.navigateTo(routerStore.ROUTES.patients);
                 } else {
                     routerStore.navigateTo(routerStore.ROUTES.chats);

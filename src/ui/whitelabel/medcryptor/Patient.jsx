@@ -9,7 +9,6 @@ const { chatStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const PatientSidebar = require('./PatientSidebar');
 const PatientZeroChats = require('./PatientZeroChats');
-const SPACE = require('~/whitelabel/helpers/space');
 
 @observer
 class Patient extends React.Component {
@@ -24,7 +23,7 @@ class Patient extends React.Component {
             <div className={css(
                 'messages',
                 'patient-space',
-                { 'patient-room': SPACE.isPatientRoomOpen }
+                { 'patient-room': chatStore.spaces.isPatientRoomOpen }
             )}>
                 <PatientSidebar />
                 {this.zeroState ? <PatientZeroChats /> : null}

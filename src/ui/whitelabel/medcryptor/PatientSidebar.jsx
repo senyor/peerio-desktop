@@ -12,19 +12,22 @@ const { Button, List, ListItem } = require('peer-ui');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const { getAttributeInParentChain } = require('~/helpers/dom');
-const SPACE = require('~/whitelabel/helpers/space');
 
 @observer
 class PatientSidebar extends React.Component {
     componentWillMount() {
-        if (SPACE.currentSpace.isNew) {
-            SPACE.currentSpace.isNew = false;
+        if (chatStore.spaces.currentSpace.isNew) {
+            chatStore.spaces.currentSpace.isNew = false;
         }
-        this.disposer = when(() => SPACE.currentSpaceDeleted, this.goBack);
+        this.disposer = when(() => this.spaceDeleted, this.goBack);
     }
 
     componentWillUnmount() {
         this.disposer();
+    }
+
+    @computed get spaceDeleted() {
+        return !chatStore.spaces.currentSpace;
     }
 
     get isNewInternalRoom() { return routerStore.currentRoute === routerStore.ROUTES.newInternalRoom; }
@@ -32,7 +35,7 @@ class PatientSidebar extends React.Component {
 
     goBack() {
         chatStore.deactivateCurrentChat();
-        chatStore.activeSpace = null;
+        chatStore.spaces.activeSpaceId = null;
         routerStore.navigateTo(routerStore.ROUTES.chats);
     }
 
@@ -65,7 +68,7 @@ class PatientSidebar extends React.Component {
     }
 
     @computed get internalRoomMap() {
-        const internalRooms = SPACE.currentSpace.internalRooms;
+        const internalRooms = chatStore.spaces.currentSpace.internalRooms;
 
         return internalRooms.map(r => {
             return (
@@ -89,7 +92,7 @@ class PatientSidebar extends React.Component {
     }
 
     @computed get patientRoomMap() {
-        const patientRooms = SPACE.currentSpace.patientRooms;
+        const patientRooms = chatStore.spaces.currentSpace.patientRooms;
 
         return patientRooms.map(c => {
             return (
@@ -120,7 +123,7 @@ class PatientSidebar extends React.Component {
             <div className="feature-navigation-list messages-list patient-sidebar">
                 <div className="list">
                     <div className="navigate-back"><Button onClick={this.goBack} icon="arrow_back" /></div>
-                    <div className="patient-name">{SPACE.currentSpace.spaceName}</div>
+                    <div className="patient-name">{chatStore.spaces.currentSpaceName}</div>
 
                     <List clickable>
                         <div>

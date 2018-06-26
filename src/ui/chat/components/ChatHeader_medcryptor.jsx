@@ -6,7 +6,6 @@ const T = require('~/ui/shared-components/T');
 const { MaterialIcon } = require('peer-ui');
 const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
-const SPACE = require('~/whitelabel/helpers/space');
 
 @observer
 class ChatHeader extends React.Component {
@@ -24,7 +23,7 @@ class ChatHeader extends React.Component {
                     <div className="notice-container">
                         <MaterialIcon className="notice-icon" icon="security" />
                         <T className="text-content"
-                            k={SPACE.isPatientRoomOpen
+                            k={chatStore.spaces.isPatientRoomOpen
                                 ? 'mcr_title_patientRoomNotice'
                                 : 'mcr_title_internalRoomNotice'
                             }
@@ -48,9 +47,9 @@ class ChatHeader extends React.Component {
                     )}
                 </div>
                 {chatStore.activeChat.isInSpace
-                    ? SPACE.isPatientRoomOpen
+                    ? chatStore.spaces.isPatientRoomOpen
                         ? <T k="mcr_title_chatHeaderPatientRoom" tag="div" className="title">
-                            {{ patientName: SPACE.currentSpace.spaceName }}
+                            {{ patientName: chatStore.spaces.currentSpaceName }}
                         </T>
                         : <T k="mcr_title_chatHeaderInternalRoom" tag="div" className="title">
                             {{ roomName: chat.nameInSpace }}

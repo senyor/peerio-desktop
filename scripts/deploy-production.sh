@@ -42,7 +42,7 @@ echo "[•••••••••••••••] building and publishing"
 echo '**'
 echo '** NOTE: on Windows, run: peerio-desktop-signer --shared Y:\ --certificate "certificate subject name"'
 echo '**'
-./node_modules/.bin/peerio-desktop-release --key ~/.peerio-updater/secret.key \
+peerio-desktop-release --key ~/.peerio-updater/secret.key \
                        --shared ~/Win \
                        --repository PeerioTechnologies/peerio-desktop \
                        --publish

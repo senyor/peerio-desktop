@@ -15,6 +15,10 @@ class MoveFileDialog extends React.Component {
     @observable selectedFolder = null;
     @observable currentFolder = null;
 
+    @computed get legacyFileSelected() {
+        return (this.props.file && this.props.file.isLegacy) || fileStore.bulk.hasLegacyObjectsSelected;
+    }
+
     @action.bound toggleShareWarning() {
         this.shareWarningDisabled = !this.shareWarningDisabled;
     }
@@ -39,8 +43,16 @@ class MoveFileDialog extends React.Component {
     }
 
     @action.bound async handleMove() {
-        const { file, folder, onHide } = this.props;
+        const { file, folder } = this.props;
         const target = this.selectedFolder || this.currentFolder;
+
+        // It should not be possible via UI to move a legacy file to a shared folder
+        // If it happens somehow, we'll log an error.
+        if (this.legacyFileSelected && target.isShared) {
+            console.error('Cannot move legacy files to a shared folder');
+            this.hideDialog();
+            return;
+        }
 
         if (target.root.isShared) {
             // we hide folder selection dialog immediately to prevent flicker
@@ -60,7 +72,13 @@ class MoveFileDialog extends React.Component {
             fileStore.bulk.moveOne(file || folder, target);
         }
 
-        onHide();
+        this.hideDialog();
+    }
+
+    @action.bound hideDialog() {
+        this.selectedFolder = null;
+        this.currentFolder = fileStore.folderStore.root;
+        this.props.onHide();
     }
 
     @computed get visibleFolders() {
@@ -81,30 +99,33 @@ class MoveFileDialog extends React.Component {
         if (folder === this.props.folder) return null;
 
         const hasFolders = folder.folders.length > 0;
+        const rowDisabled = folder.isShared && this.legacyFileSelected;
 
         return (<div
             key={`folder-${folder.id}`}
             data-folderid={folder.id}
             data-storeid={folder.store.id}
-            className="move-file-row">
+            className={css('move-file-row', { disabled: rowDisabled })}>
             <Button
                 icon={this.selectedFolder === folder ?
                     'radio_button_checked' : 'radio_button_unchecked'}
                 onClick={this.selectionChange}
                 theme="small"
                 selected={this.selectedFolder === folder}
+                disabled={rowDisabled}
             />
             <MaterialIcon icon={folder.isShared ? 'folder_shared' : 'folder'} className="folder-icon" />
-            <div className={css('file-info', { clickable: hasFolders })}
-                onClick={this.setCurrentFolder}
+            <div className={css('file-info', { clickable: hasFolders && !rowDisabled })}
+                onClick={rowDisabled ? null : this.setCurrentFolder}
             >
-                <div className="file-name clickable">{folder.name}</div>
+                <div className={css('file-name', { clickable: hasFolders && !rowDisabled })}>{folder.name}</div>
             </div>
             {hasFolders &&
                 <Button
                     onClick={this.setCurrentFolder}
                     icon="keyboard_arrow_right"
                     theme="small"
+                    disabled={rowDisabled}
                 />
             }
         </div>);
@@ -115,10 +136,10 @@ class MoveFileDialog extends React.Component {
     refDialog = ref => { this.dialog = ref; };
 
     render() {
-        const { onHide, visible } = this.props;
+        const { visible } = this.props;
 
         const actions = [
-            { label: t('button_cancel'), onClick: onHide },
+            { label: t('button_cancel'), onClick: this.hideDialog },
             { label: t('button_move'), onClick: this.handleMove }
         ];
 
@@ -131,7 +152,7 @@ class MoveFileDialog extends React.Component {
                 <Dialog
                     ref={this.refDialog}
                     actions={actions}
-                    onCancel={onHide}
+                    onCancel={this.hideDialog}
                     active={visible}
                     title={t('title_moveFileTo')}
                     className="move-file-dialog">

@@ -1,16 +1,27 @@
+// @ts-check
 const React = require('react');
 const { computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
+
+const { fileStore } = require('peerio-icebear');
 const { MaterialIcon } = require('peer-ui');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const FolderActions = require('./FolderActions');
 
+/**
+ * @augments {React.Component<{
+        /// The folder we're breadcrumbing.
+        folder: any,
+        onFolderClick: (folder: any) => void,
+        noActions?: boolean
+    }, {}>}
+ */
 @observer
 class Breadcrumb extends React.Component {
     @computed get folderPath() {
         const folderPath = [];
-        let iterator = this.props.currentFolder;
+        let iterator = this.props.folder;
         do {
             folderPath.unshift(iterator);
             iterator = iterator.parent;
@@ -19,7 +30,7 @@ class Breadcrumb extends React.Component {
     }
 
     componentDidMount() {
-        this._watchFolder = reaction(() => this.props.currentFolder, this.ellipsizeFolderNames, true);
+        this._watchFolder = reaction(() => this.props.folder, this.ellipsizeFolderNames, true);
         window.addEventListener('resize', this.ellipsizeFolderNames, false);
     }
 
@@ -130,18 +141,22 @@ class Breadcrumb extends React.Component {
 
     render() {
         const { folderPath } = this;
-        const currentFolder = this.props.currentFolder;
+        const { folder, onFolderClick } = this.props;
+
+        /** @type {number} */
+        const selectedCount = fileStore.selectedFilesOrFolders.length;
+
         return (
             <div className="breadcrumb-container">
-                {this.props.bulkSelected
+                {selectedCount > 0
                     ? <div className="breadcrumb">
-                        <div className="breadcrumb-entry" data-storeid="main" data-folderid="root">
-                            <a className="folder-name clickable" onClick={this.props.onSelectFolder}>
-                                {t('title_files')}
-                            </a>
-                            <MaterialIcon icon="keyboard_arrow_right" />
-                        </div>
-                        {currentFolder.isRoot && !currentFolder.isShared
+                        <Crumb
+                            folder={fileStore.folderStore.root}
+                            displayText={t('title_files')}
+                            onClick={onFolderClick}
+                            arrowAfter
+                        />
+                        {folder.isRoot && !folder.isShared
                             ? null
                             : <div className="breadcrumb-entry">
                                 <span className="folder-name">
@@ -152,42 +167,58 @@ class Breadcrumb extends React.Component {
                         }
                         <div className="breadcrumb-entry">
                             <span className="folder-name selected-count">
-                                <T k="title_selected" tag="span" /> ({this.props.bulkSelected})
+                                <T k="title_selected" tag="span" /> ({selectedCount})
                             </span>
                         </div>
                     </div>
                     : <div className="breadcrumb">
-                        {this.folderPath.map((folder, i) => (
-                            <div key={`${folder.id}-${folder.name}`}
-                                data-folderid={folder.id}
-                                data-storeid={folder.store.id}
-                                className="breadcrumb-entry">
-                                <a className="folder-name clickable"
-                                    onClick={this.props.onSelectFolder}>
-                                    {i > this.foldersToEllipsize
-                                        ? folder.name || t('title_files')
-                                        : '...'
-                                    }
-                                </a>
-                                {i !== folderPath.length - 1 && <MaterialIcon icon="keyboard_arrow_right" />}
-                            </div>
+                        {folderPath.map((f, i) => (
+                            <Crumb
+                                key={`${f.id}-${f.name}`}
+                                displayText={i > this.foldersToEllipsize
+                                    ? f.name || t('title_files')
+                                    : '...'
+                                }
+                                folder={f}
+                                onClick={onFolderClick}
+                                arrowAfter={i !== folderPath.length - 1}
+                            />
                         ))}
                     </div>
                 }
-                {(currentFolder.isRoot && !currentFolder.isShared) || this.props.noActions || this.props.bulkSelected
+                {(folder.isRoot && !folder.isShared) || this.props.noActions || selectedCount > 0
                     ? null
-                    : <FolderActions
-                        data-folderid={currentFolder.id}
-                        data-storeid={currentFolder.store.id}
-                        moveable
-                        onMove={currentFolder.isShared ? null : this.props.onMoveFolder}
-                        onDelete={this.props.onDelete}
-                        onRename={this.props.onRename}
-                        onShare={(currentFolder.isShared || currentFolder.canShare) ? this.props.onShare : null}
-                        onDownload={this.props.onDownload}
-                        position="top-right"
-                    />
+                    : <FolderActions folder={folder} position="top-right" />
                 }
+            </div>
+        );
+    }
+}
+
+/**
+ * @augments {React.Component<{
+        folder: any,
+        onClick: (folder: any) => void,
+        displayText: string,
+        arrowAfter: boolean
+    }, {}>}
+ */
+class Crumb extends React.Component {
+    handleClick = () => {
+        this.props.onClick(this.props.folder);
+    }
+
+    render() {
+        const { displayText, arrowAfter } = this.props;
+
+        return (
+            <div className="breadcrumb-entry">
+                <a className="folder-name clickable"
+                    onClick={this.handleClick}
+                >
+                    {displayText}
+                </a>
+                {arrowAfter && <MaterialIcon icon="keyboard_arrow_right" />}
             </div>
         );
     }

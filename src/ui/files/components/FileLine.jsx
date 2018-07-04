@@ -1,3 +1,4 @@
+// @ts-check
 const React = require('react');
 const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
@@ -15,8 +16,19 @@ const { Checkbox, ProgressBar, Tooltip } = require('peer-ui');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const FileActions = require('./FileActions');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
-const MoveFileDialog = require('./MoveFileDialog');
 
+
+/**
+ * @augments {React.Component<{
+        file: any,
+        checkbox: boolean,
+        isDragging?: boolean,
+        className?: string,
+        clickToSelect?: true,
+        fileDetails?: true,
+        fileActions?: true
+    }, {}>}
+ */
 @observer
 class FileLine extends React.Component {
     // 21 hour limit for displaying relative timestamp (because moment.js says '1 day' starting from 21h)
@@ -25,6 +37,15 @@ class FileLine extends React.Component {
     @observable hovered;
     @action.bound onMenuClick() { this.hovered = true; }
     @action.bound onMenuHide() { this.hovered = false; }
+
+    cancelUploadOrDownload = () => {
+        this.props.file.cancelUpload();
+        this.props.file.cancelDownload();
+    };
+
+    download = () => {
+        downloadFile(this.props.file);
+    };
 
     deleteFile = () => {
         let msg = t('title_confirmRemoveFilename', { name: this.props.file.name });
@@ -36,34 +57,13 @@ class FileLine extends React.Component {
         }
     };
 
-    cancelUploadOrDownload = () => {
-        this.props.file.cancelUpload();
-        this.props.file.cancelDownload();
-    };
-
-    download = () => {
-        downloadFile(this.props.file);
-    };
-
-    goToFolder = () => {
-        // navigate to clicked folder
-    }
-
-    renameFile = () => {
-
-    }
-
-    @observable moveFileVisible = false;
-    moveFile = () => {
-        this.moveFileVisible = true;
-    }
-
-    hideMoveFile = () => {
-        this.moveFileVisible = false;
-    }
-
     setContactProfileRef = (ref) => {
         if (ref) this.contactProfileRef = ref;
+    }
+
+    @action.bound
+    toggleSelected() {
+        this.props.file.selected = !this.props.file.selected;
     }
 
     @observable clickedContact;
@@ -73,7 +73,7 @@ class FileLine extends React.Component {
     }
 
     render() {
-        const { file } = this.props;
+        const { file, isDragging } = this.props;
 
         // We want relative timestamp in case it's not older then 1 day.
         // In case of relative timestamp we also want to re-render periodically to update it
@@ -101,28 +101,25 @@ class FileLine extends React.Component {
                 this.props.className,
                 {
                     hover: this.hovered,
-                    selected: this.props.selected,
-                    'selected-row': this.props.selected,
-                    'waiting-3rd-party': !file.uploading && !file.readyForDownload
+                    selected: file.selected,
+                    'selected-row': file.selected,
+                    'waiting-3rd-party': !file.uploading && !file.readyForDownload,
+                    'dragged-row': isDragging
                 }
             )}>
-                <div
-                    data-fileid={file.fileId}
-                    data-storeid={file.store.id}
-                    className="row">
-
+                <div className="row">
                     {this.props.checkbox ?
                         <Checkbox
                             className="file-checkbox"
-                            checked={this.props.selected}
-                            onChange={this.props.onToggleSelect}
+                            checked={file.selected}
+                            onChange={this.toggleSelected}
                         />
                         : <div className="file-checkbox" />
                     }
 
-                    <div className="file-icon selectable"
+                    <div className="file-icon"
                         onClick={this.props.clickToSelect
-                            ? this.props.onToggleSelect
+                            ? this.toggleSelected
                             : this.download
                         } >
                         <FileSpriteIcon
@@ -131,9 +128,9 @@ class FileLine extends React.Component {
                         />
                     </div>
 
-                    <div className="file-name selectable"
+                    <div className="file-name"
                         onClick={this.props.clickToSelect
-                            ? this.props.onToggleSelect
+                            ? this.toggleSelected
                             : this.download
                         } >
                         {file.name}
@@ -165,29 +162,12 @@ class FileLine extends React.Component {
                     {this.props.fileActions &&
                         <div className="file-actions">
                             <FileActions
-                                data-fileid={file.fileId}
-                                data-storeid={file.store.id}
-                                downloadDisabled={!file.readyForDownload || file.downloading} onDownload={this.download}
-                                shareable
-                                shareDisabled={!file.readyForDownload || !file.canShare} onShare={this.props.onShare}
-                                newFolderDisabled
-                                onRename={this.renameFile}
-                                moveable={this.props.moveable}
-                                onMove={this.moveFile}
-                                deleteable onDelete={this.deleteFile}
-                                limitedActions={file.isLegacy}
-                                onClickMoreInfo={this.props.onClickMoreInfo}
+                                file={file}
                                 onMenuClick={this.onMenuClick}
                                 onMenuHide={this.onMenuHide}
+                                onDelete={this.deleteFile}
+                                disabled={file.selected}
                             />
-                            {this.moveFileVisible && this.props.currentFolder &&
-                                <MoveFileDialog
-                                    file={file}
-                                    currentFolder={this.props.currentFolder}
-                                    visible={this.moveFileVisible}
-                                    onHide={this.hideMoveFile}
-                                />
-                            }
                         </div>
                     }
                 </div>

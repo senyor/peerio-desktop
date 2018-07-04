@@ -1,9 +1,10 @@
+// @ts-check
 const React = require('react');
-const { fileStore, User, chatStore } = require('peerio-icebear');
+const { fileStore, chatStore } = require('peerio-icebear');
 const { Button, Dialog, MaterialIcon, ProgressBar, RadioButtons } = require('peer-ui');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const { downloadFile } = require('~/helpers/file');
-const { action, observable, when } = require('mobx');
+const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
@@ -11,13 +12,23 @@ const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
 const css = require('classnames');
 const FileActions = require('~/ui/files/components/FileActions');
-const LimitedActionsDialog = require('~/ui/shared-components/LimitedActionsDialog');
 const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
+const {
+    isFileShareable,
+    isFileDeleteable,
+    fileDownloadUIEnabled
+} = require('../../files/helpers/sharedFileAndFolderActions');
 
 const ALL_IMAGES = 'all_images';
 const UNDER_LIMIT_ONLY = 'under_limit_only';
 const DISABLED = 'disabled';
 
+/**
+ * @augments {React.Component<{
+        file: any
+        onImageLoaded: () => void
+    }, {}>}
+ */
 @observer
 class InlineFile extends React.Component {
     @observable isExpanded;
@@ -53,7 +64,6 @@ class InlineFile extends React.Component {
 
 
     componentWillUnmount() {
-        if (this.timer) clearTimeout(this.timer);
         if (this._reactionToDispose) this._reactionToDispose();
 
         // When this image is mounted, increase the visibility counter
@@ -67,24 +77,17 @@ class InlineFile extends React.Component {
         { value: DISABLED, label: t('title_disable') }
     ];
 
-    get downloadDisabled() {
-        return !this.props.file.readyForDownload || this.props.file.downloading;
-    }
-
-    get shareDisabled() {
-        return !this.props.file.readyForDownload || !this.props.file.canShare;
-    }
-
-    get deleteable() {
-        return this.props.file.fileOwner === User.current.username;
-    }
 
     download = () => {
-        if (this.downloadDisabled) return;
+        if (!fileDownloadUIEnabled(this.props.file)) return;
         downloadFile(this.props.file);
     }
 
     deleteFile = async () => {
+        // the file keg passed to us in this component is not the "global" file
+        // keg, so we need to retrieve that to be able to delete the file
+        // everywhere, rather than just in this chat. (the latter is just
+        // 'unsharing', defined below.)
         const id = this.props.file.fileId;
         let file = fileStore.getById(id);
         if (!file) {
@@ -166,9 +169,12 @@ class InlineFile extends React.Component {
         const file = this.props.file;
 
         return (
-            <Dialog active={this.imagePopupVisible} ref={this.onPopupRef}
+            <Dialog
+                active={this.imagePopupVisible}
+                ref={this.onPopupRef}
                 onCancel={this.hideImagePopup}
-                className="image-popup">
+                className="image-popup"
+            >
                 <img src={this.currentImageSrc} />
                 <Button onClick={this.hideImagePopup} icon="close" className="button-close" theme="small" />
                 <div className="info-bar">
@@ -177,33 +183,31 @@ class InlineFile extends React.Component {
                         <div className="file-size">{file.sizeFormatted}</div>
                     </div>
                     <div className="right">
-                        <Button caption={t('title_download')}
+                        <Button
                             icon="file_download"
                             onClick={this.download}
-                            disabled={this.downloadDisabled}
+                            disabled={!fileDownloadUIEnabled(file)}
                             theme="small"
                         />
-                        <Button caption={t('button_share')}
+                        <Button
                             icon="person_add"
                             onClick={this.share}
-                            disabled={this.shareDisabled}
+                            disabled={!isFileShareable(file)}
                             theme="small"
                         />
-                        {this.deleteable &&
-                            <Button
-                                caption={t('button_delete')}
-                                icon="delete"
-                                onClick={this.deleteFile}
-                                theme="small"
-                            />
-                        }
-                        {this.deleteable &&
-                            <Button
-                                caption={t('button_unshare')}
-                                icon="remove_circle_outline"
-                                onClick={this.unshareFile}
-                                theme="small"
-                            />
+                        {isFileDeleteable(file) &&
+                            <React.Fragment>
+                                <Button
+                                    icon="delete"
+                                    onClick={this.deleteFile}
+                                    theme="small"
+                                />
+                                <Button
+                                    icon="remove_circle_outline"
+                                    onClick={this.unshareFile}
+                                    theme="small"
+                                />
+                            </React.Fragment>
                         }
                     </div>
                 </div>
@@ -266,14 +270,9 @@ class InlineFile extends React.Component {
         toSettings: text => <a className="clickable" onClick={this.goToSettings}>{text}</a>
     };
 
-    refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
-    @action.bound openLimitedActions() {
-        this.limitedActionsDialog.show();
-    }
-
-    refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
+    shareWithMultipleDialogRef = React.createRef();
     share = async () => {
-        const contacts = await this.shareWithMultipleDialog.show();
+        const contacts = await this.shareWithMultipleDialogRef.current.show(null, 'sharefiles');
         if (!contacts || !contacts.length) return;
         contacts.forEach(c => chatStore.startChatAndShareFiles([c], this.props.file));
     };
@@ -304,18 +303,10 @@ class InlineFile extends React.Component {
                                         theme="no-hover"
                                     />
                                 }
-                                <FileActions shareable newFolderDisabled
-                                    deleteable={this.deleteable}
-                                    unshareable={this.deleteable}
-                                    downloadDisabled={this.downloadDisabled}
-                                    shareDisabled={this.shareDisabled}
-                                    onDownload={this.download}
-                                    onShare={this.share}
+                                <FileActions
+                                    file={file}
                                     onDelete={this.deleteFile}
                                     onUnshare={this.unshareFile}
-                                    limitedActions={file.isLegacy}
-                                    onClickMoreInfo={this.openLimitedActions}
-                                    {...this.props}
                                 />
                             </div>
                             {!file.cachingFailed && file.downloading
@@ -367,14 +358,19 @@ class InlineFile extends React.Component {
                         </div>
                     }
                 </div>
-                <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
-                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} context="sharefiles" />
+                <ShareWithMultipleDialog ref={this.shareWithMultipleDialogRef} />
             </div>
         );
     }
 }
 
 
+/**
+ * @augments {React.Component<{
+        files: any[]
+        onImageLoaded: () => void
+    }, {}>}
+ */
 @observer
 class InlineFiles extends React.Component {
     renderNoFile(fileId) {
@@ -421,7 +417,6 @@ class InlineFiles extends React.Component {
                             key={fileId}
                             file={file}
                             onImageLoaded={this.props.onImageLoaded}
-                            {...this.props}
                         />);
                     })
                 }

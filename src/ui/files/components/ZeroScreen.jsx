@@ -1,7 +1,11 @@
+// @ts-check
 const React = require('react');
 const { t } = require('peerio-translator');
 const { Button } = require('peer-ui');
 
+/**
+ * @param {{ onUpload: () => void }} props
+ */
 function ZeroScreen(props) {
     return (
         <div className="files">

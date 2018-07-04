@@ -1,3 +1,4 @@
+// @ts-check
 const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
@@ -9,21 +10,44 @@ const { getContactByEvent } = require('~/helpers/icebear-dom');
 const { ModifyShareDialog } = require('./ModifyShareDialog');
 
 /**
- * onSelectContact
- * onSelectChannel
+ * @typedef {'sharefiles' | 'sharefolders' | ''} ShareContext
+ */
+
+/**
+ * @augments {React.Component<{}, {}>}
  */
 @observer
 class ShareWithMultipleDialog extends React.Component {
+    /**
+     * Reference to the promise resolver for returning the dialog result. When
+     * the resolver is set to null, the dialog is hidden.
+     *
+     * @private
+     * @type {(contactsToShareWith: any[] | null) => void | null}
+     */
+    @observable.ref
+    resolver;
+
     @observable query = '';
-    @observable visible = false;
     selectedUsers = observable.map();
+
+    /**
+     * Can be present to indicate the item being shared already has an existing
+     * share (that is, this will not be null if we're trying to share a folder
+     * that's already shared.)
+     * @type {any | null}
+     */
+    @observable folderWithExistingShare = null;
+
+    /** @type {ShareContext} */
+    @observable shareContext = '';
 
     @action.bound handleTextChange(newVal) {
         this.query = newVal;
     }
 
     get existingUsers() {
-        return this.props.item ? this.props.item.otherParticipants : [];
+        return this.folderWithExistingShare ? this.folderWithExistingShare.otherParticipants : [];
     }
 
     filterExisting = (c) => {
@@ -32,7 +56,7 @@ class ShareWithMultipleDialog extends React.Component {
     @computed get contacts() {
         const selectedUsernames = this.selectedUsers.keys();
         let ret = contactStore
-            .whitelabel.filter(this.query, this.props.context)
+            .whitelabel.filter(this.query, this.shareContext)
             .filter(c => !c.isDeleted)
             .filter(c => c.username !== User.current.username)
             .sort((c1, c2) => c1.username.localeCompare(c2.username));
@@ -73,26 +97,31 @@ class ShareWithMultipleDialog extends React.Component {
         );
     }
 
-    @action.bound show() {
+    /**
+     * @param {any?} folderWithExistingShare
+     * @param {ShareContext} shareContext
+     */
+    @action.bound show(folderWithExistingShare, shareContext) {
+        this.folderWithExistingShare = folderWithExistingShare;
+        this.shareContext = shareContext;
         this.selectedUsers.clear();
-        this.visible = true;
-        return new Promise(resolve => { this.resolve = resolve; });
+        return new Promise(resolve => { this.resolver = resolve; });
     }
 
     @action.bound close() {
-        this.visible = false;
-        this.resolve(null);
-        this.resolve = null;
+        if (this.resolver) {
+            this.resolver(null);
+            this.resolver = null;
+        }
+        this.shareContext = '';
+        this.folderWithExistingShare = null;
         this.query = '';
         this.selectedUsers.clear();
     }
 
     @action.bound share() {
-        this.visible = false;
-        this.resolve(this.selectedUsers.values());
-        this.resolve = null;
-        this.query = '';
-        this.selectedUsers.clear();
+        this.resolver(this.selectedUsers.values());
+        this.close();
     }
 
     get sharedWithBlock() {
@@ -117,12 +146,13 @@ class ShareWithMultipleDialog extends React.Component {
     setModifyShareDialogRef = (ref) => { this.modifyShareDialog = ref; };
 
     render() {
-        if (!this.visible) return false;
+        if (!this.resolver) return null;
+
         const dialogActions = [
             { label: t('button_cancel'), onClick: this.close },
             { label: t('button_share'), onClick: this.share, disabled: !this.usersSelected }
         ];
-        const item = this.props.item;
+        const item = this.folderWithExistingShare;
 
         return (
             <div>
@@ -145,7 +175,7 @@ class ShareWithMultipleDialog extends React.Component {
                                     placeholder={t('title_userSearch')}
                                     value={this.query}
                                     onChange={this.handleTextChange}
-                                    onKeyDown={this.handleKeyDown} />
+                                />
                             </div>
                         </div>
                         <div className="chat-list-container">

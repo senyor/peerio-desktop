@@ -1,3 +1,4 @@
+// @ts-check
 const React = require('react');
 const { fileStore, chatStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
@@ -72,8 +73,11 @@ class FilePicker extends React.Component {
 
     get breadCrumbsHeader() {
         return (
-            <Breadcrumb currentFolder={this.currentFolder} noActions
-                onSelectFolder={this.changeFolder} />
+            <Breadcrumb
+                noActions
+                folder={this.currentFolder}
+                onFolderClick={this.changeFolder}
+            />
         );
     }
 
@@ -86,8 +90,8 @@ class FilePicker extends React.Component {
     }
 
     @computed get items() {
-        return fileStore.searchQuery ?
-            fileStore.filesAndFoldersSearchResult
+        return fileStore.searchQuery
+            ? fileStore.filesAndFoldersSearchResult
             : this.currentFolder.filesAndFoldersDefaultSorting;
     }
 
@@ -102,7 +106,6 @@ class FilePicker extends React.Component {
             }
         ];
 
-        const { currentFolder } = this;
         const items = [];
         const data = this.items;
         const canShareFolder = chatStore.activeChat && !chatStore.activeChat.isChannel;
@@ -114,19 +117,13 @@ class FilePicker extends React.Component {
                 <FolderLine
                     key={f.id}
                     folder={f}
-                    onChangeFolder={this.changeFolder}
                     checkbox
                     disabledCheckbox={(!f.isShared && f.root.isShared) || !canShareFolder}
-                    selected={f.selected}
-                    onToggleSelect={this.toggleSelectFolder}
                 /> :
                 <FileLine
                     key={f.fileId}
                     file={f}
-                    currentFolder={currentFolder}
                     checkbox
-                    selected={f.selected}
-                    onToggleSelect={this.toggleSelect}
                     clickToSelect
                 />);
         }

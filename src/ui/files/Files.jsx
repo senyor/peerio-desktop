@@ -1,55 +1,39 @@
+// @ts-check
 const React = require('react');
 const css = require('classnames');
-const { Button, Checkbox, Dialog, Input, ProgressBar } = require('peer-ui');
 const { observer } = require('mobx-react');
 const { observable, action, computed, reaction } = require('mobx');
-const { fileStore, volumeStore, clientApp, chatStore } = require('peerio-icebear');
-const Search = require('~/ui/shared-components/Search');
-const Breadcrumb = require('./components/Breadcrumb');
+const _ = require('lodash');
+
+const { Button, Checkbox, ProgressBar } = require('peer-ui');
+const { fileStore, clientApp } = require('peerio-icebear');
+const { t } = require('peerio-translator');
+
+const T = require('~/ui/shared-components/T');
+const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
+
 const FileLine = require('./components/FileLine');
 const FolderLine = require('./components/FolderLine');
 const ZeroScreen = require('./components/ZeroScreen');
-const { pickLocalFiles, getFileTree, selectDownloadFolder, pickSavePath } = require('~/helpers/file');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
-const MoveFileDialog = require('./components/MoveFileDialog');
-const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
-const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
-const LimitedActionsDialog = require('~/ui/shared-components/LimitedActionsDialog');
-const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
-const config = require('~/config');
-const _ = require('lodash');
+const FilesHeader = require('./components/FilesHeader');
+
+const { selectDownloadFolder, pickSavePath } = require('~/helpers/file');
+const { handleUpload } = require('./helpers/sharedFileAndFolderActions');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
-const CONTEXT_FILES = 'sharefiles';
-const CONTEXT_FOLDERS = 'sharefolders';
 
 @observer
 class Files extends React.Component {
-    constructor() {
-        super();
-        this.handleUpload = this.handleUpload.bind(this);
-    }
-    // to pass to shareWithMultipleDialog
-    @observable.ref currentDialogFolder;
-    @observable.ref currentDialogFile;
-
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
 
-    @observable shareContext = '';
-
     componentWillMount() {
         clientApp.isInFilesView = true;
-        this.disposer = reaction(() => fileStore.selectedFolders.length, length => {
-            if (length > 0) {
-                this.shareContext = CONTEXT_FOLDERS;
-            } else {
-                this.shareContext = fileStore.selectedFiles.length > 0
-                    ? CONTEXT_FILES
-                    : '';
-            }
-        });
+        this.disposers = [
+            reaction(() => fileStore.folderStore.currentFolder, () => {
+                this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
+            })
+        ];
     }
 
     componentDidMount() {
@@ -80,206 +64,7 @@ class Files extends React.Component {
         // remove icebear hook for bulk save
         fileStore.bulk.downloadFolderSelector = null;
         fileStore.bulk.pickPathSelector = null;
-        this.disposer();
-    }
-
-    @action handleSearch(val) {
-        fileStore.searchQuery = val;
-    }
-
-    @observable moveFolderVisible = false;
-
-    @action.bound moveFolder(ev) {
-        const folder = getFolderByEvent(ev);
-        this.folderToMove = folder;
-        if (folder) folder.selected = true;
-        this.moveFolderVisible = true;
-    }
-
-    @action.bound moveToFolder() {
-        this.moveFolderVisible = true;
-    }
-
-    @action.bound hideMoveFolder() {
-        this.moveFolderVisible = false;
-        this.folderToMove = null;
-        // to re-enable sandwich action bars
-        fileStore.clearSelection();
-        fileStore.searchQuery = '';
-    }
-
-    @action.bound async shareFolder(ev) {
-        // IMPORTANT: synthetic events are reused, so cache folder before await
-        const folder = getFolderByEvent(ev);
-        this.currentDialogFolder = folder;
-
-        this.shareContext = CONTEXT_FOLDERS;
-        const contacts = await this.shareWithMultipleDialog.show();
-
-        this.currentDialogFolder = null;
-        if (!contacts || !contacts.length) return;
-        await volumeStore.shareFolder(folder, contacts);
-
-        this.shareContext = '';
-    }
-
-    @action.bound async shareFile(ev) {
-        const file = getFileByEvent(ev);
-        this.currentDialogFile = file;
-
-        this.shareContext = CONTEXT_FILES;
-        const contacts = await this.shareWithMultipleDialog.show();
-
-        this.currentDialogFile = null;
-        if (!contacts || !contacts.length) return;
-        contacts.forEach(c => chatStore.startChatAndShareFiles([c], file));
-
-        this.shareContext = '';
-    }
-
-    @action.bound async shareSelected() {
-        const contacts = await this.shareWithMultipleDialog.show();
-        if (!contacts || !contacts.length) return;
-        contacts.forEach(c => chatStore.startChatAndShareFiles([c], fileStore.selectedFiles.slice()));
-        fileStore.selectedFolders.forEach(f => f.canShare && volumeStore.shareFolder(f, contacts));
-        fileStore.clearSelection();
-    }
-
-    @observable triggerAddFolderPopup = false;
-    @observable addFolderPopupVisible = false;
-    @observable triggerRenameFolderPopup = false;
-    @observable renameFolderPopupVisible = false;
-    @observable folderName = '';
-    @observable folderToRename;
-    @observable folderToMove;
-    @observable folderToDelete;
-
-    @action.bound showAddFolderPopup() {
-        this.folderName = '';
-        this.triggerAddFolderPopup = true;
-    }
-
-    @action.bound showRenameFolderPopup(ev) {
-        const folder = getFolderByEvent(ev);
-        this.folderName = folder.name;
-        this.folderToRename = folder;
-        this.triggerRenameFolderPopup = true;
-    }
-
-    @action.bound handleFolderNameChange(val) {
-        this.folderName = val;
-    }
-
-    @action.bound handleAddFolder() {
-        this.addFolderPopupVisible = false;
-        this.triggerAddFolderPopup = false;
-        const { folderName } = this;
-        if (folderName && folderName.trim()) {
-            fileStore.folderStore.currentFolder.createFolder(folderName);
-        }
-        this.folderName = '';
-    }
-
-    @action.bound handleKeyDownAddFolder(ev) {
-        if (ev.key === 'Enter' && this.folderName.trim()) {
-            this.handleAddFolder();
-        }
-    }
-
-    @action.bound handleRenameFolder() {
-        this.renameFolderPopupVisible = false;
-        this.triggerRenameFolderPopup = null;
-        const { folderName, folderToRename } = this;
-        this.folderName = '';
-        this.folderToRename = null;
-        folderToRename.rename(folderName);
-    }
-
-    handleKeyDownRenameFolder = (ev) => {
-        if (ev.key === 'Enter' && this.folderName.trim()) {
-            this.handleRenameFolder();
-        }
-    }
-
-    @action.bound async downloadFolder(ev) {
-        const folder = getFolderByEvent(ev);
-        const path = await selectDownloadFolder();
-        if (!path) return;
-        fileStore.bulk.downloadOne(folder, path);
-    }
-
-    @action.bound deleteFolder(ev) {
-        const folder = getFolderByEvent(ev);
-        fileStore.bulk.removeOne(folder);
-    }
-
-    onAddPopupRef = (ref) => {
-        if (ref) this.addFolderPopupVisible = true;
-    };
-
-    onRenamePopupRef = (ref) => {
-        if (ref) this.renameFolderPopupVisible = true;
-    };
-
-    get addFolderPopup() {
-        const hide = () => {
-            this.addFolderPopupVisible = false;
-            this.triggerAddFolderPopup = false;
-        };
-        const dialogActions = [
-            { label: t('button_cancel'), onClick: hide },
-            { label: t('button_create'), disabled: !this.folderName.trim(), onClick: this.handleAddFolder }
-        ];
-        return (
-            <Dialog title={t('button_newFolder')}
-                active={this.addFolderPopupVisible} theme="small" ref={this.onAddPopupRef}
-                actions={dialogActions}
-                onCancel={hide}
-                className="add-folder-popup">
-                <Input placeholder={t('title_folderName')}
-                    value={this.folderName} onChange={this.handleFolderNameChange}
-                    onKeyDown={this.handleKeyDownAddFolder}
-                    autoFocus
-                />
-            </Dialog>);
-    }
-
-    get renameFolderPopup() {
-        const hide = () => {
-            this.renameFolderPopupVisible = false;
-            this.triggerRenameFolderPopup = false;
-        };
-        const dialogActions = [
-            { label: t('button_cancel'), onClick: hide },
-            { label: t('button_rename'), disabled: !this.folderName.trim(), onClick: this.handleRenameFolder }
-        ];
-        return (
-            <Dialog title={t('button_rename')}
-                active={this.renameFolderPopupVisible} theme="small" ref={this.onRenamePopupRef}
-                actions={dialogActions} onKeyDown={this.keyDownRenameFolder}
-                onCancel={hide}
-                className="add-folder-popup">
-                <Input placeholder={t('title_folderName')}
-                    value={this.folderName} onChange={this.handleFolderNameChange}
-                    onKeyDown={this.handleKeyDownRenameFolder}
-                    autoFocus
-                />
-            </Dialog>);
-    }
-
-    async handleUpload() {
-        const paths = await pickLocalFiles();
-        if (!paths || !paths.length) return;
-        const trees = paths.map(getFileTree);
-        await Promise.map(trees, tree => {
-            if (typeof tree === 'string') {
-                return fileStore.upload(
-                    tree, null,
-                    fileStore.folderStore.currentFolder
-                );
-            }
-            return fileStore.uploadFolder(tree, fileStore.folderStore.currentFolder);
-        });
+        this.disposers.forEach(d => d());
     }
 
     toggleSelectAll = ev => {
@@ -288,6 +73,41 @@ class Files extends React.Component {
             item.selected = !!ev.target.checked;
         });
     };
+
+    @computed get items() {
+        return fileStore.searchQuery
+            ? fileStore.filesAndFoldersSearchResult
+            : fileStore.folderStore.currentFolder.filesAndFoldersDefaultSorting;
+    }
+
+    @computed get renderedItems() {
+        const currentFolder = fileStore.folderStore.currentFolder;
+
+        const renderedItems = [];
+        const data = this.items;
+        for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
+            const f = data[i];
+            if (f.isFolder && currentFolder.isRoot && !currentFolder.isShared && f.convertingToVolume) continue;
+
+            renderedItems.push(f.isFolder
+                ? <FolderLine
+                    key={f.id}
+                    folder={f}
+                    folderActions
+                    folderDetails
+                    checkbox={!f.isShared}
+                />
+                : <FileLine
+                    key={f.id}
+                    file={f}
+                    fileActions
+                    fileDetails
+                    checkbox
+                />
+            );
+        }
+        return renderedItems;
+    }
 
     @computed get allAreSelected() {
         return this.items.length && !this.items.some(i => !i.selected && !i.isShared);
@@ -315,115 +135,14 @@ class Files extends React.Component {
         this.enqueueCheck();
     }
 
-    @action.bound changeFolder(ev) {
-        const folder = getFolderByEvent(ev);
-        if (folder !== fileStore.folderStore.currentFolder) {
-            this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
-            fileStore.folderStore.currentFolder = folder;
-            fileStore.searchQuery = '';
-            fileStore.clearSelection();
-        }
-    }
 
-    @computed get items() {
-        return fileStore.searchQuery ?
-            fileStore.filesAndFoldersSearchResult
-            : fileStore.folderStore.currentFolder.filesAndFoldersDefaultSorting;
-    }
-
-    @computed get selectedCount() {
-        return fileStore.selectedFilesOrFolders.length;
-    }
-
-    get bulkActionButtons() {
-        const buttonItems = [
-            {
-                label: t('button_download'),
-                icon: 'file_download',
-                onClick: fileStore.bulk.download
-            },
-            {
-                label: t('button_move'),
-                customIcon: 'move',
-                onClick: this.moveToFolder,
-                disabled: !fileStore.bulk.canMove
-            },
-            {
-                label: t('button_delete'),
-                icon: 'delete',
-                onClick: fileStore.bulk.remove
-            }
-        ];
-        if (config.enableVolumes) {
-            buttonItems.unshift(
-                {
-                    label: t('button_share'),
-                    icon: 'person_add',
-                    onClick: this.shareSelected,
-                    disabled: !fileStore.bulk.canShare
-                });
-        }
-        return buttonItems.map(props => {
-            return (
-                <Button
-                    key={props.label}
-                    {...props} />
-            );
-        });
-    }
-
-    get breadCrumbsHeader() {
-        return (
-            <div className="files-header"
-                data-folderid={fileStore.folderStore.currentFolder.id}
-                data-storeid={fileStore.folderStore.currentFolder.store.id}>
-                <Breadcrumb currentFolder={fileStore.folderStore.currentFolder}
-                    onSelectFolder={this.changeFolder}
-                    onMove={this.moveFolder}
-                    onDelete={this.deleteFolder}
-                    onRename={this.showRenameFolderPopup}
-                    onShare={this.shareFolder}
-                    onDownload={this.downloadFolder}
-                    bulkSelected={this.selectedCount}
-                />
-                {this.selectedCount > 0
-                    ? <div className="buttons-container bulk-buttons">
-                        {this.bulkActionButtons}
-                    </div>
-                    : <div className="buttons-container file-buttons">
-                        <Button
-                            label={t('button_newFolder')}
-                            className="new-folder"
-                            onClick={this.showAddFolderPopup}
-                            theme="affirmative secondary"
-                        />
-                        <Button className="button-affirmative"
-                            label={t('button_upload')}
-                            onClick={this.handleUpload}
-                            theme="affirmative"
-                        />
-                    </div>
-                }
-            </div>
-        );
-    }
-
-    get searchResultsHeader() {
-        return (
-            <div className="files-header">
-                <div className="search-results-header">
-                    {t('title_searchResults')}
-                </div>
-                {this.selectedCount > 0
-                    ? <div className="buttons-container bulk-buttons">
-                        {this.bulkActionButtons}
-                    </div>
-                    : null
-                }
-            </div>
-        );
-    }
-
+    /*
+     * 27/6/18: According to Lucas, folder removal notifications are a
+     * work-in-progress, and these are just placeholder variables -- one or both
+     * might be removed eventually? `removedFolderNotifVisible` is currently
+     * always false, so the notification is never shown. (obvs check for rot
+     * when implementing for real, please!)
+     */
     @observable removedFolderNotifVisible = false;
     @observable removedFolderNotifToHide = false;
 
@@ -447,76 +166,19 @@ class Files extends React.Component {
         );
     }
 
-    toggleSelectFile(ev) {
-        const file = getFileByEvent(ev);
-        file.selected = !file.selected;
-    }
-
-    toggleSelectFolder(ev) {
-        const folder = getFolderByEvent(ev);
-        folder.selected = !folder.selected;
-    }
-
-    @observable limitedActionsDialogVisible = false;
-    @action.bound openLimitedActions() {
-        this.limitedActionsDialog.show();
-    }
-
-
-    refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
     refConfirmFolderDeleteDialog = ref => { fileStore.bulk.deleteFolderConfirmator = ref && ref.show; };
-    refLimitedActionsDialog = ref => { this.limitedActionsDialog = ref; };
-
 
     render() {
         if (!fileStore.files.length && !fileStore.folderStore.root.folders.length
-            && fileStore.loaded) return <ZeroScreen onUpload={this.handleUpload} />;
+            && fileStore.loaded) return <ZeroScreen onUpload={handleUpload} />;
 
         const currentFolder = fileStore.folderStore.currentFolder;
-        const items = [];
-        const data = this.items;
-        for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
-            const f = data[i];
-            if (f.isFolder && currentFolder.isRoot && !currentFolder.isShared && f.convertingToVolume) continue;
-            items.push(f.isFolder ?
-                <FolderLine
-                    key={f.id}
-                    folder={f}
-                    moveable={fileStore.folderStore.root.hasNested}
-                    onDownload={this.downloadFolder}
-                    onMoveFolder={this.moveFolder}
-                    onRenameFolder={this.showRenameFolderPopup}
-                    onDeleteFolder={this.deleteFolder}
-                    onChangeFolder={this.changeFolder}
-                    folderActions
-                    folderDetails
-                    checkbox
-                    onToggleSelect={this.toggleSelectFolder}
-                    selected={f.selected || f === this.currentDialogFolder}
-                    onShare={this.shareFolder}
-                /> :
-                <FileLine
-                    key={f.fileId}
-                    file={f}
-                    currentFolder={currentFolder}
-                    moveable={fileStore.folderStore.root.hasNested}
-                    fileActions
-                    fileDetails
-                    checkbox
-                    onToggleSelect={this.toggleSelectFile}
-                    selected={f.selected || f === this.currentDialogFile}
-                    onClickMoreInfo={this.openLimitedActions}
-                    onShare={this.shareFile}
-                />);
-        }
+        const selectedCount = fileStore.selectedFilesOrFolders.length;
 
         this.enqueueCheck();
         return (
             <div className="files">
-                <div className="files-header-container">
-                    <Search onChange={this.handleSearch} query={fileStore.searchQuery} />
-                    {fileStore.searchQuery ? this.searchResultsHeader : this.breadCrumbsHeader}
-                </div>
+                <FilesHeader />
                 <div className="file-wrapper">
                     <div className="file-table-wrapper scrollable"
                         ref={this.setContainerRef}
@@ -526,7 +188,7 @@ class Files extends React.Component {
                             <Checkbox
                                 className={css(
                                     'file-checkbox',
-                                    { hide: this.selectedCount === 0 }
+                                    { hide: selectedCount === 0 }
                                 )}
                                 onChange={this.toggleSelectAll}
                                 checked={this.allAreSelected}
@@ -570,28 +232,14 @@ class Files extends React.Component {
                         }
                         <div className={css(
                             'file-table-body',
-                            { 'hide-checkboxes': this.selectedCount === 0 }
+                            { 'hide-checkboxes': selectedCount === 0 }
                         )}>
-                            {items}
+                            {this.renderedItems}
                         </div>
                         <div className="file-bottom-filler" />
                     </div>
                 </div>
-                <MoveFileDialog
-                    handleMove={fileStore.bulk.move}
-                    folder={this.folderToMove}
-                    currentFolder={currentFolder.parent || currentFolder}
-                    visible={this.moveFolderVisible}
-                    onHide={this.hideMoveFolder}
-                />
-                {this.triggerAddFolderPopup && this.addFolderPopup}
-                {this.triggerRenameFolderPopup && this.renameFolderPopup}
-                <LimitedActionsDialog ref={this.refLimitedActionsDialog} />
                 <ConfirmFolderDeleteDialog ref={this.refConfirmFolderDeleteDialog} />
-                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog}
-                    item={this.currentDialogFolder}
-                    context={this.shareContext}
-                />
             </div>
         );
     }

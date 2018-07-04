@@ -6,6 +6,10 @@
 .folder-row-container {
   position: relative;
 
+  &.folder-row-droppable-hovered {
+    background-color: rgba($peerio-teal, .38);
+  }
+
   &.share-in-progress {
     .percent-progress {
       visibility: visible;

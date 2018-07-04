@@ -158,8 +158,8 @@ class MessageInputProseMirror extends React.Component {
         ];
     }
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         currentInputInstance = this;
         if (!cachedPicker) {

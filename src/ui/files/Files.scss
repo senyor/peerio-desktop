@@ -6,57 +6,6 @@
   min-width: 0;
   background: $background-root;
 
-  .files-header-container {
-    width: 100%;
-    padding: $padding-large $padding-large 0;
-  }
-
-  .files-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 80px;
-    width: 100%;
-
-    .breadcrumb {
-      margin-left: $margin-large;
-    }
-
-    .buttons-container {
-      display: flex;
-
-      &.bulk-buttons .p-button {
-        padding: 0 $padding-small;
-        margin: 0;
-      }
-    }
-
-    button {
-      margin-left: $margin-small;
-
-      &.new-folder {
-        margin-left: auto;
-      }
-    }
-  }
-
-  .search-results-header {
-    @extend %title;
-    margin-left: $margin-xl;
-    color: $text-dark-inactive;
-  }
-
-  .search {
-    height: 48px;
-    width: 100%;
-    border-radius: 24px;
-
-    .search-icon {
-      padding-left: $padding-default;
-      margin-right: $margin-small;
-    }
-  }
-
   .file-wrapper {
     width: 100%;
     box-sizing: border-box;
@@ -127,11 +76,5 @@
     display: flex;
     flex-grow: 1;
     background-color: $file-bottom-filler;
-  }
-}
-
-.add-folder-popup {
-  .p-input input {
-    padding: 0 $padding-default;
   }
 }

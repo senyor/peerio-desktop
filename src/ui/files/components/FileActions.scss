@@ -9,3 +9,13 @@
     opacity: .5;
   }
 }
+
+.limited-actions-dialog {
+  .text {
+    color: $text-dark-secondary;
+
+    a {
+      text-decoration: none;
+    }
+  }
+}

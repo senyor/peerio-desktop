@@ -1,14 +1,15 @@
 .twofa-dialog {
-  .totp-input {
-    width: 130px;
-    padding: 2px 3px;
-    font-size: 22px;
-    font-weight: 200;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+  .body {
+    padding-bottom: 0;
+  }
 
-    &:focus {
-      outline: none;
+  .totp-input {
+    display: inline-block;
+    width: 130px;
+    margin: $margin-large 0 $margin-xxl;
+
+    input {
+      text-align: center;
     }
   }
 }

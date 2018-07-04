@@ -1,5 +1,5 @@
 const React = require('react');
-const { Checkbox, Dialog } = require('peer-ui');
+const { Checkbox, Dialog, Input } = require('peer-ui');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -16,8 +16,8 @@ class TwoFADialog extends React.Component {
     }
 
     @action.bound
-    onTOTPCodeChange(ev) {
-        this.totpCode = ev.target.value;
+    onTOTPCodeChange(value) {
+        this.totpCode = value;
     }
 
     @action.bound
@@ -98,23 +98,35 @@ class TwoFADialog extends React.Component {
                 active={!!req}
                 title={t(this.getTitle(req))}
                 actions={actions}
-                className="twofa-dialog">
-                <p>{this.getPreText(req)}</p>
-                <br />
+                className="twofa-dialog"
+                theme="small"
+                headerImage="./static/img/dialogs/2sv.svg"
+            >
+                {this.getPreText(req)
+                    ? <p>{this.getPreText(req)}</p>
+                    : null
+                }
                 <div className="text-center">
-                    <input type="text" className="totp-input" ref={this.setInputRef}
-                        value={this.totpCode} onChange={this.onTOTPCodeChange}
+                    <Input
+                        className="totp-input"
+                        ref={this.setInputRef}
+                        value={this.totpCode}
+                        onChange={this.onTOTPCodeChange}
                         onKeyDown={this.handleKeyDown}
+                        placeholder={t('title_2FAInputPlaceholder')}
+                        autoFocus
                     />
                 </div>
-                <br />
                 {req && req.type === 'login' ?
                     <Checkbox
                         checked={uiStore.prefs.last2FATrustDeviceSetting}
                         label={t('title_trustThisDevice')}
                         onChange={this.onToggleTrust}
                     /> : null}
-                <p>{this.getPostText(req)}</p>
+                {this.getPostText(req)
+                    ? <p>{this.getPostText(req)}</p>
+                    : null
+                }
             </Dialog>
         );
     }

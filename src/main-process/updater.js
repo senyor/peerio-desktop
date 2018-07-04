@@ -47,11 +47,11 @@ function start(mainWindow) {
         ipcMain.on('update-check-last-failed', async () => {
             if (!autoUpdater) return;
 
-            const failed = await autoUpdater.didLastUpdateFail();
-            if (!failed) {
+            const failedAttempts = await autoUpdater.failedInstallAttempts();
+            if (!failedAttempts) {
                 autoUpdater.cleanup(); // don't care to await it
             }
-            mainWindow.webContents.send('update-last-failed', failed);
+            mainWindow.webContents.send('update-failed-attempts', failedAttempts);
         });
 
         ipcMain.on('update-cleanup', async () => {
@@ -82,7 +82,7 @@ function start(mainWindow) {
         });
 
         if (!isDevEnv) {
-            autoUpdater.didLastUpdateFail().then(failed => {
+            autoUpdater.failedInstallAttempts().then(failed => {
                 if (!failed) {
                     setTimeout(() => autoUpdater.checkForUpdates(), 3000);
                     setInterval(() => autoUpdater.checkForUpdates(), 60 * 60 * 1000);

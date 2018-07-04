@@ -43,7 +43,7 @@
   // Note that links can't be created directly inside the message input -- we
   // only see them in the message list.
   a {
-    @extend %selectable;
+    cursor: pointer !important;
     word-break: break-word;
     color: $peerio-blue;
   }

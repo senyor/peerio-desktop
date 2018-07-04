@@ -5,8 +5,9 @@ const { observer } = require('mobx-react');
 const { observable, action, runInAction } = require('mobx');
 const css = require('classnames');
 const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T');
 const { contactStore, systemMessages, User } = require('peerio-icebear');
-const { Button, MaterialIcon, Menu, MenuItem } = require('peer-ui');
+const { Button, MaterialIcon } = require('peer-ui');
 const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { time } = require('~/helpers/formatter');
@@ -51,8 +52,8 @@ let legacyProcessMessageForDisplay;
 @observer
 class Message extends React.Component {
     @observable.shallow errorData = null;
-    @observable errorMenuVisible = false;
     @observable allowShowSendingState = false;
+    @observable resendInProgress = false;
 
     componentDidMount() {
         if (!this.props.message.sending) return;
@@ -193,6 +194,12 @@ class Message extends React.Component {
         );
     }
 
+    @action.bound handleRetry(m) {
+        this.allowShowSendingState = true;
+        this.resendInProgress = true;
+        m.send();
+    }
+
     componentDidCatch(error, info) {
         runInAction(() => { this.errorData = { error, info }; });
     }
@@ -210,7 +217,7 @@ class Message extends React.Component {
             <div className={
                 css('message-content-wrapper', {
                     'invalid-sign': invalidSign,
-                    'send-error': m.sendError,
+                    'send-error': m.sendError || this.resendInProgress,
                     light: this.props.light,
                     selected: m === uiStore.selectedMessage
                 })}>
@@ -274,34 +281,30 @@ class Message extends React.Component {
                         </div>
                         {/* m.inlineImages.map(url => (
                             <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />)) */}
-                        {m.sendError ?
-                            <Menu
-                                className="send-error-menu"
-                                customButton={
-                                    <div className="send-error-text-container">
-                                        <MaterialIcon icon="error" />
-                                        <span className="send-error-message">
-                                            {t('error_messageSendFail')}
-                                        </span>
-                                    </div>
-                                }
-                                position="top-right">
-                                <MenuItem
-                                    caption={t('button_retry')}
-                                    onClick={() => m.send()} />
-                                <MenuItem
-                                    caption={t('button_delete')}
-                                    onClick={() => this.props.chat.removeMessage(m)} />
-                            </Menu>
+                        {m.sendError || (this.allowShowSendingState && m.sending)
+                            ? <div className={css('send-error-options', { 'send-in-progress': m.sending })}>
+                                <MaterialIcon icon={m.sending ? 'cached' : 'error_outline'} />
+                                <T
+                                    k={m.sending ? 'title_sendRetry' : 'error_messageNotSent'}
+                                    className="send-error-text"
+                                />
+                                <a
+                                    onClick={m.sending ? null : () => this.handleRetry(m)}
+                                    className={css({ disabled: m.sending })}
+                                >
+                                    <T k="button_tryAgain" />
+                                </a>
+                                <a onClick={() => this.props.chat.removeMessage(m)}><T k="button_remove" /></a>
+                            </div>
                             : null
                         }
                     </div>
-                    {invalidSign ? <MaterialIcon icon="error_outline_circle" className="warning-icon" /> : null}
                     {this.renderReceipts(m)}
 
                 </div>
-                {invalidSign ?
-                    <div className="invalid-sign-warning">
+                {invalidSign
+                    ? <div className="invalid-sign-warning">
+                        <MaterialIcon icon="error_outline_circle" className="warning-icon" />
                         <div className="content">{t('error_invalidMessageSignature')}</div>
                         <Button
                             href={urls.msgSignature}
@@ -310,8 +313,6 @@ class Message extends React.Component {
                     </div>
                     : null
                 }
-
-                {this.allowShowSendingState && m.sending ? <div className="sending-overlay" /> : null}
 
                 <ContactProfile
                     ref={this.setContactProfileRef}

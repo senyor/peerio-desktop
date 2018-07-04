@@ -34,7 +34,8 @@ class SharedFolderActions extends React.Component {
                     : null
                 }
                 {this.props.onUnshare && <MenuItem caption={t('button_unshare')}
-                    icon="remove_circle_outline"
+                    className="custom-icon-hover-container"
+                    customIcon="remove-member"
                     onClick={this.props.onUnshare}
                 />}
                 {this.props.onDelete && <MenuItem caption={t('button_delete')}

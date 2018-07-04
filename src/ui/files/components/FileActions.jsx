@@ -124,9 +124,9 @@ class FileActions extends React.Component {
                                 onClick={this.props.onDelete}
                             />}
                             {/* Unshare conditions are the same as delete conditions */}
-                            {this.props.onUnshare && <MenuItem
-                                caption={t('button_unshare')}
-                                icon="remove_circle_outline"
+                            {this.props.onUnshare && <MenuItem caption={t('button_unshare')}
+                                className="custom-icon-hover-container"
+                                customIcon="remove-member"
                                 onClick={this.props.onUnshare}
                             />}
                         </React.Fragment>

@@ -212,7 +212,17 @@ class MessageInputProseMirror extends React.Component {
                         // React forbids doing this.) We could alternately use
                         // <spans> with a background-image or pseudo-element,
                         // similar to eg. Slack.
-                        this.props.onSend(mentionifiedState.doc.toJSON(), view.dom.textContent);
+
+                        // Since textContent strips <br> tags, and ProseMirror doesn't
+                        // insert line breaks after them, to extract text with proper
+                        // line breaks, we deep clone the editor's DOM node and append
+                        // '\n' after each <br>.
+                        const domClone = /** @type {Element} */ (view.dom.cloneNode(true));
+                        domClone.querySelectorAll('br').forEach(br => {
+                            br.insertAdjacentText('afterend', '\n');
+                        });
+
+                        this.props.onSend(mentionifiedState.doc.toJSON(), domClone.textContent);
                         this.clearEditor();
                     }
 

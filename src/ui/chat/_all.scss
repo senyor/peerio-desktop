@@ -104,6 +104,8 @@
 
   .message-toolbar-inner {
     @extend %flex-col;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .title {
@@ -121,10 +123,6 @@
       padding: 0;
       margin: 0;
 
-      .name-editor-inner {
-        overflow: hidden;
-      }
-
       input {
         height: 24px;
         width: 100%;
@@ -137,6 +135,12 @@
         border: 1px solid rgba($peerio-blue, .54);
         border-radius: 4px;
       }
+    }
+
+    .name-editor-inner {
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .title-content {
@@ -187,6 +191,10 @@
         padding: $padding-small;
       }
     }
+  }
+
+  .message-toolbar-inner-right {
+    min-width: 72px; // 2x icon width 36px
   }
 
   .search {

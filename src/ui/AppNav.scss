@@ -67,17 +67,26 @@
   }
 
   // Individual menu item hover/selected colours
-  .p-menu-item {
-    &:hover,
-    &.selected {
-      &.security .material-icons { color: $yellow; }
-      &.account .material-icons { color: $peerio-purple; }
-      &.about .material-icons { color: $peerio-teal; }
-      &.help .material-icons { color: $peerio-violet; }
-      &.upgrade .material-icons { color: $darkblue; }
-      &.signout .material-icons { color: $red; }
-    }
+  &.color-icons .p-menu-item,
+  .p-menu-item:hover,
+  .p-menu-item.selected {
+    &.security .material-icons { color: $yellow; }
+    &.account .material-icons { color: $peerio-purple; }
+    &.about .material-icons { color: $peerio-teal; }
+    &.help .material-icons { color: $peerio-violet; }
+    &.upgrade .material-icons { color: $darkblue; }
+    &.signout .material-icons { color: $red; }
 
+    &.profile,
+    &.preferences {
+      .p-custom-icon {
+        img.default { display: none; }
+        img.hover { display: inline-block; }
+      }
+    }
+  }
+
+  .p-menu-item {
     &.selected {
       &.profile { background-color: rgba($peerio-blue, .05); }
       &.security { background-color: rgba($yellow, .05); }

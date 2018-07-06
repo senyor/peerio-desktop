@@ -14,7 +14,7 @@ class Settings extends React.Component {
         {
             route: 'profile',
             label: t('title_settingsProfile'),
-            className: css({ 'tab-notify': !User.current.primaryAddressConfirmed })
+            className: css('profile', { 'tab-notify': !User.current.primaryAddressConfirmed })
         },
         {
             route: 'security',
@@ -59,12 +59,13 @@ class Settings extends React.Component {
             const onClickFunction = this[`to${button.route[0].toUpperCase()}${button.route.slice(1)}`] = () => {
                 routerStore.navigateTo(routerStore.ROUTES[button.route]);
             };
+            const className = button.className ? button.className : button.route;
 
             this.buttonElements.push(
                 <Button label={button.label}
                     key={button.label}
                     onClick={onClickFunction}
-                    className={button.className}
+                    className={className}
                     theme="secondary"
                 />
             );

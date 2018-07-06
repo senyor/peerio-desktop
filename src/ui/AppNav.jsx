@@ -1,5 +1,5 @@
 const React = require('react');
-const { autorunAsync, observable } = require('mobx');
+const { autorunAsync, observable, action, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Avatar, Divider, Menu, MenuHeader, MenuItem } = require('peer-ui');
 const { User, contactStore, chatStore, fileStore } = require('peerio-icebear');
@@ -88,6 +88,96 @@ class AppNav extends React.Component {
         startTaskbarOverlay();
     }
 
+    @computed get menuItems() {
+        const hideUpgrade = config.disablePayments || User.current.hasActivePlans;
+
+        const menuContent = [
+            {
+                value: 'Profile',
+                customIcon: 'public-profile',
+                caption: 'title_settingsProfile',
+                className: css(
+                    'profile',
+                    'custom-icon-hover-container',
+                    { 'avatar-notify': !User.current.primaryAddressConfirmed }
+                )
+            },
+            {
+                value: 'Security',
+                icon: 'security',
+                caption: 'title_settingsSecurity'
+            },
+            {
+                value: 'Preferences',
+                customIcon: 'preferences',
+                caption: 'title_settingsPreferences',
+                className: 'preferences custom-icon-hover-container',
+                clickFunction: 'toPrefs'
+            },
+            {
+                value: 'Account',
+                icon: 'account_circle',
+                caption: 'title_settingsAccount'
+            },
+            {
+                value: 'About',
+                icon: 'info',
+                caption: 'title_About'
+            },
+            {
+                value: 'Help',
+                icon: 'help',
+                caption: 'title_help'
+            },
+            {
+                hidden: hideUpgrade,
+                divider: true
+            },
+            {
+                hidden: hideUpgrade,
+                value: 'Upgrade',
+                icon: 'open_in_browser',
+                caption: 'button_upgrade'
+            },
+            {
+                divider: true
+            },
+            {
+                value: 'Signout',
+                icon: 'power_settings_new',
+                caption: 'button_logout',
+                clickFunction: 'signout'
+            }
+        ];
+
+        return menuContent.map((m, i) => {
+            if (m.hidden) return null;
+            if (m.divider) return <Divider key={`divider-${i}`} />; // eslint-disable-line
+
+            const value = m.value.toLowerCase();
+            const className = m.className ? m.className : value;
+            const route = m.route ? m.route : value;
+            const clickFunction = m.clickFunction ? m.clickFunction : `to${m.value}`;
+
+            return (
+                <MenuItem
+                    key={value}
+                    value={value}
+                    caption={t(m.caption)}
+                    className={className}
+                    icon={m.icon}
+                    customIcon={m.customIcon}
+                    selected={routerStore.currentRoute === routerStore.ROUTES[route]}
+                    onClick={this[clickFunction]}
+                />
+            );
+        });
+    }
+
+    @observable colorIcons = true;
+    @action.bound handleMouseEnter() { this.colorIcons = false; }
+    @action.bound handleMouseLeave() { this.colorIcons = true; }
+
     _doSignout = async (untrust) => {
         await autologin.disable();
         await User.current.signout(untrust);
@@ -118,7 +208,8 @@ class AppNav extends React.Component {
                     <Menu
                         customButton={<Avatar contact={contact} size="medium" />}
                         position="top-left"
-                        theme="wide app-nav-menu"
+                        theme="wide"
+                        innerClassName={css('app-nav-menu', { 'color-icons': this.colorIcons })}
                     >
                         <MenuHeader
                             leftContent={<Avatar contact={contact} size="medium" onClick={this.toProfile} />}
@@ -126,80 +217,9 @@ class AppNav extends React.Component {
                             legend={contact.username}
                         />
                         <Divider />
-                        <MenuItem
-                            value="profile"
-                            customIcon="public-profile"
-                            caption={t('title_settingsProfile')}
-                            onClick={this.toProfile}
-                            className={css(
-                                'profile',
-                                'custom-icon-hover-container',
-                                { 'avatar-notify': !primaryAddressConfirmed }
-                            )}
-                            selected={currentRoute === ROUTES.profile}
-                        />
-                        <MenuItem
-                            className="security"
-                            value="security"
-                            icon="security"
-                            caption={t('title_settingsSecurity')}
-                            onClick={this.toSecurity}
-                            selected={currentRoute === ROUTES.security}
-                        />
-                        <MenuItem
-                            className="preferences custom-icon-hover-container"
-                            value="preferences"
-                            customIcon="preferences"
-                            caption={t('title_settingsPreferences')}
-                            onClick={this.toPrefs}
-                            selected={currentRoute === ROUTES.prefs}
-                        />
-                        <MenuItem
-                            className="account"
-                            value="account"
-                            icon="account_circle"
-                            caption={t('title_settingsAccount')}
-                            onClick={this.toAccount}
-                            selected={currentRoute === ROUTES.account}
-                        />
-                        <MenuItem
-                            className="about"
-                            value="about"
-                            icon="info"
-                            caption={t('title_About')}
-                            onClick={this.toAbout}
-                            selected={currentRoute === ROUTES.about}
-                        />
-                        <MenuItem
-                            className="help"
-                            value="help"
-                            icon="help"
-                            caption={t('title_help')}
-                            onClick={this.toHelp}
-                            selected={currentRoute === ROUTES.help}
-                        />
-                        {config.disablePayments || User.current.hasActivePlans
-                            ? null
-                            : <Divider key="appnav-nested-divider" />
-                        }
-                        {config.disablePayments || User.current.hasActivePlans
-                            ? null
-                            : <MenuItem key="appnav-nested-menuitem"
-                                className="upgrade"
-                                value="upgrade"
-                                icon="open_in_browser"
-                                caption={t('button_upgrade')}
-                                onClick={this.toUpgrade}
-                            />
-                        }
-                        <Divider />
-                        <MenuItem
-                            className="signout"
-                            value="signout"
-                            icon="power_settings_new"
-                            caption={t('button_logout')}
-                            onClick={this.signout}
-                        />
+                        <div onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+                            {this.menuItems}
+                        </div>
                     </Menu>
                 </div>
                 <div className="app-menu">

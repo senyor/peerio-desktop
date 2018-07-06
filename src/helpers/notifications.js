@@ -206,16 +206,18 @@ class InviteAcceptedNotification {
     }
 
     showDesktopNotification() {
-        const { username } = this.contact;
-        if (!username) return;
-        const contact = contactStore.getContact(username);
+        if (!appState.isFocused) {
+            const { username } = this.contact;
+            if (!username) return;
+            const contact = contactStore.getContact(username);
 
-        this.postDesktopNotification(
-            t('notification_inviteAcceptedTitle'),
-            t('notification_inviteAcceptedBody', {
-                firstName: contact.firstName || '', username
-            })
-        );
+            this.postDesktopNotification(
+                t('notification_inviteAcceptedTitle'),
+                t('notification_inviteAcceptedBody', {
+                    firstName: contact.firstName || '', username
+                })
+            );
+        }
     }
 
     playSound() {

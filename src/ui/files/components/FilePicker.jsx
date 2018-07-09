@@ -113,11 +113,12 @@ class FilePicker extends React.Component {
             const f = data[i];
             if (f.isLegacy && this.props.hideLegacy) continue;
 
+            // TODO: re-enable checkbox when folder sharing is allowed
             items.push(f.isFolder ?
                 <FolderLine
                     key={f.id}
                     folder={f}
-                    checkbox
+                    checkbox={false}
                     disabledCheckbox={(!f.isShared && f.root.isShared) || !canShareFolder}
                 /> :
                 <FileLine

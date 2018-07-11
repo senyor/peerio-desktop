@@ -15,6 +15,7 @@ const FolderActions = require('./FolderActions');
         folder: any,
         onFolderClick: (folder: any) => void,
         noActions?: boolean
+        noSelectionCounter?: boolean
     }, {}>}
  */
 @observer
@@ -148,7 +149,7 @@ class Breadcrumb extends React.Component {
 
         return (
             <div className="breadcrumb-container">
-                {selectedCount > 0
+                {selectedCount > 0 && !this.props.noSelectionCounter
                     ? <div className="breadcrumb">
                         <Crumb
                             folder={fileStore.folderStore.root}

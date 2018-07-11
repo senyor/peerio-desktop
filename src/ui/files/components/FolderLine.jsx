@@ -141,7 +141,6 @@ class FolderLine extends React.Component {
                             <FolderActions
                                 folder={folder}
                                 deleteDisabled={shareInProgress}
-                                disabled={folder.selected}
                                 onMenuClick={this.onMenuClick}
                                 onMenuHide={this.onMenuHide}
                             />

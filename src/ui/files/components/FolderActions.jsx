@@ -9,7 +9,7 @@ const AddOrRenameDialog = require('./AddOrRenameDialog');
 const MoveFileDialog = require('./MoveFileDialog');
 const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
 
-const { volumeStore } = require('peerio-icebear');
+const { volumeStore, fileStore } = require('peerio-icebear');
 
 const {
     deleteFileOrFolder,
@@ -46,6 +46,9 @@ class FolderActions extends React.Component {
     }
 
     shareFolder = async () => {
+        fileStore.clearSelection();
+        this.props.folder.selected = true;
+
         const f = this.props.folder;
 
         const contacts = await this.shareWithMultipleDialogRef.current.show(
@@ -58,10 +61,14 @@ class FolderActions extends React.Component {
     }
 
     renameFolder = () => {
+        fileStore.clearSelection();
+        this.props.folder.selected = true;
         this.renameFolderDialogRef.current.show(this.props.folder);
     }
 
     moveFolder = () => {
+        fileStore.clearSelection();
+        this.props.folder.selected = true;
         this.moveFileDialogRef.current.show(this.props.folder.parent, this.props.folder);
     }
 

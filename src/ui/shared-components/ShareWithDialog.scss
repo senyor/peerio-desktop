@@ -81,6 +81,12 @@ $list-header-height: 48px;
     }
   }
 
+  .list-contacts {
+    .selected .left .material-icons {
+      color: $peerio-blue;
+    }
+  }
+
   .receipt-wrapper {
     @extend %flex-row;
     align-items: center;

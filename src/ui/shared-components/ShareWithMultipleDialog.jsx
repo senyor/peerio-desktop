@@ -3,7 +3,8 @@ const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { contactStore, User } = require('peerio-icebear');
-const { Avatar, Checkbox, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('peer-ui');
+const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('peer-ui');
+const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { getContactByEvent } = require('~/helpers/icebear-dom');
@@ -84,10 +85,12 @@ class ShareWithMultipleDialog extends React.Component {
     }
 
     renderContact = (c) => {
+        const selected = this.selectedUsers.has(c.username);
         return (
             <div data-username={c.username} key={c.username}>
                 <ListItem
-                    leftIcon={<Checkbox checked={this.selectedUsers.has(c.username)} />}
+                    className={css({ selected })}
+                    leftIcon={selected ? 'check_box' : 'check_box_outline_blank'}
                     leftContent={<Avatar key="a" contact={c} size="small" />}
                     onClick={this.onContactClick}>
                     <span className="full-name">{c.fullName}</span>
@@ -184,7 +187,7 @@ class ShareWithMultipleDialog extends React.Component {
                                     <T k="title_contacts" />
                                     &nbsp;({this.contacts.length})
                                 </div>
-                                <List className="list-chats list-dms" clickable>
+                                <List className="list-chats list-contacts" clickable>
                                     {this.contacts.map(this.renderContact)}
                                 </List>
                             </div>

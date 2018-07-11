@@ -58,14 +58,20 @@ class FileActions extends React.Component {
     }
 
     moveFile = () => {
+        fileStore.clearSelection();
+        this.props.file.selected = true;
+
         const folder = this.props.file.folder || fileStore.folderStore.root;
         this.moveFileDialogRef.current.show(folder, this.props.file);
     }
 
     shareFile = async () => {
-        const contacts = await this.shareWithMultipleDialogRef.current.show(null, 'sharefiles');
+        fileStore.clearSelection();
+        this.props.file.selected = true;
 
+        const contacts = await this.shareWithMultipleDialogRef.current.show(null, 'sharefiles');
         if (!contacts || !contacts.length) return;
+
         contacts.forEach(c => chatStore.startChatAndShareFiles([c], this.props.file));
     }
 

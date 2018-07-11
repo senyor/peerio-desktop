@@ -189,6 +189,7 @@ class MoveFileDialog extends React.Component {
                         folder={this.currentFolder}
                         onFolderClick={this.setCurrentFolder}
                         noActions
+                        noSelectionCounter
                     />
                     <div className="move-folders-container">
                         {this.visibleFolders}

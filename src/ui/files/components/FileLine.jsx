@@ -166,7 +166,6 @@ class FileLine extends React.Component {
                                 onMenuClick={this.onMenuClick}
                                 onMenuHide={this.onMenuHide}
                                 onDelete={this.deleteFile}
-                                disabled={file.selected}
                             />
                         </div>
                     }

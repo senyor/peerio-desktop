@@ -11,6 +11,9 @@ const {
 
 
 /**
+ * Remember that these are just for play until we introduce real types -- any
+ * non-primitive will satisfy these.
+ *
  * @typedef {{
       isFolder: true
       [prop: string]: any

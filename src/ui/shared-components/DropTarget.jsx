@@ -47,6 +47,8 @@ class DropTarget extends React.Component {
     }
 
     render() {
+        if (routerStore.currentRoute === routerStore.ROUTES.files) return null;
+
         if (this.dialogActive) {
             return (
                 <UploadDialog

@@ -1,3 +1,4 @@
+// @ts-check
 const React = require('react');
 const { action } = require('mobx');
 const { observer } = require('mobx-react');
@@ -11,6 +12,13 @@ const { t } = require('peerio-translator');
 const { Button, MaterialIcon } = require('peer-ui');
 const SharedFolderActions = require('./SharedFolderActions');
 
+
+/**
+ * @augments {React.Component<{
+        folderId: string
+        sharedByMe: boolean
+    }, {}>}
+ */
 @observer
 class InlineSharedFolder extends React.Component {
     get volume() {

@@ -1,7 +1,11 @@
 const React = require('react');
+const { DragDropContext } = require('react-dnd');
+const HTML5Backend = require('react-dnd-html5-backend').default;
+
 const isDevEnv = require('~/helpers/is-dev-env');
 const { Button, ProgressBar } = require('peer-ui');
 const DropTarget = require('./shared-components/DropTarget');
+const DragPreviewLayer = require('~/ui/files/components/DragPreviewLayer');
 const { ipcRenderer } = require('electron');
 const { socket, clientApp, warnings, chatStore } = require('peerio-icebear');
 const { computed, reaction, observable, when } = require('mobx');
@@ -17,6 +21,7 @@ const appState = require('~/stores/app-state');
 const appControl = require('~/helpers/app-control');
 const routerStore = require('~/stores/router-store');
 
+@DragDropContext(HTML5Backend)
 @observer
 class Root extends React.Component {
     /*
@@ -103,6 +108,7 @@ class Root extends React.Component {
                 <UpdateFailedDialog />
                 <ReadyToInstallUpdateDialog />
                 <InstallingUpdateDialog />
+                <DragPreviewLayer />
                 <DropTarget />
             </div>
         );

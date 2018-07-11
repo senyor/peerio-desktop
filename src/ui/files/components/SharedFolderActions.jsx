@@ -1,9 +1,29 @@
+// @ts-check
 const React = require('react');
 const { observer } = require('mobx-react');
 const { Menu, MenuItem, Divider } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { getDataProps } = require('~/helpers/dom');
 
+/**
+ * @augments {React.Component<{
+        /// is the entire action menu disabled?
+        disabled?: boolean
+
+        position?: "top-left" | "top-right" | "bottom-left" | "bottom-right"
+
+        onClick?: () => void
+
+        onShare?: () => any
+        shareDisabled?: boolean
+
+        onDownload?: () => any
+        downloadDisabled?: boolean
+
+        onDelete?: () => any
+        onUnshare?: () => any
+    }, {}>}
+ */
 @observer
 class SharedFolderActions extends React.Component {
     render() {

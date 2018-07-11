@@ -3,6 +3,7 @@ const React = require('react');
 const css = require('classnames');
 const { observer } = require('mobx-react');
 const { observable, action, computed, reaction } = require('mobx');
+const { DropTarget } = require('react-dnd');
 const _ = require('lodash');
 
 const { Button, Checkbox, ProgressBar } = require('peer-ui');
@@ -12,20 +13,44 @@ const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const ConfirmFolderDeleteDialog = require('~/ui/shared-components/ConfirmFolderDeleteDialog');
 
-const FileLine = require('./components/FileLine');
-const FolderLine = require('./components/FolderLine');
+const DraggableLine = require('./components/DraggableLine');
 const ZeroScreen = require('./components/ZeroScreen');
 const FilesHeader = require('./components/FilesHeader');
+const ShareConfirmDialog = require('./components/ShareConfirmDialog');
+
+const DragDropTypes = require('./helpers/dragDropTypes');
+const { uploadDroppedFiles } = require('./helpers/dragDropHelpers');
 
 const { selectDownloadFolder, pickSavePath } = require('~/helpers/file');
 const { handleUpload } = require('./helpers/sharedFileAndFolderActions');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
+/**
+ * @augments {React.Component<{
+        connectDropTarget?: (el: JSX.Element) => JSX.Element,
+        isBeingDraggedOver?: boolean
+    }, {}>}
+ */
+@DropTarget(
+    [DragDropTypes.NATIVEFILE],
+    {
+        drop(props, monitor) {
+            if (monitor.didDrop()) return; // drop was already handled by eg. a droppable folder line
+            uploadDroppedFiles(monitor.getItem().files, fileStore.folderStore.currentFolder);
+        }
+    },
+    (connect, monitor) => ({
+        connectDropTarget: connect.dropTarget(),
+        isBeingDraggedOver: monitor.isOver({ shallow: true })
+    })
+)
 @observer
 class Files extends React.Component {
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
+
+    shareConfirmDialogRef = React.createRef();
 
     componentWillMount() {
         clientApp.isInFilesView = true;
@@ -88,29 +113,20 @@ class Files extends React.Component {
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             if (f.isFolder && currentFolder.isRoot && !currentFolder.isShared && f.convertingToVolume) continue;
-
-            renderedItems.push(f.isFolder
-                ? <FolderLine
-                    key={f.id}
-                    folder={f}
-                    folderActions
-                    folderDetails
-                    checkbox={!f.isShared}
-                />
-                : <FileLine
-                    key={f.id}
-                    file={f}
-                    fileActions
-                    fileDetails
-                    checkbox
-                />
-            );
+            renderedItems.push(<DraggableLine fileOrFolder={f} key={f.id} confirmShare={this.confirmShare} />);
         }
         return renderedItems;
     }
 
     @computed get allAreSelected() {
         return this.items.length && !this.items.some(i => !i.selected && !i.isShared);
+    }
+
+    /**
+     * @type {() => Promise<boolean>}
+     */
+    confirmShare = () => {
+        return this.shareConfirmDialogRef.current.check();
     }
 
     checkScrollPosition = () => {
@@ -175,6 +191,8 @@ class Files extends React.Component {
         const currentFolder = fileStore.folderStore.currentFolder;
         const selectedCount = fileStore.selectedFilesOrFolders.length;
 
+        const { connectDropTarget, isBeingDraggedOver } = this.props;
+
         this.enqueueCheck();
         return (
             <div className="files">
@@ -230,15 +248,20 @@ class Files extends React.Component {
                                 <ProgressBar value={currentFolder.progress} max={currentFolder.progressMax} />
                             </div>
                         }
-                        <div className={css(
-                            'file-table-body',
-                            { 'hide-checkboxes': selectedCount === 0 }
-                        )}>
-                            {this.renderedItems}
-                        </div>
-                        <div className="file-bottom-filler" />
+                        {connectDropTarget(
+                            <div className={css('drop-zone', { 'drop-zone-droppable-hovered': isBeingDraggedOver })}>
+                                <div className={css(
+                                    'file-table-body',
+                                    { 'hide-checkboxes': selectedCount === 0 }
+                                )}>
+                                    {this.renderedItems}
+                                </div>
+                                <div className="file-bottom-filler" />
+                            </div>
+                        )}
                     </div>
                 </div>
+                <ShareConfirmDialog ref={this.shareConfirmDialogRef} />
                 <ConfirmFolderDeleteDialog ref={this.refConfirmFolderDeleteDialog} />
             </div>
         );

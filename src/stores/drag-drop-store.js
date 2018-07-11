@@ -1,5 +1,6 @@
-const { observable, action } = require('mobx');
+const { observable, action, autorun } = require('mobx');
 const { User } = require('peerio-icebear');
+const routerStore = require('~/stores/router-store');
 const { getFileTree, getFileList } = require('~/helpers/file');
 const _ = require('lodash');
 
@@ -102,9 +103,23 @@ class DragDropStore {
 }
 
 const store = new DragDropStore();
-window.addEventListener('drop', store._onDrop, false);
-window.addEventListener('dragenter', store._onEnter, false);
-window.addEventListener('dragleave', store._onLeave, false);
-window.addEventListener('dragover', store._onOver, false);
+
+// HACK: since this class interacts with the dom, it should really be in a
+// component (probably DropTarget since it's the only component that currently
+// uses it) and hook into its lifecycle events. instead, we've gotta pull in the
+// router and examine the current route to decide if we should be enabled...
+autorun(() => {
+    if (routerStore.currentRoute === routerStore.ROUTES.files) {
+        window.removeEventListener('drop', store._onDrop, false);
+        window.removeEventListener('dragenter', store._onEnter, false);
+        window.removeEventListener('dragleave', store._onLeave, false);
+        window.removeEventListener('dragover', store._onOver, false);
+    } else {
+        window.addEventListener('drop', store._onDrop, false);
+        window.addEventListener('dragenter', store._onEnter, false);
+        window.addEventListener('dragleave', store._onLeave, false);
+        window.addEventListener('dragover', store._onOver, false);
+    }
+});
 
 module.exports = store;

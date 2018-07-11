@@ -77,4 +77,17 @@
     flex-grow: 1;
     background-color: $file-bottom-filler;
   }
+
+  .drop-zone {
+    // duplicating flex styles of parent; needs update if the parent is updated!
+    // maybe just use `display: contents;` if it's shipped by the time this
+    // needs updating.
+    @extend %flex-col;
+    @extend %flex-grow-1;
+    @extend %flex-shrink-0;
+  }
+
+  .drop-zone-droppable-hovered {
+    background-color: rgba($peerio-teal, .38);
+  }
 }

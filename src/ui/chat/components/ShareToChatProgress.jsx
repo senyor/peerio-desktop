@@ -10,12 +10,12 @@ const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 
 @observer
 class ShareToChatProgress extends React.Component {
-    cancel = () => {
-        // TODO: mocks show ability to cancel folder share-in-progress as well
+    // TODO: handle folder share cancel once available
+    handleCancel(item) {
         if (confirm(t('title_confirmCancelUpload'))) {
-            this.props.queue[0].cancelUpload();
+            item.cancelUpload();
         }
-    };
+    }
 
     render() {
         const uploads = this.props.uploadQueue || [];
@@ -24,6 +24,7 @@ class ShareToChatProgress extends React.Component {
         const item = uploads[0] || folders[0];
         const queued = uploads.length + folders.length - 1;
         const { progress, progressMax, progressPercentage } = item;
+        const uploadProgressPercentage = progress ? Math.floor(progress / progressMax * 100) : 0;
         const fileType = fileHelpers.getFileIconType(fileHelpers.getFileExtension(item.name));
 
         return (
@@ -53,15 +54,18 @@ class ShareToChatProgress extends React.Component {
                                 ? `${progressPercentage}%`
                                 : queued
                                     ? null
-                                    : progress ? `${Math.floor(progress / progressMax * 100)}%` : '0%'
-                                // TODO: for some reason it's possible for progress > progressMax ??
+                                    : `${uploadProgressPercentage}%`
                             }
                         </span>
 
                         {item.isFolder
                             ? null // TODO: mocks show ability to cancel folder share-in-progress as well
                             : !progress || progress < progressMax
-                                ? <Button icon="cancel" onClick={this.cancel} className="right-icon" />
+                                ? <Button
+                                    icon="cancel"
+                                    onClick={() => this.handleCancel(item)}
+                                    className="right-icon"
+                                />
                                 : null
                         }
 

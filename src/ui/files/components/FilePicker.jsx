@@ -2,25 +2,28 @@
 const React = require('react');
 const { fileStore, chatStore } = require('peerio-icebear');
 const { observer } = require('mobx-react');
-const { observable, computed, action } = require('mobx');
+const { observable, computed } = require('mobx');
 const { Dialog, ProgressBar } = require('peer-ui');
 const FileLine = require('./FileLine');
 const FolderLine = require('./FolderLine');
 const Search = require('~/ui/shared-components/Search');
 const Breadcrumb = require('./Breadcrumb');
 const { t } = require('peerio-translator');
-const { getFolderByEvent, getFileByEvent } = require('~/helpers/icebear-dom');
+const { setCurrentFolder } = require('../helpers/sharedFileAndFolderActions');
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
 @observer
 class FilePicker extends React.Component {
-    @observable currentFolder = fileStore.folderStore.root;
-
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
 
+    componentWillMount() {
+        fileStore.folderStore.currentFolder = fileStore.folderStore.root;
+    }
+
     componentWillUnmount() {
+        fileStore.folderStore.currentFolder = fileStore.folderStore.root;
         fileStore.searchQuery = '';
     }
 
@@ -75,8 +78,8 @@ class FilePicker extends React.Component {
         return (
             <Breadcrumb
                 noActions
-                folder={this.currentFolder}
-                onFolderClick={this.changeFolder}
+                folder={fileStore.folderStore.currentFolder}
+                onFolderClick={setCurrentFolder}
             />
         );
     }
@@ -92,7 +95,7 @@ class FilePicker extends React.Component {
     @computed get items() {
         return fileStore.searchQuery
             ? fileStore.filesAndFoldersSearchResult
-            : this.currentFolder.filesAndFoldersDefaultSorting;
+            : fileStore.folderStore.currentFolder.filesAndFoldersDefaultSorting;
     }
 
     render() {
@@ -156,22 +159,6 @@ class FilePicker extends React.Component {
                 <ProgressBar type="linear" mode="indeterminate" />
             </div>
         );
-    }
-
-    @action.bound changeFolder(ev) {
-        const folder = getFolderByEvent(ev);
-        this.currentFolder = folder;
-        fileStore.searchQuery = '';
-    }
-
-    @action.bound toggleSelectFolder(ev) {
-        const folder = getFolderByEvent(ev);
-        folder.selected = !folder.selected;
-    }
-
-    @action.bound toggleSelect(ev) {
-        const file = getFileByEvent(ev);
-        file.selected = !file.selected;
     }
 }
 

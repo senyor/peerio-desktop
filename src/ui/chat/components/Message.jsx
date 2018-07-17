@@ -283,7 +283,7 @@ class Message extends React.Component {
                             <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />)) */}
                         {m.sendError || (this.allowShowSendingState && m.sending)
                             ? <div className={css('send-error-options', { 'send-in-progress': m.sending })}>
-                                <MaterialIcon icon={m.sending ? 'cached' : 'error_outline'} />
+                                <MaterialIcon icon={m.sending ? 'autorenew' : 'error_outline'} />
                                 <T
                                     k={m.sending ? 'title_sendRetry' : 'error_messageNotSent'}
                                     className="send-error-text"

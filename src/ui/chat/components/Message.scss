@@ -136,9 +136,13 @@
   .send-error-options {
     display: flex;
     align-items: center;
-    margin: 0 $margin-default;
+    margin: $margin-tiny $margin-default;
     font-size: 12px;
     color: $text-dark-hint;
+
+    .material-icons {
+      color: $color-error;
+    }
 
     .p-button {
       width: 24px;
@@ -176,7 +180,7 @@
 
       @keyframes spin {
         from { transform: rotate(0deg); }
-        to { transform: rotate(-360deg); }
+        to { transform: rotate(360deg); }
       }
     }
   }

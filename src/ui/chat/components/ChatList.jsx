@@ -228,22 +228,14 @@ class ChatList extends React.Component {
     }
 
     // Scroll-to-position when clicking "unread messages" notification
-    @observable goToUnread;
-    @action.bound onClickUnreadNotify() {
-        if (this.prevUnread) {
-            this.goToUnread = this.prevUnread;
-            window.requestAnimationFrame(this.smoothScrollUp);
-        } else {
-            this.goToUnread = this.nextUnread;
-            window.requestAnimationFrame(this.smoothScrollDown);
-        }
-    }
+    @action.bound clickUnreadsAbove() { window.requestAnimationFrame(this.smoothScrollUp); }
+    @action.bound clickUnreadsBelow() { window.requestAnimationFrame(this.smoothScrollDown); }
 
     smoothScrollUp = () => {
         const el = this.scrollContainerRef;
         if (!el) return;
 
-        const goal = this.goToUnread;
+        const goal = this.prevUnread;
         if (el.scrollTop <= goal || el.scrollTop === 0) {
             return;
         }
@@ -256,7 +248,7 @@ class ChatList extends React.Component {
         const el = this.scrollContainerRef;
         if (!el) return;
 
-        const goal = this.goToUnread;
+        const goal = this.nextUnread;
         if (el.scrollTop >= goal || el.scrollTop + el.clientHeight >= this.containerTotalHeight) {
             return;
         }
@@ -352,20 +344,18 @@ class ChatList extends React.Component {
                             </List>
 
                             <Button
-                                className={css(
-                                    'unread-notification',
-                                    {
-                                        banish: !this.prevUnread && !this.nextUnread,
-                                        top: !!this.prevUnread
-                                    }
-                                )}
-                                onClick={this.onClickUnreadNotify}
+                                className={css('unread-notification top', { banish: !this.prevUnread })}
+                                onClick={this.clickUnreadsAbove}
                             >
                                 <span className="text">Unread messages</span>
-                                <MaterialIcon icon={this.prevUnread
-                                    ? 'keyboard_arrow_up'
-                                    : 'keyboard_arrow_down'
-                                } />
+                                <MaterialIcon icon="keyboard_arrow_up" />
+                            </Button>
+                            <Button
+                                className={css('unread-notification bottom', { banish: !this.nextUnread })}
+                                onClick={this.clickUnreadsBelow}
+                            >
+                                <span className="text">Unread messages</span>
+                                <MaterialIcon icon="keyboard_arrow_down" />
                             </Button>
                         </div>
                 }

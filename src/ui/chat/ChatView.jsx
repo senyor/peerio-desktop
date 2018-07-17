@@ -1,3 +1,4 @@
+// @ts-check
 const React = require('react');
 const { action, computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
@@ -149,7 +150,6 @@ class ChatView extends React.Component {
 
     postJitsiLink = () => {
         const jitsiLink = chatStore.generateJitsiUrl();
-        this.selfNewMessageCounter++;
         chatStore.activeChat && chatStore.activeChat.createVideoCall(jitsiLink);
 
         this.toggleJitsiDialog();

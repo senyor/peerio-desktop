@@ -35,6 +35,8 @@ const chatKeys = {
             return true;
         }
     ),
+    // keybindings are referenced in the FormattingButton component, so if
+    // they're being changed here make sure they're reflected there as well!
     'Mod-b': toggleMark(chatSchema.marks.strong),
     'Mod-i': toggleMark(chatSchema.marks.em),
     'Mod-5': toggleMark(chatSchema.marks.strike),

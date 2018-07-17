@@ -102,6 +102,9 @@ function insertEmoji(emoji, state, dispatch) {
 /**
  * @augments {React.Component<{
         placeholder : string
+        /// FIXME/TS: should be Plugin[], but buggy ts-in-js
+        /// support for the 100th time is getting confused about namespaces
+        extraPlugins: any[]
         onSend : (richText : Object, legacyText : string) => void
     }, {}>}
  */
@@ -142,7 +145,7 @@ class MessageInputProseMirror extends React.Component {
     getEmptyState() {
         return EditorState.create({
             doc: emptyState,
-            plugins: this.getConfiguredPlugins({ placeholderText: this.props.placeholder })
+            plugins: this.getConfiguredPlugins()
         });
     }
 
@@ -151,9 +154,10 @@ class MessageInputProseMirror extends React.Component {
      * which can be reconfigured or aren't necessarily known while the
      * constructor is running.
      */
-    getConfiguredPlugins(/** @type {{ placeholderText : string }} */{ placeholderText }) {
+    getConfiguredPlugins() {
         return [
-            placeholder(placeholderText, emptyState),
+            placeholder(this.props.placeholder, emptyState),
+            ...this.props.extraPlugins,
             ...this.basePlugins
         ];
     }
@@ -251,12 +255,13 @@ class MessageInputProseMirror extends React.Component {
         this.emojiSuggestions.cleanup();
     }
 
-    componentWillReceiveProps(newProps) {
-        if (this.props.placeholder !== newProps.placeholder) {
+    componentDidUpdate(prevProps) {
+        if (
+            (this.props.placeholder !== prevProps.placeholder) ||
+            (this.props.extraPlugins !== prevProps.extraPlugins)
+        ) {
             this.editorView.updateState(this.editorView.state.reconfigure({
-                plugins: this.getConfiguredPlugins({
-                    placeholderText: newProps.placeholder
-                })
+                plugins: this.getConfiguredPlugins()
             }));
         }
     }

@@ -8,7 +8,7 @@ const { Checkbox, CustomIcon, MaterialIcon, ProgressBar } = require('peer-ui');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
-const { User, contactStore } = require('peerio-icebear');
+const { User, contactStore, fileStore } = require('peerio-icebear');
 const { setCurrentFolder } = require('../helpers/sharedFileAndFolderActions');
 
 // TESTING
@@ -58,6 +58,11 @@ class FolderLine extends React.Component {
     @action.bound
     toggleSelected() {
         this.props.folder.selected = !this.props.folder.selected;
+    }
+
+    onActionInProgress = () => {
+        fileStore.clearSelection();
+        this.toggleSelected();
     }
 
     @observable clickedContact;
@@ -143,6 +148,7 @@ class FolderLine extends React.Component {
                                 deleteDisabled={shareInProgress}
                                 onMenuClick={this.onMenuClick}
                                 onMenuHide={this.onMenuHide}
+                                onActionInProgress={this.onActionInProgress}
                             />
                         </div>
                     }

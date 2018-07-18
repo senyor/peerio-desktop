@@ -3,7 +3,7 @@ const React = require('react');
 const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
 
-const { contactStore, User } = require('peerio-icebear');
+const { contactStore, fileStore, User } = require('peerio-icebear');
 const { downloadFile } = require('~/helpers/file');
 const moment = require('moment');
 const css = require('classnames');
@@ -37,6 +37,17 @@ class FileLine extends React.Component {
     @observable hovered;
     @action.bound onMenuClick() { this.hovered = true; }
     @action.bound onMenuHide() { this.hovered = false; }
+
+    // When dialog is opened by FileActions menu, clear the selection and select only this file
+    onActionInProgress = () => {
+        fileStore.clearSelection();
+        this.toggleSelected();
+    }
+
+    // Most actions will clear file selection on their own, but this will handle actions that don't.
+    onActionComplete() {
+        fileStore.clearSelection();
+    }
 
     cancelUploadOrDownload = () => {
         this.props.file.cancelUpload();
@@ -165,6 +176,8 @@ class FileLine extends React.Component {
                                 file={file}
                                 onMenuClick={this.onMenuClick}
                                 onMenuHide={this.onMenuHide}
+                                onActionInProgress={this.onActionInProgress}
+                                onActionComplete={this.onActionComplete}
                                 onDelete={this.deleteFile}
                             />
                         </div>

@@ -38,6 +38,12 @@ const {
         /// not implemented
         onRename?: () => any
 
+        /// Currently used when Move or Share dialog has been opened, to affect selection state in parent FileLine
+        onActionInProgress?: () => void
+
+        /// Currently used when Share dialog has been closed, to clear selection state in parent FileLine.
+        /// Not used on other actions because the actions themselves clear selection state at SDK level.
+        onActionComplete?: () => void
     }, {}>}
  */
 @observer
@@ -58,21 +64,18 @@ class FileActions extends React.Component {
     }
 
     moveFile = () => {
-        fileStore.clearSelection();
-        this.props.file.selected = true;
-
+        if (this.props.onActionInProgress) this.props.onActionInProgress();
         const folder = this.props.file.folder || fileStore.folderStore.root;
         this.moveFileDialogRef.current.show(folder, this.props.file);
     }
 
     shareFile = async () => {
-        fileStore.clearSelection();
-        this.props.file.selected = true;
-
+        if (this.props.onActionInProgress) this.props.onActionInProgress();
         const contacts = await this.shareWithMultipleDialogRef.current.show(null, 'sharefiles');
         if (!contacts || !contacts.length) return;
 
         contacts.forEach(c => chatStore.startChatAndShareFiles([c], this.props.file));
+        if (this.props.onActionComplete) this.props.onActionComplete();
     }
 
     render() {

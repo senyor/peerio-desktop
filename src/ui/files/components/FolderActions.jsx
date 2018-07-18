@@ -9,7 +9,7 @@ const AddOrRenameDialog = require('./AddOrRenameDialog');
 const MoveFileDialog = require('./MoveFileDialog');
 const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
 
-const { volumeStore, fileStore } = require('peerio-icebear');
+const { volumeStore } = require('peerio-icebear');
 
 const {
     deleteFileOrFolder,
@@ -22,6 +22,8 @@ const {
         folder: any,
         onMenuClick?: () => void
         onMenuHide?: () => void
+        /// Currently used when Move/Share/Rename dialog has been opened, to affect selection state in parent FileLine
+        onActionInProgress?: () => void
         position?: "top-left" | "top-right" | "bottom-left" | "bottom-right"
         /// Is the entire action menu disabled?
         disabled?: boolean,
@@ -46,9 +48,7 @@ class FolderActions extends React.Component {
     }
 
     shareFolder = async () => {
-        fileStore.clearSelection();
-        this.props.folder.selected = true;
-
+        if (this.props.onActionInProgress) this.props.onActionInProgress();
         const f = this.props.folder;
 
         const contacts = await this.shareWithMultipleDialogRef.current.show(
@@ -61,14 +61,12 @@ class FolderActions extends React.Component {
     }
 
     renameFolder = () => {
-        fileStore.clearSelection();
-        this.props.folder.selected = true;
+        if (this.props.onActionInProgress) this.props.onActionInProgress();
         this.renameFolderDialogRef.current.show(this.props.folder);
     }
 
     moveFolder = () => {
-        fileStore.clearSelection();
-        this.props.folder.selected = true;
+        if (this.props.onActionInProgress) this.props.onActionInProgress();
         this.moveFileDialogRef.current.show(this.props.folder.parent, this.props.folder);
     }
 

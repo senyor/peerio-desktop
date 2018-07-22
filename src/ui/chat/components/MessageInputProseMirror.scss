@@ -1,8 +1,23 @@
-.message-editor-container-prosemirror {
-  position: relative;
+.message-editor-container-anotherwrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
   height: 100%;
   width: 100%;
-  padding: $padding-small 0;
+}
+
+.message-editor-container-prosemirror {
+  // flex to align the lone inner content div to bottom
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  position: relative;
+
+  max-height: 112px;
+  min-height: 40px; // 64px - 24px for formatting toolbar below
+  padding: $padding-small 0 0; // normally $padding-small on top and bottom, omitted when formatting toolbar is present
   margin: 0 0 0 18px;
   box-sizing: border-box;
   font-family: inherit;

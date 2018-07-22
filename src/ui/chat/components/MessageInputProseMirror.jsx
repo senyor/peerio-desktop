@@ -33,7 +33,7 @@ const {
 } = require('prosemirror-state');
 const { keymap } = require('prosemirror-keymap');
 
-const { chatSchema, isWhitespaceOnly, emptyState } = require('~/helpers/chat/prosemirror/chat-schema');
+const { chatSchema, isWhitespaceOnly, emptyDoc } = require('~/helpers/chat/prosemirror/chat-schema');
 const { chatPlugins } = require('~/helpers/chat/prosemirror/chat-plugins');
 const { placeholder } = require('~/helpers/chat/prosemirror/placeholder');
 const { linkify } = require('~/helpers/chat/prosemirror/linkify-text');
@@ -50,6 +50,11 @@ const makeEmojiSuggestions = require('./suggestions/EmojiSuggestions');
 
 // eslint-disable-next-line no-unused-vars, (used for typechecking)
 const Suggestions = require('./suggestions/Suggestions');
+
+const { BoldButton, ItalicButton, StrikeButton } = require('./FormattingButton');
+const FormattingToolbar = require('./FormattingToolbar');
+
+const Toolbar = new FormattingToolbar();
 
 
 // ---------------------------------
@@ -102,9 +107,6 @@ function insertEmoji(emoji, state, dispatch) {
 /**
  * @augments {React.Component<{
         placeholder : string
-        /// FIXME/TS: should be Plugin[], but buggy ts-in-js
-        /// support for the 100th time is getting confused about namespaces
-        extraPlugins: any[]
         onSend : (richText : Object, legacyText : string) => void
     }, {}>}
  */
@@ -144,8 +146,8 @@ class MessageInputProseMirror extends React.Component {
 
     getEmptyState() {
         return EditorState.create({
-            doc: emptyState,
-            plugins: this.getConfiguredPlugins()
+            doc: emptyDoc,
+            plugins: this.getConfiguredPlugins(emptyDoc)
         });
     }
 
@@ -153,11 +155,15 @@ class MessageInputProseMirror extends React.Component {
      * Get the full set of plugins for the ProseMirror editor, including those
      * which can be reconfigured or aren't necessarily known while the
      * constructor is running.
+     * @param {any} doc FIXME/TS: untypable in js, should be ProseMirrorNode
      */
-    getConfiguredPlugins() {
+    getConfiguredPlugins(doc) {
         return [
-            placeholder(this.props.placeholder, emptyState),
-            ...this.props.extraPlugins,
+            placeholder(this.props.placeholder, emptyDoc),
+            Toolbar.plugin(doc),
+            BoldButton.plugin(),
+            ItalicButton.plugin(),
+            StrikeButton.plugin(),
             ...this.basePlugins
         ];
     }
@@ -256,12 +262,9 @@ class MessageInputProseMirror extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (
-            (this.props.placeholder !== prevProps.placeholder) ||
-            (this.props.extraPlugins !== prevProps.extraPlugins)
-        ) {
+        if (this.props.placeholder !== prevProps.placeholder) {
             this.editorView.updateState(this.editorView.state.reconfigure({
-                plugins: this.getConfiguredPlugins()
+                plugins: this.getConfiguredPlugins(this.editorView.state.doc)
             }));
         }
     }
@@ -350,11 +353,20 @@ class MessageInputProseMirror extends React.Component {
             <EmojiSuggestions key="emoji-suggestions" />,
             <div
                 key="editor"
-                id="messageEditor"
-                className="message-editor-container-prosemirror"
-                onBlur={this.onInputBlur}
-                ref={this.mountProseMirror}
-            />,
+                className="message-editor-container-anotherwrapper"
+            >
+                <div
+                    id="messageEditor"
+                    className="message-editor-container-prosemirror"
+                    onBlur={this.onInputBlur}
+                    ref={this.mountProseMirror}
+                />
+                <Toolbar.Component>
+                    <BoldButton.Component />
+                    <ItalicButton.Component />
+                    <StrikeButton.Component />
+                </Toolbar.Component>
+            </div>,
             <Button
                 key="emoji-picker-open-button"
                 icon="mood"

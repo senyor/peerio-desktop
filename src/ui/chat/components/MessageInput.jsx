@@ -18,11 +18,6 @@ const { pickLocalFiles, getFileList } = require('~/helpers/file');
 const UploadDialog = require('~/ui/shared-components/UploadDialog');
 
 const MessageInputProseMirror = require('./MessageInputProseMirror');
-const { BoldButton, ItalicButton, StrikeButton } = require('./FormattingButton');
-const FormattingToolbar = require('./FormattingToolbar');
-
-const Toolbar = new FormattingToolbar();
-
 
 /**
  * @augments {React.Component<{
@@ -190,20 +185,9 @@ class MessageInput extends React.Component {
                         ? <div className="message-editor-empty" >&nbsp;</div>
                         : <MessageInputProseMirror
                             placeholder={this.props.placeholder}
-                            extraPlugins={[
-                                Toolbar.plugin,
-                                BoldButton.plugin,
-                                ItalicButton.plugin,
-                                StrikeButton.plugin
-                            ]}
                             onSend={this.props.onSend}
                         />
                     }
-                    <Toolbar.Component>
-                        <BoldButton.Component />
-                        <ItalicButton.Component />
-                        <StrikeButton.Component />
-                    </Toolbar.Component>
                     <Button
                         disabled={!chat || !chat.canSendAck}
                         icon="thumb_up"

@@ -248,14 +248,14 @@ const chatSchema = new Schema({
     }
 });
 
-const emptyState = chatSchema.node('doc', null, chatSchema.node('paragraph'));
+const emptyDoc = chatSchema.node('doc', null, chatSchema.node('paragraph'));
 
 /**
  * Return whether the document is in its initial state.
  * @param {Node} doc
  * @returns {boolean}
  */
-function isEmpty(doc) { return doc.eq(emptyState); }
+function isEmpty(doc) { return doc.eq(emptyDoc); }
 
 /**
  * Return whether the given document/node contains only whitespace.
@@ -293,5 +293,5 @@ module.exports = {
     Renderer,
     isEmpty,
     isWhitespaceOnly,
-    emptyState
+    emptyDoc
 };

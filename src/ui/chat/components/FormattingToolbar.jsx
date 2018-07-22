@@ -6,7 +6,7 @@
  */
 
 const React = require('react');
-const { observable, runInAction } = require('mobx');
+const { observable, action, runInAction } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const { Plugin } = require('prosemirror-state');
@@ -17,8 +17,19 @@ class FormattingToolbar {
     @observable
     enabled = false;
 
-    constructor() {
-        this.plugin = makePlugin(this);
+    @action.bound
+    plugin(doc) {
+        const self = this;
+        self.enabled = !isEmpty(doc);
+        return new Plugin({
+            view() {
+                return {
+                    update({ state: newState }) {
+                        runInAction(() => { self.enabled = !isEmpty(newState.doc); });
+                    }
+                };
+            }
+        });
     }
 
     Component = observer((props) => {
@@ -29,18 +40,6 @@ class FormattingToolbar {
         >
             {props.children}
         </div>);
-    });
-}
-
-function makePlugin(/** @type {FormattingToolbar} */self) {
-    return new Plugin({
-        view() {
-            return {
-                update({ state }) {
-                    runInAction(() => { self.enabled = !isEmpty(state.doc); });
-                }
-            };
-        }
     });
 }
 

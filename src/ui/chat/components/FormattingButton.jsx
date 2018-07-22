@@ -9,6 +9,7 @@ const os = require('os');
 const React = require('react');
 const {
     observable,
+    action,
     runInAction
 } = require('mobx');
 const { observer } = require('mobx-react');
@@ -53,7 +54,23 @@ class FormattingButton {
         this.markType = markType;
         this.onClick = onClick;
         this.label = label;
-        this.plugin = makePlugin(this);
+    }
+
+    @action.bound
+    plugin() {
+        const self = this;
+
+        this.active = false;
+        return new Plugin({
+            view() {
+                return {
+                    update(view) {
+                        if (self.view !== view) self.view = view; // terrible hack, but desperate times...
+                        runInAction(() => { self.active = isMarkActive(view.state, self.markType); });
+                    }
+                };
+            }
+        });
     }
 
     handleClick = () => {
@@ -62,7 +79,7 @@ class FormattingButton {
         // below.) Unfortunately this hybrid plugin-component design makes it
         // way harder to share component state derived from ProseMirror state,
         // so this sort of stuff will be necessarily fragile and bug-prone...)
-        if (!isEmpty(this.view.state.doc)) {
+        if (this.view && !isEmpty(this.view.state.doc)) {
             this.onClick(this.view.state, this.view.dispatch);
             this.view.focus();
         }
@@ -84,18 +101,6 @@ class FormattingButton {
     });
 }
 
-function makePlugin(/** @type {FormattingButton} */self) {
-    return new Plugin({
-        view() {
-            return {
-                update(view) {
-                    if (self.view !== view) self.view = view; // terrible hack, but desperate times...
-                    runInAction(() => { self.active = isMarkActive(view.state, self.markType); });
-                }
-            };
-        }
-    });
-}
 
 /**
  * Is the given mark active in the given editor state's selection set?

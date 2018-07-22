@@ -9,8 +9,6 @@
     //flex-grow: 1; FIXME: only grow when textarea grows.
     flex-shrink: 0;
     position: relative;
-    max-height: 112px;
-    min-height: 64px;
     padding: 0 $padding-small 0 26px;
     margin-top: auto;
     background-color: $background-root;

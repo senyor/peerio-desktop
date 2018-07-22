@@ -56,6 +56,11 @@ class MoveFileDialog extends React.Component {
      */
     itemToMove;
 
+    /**
+     * @type {string}
+     */
+    @observable query = '';
+
     shareConfirmDialogRef = React.createRef();
     dialogRef = React.createRef();
 
@@ -124,8 +129,8 @@ class MoveFileDialog extends React.Component {
     }
 
     @computed get visibleFolders() {
-        let visibleFolders = fileStore.searchQuery
-            ? fileStore.foldersSearchResult
+        let visibleFolders = this.query
+            ? fileStore.foldersFiltered(this.query)
             : this.currentFolder.foldersSortedByName;
 
         if (this.itemToMove && this.itemToMove.isFolder) {
@@ -144,8 +149,8 @@ class MoveFileDialog extends React.Component {
         ));
     }
 
-    @action.bound handleSearch(query) {
-        fileStore.searchQuery = query;
+    @action.bound handleSearch(val) {
+        this.query = val;
     }
 
     @action.bound
@@ -183,7 +188,7 @@ class MoveFileDialog extends React.Component {
                     className="move-file-dialog">
                     <Search
                         onChange={this.handleSearch}
-                        query={fileStore.searchQuery}
+                        query={this.query}
                     />
                     <Breadcrumb
                         folder={this.currentFolder}

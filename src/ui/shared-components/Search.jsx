@@ -20,7 +20,7 @@ class Search extends React.Component {
                 <Input placeholder={t('title_search')} value={this.props.query} onChange={this.handleChange} />
                 {this.props.query === ''
                     ? null
-                    : <Button icon="highlight_off" onClick={this.handleClear} theme="no-hover" />
+                    : <Button icon="close" onClick={this.handleClear} theme="small no-hover" />
                 }
             </div>
         );

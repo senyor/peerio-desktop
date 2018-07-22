@@ -4,6 +4,7 @@
   align-items: center;
   height: 36px;
   width: 256px;
+  padding: 0 $padding-default;
   background: $background-root;
   border: 1px solid $input-border;
   border-radius: 8px;
@@ -17,10 +18,6 @@
     padding: 0 0 0 $padding-small;
     line-height: 36px;
     border-width: 0;
-  }
-
-  .search-icon {
-    padding: 6px 0 6px $padding-small;
   }
 
   button {

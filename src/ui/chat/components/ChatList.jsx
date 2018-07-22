@@ -228,14 +228,21 @@ class ChatList extends React.Component {
     }
 
     // Scroll-to-position when clicking "unread messages" notification
-    @action.bound clickUnreadsAbove() { window.requestAnimationFrame(this.smoothScrollUp); }
-    @action.bound clickUnreadsBelow() { window.requestAnimationFrame(this.smoothScrollDown); }
+    @observable goalUnread;
+    @action.bound clickUnreadsAbove() {
+        this.goalUnread = this.prevUnread;
+        window.requestAnimationFrame(this.smoothScrollUp);
+    }
+    @action.bound clickUnreadsBelow() {
+        this.goalUnread = this.nextUnread;
+        window.requestAnimationFrame(this.smoothScrollDown);
+    }
 
     smoothScrollUp = () => {
         const el = this.scrollContainerRef;
         if (!el) return;
 
-        const goal = this.prevUnread;
+        const goal = this.goalUnread;
         if (el.scrollTop <= goal || el.scrollTop === 0) {
             return;
         }
@@ -248,7 +255,7 @@ class ChatList extends React.Component {
         const el = this.scrollContainerRef;
         if (!el) return;
 
-        const goal = this.nextUnread;
+        const goal = this.goalUnread;
         if (el.scrollTop >= goal || el.scrollTop + el.clientHeight >= this.containerTotalHeight) {
             return;
         }

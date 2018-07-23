@@ -31,7 +31,6 @@
 .pending-dm-header {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -41,6 +40,13 @@
   .main-text {
     @extend %headline;
     margin-top: $margin-tiny;
+  }
+
+  .invite-type {
+    @extend %subtitle;
+    margin-top: $margin-small;
+    font-weight: $font-weight-semibold;
+    color: $text-dark-secondary;
   }
 
   .user-profile-container {

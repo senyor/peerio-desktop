@@ -51,7 +51,9 @@ class Contacts extends React.Component {
                                 className={css({ active: isAllActive })}
                                 onClick={this.toAll} />
                             <ListItem leftIcon="person_add"
-                                caption={`${t('title_invitedContacts')} (${contactStore.invitedContacts.length})`}
+                                caption={
+                                    `${t('title_invitedContacts')} (${contactStore.invitedNotJoinedContacts.length})`
+                                }
                                 className={css({ active: isInvitedActive })}
                                 onClick={this.toInvited} />
                         </List>

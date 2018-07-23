@@ -18,7 +18,7 @@ class InvitedContacts extends React.Component {
     }
 
     rerouteIfZero = () => {
-        if (contactStore.invitedContacts.length) return;
+        if (contactStore.invitedNotJoinedContacts.length) return;
         routerStore.navigateTo(routerStore.ROUTES.newInvite);
     };
 
@@ -52,7 +52,7 @@ class InvitedContacts extends React.Component {
                     <div className="contact-list-section">
                         <div className="contact-list-section-marker" />
                         <List className="contact-list-section-content" theme="large">
-                            {contactStore.invitedContacts.map(c =>
+                            {contactStore.invitedNotJoinedContacts.map(c =>
                                 (<ListItem key={c.email}
                                     leftContent={<div className="avatar-invited material-icons">person</div>}
                                     caption={c.email}

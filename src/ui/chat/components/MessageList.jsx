@@ -101,7 +101,10 @@ class MessageList extends React.Component {
             return;
         }
         // check if chat has changed since last render
-        if (this.lastRenderedChatId !== chatStore.activeChat.id) {
+        if (
+            !chatStore.activeChat.initialPageLoaded ||
+            this.lastRenderedChatId !== chatStore.activeChat.id
+        ) {
             this.lastRenderedChatId = chatStore.activeChat.id;
             clientApp.isReadingNewestMessages = true;
             this.instantlyScrollToBottom();

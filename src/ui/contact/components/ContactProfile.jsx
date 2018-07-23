@@ -7,8 +7,19 @@ const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
 const T = require('~/ui/shared-components/T');
 
+const ContactProfileFingerprint = observer(({ contact }) => {
+    const f = contact.fingerprint.split('-');
+    return (
+        <div className="row">
+            <div className="list-title"> {t('title_publicKey')}</div>
+            <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
+            <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
+        </div>
+    );
+});
+
 @observer
-class ContactProfile extends React.Component {
+class ContactProfileBody extends React.Component {
     startChat = () => {
         chatStore.startChat([this.props.contact]);
         routerStore.navigateTo(routerStore.ROUTES.chats);
@@ -23,23 +34,7 @@ class ContactProfile extends React.Component {
         contactStore.addContact(this.props.contact);
     };
 
-    @observable dialogVisible;
-    @action.bound openDialog() { this.dialogVisible = true; }
-    @action.bound closeDialog() { this.dialogVisible = false; }
-
-    renderFingerprint() {
-        if (!this.dialogVisible || !this.props.contact) return null;
-        const f = this.props.contact.fingerprint.split('-');
-        return (
-            <div className="row">
-                <div className="list-title"> {t('title_publicKey')}</div>
-                <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
-                <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
-            </div>
-        );
-    }
-
-    renderContent() {
+    render() {
         const c = this.props.contact;
         if (!c) return null;
 
@@ -76,7 +71,7 @@ class ContactProfile extends React.Component {
                         {c.isDeleted ? <T k="title_accountDeleted" className="deleted-account" tag="div" /> : null}
                         <div className="full-name selectable">{c.firstName} {c.lastName}</div>
                         <div className="selectable">{c.usernameTag}</div>
-                        {this.renderFingerprint()}
+                        <ContactProfileFingerprint contact={c} />
                     </div>
                 </div>
                 <div className="row profile-actions-container">
@@ -108,19 +103,25 @@ class ContactProfile extends React.Component {
             </div>
         );
     }
+}
+
+@observer
+class ContactProfile extends React.Component {
+    @observable dialogVisible;
+    @action.bound openDialog() { this.dialogVisible = true; }
+    @action.bound closeDialog() { this.dialogVisible = false; }
 
     render() {
         return (
             <Dialog
                 active={this.dialogVisible}
                 onCancel={this.closeDialog}
-                actions={[{ label: t('button_ok'), onClick: () => this.closeDialog() }]}
+                actions={[{ label: t('button_ok'), onClick: this.closeDialog }]}
             >
-                {this.renderContent()}
+                <ContactProfileBody {...this.props} />
             </Dialog>
         );
     }
 }
-
 
 module.exports = ContactProfile;

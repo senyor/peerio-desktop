@@ -5,6 +5,7 @@ const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env');
 const FileStream = require('peerio-icebear/dist/models/files/node-file-stream');
 const StorageEngine = require('peerio-icebear/dist/models/storage/node-json-storage');
+const CacheEngine = require('~/stores/indexed-db-storage');
 const { setUrlMap, setTagHandler, setStringReplacement } = require('peerio-translator');
 const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
 
@@ -38,6 +39,7 @@ cfg.FileStream = FileStream;
 cfg.FileStream.storageFolder = path.join(app.getPath('userData'), 'ImageCache');
 cfg.StorageEngine = StorageEngine;
 cfg.StorageEngine.storageFolder = app.getPath('userData');
+cfg.CacheEngine = CacheEngine;
 
 // --- FILE UPLOAD/DOWNLOAD SETTINGS
 cfg.download.parallelism = 4;
@@ -72,7 +74,7 @@ if (isDevEnv) {
     if (process.env.PEERIO_STAGING_SOCKET_SERVER) {
         cfg.socketServerUrl = process.env.PEERIO_STAGING_SOCKET_SERVER;
     }
-    // Allow overridding of whitelabel config.
+    // Allow overriding of whitelabel config.
     if (process.env.PEERIO_WHITELABEL) {
         cfg.whiteLabel.name = process.env.PEERIO_WHITELABEL;
     }

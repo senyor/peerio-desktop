@@ -53,6 +53,7 @@
         "performance": false,
         "FileReader": false,
         "L": false,
-        "Notification": false
+        "Notification": false,
+        "indexedDB": false
     }
 }

@@ -48,14 +48,18 @@
     }
   }
 
-  .suggest-add-contact {
+  .no-contact-found {
     display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     align-items: center;
-    margin: $margin-xl;
-    color: $text-dark-inactive;
+    justify-content: space-between;
+    padding-top: $padding-xxl;
+    margin: 0 $margin-xxl;
 
     .text {
-      margin-left: $margin-default;
+      margin: $margin-xl;
+      text-align: center;
     }
   }
 }

@@ -115,9 +115,9 @@ class ContactList extends React.Component {
                             )
                         )}
                     </div>
-                    : <div className="suggest-add-contact">
-                        <MaterialIcon icon="help_outline" />
+                    : <div className="no-contact-found">
                         <T k="error_contactNotFound" className="text">{textParser}</T>
+                        <img src="./static/img/illustration-no-results.svg" />
                     </div>
                 }
             </div>

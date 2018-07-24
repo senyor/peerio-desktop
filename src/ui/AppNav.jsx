@@ -76,6 +76,7 @@ class AppNav extends React.Component {
         ['mail', 'chats', 'files', 'contacts', 'profile', 'security', 'prefs', 'account', 'about', 'help', 'onboarding']
             .forEach(route => {
                 this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
+                    this.enableColorIcons();
                     routerStore.navigateTo(routerStore.ROUTES[route]);
                 };
             });
@@ -112,6 +113,7 @@ class AppNav extends React.Component {
                 customIcon: 'preferences',
                 caption: 'title_settingsPreferences',
                 className: 'preferences custom-icon-hover-container',
+                route: 'prefs',
                 clickFunction: 'toPrefs'
             },
             {
@@ -175,8 +177,8 @@ class AppNav extends React.Component {
     }
 
     @observable colorIcons = true;
-    @action.bound handleMouseEnter() { this.colorIcons = false; }
-    @action.bound handleMouseLeave() { this.colorIcons = true; }
+    @action.bound enableColorIcons() { this.colorIcons = true; }
+    @action.bound disableColorIcons() { this.colorIcons = false; }
 
     _doSignout = async (untrust) => {
         await autologin.disable();
@@ -217,7 +219,7 @@ class AppNav extends React.Component {
                             legend={contact.username}
                         />
                         <Divider />
-                        <div onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+                        <div onMouseEnter={this.disableColorIcons} onMouseLeave={this.enableColorIcons}>
                             {this.menuItems}
                         </div>
                     </Menu>

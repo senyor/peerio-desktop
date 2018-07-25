@@ -1,7 +1,7 @@
 const {
     chatSchema,
     isWhitespaceOnly,
-    emptyState
+    emptyDoc
 } = require('../../app/build/helpers/chat/prosemirror/chat-schema');
 
 
@@ -33,7 +33,7 @@ const paragraphWithEmoji = chatSchema.node('doc', null,
 
 describe('chat schema', () => {
     [
-        { doc: emptyState, name: 'empty doc', shouldBeWhitespaceOnly: true },
+        { doc: emptyDoc, name: 'empty doc', shouldBeWhitespaceOnly: true },
         { doc: hardBreakOnly, name: 'hard break only', shouldBeWhitespaceOnly: true },
         { doc: paragraphWithText, name: 'paragraph with text', shouldBeWhitespaceOnly: false },
         { doc: paragraphWithWhitespace, name: 'paragraph with whitespace', shouldBeWhitespaceOnly: true },

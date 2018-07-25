@@ -1,11 +1,75 @@
 .file-status-window {
   display: flex;
+  flex-direction: column;
   position: fixed;
   width: 400px;
+  max-height: 336px;
   min-height: 40px;
   right: $margin-large;
   bottom: $margin-default;
+  overflow: hidden;
+  transition: max-height 300ms;
+  color: $text-dark-secondary;
+  box-shadow: $shadow-8;
   background-color: $background-root;
   border-radius: 8px;
-  box-shadow: $shadow-8;
+
+  &.collapsed {
+    max-height: 40px;
+  }
+
+  .title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 40px;
+    padding: 0 $padding-default;
+    font-weight: $font-weight-semibold;
+    background-color: rgba($peerio-blue, .3);
+  }
+
+  .body {
+    overflow-y: auto;
+  }
+
+  .heading {
+    display: flex;
+    align-items: center;
+    position: sticky;
+    z-index: 1;
+    height: 32px;
+    top: 0;
+    padding: 0 $padding-default;
+    font-size: 12px;
+    font-weight: $font-weight-semibold;
+    background-color: $background-root;
+  }
+
+  .file-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 48px;
+    padding: 0 $padding-default;
+
+    .file-sprite-icon {
+      display: inline-block;
+    }
+
+    .file-name {
+      margin-left: $margin-small;
+      font-weight: $font-weight-semibold;
+    }
+
+    .right-icon { margin-left: auto; }
+    .completed { color: $color-confirmation; }
+    .find-file { display: none; }
+
+    &:hover {
+      background-color: $background-hover-accent;
+
+      .completed { display: none; }
+      .find-file { display: inline-block; }
+    }
+  }
 }

@@ -1,0 +1,11 @@
+.file-status-window {
+  display: flex;
+  position: fixed;
+  width: 400px;
+  min-height: 40px;
+  right: $margin-large;
+  bottom: $margin-default;
+  background-color: $background-root;
+  border-radius: 8px;
+  box-shadow: $shadow-8;
+}

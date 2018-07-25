@@ -17,6 +17,7 @@ const DraggableLine = require('./components/DraggableLine');
 const ZeroScreen = require('./components/ZeroScreen');
 const FilesHeader = require('./components/FilesHeader');
 const ShareConfirmDialog = require('./components/ShareConfirmDialog');
+const FileStatusWindow = require('./components/FileStatusWindow');
 
 const DragDropTypes = require('./helpers/dragDropTypes');
 const { uploadDroppedFiles } = require('./helpers/dragDropHelpers');
@@ -263,6 +264,7 @@ class Files extends React.Component {
                 </div>
                 <ShareConfirmDialog ref={this.shareConfirmDialogRef} />
                 <ConfirmFolderDeleteDialog ref={this.refConfirmFolderDeleteDialog} />
+                <FileStatusWindow />
             </div>
         );
     }

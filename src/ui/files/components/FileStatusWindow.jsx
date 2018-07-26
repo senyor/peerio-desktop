@@ -1,3 +1,4 @@
+// @ts-check;
 const React = require('react');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');

@@ -1,0 +1,12 @@
+$slim-scrollbar-width: 8px;
+
+.scrollable,
+%scrollable {
+  overflow-y: auto;
+}
+
+%slim-scrollbar {
+  &::-webkit-scrollbar {
+    width: $slim-scrollbar-width;
+  }
+}

@@ -76,19 +76,6 @@ ul {
   }
 }
 
-// Scroll function and scrollbar
-.scrollable,
-%scrollable {
-  overflow-y: auto;
-}
-
-.slim-scrollbar,
-%slim-scrollbar {
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-}
-
 // BUTTONS
 .clickable {
   cursor: pointer;

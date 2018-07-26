@@ -42,6 +42,10 @@ class FileStatusWindow extends React.Component {
         uiStore.fileStatusWindowCollapsed = !uiStore.fileStatusWindowCollapsed;
     }
 
+    closeWindow() {
+        console.log('close window');
+    }
+
     @computed get downloadQueue() { return DOWNLOAD_FILES.map(f => this.fileItem(f, 'download')); }
     @computed get uploadQueue() { return UPLOAD_FILES.map(f => this.fileItem(f, 'upload')); }
 

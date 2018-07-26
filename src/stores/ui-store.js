@@ -31,6 +31,9 @@ class UIStore {
         }
     }
 
+    // files status UI window collapsed state
+    @observable fileStatusWindowCollapsed = false;
+
     // anything you add here will be stored with 'pref_' prefix in personal tinydb
     @observable prefs = {
         messageSoundsEnabled: true,

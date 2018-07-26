@@ -3,6 +3,7 @@ const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 
 const css = require('classnames');
+const uiStore = require('~/stores/ui-store');
 const T = require('~/ui/shared-components/T');
 const { Button, MaterialIcon, ProgressBar } = require('peer-ui');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
@@ -23,11 +24,10 @@ const FILES = [
 
 @observer
 class FileStatusWindow extends React.Component {
-    @observable collapsed = false;
     @observable allCompleted = true;
 
     @action.bound toggleWindow() {
-        this.collapsed = !this.collapsed;
+        uiStore.fileStatusWindowCollapsed = !uiStore.fileStatusWindowCollapsed;
     }
 
     @computed get downloadQueue() { return FILES.map(f => this.fileItem(f, 'download')); }
@@ -84,12 +84,12 @@ class FileStatusWindow extends React.Component {
 
     render() {
         return (
-            <div className={css('file-status-window', { collapsed: this.collapsed })}>
+            <div className={css('file-status-window', { collapsed: uiStore.fileStatusWindowCollapsed })}>
                 <div className="title-bar">
                     <T k="title_fileStatus">{{ number: FILES.length + FILES.length }}</T>
                     <div className="buttons-container">
                         <Button
-                            icon={this.collapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
+                            icon={uiStore.fileStatusWindowCollapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
                             onClick={this.toggleWindow}
                             theme="small"
                         />

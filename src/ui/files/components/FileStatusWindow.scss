@@ -21,11 +21,18 @@
   .title-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     min-height: 40px;
     padding: 0 $padding-default;
     font-weight: $font-weight-semibold;
     background-color: rgba($peerio-blue, .3);
+
+    .buttons-container {
+      margin-left: auto;
+
+      .p-button {
+        margin-left: $margin-default;
+      }
+    }
   }
 
   .body {
@@ -38,11 +45,14 @@
     position: sticky;
     z-index: 1;
     height: 32px;
-    top: 0;
+    top: -1px;
+    margin-top: -1px; // tuck the top border under the title bar when stickied
     padding: 0 $padding-default;
     font-size: 12px;
     font-weight: $font-weight-semibold;
     background-color: $background-root;
+    border-bottom: 1px solid $divider-dark;
+    border-top: 1px solid $divider-dark;
   }
 
   .file-item {
@@ -61,6 +71,13 @@
       font-weight: $font-weight-semibold;
     }
 
+    .p-progress-bar {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: -2px; // half ProgressBar height
+    }
+
     .right-icon { margin-left: auto; }
     .completed { color: $color-confirmation; }
     .find-file { display: none; }
@@ -70,6 +87,18 @@
 
       .completed { display: none; }
       .find-file { display: inline-block; }
+    }
+
+    &.error {
+      pointer-events: none;
+
+      .file-sprite-icon {
+        opacity: .6;
+      }
+
+      .file-name {
+        color: $text-dark-hint;
+      }
     }
   }
 }

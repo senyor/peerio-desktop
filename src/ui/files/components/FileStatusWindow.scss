@@ -41,7 +41,7 @@
 
     &.has-scrollbar {
       .file-item .right-icon {
-        margin-right: -4px; // adjust button spacing when scrollbar exists
+        margin-right: -$slim-scrollbar-width; // adjust button spacing when scrollbar exists
       }
     }
   }

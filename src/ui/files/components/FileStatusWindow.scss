@@ -38,6 +38,12 @@
   .body {
     @extend %scrollable;
     @extend %slim-scrollbar;
+
+    &.has-scrollbar {
+      .file-item .right-icon {
+        margin-right: -4px; // adjust button spacing when scrollbar exists
+      }
+    }
   }
 
   .heading {
@@ -47,8 +53,8 @@
     z-index: 1;
     height: 32px;
     top: -1px;
-    margin-top: -1px; // tuck the top border under the title bar when stickied
     padding: 0 $padding-default;
+    margin-top: -1px; // tuck the top border under the title bar when stickied
     font-size: 12px;
     font-weight: $font-weight-semibold;
     background-color: $background-root;
@@ -74,16 +80,15 @@
 
     .p-progress-bar {
       position: absolute;
-      top: 100%;
       left: 0;
+      top: 100%;
       margin-top: -2px; // half ProgressBar height
     }
 
     .right-icon {
       margin-left: auto;
-      margin-right: -4px;
     }
-    .completed { color: $color-confirmation; }
+
     .find-file { display: none; }
 
     &:hover {

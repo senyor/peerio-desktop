@@ -86,7 +86,7 @@ class FileStatusWindow extends React.Component {
         return (
             <div className={css('file-status-window', { collapsed: this.collapsed })}>
                 <div className="title-bar">
-                    <T k="title_fileStatus">{{ number: 43 }}</T>
+                    <T k="title_fileStatus">{{ number: FILES.length + FILES.length }}</T>
                     <div className="buttons-container">
                         <Button
                             icon={this.collapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
@@ -106,7 +106,7 @@ class FileStatusWindow extends React.Component {
                 <div className="body">
                     <div className="heading">
                         <T k="title_downloads" />&nbsp;
-                        <span>(24)</span>
+                        <span>({FILES.length})</span>
                     </div>
                     <div className="files-container">
                         {this.downloadQueue}
@@ -114,7 +114,7 @@ class FileStatusWindow extends React.Component {
 
                     <div className="heading">
                         <T k="title_uploads" />&nbsp;
-                        <span>(24)</span>
+                        <span>({FILES.length})</span>
                     </div>
                     <div className="files-container">
                         {this.uploadQueue}

@@ -28,8 +28,7 @@ const DOWNLOAD_FILES = [
 class FileStatusWindow extends React.Component {
     @observable allCompleted = true;
 
-    @observable bodyRef;
-
+    @observable.ref bodyRef;
     setBodyRef = (ref) => {
         if (ref) this.bodyRef = ref;
     }
@@ -122,7 +121,6 @@ class FileStatusWindow extends React.Component {
                 </div>
                 <div className={css('body', { 'has-scrollbar': this.hasScrollBar })}
                     ref={this.setBodyRef}
-                    onClick={() => console.log(this.hasScrollBar)}
                 >
                     {DOWNLOAD_FILES.length
                         ? <React.Fragment>

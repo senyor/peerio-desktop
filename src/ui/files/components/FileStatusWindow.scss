@@ -36,7 +36,8 @@
   }
 
   .body {
-    overflow-y: auto;
+    @extend %scrollable;
+    @extend %slim-scrollbar;
   }
 
   .heading {
@@ -78,7 +79,10 @@
       margin-top: -2px; // half ProgressBar height
     }
 
-    .right-icon { margin-left: auto; }
+    .right-icon {
+      margin-left: auto;
+      margin-right: -4px;
+    }
     .completed { color: $color-confirmation; }
     .find-file { display: none; }
 

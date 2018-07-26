@@ -58,6 +58,7 @@ class FileStatusWindow extends React.Component {
                         : <Button
                             className="right-icon"
                             icon="highlight_off"
+                            theme="small"
                             onClick={this[cancelFunction]}
                         />
                 }

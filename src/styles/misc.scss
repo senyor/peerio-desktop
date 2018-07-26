@@ -76,9 +76,17 @@ ul {
   }
 }
 
-// Make things scrollable
-.scrollable {
+// Scroll function and scrollbar
+.scrollable,
+%scrollable {
   overflow-y: auto;
+}
+
+.slim-scrollbar,
+%slim-scrollbar {
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
 }
 
 // BUTTONS

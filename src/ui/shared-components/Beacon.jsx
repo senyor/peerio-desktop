@@ -9,29 +9,20 @@ class Beacon extends React.Component {
     @observable contentRef = React.createRef();
 
     @computed
-    get contentDimensions() {
-        if (!this.contentRef || !this.contentRef.current) return null;
+    get contentRect() {
+        if (!this.contentRef || !this.contentRef.current) {
+            return {x: 0, y: 0, width: 0, height: 0};
+        }
         return this.contentRef.current.getBoundingClientRect();
     }
 
     @computed
-    get contentHeight() {
-        if (!this.contentDimensions) return null;
-        return this.contentDimensions.height;
-    }
-
-    @computed
-    get contentWidth() {
-        if (!this.contentDimensions) return null;
-        return this.contentDimensions.width;
-    }
-
-    @computed
     get circleSize() {
+        const { width, height } = this.contentRect;
         // The size of the circle is the greater of the child content's width and height
-        return this.contentWidth > this.contentHeight
-            ? this.contentWidth
-            : this.contentHeight;
+        return width > height
+            ? width
+            : height;
     }
 
     @computed
@@ -69,8 +60,8 @@ class Beacon extends React.Component {
                     <div
                         className="circle-content"
                         style={{
-                            marginTop: -this.contentHeight / 2,
-                            marginLeft: -this.contentWidth / 2
+                            marginTop: -this.contentRect.height / 2,
+                            marginLeft: -this.contentRect.width / 2
                         }}
                     >
                         {this.props.children}

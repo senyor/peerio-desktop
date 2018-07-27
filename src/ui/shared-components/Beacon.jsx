@@ -5,60 +5,83 @@ const { observer } = require('mobx-react');
 
 @observer
 class Beacon extends React.Component {
-    @observable containerRef = React.createRef();
+    // We make a lot of calculations based on child content size and position
+    @observable contentRef = React.createRef();
 
     @computed
-    get containerDimensions() {
-        if (!this.containerRef || !this.containerRef.current) return null;
-        return this.containerRef.current.getBoundingClientRect();
+    get contentDimensions() {
+        if (!this.contentRef || !this.contentRef.current) return null;
+        return this.contentRef.current.getBoundingClientRect();
     }
 
     @computed
-    get containerWidth() {
-        if (!this.containerDimensions) return null;
-        return this.containerDimensions.width;
+    get contentHeight() {
+        if (!this.contentDimensions) return null;
+        return this.contentDimensions.height;
     }
 
     @computed
-    get containerHeight() {
-        if (!this.containerDimensions) return null;
-        return this.containerDimensions.height;
+    get contentWidth() {
+        if (!this.contentDimensions) return null;
+        return this.contentDimensions.width;
     }
 
-    // @computed get circleSize() {
-    //     const height = this.containerHeight;
-    //     const width = this.containerWidth;
-    // }
+    @computed
+    get circleSize() {
+        // The size of the circle is the greater of the child content's width and height
+        return this.contentWidth > this.contentHeight
+            ? this.contentWidth
+            : this.contentHeight;
+    }
 
-    render() {
+    @computed
+    get circleStyle() {
+        return {
+            width: this.circleSize,
+            height: this.circleSize,
+            left: -this.circleSize / 2,
+            top: -this.circleSize / 2
+        };
+    }
+
+    // Beacon functions
+    beaconClick = () => {
+        console.log('beacon click');
+    };
+
+    // HTML content
+    childContent = (
+        <div className="beacon-container" key="container" ref={this.contentRef}>
+            {this.props.children}
+        </div>
+    );
+
+    @computed
+    get beaconContent() {
         return (
-            /*
-                The unsightly <div> nesting is so that the container can have any positioning, while the content itself
-                is `relative` positioned. This allows the beacon itself to be `absolute` positioned and thus have its
-                position defined by the bounds of the child content. Whew!
+            <div className="beacon" key="beacon" onClick={this.beaconClick}>
+                <div className="rectangle">
+                    <div className="header">Header text goes in here</div>
+                    TEXT
+                </div>
 
-                All of this means that the beacon ends up positioned without needing to use in-window calculations,
-                which is worth the extra verbosity.
-            */
-            <div className="beacon-container" ref={this.containerRef}>
-                <div className="inner-container">
-                    {this.props.children}
-
-                    <div className="beacon">
-                        <div className="content-container">
-                            <div className="rectangle">
-                                <div className="header">
-                                    Header text goes in here
-                                </div>
-                                TEXT
-                            </div>
-
-                            <div className="circle">CHILDREN`</div>
-                        </div>
+                <div className="circle" style={this.circleStyle}>
+                    <div
+                        className="circle-content"
+                        style={{
+                            marginTop: -this.contentHeight / 2,
+                            marginLeft: -this.contentWidth / 2
+                        }}
+                    >
+                        {this.props.children}
                     </div>
                 </div>
             </div>
         );
+    }
+
+    render() {
+        return [this.childContent, this.beaconContent];
     }
 }
 

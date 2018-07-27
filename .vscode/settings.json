@@ -12,7 +12,6 @@
   },
   "typescript.tsdk": "./node_modules/typescript/lib",
   "eslint.enable": true,
-  "tslint.enable": false,
   "eslint.validate": [
     "javascript",
     "javascriptreact",

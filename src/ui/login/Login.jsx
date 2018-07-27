@@ -252,32 +252,32 @@ class Login extends Component {
                                 ref={this.onAKRef}
                                 theme="dark"
                             />
-                            <Beacon>
-                                <Button
-                                    icon="visibility"
-                                    active={this.loginStore.passwordVisible}
-                                    tooltip={
-                                        this.loginStore.passwordVisible
-                                            ? t('title_hideAccountKey')
-                                            : t('title_showAccountKey')
-                                    }
-                                    tooltipPosition="right"
-                                    onClick={this.togglePasswordVisibility}
-                                />
-                            </Beacon>
+                            <Button
+                                icon="visibility"
+                                active={this.loginStore.passwordVisible}
+                                tooltip={
+                                    this.loginStore.passwordVisible
+                                        ? t('title_hideAccountKey')
+                                        : t('title_showAccountKey')
+                                }
+                                tooltipPosition="right"
+                                onClick={this.togglePasswordVisibility}
+                            />
                         </div>
                         {/* <Dropdown value={languageStore.language}
                                   options={languageStore.translationLangsDataSource}
                                   onChange={languageStore.changeLanguage} />
                         */}
                     </div>
-                    <Button
-                        className="login-button"
-                        label={t('button_login')}
-                        onClick={this.onLoginClick}
-                        disabled={this.loginStore.hasErrors}
-                        theme="affirmative"
-                    />
+                    <Beacon>
+                        <Button
+                            className="login-button"
+                            label={t('button_login')}
+                            onClick={this.onLoginClick}
+                            disabled={this.loginStore.hasErrors}
+                            theme="affirmative"
+                        />
+                    </Beacon>
 
                     <SignupLink />
                 </div>

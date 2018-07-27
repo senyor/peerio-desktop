@@ -53,9 +53,7 @@ class Beacon extends React.Component {
                                 TEXT
                             </div>
 
-                            <div className="circle">
-                                CHILDREN`
-                            </div>
+                            <div className="circle">CHILDREN`</div>
                         </div>
                     </div>
                 </div>

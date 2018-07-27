@@ -14,7 +14,10 @@ d.spam = (interval = 1000, words = 10) => {
     spamInterval = setInterval(() => {
         if (!ice.chatStore.activeChat) return;
         ice.chatStore.activeChat.sendMessage(
-            `${spamCounter++} ${ice.PhraseDictionary.current.getPassphrase(words)}`);
+            `${spamCounter++} ${ice.PhraseDictionary.current.getPassphrase(
+                words
+            )}`
+        );
     }, interval);
 };
 d.stopSpam = () => {
@@ -25,7 +28,7 @@ d.stopSpam = () => {
 //--------------------------------------
 
 //-- Loads pages of current chat in the ui until finds a message containing specific text, case-insensitive
-d.findMessage = async (text) => {
+d.findMessage = async text => {
     const chat = ice.chatStore.activeChat;
     if (!chat) return;
     text = text.toUpperCase();
@@ -42,7 +45,7 @@ d.findMessage = async (text) => {
 };
 //---------------------------------------
 
-d.testSocketThrottle = async (requestCount) => {
+d.testSocketThrottle = async requestCount => {
     if (!requestCount) return;
     const start = Date.now();
     const promises = [];
@@ -51,7 +54,9 @@ d.testSocketThrottle = async (requestCount) => {
         promises.push(ice.socket.send('/auth/server/settings'));
     }
     await Promise.all(promises);
-    console.log(`Throttle test sent ${requestCount} requests in ${Date.now() - start}ms`);
+    console.log(
+        `Throttle test sent ${requestCount} requests in ${Date.now() - start}ms`
+    );
 };
 
 /* eslint-enable */

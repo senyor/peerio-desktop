@@ -11,7 +11,7 @@ class PasscodeLock extends React.Component {
     @observable passcode = '';
     @observable error;
 
-    handleChange = (val) => {
+    handleChange = val => {
         this.passcode = val;
         this.validatePasscode();
     };
@@ -29,7 +29,8 @@ class PasscodeLock extends React.Component {
         if (ref) ref.focus();
     }
     validatePasscode = _.debounce(() => {
-        User.current.validatePasscode(this.passcode)
+        User.current
+            .validatePasscode(this.passcode)
             .then(this.unlock)
             .catch(this.handleError);
     }, 350);
@@ -38,12 +39,14 @@ class PasscodeLock extends React.Component {
         return (
             <div className="passcode-lock">
                 <p>{t('title_enterPasswordDetail')}</p>
-                <Input type="password"
+                <Input
+                    type="password"
                     value={this.passcode}
                     label={t('title_devicePassword')}
                     onChange={this.handleChange}
                     error={this.error}
-                    innerRef={this.onInputMount} />
+                    innerRef={this.onInputMount}
+                />
             </div>
         );
     }

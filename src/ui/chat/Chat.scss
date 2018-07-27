@@ -7,7 +7,8 @@
   // FIXME remove calc?
   width: calc(100vw - 336px);
 
-  .message-toolbar { }
+  .message-toolbar {
+  }
 
   .messages-and-sidebar-container {
     @extend %flex-row;
@@ -47,7 +48,7 @@
     height: 3ex;
     min-height: 20px;
     min-width: 20px;
-    margin: -.2ex .15em .2ex;
+    margin: -0.2ex 0.15em 0.2ex;
     vertical-align: middle;
     transition: transform 50ms ease;
     //  width: auto;

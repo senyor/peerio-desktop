@@ -9,9 +9,7 @@
 // @ts-ignore (doesn't recognize json files)
 const emojiJson = require('~/static/emoji/emoji.json');
 
-
 const pngFolder = './static/emoji/png/';
-
 
 /**
  * @typedef {Object} Emoji
@@ -56,7 +54,6 @@ const emojiCategories = [
     { id: 'flags', name: 'Flags' }
 ];
 
-
 /**
  * Maps a _unique_ shortname to each emoji; no aliases (alternate shortnames) are included in this object.
  * @type {{ [shortname : string] : Emoji}}
@@ -74,15 +71,16 @@ Object.values(emojiJson.byCategory).forEach(emojiList => {
 
 Object.keys(emojiJson.byAllShortnames).forEach(alias => {
     // @ts-ignore (assigning a new type)
-    emojiJson.byAllShortnames[alias] = emojiByCanonicalShortname[emojiJson.byAllShortnames[alias]];
+    emojiJson.byAllShortnames[alias] =
+        emojiByCanonicalShortname[emojiJson.byAllShortnames[alias]];
 });
 
 Object.keys(emojiJson.byAscii).forEach(ascii => {
     // @ts-ignore (assigning a new type)
-    emojiJson.byAscii[ascii] = emojiByCanonicalShortname[emojiJson.byAscii[ascii]];
+    emojiJson.byAscii[ascii] =
+        emojiByCanonicalShortname[emojiJson.byAscii[ascii]];
 });
 // -----------------
-
 
 /**
  * Maps categories to arrays of emoji.

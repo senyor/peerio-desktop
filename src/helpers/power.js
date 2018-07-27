@@ -12,21 +12,23 @@ const { socket } = require('peerio-icebear');
 function suspendHandler() {
     console.log('The system is going to sleep');
     if (!socket.authenticated) return;
-    socket.send('/auth/push/enable')
-        .catch(err => {
-            console.error(err);
-            console.log('Failed to enable push notifications on OS sleep.');
-        });
+    socket.send('/auth/push/enable').catch(err => {
+        console.error(err);
+        console.log('Failed to enable push notifications on OS sleep.');
+    });
 }
 
 function resumeHandler() {
     console.log('The system is going to resume');
     if (!socket.authenticated) return;
-    socket.send('/auth/push/disable')
+    socket
+        .send('/auth/push/disable')
         .timeout(3000) // short timeout here will let us avoid long lags in connection that happen after sleep
         .catch(err => {
             console.error(err);
-            console.log('Connection seems to be broken after OS resume, forcibly reconnecting to avoid lag.');
+            console.log(
+                'Connection seems to be broken after OS resume, forcibly reconnecting to avoid lag.'
+            );
             socket.reset();
         });
 }

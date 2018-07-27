@@ -8,8 +8,26 @@ const { User } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 
-function createOnboardingItem(icon, title, description, descriptionFinished, valueFn, action, extraClass, buttonItem) {
-    return { icon, title, description, descriptionFinished, valueFn, action, extraClass, buttonItem };
+function createOnboardingItem(
+    icon,
+    title,
+    description,
+    descriptionFinished,
+    valueFn,
+    action,
+    extraClass,
+    buttonItem
+) {
+    return {
+        icon,
+        title,
+        description,
+        descriptionFinished,
+        valueFn,
+        action,
+        extraClass,
+        buttonItem
+    };
 }
 
 @observer
@@ -17,7 +35,10 @@ class Onboarding extends React.Component {
     @observable waiting = false;
 
     get items() {
-        const { currentInvitedPeopleBonus, maxInvitedPeopleBonus } = User.current;
+        const {
+            currentInvitedPeopleBonus,
+            maxInvitedPeopleBonus
+        } = User.current;
         return [
             createOnboardingItem(
                 'mail',
@@ -53,7 +74,10 @@ class Onboarding extends React.Component {
             ),
             createOnboardingItem(
                 'person_add',
-                t('title_onboardingInvitePeople', { current: currentInvitedPeopleBonus, max: maxInvitedPeopleBonus }),
+                t('title_onboardingInvitePeople', {
+                    current: currentInvitedPeopleBonus,
+                    max: maxInvitedPeopleBonus
+                }),
                 t('title_onboardingInvitePeopleContent'),
                 t('title_onboardingStorageUnlocked', { amount: '250' }),
                 () => currentInvitedPeopleBonus >= maxInvitedPeopleBonus,
@@ -78,13 +102,27 @@ class Onboarding extends React.Component {
     }
 
     renderItem = (item, index) => {
-        const { icon, title, description, descriptionFinished, valueFn, action, extraClass, buttonItem } = item;
+        const {
+            icon,
+            title,
+            description,
+            descriptionFinished,
+            valueFn,
+            action,
+            extraClass,
+            buttonItem
+        } = item;
         const done = valueFn();
         return (
-            <div key={title}
+            <div
+                key={title}
                 onClick={done ? null : action}
-                className={css('onboarding-to-do',
-                    { 'done-first': done && index === 0, done, clickable: !done && !!action })}>
+                className={css('onboarding-to-do', {
+                    'done-first': done && index === 0,
+                    done,
+                    clickable: !done && !!action
+                })}
+            >
                 <div className="done-container">
                     <MaterialIcon icon={done ? 'check' : icon} />
                     <div className="extraclass-container">
@@ -106,20 +144,30 @@ class Onboarding extends React.Component {
                 <div className="onboarding-content">
                     <div className="display-1">{t('title_onboarding1')}</div>
                     <div className="title">{t('title_onboarding2')}</div>
-                    <p>{t('title_earned', { current: currentOnboardingBonus, max: maximumOnboardingBonus })}</p>
+                    <p>
+                        {t('title_earned', {
+                            current: currentOnboardingBonus,
+                            max: maximumOnboardingBonus
+                        })}
+                    </p>
                     <div className="onboarding-to-dos">
-                        {this.items.filter(item => !item.valueFn()).map(this.renderItem)}
-                        {this.items.filter(item => item.valueFn()).map(this.renderItem)}
+                        {this.items
+                            .filter(item => !item.valueFn())
+                            .map(this.renderItem)}
+                        {this.items
+                            .filter(item => item.valueFn())
+                            .map(this.renderItem)}
                     </div>
                     <div className="usage-cloud-container">
                         <UsageCloud />
                     </div>
-                    <div className="onboarding-info">{t('title_onboardingLink')}</div>
+                    <div className="onboarding-info">
+                        {t('title_onboardingLink')}
+                    </div>
                 </div>
             </div>
         );
     }
 }
-
 
 module.exports = Onboarding;

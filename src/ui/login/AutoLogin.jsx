@@ -5,7 +5,8 @@ const autologin = require('~/helpers/autologin');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 
-@observer class AutoLogin extends React.Component {
+@observer
+class AutoLogin extends React.Component {
     enable() {
         autologin.enable();
         autologin.dontSuggestEnablingAgain();
@@ -18,16 +19,23 @@ const T = require('~/ui/shared-components/T');
     }
     render() {
         return (
-            <div className="auto-sign-in" >
+            <div className="auto-sign-in">
                 <div className="content">
-                    <img alt="peerio" className="logo" src="static/img/logo-white.png" />
-                    <div className="display-2">{t('title_enableAutomatic')}</div>
+                    <img
+                        alt="peerio"
+                        className="logo"
+                        src="static/img/logo-white.png"
+                    />
+                    <div className="display-2">
+                        {t('title_enableAutomatic')}
+                    </div>
                     <div className="options">
                         <div className="option">
                             <Button
                                 label={t('button_enable')}
                                 value="enable"
-                                onClick={this.enable} />
+                                onClick={this.enable}
+                            />
                             <p>
                                 <T k="title_enableAutomatic1" />
                             </p>
@@ -36,7 +44,8 @@ const T = require('~/ui/shared-components/T');
                             <Button
                                 label={t('button_disable')}
                                 value="disable"
-                                onClick={this.disable} />
+                                onClick={this.disable}
+                            />
                             <p>
                                 <T k="title_enableAutomatic2" />
                             </p>
@@ -47,6 +56,5 @@ const T = require('~/ui/shared-components/T');
         );
     }
 }
-
 
 module.exports = AutoLogin;

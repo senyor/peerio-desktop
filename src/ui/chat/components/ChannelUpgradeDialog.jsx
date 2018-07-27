@@ -38,7 +38,8 @@ class ChannelUpgradeDialog extends React.Component {
                 actions={dialogActions}
                 onCancel={this.hide}
                 title={t('title_limitDialog')}
-                theme="warning">
+                theme="warning"
+            >
                 <p>{t('title_limitDialogText1', { limit })}</p>
                 <br />
                 <p>{t('title_limitDialogText2')}</p>

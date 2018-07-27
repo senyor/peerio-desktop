@@ -69,28 +69,31 @@ class UpdaterStore {
             }
         });
 
-        ipcRenderer.on('update-downloaded', (ev, downloadedFile, manifest, mandatory) => {
-            console.log('Update downloaded');
-            this.mandatory = mandatory || clientApp.clientVersionDeprecated;
-            this.readyToInstall = true;
-            this.scheduleInstallOnQuit();
-            if (this.mandatory) {
-                this.askToInstall = true;
-            } else {
-                // Turn on askToInstall flag in 12 hours (and every 12 hours after that)
-                // to remind to install updates if the app didn't quit.
-                // We ask nicely 2 times, but the 3rd time the update will be mandatory.
-                let askCount = 0;
-                setInterval(() => {
-                    if (this.installing) return;
-                    if (askCount++ >= 2) {
-                        this.mandatory = true;
-                    }
+        ipcRenderer.on(
+            'update-downloaded',
+            (ev, downloadedFile, manifest, mandatory) => {
+                console.log('Update downloaded');
+                this.mandatory = mandatory || clientApp.clientVersionDeprecated;
+                this.readyToInstall = true;
+                this.scheduleInstallOnQuit();
+                if (this.mandatory) {
                     this.askToInstall = true;
-                }, 12 * 60 * 60 * 1000);
-                warnings.add('title_updateWillBeInstalled');
+                } else {
+                    // Turn on askToInstall flag in 12 hours (and every 12 hours after that)
+                    // to remind to install updates if the app didn't quit.
+                    // We ask nicely 2 times, but the 3rd time the update will be mandatory.
+                    let askCount = 0;
+                    setInterval(() => {
+                        if (this.installing) return;
+                        if (askCount++ >= 2) {
+                            this.mandatory = true;
+                        }
+                        this.askToInstall = true;
+                    }, 12 * 60 * 60 * 1000);
+                    warnings.add('title_updateWillBeInstalled');
+                }
             }
-        });
+        );
 
         ipcRenderer.on('checking-for-update', () => {
             this.checking = true;
@@ -118,14 +121,19 @@ class UpdaterStore {
         ipcRenderer.send('update-check-last-failed');
 
         // Force check and install if client is deprecated.
-        when(() => clientApp.clientVersionDeprecated, () => {
-            this.quitAndRetryInstall();
-        });
+        when(
+            () => clientApp.clientVersionDeprecated,
+            () => {
+                this.quitAndRetryInstall();
+            }
+        );
     }
 
     cleanup() {
         return new Promise(resolve => {
-            ipcRenderer.once('update-cleanup-done', () => { resolve(); });
+            ipcRenderer.once('update-cleanup-done', () => {
+                resolve();
+            });
             ipcRenderer.send('update-cleanup');
         });
     }

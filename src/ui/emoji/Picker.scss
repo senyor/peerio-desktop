@@ -54,7 +54,7 @@ $picker-border-radius: 6px;
       cursor: pointer;
       margin: 14px 7px 7px;
       box-sizing: content-box;
-      transition: transform .15s ease;
+      transition: transform 0.15s ease;
       // zoom: .5;
     }
 
@@ -79,7 +79,7 @@ $picker-border-radius: 6px;
     border-top: 1px solid #d9d9d9;
 
     .emojione {
-      zoom: .8;
+      zoom: 0.8;
       flex-shrink: 0;
       margin-right: 10px;
     }
@@ -103,18 +103,18 @@ $picker-border-radius: 6px;
     cursor: pointer;
     padding: 10px 10px 7px;
     box-sizing: border-box;
-    transition: opacity .2s, background-color .2s;
-    opacity: .2;
+    transition: opacity 0.2s, background-color 0.2s;
+    opacity: 0.2;
   }
 
   .category:hover {
-    opacity: .6;
+    opacity: 0.6;
     background-color: #e0e0e0;
   }
 
   .category.selected {
     padding: 10px 10px 4px;
-    opacity: .6;
+    opacity: 0.6;
     border-bottom: 3px solid #3b97cc;
   }
 

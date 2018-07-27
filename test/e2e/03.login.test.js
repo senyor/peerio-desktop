@@ -18,7 +18,7 @@ describe('Login:', function() {
     // });
 
     // it('cannot log in with bad password/passcode', function() {
-        // this will be very slow
+    // this will be very slow
     // });
 
     // it('cannot log in with legacy username', function() {

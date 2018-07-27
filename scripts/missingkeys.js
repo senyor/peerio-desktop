@@ -1,8 +1,9 @@
 const fs = require('fs');
 const glob = require('glob');
 
-const keys = JSON.parse(fs.readFileSync('../app/node_modules/peerio-icebear/src/copy/en.json'));
-
+const keys = JSON.parse(
+    fs.readFileSync('../app/node_modules/peerio-icebear/src/copy/en.json')
+);
 
 glob('../**/*.jsx', (err, files) => {
     for (const i of files) {
@@ -18,4 +19,3 @@ glob('../**/*.jsx', (err, files) => {
         }
     }
 });
-

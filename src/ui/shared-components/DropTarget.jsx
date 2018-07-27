@@ -20,7 +20,10 @@ class DropTarget extends React.Component {
     fileDropHandler = (list, trees) => {
         if (this.dialogActive || list.success.length === 0) return;
         this._files = list.success;
-        if (routerStore.currentRoute === routerStore.ROUTES.chats && chatStore.activeChat) {
+        if (
+            routerStore.currentRoute === routerStore.ROUTES.chats &&
+            chatStore.activeChat
+        ) {
             this.dialogActive = true;
             return;
         }
@@ -64,8 +67,12 @@ class DropTarget extends React.Component {
                 <div className="drop-content">
                     <MaterialIcon icon="cloud_upload" />
                     <div className="display-2">
-                        {t('title_dropToUpload', { count: ''/* dragStore.hoveringFileCount */ })}
-                        <div className="display-1">{/* util.formatBytes(dragStore.hoveringFileSize) */}</div>
+                        {t('title_dropToUpload', {
+                            count: '' /* dragStore.hoveringFileCount */
+                        })}
+                        <div className="display-1">
+                            {/* util.formatBytes(dragStore.hoveringFileSize) */}
+                        </div>
                     </div>
                 </div>
             </div>

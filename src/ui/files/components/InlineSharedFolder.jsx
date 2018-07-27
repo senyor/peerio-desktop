@@ -12,7 +12,6 @@ const { t } = require('peerio-translator');
 const { Button, MaterialIcon } = require('peer-ui');
 const SharedFolderActions = require('./SharedFolderActions');
 
-
 /**
  * @augments {React.Component<{
         folderId: string
@@ -26,20 +25,24 @@ class InlineSharedFolder extends React.Component {
     }
 
     get isShared() {
-        return !!this.volume.allParticipants.find(p => p.username === chatStore.activeChat.dmPartnerUsername);
+        return !!this.volume.allParticipants.find(
+            p => p.username === chatStore.activeChat.dmPartnerUsername
+        );
     }
 
     click = () => {
         fileStore.folderStore.currentFolder = this.volume;
         routerStore.navigateTo(routerStore.ROUTES.files);
-    }
+    };
 
-    @action.bound unshareFolder() {
+    @action.bound
+    unshareFolder() {
         const contact = chatStore.activeChat.otherParticipants[0];
         this.volume.removeParticipant(contact);
     }
 
-    @action.bound reshareFolder() {
+    @action.bound
+    reshareFolder() {
         const contact = chatStore.activeChat.otherParticipants[0];
         this.volume.addParticipants([contact]);
     }
@@ -69,31 +72,44 @@ class InlineSharedFolder extends React.Component {
                 <div className="inline-files">
                     <div className="shared-file inline-files-topbar">
                         <div className="container">
-                            <div className="file-name-container clickable"
+                            <div
+                                className="file-name-container clickable"
                                 onClick={this.click}
                             >
                                 <div className="file-icon">
-                                    <MaterialIcon icon={this.isShared ? 'folder_shared' : 'folder'} />
+                                    <MaterialIcon
+                                        icon={
+                                            this.isShared
+                                                ? 'folder_shared'
+                                                : 'folder'
+                                        }
+                                    />
                                 </div>
                                 <div className="file-name">
-                                    {this.isShared
-                                        ? volume.name
-                                        : <T k="title_folderNameUnshared">{{ folderName: volume.name }}</T>
-                                    }
+                                    {this.isShared ? (
+                                        volume.name
+                                    ) : (
+                                        <T k="title_folderNameUnshared">
+                                            {{ folderName: volume.name }}
+                                        </T>
+                                    )}
                                 </div>
                             </div>
-                            {this.props.sharedByMe
-                                ? (this.isShared
-                                    ? <SharedFolderActions
+                            {this.props.sharedByMe ? (
+                                this.isShared ? (
+                                    <SharedFolderActions
                                         onShare={null}
                                         onDownload={null}
                                         onUnshare={this.unshareFolder}
                                         onDelete={null}
                                     />
-                                    : <Button label={t('button_reshare')} onClick={this.reshareFolder} />
+                                ) : (
+                                    <Button
+                                        label={t('button_reshare')}
+                                        onClick={this.reshareFolder}
+                                    />
                                 )
-                                : null
-                            }
+                            ) : null}
                         </div>
                     </div>
                 </div>

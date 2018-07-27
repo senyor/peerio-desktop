@@ -7,7 +7,6 @@ const { User, contactStore } = require('peerio-icebear');
 const { sanitizeChatMessage } = require('~/helpers/sanitizer');
 const { isUrlAllowed } = require('~/helpers/url');
 
-
 const emojione = require('~/static/emoji/emojione.js');
 
 emojione.ascii = true;
@@ -19,20 +18,26 @@ let ownMentionRegex;
 function highlightMentions(str) {
     // eslint-disable-next-line no-return-assign
     return str.replace(
-        ownMentionRegex || (ownMentionRegex = contactStore.getContact(User.current.username).mentionRegex),
+        ownMentionRegex ||
+            (ownMentionRegex = contactStore.getContact(User.current.username)
+                .mentionRegex),
         '<span class="mention self">$&</span>'
     );
 }
 
 const mentionRegex = /(\s*|^)@([a-zA-Z0-9_]{1,32})/gm;
 function linkifyMentions(str) {
-    return str.replace(mentionRegex, '$1<span class="mention clickable" onClick=legacyOpenContact("$2")>@$2</span>');
+    return str.replace(
+        mentionRegex,
+        '$1<span class="mention clickable" onClick=legacyOpenContact("$2")>@$2</span>'
+    );
 }
 
 const inlinePreRegex = /`(.*)`/g;
 const blockPreRegex = /`{3}([^`]*)`{3}/g;
 function formatPre(str) {
-    return str.replace(blockPreRegex, '<div class="pre">$1</div>')
+    return str
+        .replace(blockPreRegex, '<div class="pre">$1</div>')
         .replace(inlinePreRegex, '<span class="pre">$1</span>');
 }
 
@@ -79,7 +84,6 @@ export function processMessageForDisplay(msg) {
 
     // we don't expect any html in original text,
     // if there are any tags - user entered them, we consider them plaintext and encode
-
 
     // we don't expect any html in original text,
     // if there are any tags - user entered them, we consider them plaintext and encode

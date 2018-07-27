@@ -7,7 +7,7 @@ const { app, BrowserWindow, globalShortcut } = require('electron');
 
 let mainWindow;
 
-process.on('uncaughtException', (error) => {
+process.on('uncaughtException', error => {
     console.error('uncaughtException in Node:', error);
 });
 
@@ -76,7 +76,13 @@ if (
 
 // For dev builds we want to use separate user data directory
 if (isDevEnv) {
-    app.setPath('userData', path.resolve(app.getPath('appData'), `${app.getName().toLowerCase()}_dev`));
+    app.setPath(
+        'userData',
+        path.resolve(
+            app.getPath('appData'),
+            `${app.getName().toLowerCase()}_dev`
+        )
+    );
 }
 
 // configure logging
@@ -86,18 +92,23 @@ const devtools = require('~/main-process/dev-tools');
 const buildContextMenu = require('~/main-process/context-menu');
 const buildGlobalShortcuts = require('~/main-process/global-shortcuts');
 const applyMiscHooks = require('~/main-process/misc-hooks');
-const { saveWindowState, getSavedWindowState } = require('~/main-process/state-persistance');
+const {
+    saveWindowState,
+    getSavedWindowState
+} = require('~/main-process/state-persistance');
 const setMainMenu = require('~/main-process/main-menu');
 const { isAppInDMG, handleLaunchFromDMG } = require('~/main-process/dmg');
 const updater = require('./main-process/updater');
 const config = require('~/config');
 
-
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
 app.commandLine.appendSwitch('disk-cache-size', 200 * 1024 * 1024);
 app.commandLine.appendSwitch('js-flags', '--harmony_regexp_lookbehind');
 if (process.env.REMOTE_DEBUG_PORT !== undefined) {
-    app.commandLine.appendSwitch('remote-debugging-port', process.env.REMOTE_DEBUG_PORT);
+    app.commandLine.appendSwitch(
+        'remote-debugging-port',
+        process.env.REMOTE_DEBUG_PORT
+    );
 }
 
 let mustCloseWindow = false;
@@ -119,13 +130,16 @@ app.on('ready', async () => {
     await config.FileStream.createTempCache();
 
     const windowState = await getSavedWindowState();
-    const winConfig = Object.assign({
-        show: false,
-        center: true,
-        minWidth: 900,
-        minHeight: 728,
-        title: app.getName()
-    }, windowState);
+    const winConfig = Object.assign(
+        {
+            show: false,
+            center: true,
+            minWidth: 900,
+            minHeight: 728,
+            title: app.getName()
+        },
+        windowState
+    );
 
     if (isDevEnv) {
         winConfig.title = `${winConfig.title} DEV`;

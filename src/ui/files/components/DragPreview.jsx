@@ -23,31 +23,25 @@ class DragPreview extends React.Component {
         if (filesAndFoldersCount === 1) {
             if (files.length > 0) {
                 displayName = files[0].name;
-                iconComponent = (<FileSpriteIcon
-                    type={files[0].iconType}
-                    size="medium"
-                />);
+                iconComponent = (
+                    <FileSpriteIcon type={files[0].iconType} size="medium" />
+                );
             } else {
                 displayName = folders[0].name;
                 iconComponent = <MaterialIcon icon="folder" />;
             }
         } else {
-            displayName = t('title_draggingMultipleItems', { count: filesAndFoldersCount });
-            iconComponent = (<FileSpriteIcon
-                type="other"
-                size="medium"
-            />);
+            displayName = t('title_draggingMultipleItems', {
+                count: filesAndFoldersCount
+            });
+            iconComponent = <FileSpriteIcon type="other" size="medium" />;
         }
 
         return (
             <div className={css('files-dragpreview', { 'can-drop': canDrop })}>
                 <div className="body">
-                    <div className="file-icon">
-                        {iconComponent}
-                    </div>
-                    <div className="file-description">
-                        {displayName}
-                    </div>
+                    <div className="file-icon">{iconComponent}</div>
+                    <div className="file-description">{displayName}</div>
                 </div>
             </div>
         );

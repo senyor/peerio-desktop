@@ -33,11 +33,17 @@ const {
 } = require('prosemirror-state');
 const { keymap } = require('prosemirror-keymap');
 
-const { chatSchema, isWhitespaceOnly, emptyDoc } = require('~/helpers/chat/prosemirror/chat-schema');
+const {
+    chatSchema,
+    isWhitespaceOnly,
+    emptyDoc
+} = require('~/helpers/chat/prosemirror/chat-schema');
 const { chatPlugins } = require('~/helpers/chat/prosemirror/chat-plugins');
 const { placeholder } = require('~/helpers/chat/prosemirror/placeholder');
 const { linkify } = require('~/helpers/chat/prosemirror/linkify-text');
-const { ensureMentions } = require('~/helpers/chat/prosemirror/ensure-mentions');
+const {
+    ensureMentions
+} = require('~/helpers/chat/prosemirror/ensure-mentions');
 
 const { t } = require('peerio-translator');
 const { Button } = require('peer-ui');
@@ -51,11 +57,14 @@ const makeEmojiSuggestions = require('./suggestions/EmojiSuggestions');
 // eslint-disable-next-line no-unused-vars, (used for typechecking)
 const Suggestions = require('./suggestions/Suggestions');
 
-const { BoldButton, ItalicButton, StrikeButton } = require('./FormattingButton');
+const {
+    BoldButton,
+    ItalicButton,
+    StrikeButton
+} = require('./FormattingButton');
 const FormattingToolbar = require('./FormattingToolbar');
 
 const Toolbar = new FormattingToolbar();
-
 
 // ---------------------------------
 // BEGIN KIND OF JANKY CACHING CODE:
@@ -89,16 +98,20 @@ function onEmojiPicked(emoji) {
 function insertEmoji(emoji, state, dispatch) {
     const type = chatSchema.nodes.emoji;
     const { $from } = state.selection;
-    if (!$from.parent.canReplaceWith($from.index(), $from.index(), type)) return false;
+    if (!$from.parent.canReplaceWith($from.index(), $from.index(), type))
+        return false;
     if (dispatch) {
-        dispatch(state.tr.replaceSelectionWith(type.create({
-            shortname: emoji.shortname
-        })));
+        dispatch(
+            state.tr.replaceSelectionWith(
+                type.create({
+                    shortname: emoji.shortname
+                })
+            )
+        );
     }
     return true;
 }
 // ---------------------------------
-
 
 // Reminder that the JSDoc modifiers @private and @readonly below are basically
 // for fun, since we're not generating documentation and TypeScript can't
@@ -173,14 +186,20 @@ class MessageInputProseMirror extends React.Component {
 
         currentInputInstance = this;
         if (!cachedPicker) {
-            cachedPicker = (<EmojiPicker
-                key="emoji-picker"
-                onPicked={onEmojiPicked}
-                onBlur={() => { currentInputInstance.hideEmojiPicker(); }}
-            />);
+            cachedPicker = (
+                <EmojiPicker
+                    key="emoji-picker"
+                    onPicked={onEmojiPicked}
+                    onBlur={() => {
+                        currentInputInstance.hideEmojiPicker();
+                    }}
+                />
+            );
         }
 
-        this.usernameSuggestions = makeUsernameSuggestions(() => this.editorView);
+        this.usernameSuggestions = makeUsernameSuggestions(
+            () => this.editorView
+        );
         this.emojiSuggestions = makeEmojiSuggestions(() => this.editorView);
 
         // Note the ordering: the suggestions plugin has to come before the
@@ -194,15 +213,17 @@ class MessageInputProseMirror extends React.Component {
                 // using `this.props.onSend` and `this.clearEditor`.
                 Enter: (
                     // TODO/TS: these can be added to the PM typings on definitelytyped
-                    /** @type {EditorState} */state,
-                    /** @type {(tr : Transaction) => void} */dispatch,
-                    /** @type {EditorView} */view
+                    /** @type {EditorState} */ state,
+                    /** @type {(tr : Transaction) => void} */ dispatch,
+                    /** @type {EditorView} */ view
                 ) => {
                     if (isWhitespaceOnly(state.doc)) return false;
 
                     if (dispatch) {
                         const linkifiedState = linkify(state);
-                        const mentionifiedState = ensureMentions(linkifiedState);
+                        const mentionifiedState = ensureMentions(
+                            linkifiedState
+                        );
 
                         // For the plaintext version of our message, we grab the
                         // view element's `textContent` -- ProseMirror nodes
@@ -227,12 +248,17 @@ class MessageInputProseMirror extends React.Component {
                         // insert line breaks after them, to extract text with proper
                         // line breaks, we deep clone the editor's DOM node and append
                         // '\n' after each <br>.
-                        const domClone = /** @type {Element} */ (view.dom.cloneNode(true));
+                        const domClone = /** @type {Element} */ (view.dom.cloneNode(
+                            true
+                        ));
                         domClone.querySelectorAll('br').forEach(br => {
                             br.insertAdjacentText('afterend', '\n');
                         });
 
-                        this.props.onSend(mentionifiedState.doc.toJSON(), domClone.textContent);
+                        this.props.onSend(
+                            mentionifiedState.doc.toJSON(),
+                            domClone.textContent
+                        );
                         this.clearEditor();
                     }
 
@@ -244,10 +270,15 @@ class MessageInputProseMirror extends React.Component {
     }
 
     componentDidMount() {
-        this.disposer = observe(chatStore, 'activeChat', change => {
-            this.backupUnsentMessage(change.oldValue);
-            this.restoreUnsentMessage(change.newValue);
-        }, true);
+        this.disposer = observe(
+            chatStore,
+            'activeChat',
+            change => {
+                this.backupUnsentMessage(change.oldValue);
+                this.restoreUnsentMessage(change.newValue);
+            },
+            true
+        );
     }
 
     componentWillUnmount() {
@@ -263,9 +294,13 @@ class MessageInputProseMirror extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.placeholder !== prevProps.placeholder) {
-            this.editorView.updateState(this.editorView.state.reconfigure({
-                plugins: this.getConfiguredPlugins(this.editorView.state.doc)
-            }));
+            this.editorView.updateState(
+                this.editorView.state.reconfigure({
+                    plugins: this.getConfiguredPlugins(
+                        this.editorView.state.doc
+                    )
+                })
+            );
         }
     }
 
@@ -310,7 +345,11 @@ class MessageInputProseMirror extends React.Component {
             }
 
             view.state.doc = Node.fromJSON(chatSchema, savedState);
-            view.setProps({ state: view.state.apply(view.state.tr.setSelection(Selection.atEnd(view.state.doc))) });
+            view.setProps({
+                state: view.state.apply(
+                    view.state.tr.setSelection(Selection.atEnd(view.state.doc))
+                )
+            });
             view.focus();
         } catch (err) {
             console.error(`Can't restore unsent message:`, err);
@@ -334,7 +373,7 @@ class MessageInputProseMirror extends React.Component {
     onInputBlur = () => {
         this.usernameSuggestions.dismiss();
         this.emojiSuggestions.dismiss();
-    }
+    };
 
     render() {
         /*

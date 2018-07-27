@@ -17,9 +17,7 @@ function ZeroScreen(props) {
                     </div>
                     <div className="instructions-container">
                         <div className="text-container">
-                            <p>
-                                {t('title_filesNull2')}
-                            </p>
+                            <p>{t('title_filesNull2')}</p>
                             <Button
                                 onClick={props.onUpload}
                                 label={t('button_upload')}
@@ -30,7 +28,8 @@ function ZeroScreen(props) {
                 </div>
                 <div className="spacer" />
             </div>
-        </div>);
+        </div>
+    );
 }
 
 module.exports = ZeroScreen;

@@ -38,19 +38,20 @@ class MessageInput extends React.Component {
     @observable uploadDialogActive = false;
     selectedFiles = [];
 
-    @action.bound activateUploadDialog() {
+    @action.bound
+    activateUploadDialog() {
         const chat = chatStore.activeChat;
         if (!chat) return;
-        pickLocalFiles()
-            .then(paths => {
-                paths = getFileList(paths).success; // eslint-disable-line
-                if (!paths || !paths.length) return;
-                this.selectedFiles = paths;
-                this.uploadDialogActive = true;
-            });
+        pickLocalFiles().then(paths => {
+            paths = getFileList(paths).success; // eslint-disable-line
+            if (!paths || !paths.length) return;
+            this.selectedFiles = paths;
+            this.uploadDialogActive = true;
+        });
     }
 
-    @action.bound deactivateUploadDialog() {
+    @action.bound
+    deactivateUploadDialog() {
         this.uploadDialogActive = false;
         this.selectedFiles = [];
     }
@@ -59,7 +60,7 @@ class MessageInput extends React.Component {
      * Drag-and-drop is handled by another component higher in the hierarchy,
      * so we use this event handler to ensure drops aren't caught in our input field.
      */
-    preventDrop = (e) => {
+    preventDrop = e => {
         e.preventDefault();
         return false;
     };
@@ -78,7 +79,7 @@ class MessageInput extends React.Component {
         this.filePickerActive = true;
     };
 
-    onPaste = (ev) => {
+    onPaste = ev => {
         const chat = chatStore.activeChat;
         if (!chat) return;
         const { items } = ev.clipboardData;
@@ -90,11 +91,14 @@ class MessageInput extends React.Component {
             ev.stopPropagation();
             const reader = new FileReader();
             if (!confirm(t('title_uploadPastedFile'))) break;
-            const tmpPath = path.join(os.tmpdir(), `peerio-${Date.now()}.${items[i].type.split('/')[1]}`);
+            const tmpPath = path.join(
+                os.tmpdir(),
+                `peerio-${Date.now()}.${items[i].type.split('/')[1]}`
+            );
 
             reader.onloadend = () => {
                 const buffer = Buffer.from(reader.result);
-                fs.writeFile(tmpPath, buffer, {}, (err) => {
+                fs.writeFile(tmpPath, buffer, {}, err => {
                     if (err) {
                         console.error(err);
                         return;
@@ -105,7 +109,7 @@ class MessageInput extends React.Component {
             reader.readAsArrayBuffer(blob);
             break;
         }
-    }
+    };
 
     renderFilePicker() {
         return (
@@ -119,35 +123,46 @@ class MessageInput extends React.Component {
     }
 
     @observable snackbarRef;
-    @action.bound setSnackbarRef(ref) {
+    @action.bound
+    setSnackbarRef(ref) {
         if (ref) this.snackbarRef = ref;
     }
 
-    @computed get snackbarVisible() {
+    @computed
+    get snackbarVisible() {
         if (this.snackbarRef) return this.snackbarRef.isVisible;
         return false;
     }
 
-    @computed get jumpToBottomVisible() {
-        return this.props.messageListScrolledUp || chatStore.activeChat.canGoDown ||
-            (!clientApp.isReadingNewestMessages && chatStore.activeChat.unreadCount > 0);
+    @computed
+    get jumpToBottomVisible() {
+        return (
+            this.props.messageListScrolledUp ||
+            chatStore.activeChat.canGoDown ||
+            (!clientApp.isReadingNewestMessages &&
+                chatStore.activeChat.unreadCount > 0)
+        );
     }
 
     renderJumpToBottom() {
         if (!this.jumpToBottomVisible) return null;
         const chat = chatStore.activeChat;
         return (
-            <div className={css(
-                'jump-to-bottom',
-                {
+            <div
+                className={css('jump-to-bottom', {
                     'snackbar-visible': this.snackbarVisible,
                     'share-in-progress': this.props.shareInProgress
-                }
-            )}>
-                <Button icon="keyboard_arrow_down" onClick={this.props.onJumpToBottom} />
-                {chat.unreadCount > 0 &&
-                    <div className="unread-badge">{chat.unreadCount < 100 ? chat.unreadCount : '99+'}</div>
-                }
+                })}
+            >
+                <Button
+                    icon="keyboard_arrow_down"
+                    onClick={this.props.onJumpToBottom}
+                />
+                {chat.unreadCount > 0 && (
+                    <div className="unread-badge">
+                        {chat.unreadCount < 100 ? chat.unreadCount : '99+'}
+                    </div>
+                )}
             </div>
         );
     }
@@ -163,31 +178,42 @@ class MessageInput extends React.Component {
         }
         const chat = chatStore.activeChat;
         return (
-            <div className="message-input-wrapper" >
-                <Snackbar className={css('snackbar-chat', { 'share-in-progress': this.props.shareInProgress })}
-                    ref={this.setSnackbarRef} />
-                <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
+            <div className="message-input-wrapper">
+                <Snackbar
+                    className={css('snackbar-chat', {
+                        'share-in-progress': this.props.shareInProgress
+                    })}
+                    ref={this.setSnackbarRef}
+                />
+                <div
+                    className="message-input"
+                    onDrop={this.preventDrop}
+                    onPaste={this.onPaste}
+                >
                     <Menu
                         position="bottom-left"
                         icon="add_circle_outline"
                         tooltip={t('title_shareToChat')}
                     >
-                        <MenuItem value="share"
+                        <MenuItem
+                            value="share"
                             caption={t('title_shareFromFiles')}
                             onClick={this.showFilePicker}
                         />
-                        <MenuItem value="upload"
+                        <MenuItem
+                            value="upload"
                             caption={t('title_uploadAndShare')}
                             onClick={this.activateUploadDialog}
                         />
                     </Menu>
-                    {this.props.readonly
-                        ? <div className="message-editor-empty" >&nbsp;</div>
-                        : <MessageInputProseMirror
+                    {this.props.readonly ? (
+                        <div className="message-editor-empty">&nbsp;</div>
+                    ) : (
+                        <MessageInputProseMirror
                             placeholder={this.props.placeholder}
                             onSend={this.props.onSend}
                         />
-                    }
+                    )}
                     <Button
                         disabled={!chat || !chat.canSendAck}
                         icon="thumb_up"

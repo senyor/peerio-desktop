@@ -6,7 +6,8 @@ class PoweredBy extends React.Component {
             <img
                 className="poweredBy"
                 alt="Powered by Peerio"
-                src="static/img/poweredByPeerio_white.svg" />
+                src="static/img/poweredByPeerio_white.svg"
+            />
         );
     }
 }

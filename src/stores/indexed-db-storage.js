@@ -7,7 +7,8 @@ class IndexedDbStorage extends CacheEngineBase {
     }
 
     getStore(readonly) {
-        return this.db.transaction(this._stores, readonly ? 'readonly' : 'readwrite')
+        return this.db
+            .transaction(this._stores, readonly ? 'readonly' : 'readwrite')
             .objectStore(this.name);
     }
 
@@ -25,7 +26,9 @@ class IndexedDbStorage extends CacheEngineBase {
                 resolve();
             };
             req.onupgradeneeded = ev => {
-                ev.target.result.createObjectStore(this.name, { keyPath: this.keyPath });
+                ev.target.result.createObjectStore(this.name, {
+                    keyPath: this.keyPath
+                });
             };
         });
     }
@@ -118,6 +121,5 @@ class IndexedDbStorage extends CacheEngineBase {
         return indexedDB.deleteDatabase(name);
     }
 }
-
 
 module.exports = IndexedDbStorage;

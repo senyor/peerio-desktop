@@ -7,11 +7,7 @@
 
 const os = require('os');
 const React = require('react');
-const {
-    observable,
-    action,
-    runInAction
-} = require('mobx');
+const { observable, action, runInAction } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 
@@ -28,8 +24,10 @@ const {
 } = require('prosemirror-state');
 const { toggleMark } = require('prosemirror-commands');
 
-const { chatSchema, isEmpty } = require('~/helpers/chat/prosemirror/chat-schema');
-
+const {
+    chatSchema,
+    isEmpty
+} = require('~/helpers/chat/prosemirror/chat-schema');
 
 /**
  * @typedef FormattingConfig
@@ -40,8 +38,7 @@ const { chatSchema, isEmpty } = require('~/helpers/chat/prosemirror/chat-schema'
  */
 
 class FormattingButton {
-    @observable
-    active = false;
+    @observable active = false;
 
     /** @type {EditorView} */
     view;
@@ -66,7 +63,12 @@ class FormattingButton {
                 return {
                     update(view) {
                         if (self.view !== view) self.view = view; // terrible hack, but desperate times...
-                        runInAction(() => { self.active = isMarkActive(view.state, self.markType); });
+                        runInAction(() => {
+                            self.active = isMarkActive(
+                                view.state,
+                                self.markType
+                            );
+                        });
                     }
                 };
             }
@@ -83,24 +85,25 @@ class FormattingButton {
             this.onClick(this.view.state, this.view.dispatch);
             this.view.focus();
         }
-    }
+    };
 
     Component = observer(() => {
         const { active, label, markType } = this;
 
-        return (<div
-            onClick={this.handleClick}
-            className={css(
-                'formatting-button',
-                `formatting-button-${markType.name}`,
-                { 'formatting-button-active': active }
-            )}
-        >
-            {label}
-        </div>);
+        return (
+            <div
+                onClick={this.handleClick}
+                className={css(
+                    'formatting-button',
+                    `formatting-button-${markType.name}`,
+                    { 'formatting-button-active': active }
+                )}
+            >
+                {label}
+            </div>
+        );
     });
 }
-
 
 /**
  * Is the given mark active in the given editor state's selection set?
@@ -110,7 +113,8 @@ class FormattingButton {
  */
 function isMarkActive(state, markType) {
     const { from, $from, to, empty } = state.selection;
-    if (empty) return markType.isInSet(state.storedMarks || $from.marks()) != null;
+    if (empty)
+        return markType.isInSet(state.storedMarks || $from.marks()) != null;
     return state.doc.rangeHasMark(from, to, markType);
 }
 

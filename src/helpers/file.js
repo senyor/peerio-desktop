@@ -13,7 +13,11 @@ function selectDownloadFolder() {
             win,
             {
                 buttonLabel: t('button_download'),
-                properties: ['openDirectory', 'treatPackageAsDirectory', 'createDirectory']
+                properties: [
+                    'openDirectory',
+                    'treatPackageAsDirectory',
+                    'createDirectory'
+                ]
             },
             folders => {
                 if (!folders || !folders.length) {
@@ -63,7 +67,9 @@ function requestDownloadPath(fileName) {
             ext = ext.substring(1); // strip dot
             filters = [
                 {
-                    name: t('dialog_fileTypeForExtension', { extension: ext.toUpperCase() }), // '{extension} File'
+                    name: t('dialog_fileTypeForExtension', {
+                        extension: ext.toUpperCase()
+                    }), // '{extension} File'
                     extensions: [ext]
                 },
                 {
@@ -83,7 +89,8 @@ function requestDownloadPath(fileName) {
             fileSavePath => {
                 if (fileSavePath) resolve(fileSavePath);
                 else reject(new Error('User cancelled save dialog.'));
-            });
+            }
+        );
     });
 }
 
@@ -95,13 +102,22 @@ function downloadFile(file) {
             finalPath = p;
             return file.download(p);
         }) // todo: file.cached is a temporary hack
-        .then(() => file.cached && electron.app.dock && electron.app.dock.downloadFinished(finalPath))
+        .then(
+            () =>
+                file.cached &&
+                electron.app.dock &&
+                electron.app.dock.downloadFinished(finalPath)
+        )
         .then(() => file.cached && electron.shell.showItemInFolder(finalPath));
 }
 
 function pickLocalFiles() {
     return new Promise(resolve => {
-        const properties = ['openFile', 'multiSelections', 'treatPackageAsDirectory'];
+        const properties = [
+            'openFile',
+            'multiSelections',
+            'treatPackageAsDirectory'
+        ];
         if (process.platform === 'darwin') properties.push('openDirectory');
         const win = electron.getCurrentWindow();
         electron.dialog.showOpenDialog(win, { properties }, resolve);
@@ -123,7 +139,9 @@ function pickLocalFiles() {
 function getFileList(paths) {
     // console.debug(paths);
     const ret = {
-        success: [], error: [], restricted: []
+        success: [],
+        error: [],
+        restricted: []
     };
     if (!paths) return ret;
     ret.successBytes = 0;
@@ -138,7 +156,8 @@ function getFileList(paths) {
             if (stat.isDirectory()) {
                 // going into recursion
                 const namesInDir = fs.readdirSync(p);
-                for (let i = 0; i < namesInDir.length; i++) namesInDir[i] = path.join(p, namesInDir[i]);
+                for (let i = 0; i < namesInDir.length; i++)
+                    namesInDir[i] = path.join(p, namesInDir[i]);
                 const nested = getFileList(namesInDir);
                 ret.success.push(...nested.success);
                 ret.error.push(...nested.error);
@@ -172,7 +191,8 @@ function getFileTree(filePath) {
             };
 
             const namesInDir = fs.readdirSync(filePath);
-            for (let i = 0; i < namesInDir.length; i++) namesInDir[i] = path.join(filePath, namesInDir[i]);
+            for (let i = 0; i < namesInDir.length; i++)
+                namesInDir[i] = path.join(filePath, namesInDir[i]);
             namesInDir.forEach(child => {
                 child = getFileTree(child); //eslint-disable-line
                 if (!child) return;
@@ -191,7 +211,6 @@ function getFileTree(filePath) {
         return null;
     }
 }
-
 
 module.exports = {
     downloadFile,

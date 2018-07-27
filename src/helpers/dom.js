@@ -41,9 +41,11 @@ function getParentWithClass(element, className) {
 function getDataProps(props) {
     const dataProps = {};
 
-    Object.keys(props).filter(p => p.startsWith('data-')).forEach(key => {
-        dataProps[key] = props[key];
-    });
+    Object.keys(props)
+        .filter(p => p.startsWith('data-'))
+        .forEach(key => {
+            dataProps[key] = props[key];
+        });
 
     return dataProps;
 }

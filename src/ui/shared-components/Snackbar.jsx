@@ -19,8 +19,12 @@ class Snackbar extends WarningDisplayBase {
     render() {
         const w = warnings.current;
         return (
-            <div className={css(this.props.className, 'snackbar-wrapper', { show: this.isVisible })}
-                onClick={this.dismiss}>
+            <div
+                className={css(this.props.className, 'snackbar-wrapper', {
+                    show: this.isVisible
+                })}
+                onClick={this.dismiss}
+            >
                 <div className="snackbar">
                     {w ? <T k={w.content}>{w.data}</T> : null}
                 </div>

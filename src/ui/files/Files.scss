@@ -27,7 +27,7 @@
     overflow: hidden;
 
     transition: max-height 250ms, min-height 250ms, border-top 250ms;
-    background-color: rgba(4, 11, 65, .15);
+    background-color: rgba(4, 11, 65, 0.15);
     border-top: 4px solid $color-confirmation;
 
     .p-button {
@@ -68,7 +68,7 @@
     }
 
     &.converting-to-volume {
-      background-color: rgba($color-error, .05);
+      background-color: rgba($color-error, 0.05);
     }
   }
 
@@ -88,6 +88,6 @@
   }
 
   .drop-zone-droppable-hovered {
-    background-color: rgba($peerio-teal, .38);
+    background-color: rgba($peerio-teal, 0.38);
   }
 }

@@ -4,12 +4,21 @@ const { app, ipcMain } = require('electron');
 const TinyDb = require('peerio-icebear/dist/db/tiny-db');
 const autoUpdater = require('@peerio/updater')();
 
-TinyDb.system.getValue('pref_prereleaseUpdatesEnabled')
+TinyDb.system
+    .getValue('pref_prereleaseUpdatesEnabled')
     .then(enabled => {
         autoUpdater.allowPrerelease = !!enabled;
-        console.log(`Prerelease updates are ${autoUpdater.allowPrerelease ? 'enabled' : 'disabled'}`);
-    }).catch(err => {
-        console.error('Failed to retrieve prerelease update setting from TinyDb', err);
+        console.log(
+            `Prerelease updates are ${
+                autoUpdater.allowPrerelease ? 'enabled' : 'disabled'
+            }`
+        );
+    })
+    .catch(err => {
+        console.error(
+            'Failed to retrieve prerelease update setting from TinyDb',
+            err
+        );
     });
 
 function start(mainWindow) {
@@ -19,7 +28,9 @@ function start(mainWindow) {
     }
 
     try {
-        autoUpdater.setDownloadsDirectory(path.join(app.getPath('userData'), 'Updates'));
+        autoUpdater.setDownloadsDirectory(
+            path.join(app.getPath('userData'), 'Updates')
+        );
 
         // Handlers for events from renderer process.
 
@@ -51,7 +62,10 @@ function start(mainWindow) {
             if (!failedAttempts) {
                 autoUpdater.cleanup(); // don't care to await it
             }
-            mainWindow.webContents.send('update-failed-attempts', failedAttempts);
+            mainWindow.webContents.send(
+                'update-failed-attempts',
+                failedAttempts
+            );
         });
 
         ipcMain.on('update-cleanup', async () => {
@@ -77,19 +91,32 @@ function start(mainWindow) {
             mainWindow.webContents.send('update-error', err);
         });
 
-        autoUpdater.on('update-downloaded', (downloadedFile, manifest, mandatory) => {
-            mainWindow.webContents.send('update-downloaded', downloadedFile, manifest, mandatory);
-        });
+        autoUpdater.on(
+            'update-downloaded',
+            (downloadedFile, manifest, mandatory) => {
+                mainWindow.webContents.send(
+                    'update-downloaded',
+                    downloadedFile,
+                    manifest,
+                    mandatory
+                );
+            }
+        );
 
         if (!isDevEnv) {
             autoUpdater.failedInstallAttempts().then(failed => {
                 if (!failed) {
                     setTimeout(() => autoUpdater.checkForUpdates(), 3000);
-                    setInterval(() => autoUpdater.checkForUpdates(), 60 * 60 * 1000);
+                    setInterval(
+                        () => autoUpdater.checkForUpdates(),
+                        60 * 60 * 1000
+                    );
                 }
             });
         } else {
-            sendStatusToMainWindow('Updater did not start because dev build was detected.');
+            sendStatusToMainWindow(
+                'Updater did not start because dev build was detected.'
+            );
         }
     } catch (ex) {
         console.error('Error starting updater', ex);

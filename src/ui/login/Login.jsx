@@ -8,6 +8,7 @@ const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
+const Beacon = require('~/ui/shared-components/Beacon');
 const T = require('~/ui/shared-components/T');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
@@ -207,14 +208,16 @@ class LoginStore extends OrderedFormStore {
                                 onKeyPress={this.handleKeyPress}
                                 ref={this.onAKRef}
                                 theme="dark" />
-                            <Button
-                                icon="visibility"
-                                active={this.loginStore.passwordVisible}
-                                tooltip={this.loginStore.passwordVisible ?
-                                    t('title_hideAccountKey') : t('title_showAccountKey')}
-                                tooltipPosition="right"
-                                onClick={this.togglePasswordVisibility}
-                            />
+                            <Beacon>
+                                <Button
+                                    icon="visibility"
+                                    active={this.loginStore.passwordVisible}
+                                    tooltip={this.loginStore.passwordVisible ?
+                                        t('title_hideAccountKey') : t('title_showAccountKey')}
+                                    tooltipPosition="right"
+                                    onClick={this.togglePasswordVisibility}
+                                />
+                            </Beacon>
                         </div>
                         {/* <Dropdown value={languageStore.language}
                                   options={languageStore.translationLangsDataSource}

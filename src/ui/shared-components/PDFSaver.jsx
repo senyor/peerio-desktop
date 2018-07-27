@@ -7,7 +7,7 @@ const style = { display: 'inline-flex', width: 0, height: 0, flex: '0 1' };
 // Props:
 // template  - path to html file (pdf template)
 //
-//
+// No @observer needed
 class PDFSaver extends React.Component {
     handler = null;
 

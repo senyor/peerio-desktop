@@ -1,6 +1,8 @@
 const React = require('react');
+const { observer } = require('mobx-react');
 const { Button } = require('peer-ui');
 
+@observer
 class MailFormatActions extends React.Component {
     render() {
         return (

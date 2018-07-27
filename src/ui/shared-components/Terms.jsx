@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 const React = require('react');
 
+// no @observer, static component
 class Terms extends React.Component {
     render() {
         return (

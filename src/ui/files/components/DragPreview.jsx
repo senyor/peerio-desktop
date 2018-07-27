@@ -1,5 +1,6 @@
 // @ts-check
 const React = require('react');
+const { observer } = require('mobx-react');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { MaterialIcon } = require('peer-ui');
@@ -12,6 +13,7 @@ const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
         canDrop: boolean
     }, {}>}
  */
+@observer
 class DragPreview extends React.Component {
     render() {
         const { canDrop, files, folders } = this.props;

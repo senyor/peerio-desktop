@@ -194,7 +194,7 @@ app.on('ready', async () => {
         rememberWindowState();
     });
 
-    mainWindow.on('close', async function handleClose(e) {
+    const handleClose = async function(e) {
         e.preventDefault();
         try {
             await saveWindowState(windowState);
@@ -207,7 +207,9 @@ app.on('ready', async () => {
             mainWindow.removeListener('close', handleClose);
             mainWindow.close();
         }
-    });
+    };
+
+    mainWindow.on('close', handleClose);
 
     mainWindow.once('closed', () => {
         mainWindow = null;

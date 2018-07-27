@@ -8,9 +8,9 @@ const AvatarControl = require('./AvatarControl');
 const { t } = require('peerio-translator');
 const { warnings } = require('peerio-icebear');
 
-
-@observer class AccountKey extends Component {
-    handleKeyPress = (e) => {
+@observer
+class AccountKey extends Component {
+    handleKeyPress = e => {
         if (e.key === 'Enter') {
             this.props.returnHandler();
         }
@@ -36,7 +36,9 @@ const { warnings } = require('peerio-icebear');
     };
 
     render() {
-        const { store: { passphrase, temporaryAvatarDataUrl } } = this.props;
+        const {
+            store: { passphrase, temporaryAvatarDataUrl }
+        } = this.props;
         return (
             <div className="savekey-container">
                 <AvatarControl url={temporaryAvatarDataUrl} />
@@ -44,8 +46,14 @@ const { warnings } = require('peerio-icebear');
                 <div className="account-key-wrapper">
                     <div className="label">{t('title_yourAccountKey')}</div>
                     <div className="inner">
-                        <div className="account-key" onClick={this.copyPassphrase}>{passphrase}</div>
-                        <Button icon="content_copy"
+                        <div
+                            className="account-key"
+                            onClick={this.copyPassphrase}
+                        >
+                            {passphrase}
+                        </div>
+                        <Button
+                            icon="content_copy"
                             tooltip={t('title_copy')}
                             onClick={this.copyPassphrase}
                             theme="no-hover active"
@@ -60,7 +68,12 @@ const { warnings } = require('peerio-icebear');
                     onClick={this.backupAccountKey}
                     theme="primary"
                 />
-                <PDFSaver ref={ref => { this.pdfSaver = ref; }} template="./AccountKeyBackup.html" />
+                <PDFSaver
+                    ref={ref => {
+                        this.pdfSaver = ref;
+                    }}
+                    template="./AccountKeyBackup.html"
+                />
             </div>
         );
     }

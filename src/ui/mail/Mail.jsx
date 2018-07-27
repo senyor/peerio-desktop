@@ -26,28 +26,30 @@ class Mail extends React.Component {
         this.handleSort = this.handleSort.bind(this);
     }
 
-    @action handleCompose() {
+    @action
+    handleCompose() {
         ghostStore.createGhost();
         this.sent = false;
     }
 
-    @action handleSend(data) {
+    @action
+    handleSend(data) {
         ghostStore.selectedGhost.send(data);
     }
 
-    @action handleAttach(files) {
+    @action
+    handleAttach(files) {
         ghostStore.selectedGhost.attachFiles(files);
     }
 
-    @action handleSort(value) {
+    @action
+    handleSort(value) {
         ghostStore.sort(value);
     }
 
     renderRight() {
         if (ghostStore.selectedGhost.sent) {
-            return (
-                <MailSent ghost={ghostStore.selectedGhost} />
-            );
+            return <MailSent ghost={ghostStore.selectedGhost} />;
         }
         return (
             <MailCompose
@@ -70,34 +72,52 @@ class Mail extends React.Component {
                 <div className="mail-list-wrapper">
                     <div className="mail-sorting">
                         <div>
-                            {t('title_sort')} <strong>
-                                {availableSorts.find((s) => s.sort === ghostStore.selectedSort).caption}
+                            {t('title_sort')}{' '}
+                            <strong>
+                                {
+                                    availableSorts.find(
+                                        s => s.sort === ghostStore.selectedSort
+                                    ).caption
+                                }
                             </strong>
                         </div>
                         <Menu onSelect={this.handleSort} icon="arrow_drop_down">
-                            {availableSorts.map((s) => {
-                                return (<MenuItem key={s.sort} value={s.sort} caption={s.caption} />);
+                            {availableSorts.map(s => {
+                                return (
+                                    <MenuItem
+                                        key={s.sort}
+                                        value={s.sort}
+                                        caption={s.caption}
+                                    />
+                                );
                             })}
                         </Menu>
                     </div>
                     <div className="mail-list">
-                        {ghostStore.ghosts.map((m) => {
-                            return (<MailItem key={m.ghostId}
-                                sent={m.sent}
-                                ghostId={m.ghostId}
-                                subject={m.subject}
-                                date={m.date.fromNow(true)}
-                                recipient={m.recipients}
-                                attachments={m.files.length > 0}
-                                firstLine={m.preview}
-                                alive={!m.expired && !m.revoked}
-                                active={false} />
+                        {ghostStore.ghosts.map(m => {
+                            return (
+                                <MailItem
+                                    key={m.ghostId}
+                                    sent={m.sent}
+                                    ghostId={m.ghostId}
+                                    subject={m.subject}
+                                    date={m.date.fromNow(true)}
+                                    recipient={m.recipients}
+                                    attachments={m.files.length > 0}
+                                    firstLine={m.preview}
+                                    alive={!m.expired && !m.revoked}
+                                    active={false}
+                                />
                             );
                         })}
                     </div>
                 </div>
-                {ghostStore.ghosts.length === 0 && !ghostStore.loading ? <ZeroMail /> : null}
-                {ghostStore.selectedId && !ghostStore.loading ? this.renderRight() : null}
+                {ghostStore.ghosts.length === 0 && !ghostStore.loading ? (
+                    <ZeroMail />
+                ) : null}
+                {ghostStore.selectedId && !ghostStore.loading
+                    ? this.renderRight()
+                    : null}
 
                 <Button icon="add" onClick={this.handleCompose} />
             </div>

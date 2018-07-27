@@ -12,8 +12,12 @@ const ContactProfileFingerprint = observer(({ contact }) => {
     return (
         <div className="row">
             <div className="list-title"> {t('title_publicKey')}</div>
-            <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
-            <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
+            <div className="monospace selectable">
+                {f[0]} {f[1]} {f[2]}
+            </div>
+            <div className="monospace selectable">
+                {f[3]} {f[4]} {f[5]}
+            </div>
         </div>
     );
 });
@@ -60,44 +64,54 @@ class ContactProfileBody extends React.Component {
 
         return (
             <div className="contact-profile">
-                {c.tofuError
-                    ? <div className="contact-error">
+                {c.tofuError ? (
+                    <div className="contact-error">
                         {t('error_contactFingerprintChangedDetail')}
                     </div>
-                    : null}
+                ) : null}
                 <div className="contact-avatar-info">
                     <Avatar contact={c} size="full" />
                     <div className="account-profile-container">
-                        {c.isDeleted ? <T k="title_accountDeleted" className="deleted-account" tag="div" /> : null}
-                        <div className="full-name selectable">{c.firstName} {c.lastName}</div>
+                        {c.isDeleted ? (
+                            <T
+                                k="title_accountDeleted"
+                                className="deleted-account"
+                                tag="div"
+                            />
+                        ) : null}
+                        <div className="full-name selectable">
+                            {c.firstName} {c.lastName}
+                        </div>
                         <div className="selectable">{c.usernameTag}</div>
                         <ContactProfileFingerprint contact={c} />
                     </div>
                 </div>
                 <div className="row profile-actions-container">
                     <div className="profile-actions">
-                        {c.isDeleted
-                            ? null
-                            : <Button
+                        {c.isDeleted ? null : (
+                            <Button
                                 tooltip={t('title_haveAChat')}
                                 icon="forum"
                                 onClick={this.startChat}
                                 theme="no-hover"
                             />
-                        }
-                        {c.isAdded
-                            ? <Button icon="star"
+                        )}
+                        {c.isAdded ? (
+                            <Button
+                                icon="star"
                                 tooltip={t('button_removeFavourite')}
                                 onClick={this.removeContact}
                                 theme="no-hover"
                                 className="gold"
                             />
-                            : <Button icon="star_outline"
+                        ) : (
+                            <Button
+                                icon="star_outline"
                                 tooltip={t('button_addFavourite')}
                                 onClick={this.addContact}
                                 theme="no-hover"
                             />
-                        }
+                        )}
                     </div>
                 </div>
             </div>
@@ -108,8 +122,14 @@ class ContactProfileBody extends React.Component {
 @observer
 class ContactProfile extends React.Component {
     @observable dialogVisible;
-    @action.bound openDialog() { this.dialogVisible = true; }
-    @action.bound closeDialog() { this.dialogVisible = false; }
+    @action.bound
+    openDialog() {
+        this.dialogVisible = true;
+    }
+    @action.bound
+    closeDialog() {
+        this.dialogVisible = false;
+    }
 
     render() {
         return (

@@ -44,11 +44,21 @@
         background-color: $peerio-blue;
       }
 
-      &.security::after { background-color: $yellow; }
-      &.prefs::after { background-color: $darkteal; }
-      &.account::after { background-color: $peerio-purple; }
-      &.about::after { background-color: $peerio-teal; }
-      &.help::after { background-color: $peerio-violet; }
+      &.security::after {
+        background-color: $yellow;
+      }
+      &.prefs::after {
+        background-color: $darkteal;
+      }
+      &.account::after {
+        background-color: $peerio-purple;
+      }
+      &.about::after {
+        background-color: $peerio-teal;
+      }
+      &.help::after {
+        background-color: $peerio-violet;
+      }
 
       &:disabled::after {
         min-width: 100%;

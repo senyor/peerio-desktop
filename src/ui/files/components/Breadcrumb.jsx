@@ -20,7 +20,8 @@ const FolderActions = require('./FolderActions');
  */
 @observer
 class Breadcrumb extends React.Component {
-    @computed get folderPath() {
+    @computed
+    get folderPath() {
         const folderPath = [];
         let iterator = this.props.folder;
         do {
@@ -31,7 +32,11 @@ class Breadcrumb extends React.Component {
     }
 
     componentDidMount() {
-        this._watchFolder = reaction(() => this.props.folder, this.ellipsizeFolderNames, true);
+        this._watchFolder = reaction(
+            () => this.props.folder,
+            this.ellipsizeFolderNames,
+            true
+        );
         window.addEventListener('resize', this.ellipsizeFolderNames, false);
     }
 
@@ -41,9 +46,10 @@ class Breadcrumb extends React.Component {
     }
 
     // Total combined current widths of text, before replacing folder names with ellipses
-    @computed get folderWidths() {
+    @computed
+    get folderWidths() {
         const array = [];
-        this.folderPath.forEach((folder) => {
+        this.folderPath.forEach(folder => {
             folder.name
                 ? array.push(folder.name)
                 : array.push(t('title_files'));
@@ -56,9 +62,10 @@ class Breadcrumb extends React.Component {
     @observable foldersToEllipsize = -1;
 
     // Actual current widths, after replacing folder names with ellipses
-    @computed get folderWidthsWithEllipsized() {
+    @computed
+    get folderWidthsWithEllipsized() {
         const array = [];
-        this.folderPath.forEach((folder) => {
+        this.folderPath.forEach(folder => {
             folder.name
                 ? array.push(folder.name)
                 : array.push(t('title_files'));
@@ -80,12 +87,10 @@ class Breadcrumb extends React.Component {
         const widthArray = [];
         const folderMaxWidth = 120;
 
-        array.forEach((folder) => {
+        array.forEach(folder => {
             const thisWidth = this.context.measureText(folder).width;
             widthArray.push(
-                thisWidth < folderMaxWidth
-                    ? thisWidth
-                    : folderMaxWidth
+                thisWidth < folderMaxWidth ? thisWidth : folderMaxWidth
             );
         });
 
@@ -93,7 +98,8 @@ class Breadcrumb extends React.Component {
     }
 
     // Used to calculate total actual width of folder names, including ellipsized names
-    @computed get totalWidth() {
+    @computed
+    get totalWidth() {
         this.element = document.createElement('canvas');
         this.context = this.element.getContext('2d');
         this.context.font = '600 20px Open Sans'; // hardcoded, need to change if font stack changes!
@@ -101,10 +107,8 @@ class Breadcrumb extends React.Component {
         let totalWidth = 0;
         const folderMaxWidth = 120;
 
-        this.folderWidthsWithEllipsized.forEach((width) => {
-            totalWidth += width < folderMaxWidth
-                ? width
-                : folderMaxWidth;
+        this.folderWidthsWithEllipsized.forEach(width => {
+            totalWidth += width < folderMaxWidth ? width : folderMaxWidth;
         });
 
         // Add width of icons (hardcoded at 32px right now)
@@ -114,14 +118,26 @@ class Breadcrumb extends React.Component {
     }
 
     ellipsizeFolderNames = () => {
-        const breadcrumbContainer = document.getElementsByClassName('breadcrumb-container')[0];
+        const breadcrumbContainer = document.getElementsByClassName(
+            'breadcrumb-container'
+        )[0];
 
         // 48px subtracted to take into account the width of the three-dots button
         // 32px subtracted to take into account the left margin of the breadcrumb
         const containerWidth =
-            parseInt(window.getComputedStyle(breadcrumbContainer).getPropertyValue('width'), 10) - 48 - 32;
+            parseInt(
+                window
+                    .getComputedStyle(breadcrumbContainer)
+                    .getPropertyValue('width'),
+                10
+            ) -
+            48 -
+            32;
 
-        while (this.totalWidth > containerWidth && this.foldersToEllipsize < this.folderPath.length) {
+        while (
+            this.totalWidth > containerWidth &&
+            this.foldersToEllipsize < this.folderPath.length
+        ) {
             this.foldersToEllipsize++;
         }
 
@@ -134,11 +150,14 @@ class Breadcrumb extends React.Component {
          * If folder name will not overflow breadcrumb container, then replace ellipsis with folder name.
          * Repeat until the folder name WOULD overflow breadcrumb container.
          */
-        while ((this.folderWidths[this.foldersToEllipsize] - this.folderWidthsWithEllipsized[this.foldersToEllipsize])
-            < (containerWidth - this.totalWidth)) {
+        while (
+            this.folderWidths[this.foldersToEllipsize] -
+                this.folderWidthsWithEllipsized[this.foldersToEllipsize] <
+            containerWidth - this.totalWidth
+        ) {
             this.foldersToEllipsize--;
         }
-    }
+    };
 
     render() {
         const { folderPath } = this;
@@ -149,36 +168,37 @@ class Breadcrumb extends React.Component {
 
         return (
             <div className="breadcrumb-container">
-                {selectedCount > 0 && !this.props.noSelectionCounter
-                    ? <div className="breadcrumb">
+                {selectedCount > 0 && !this.props.noSelectionCounter ? (
+                    <div className="breadcrumb">
                         <Crumb
                             folder={fileStore.folderStore.root}
                             displayText={t('title_files')}
                             onClick={onFolderClick}
                             arrowAfter
                         />
-                        {folder.isRoot && !folder.isShared
-                            ? null
-                            : <div className="breadcrumb-entry">
-                                <span className="folder-name">
-                                    ...
-                                </span>
+                        {folder.isRoot && !folder.isShared ? null : (
+                            <div className="breadcrumb-entry">
+                                <span className="folder-name">...</span>
                                 <MaterialIcon icon="keyboard_arrow_right" />
                             </div>
-                        }
+                        )}
                         <div className="breadcrumb-entry">
                             <span className="folder-name selected-count">
-                                <T k="title_selected" tag="span" /> ({selectedCount})
+                                <T k="title_selected" tag="span" /> ({
+                                    selectedCount
+                                })
                             </span>
                         </div>
                     </div>
-                    : <div className="breadcrumb">
+                ) : (
+                    <div className="breadcrumb">
                         {folderPath.map((f, i) => (
                             <Crumb
                                 key={`${f.id}-${f.name}`}
-                                displayText={i > this.foldersToEllipsize
-                                    ? f.name || t('title_files')
-                                    : '...'
+                                displayText={
+                                    i > this.foldersToEllipsize
+                                        ? f.name || t('title_files')
+                                        : '...'
                                 }
                                 folder={f}
                                 onClick={onFolderClick}
@@ -186,11 +206,12 @@ class Breadcrumb extends React.Component {
                             />
                         ))}
                     </div>
-                }
-                {(folder.isRoot && !folder.isShared) || this.props.noActions || selectedCount > 0
-                    ? null
-                    : <FolderActions folder={folder} position="top-right" />
-                }
+                )}
+                {(folder.isRoot && !folder.isShared) ||
+                this.props.noActions ||
+                selectedCount > 0 ? null : (
+                    <FolderActions folder={folder} position="top-right" />
+                )}
             </div>
         );
     }
@@ -207,16 +228,14 @@ class Breadcrumb extends React.Component {
 class Crumb extends React.Component {
     handleClick = () => {
         this.props.onClick(this.props.folder);
-    }
+    };
 
     render() {
         const { displayText, arrowAfter } = this.props;
 
         return (
             <div className="breadcrumb-entry">
-                <a className="folder-name clickable"
-                    onClick={this.handleClick}
-                >
+                <a className="folder-name clickable" onClick={this.handleClick}>
                     {displayText}
                 </a>
                 {arrowAfter && <MaterialIcon icon="keyboard_arrow_right" />}

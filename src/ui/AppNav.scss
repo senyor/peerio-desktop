@@ -70,32 +70,64 @@
   &.color-icons .p-menu-item,
   .p-menu-item:hover,
   .p-menu-item.selected {
-    &.security .material-icons { color: $yellow; }
-    &.account .material-icons { color: $peerio-purple; }
-    &.about .material-icons { color: $peerio-teal; }
-    &.help .material-icons { color: $peerio-violet; }
-    &.upgrade .material-icons { color: $darkblue; }
-    &.signout .material-icons { color: $red; }
+    &.security .material-icons {
+      color: $yellow;
+    }
+    &.account .material-icons {
+      color: $peerio-purple;
+    }
+    &.about .material-icons {
+      color: $peerio-teal;
+    }
+    &.help .material-icons {
+      color: $peerio-violet;
+    }
+    &.upgrade .material-icons {
+      color: $darkblue;
+    }
+    &.signout .material-icons {
+      color: $red;
+    }
 
     &.profile,
     &.preferences {
       .p-custom-icon {
-        img.default { display: none; }
-        img.hover { display: inline-block; }
+        img.default {
+          display: none;
+        }
+        img.hover {
+          display: inline-block;
+        }
       }
     }
   }
 
   .p-menu-item {
     &.selected {
-      &.profile { background-color: rgba($peerio-blue, .05); }
-      &.security { background-color: rgba($yellow, .05); }
-      &.preferences { background-color: rgba($darkteal, .05); }
-      &.account { background-color: rgba($peerio-purple, .05); }
-      &.about { background-color: rgba($peerio-teal, .05); }
-      &.help { background-color: rgba($peerio-violet, .05); }
-      &.upgrade { background-color: rgba($peerio-blue, .05); }
-      &.signout { background-color: rgba($red, .05); }
+      &.profile {
+        background-color: rgba($peerio-blue, 0.05);
+      }
+      &.security {
+        background-color: rgba($yellow, 0.05);
+      }
+      &.preferences {
+        background-color: rgba($darkteal, 0.05);
+      }
+      &.account {
+        background-color: rgba($peerio-purple, 0.05);
+      }
+      &.about {
+        background-color: rgba($peerio-teal, 0.05);
+      }
+      &.help {
+        background-color: rgba($peerio-violet, 0.05);
+      }
+      &.upgrade {
+        background-color: rgba($peerio-blue, 0.05);
+      }
+      &.signout {
+        background-color: rgba($red, 0.05);
+      }
     }
   }
 }

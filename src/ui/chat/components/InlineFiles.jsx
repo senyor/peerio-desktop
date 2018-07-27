@@ -1,7 +1,13 @@
-// @ts-check
+// -@ts-check
 const React = require('react');
 const { fileStore, chatStore } = require('peerio-icebear');
-const { Button, Dialog, MaterialIcon, ProgressBar, RadioButtons } = require('peer-ui');
+const {
+    Button,
+    Dialog,
+    MaterialIcon,
+    ProgressBar,
+    RadioButtons
+} = require('peer-ui');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const { downloadFile } = require('~/helpers/file');
 const { observable, when } = require('mobx');
@@ -49,19 +55,25 @@ class InlineFile extends React.Component {
             // if user sets the preference later, the image would be shown
             // if it's already enabled, the when would be executed immediately
             this._reactionToDispose = when(
-                () => uiStore.prefs.peerioContentEnabled && uiStore.prefs.peerioContentConsented,
+                () =>
+                    uiStore.prefs.peerioContentEnabled &&
+                    uiStore.prefs.peerioContentConsented,
                 () => {
                     this.isExpanded = true;
-                    if (!file.tmpCached && !file.isOverInlineSizeLimit && !file.isOversizeCutoff) {
+                    if (
+                        !file.tmpCached &&
+                        !file.isOverInlineSizeLimit &&
+                        !file.isOversizeCutoff
+                    ) {
                         file.tryToCacheTemporarily();
                     }
-                });
+                }
+            );
         }
         // When this image is mounted, increase the visibility counter
         // to prevent it being deleted
         file.visibleCounter++;
     }
-
 
     componentWillUnmount() {
         if (this._reactionToDispose) this._reactionToDispose();
@@ -77,11 +89,10 @@ class InlineFile extends React.Component {
         { value: DISABLED, label: t('title_disable') }
     ];
 
-
     download = () => {
         if (!fileDownloadUIEnabled(this.props.file)) return;
         downloadFile(this.props.file);
-    }
+    };
 
     deleteFile = async () => {
         // the file keg passed to us in this component is not the "global" file
@@ -101,21 +112,21 @@ class InlineFile extends React.Component {
         if (confirm(msg)) {
             file.remove();
         }
-    }
+    };
 
     unshareFile = () => {
         this.props.file.remove();
-    }
+    };
 
-    onSelectedModeChange = (value) => {
+    onSelectedModeChange = value => {
         this.selectedMode = value;
-    }
+    };
 
     onDismiss = () => {
         this.firstSave = true;
         this.selectedMode = DISABLED;
         this.onSubmitConsent();
-    }
+    };
 
     onSubmitConsent = () => {
         this.firstSave = true;
@@ -134,36 +145,36 @@ class InlineFile extends React.Component {
                 uiStore.prefs.peerioContentEnabled = false;
                 break;
         }
-    }
+    };
 
     onErrorLoadingImage = () => {
         this.errorLoading = true;
-    }
+    };
 
     toggleExpand = () => {
         this.isExpanded = !this.isExpanded;
-    }
+    };
 
     forceDownload = () => {
         this.props.file.tryToCacheTemporarily(true);
-    }
+    };
 
     hideImagePopup = () => {
         this.imagePopupVisible = false;
         this.currentImageSrc = '';
-    }
+    };
 
-    imageClick = (ev) => {
+    imageClick = ev => {
         this.currentImageSrc = ev.target.src;
-    }
+    };
 
-    onPopupRef = (ref) => {
+    onPopupRef = ref => {
         if (ref) this.imagePopupVisible = true;
     };
 
     goToSettings = () => {
         routerStore.navigateTo(routerStore.ROUTES.prefs);
-    }
+    };
 
     get imagePopup() {
         const file = this.props.file;
@@ -176,7 +187,12 @@ class InlineFile extends React.Component {
                 className="image-popup"
             >
                 <img src={this.currentImageSrc} />
-                <Button onClick={this.hideImagePopup} icon="close" className="button-close" theme="small" />
+                <Button
+                    onClick={this.hideImagePopup}
+                    icon="close"
+                    className="button-close"
+                    theme="small"
+                />
                 <div className="info-bar">
                     <div className="left">
                         <div className="file-name">{file.name}</div>
@@ -195,7 +211,7 @@ class InlineFile extends React.Component {
                             disabled={!isFileShareable(file)}
                             theme="small"
                         />
-                        {isFileDeleteable(file) &&
+                        {isFileDeleteable(file) && (
                             <React.Fragment>
                                 <Button
                                     icon="delete"
@@ -208,10 +224,11 @@ class InlineFile extends React.Component {
                                     theme="small"
                                 />
                             </React.Fragment>
-                        }
+                        )}
                     </div>
                 </div>
-            </Dialog>);
+            </Dialog>
+        );
     }
 
     renderConsent() {
@@ -222,7 +239,9 @@ class InlineFile extends React.Component {
                     <T k="title_enableImagePreviews" className="text" />
                 </div>
                 <div className="warning-body">
-                    <p className="text"><T k="title_imagePreviewWarning" /></p>
+                    <p className="text">
+                        <T k="title_imagePreviewWarning" />
+                    </p>
                     <RadioButtons
                         value={this.selectedMode}
                         onChange={this.onSelectedModeChange}
@@ -236,13 +255,14 @@ class InlineFile extends React.Component {
                         >
                             {t('button_notNow')}
                         </Button>
-                        <Button className="save" onClick={this.onSubmitConsent}>{t('button_save')}</Button>
+                        <Button className="save" onClick={this.onSubmitConsent}>
+                            {t('button_save')}
+                        </Button>
                     </div>
                 </div>
             </div>
         );
     }
-
 
     renderOversizeWarning() {
         return (
@@ -250,8 +270,10 @@ class InlineFile extends React.Component {
                 <T k="title_imageSizeWarning" className="text">
                     {{ size: fileStore.inlineImageSizeLimitFormatted }}
                 </T>&nbsp;
-                <Button className="display-this-image display-over-limit-image"
-                    onClick={this.forceDownload}>
+                <Button
+                    className="display-this-image display-over-limit-image"
+                    onClick={this.forceDownload}
+                >
                     {t('button_displayThisImageAfterWarning')}
                 </Button>
             </div>
@@ -260,21 +282,30 @@ class InlineFile extends React.Component {
     renderOversizeCutoffWarning() {
         return (
             <div className="image-over-limit-warning">
-                <T k="title_imageTooBigCutoff" className="text" >
+                <T k="title_imageTooBigCutoff" className="text">
                     {{ size: fileStore.inlineImageSizeLimitCutoffFormatted }}
                 </T>
             </div>
         );
     }
     settingsLinkSegment = {
-        toSettings: text => <a className="clickable" onClick={this.goToSettings}>{text}</a>
+        toSettings: text => (
+            <a className="clickable" onClick={this.goToSettings}>
+                {text}
+            </a>
+        )
     };
 
     shareWithMultipleDialogRef = React.createRef();
     share = async () => {
-        const contacts = await this.shareWithMultipleDialogRef.current.show(null, 'sharefiles');
+        const contacts = await this.shareWithMultipleDialogRef.current.show(
+            null,
+            'sharefiles'
+        );
         if (!contacts || !contacts.length) return;
-        contacts.forEach(c => chatStore.startChatAndShareFiles([c], this.props.file));
+        contacts.forEach(c =>
+            chatStore.startChatAndShareFiles([c], this.props.file)
+        );
     };
 
     render() {
@@ -285,85 +316,126 @@ class InlineFile extends React.Component {
                     <div className="inline-files-topbar">
                         <div className="shared-file">
                             <div className="container">
-                                <div className="clickable file-name-container" onClick={this.download}>
+                                <div
+                                    className="clickable file-name-container"
+                                    onClick={this.download}
+                                >
                                     <div className="file-icon">
-                                        <FileSpriteIcon type={file.iconType} size="small" />
+                                        <FileSpriteIcon
+                                            type={file.iconType}
+                                            size="small"
+                                        />
                                     </div>
                                     <div className="file-name">
                                         {file.nameWithoutExtension}
                                     </div>
-                                    <div className="file-ext">
-                                        .{file.ext}
-                                    </div>
+                                    <div className="file-ext">.{file.ext}</div>
                                 </div>
-                                {(file.isImage && uiStore.prefs.peerioContentConsented) &&
-                                    <Button
-                                        icon={this.isExpanded ? 'arrow_drop_up' : 'arrow_drop_down'}
-                                        onClick={this.toggleExpand}
-                                        theme="no-hover"
-                                    />
-                                }
+                                {file.isImage &&
+                                    uiStore.prefs.peerioContentConsented && (
+                                        <Button
+                                            icon={
+                                                this.isExpanded
+                                                    ? 'arrow_drop_up'
+                                                    : 'arrow_drop_down'
+                                            }
+                                            onClick={this.toggleExpand}
+                                            theme="no-hover"
+                                        />
+                                    )}
                                 <FileActions
                                     file={file}
                                     onDelete={this.deleteFile}
                                     onUnshare={this.unshareFile}
                                 />
                             </div>
-                            {!file.cachingFailed && file.downloading
-                                ? <ProgressBar type="linear" mode="determinate" value={file.progress}
-                                    max={file.progressMax} />
-                                : null
-                            }
+                            {!file.cachingFailed && file.downloading ? (
+                                <ProgressBar
+                                    type="linear"
+                                    mode="determinate"
+                                    value={file.progress}
+                                    max={file.progressMax}
+                                />
+                            ) : null}
                         </div>
                     </div>
-                    {this.isExpanded && uiStore.prefs.peerioContentConsented &&
-                        <div className={css('inline-files-expanded',
-                            {
-                                'display-image': uiStore.prefs.peerioContentEnabled &&
-                                    (file.tmpCached || !file.isOverInlineSizeLimit)
-                            })}>
-                            {file.tmpCached || uiStore.prefs.peerioContentEnabled
-                                ? <div className="inline-files-dropdown">
-                                    {file.tmpCached &&
-                                        (this.errorLoading
-                                            ? <span>{t('error_loadingImage')}</span>
-                                            : <img src={file.tmpCachePath}
-                                                onLoad={this.props.onImageLoaded}
-                                                onError={this.onErrorLoadingImage}
-                                                onClick={this.imageClick} />)}
-                                    {!file.tmpCached && !file.downloading && file.isOverInlineSizeLimit
-                                        && !file.isOversizeCutoff
-                                        && this.renderOversizeWarning()}
-                                    {file.isOversizeCutoff
-                                        && this.renderOversizeCutoffWarning()}
-                                    {file.cachingFailed ? <span>{t('error_downloadFailed')}</span> : null}
-                                </div>
-                                : <Button className="display-this-image" onClick={this.forceDownload}>
-                                    {t('button_displayThisImage')}
-                                </Button>
-                            }
-                        </div>
-                    }
+                    {this.isExpanded &&
+                        uiStore.prefs.peerioContentConsented && (
+                            <div
+                                className={css('inline-files-expanded', {
+                                    'display-image':
+                                        uiStore.prefs.peerioContentEnabled &&
+                                        (file.tmpCached ||
+                                            !file.isOverInlineSizeLimit)
+                                })}
+                            >
+                                {file.tmpCached ||
+                                uiStore.prefs.peerioContentEnabled ? (
+                                    <div className="inline-files-dropdown">
+                                        {file.tmpCached &&
+                                            (this.errorLoading ? (
+                                                <span>
+                                                    {t('error_loadingImage')}
+                                                </span>
+                                            ) : (
+                                                <img
+                                                    src={file.tmpCachePath}
+                                                    onLoad={
+                                                        this.props.onImageLoaded
+                                                    }
+                                                    onError={
+                                                        this.onErrorLoadingImage
+                                                    }
+                                                    onClick={this.imageClick}
+                                                />
+                                            ))}
+                                        {!file.tmpCached &&
+                                            !file.downloading &&
+                                            file.isOverInlineSizeLimit &&
+                                            !file.isOversizeCutoff &&
+                                            this.renderOversizeWarning()}
+                                        {file.isOversizeCutoff &&
+                                            this.renderOversizeCutoffWarning()}
+                                        {file.cachingFailed ? (
+                                            <span>
+                                                {t('error_downloadFailed')}
+                                            </span>
+                                        ) : null}
+                                    </div>
+                                ) : (
+                                    <Button
+                                        className="display-this-image"
+                                        onClick={this.forceDownload}
+                                    >
+                                        {t('button_displayThisImage')}
+                                    </Button>
+                                )}
+                            </div>
+                        )}
                     {this.currentImageSrc && this.imagePopup}
                 </div>
-                <div>{!uiStore.prefs.peerioContentConsented && file.isImage &&
-                    this.renderConsent()
-                }
+                <div>
+                    {!uiStore.prefs.peerioContentConsented &&
+                        file.isImage &&
+                        this.renderConsent()}
                 </div>
                 <div>
-                    {this.firstSave &&
+                    {this.firstSave && (
                         <div className="update-settings">
                             <MaterialIcon icon="check_circle" />
-                            <T k="title_updateSettingsAnyTime" className="text">{this.settingsLinkSegment}</T>
+                            <T k="title_updateSettingsAnyTime" className="text">
+                                {this.settingsLinkSegment}
+                            </T>
                         </div>
-                    }
+                    )}
                 </div>
-                <ShareWithMultipleDialog ref={this.shareWithMultipleDialogRef} />
+                <ShareWithMultipleDialog
+                    ref={this.shareWithMultipleDialogRef}
+                />
             </div>
         );
     }
 }
-
 
 /**
  * @augments {React.Component<{
@@ -376,27 +448,34 @@ class InlineFiles extends React.Component {
     renderNoFile(fileId) {
         return (
             <div className="inline-files-container" key={fileId}>
-                <div className="unknown-file">
-                    {t('error_fileRemoved')}
-                </div>
+                <div className="unknown-file">{t('error_fileRemoved')}</div>
             </div>
         );
     }
     renderProgress(fileId) {
         return (
             <div className="inline-files-container" key={fileId}>
-                <ProgressBar type="linear" mode="indeterminate" className="unknown-file-progress-bar" />
+                <ProgressBar
+                    type="linear"
+                    mode="indeterminate"
+                    className="unknown-file-progress-bar"
+                />
             </div>
         );
     }
 
     renderNoSignature(fileId) {
         return (
-            <div className="inline-files-container" key={fileId}
-                onClick={uiStore.showFileSignatureErrorDialog}>
+            <div
+                className="inline-files-container"
+                key={fileId}
+                onClick={uiStore.showFileSignatureErrorDialog}
+            >
                 <div className="invalid-file">
                     <MaterialIcon icon="info_outline" />
-                    <div className="file-name">{t('error_invalidFileSignature')}</div>
+                    <div className="file-name">
+                        {t('error_invalidFileSignature')}
+                    </div>
                 </div>
             </div>
         );
@@ -406,20 +485,24 @@ class InlineFiles extends React.Component {
         if (!this.props.files.map) return null;
         return (
             <div>
-                {
-                    this.props.files.map(fileId => {
-                        const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
-                        if (file.deleted) return this.renderNoFile(fileId);
-                        if (file.signatureError) return this.renderNoSignature(fileId);
-                        if (!file.loaded) return this.renderProgress(fileId);
+                {this.props.files.map(fileId => {
+                    const file = fileStore.getByIdInChat(
+                        fileId,
+                        chatStore.activeChat.id
+                    );
+                    if (file.deleted) return this.renderNoFile(fileId);
+                    if (file.signatureError)
+                        return this.renderNoSignature(fileId);
+                    if (!file.loaded) return this.renderProgress(fileId);
 
-                        return (<InlineFile
+                    return (
+                        <InlineFile
                             key={fileId}
                             file={file}
                             onImageLoaded={this.props.onImageLoaded}
-                        />);
-                    })
-                }
+                        />
+                    );
+                })}
             </div>
         );
     }

@@ -3,9 +3,9 @@ const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 
-
-@observer class Welcome extends Component {
-    handleKeyPress = (e) => {
+@observer
+class Welcome extends Component {
+    handleKeyPress = e => {
         if (e.key === 'Enter') {
             this.props.returnHandler();
         }

@@ -10,18 +10,23 @@ const uiStore = require('~/stores/ui-store');
 class ShareConfirmDialog extends React.Component {
     @observable shareWarningDisabled = false;
 
-    @action.bound check() {
+    @action.bound
+    check() {
         if (uiStore.prefs.seenMoveToSharedVolumeWarning) return true;
         this.dialog.showWithoutAnimation();
-        return new Promise(resolve => { this.resolve = resolve; });
+        return new Promise(resolve => {
+            this.resolve = resolve;
+        });
     }
 
-    @action.bound async cancel() {
+    @action.bound
+    async cancel() {
         this.dialog.hideWithoutAnimation();
         this.resolve(false);
     }
 
-    @action.bound confirm() {
+    @action.bound
+    confirm() {
         this.dialog.setInactive();
         if (this.shareWarningDisabled) {
             uiStore.prefs.seenMoveToSharedVolumeWarning = true;
@@ -29,11 +34,14 @@ class ShareConfirmDialog extends React.Component {
         this.resolve(true);
     }
 
-    @action.bound toggleShareWarning() {
+    @action.bound
+    toggleShareWarning() {
         this.shareWarningDisabled = !this.shareWarningDisabled;
     }
 
-    dialogRef = ref => { this.dialog = ref; };
+    dialogRef = ref => {
+        this.dialog = ref;
+    };
 
     render() {
         const shareConfirmActions = [
@@ -47,7 +55,8 @@ class ShareConfirmDialog extends React.Component {
                 actions={shareConfirmActions}
                 onCancel={this.cancel}
                 title={t('title_moveToSharedFolder')}
-                className="move-file-confirm-share">
+                className="move-file-confirm-share"
+            >
                 <T k="title_moveToSharedFolderDescription" />
                 <div className="share-warning-toggle">
                     <Checkbox

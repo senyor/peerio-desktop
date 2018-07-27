@@ -26,12 +26,14 @@ class MessageNotification {
         this.lastMessageText = props.lastMessageText;
         this.counter = props.unreadCount;
         this.translationKeyword = 'Messages';
-        this.userDesktopNotificationCondition = uiStore.prefs.messageDesktopNotificationsEnabled;
+        this.userDesktopNotificationCondition =
+            uiStore.prefs.messageDesktopNotificationsEnabled;
         this.userSoundsCondition = uiStore.prefs.messageSoundsEnabled;
     }
 
     send() {
-        if (this.userDesktopNotificationCondition) this.showDesktopNotification();
+        if (this.userDesktopNotificationCondition)
+            this.showDesktopNotification();
         if (this.userSoundsCondition) this.playSound();
     }
 
@@ -42,12 +44,11 @@ class MessageNotification {
                 body = t(`notification_manyNew${this.translationKeyword}`);
             }
             if (this.counter > 1) {
-                body = t(`notification_new${this.translationKeyword}`, { count: this.counter });
+                body = t(`notification_new${this.translationKeyword}`, {
+                    count: this.counter
+                });
             }
-            this.postDesktopNotification(
-                this.chat.name,
-                body
-            );
+            this.postDesktopNotification(this.chat.name, body);
         }
     }
 
@@ -66,7 +67,7 @@ class MessageNotification {
             // Focus on message input.
             uiStore.focusMessageInput();
         }
-    }
+    };
 
     postDesktopNotification(title, body) {
         if (!title || !body) return;
@@ -80,12 +81,13 @@ class MessageNotification {
         };
 
         // icon needed for Windows, looks weird on Mac
-        if (config.os !== 'Darwin') props.icon = path.join(app.getAppPath(), 'build/static/img/notification-icon.png');
+        if (config.os !== 'Darwin')
+            props.icon = path.join(
+                app.getAppPath(),
+                'build/static/img/notification-icon.png'
+            );
 
-        const notification = new Notification(
-            title,
-            props
-        );
+        const notification = new Notification(title, props);
         notification.onclick = this.handleClick;
         notifications[this.chat.id] = notification;
     }
@@ -94,20 +96,28 @@ class MessageNotification {
 class MentionNotification extends MessageNotification {
     constructor(props) {
         super(props);
-        this.userDesktopNotificationCondition = uiStore.prefs.mentionDesktopNotificationsEnabled;
+        this.userDesktopNotificationCondition =
+            uiStore.prefs.mentionDesktopNotificationsEnabled;
         this.userSoundsCondition = uiStore.prefs.mentionSoundsEnabled;
         this.translationKeyword = 'Mentions';
-        this.counter = this.unreadCount > config.chat.pageSize ? this.unreadCount : this.freshBatchMentionCount;
+        this.counter =
+            this.unreadCount > config.chat.pageSize
+                ? this.unreadCount
+                : this.freshBatchMentionCount;
     }
 }
 
 class DMNotification extends MessageNotification {
     constructor(props) {
         super(props);
-        this.userDesktopNotificationCondition = uiStore.prefs.mentionDesktopNotificationsEnabled;
+        this.userDesktopNotificationCondition =
+            uiStore.prefs.mentionDesktopNotificationsEnabled;
         this.userSoundsCondition = uiStore.prefs.mentionSoundsEnabled;
         this.translationKeyword = 'DMs';
-        this.counter = this.unreadCount > config.chat.pageSize ? this.unreadCount : this.freshBatchMentionCount;
+        this.counter =
+            this.unreadCount > config.chat.pageSize
+                ? this.unreadCount
+                : this.freshBatchMentionCount;
     }
 }
 
@@ -126,12 +136,14 @@ function sendMessageNotification(props) {
 class InviteNotification {
     constructor(props) {
         this.invite = props.invite;
-        this.userDesktopNotificationCondition = uiStore.prefs.inviteDesktopNotificationsEnabled;
+        this.userDesktopNotificationCondition =
+            uiStore.prefs.inviteDesktopNotificationsEnabled;
         this.userSoundsCondition = uiStore.prefs.messageSoundsEnabled;
     }
 
     send() {
-        if (this.userDesktopNotificationCondition) this.showDesktopNotification();
+        if (this.userDesktopNotificationCondition)
+            this.showDesktopNotification();
         if (this.userSoundsCondition) this.playSound();
     }
 
@@ -139,12 +151,18 @@ class InviteNotification {
         if (!appState.isFocused) {
             const { username, channelName } = this.invite;
             const contact = contactStore.getContact(username);
-            when(() => !contact.loading, () => {
-                this.postDesktopNotification(
-                    t('notification_roomInviteTitle'),
-                    t('notification_roomInviteBody', { name: contact.fullName, room: channelName })
-                );
-            });
+            when(
+                () => !contact.loading,
+                () => {
+                    this.postDesktopNotification(
+                        t('notification_roomInviteTitle'),
+                        t('notification_roomInviteBody', {
+                            name: contact.fullName,
+                            room: channelName
+                        })
+                    );
+                }
+            );
         }
     }
 
@@ -159,15 +177,20 @@ class InviteNotification {
             // Activate invite
             // "when" is needed because notification can arrive and be clicked
             // before chatStore is loaded, which causes lots of confusion in UI.
-            when(() => chatStore.loaded, () => {
-                chatInviteStore.activateInvite(this.invite.kegDbId);
-                if (chatInviteStore.activeInvite) {
-                    chatStore.deactivateCurrentChat();
-                    routerStore.navigateTo(routerStore.ROUTES.channelInvite);
+            when(
+                () => chatStore.loaded,
+                () => {
+                    chatInviteStore.activateInvite(this.invite.kegDbId);
+                    if (chatInviteStore.activeInvite) {
+                        chatStore.deactivateCurrentChat();
+                        routerStore.navigateTo(
+                            routerStore.ROUTES.channelInvite
+                        );
+                    }
                 }
-            });
+            );
         }
-    }
+    };
 
     postDesktopNotification(title, body) {
         if (!title || !body) return;
@@ -177,12 +200,13 @@ class InviteNotification {
         };
 
         // icon needed for Windows, looks weird on Mac
-        if (config.os !== 'Darwin') props.icon = path.join(app.getAppPath(), 'build/static/img/notification-icon.png');
+        if (config.os !== 'Darwin')
+            props.icon = path.join(
+                app.getAppPath(),
+                'build/static/img/notification-icon.png'
+            );
 
-        const notification = new Notification(
-            title,
-            props
-        );
+        const notification = new Notification(title, props);
         notification.onclick = this.handleClick;
     }
 }
@@ -201,7 +225,8 @@ class InviteAcceptedNotification {
     }
 
     send() {
-        if (this.userDesktopNotificationCondition) this.showDesktopNotification();
+        if (this.userDesktopNotificationCondition)
+            this.showDesktopNotification();
         if (this.userSoundsCondition) this.playSound();
     }
 
@@ -214,7 +239,8 @@ class InviteAcceptedNotification {
             this.postDesktopNotification(
                 t('notification_inviteAcceptedTitle'),
                 t('notification_inviteAcceptedBody', {
-                    firstName: contact.firstName || '', username
+                    firstName: contact.firstName || '',
+                    username
                 })
             );
         }
@@ -231,15 +257,20 @@ class InviteAcceptedNotification {
             // Activate invite
             // "when" is needed because notification can arrive and be clicked
             // before chatStore is loaded, which causes lots of confusion in UI.
-            when(() => chatStore.loaded, () => {
-                chatInviteStore.activateInvite(this.invite.kegDbId);
-                if (chatInviteStore.activeInvite) {
-                    chatStore.deactivateCurrentChat();
-                    routerStore.navigateTo(routerStore.ROUTES.channelInvite);
+            when(
+                () => chatStore.loaded,
+                () => {
+                    chatInviteStore.activateInvite(this.invite.kegDbId);
+                    if (chatInviteStore.activeInvite) {
+                        chatStore.deactivateCurrentChat();
+                        routerStore.navigateTo(
+                            routerStore.ROUTES.channelInvite
+                        );
+                    }
                 }
-            });
+            );
         }
-    }
+    };
 
     postDesktopNotification(title, body) {
         if (!title || !body) return;
@@ -249,12 +280,13 @@ class InviteAcceptedNotification {
         };
 
         // icon needed for Windows, looks weird on Mac
-        if (config.os !== 'Darwin') props.icon = path.join(app.getAppPath(), 'build/static/img/notification-icon.png');
+        if (config.os !== 'Darwin')
+            props.icon = path.join(
+                app.getAppPath(),
+                'build/static/img/notification-icon.png'
+            );
 
-        const notification = new Notification(
-            title,
-            props
-        );
+        const notification = new Notification(title, props);
         notification.onclick = this.handleClick;
     }
 }

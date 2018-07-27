@@ -5,9 +5,14 @@ const { warnings, warningStates } = require('peerio-icebear');
 
 @observer
 class WarningDisplayBase extends React.Component {
-    @computed get isVisible() {
+    @computed
+    get isVisible() {
         const w = warnings.current;
-        return !!(w && w.level === this.level && w.state === warningStates.SHOWING);
+        return !!(
+            w &&
+            w.level === this.level &&
+            w.state === warningStates.SHOWING
+        );
     }
 
     constructor(level) {
@@ -15,10 +20,9 @@ class WarningDisplayBase extends React.Component {
         this.level = level;
     }
 
-
     dismiss = () => {
         warnings.current.dismiss();
-    }
+    };
 }
 
 module.exports = WarningDisplayBase;

@@ -18,21 +18,36 @@ class ELEMENTS {
     textParser = {
         toCreateDM: text => {
             return (
-                <a className="clickable" onClick={() => routerStore.navigateTo(routerStore.ROUTES.newChat)}>
+                <a
+                    className="clickable"
+                    onClick={() =>
+                        routerStore.navigateTo(routerStore.ROUTES.newChat)
+                    }
+                >
                     {text}
                 </a>
             );
         },
         toCreateRoom: text => {
             return (
-                <a className="clickable" onClick={() => routerStore.navigateTo(routerStore.ROUTES.newChannel)}>
+                <a
+                    className="clickable"
+                    onClick={() =>
+                        routerStore.navigateTo(routerStore.ROUTES.newChannel)
+                    }
+                >
                     {text}
                 </a>
             );
         },
         toCreatePatient: text => {
             return (
-                <a className="clickable" onClick={() => routerStore.navigateTo(routerStore.ROUTES.newPatient)}>
+                <a
+                    className="clickable"
+                    onClick={() =>
+                        routerStore.navigateTo(routerStore.ROUTES.newPatient)
+                    }
+                >
                     {text}
                 </a>
             );
@@ -41,12 +56,15 @@ class ELEMENTS {
 
     get newChannel() {
         const obj = {
-            title: (
-                <T k={STRINGS.newChannel.title} tag="span" />
-            ),
+            title: <T k={STRINGS.newChannel.title} tag="span" />,
             description: [
-                <T key="new-channel-description" k={STRINGS.newChannel.description} />,
-                <T key="new-channel-offer-dm" k={STRINGS.newChannel.offerDM}>{this.textParser}</T>
+                <T
+                    key="new-channel-description"
+                    k={STRINGS.newChannel.description}
+                />,
+                <T key="new-channel-offer-dm" k={STRINGS.newChannel.offerDM}>
+                    {this.textParser}
+                </T>
             ],
             acceptFunction: 'createNewChannel'
         };
@@ -63,21 +81,19 @@ class ELEMENTS {
             }
 
             if (this.currentView === 'newInternalRoom') {
-                obj.description = (
-                    <T k={STRINGS.newChannel.description} />
-                );
+                obj.description = <T k={STRINGS.newChannel.description} />;
 
                 obj.acceptFunction = 'createNewInternalRoom';
             }
 
             if (this.currentView === 'newPatientRoom') {
                 obj.title = (
-                    <T k={STRINGS.newChannel.title} tag="span">{{ patientName: chatStore.spaces.currentSpaceName }}</T>
+                    <T k={STRINGS.newChannel.title} tag="span">
+                        {{ patientName: chatStore.spaces.currentSpaceName }}
+                    </T>
                 );
 
-                obj.description = (
-                    <T k={STRINGS.newChannel.description} />
-                );
+                obj.description = <T k={STRINGS.newChannel.description} />;
 
                 obj.acceptFunction = 'createNewPatientRoom';
 
@@ -92,13 +108,19 @@ class ELEMENTS {
         const obj = {
             description: [
                 <T key="new-chat-desc" k="title_newDirectMessageDescription" />,
-                <T key="new-chat-offer-room" k={STRINGS.newChat.offerRoom}>{this.textParser}</T>
+                <T key="new-chat-offer-room" k={STRINGS.newChat.offerRoom}>
+                    {this.textParser}
+                </T>
             ]
         };
 
         if (config.whiteLabel.name === 'medcryptor') {
-            obj.description.splice(1, 0,
-                <T key="new-chat-offer-patient" k="mcr_title_offerNewPatient">{this.textParser}</T>
+            obj.description.splice(
+                1,
+                0,
+                <T key="new-chat-offer-patient" k="mcr_title_offerNewPatient">
+                    {this.textParser}
+                </T>
             );
         }
 
@@ -107,10 +129,10 @@ class ELEMENTS {
 
     get chatEditor() {
         const page = {
-            displayName: (chat) => {
+            displayName: chat => {
                 return chat.name;
             },
-            saveNameChanges: (val) => {
+            saveNameChanges: val => {
                 if (!chatStore.activeChat) return Promise.resolve();
                 return chatStore.activeChat.rename(val);
             }
@@ -118,15 +140,17 @@ class ELEMENTS {
 
         if (config.whiteLabel.name === 'medcryptor') {
             if (chatStore.activeChat.isInSpace && User.current.isMCAdmin) {
-                page.displayName = (chat) => {
+                page.displayName = chat => {
                     return chat.nameInSpace;
                 };
 
-                page.saveNameChanges = async (val) => {
+                page.saveNameChanges = async val => {
                     if (!chatStore.activeChat) return Promise.resolve();
                     return Promise.all([
                         chatStore.activeChat.renameInSpace(val),
-                        chatStore.activeChat.rename(`${chatStore.spaces.currentSpaceName} - ${val}`)
+                        chatStore.activeChat.rename(
+                            `${chatStore.spaces.currentSpaceName} - ${val}`
+                        )
                     ]);
                 };
             }
@@ -137,21 +161,30 @@ class ELEMENTS {
 
     get chatView() {
         const obj = {
-            title: (name) => <div className="title-content">{name}</div>,
+            title: name => <div className="title-content">{name}</div>,
             currentContext: null,
-            checkActiveSpace: () => { return null; }
+            checkActiveSpace: () => {
+                return null;
+            }
         };
 
         if (config.whiteLabel.name === 'medcryptor') {
             // MC admin sees room type in brackets next to room namem, at the top of ChatView
-            if (chatStore.activeChat && chatStore.activeChat.isInSpace && User.current.isMCAdmin) {
-                obj.title = (name) => {
+            if (
+                chatStore.activeChat &&
+                chatStore.activeChat.isInSpace &&
+                User.current.isMCAdmin
+            ) {
+                obj.title = name => {
                     return (
                         <div className="title-content">
-                            {name}&nbsp;
-                            (<T k={chatStore.spaces.isPatientRoomOpen ?
-                                'mcr_title_patientRoom' :
-                                'mcr_title_internalRoom'} />)
+                            {name}&nbsp; (<T
+                                k={
+                                    chatStore.spaces.isPatientRoomOpen
+                                        ? 'mcr_title_patientRoom'
+                                        : 'mcr_title_internalRoom'
+                                }
+                            />)
                         </div>
                     );
                 };
@@ -162,7 +195,10 @@ class ELEMENTS {
             }
 
             obj.checkActiveSpace = () => {
-                if (chatStore.spaces.activeSpaceId && routerStore.currentRoute === routerStore.ROUTES.chats) {
+                if (
+                    chatStore.spaces.activeSpaceId &&
+                    routerStore.currentRoute === routerStore.ROUTES.chats
+                ) {
                     routerStore.navigateTo(routerStore.ROUTES.patients);
                 }
             };
@@ -185,10 +221,14 @@ class ELEMENTS {
 
     get channelSideBar() {
         const obj = {
-            canILeave: (chatCanILeave) => chatCanILeave
+            canILeave: chatCanILeave => chatCanILeave
         };
 
-        if (config.whiteLabel.name === 'medcryptor' && User.current.isMCAdmin && routerStore.isPatientSpace) {
+        if (
+            config.whiteLabel.name === 'medcryptor' &&
+            User.current.isMCAdmin &&
+            routerStore.isPatientSpace
+        ) {
             obj.canILeave = () => false;
         }
 
@@ -213,14 +253,15 @@ class ELEMENTS {
         };
 
         const obj = {
-            userMenuItems: () => [
-                itemMakeAdmin,
-                itemDeleteMember
-            ]
+            userMenuItems: () => [itemMakeAdmin, itemDeleteMember]
         };
 
-        if (config.whiteLabel.name === 'medcryptor' && User.current.isMCAdmin && routerStore.isPatientSpace) {
-            obj.userMenuItems = (username) => {
+        if (
+            config.whiteLabel.name === 'medcryptor' &&
+            User.current.isMCAdmin &&
+            routerStore.isPatientSpace
+        ) {
+            obj.userMenuItems = username => {
                 if (contactStore.whitelabel.checkMCDoctor(username)) {
                     return [itemDeleteMember];
                 }
@@ -243,7 +284,8 @@ class ELEMENTS {
             // In MC, need to check if activeChat is in patient space, and activate that space if so.
             obj.goToActiveChat = () => {
                 if (chatStore.activeChat && chatStore.activeChat.isInSpace) {
-                    chatStore.spaces.activeSpaceId = chatStore.activeChat.chatHead.spaceId;
+                    chatStore.spaces.activeSpaceId =
+                        chatStore.activeChat.chatHead.spaceId;
                     routerStore.navigateTo(routerStore.ROUTES.patients);
                 } else if (chatStore.spaces.activeSpaceId) {
                     routerStore.navigateTo(routerStore.ROUTES.patients);

@@ -6,12 +6,18 @@ const isDevEnv = require('~/helpers/is-dev-env');
 const FileStream = require('peerio-icebear/dist/models/files/node-file-stream');
 const StorageEngine = require('peerio-icebear/dist/models/storage/node-json-storage');
 const CacheEngine = require('~/stores/indexed-db-storage');
-const { setUrlMap, setTagHandler, setStringReplacement } = require('peerio-translator');
+const {
+    setUrlMap,
+    setTagHandler,
+    setStringReplacement
+} = require('peerio-translator');
 const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
 
 const packageJson = require(path.join(app.getAppPath(), 'package.json'));
 if (!packageJson) {
-    throw new Error(`Unable to find package.json (resources path: ${process.resourcesPath})`);
+    throw new Error(
+        `Unable to find package.json (resources path: ${process.resourcesPath})`
+    );
 }
 if (!packageJson.peerio) {
     throw new Error('Missing "peerio" in package.json');
@@ -30,8 +36,11 @@ for (const name in tagHandlers) {
 }
 
 // replace config-specific strings
-cfg.translator.stringReplacements.forEach((replacementObject) => {
-    setStringReplacement(replacementObject.original, replacementObject.replacement);
+cfg.translator.stringReplacements.forEach(replacementObject => {
+    setStringReplacement(
+        replacementObject.original,
+        replacementObject.replacement
+    );
 });
 
 // --- PLATFORM SPECIFIC IMPLEMENTATIONS
@@ -82,11 +91,22 @@ if (isDevEnv) {
 
 // --- DIAGNOSTIC STARTUP LOG
 try {
-    console.log(isDevEnv ? 'DEV environment detected' : 'PROD environment detected');
-    console.log(`Starting app: ${cfg.appId} v${cfg.appVersion} | ${cfg.arch} | ${cfg.platform} | ` +
-        `${os.platform()}-${os.release()} | ${os.cpus().length} CPUs | ` +
-        `${os.totalmem() / 1024 / 1024 / 1024}GB RAM (${+(os.freemem() / 1024 / 1024 / 1024).toFixed(2)}GB free) | ` +
-        `${Math.round(os.uptime() / 60 / 60)} hours uptime`);
+    console.log(
+        isDevEnv ? 'DEV environment detected' : 'PROD environment detected'
+    );
+    console.log(
+        `Starting app: ${cfg.appId} v${cfg.appVersion} | ${cfg.arch} | ${
+            cfg.platform
+        } | ` +
+            `${os.platform()}-${os.release()} | ${os.cpus().length} CPUs | ` +
+            `${os.totalmem() / 1024 / 1024 / 1024}GB RAM (${+(
+                os.freemem() /
+                1024 /
+                1024 /
+                1024
+            ).toFixed(2)}GB free) | ` +
+            `${Math.round(os.uptime() / 60 / 60)} hours uptime`
+    );
 } catch (err) {
     console.log(err);
 }

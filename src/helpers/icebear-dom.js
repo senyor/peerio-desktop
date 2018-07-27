@@ -12,7 +12,9 @@ function getFolderByEvent(ev) {
     const folderId = getAttributeInParentChain(ev.target, 'data-folderid');
     const storeId = getAttributeInParentChain(ev.target, 'data-storeid');
     const store = fileStore.getFileStoreById(storeId);
-    return folderId === 'root' ? store.folderStore.root : store.folderStore.getById(folderId);
+    return folderId === 'root'
+        ? store.folderStore.root
+        : store.folderStore.getById(folderId);
 }
 
 function getFileByEvent(ev) {
@@ -23,12 +25,24 @@ function getFileByEvent(ev) {
 }
 
 async function getChannelByEvent(ev) {
-    return chatStore.getChatWhenReady(getAttributeInParentChain(ev.target, 'data-channelid'));
+    return chatStore.getChatWhenReady(
+        getAttributeInParentChain(ev.target, 'data-channelid')
+    );
 }
 
 async function getContactByEvent(ev) {
-    const contact = contactStore.getContact(getAttributeInParentChain(ev.target, 'data-username'));
-    return new Promise(resolve => when(() => !contact.loading, () => resolve(contact)));
+    const contact = contactStore.getContact(
+        getAttributeInParentChain(ev.target, 'data-username')
+    );
+    return new Promise(resolve =>
+        when(() => !contact.loading, () => resolve(contact))
+    );
 }
 
-module.exports = { getVolumeByEvent, getFolderByEvent, getFileByEvent, getChannelByEvent, getContactByEvent };
+module.exports = {
+    getVolumeByEvent,
+    getFolderByEvent,
+    getFileByEvent,
+    getChannelByEvent,
+    getContactByEvent
+};

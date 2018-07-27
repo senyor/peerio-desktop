@@ -9,7 +9,11 @@ class IdentityVerificationNotice extends React.Component {
     render() {
         return (
             <div className="identity-verification-notice">
-                <div className={css('notice-container', { 'extra-margin': this.props.extraMargin })}>
+                <div
+                    className={css('notice-container', {
+                        'extra-margin': this.props.extraMargin
+                    })}
+                >
                     <MaterialIcon className="notice-icon" icon="security" />
                     <T className="text-content" k="title_verifyUserIdentity" />
                 </div>

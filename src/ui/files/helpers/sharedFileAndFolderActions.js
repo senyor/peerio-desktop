@@ -9,7 +9,6 @@ const {
     selectDownloadFolder
 } = require('~/helpers/file');
 
-
 /**
  * Remember that these are just for play until we introduce real types -- any
  * non-primitive will satisfy these.
@@ -25,7 +24,6 @@ const {
  *
  * @typedef {File | Folder} FileOrFolder
  */
-
 
 /*
  * TODO: any of these that could be sensibly placed on the icebear models might
@@ -134,7 +132,10 @@ class FilesAndFoldersSharedMethods {
                     fileStore.folderStore.currentFolder
                 );
             }
-            return fileStore.uploadFolder(tree, fileStore.folderStore.currentFolder);
+            return fileStore.uploadFolder(
+                tree,
+                fileStore.folderStore.currentFolder
+            );
         });
     }
 }

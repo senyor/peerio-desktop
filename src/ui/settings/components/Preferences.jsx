@@ -25,7 +25,8 @@ class Preferences extends React.Component {
     }
 
     onMessageSoundsChanged(ev) {
-        if (ev.target.checked === true) uiStore.prefs.mentionSoundsEnabled = false;
+        if (ev.target.checked === true)
+            uiStore.prefs.mentionSoundsEnabled = false;
         uiStore.prefs.messageSoundsEnabled = ev.target.checked;
     }
 
@@ -35,7 +36,8 @@ class Preferences extends React.Component {
     }
 
     onMessageDesktopNotificationsChanged(ev) {
-        if (ev.target.checked === true) uiStore.prefs.mentionDesktopNotificationsEnabled = false;
+        if (ev.target.checked === true)
+            uiStore.prefs.mentionDesktopNotificationsEnabled = false;
         uiStore.prefs.messageDesktopNotificationsEnabled = ev.target.checked;
     }
 
@@ -75,44 +77,62 @@ class Preferences extends React.Component {
             <div className="preferences">
                 <section className="section-divider">
                     <div className="title">{t('title_emailNotifications')}</div>
-                    <p>
-                        {t('title_emailsDetail')}
-                    </p>
-                    <Switch checked={User.current.settings.messageNotifications}
+                    <p>{t('title_emailsDetail')}</p>
+                    <Switch
+                        checked={User.current.settings.messageNotifications}
                         label={t('title_notificationsEmailMessage')}
-                        onChange={this.onMsgNotifChanged} />
+                        onChange={this.onMsgNotifChanged}
+                    />
                 </section>
                 <section className="section-divider">
                     <div className="title">{t('title_soundNotifications')}</div>
-                    <p>
-                        {t('title_soundsDetail')}
-                    </p>
-                    <Switch checked={uiStore.prefs.messageSoundsEnabled}
+                    <p>{t('title_soundsDetail')}</p>
+                    <Switch
+                        checked={uiStore.prefs.messageSoundsEnabled}
                         label={t('title_soundsMessage')}
-                        onChange={this.onMessageSoundsChanged} />
-                    <Switch checked={uiStore.prefs.mentionSoundsEnabled}
+                        onChange={this.onMessageSoundsChanged}
+                    />
+                    <Switch
+                        checked={uiStore.prefs.mentionSoundsEnabled}
                         disabled={this.mentionSoundsSwitchDisabled}
                         label={t('title_soundsMention')}
-                        onChange={this.onMentionSoundsChanged} />
-                    <Switch checked={uiStore.prefs.errorSoundsEnabled}
+                        onChange={this.onMentionSoundsChanged}
+                    />
+                    <Switch
+                        checked={uiStore.prefs.errorSoundsEnabled}
                         label={t('title_soundsError')}
-                        onChange={this.onErrorSoundsChanged} />
+                        onChange={this.onErrorSoundsChanged}
+                    />
                 </section>
                 <section className="section-divider">
-                    <div className="title">{t('title_desktopNotifications')}</div>
-                    <p>
-                        {t('title_desktopNotificationsDetail')}
-                    </p>
-                    <Switch checked={uiStore.prefs.messageDesktopNotificationsEnabled}
+                    <div className="title">
+                        {t('title_desktopNotifications')}
+                    </div>
+                    <p>{t('title_desktopNotificationsDetail')}</p>
+                    <Switch
+                        checked={
+                            uiStore.prefs.messageDesktopNotificationsEnabled
+                        }
                         label={t('title_messageDesktopNotificationsMessage')}
-                        onChange={this.onMessageDesktopNotificationsChanged} />
-                    <Switch checked={uiStore.prefs.mentionDesktopNotificationsEnabled}
+                        onChange={this.onMessageDesktopNotificationsChanged}
+                    />
+                    <Switch
+                        checked={
+                            uiStore.prefs.mentionDesktopNotificationsEnabled
+                        }
                         label={t('title_mentionDesktopNotificationsMessage')}
-                        disabled={this.mentionDesktopNotificationsSwitchDisabled}
-                        onChange={this.onMentionDesktopNotificationsChanged} />
-                    <Switch checked={uiStore.prefs.inviteDesktopNotificationsEnabled}
+                        disabled={
+                            this.mentionDesktopNotificationsSwitchDisabled
+                        }
+                        onChange={this.onMentionDesktopNotificationsChanged}
+                    />
+                    <Switch
+                        checked={
+                            uiStore.prefs.inviteDesktopNotificationsEnabled
+                        }
                         label={t('title_inviteDesktopNotificationsMessage')}
-                        onChange={this.onInviteDesktopNotificationsChanged} />
+                        onChange={this.onInviteDesktopNotificationsChanged}
+                    />
                 </section>
                 {/* <section className="section-divider prefs-files">
                     <div className="title">{t('title_files')}</div>
@@ -128,15 +148,26 @@ class Preferences extends React.Component {
                 <section className="section-divider prefs-display">
                     <div className="title">{t('title_displayPreferences')}</div>
                     <p className="subheading">{t('title_imageFilePreviews')}</p>
-                    <Switch className="narrow" label={t('title_showImagePreviews')}
+                    <Switch
+                        className="narrow"
+                        label={t('title_showImagePreviews')}
                         checked={uiStore.prefs.peerioContentEnabled}
-                        onChange={this.onPeerioContentPreviewToggle} />
-                    <p className="narrow smalltext">{t('title_showImagePreviewsDescription2')}</p>
-                    <Switch label={t('title_showLargeImages', { size: fileStore.inlineImageSizeLimitFormatted })}
+                        onChange={this.onPeerioContentPreviewToggle}
+                    />
+                    <p className="narrow smalltext">
+                        {t('title_showImagePreviewsDescription2')}
+                    </p>
+                    <Switch
+                        label={t('title_showLargeImages', {
+                            size: fileStore.inlineImageSizeLimitFormatted
+                        })}
                         checked={!uiStore.prefs.limitInlineImageSize}
-                        onChange={this.onInlineContentSizeLimitToggle} />
-                    <p className="narrow smalltext">{t('title_imageTooBigCutoff',
-                        { size: fileStore.inlineImageSizeLimitCutoffFormatted })}
+                        onChange={this.onInlineContentSizeLimitToggle}
+                    />
+                    <p className="narrow smalltext">
+                        {t('title_imageTooBigCutoff', {
+                            size: fileStore.inlineImageSizeLimitCutoffFormatted
+                        })}
                     </p>
                 </section>
                 <section className="section-divider prefs-url">
@@ -144,17 +175,22 @@ class Preferences extends React.Component {
                     <div className="warning">
                         <MaterialIcon icon="security" />
                         <div>
-                            <span>{t('title_EnableUrlPreviewWarning')}&nbsp;</span>
+                            <span>
+                                {t('title_EnableUrlPreviewWarning')}&nbsp;
+                            </span>
                             <T k="title_learnMore" />
                         </div>
                     </div>
-                    <Switch label={t('title_EnableUrlPreviews')}
+                    <Switch
+                        label={t('title_EnableUrlPreviews')}
                         checked={uiStore.prefs.externalContentEnabled}
-                        onChange={this.onUrlPreviewToggle} />
-                    <Checkbox label={t('title_onlyFromFavourites')}
+                        onChange={this.onUrlPreviewToggle}
+                    />
+                    <Checkbox
+                        label={t('title_onlyFromFavourites')}
                         checked={uiStore.prefs.externalContentJustForFavs}
-                        onChange={this.onFavContactsPreviewToggle} />
-
+                        onChange={this.onFavContactsPreviewToggle}
+                    />
                 </section>
             </div>
         );

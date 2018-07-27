@@ -36,32 +36,41 @@ class SharedFolderActions extends React.Component {
                 disabled={this.props.disabled}
                 {...getDataProps(this.props)}
             >
-                {this.props.onShare
-                    ? <MenuItem caption={t('button_share')}
+                {this.props.onShare ? (
+                    <MenuItem
+                        caption={t('button_share')}
                         icon="person_add"
                         onClick={this.props.onShare}
                         disabled={this.props.shareDisabled}
                     />
-                    : null
-                }
-                {this.props.onDownload && <MenuItem caption={t('title_download')}
-                    icon="file_download"
-                    onClick={this.props.onDownload}
-                    disabled={this.props.downloadDisabled}
-                />}
-                {(this.props.onShare || this.props.onDownload) && (this.props.onUnshare || this.props.onDelete)
-                    ? <Divider />
-                    : null
-                }
-                {this.props.onUnshare && <MenuItem caption={t('button_unshare')}
-                    className="custom-icon-hover-container"
-                    customIcon="remove-member"
-                    onClick={this.props.onUnshare}
-                />}
-                {this.props.onDelete && <MenuItem caption={t('button_delete')}
-                    icon="delete"
-                    onClick={this.props.onDelete} />
-                }
+                ) : null}
+                {this.props.onDownload && (
+                    <MenuItem
+                        caption={t('title_download')}
+                        icon="file_download"
+                        onClick={this.props.onDownload}
+                        disabled={this.props.downloadDisabled}
+                    />
+                )}
+                {(this.props.onShare || this.props.onDownload) &&
+                (this.props.onUnshare || this.props.onDelete) ? (
+                    <Divider />
+                ) : null}
+                {this.props.onUnshare && (
+                    <MenuItem
+                        caption={t('button_unshare')}
+                        className="custom-icon-hover-container"
+                        customIcon="remove-member"
+                        onClick={this.props.onUnshare}
+                    />
+                )}
+                {this.props.onDelete && (
+                    <MenuItem
+                        caption={t('button_delete')}
+                        icon="delete"
+                        onClick={this.props.onDelete}
+                    />
+                )}
             </Menu>
         );
     }

@@ -8,7 +8,8 @@ const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerific
 
 @observer
 class ChatHeader extends React.Component {
-    @computed get displayParticipants() {
+    @computed
+    get displayParticipants() {
         const chat = chatStore.activeChat;
         if (!chat) return [];
         if (chat.isChannel) return chat.allParticipants;
@@ -21,11 +22,24 @@ class ChatHeader extends React.Component {
         return (
             <div className="messages-start">
                 <div className="avatars">
-                    {this.displayParticipants.map(
-                        c => <AvatarWithPopup size="large" key={c.username} contact={c} tooltip />
-                    )}
+                    {this.displayParticipants.map(c => (
+                        <AvatarWithPopup
+                            size="large"
+                            key={c.username}
+                            contact={c}
+                            tooltip
+                        />
+                    ))}
                 </div>
-                <T k={chat.isChannel ? 'title_chatBeginningRoom' : 'title_chatBeginning'} tag="div" className="title">
+                <T
+                    k={
+                        chat.isChannel
+                            ? 'title_chatBeginningRoom'
+                            : 'title_chatBeginning'
+                    }
+                    tag="div"
+                    className="title"
+                >
                     {{
                         chatName: chat.name
                     }}

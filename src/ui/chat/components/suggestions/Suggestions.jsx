@@ -16,13 +16,7 @@ hierarchy, respectively, and call 'cleanup' when unmounting.
 */
 
 const React = require('react');
-const {
-    observable,
-    autorun,
-    action,
-    computed,
-    runInAction
-} = require('mobx');
+const { observable, autorun, action, computed, runInAction } = require('mobx');
 const { observer } = require('mobx-react');
 const { Plugin } = require('prosemirror-state');
 
@@ -33,7 +27,6 @@ const { ResolvedPos } = require('prosemirror-model'); // eslint-disable-line no-
  * matching against the suggestions regexes.
  */
 const MATCH_BEFORE = 100; // TODO: consider making tunable in Suggestions constuctor
-
 
 /**
  * @typedef MatchData
@@ -67,14 +60,11 @@ const MATCH_BEFORE = 100; // TODO: consider making tunable in Suggestions constu
  * @property { (matchData : MatchData, acceptedSuggestion : any) => any } onAcceptSuggestion
  */
 
-
 class Suggestions {
-    @observable
-    selectedIndex = 0;
+    @observable selectedIndex = 0;
 
     /** @type {MatchData | null} */
-    @observable.shallow
-    matchData = null;
+    @observable.shallow matchData = null;
 
     /* FIXME/TS: this class should be generic:
        'any'/'any[]' should be 'T'/'T[]', keySource should be 'keyof T'.
@@ -84,7 +74,13 @@ class Suggestions {
      * @param {SuggestionsConfig} config
      */
     constructor(config) {
-        const { matchers, source, formatter, keySource, onAcceptSuggestion } = config;
+        const {
+            matchers,
+            source,
+            formatter,
+            keySource,
+            onAcceptSuggestion
+        } = config;
         this.matchers = matchers;
         this.source = source;
         this.formatter = formatter;
@@ -96,18 +92,23 @@ class Suggestions {
         this.disposer = autorun(() => {
             // Our selected index should always be in range.
             if (this.suggestions && this.suggestions.length > 0) {
-                this.selectedIndex = Math.min(this.selectedIndex, this.suggestions.length - 1);
+                this.selectedIndex = Math.min(
+                    this.selectedIndex,
+                    this.suggestions.length - 1
+                );
             }
 
             /** @type {any} */
-            const el = document.querySelector(`.suggests>.suggest-item:nth-of-type(${this.selectedIndex + 1})`);
+            const el = document.querySelector(
+                `.suggests>.suggest-item:nth-of-type(${this.selectedIndex + 1})`
+            );
             if (el) el.scrollIntoViewIfNeeded(true);
         });
     }
 
     cleanup = () => {
         if (this.disposer) this.disposer();
-    }
+    };
 
     @computed
     get visible() {
@@ -132,7 +133,10 @@ class Suggestions {
     @action.bound
     acceptSuggestion() {
         if (this.matchData && this.suggestions.length > 0) {
-            this.onAcceptSuggestion(this.matchData, this.suggestions[this.selectedIndex]);
+            this.onAcceptSuggestion(
+                this.matchData,
+                this.suggestions[this.selectedIndex]
+            );
         }
         this.dismiss();
     }
@@ -143,28 +147,35 @@ class Suggestions {
         return (
             <div className="suggests-wrapper">
                 <div className="suggests">
-                    {this.suggestions.length === 0
-                        ? <div className="suggest-item">No suggestions.</div>
-                        : this.suggestions.map((s, i) => {
+                    {this.suggestions.length === 0 ? (
+                        <div className="suggest-item">No suggestions.</div>
+                    ) : (
+                        this.suggestions.map((s, i) => {
                             return (
                                 <div
-                                    className={`suggest-item ${i === this.selectedIndex ? 'selected' : ''}`}
+                                    className={`suggest-item ${
+                                        i === this.selectedIndex
+                                            ? 'selected'
+                                            : ''
+                                    }`}
                                     key={s[this.keySource]}
                                     onMouseDown={this.acceptSuggestion}
-                                    onMouseOver={action(() => { this.selectedIndex = i; })}
+                                    onMouseOver={action(() => {
+                                        this.selectedIndex = i;
+                                    })}
                                 >
                                     {this.formatter(s)}
                                 </div>
                             );
                         })
-                    }
+                    )}
                 </div>
             </div>
         );
     });
 }
 
-function makePlugin(/** @type {Suggestions} */self) {
+function makePlugin(/** @type {Suggestions} */ self) {
     return new Plugin({
         props: {
             handleKeyDown(view, ev) {
@@ -173,7 +184,10 @@ function makePlugin(/** @type {Suggestions} */self) {
                         if (self.visible && self.suggestions.length > 0) {
                             runInAction(() => {
                                 self.selectedIndex += 1;
-                                if (self.selectedIndex >= self.suggestions.length) {
+                                if (
+                                    self.selectedIndex >=
+                                    self.suggestions.length
+                                ) {
                                     self.selectedIndex = 0;
                                 }
                             });
@@ -185,7 +199,8 @@ function makePlugin(/** @type {Suggestions} */self) {
                             runInAction(() => {
                                 self.selectedIndex -= 1;
                                 if (self.selectedIndex < 0) {
-                                    self.selectedIndex = self.suggestions.length - 1;
+                                    self.selectedIndex =
+                                        self.suggestions.length - 1;
                                 }
                             });
                             return true;
@@ -233,7 +248,6 @@ function makePlugin(/** @type {Suggestions} */self) {
                         return;
                     }
 
-
                     // FIXME/TS: cast selection as TextSelection here instead of using index notation hack
                     /** @type {ResolvedPos} */
                     const cursor = view.state.selection['$cursor']; // eslint-disable-line dot-notation
@@ -250,7 +264,11 @@ function makePlugin(/** @type {Suggestions} */self) {
                             const match = self.matchers[i].exec(textBefore);
 
                             if (match) {
-                                self.matchData = { match, from: cursor.pos - match[0].length, to: cursor.pos };
+                                self.matchData = {
+                                    match,
+                                    from: cursor.pos - match[0].length,
+                                    to: cursor.pos
+                                };
                                 return;
                             }
                         }

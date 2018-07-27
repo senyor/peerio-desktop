@@ -10,8 +10,10 @@ const css = require('classnames');
 const ShareConfirmDialog = require('./ShareConfirmDialog');
 
 // HACK: circular require :(
-let Breadcrumb; setTimeout(() => { Breadcrumb = require('./Breadcrumb'); });
-
+let Breadcrumb;
+setTimeout(() => {
+    Breadcrumb = require('./Breadcrumb');
+});
 
 /**
  * @augments {React.Component<{}, {}>}
@@ -46,8 +48,7 @@ class MoveFileDialog extends React.Component {
      * @private
      * @type {() => void | null}
      */
-    @observable.ref
-    resolver = null;
+    @observable.ref resolver = null;
 
     disposer;
 
@@ -74,11 +75,16 @@ class MoveFileDialog extends React.Component {
         this.currentFolder = initialFolder;
         this.itemToMove = itemToMove;
 
-        this.disposer = reaction(() => this.currentFolder.isDeleted, isDeleted => {
-            if (isDeleted) this.currentFolder = fileStore.folderStore.root;
-        });
+        this.disposer = reaction(
+            () => this.currentFolder.isDeleted,
+            isDeleted => {
+                if (isDeleted) this.currentFolder = fileStore.folderStore.root;
+            }
+        );
 
-        return new Promise(res => { this.resolver = res; });
+        return new Promise(res => {
+            this.resolver = res;
+        });
     }
 
     @action.bound
@@ -94,11 +100,16 @@ class MoveFileDialog extends React.Component {
     /**
      * @returns {boolean}
      */
-    @computed get legacyFileSelected() {
-        return this.itemToMove && this.itemToMove.isLegacy || fileStore.bulk.hasLegacyObjectsSelected;
+    @computed
+    get legacyFileSelected() {
+        return (
+            (this.itemToMove && this.itemToMove.isLegacy) ||
+            fileStore.bulk.hasLegacyObjectsSelected
+        );
     }
 
-    @action.bound async performMove() {
+    @action.bound
+    async performMove() {
         const targetFolder = this.selectedFolder || this.currentFolder;
 
         // It should not be possible via UI to move a legacy file to a shared folder
@@ -112,7 +123,7 @@ class MoveFileDialog extends React.Component {
         if (targetFolder.root.isShared) {
             // we hide folder selection dialog immediately to prevent flicker
             this.dialogRef.current.hideWithoutAnimation();
-            if (!await this.shareConfirmDialogRef.current.check()) {
+            if (!(await this.shareConfirmDialogRef.current.check())) {
                 // if user pressed cancel on confirmation, we show our dialog immediately
                 // to prevent flicker again
                 this.dialogRef.current.showWithoutAnimation();
@@ -128,7 +139,8 @@ class MoveFileDialog extends React.Component {
         this.close();
     }
 
-    @computed get visibleFolders() {
+    @computed
+    get visibleFolders() {
         let visibleFolders = this.query
             ? fileStore.foldersFiltered(this.query)
             : this.currentFolder.foldersSortedByName;
@@ -149,7 +161,8 @@ class MoveFileDialog extends React.Component {
         ));
     }
 
-    @action.bound handleSearch(val) {
+    @action.bound
+    handleSearch(val) {
         this.query = val;
     }
 
@@ -163,10 +176,10 @@ class MoveFileDialog extends React.Component {
         this.selectedFolder = folder;
     }
 
-    @action.bound toggleShareWarning() {
+    @action.bound
+    toggleShareWarning() {
         this.shareWarningDisabled = !this.shareWarningDisabled;
     }
-
 
     render() {
         if (!this.resolver) return null;
@@ -185,11 +198,9 @@ class MoveFileDialog extends React.Component {
                     actions={actions}
                     onCancel={this.close}
                     title={t('title_moveFileTo')}
-                    className="move-file-dialog">
-                    <Search
-                        onChange={this.handleSearch}
-                        query={this.query}
-                    />
+                    className="move-file-dialog"
+                >
+                    <Search onChange={this.handleSearch} query={this.query} />
                     <Breadcrumb
                         folder={this.currentFolder}
                         onFolderClick={this.setCurrentFolder}
@@ -218,44 +229,61 @@ class MoveFileDialog extends React.Component {
 class FolderRow extends React.Component {
     handleSelect = () => {
         this.props.onSelect(this.props.folder);
-    }
+    };
 
     handleEnter = () => {
         this.props.onEnter(this.props.folder);
-    }
+    };
 
     render() {
         const { folder, isSelected, disabled } = this.props;
 
         const hasFolders = folder.folders.length > 0;
 
-        return (<div
-            key={`folder-${folder.id}`}
-            data-folderid={folder.id}
-            data-storeid={folder.store.id}
-            className={css('move-file-row', { disabled })}>
-            <Button
-                icon={isSelected ? 'radio_button_checked' : 'radio_button_unchecked'}
-                onClick={this.handleSelect}
-                theme="small"
-                selected={isSelected}
-                disabled={disabled}
-            />
-            <MaterialIcon icon={folder.isShared ? 'folder_shared' : 'folder'} className="folder-icon" />
-            <div className={css('file-info', { clickable: hasFolders })}
-                onClick={disabled ? null : this.handleEnter}
+        return (
+            <div
+                key={`folder-${folder.id}`}
+                data-folderid={folder.id}
+                data-storeid={folder.store.id}
+                className={css('move-file-row', { disabled })}
             >
-                <div className={css('file-name', { clickable: hasFolders && !disabled })}>{folder.name}</div>
-            </div>
-            {hasFolders &&
                 <Button
-                    onClick={this.handleEnter}
-                    icon="keyboard_arrow_right"
+                    icon={
+                        isSelected
+                            ? 'radio_button_checked'
+                            : 'radio_button_unchecked'
+                    }
+                    onClick={this.handleSelect}
                     theme="small"
+                    selected={isSelected}
                     disabled={disabled}
                 />
-            }
-        </div>);
+                <MaterialIcon
+                    icon={folder.isShared ? 'folder_shared' : 'folder'}
+                    className="folder-icon"
+                />
+                <div
+                    className={css('file-info', { clickable: hasFolders })}
+                    onClick={disabled ? null : this.handleEnter}
+                >
+                    <div
+                        className={css('file-name', {
+                            clickable: hasFolders && !disabled
+                        })}
+                    >
+                        {folder.name}
+                    </div>
+                </div>
+                {hasFolders && (
+                    <Button
+                        onClick={this.handleEnter}
+                        icon="keyboard_arrow_right"
+                        theme="small"
+                        disabled={disabled}
+                    />
+                )}
+            </div>
+        );
     }
 }
 

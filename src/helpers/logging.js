@@ -4,7 +4,6 @@
 // const { User, socket } = require('peerio-icebear');
 // const { reaction } = require('mobx');
 
-
 // /**
 //  * Plugs into the Airbrake API in order to send errors.
 //  *

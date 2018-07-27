@@ -30,7 +30,7 @@
     .p-button {
       width: 64px;
       color: $peerio-blue;
-      opacity: .95;
+      opacity: 0.95;
       box-shadow: 0 9px 46px 0 $black-12;
       background-color: $background-root;
       border: 1px solid $black-12;
@@ -70,6 +70,6 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, .58);
+    background-color: rgba(255, 255, 255, 0.58);
   }
 }

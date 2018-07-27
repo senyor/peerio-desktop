@@ -18,26 +18,23 @@ class AddOrRenameFolderDialog extends React.Component {
      * @private
      * @type {() => void | null}
      */
-    @observable.ref
-    resolver = null;
+    @observable.ref resolver = null;
 
     /**
      * @type {string}
      */
-    @observable
-    inputValue;
+    @observable inputValue;
 
     /**
      * @type {React.RefObject<HTMLInputElement>}
      */
-    inputRef = React.createRef()
+    inputRef = React.createRef();
 
     /**
      * The file or folder to rename.
      * If null, we're adding a new folder.
      */
-    @observable.ref
-    folderToRename = null;
+    @observable.ref folderToRename = null;
 
     /**
      * @param {any?} fileOrFolder The file or folder to rename; if undefined,
@@ -62,7 +59,9 @@ class AddOrRenameFolderDialog extends React.Component {
             }
         });
 
-        return new Promise(res => { this.resolver = res; });
+        return new Promise(res => {
+            this.resolver = res;
+        });
     }
 
     @action.bound
@@ -86,21 +85,21 @@ class AddOrRenameFolderDialog extends React.Component {
             this.folderToRename.rename(this.inputValue);
         }
         this.close();
-    }
+    };
 
     performAddFolder = () => {
         if (this.canPerformAddOrRename) {
             fileStore.folderStore.currentFolder.createFolder(this.inputValue);
         }
         this.close();
-    }
+    };
 
     @action.bound
     onInputChange(val) {
         this.inputValue = val;
     }
 
-    onInputKeyDown = (ev) => {
+    onInputKeyDown = ev => {
         if (ev.key === 'Enter' && this.canPerformAddOrRename) {
             if (this.folderToRename) {
                 this.performRename();
@@ -108,7 +107,7 @@ class AddOrRenameFolderDialog extends React.Component {
                 this.performAddFolder();
             }
         }
-    }
+    };
 
     render() {
         if (!this.resolver) {
@@ -118,13 +117,23 @@ class AddOrRenameFolderDialog extends React.Component {
         const dialogActions = [
             { label: t('button_cancel'), onClick: this.close },
             this.folderToRename
-                ? { label: t('button_rename'), disabled: !this.canPerformAddOrRename, onClick: this.performRename }
-                : { label: t('button_create'), disabled: !this.canPerformAddOrRename, onClick: this.performAddFolder }
+                ? {
+                      label: t('button_rename'),
+                      disabled: !this.canPerformAddOrRename,
+                      onClick: this.performRename
+                  }
+                : {
+                      label: t('button_create'),
+                      disabled: !this.canPerformAddOrRename,
+                      onClick: this.performAddFolder
+                  }
         ];
 
         return (
             <Dialog
-                title={t(this.folderToRename ? 'button_rename' : 'button_newFolder')}
+                title={t(
+                    this.folderToRename ? 'button_rename' : 'button_newFolder'
+                )}
                 active
                 size="small"
                 actions={dialogActions}
@@ -140,7 +149,8 @@ class AddOrRenameFolderDialog extends React.Component {
                     onKeyDown={this.onInputKeyDown}
                     autoFocus
                 />
-            </Dialog>);
+            </Dialog>
+        );
     }
 }
 

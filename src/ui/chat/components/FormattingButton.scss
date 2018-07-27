@@ -10,7 +10,13 @@
     }
   }
 
-  .formatting-button-strong { font-weight: $font-weight-semibold; }
-  .formatting-button-em { font-style: italic; }
-  .formatting-button-strike { text-decoration: line-through; }
+  .formatting-button-strong {
+    font-weight: $font-weight-semibold;
+  }
+  .formatting-button-em {
+    font-style: italic;
+  }
+  .formatting-button-strike {
+    text-decoration: line-through;
+  }
 }

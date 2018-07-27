@@ -1,4 +1,4 @@
-// @ts-check
+// -@ts-check
 
 // TODO: split schema into own file, possibly migrate to Icebear
 
@@ -17,7 +17,6 @@ const {
     pngFolder
 } = require('~/helpers/chat/emoji');
 const { parseUrls } = require('~/helpers/url');
-
 
 /** Pattern to match against when creating a new mention node. */
 const validUsernamePattern = /[a-zA-Z0-9_]{1,32}/;
@@ -43,7 +42,9 @@ const chatSchema = new Schema({
             content: 'inline*',
             group: 'block',
             parseDOM: [{ tag: 'p' }],
-            toDOM() { return ['p', 0]; }
+            toDOM() {
+                return ['p', 0];
+            }
         },
         text: { group: 'inline' },
         hard_break: {
@@ -51,7 +52,9 @@ const chatSchema = new Schema({
             group: 'inline',
             selectable: false,
             parseDOM: [{ tag: 'br' }],
-            toDOM() { return ['br']; }
+            toDOM() {
+                return ['br'];
+            }
         },
         // The link node has no `parseDOM` field: it can't be instantiated in
         // the input field, but might be created when sending the message.
@@ -79,7 +82,8 @@ const chatSchema = new Schema({
             toReact(node) {
                 const content = node.textContent;
                 const { href } = parseUrls(content)[0];
-                if (!href) throw new Error(`Invalid parsed href for '${content}'`);
+                if (!href)
+                    throw new Error(`Invalid parsed href for '${content}'`);
                 return <a href={href}>{content}</a>;
             }
         },
@@ -94,14 +98,15 @@ const chatSchema = new Schema({
             parseDOM: [
                 {
                     tag: 'span',
-                    getAttrs(/** @type {HTMLSpanElement} */e) {
+                    getAttrs(/** @type {HTMLSpanElement} */ e) {
                         const { username } = e.dataset;
                         if (
                             username &&
                             validUsernamePattern.test(username) &&
                             e.classList.contains('mention') &&
                             e.textContent === `@${username}`
-                        ) return { username };
+                        )
+                            return { username };
 
                         return false;
                     }
@@ -125,7 +130,9 @@ const chatSchema = new Schema({
             toReact(node, _, props) {
                 return (
                     <span
-                        className={css('mention', 'clickable', { self: node.attrs.username === props.currentUser })}
+                        className={css('mention', 'clickable', {
+                            self: node.attrs.username === props.currentUser
+                        })}
                         data-username={node.attrs.username}
                         onClick={props.onClickContact}
                     >
@@ -144,15 +151,18 @@ const chatSchema = new Schema({
             parseDOM: [
                 {
                     tag: 'img',
-                    getAttrs(/** @type {HTMLImageElement} */e) {
+                    getAttrs(/** @type {HTMLImageElement} */ e) {
                         const shortname = e.title;
                         const src = e.getAttribute('src');
                         if (
                             e.className === 'emojione' &&
                             e.alt &&
-                            shortname && (shortname in emojiByCanonicalShortname) &&
-                            src && src.startsWith(pngFolder)
-                        ) return { shortname };
+                            shortname &&
+                            shortname in emojiByCanonicalShortname &&
+                            src &&
+                            src.startsWith(pngFolder)
+                        )
+                            return { shortname };
 
                         return false;
                     }
@@ -166,7 +176,9 @@ const chatSchema = new Schema({
             toDOM(node) {
                 const emoji = emojiByCanonicalShortname[node.attrs.shortname];
                 if (!emoji) {
-                    console.warn(`emoji data not found for ${node.attrs.shortname}`);
+                    console.warn(
+                        `emoji data not found for ${node.attrs.shortname}`
+                    );
                     return [
                         'img',
                         {
@@ -192,28 +204,40 @@ const chatSchema = new Schema({
             toReact(node) {
                 const emoji = emojiByCanonicalShortname[node.attrs.shortname];
                 if (!emoji) {
-                    console.warn(`emoji data not found for ${node.attrs.shortname}`);
-                    return (<img
-                        className="emojione"
-                        alt="❔"
-                        title=":grey_question:"
-                        src={`${pngFolder}2754.png`}
-                    />);
+                    console.warn(
+                        `emoji data not found for ${node.attrs.shortname}`
+                    );
+                    return (
+                        <img
+                            className="emojione"
+                            alt="❔"
+                            title=":grey_question:"
+                            src={`${pngFolder}2754.png`}
+                        />
+                    );
                 }
 
-                return (<img
-                    className="emojione"
-                    alt={emoji.characters}
-                    title={node.attrs.shortname}
-                    src={emoji.filename}
-                />);
+                return (
+                    <img
+                        className="emojione"
+                        alt={emoji.characters}
+                        title={node.attrs.shortname}
+                        src={emoji.filename}
+                    />
+                );
             }
         }
     },
     marks: {
         em: {
-            parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
-            toDOM() { return ['em']; }
+            parseDOM: [
+                { tag: 'i' },
+                { tag: 'em' },
+                { style: 'font-style=italic' }
+            ],
+            toDOM() {
+                return ['em'];
+            }
         },
         strike: {
             parseDOM: [
@@ -222,7 +246,9 @@ const chatSchema = new Schema({
                 { tag: 'del' },
                 { style: 'text-decoration=line-through' }
             ],
-            toDOM() { return ['s']; }
+            toDOM() {
+                return ['s'];
+            }
         },
         strong: {
             parseDOM: [
@@ -231,7 +257,10 @@ const chatSchema = new Schema({
                 // pasted content will be inexplicably wrapped in `<b>`
                 // tags with a font-weight normal.
                 // @ts-ignore (bad typings for 'node')
-                { tag: 'b', getAttrs: node => node.style.fontWeight !== 'normal' && null },
+                {
+                    tag: 'b',
+                    getAttrs: node => node.style.fontWeight !== 'normal' && null
+                },
                 // Incidentally, the `&& null` part in some of these parseDOM
                 // rules is confusing. getAttrs is used both to provide
                 // conditions for matching a parse rule AND to provide
@@ -241,9 +270,15 @@ const chatSchema = new Schema({
                 // attributes (whereas 'false' means the rule didn't match.)
 
                 // @ts-ignore (bad typings for 'node')
-                { style: 'font-weight', getAttrs: value => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null }
+                {
+                    style: 'font-weight',
+                    getAttrs: value =>
+                        /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null
+                }
             ],
-            toDOM() { return ['strong']; }
+            toDOM() {
+                return ['strong'];
+            }
         }
     }
 });
@@ -255,7 +290,9 @@ const emptyDoc = chatSchema.node('doc', null, chatSchema.node('paragraph'));
  * @param {Node} doc
  * @returns {boolean}
  */
-function isEmpty(doc) { return doc.eq(emptyDoc); }
+function isEmpty(doc) {
+    return doc.eq(emptyDoc);
+}
 
 /**
  * Return whether the given document/node contains only whitespace.
@@ -264,11 +301,17 @@ function isEmpty(doc) { return doc.eq(emptyDoc); }
  */
 function isWhitespaceOnly(node) {
     if (node.isBlock) {
-        if (node.type === chatSchema.nodes.paragraph || node.type === chatSchema.nodes.doc) {
+        if (
+            node.type === chatSchema.nodes.paragraph ||
+            node.type === chatSchema.nodes.doc
+        ) {
             if (node.content.size > 0) {
                 // if we're a paragraph node or a doc with content, we're whitespace if our contents are whitespace.
                 // eslint-disable-next-line dot-notation, (inner content array not exposed in api)
-                return node.content['content'].reduce((p, c) => p && isWhitespaceOnly(c), true);
+                return node.content['content'].reduce(
+                    (p, c) => p && isWhitespaceOnly(c),
+                    true
+                );
             }
             // if we're a paragraph node or a doc with no content, we're whitespace.
             return true;
@@ -286,7 +329,6 @@ function isWhitespaceOnly(node) {
 }
 
 const Renderer = makeReactRenderer(chatSchema, 'MessageRichTextRenderer');
-
 
 module.exports = {
     chatSchema,

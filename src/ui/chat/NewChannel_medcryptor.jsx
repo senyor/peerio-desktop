@@ -31,15 +31,23 @@ class NewChannel extends React.Component {
             this.waiting = false;
             return;
         }
-        when(() => chat.added === true, () => {
-            routerStore.navigateTo(route);
-        });
-    }
+        when(
+            () => chat.added === true,
+            () => {
+                routerStore.navigateTo(route);
+            }
+        );
+    };
 
     createNewChannel = async () => {
-        const chat = await chatStore.startChat(this.userPicker.selected, true, this.channelName, this.purpose);
+        const chat = await chatStore.startChat(
+            this.userPicker.selected,
+            true,
+            this.channelName,
+            this.purpose
+        );
         this.navigateWhenReady(chat, routerStore.ROUTES.chats);
-    }
+    };
 
     createNewPatientSpace = async () => {
         const newSpaceProperties = {
@@ -52,47 +60,59 @@ class NewChannel extends React.Component {
             newSpaceProperties,
             t('mcr_title_consultation'),
             'patient',
-            this.userPicker.selected);
+            this.userPicker.selected
+        );
         const internalRoom = await chatStore.spaces.createRoomInSpace(
             newSpaceProperties,
             t('mcr_title_general'),
             'internal',
-            []);
+            []
+        );
 
         if (!internalRoom || !patientRoom) {
             this.waiting = false;
             return;
         }
 
-        when(() => internalRoom.added && patientRoom.added, () => {
-            this.waiting = false;
+        when(
+            () => internalRoom.added && patientRoom.added,
+            () => {
+                this.waiting = false;
 
-            const created = chatStore.spaces.spacesList.find(x => x.spaceName === newSpaceProperties.spaceName);
-            created.isNew = true;
-            internalRoom.isNew = true;
-            patientRoom.isNew = true;
-        });
-    }
+                const created = chatStore.spaces.spacesList.find(
+                    x => x.spaceName === newSpaceProperties.spaceName
+                );
+                created.isNew = true;
+                internalRoom.isNew = true;
+                patientRoom.isNew = true;
+            }
+        );
+    };
 
-    createNewInternalRoom = () => { this.createRoomInPatientSpace('internal'); }
-    createNewPatientRoom = () => { this.createRoomInPatientSpace('patient'); }
+    createNewInternalRoom = () => {
+        this.createRoomInPatientSpace('internal');
+    };
+    createNewPatientRoom = () => {
+        this.createRoomInPatientSpace('patient');
+    };
 
-    createRoomInPatientSpace = async (type) => {
+    createRoomInPatientSpace = async type => {
         const chat = await chatStore.spaces.createRoomInSpace(
             chatStore.spaces.currentSpace,
             this.channelName,
             type,
-            this.userPicker.selected);
+            this.userPicker.selected
+        );
         this.navigateWhenReady(chat, routerStore.ROUTES.patients);
-    }
+    };
 
     handleNameChange = val => {
         this.channelName = val;
-    }
+    };
 
     handlePurposeChange = val => {
         this.purpose = val;
-    }
+    };
 
     setUserPickerRef = ref => {
         this.userPicker = ref;
@@ -105,16 +125,18 @@ class NewChannel extends React.Component {
 
     render() {
         if (this.waiting) {
-            return (<div className="new-channel create-new-chat">
-                <div className="create-channel-loading"><ProgressBar type="circular" /></div>
-            </div>);
+            return (
+                <div className="new-channel create-new-chat">
+                    <div className="create-channel-loading">
+                        <ProgressBar type="circular" />
+                    </div>
+                </div>
+            );
         }
         return (
             <div className="new-channel create-new-chat">
                 <div className="chat-creation-header">
-                    <div className="title">
-                        {ELEMENTS.newChannel.title}
-                    </div>
+                    <div className="title">{ELEMENTS.newChannel.title}</div>
                     <div className="description">
                         {ELEMENTS.newChannel.description}
                     </div>
@@ -123,7 +145,11 @@ class NewChannel extends React.Component {
                     <div className="message-search-wrapper-new-channel message-search-wrapper">
                         <div className="new-chat-search">
                             <div className="chip-wrapper">
-                                <Input placeholder={t(STRINGS.newChannel.channelName)} innerRef={this.setNameInputRef}
+                                <Input
+                                    placeholder={t(
+                                        STRINGS.newChannel.channelName
+                                    )}
+                                    innerRef={this.setNameInputRef}
                                     value={this.channelName}
                                     onChange={this.handleNameChange}
                                     maxLength={config.chat.maxChatNameLength}
@@ -132,24 +158,37 @@ class NewChannel extends React.Component {
                         </div>
                         <div className="helper-text" />
                     </div>
-                    {routerStore.isPatientSpace || routerStore.isNewPatient
-                        ? null
-                        : <div className="message-search-wrapper-new-channel message-search-wrapper">
+                    {routerStore.isPatientSpace ||
+                    routerStore.isNewPatient ? null : (
+                        <div className="message-search-wrapper-new-channel message-search-wrapper">
                             <div className="new-chat-search">
                                 <div className="chip-wrapper">
-                                    <Input placeholder={t(STRINGS.newChannel.channelPurpose)}
+                                    <Input
+                                        placeholder={t(
+                                            STRINGS.newChannel.channelPurpose
+                                        )}
                                         value={this.purpose}
                                         onChange={this.handlePurposeChange}
-                                        maxLength={config.chat.maxChatPurposeLength}
+                                        maxLength={
+                                            config.chat.maxChatPurposeLength
+                                        }
                                     />
                                 </div>
                             </div>
-                            <T k={STRINGS.newChannel.purposeHelper} tag="div" className="helper-text" />
+                            <T
+                                k={STRINGS.newChannel.purposeHelper}
+                                tag="div"
+                                className="helper-text"
+                            />
                         </div>
-                    }
+                    )}
                     <div className="user-picker-container">
-                        <UserPicker ref={this.setUserPickerRef} title={t(STRINGS.newChannel.userPickerTitle)}
-                            noHeader onlyPick noAutoFocus
+                        <UserPicker
+                            ref={this.setUserPickerRef}
+                            title={t(STRINGS.newChannel.userPickerTitle)}
+                            noHeader
+                            onlyPick
+                            noAutoFocus
                             onAccept={this.handleAccept}
                             noSubmit={!this.channelName.length}
                             context={ELEMENTS.newChannel.context}
@@ -160,6 +199,5 @@ class NewChannel extends React.Component {
         );
     }
 }
-
 
 module.exports = NewChannel;

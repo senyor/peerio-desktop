@@ -35,7 +35,8 @@ const emailMatcher = new EmailMatcher({ tagBuilder: {} });
  * @returns {{ text: string, index: number, href: string }[]}
  */
 function parseUrls(text) {
-    return urlMatcher.parseMatches(text)
+    return urlMatcher
+        .parseMatches(text)
         .concat(emailMatcher.parseMatches(text))
         .map(match => ({
             text: match.matchedText,

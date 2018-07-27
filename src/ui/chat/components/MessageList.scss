@@ -60,13 +60,13 @@
     margin: 0;
 
     .marker {
-      background: rgba($color-error, .38);
+      background: rgba($color-error, 0.38);
     }
 
     .content {
       padding-right: $padding-default;
       font-size: 12px;
-      color: rgba($color-error, .7);
+      color: rgba($color-error, 0.7);
     }
   }
 

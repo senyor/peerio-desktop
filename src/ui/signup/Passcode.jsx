@@ -23,11 +23,18 @@ class PasscodeStore extends OrderedFormStore {
     @observable passcodeStrength = 0;
     @observable zxcvbnScore = null;
 
-    @computed get hasErrors() {
-        return !(this.initialized && socket.connected && this.passcodeValid && this.passcodeRepeatValid);
+    @computed
+    get hasErrors() {
+        return !(
+            this.initialized &&
+            socket.connected &&
+            this.passcodeValid &&
+            this.passcodeRepeatValid
+        );
     }
 
-    @observable passcodeHints = observable.map({
+    @observable
+    passcodeHints = observable.map({
         length: false,
         case: false,
         number: false,
@@ -58,17 +65,31 @@ class PasscodeStore extends OrderedFormStore {
      * Note that hints are divorced from whether the user can actually register.
      */
     ratePasscode() {
-        this.passcodeHints.set('length', this.passcode.length > MIN_PASSWORD_LENGTH);
-        this.passcodeHints.set('case', this.passcode.length > 0 &&
-            !(this.passcode.match(/^[a-z\d\W]+$/) || this.passcode.match(/^[A-Z\d\W]+$/)));
+        this.passcodeHints.set(
+            'length',
+            this.passcode.length > MIN_PASSWORD_LENGTH
+        );
+        this.passcodeHints.set(
+            'case',
+            this.passcode.length > 0 &&
+                !(
+                    this.passcode.match(/^[a-z\d\W]+$/) ||
+                    this.passcode.match(/^[A-Z\d\W]+$/)
+                )
+        );
         this.passcodeHints.set('number', this.passcode.match(/\d/));
         this.passcodeHints.set('specialChars', this.passcode.match(/\W/));
         let hasDictionaryProblems = this.passcode.length > 0;
         if (this.passcode.length > 0) {
             this.zxcvbnScore = zxcvbn(this.passcode, this.banList || []);
-            hasDictionaryProblems = !this.zxcvbnScore.sequence.find((admonishment) => {
-                return ['repeat', 'dictionary'].indexOf(admonishment.pattern) > -1;
-            });
+            hasDictionaryProblems = !this.zxcvbnScore.sequence.find(
+                admonishment => {
+                    return (
+                        ['repeat', 'dictionary'].indexOf(admonishment.pattern) >
+                        -1
+                    );
+                }
+            );
             this.passcodeStrength = this.zxcvbnScore.score;
         } else {
             this.zxcvbnScore = null;
@@ -77,7 +98,8 @@ class PasscodeStore extends OrderedFormStore {
     }
 }
 
-@observer class Passcode extends Component {
+@observer
+class Passcode extends Component {
     @observable focusPasscode = false;
 
     constructor() {
@@ -98,7 +120,8 @@ class PasscodeStore extends OrderedFormStore {
      *
      * @param {Boolean} isFocused
      */
-    @action showHints(isFocused) {
+    @action
+    showHints(isFocused) {
         console.log('propagate focus', isFocused);
         this.focusPasscode = isFocused;
     }
@@ -107,17 +130,21 @@ class PasscodeStore extends OrderedFormStore {
      * Force passcodeRepeat to validate on subsequent passcode changes
      */
     componentDidMount() {
-        reaction(() => this.props.store.passcode, () => {
-            if (this.props.store.passcodeRepeat) {
-                this.props.store.validatePasscodeRepeat();
+        reaction(
+            () => this.props.store.passcode,
+            () => {
+                if (this.props.store.passcodeRepeat) {
+                    this.props.store.validatePasscodeRepeat();
+                }
             }
-        });
+        );
     }
 
     /**
      * Call the parent form's return handler.
      */
-    @action handleKeyPress(e) {
+    @action
+    handleKeyPress(e) {
         if (e.key === 'Enter') {
             this.props.returnHandler();
         }
@@ -168,9 +195,14 @@ class PasscodeStore extends OrderedFormStore {
 
         return (
             <div className="passcode">
-                <div className={css('hint-wrapper', { focused: this.focusPasscode })}>
+                <div
+                    className={css('hint-wrapper', {
+                        focused: this.focusPasscode
+                    })}
+                >
                     <div className="password-sentiment">
-                        <ValidatedInput type="password"
+                        <ValidatedInput
+                            type="password"
                             name="passcode"
                             className="login-input"
                             label={t('title_devicePassword')}
@@ -182,26 +214,48 @@ class PasscodeStore extends OrderedFormStore {
                                 equalsValue: this.props.store.passcodeRepeat,
                                 equalsErrorMessage: t('error_passwordRepeat')
                             }}
-                            onKeyPress={this.handleKeyPress} />
-                        <MaterialIcon icon={this.passcodeStrengthMeter[this.props.store.passcodeStrength].icon}
-                            className={this.props.store.zxcvbnScore === null ? 'hide' :
-                                this.passcodeStrengthMeter[this.props.store.passcodeStrength].class}
+                            onKeyPress={this.handleKeyPress}
+                        />
+                        <MaterialIcon
+                            icon={
+                                this.passcodeStrengthMeter[
+                                    this.props.store.passcodeStrength
+                                ].icon
+                            }
+                            className={
+                                this.props.store.zxcvbnScore === null
+                                    ? 'hide'
+                                    : this.passcodeStrengthMeter[
+                                          this.props.store.passcodeStrength
+                                      ].class
+                            }
                         />
                     </div>
                     <ul className="passcode-hints">
                         <li className="heading">{t('title_passwordHints')}</li>
-                        {this.props.store.passcodeHints.entries().map(([key, hint]) => {
-                            return (
-                                <li key={key} className={hint ? 'passed' : ''}>
-                                    <MaterialIcon icon={hint ? 'lens' : 'panorama_fish_eye'} />
-                                    {t(`title_passwordHint_${key}`)}
-                                </li>
-                            );
-                        }
-                        )}
+                        {this.props.store.passcodeHints
+                            .entries()
+                            .map(([key, hint]) => {
+                                return (
+                                    <li
+                                        key={key}
+                                        className={hint ? 'passed' : ''}
+                                    >
+                                        <MaterialIcon
+                                            icon={
+                                                hint
+                                                    ? 'lens'
+                                                    : 'panorama_fish_eye'
+                                            }
+                                        />
+                                        {t(`title_passwordHint_${key}`)}
+                                    </li>
+                                );
+                            })}
                     </ul>
                 </div>
-                <ValidatedInput type="password"
+                <ValidatedInput
+                    type="password"
                     name="passcodeRepeat"
                     className="login-input"
                     label={t('title_devicePasswordConfirm')}
@@ -211,7 +265,8 @@ class PasscodeStore extends OrderedFormStore {
                         equalsErrorMessage: t('error_passwordRepeat')
                     }}
                     store={this.props.store}
-                    onKeyPress={this.handleKeyPress} />
+                    onKeyPress={this.handleKeyPress}
+                />
             </div>
         );
     }

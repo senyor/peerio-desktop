@@ -33,8 +33,13 @@ class UploadDialog extends React.Component {
      */
     // start with -1 because we call previewNextFile on mount
     @observable currentFileIndex = -1;
-    @computed get currentFile() {
-        if (!this.props.files || this.props.files.length < this.currentFileIndex) return null;
+    @computed
+    get currentFile() {
+        if (
+            !this.props.files ||
+            this.props.files.length < this.currentFileIndex
+        )
+            return null;
         return this.props.files[this.currentFileIndex];
     }
 
@@ -42,35 +47,44 @@ class UploadDialog extends React.Component {
      * Returns current file name with a random query string added to
      * prevent Chromium caching.
      */
-    @computed get currentFileForceNoCache() {
+    @computed
+    get currentFileForceNoCache() {
         return `${this.currentFile}?${Math.random()}`;
     }
 
-    @action.bound onFileNameChange(val) {
+    @action.bound
+    onFileNameChange(val) {
         this.fileName = val;
     }
 
-    @computed get fileExt() {
+    @computed
+    get fileExt() {
         if (!this.currentFile) return '';
-        return fileHelpers.getFileExtension(fileHelpers.getFileName(this.currentFile));
+        return fileHelpers.getFileExtension(
+            fileHelpers.getFileName(this.currentFile)
+        );
     }
 
-    @computed get fileType() {
+    @computed
+    get fileType() {
         return fileHelpers.getFileIconType(this.fileExt);
     }
 
     // "Display" filename can be different from true file name (ext shown on input blur, hidden on focus)
     @observable inputFocused = false;
 
-    @action.bound onInputFocus() {
+    @action.bound
+    onInputFocus() {
         this.inputFocused = true;
     }
 
-    @action.bound onInputBlur() {
+    @action.bound
+    onInputBlur() {
         this.inputFocused = false;
     }
 
-    @computed get displayFileName() {
+    @computed
+    get displayFileName() {
         if (this.fileName === '') return '';
         if (this.inputFocused) return this.fileName;
         return `${this.fileName}.${this.fileExt}`;
@@ -78,12 +92,14 @@ class UploadDialog extends React.Component {
 
     @observable messageText = '';
 
-    @action.bound onMessageChange(val) {
+    @action.bound
+    onMessageChange(val) {
         this.messageText = val;
     }
 
     // Iterate through props.files array when clicking either button (or pressing esc) on dialog
-    @action.bound previewNextFile() {
+    @action.bound
+    previewNextFile() {
         this.currentFileIndex++;
         const file = this.currentFile;
         if (!file) {
@@ -96,26 +112,35 @@ class UploadDialog extends React.Component {
 
     // Change the chat(s) target of the upload
     @observable shareWithVisible = false;
-    @action.bound showShareWithDialog() {
+    @action.bound
+    showShareWithDialog() {
         this.shareWithVisible = true;
     }
 
-    @action.bound hideShareWithDialog() {
+    @action.bound
+    hideShareWithDialog() {
         this.shareWithVisible = false;
     }
 
     // Dialog actions
-    @action.bound cancelUpload() {
+    @action.bound
+    cancelUpload() {
         this.previewNextFile();
     }
 
-    @action.bound async uploadAndShare() {
+    @action.bound
+    async uploadAndShare() {
         const { targetContact } = this;
         try {
             if (targetContact) {
                 this.targetChat = await chatStore.startChat([targetContact]);
             }
-            this.targetChat.uploadAndShareFile(this.currentFile, this.parsedFileName, null, this.messageText);
+            this.targetChat.uploadAndShareFile(
+                this.currentFile,
+                this.parsedFileName,
+                null,
+                this.messageText
+            );
         } catch (err) {
             console.error(err);
         }
@@ -123,25 +148,29 @@ class UploadDialog extends React.Component {
     }
 
     // Check if user manually added filename extension back, remove it if so
-    @computed get parsedFileName() {
+    @computed
+    get parsedFileName() {
         if (fileHelpers.getFileExtension(this.fileName) === this.fileExt) {
             return this.fileName;
         }
         return this.fileName.concat(`.${this.fileExt}`);
     }
 
-    @action.bound changeToContact(contact) {
+    @action.bound
+    changeToContact(contact) {
         this.targetContact = contact;
         this.targetChat = null;
     }
 
-    @action.bound changeToChannel(channel) {
+    @action.bound
+    changeToChannel(channel) {
         this.targetContact = null;
         this.targetChat = channel;
         chatStore.activate(channel.id);
     }
 
-    @computed get targetTitle() {
+    @computed
+    get targetTitle() {
         const { targetChat, targetContact } = this;
 
         if (!!targetChat && targetChat.isChannel) {
@@ -156,7 +185,8 @@ class UploadDialog extends React.Component {
         if (targetContact) {
             contact = targetContact;
         } else {
-            contact = targetChat.otherParticipants[0] || contactStore.currentUser;
+            contact =
+                targetChat.otherParticipants[0] || contactStore.currentUser;
         }
 
         return (
@@ -168,16 +198,24 @@ class UploadDialog extends React.Component {
         );
     }
 
-    @computed get dialogTitle() {
-        return this.props.files.length > 1 ?
-            t('title_uploadAndShareCount', { current: (this.currentFileIndex + 1), total: this.props.files.length }) :
-            t('title_uploadAndShare');
+    @computed
+    get dialogTitle() {
+        return this.props.files.length > 1
+            ? t('title_uploadAndShareCount', {
+                  current: this.currentFileIndex + 1,
+                  total: this.props.files.length
+              })
+            : t('title_uploadAndShare');
     }
 
     render() {
         const uploadActions = [
             { label: t('button_cancel'), onClick: this.cancelUpload },
-            { label: t('button_share'), onClick: this.uploadAndShare, disabled: this.fileName.length === 0 }
+            {
+                label: t('button_share'),
+                onClick: this.uploadAndShare,
+                disabled: this.fileName.length === 0
+            }
         ];
 
         if (this.shareWithVisible) {
@@ -192,20 +230,40 @@ class UploadDialog extends React.Component {
         }
 
         return (
-            <Dialog active noAnimation
+            <Dialog
+                active
+                noAnimation
                 className="upload-dialog"
                 actions={uploadActions}
                 onCancel={this.cancelUpload}
-                title={this.dialogTitle}>
+                title={this.dialogTitle}
+            >
                 <div className="upload-dialog-contents">
-                    <div className={css('image-or-icon', { 'icon-container': this.fileType !== 'img' })}>
-                        {this.fileType === 'img'
-                            ? <div className="thumbnail"><img src={this.currentFileForceNoCache} alt="" /></div>
-                            : <div className="icon-inner">
-                                <FileSpriteIcon type={this.fileType} size="xlarge" />
-                                <T k="title_previewUnavailable" tag="div" className="preview-unavailable" />
+                    <div
+                        className={css('image-or-icon', {
+                            'icon-container': this.fileType !== 'img'
+                        })}
+                    >
+                        {this.fileType === 'img' ? (
+                            <div className="thumbnail">
+                                <img
+                                    src={this.currentFileForceNoCache}
+                                    alt=""
+                                />
                             </div>
-                        }
+                        ) : (
+                            <div className="icon-inner">
+                                <FileSpriteIcon
+                                    type={this.fileType}
+                                    size="xlarge"
+                                />
+                                <T
+                                    k="title_previewUnavailable"
+                                    tag="div"
+                                    className="preview-unavailable"
+                                />
+                            </div>
+                        )}
                     </div>
                     <div className="info-and-inputs">
                         <Input
@@ -217,7 +275,11 @@ class UploadDialog extends React.Component {
                         />
                         <div className="share-with">
                             <div className="user-list">
-                                <T k="title_shareWith" className="heading" tag="div" />
+                                <T
+                                    k="title_shareWith"
+                                    className="heading"
+                                    tag="div"
+                                />
                                 {this.targetTitle}
                             </div>
                             <Button
@@ -226,7 +288,8 @@ class UploadDialog extends React.Component {
                                 theme="small"
                             />
                         </div>
-                        <Input placeholder={t('title_addCommentOptional')}
+                        <Input
+                            placeholder={t('title_addCommentOptional')}
                             value={this.messageText}
                             onChange={this.onMessageChange}
                             multiline

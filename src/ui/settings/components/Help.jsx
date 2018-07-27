@@ -14,19 +14,25 @@ class Help extends React.Component {
     feedback = () => {
         console.log('feedback', config.contacts.feedbackUser);
         const feedback = contactStore.getContact(config.contacts.feedbackUser);
-        when(() => !feedback.loading, () => {
-            chatStore.startChat([feedback]);
-            window.router.push('/app/chats');
-        });
-    }
+        when(
+            () => !feedback.loading,
+            () => {
+                chatStore.startChat([feedback]);
+                window.router.push('/app/chats');
+            }
+        );
+    };
 
     support = () => {
         const support = contactStore.getContact(config.contacts.supportUser);
-        when(() => !support.loading, () => {
-            chatStore.startChat([support]);
-            window.router.push('/app/chats');
-        });
-    }
+        when(
+            () => !support.loading,
+            () => {
+                chatStore.startChat([support]);
+                window.router.push('/app/chats');
+            }
+        );
+    };
 
     copyLogs = () => {
         clipboard.writeText(console.history.toString());
@@ -40,7 +46,8 @@ class Help extends React.Component {
                     <div className="title">{t('title_support')}</div>
                     <div className="text">
                         <T k="title_helpText" />
-                        <Button icon="live_help"
+                        <Button
+                            icon="live_help"
                             href={urls.helpCenter}
                             tooltip={t('button_HC')}
                             theme="no-hover"
@@ -48,12 +55,14 @@ class Help extends React.Component {
                     </div>
                     <div className="text">
                         <T k="title_supportIntro" />
-                        <Button icon="question_answer"
+                        <Button
+                            icon="question_answer"
                             onClick={this.support}
                             tooltip={t('button_supportChat')}
                             theme="no-hover"
                         />
-                        <Button icon="email"
+                        <Button
+                            icon="email"
                             href={urls.contactSupport}
                             tooltip={t('button_supportEmail')}
                             theme="no-hover"
@@ -64,7 +73,8 @@ class Help extends React.Component {
                     <div className="title">{t('title_feedback')}</div>
                     <div className="text">
                         <T k="title_feedbackIntro" />
-                        <Button icon="question_answer"
+                        <Button
+                            icon="question_answer"
                             onClick={this.feedback}
                             tooltip={t('button_feedbackChat')}
                             theme="no-hover"
@@ -75,7 +85,8 @@ class Help extends React.Component {
                     <div className="title">{t('title_logs')}</div>
                     <div className="text">
                         <T k="title_logsIntro" />
-                        <Button icon="content_copy"
+                        <Button
+                            icon="content_copy"
                             onClick={this.copyLogs}
                             tooltip={t('button_copyLogs')}
                             theme="no-hover"

@@ -7,7 +7,6 @@ const debounce = require('lodash/debounce');
 const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
 const { emojiByCanonicalShortname } = require('~/helpers/chat/emoji');
 
-
 const unicodeToEmoji = {};
 const unicodeSequences = [];
 Object.values(emojiByCanonicalShortname).forEach(emoji => {
@@ -16,13 +15,13 @@ Object.values(emojiByCanonicalShortname).forEach(emoji => {
 });
 
 const emojiRegex = new RegExp(
-    `[${unicodeSequences.map(seq => seq.replace(/[\\^$*+?.()|[\]{}]/g, '\\$&')).join('')}]`,
+    `[${unicodeSequences
+        .map(seq => seq.replace(/[\\^$*+?.()|[\]{}]/g, '\\$&'))
+        .join('')}]`,
     'gu'
 );
 
-
 const parser = DOMParser.fromSchema(chatSchema);
-
 
 /**
  * This plugin replaces emoji in three separate cases:
@@ -57,26 +56,28 @@ function emojiPlugin() {
         const emoji = unicodeToEmoji[charAccumulator];
         if (emoji) {
             const { state } = view;
-            view.dispatch(state.tr.replaceWith(
-                _from,
-                _from + charAccumulator.length,
-                state.schema.node('emoji', { shortname: emoji.shortname })
-            ));
+            view.dispatch(
+                state.tr.replaceWith(
+                    _from,
+                    _from + charAccumulator.length,
+                    state.schema.node('emoji', { shortname: emoji.shortname })
+                )
+            );
         }
 
         resetCharacterCheck();
     });
 
-
     // Note that this mirrors the values returned by toDOM and toReact in the
     // chat schema, and the DOM tag we build in clipboardTextParser below -- if
     // any of them change, the change should be reflected everywhere!
-    const unicodeToImg = (unicode) => {
+    const unicodeToImg = unicode => {
         const emoji = unicodeToEmoji[unicode];
         if (!emoji) return unicode;
-        return `<img class="emojione" alt="${emoji.characters}" title="${emoji.shortname}" src="${emoji.filename}" />`;
+        return `<img class="emojione" alt="${emoji.characters}" title="${
+            emoji.shortname
+        }" src="${emoji.filename}" />`;
     };
-
 
     // Our plugin intercepts both pasted HTML and pasted plaintext; it does an
     // additional pre-parse transformation for the former, and replaces
@@ -96,16 +97,22 @@ function emojiPlugin() {
             transformPastedHTML(html) {
                 // @ts-ignore bad typings
                 const $ = cheerio.load(html);
-                $('*').contents().filter((i, el) => el.type === 'text').each((i, el) => {
-                    const wrapped = $(el);
+                $('*')
+                    .contents()
+                    .filter((i, el) => el.type === 'text')
+                    .each((i, el) => {
+                        const wrapped = $(el);
 
-                    /** @type {string} */
-                    const text = wrapped.text();
-                    const replacement = text.replace(emojiRegex, unicodeToImg);
-                    if (replacement !== text) {
-                        wrapped.replaceWith(replacement);
-                    }
-                });
+                        /** @type {string} */
+                        const text = wrapped.text();
+                        const replacement = text.replace(
+                            emojiRegex,
+                            unicodeToImg
+                        );
+                        if (replacement !== text) {
+                            wrapped.replaceWith(replacement);
+                        }
+                    });
                 return $.html();
             },
             // Handle pasted plain text that may contain emoji. Since
@@ -119,59 +126,71 @@ function emojiPlugin() {
             // tag.
             clipboardTextParser(text) {
                 const dom = document.createElement('div');
-                text.trim().split(/(?:\r\n?|\n)+/).forEach(block => {
-                    /** @type {RegExpMatchArray | undefined} */
-                    let match;
+                text.trim()
+                    .split(/(?:\r\n?|\n)+/)
+                    .forEach(block => {
+                        /** @type {RegExpMatchArray | undefined} */
+                        let match;
 
-                    // FIXME/TS: interface 'Emoji' from heplers/chat/emoji.js, not this inline def
-                    /** @type {({characters, shortname, filename} | string)[]} */
-                    const result = [];
+                        // FIXME/TS: interface 'Emoji' from heplers/chat/emoji.js, not this inline def
+                        /** @type {({characters, shortname, filename} | string)[]} */
+                        const result = [];
 
-                    let lastIndex = 0;
+                        let lastIndex = 0;
 
-                    // eslint-disable-next-line no-cond-assign
-                    while (match = emojiRegex.exec(block)) {
-                        if (match.index > lastIndex) {
-                            result.push(block.slice(lastIndex, match.index));
-                        }
-
-                        const emoji = unicodeToEmoji[match[0]];
-                        // if we don't match the emoji for some reason, just push the characters.
-                        result.push(emoji || match[0]);
-
-                        lastIndex = emojiRegex.lastIndex; // eslint-disable-line prefer-destructuring
-                    }
-
-                    if (result.length > 0) {
-                        if (lastIndex < block.length) {
-                            result.push(block.slice(lastIndex));
-                        }
-
-                        const p = dom.appendChild(document.createElement('p'));
-                        for (const fragment of result) {
-                            if (typeof fragment === 'string') {
-                                p.appendChild(document.createTextNode(fragment));
-                            } else {
-                                // Note that this mirrors the values returned by
-                                // toDOM and toReact in the chat schema, and the
-                                // unicodeToImg function used in
-                                // transformPastedHTML above -- if any of them
-                                // change, the change should be reflected
-                                // everywhere!
-                                const img = p.appendChild(document.createElement('img'));
-                                img.className = 'emojione';
-                                img.alt = fragment.characters;
-                                img.title = fragment.shortname;
-                                img.src = fragment.filename;
+                        // eslint-disable-next-line no-cond-assign
+                        while ((match = emojiRegex.exec(block))) {
+                            if (match.index > lastIndex) {
+                                result.push(
+                                    block.slice(lastIndex, match.index)
+                                );
                             }
+
+                            const emoji = unicodeToEmoji[match[0]];
+                            // if we don't match the emoji for some reason, just push the characters.
+                            result.push(emoji || match[0]);
+
+                            lastIndex = emojiRegex.lastIndex; // eslint-disable-line prefer-destructuring
                         }
-                    } else {
-                        // If we didn't find any emoji, no need for complex
-                        // logic to build up the dom tag -- just set its
-                        // textContent.
-                        dom.appendChild(document.createElement('p')).textContent = block;
-                    }
-                });
+
+                        if (result.length > 0) {
+                            if (lastIndex < block.length) {
+                                result.push(block.slice(lastIndex));
+                            }
+
+                            const p = dom.appendChild(
+                                document.createElement('p')
+                            );
+                            for (const fragment of result) {
+                                if (typeof fragment === 'string') {
+                                    p.appendChild(
+                                        document.createTextNode(fragment)
+                                    );
+                                } else {
+                                    // Note that this mirrors the values returned by
+                                    // toDOM and toReact in the chat schema, and the
+                                    // unicodeToImg function used in
+                                    // transformPastedHTML above -- if any of them
+                                    // change, the change should be reflected
+                                    // everywhere!
+                                    const img = p.appendChild(
+                                        document.createElement('img')
+                                    );
+                                    img.className = 'emojione';
+                                    img.alt = fragment.characters;
+                                    img.title = fragment.shortname;
+                                    img.src = fragment.filename;
+                                }
+                            }
+                        } else {
+                            // If we didn't find any emoji, no need for complex
+                            // logic to build up the dom tag -- just set its
+                            // textContent.
+                            dom.appendChild(
+                                document.createElement('p')
+                            ).textContent = block;
+                        }
+                    });
                 return parser.parseSlice(dom);
             },
             // Handle unicode input directly from keyboard.

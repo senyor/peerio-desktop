@@ -3,7 +3,6 @@ const React = require('react');
 const css = require('classnames');
 const { ghostStore } = require('peerio-icebear');
 
-
 class MailItem extends React.Component {
     handleSelect = () => {
         ghostStore.selectedId = this.props.ghostId;
@@ -11,16 +10,20 @@ class MailItem extends React.Component {
 
     render() {
         return (
-            <div className={css('mail-item', {
-                active: ghostStore.selectedId === this.props.ghostId,
-                draft: !this.props.sent,
-                alive: this.props.alive,
-                attachments: this.props.attachments
-            })}
-            onClick={this.handleSelect}>
+            <div
+                className={css('mail-item', {
+                    active: ghostStore.selectedId === this.props.ghostId,
+                    draft: !this.props.sent,
+                    alive: this.props.alive,
+                    attachments: this.props.attachments
+                })}
+                onClick={this.handleSelect}
+            >
                 <div className="mail-item-content">
                     <div className="subject-container">
-                        <strong className="item-subject">{this.props.subject}</strong>
+                        <strong className="item-subject">
+                            {this.props.subject}
+                        </strong>
                         {this.props.date}
                     </div>
                     <div>{this.props.recipient}</div>

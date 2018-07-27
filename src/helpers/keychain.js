@@ -18,7 +18,7 @@ async function saveSecret(username, passphrase) {
     if (!keytar) return Promise.resolve(false);
     try {
         await keytar.setPassword(service, username, passphrase);
-        return Promise.resolve(true);// we want bluebird promises
+        return Promise.resolve(true); // we want bluebird promises
     } catch (err) {
         console.error('Error setting passphrase with keytar', err);
         return Promise.resolve(false);

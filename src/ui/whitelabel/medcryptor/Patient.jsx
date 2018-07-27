@@ -12,19 +12,22 @@ const PatientZeroChats = require('./PatientZeroChats');
 
 @observer
 class Patient extends React.Component {
-    @computed get zeroState() {
+    @computed
+    get zeroState() {
         return (
-            !chatStore.loading && !chatStore.activeChat && routerStore.currentRoute === routerStore.ROUTES.patients
+            !chatStore.loading &&
+            !chatStore.activeChat &&
+            routerStore.currentRoute === routerStore.ROUTES.patients
         );
     }
 
     render() {
         return (
-            <div className={css(
-                'messages',
-                'patient-space',
-                { 'patient-room': chatStore.spaces.isPatientRoomOpen }
-            )}>
+            <div
+                className={css('messages', 'patient-space', {
+                    'patient-room': chatStore.spaces.isPatientRoomOpen
+                })}
+            >
                 <PatientSidebar />
                 {this.zeroState ? <PatientZeroChats /> : null}
                 {this.props.children}
@@ -32,6 +35,5 @@ class Patient extends React.Component {
         );
     }
 }
-
 
 module.exports = Patient;

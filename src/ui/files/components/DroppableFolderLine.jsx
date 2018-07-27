@@ -21,15 +21,16 @@ const folderDropSpec = {
         }
 
         const { filesOrFolders } = getAllDraggedItems();
-        const snackbarCopy = filesOrFolders.length === 1
-            ? t('warning_oneFileOrFolderMoved', {
-                fileOrFolderName: filesOrFolders[0].name,
-                targetFolderName: props.folder.name
-            })
-            : t('warning_multipleFilesOrFoldersMoved', {
-                count: filesOrFolders.length,
-                targetFolderName: props.folder.name
-            });
+        const snackbarCopy =
+            filesOrFolders.length === 1
+                ? t('warning_oneFileOrFolderMoved', {
+                      fileOrFolderName: filesOrFolders[0].name,
+                      targetFolderName: props.folder.name
+                  })
+                : t('warning_multipleFilesOrFoldersMoved', {
+                      count: filesOrFolders.length,
+                      targetFolderName: props.folder.name
+                  });
 
         if (props.folder.root.isShared) {
             (async () => {
@@ -75,7 +76,6 @@ const folderDropSpec = {
     }} FolderLineProps
  */
 
-
 /**
  * @augments {React.Component<{
         confirmShare: () => Promise<boolean>,
@@ -104,11 +104,15 @@ class DroppableFolderLine extends React.Component {
 
         // react-dnd requires its connectors' children to be a native element
         // like <div> for some reason.
-        return connectDropTarget(<div><FolderLine
-            {...passthroughProps}
-            isBeingDraggedOver={isBeingDraggedOver}
-            canBeDroppedInto={canBeDroppedInto}
-        /></div>);
+        return connectDropTarget(
+            <div>
+                <FolderLine
+                    {...passthroughProps}
+                    isBeingDraggedOver={isBeingDraggedOver}
+                    canBeDroppedInto={canBeDroppedInto}
+                />
+            </div>
+        );
     }
 }
 

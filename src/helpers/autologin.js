@@ -9,14 +9,19 @@ function disable() {
     return _setAutologin(false);
 }
 
-
 function _setAutologin(enabled) {
     User.current.autologinEnabled = enabled;
     if (enabled) {
-        keychain.saveSecret(User.current.username, crypto.cryptoUtil.padPassphrase(User.current.passphrase))
-            .then((ret) => {
+        keychain
+            .saveSecret(
+                User.current.username,
+                crypto.cryptoUtil.padPassphrase(User.current.passphrase)
+            )
+            .then(ret => {
                 if (!ret) {
-                    console.error('Failed to set autologin (libary returned false).');
+                    console.error(
+                        'Failed to set autologin (libary returned false).'
+                    );
                     warnings.addSevere('title_autologinSetFail');
                 }
                 User.current.autologinEnabled = true;
@@ -26,7 +31,8 @@ function _setAutologin(enabled) {
                 warnings.addSevere('title_autologinSetFail');
             });
     } else {
-        keychain.removeSecret(User.current.username)
+        keychain
+            .removeSecret(User.current.username)
             .then(() => {
                 User.current.autologinEnabled = false;
             })
@@ -38,11 +44,10 @@ function _setAutologin(enabled) {
 }
 
 function getPassphrase(username) {
-    return keychain.getSecret(username)
-        .then((padded) => {
-            if (padded) return crypto.cryptoUtil.unpadPassphrase(padded);
-            return false;
-        });
+    return keychain.getSecret(username).then(padded => {
+        if (padded) return crypto.cryptoUtil.unpadPassphrase(padded);
+        return false;
+    });
 }
 
 /**
@@ -57,4 +62,10 @@ async function shouldSuggestEnabling() {
     return !ret;
 }
 
-module.exports = { enable, disable, getPassphrase, dontSuggestEnablingAgain, shouldSuggestEnabling };
+module.exports = {
+    enable,
+    disable,
+    getPassphrase,
+    dontSuggestEnablingAgain,
+    shouldSuggestEnabling
+};

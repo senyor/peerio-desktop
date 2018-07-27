@@ -7,21 +7,30 @@ const { ProgressBar } = require('peer-ui');
 const routerStore = require('~/stores/router-store');
 const ELEMENTS = require('~/whitelabel/helpers/elements');
 
-const messages = ['title_randomMessage1', 'title_randomMessage2', 'title_randomMessage3', 'title_randomMessage4'];
-const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
+const messages = [
+    'title_randomMessage1',
+    'title_randomMessage2',
+    'title_randomMessage3',
+    'title_randomMessage4'
+];
+const randomMessage =
+    messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
 
 @observer
 class Loading extends React.Component {
     componentDidMount() {
-        this.dispose = when(() => chatStore.loaded, () => {
-            // TODO: refactor when SDK is there for chat invites
-            if (chatStore.chats.length || chatInviteStore.received.length) {
-                ELEMENTS.loading.goToActiveChat();
-            } else {
-                routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+        this.dispose = when(
+            () => chatStore.loaded,
+            () => {
+                // TODO: refactor when SDK is there for chat invites
+                if (chatStore.chats.length || chatInviteStore.received.length) {
+                    ELEMENTS.loading.goToActiveChat();
+                } else {
+                    routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+                }
+                this.dispose = null;
             }
-            this.dispose = null;
-        });
+        );
     }
 
     componentWillUnmount() {
@@ -39,6 +48,5 @@ class Loading extends React.Component {
         );
     }
 }
-
 
 module.exports = Loading;

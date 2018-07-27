@@ -21,26 +21,30 @@ function makeUsernameSuggestions(getView) {
         source(matchData) {
             const chat = chatStore.activeChat;
             if (!chat || !chat.otherParticipants.length) return null;
-            return contactStore.filter(matchData.match[1].toLocaleLowerCase(), chat.otherParticipants);
+            return contactStore.filter(
+                matchData.match[1].toLocaleLowerCase(),
+                chat.otherParticipants
+            );
         },
         formatter: contact => (
             <span>
                 <Avatar size="tiny" contact={contact} />
-                <span className="semibold">@{contact.username}</span> - {contact.fullName}
+                <span className="semibold">@{contact.username}</span> -{' '}
+                {contact.fullName}
             </span>
         ),
         keySource: 'username',
         onAcceptSuggestion: (matchData, acceptedSuggestion) => {
             const view = getView();
             if (view) {
-                view.dispatch(view.state.tr.replaceWith(
-                    matchData.from,
-                    matchData.to,
-                    [
-                        chatSchema.node('mention', { username: acceptedSuggestion.username }),
+                view.dispatch(
+                    view.state.tr.replaceWith(matchData.from, matchData.to, [
+                        chatSchema.node('mention', {
+                            username: acceptedSuggestion.username
+                        }),
                         chatSchema.text(' ')
-                    ]
-                ));
+                    ])
+                );
             }
         }
     });

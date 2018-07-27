@@ -5,18 +5,24 @@ const { observer } = require('mobx-react');
 const { Input } = require('peer-ui');
 const { t } = require('peerio-translator');
 
-@observer class ConfirmKey extends Component {
+@observer
+class ConfirmKey extends Component {
     @observable confirmText = '';
     confirmTextSample = t('title_confirmTextSample');
 
     componentDidMount() {
-        reaction(() => this.confirmText.toLocaleLowerCase() === this.confirmTextSample.toLocaleLowerCase(), v => {
-            console.log(true);
-            if (v) this.props.store.confirmedKeyBackup = true;
-        });
+        reaction(
+            () =>
+                this.confirmText.toLocaleLowerCase() ===
+                this.confirmTextSample.toLocaleLowerCase(),
+            v => {
+                console.log(true);
+                if (v) this.props.store.confirmedKeyBackup = true;
+            }
+        );
     }
 
-    handleKeyPress = (e) => {
+    handleKeyPress = e => {
         if (e.key === 'Enter') {
             this.props.returnHandler();
         }
@@ -33,11 +39,19 @@ const { t } = require('peerio-translator');
                     {/* Only you have a copy of your Account Key. */}
                     <p>{t('title_confirmContent2')}</p>
                     {/* If you lose it, we cannot help you access your account. */}
-                    <p>{t('title_confirmTextInput', { sample: this.confirmTextSample })}</p>
+                    <p>
+                        {t('title_confirmTextInput', {
+                            sample: this.confirmTextSample
+                        })}
+                    </p>
                     <Input
                         onKeyPress={this.handleKeyPress}
-                        value={this.confirmText} label={t('title_confirmTextInputLabel')}
-                        onChange={text => { this.confirmText = text; }} />
+                        value={this.confirmText}
+                        label={t('title_confirmTextInputLabel')}
+                        onChange={text => {
+                            this.confirmText = text;
+                        }}
+                    />
                 </div>
             </div>
         );

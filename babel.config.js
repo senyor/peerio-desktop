@@ -11,7 +11,12 @@ module.exports = function(api) {
                 { useBuiltIns: true }
             ],
             ['babel-plugin-root-import', { rootPathSuffix: 'build' }],
-            '@babel/plugin-transform-modules-commonjs',
+            [
+                '@babel/plugin-transform-modules-commonjs',
+                {
+                    allowTopLevelThis: true
+                }
+            ],
             [
                 '@babel/transform-async-to-generator',
                 {
@@ -20,6 +25,7 @@ module.exports = function(api) {
                 }
             ]
         ],
+        ignore: ['src/static'],
         env: {
             production: {
                 sourceMaps: false,

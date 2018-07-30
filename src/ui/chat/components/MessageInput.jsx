@@ -208,7 +208,9 @@ class MessageInput extends React.Component {
                         active
                         header="Beak on alright"
                         text="Beak on beakin' on"
-                        circleContent={<MaterialIcon icon="add_circle_outline" />}
+                        circleContent={
+                            <MaterialIcon icon="add_circle_outline" />
+                        }
                     >
                         <Menu
                             position="bottom-left"

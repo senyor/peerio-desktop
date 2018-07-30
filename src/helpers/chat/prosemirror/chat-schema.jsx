@@ -35,6 +35,7 @@ const validUsernamePattern = /[a-zA-Z0-9_]{1,32}/;
 // interpolating or using node values as text is fine, as it just creates text nodes
 // (ie. https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode) --
 // just be careful with attributes!
+// @ts-ignore typings error?
 const chatSchema = new Schema({
     nodes: {
         doc: { content: 'block+' },
@@ -62,7 +63,7 @@ const chatSchema = new Schema({
         link: {
             inline: true,
             group: 'inline',
-            content: 'text+',
+            content: 'text*',
             selectable: true,
             // SECURITY: it's less efficient than fully pre-parsing the url, but
             // for security, in chats links aren't allowed a different href than

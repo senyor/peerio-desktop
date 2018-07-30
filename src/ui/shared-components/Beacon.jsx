@@ -10,6 +10,7 @@ const css = require('classnames');
         position?: 'left' | 'right'
         header?: string
         text: string
+        circleContent: any
     }, {}>}
  */
 @observer
@@ -204,12 +205,7 @@ class Beacon extends React.Component {
                         width: this.circleSize
                     }}
                 >
-                    <div
-                        className="circle-content"
-                        style={this.circleContentOffset}
-                    >
-                        {this.props.children}
-                    </div>
+                    {this.props.circleContent}
                 </div>
             </div>
         );

@@ -29,6 +29,9 @@
 
   .circle {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     min-height: 32px;
     min-width: 32px;
     padding: 20px;
@@ -38,12 +41,5 @@
     background-color: $white;
     border: 4px solid $peerio-purple;
     border-radius: 100%;
-
-    .circle-content {
-      position: absolute;
-      pointer-events: none;
-      left: 50%;
-      top: 50%;
-    }
   }
 }

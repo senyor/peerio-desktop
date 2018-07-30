@@ -11,7 +11,7 @@ const { debounce } = require('lodash');
 const css = require('classnames');
 const { t } = require('peerio-translator');
 const { fileStore, chatStore, clientApp } = require('peerio-icebear');
-const { Button, Menu, MenuItem } = require('peer-ui');
+const { Button, MaterialIcon, Menu, MenuItem } = require('peer-ui');
 
 const FilePicker = require('~/ui/files/components/FilePicker');
 const Snackbar = require('~/ui/shared-components/Snackbar');
@@ -208,6 +208,7 @@ class MessageInput extends React.Component {
                         active
                         header="Beak on alright"
                         text="Beak on beakin' on"
+                        circleContent={<MaterialIcon icon="add_circle_outline" />}
                     >
                         <Menu
                             position="bottom-left"

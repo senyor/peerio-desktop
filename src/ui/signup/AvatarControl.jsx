@@ -5,7 +5,8 @@ const { observer } = require('mobx-react');
 const AvatarDialog = require('./AvatarDialog');
 const { t } = require('peerio-translator');
 
-@observer class AvatarControl extends Component {
+@observer
+class AvatarControl extends Component {
     getInstructions() {
         return (
             <div className="avatar-instructions">
@@ -19,7 +20,7 @@ const { t } = require('peerio-translator');
         const { url } = this.props;
         return (
             <div className="avatar-input" onClick={AvatarDialog.showDialog}>
-                {url ? <img src={url} /> : this.getInstructions() }
+                {url ? <img src={url} /> : this.getInstructions()}
             </div>
         );
     }

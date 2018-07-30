@@ -20,12 +20,11 @@ class ChannelUpgradeOffer extends React.Component {
             <div className="upgrade-rooms">
                 <div>
                     <span>👋 </span>
-                    <T k="title_channelUpgradeOffer">{{ limit: User.current.channelLimit }}</T>
+                    <T k="title_channelUpgradeOffer">
+                        {{ limit: User.current.channelLimit }}
+                    </T>
                 </div>
-                <Button
-                    onClick={this.toUpgrade}
-                    label={t('button_upgrade')}
-                />
+                <Button onClick={this.toUpgrade} label={t('button_upgrade')} />
             </div>
         );
     }

@@ -14,7 +14,9 @@ class Settings extends React.Component {
         {
             route: 'profile',
             label: t('title_settingsProfile'),
-            className: css('profile', { 'tab-notify': !User.current.primaryAddressConfirmed })
+            className: css('profile', {
+                'tab-notify': !User.current.primaryAddressConfirmed
+            })
         },
         {
             route: 'security',
@@ -38,9 +40,9 @@ class Settings extends React.Component {
         },
         appState.devModeEnabled
             ? {
-                route: 'devSettings',
-                label: 'dev settings'
-            }
+                  route: 'devSettings',
+                  label: 'dev settings'
+              }
             : null
     ];
 
@@ -54,15 +56,20 @@ class Settings extends React.Component {
     buttonElements = [];
     constructor() {
         super();
-        this.buttons.forEach((button) => {
+        this.buttons.forEach(button => {
             if (!button) return;
-            const onClickFunction = this[`to${button.route[0].toUpperCase()}${button.route.slice(1)}`] = () => {
+            const onClickFunction = (this[
+                `to${button.route[0].toUpperCase()}${button.route.slice(1)}`
+            ] = () => {
                 routerStore.navigateTo(routerStore.ROUTES[button.route]);
-            };
-            const className = button.className ? button.className : button.route;
+            });
+            const className = button.className
+                ? button.className
+                : button.route;
 
             this.buttonElements.push(
-                <Button label={button.label}
+                <Button
+                    label={button.label}
                     key={button.label}
                     onClick={onClickFunction}
                     className={className}
@@ -73,27 +80,31 @@ class Settings extends React.Component {
     }
 
     componentWillMount() {
-        this.disposeRouterListener = window.router.listen(this.handleRouteChange);
+        this.disposeRouterListener = window.router.listen(
+            this.handleRouteChange
+        );
     }
 
     componentWillUnmount() {
         if (this.disposeRouterListener) this.disposeRouterListener();
     }
 
-    @action.bound handleRouteChange(route) {
+    @action.bound
+    handleRouteChange(route) {
         this.setActive(this.ROUTES_MAP[route.pathname]);
     }
 
     buttonRefs = [];
-    setContainerRef = (ref) => {
+    setContainerRef = ref => {
         if (ref) {
             this.buttonRefs = Array.from(ref.childNodes);
             this.setActive(this.ROUTES_MAP[routerStore.currentRoute]);
         }
-    }
+    };
 
     @observable indexOfActive;
-    @action.bound setActive(index) {
+    @action.bound
+    setActive(index) {
         if (this.indexOfActive >= 0) {
             this.buttonRefs[this.indexOfActive].disabled = false;
         }
@@ -108,12 +119,8 @@ class Settings extends React.Component {
         return (
             <div className="settings">
                 <div className="tab-wrapper">
-                    <div className="headline">
-                        {t('title_settings')}
-                    </div>
-                    <div className="tabs"
-                        ref={this.setContainerRef}
-                    >
+                    <div className="headline">{t('title_settings')}</div>
+                    <div className="tabs" ref={this.setContainerRef}>
                         {this.buttonElements}
                     </div>
                 </div>

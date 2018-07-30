@@ -8,12 +8,13 @@ const ELEMENTS = require('~/whitelabel/helpers/elements');
 
 @observer
 class ChatNameEditor extends React.Component {
-    @action.bound setRef(ref) {
+    @action.bound
+    setRef(ref) {
         if (ref) this.inputRef = ref;
         if (this.props.innerRef) this.props.innerRef(ref);
     }
 
-    acceptNameEdit = (val) => {
+    acceptNameEdit = val => {
         try {
             if (this.props.purpose) {
                 chatStore.activeChat.changePurpose(val);
@@ -29,11 +30,16 @@ class ChatNameEditor extends React.Component {
         const chat = chatStore.activeChat;
         if (!chat || !chat.chatHead) return null;
 
-        const hint = this.props.purpose ? 'title_chatPurposeHint' : 'title_chatNameHint';
+        const hint = this.props.purpose
+            ? 'title_chatPurposeHint'
+            : 'title_chatNameHint';
         const label = this.props.purpose ? 'title_purpose' : 'title_title';
-        const value = this.props.purpose ? chat.purpose : ELEMENTS.chatEditor.displayName(chat);
+        const value = this.props.purpose
+            ? chat.purpose
+            : ELEMENTS.chatEditor.displayName(chat);
         return (
-            <BetterInput label={this.props.showLabel ? t(label) : null}
+            <BetterInput
+                label={this.props.showLabel ? t(label) : null}
                 hint={t(hint)}
                 className={this.props.className}
                 onFocus={this.props.onFocus}
@@ -46,9 +52,12 @@ class ChatNameEditor extends React.Component {
                 tabIndex={this.props.tabIndex}
                 readOnly={this.props.readOnly}
                 multiline={this.props.multiline}
-                maxLength={this.props.purpose ? config.chat.maxChatPurposeLength : config.chat.maxChatNameLength}
+                maxLength={
+                    this.props.purpose
+                        ? config.chat.maxChatPurposeLength
+                        : config.chat.maxChatNameLength
+                }
             />
-
         );
     }
 }

@@ -58,13 +58,14 @@ class BetterInput extends React.Component {
         this.accepted = true;
     };
 
-    onKeyDown = (e) => {
+    onKeyDown = e => {
         if (e.key === 'Enter') {
             if (!this.isValid) return;
             this.accepted = true;
             this.props.onAccept(this.value, this.isValid);
             this.inputRef.blur();
-        } if (e.key === 'Escape') {
+        }
+        if (e.key === 'Escape') {
             this.rejected = true;
             if (this.props.onReject) this.props.onReject();
             this.value = this.props.value || '';
@@ -77,29 +78,38 @@ class BetterInput extends React.Component {
         this.rejected = true;
     }
 
-    setRef = (ref) => {
+    setRef = ref => {
         if (ref) {
             this.inputRef = ref;
             if (this.props.innerRef) this.props.innerRef(ref);
         }
-    }
+    };
 
     focus() {
         if (this.inputRef) this.inputRef.focus();
     }
 
-
     render() {
         const {
-            onFocus, onBlur, onChange, onKeyDown, onAccept, onReject,
-            value, acceptOnBlur, validator, error, displayValue, ...props
+            onFocus,
+            onBlur,
+            onChange,
+            onKeyDown,
+            onAccept,
+            onReject,
+            value,
+            acceptOnBlur,
+            validator,
+            error,
+            displayValue,
+            ...props
         } = this.props;
         props.onFocus = this.onFocus;
         props.onBlur = this.onBlur;
         props.onChange = this.onChange;
         props.onKeyDown = this.onKeyDown;
         props.innerRef = this.setRef;
-        props.value = this.focused ? this.value : (displayValue || this.value);
+        props.value = this.focused ? this.value : displayValue || this.value;
         props.type = 'text';
         props.error = this.isValid ? '' : t(error);
         return React.createElement(Input, props);

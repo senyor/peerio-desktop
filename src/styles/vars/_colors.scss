@@ -1,45 +1,45 @@
 //// COLOR VARIABLES (pulled either from _branding or whitelabel)
 // base UI colors
-$darkblue: $color-ui-1;   // 040b40
-$darkteal: $color-ui-2;   // 004e69
+$darkblue: $color-ui-1; // 040b40
+$darkteal: $color-ui-2; // 004e69
 
 // brand colours
-$peerio-blue: $color-brand-1;    // 408cff
-$peerio-purple: $color-brand-2;  // 5461cc
-$peerio-teal: $color-brand-3;    // 02cedb
+$peerio-blue: $color-brand-1; // 408cff
+$peerio-purple: $color-brand-2; // 5461cc
+$peerio-teal: $color-brand-3; // 02cedb
 
 // status and accent colours
 $yellow: $color-accent-1; // fdc700
-$red: $color-accent-2;    // e90162
+$red: $color-accent-2; // e90162
 
 // for use with dark backgrounds
 $white: rgb(255, 255, 255);
-$white-70: rgba($white, .7);
-$white-50: rgba($white, .5);
-$white-38: rgba($white, .38);
-$white-12: rgba($white, .12);
+$white-70: rgba($white, 0.7);
+$white-50: rgba($white, 0.5);
+$white-38: rgba($white, 0.38);
+$white-12: rgba($white, 0.12);
 
 // for use with light backgrounds
-$black: rgba(0, 0, 0, .87);
-$black-54: rgba(0, 0, 0, .54);
-$black-38: rgba(0, 0, 0, .38);
-$black-12: rgba(0, 0, 0, .12);
-$black-06: rgba(0, 0, 0, .06);
-$black-03: rgba(0, 0, 0, .03);
+$black: rgba(0, 0, 0, 0.87);
+$black-54: rgba(0, 0, 0, 0.54);
+$black-38: rgba(0, 0, 0, 0.38);
+$black-12: rgba(0, 0, 0, 0.12);
+$black-06: rgba(0, 0, 0, 0.06);
+$black-03: rgba(0, 0, 0, 0.03);
 
 //// BACKGROUNDS
 // Background colors
 $background-root: $white;
-$background-hover-default: rgba($darkblue, .05);
+$background-hover-default: rgba($darkblue, 0.05);
 $background-hover-default-solid: #f2f2f5;
-$background-hover-accent: rgba($peerio-blue, .05);
-$background-selected: rgba($peerio-blue, .15);
+$background-hover-accent: rgba($peerio-blue, 0.05);
+$background-selected: rgba($peerio-blue, 0.15);
 $background-neutral: $black-12;
-$background-overlay: rgba($darkblue, .3);
-$hover-bg: rgba($white, .15);
+$background-overlay: rgba($darkblue, 0.3);
+$hover-bg: rgba($white, 0.15);
 $background-list: $darkblue;
 $badge-bg-color: $peerio-blue;
-$background-highlighted: rgba($peerio-purple, .45);
+$background-highlighted: rgba($peerio-purple, 0.45);
 $background-disabled: $black-12;
 
 //// FONT COLORS
@@ -62,7 +62,7 @@ $icon-light-active: $white;
 $icon-light-inactive: $white-70;
 
 //// DIVIDERS
-$divider-dark: rgba($darkblue, .12);
+$divider-dark: rgba($darkblue, 0.12);
 $divider-accent: $peerio-teal;
 
 //// INPUTS

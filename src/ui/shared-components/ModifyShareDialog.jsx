@@ -16,27 +16,34 @@ const { Avatar, Dialog, List, ListItem, Button } = require('peer-ui');
 class ModifyShareDialog extends React.Component {
     @observable visible = false;
 
-    @computed get contacts() {
+    @computed
+    get contacts() {
         return this.props.contacts;
     }
 
-    @action.bound async onContactClick(ev) {
+    @action.bound
+    async onContactClick(ev) {
         const contact = await getContactByEvent(ev);
         this.selectedUsers.set(contact.username, contact);
     }
 
-    @action.bound show() {
+    @action.bound
+    show() {
         this.visible = true;
-        return new Promise(resolve => { this.resolve = resolve; });
+        return new Promise(resolve => {
+            this.resolve = resolve;
+        });
     }
 
-    @action.bound close() {
+    @action.bound
+    close() {
         this.visible = false;
         this.resolve(null);
         this.resolve = null;
     }
 
-    @action.bound share() {
+    @action.bound
+    share() {
         // TODO: this may be different is the dialog invoked
         // from different circumstances
         this.close();
@@ -49,11 +56,14 @@ class ModifyShareDialog extends React.Component {
         ];
 
         return (
-            <Dialog active noAnimation
+            <Dialog
+                active
+                noAnimation
                 className="share-with-dialog share-folder modify-shared-with"
                 actions={dialogActions}
                 onCancel={this.close}
-                title={t('title_sharedWith')}>
+                title={t('title_sharedWith')}
+            >
                 <div className="share-with-contents">
                     <div className="chat-list-container">
                         <div className="list-dms-container">
@@ -63,15 +73,23 @@ class ModifyShareDialog extends React.Component {
                             </div>
                             <List className="list-chats list-dms">
                                 {this.contacts.map(c => {
-                                    return (<ModifyShareListItem key={c.username}
-                                        contact={c} folder={this.props.folder}
-                                    />);
+                                    return (
+                                        <ModifyShareListItem
+                                            key={c.username}
+                                            contact={c}
+                                            folder={this.props.folder}
+                                        />
+                                    );
                                 })}
                             </List>
                         </div>
                     </div>
                     <div className="receipt-wrapper">
-                        <Button icon="person_add" label={t('title_shareWithOthers')} onClick={this.share} />
+                        <Button
+                            icon="person_add"
+                            label={t('title_shareWithOthers')}
+                            onClick={this.share}
+                        />
                     </div>
                 </div>
             </Dialog>
@@ -83,11 +101,13 @@ class ModifyShareDialog extends React.Component {
 class ModifyShareListItem extends ListItem {
     @observable isClicked = false;
 
-    @action.bound triggerRemoveUserWarning() {
+    @action.bound
+    triggerRemoveUserWarning() {
         this.isClicked = true;
     }
 
-    @action.bound handleRemove() {
+    @action.bound
+    handleRemove() {
         this.props.folder.removeParticipant(this.props.contact.username);
     }
 
@@ -96,31 +116,44 @@ class ModifyShareListItem extends ListItem {
 
         return (
             <ListItem
-                className={css(
-                    'modify-share-list-item',
-                    { expanded: this.isClicked }
-                )}
+                className={css('modify-share-list-item', {
+                    expanded: this.isClicked
+                })}
                 leftContent={<Avatar key="a" contact={c} size="small" />}
                 rightContent={
-                    this.isClicked
-                        ? <a className="clickable" onClick={this.handleRemove}>{t('button_remove')}</a>
-                        : (
-                            this.props.folder.owner === c.username
-                                ? <T k="title_owner" className="badge-old-version" />
-                                : <Button icon="remove_circle_outline" onClick={this.triggerRemoveUserWarning} />
-                        )
-                }>
+                    this.isClicked ? (
+                        <a className="clickable" onClick={this.handleRemove}>
+                            {t('button_remove')}
+                        </a>
+                    ) : this.props.folder.owner === c.username ? (
+                        <T k="title_owner" className="badge-old-version" />
+                    ) : (
+                        <Button
+                            icon="remove_circle_outline"
+                            onClick={this.triggerRemoveUserWarning}
+                        />
+                    )
+                }
+            >
                 <div>
                     <span className="full-name">{c.fullName}</span>
                     <span className="username">@{c.username}</span>
                 </div>
 
-                {this.isClicked
-                    ? <T k="title_unshareUserWarning" tag="div" className="remove-user-warning">
-                        {{ fileCount: this.props.folder.store.getFilesSharedBy(c.username).length, user: c.firstName }}
+                {this.isClicked ? (
+                    <T
+                        k="title_unshareUserWarning"
+                        tag="div"
+                        className="remove-user-warning"
+                    >
+                        {{
+                            fileCount: this.props.folder.store.getFilesSharedBy(
+                                c.username
+                            ).length,
+                            user: c.firstName
+                        }}
                     </T>
-                    : null
-                }
+                ) : null}
             </ListItem>
         );
     }

@@ -33,10 +33,18 @@ class InvitedContacts extends React.Component {
     contactActions(c) {
         return (
             <div data-id={c.email}>
-                <Button icon="email" tooltip={t('button_resendInvite')}
-                    tooltipPosition="bottom" onClick={this.resendInvite} />
-                <Button icon="delete" tooltip={t('button_delete')}
-                    tooltipPosition="bottom" onClick={this.removeInvite} />
+                <Button
+                    icon="email"
+                    tooltip={t('button_resendInvite')}
+                    tooltipPosition="bottom"
+                    onClick={this.resendInvite}
+                />
+                <Button
+                    icon="delete"
+                    tooltip={t('button_delete')}
+                    tooltipPosition="bottom"
+                    onClick={this.removeInvite}
+                />
             </div>
         );
     }
@@ -51,20 +59,29 @@ class InvitedContacts extends React.Component {
                 <div className="contact-list">
                     <div className="contact-list-section">
                         <div className="contact-list-section-marker" />
-                        <List className="contact-list-section-content" theme="large">
-                            {contactStore.invitedNotJoinedContacts.map(c =>
-                                (<ListItem key={c.email}
-                                    leftContent={<div className="avatar-invited material-icons">person</div>}
+                        <List
+                            className="contact-list-section-content"
+                            theme="large"
+                        >
+                            {contactStore.invitedNotJoinedContacts.map(c => (
+                                <ListItem
+                                    key={c.email}
+                                    leftContent={
+                                        <div className="avatar-invited material-icons">
+                                            person
+                                        </div>
+                                    }
                                     caption={c.email}
-                                    legend={`${t('title_invited')} ${moment(c.added).fromNow()}`}
+                                    legend={`${t('title_invited')} ${moment(
+                                        c.added
+                                    ).fromNow()}`}
                                     rightContent={this.contactActions(c)}
-                                />)
-                            )}
+                                />
+                            ))}
                         </List>
                     </div>
                 </div>
             </div>
-
         );
     }
 }

@@ -5,7 +5,8 @@ function saveWindowState(state) {
 }
 
 function getSavedWindowState() {
-    return TinyDb.system.getValue('windowState')
+    return TinyDb.system
+        .getValue('windowState')
         .then(savedState => savedState || {})
         .then(savedState => ({
             x: savedState.x,

@@ -6,10 +6,10 @@ let gotUrl = false;
 function runCmd(cmd, args, callback) {
     const child = cp.spawn(cmd, args || []);
     if (callback) {
-        child.stdout.on('data', (buffer) => {
+        child.stdout.on('data', buffer => {
             callback(buffer.toString());
         });
-        child.stderr.on('data', (buffer) => {
+        child.stderr.on('data', buffer => {
             callback(buffer.toString());
         });
         // child.stdout.on('end', () => { callback(); });
@@ -24,13 +24,15 @@ function processMochaOutput(str) {
             openChrome(match[0]);
         }
     }
-    if(str!=null) console.log(str);
+    if (str != null) console.log(str);
 }
 
 function openChrome(url) {
     let cmd =
-'osascript <<EOD\n\
-   set theURL to "' + url + '"\n\
+        'osascript <<EOD\n\
+   set theURL to "' +
+        url +
+        '"\n\
     tell application "Google Chrome"\n\
         if windows = {} then\n\
             make new window\n\
@@ -49,7 +51,6 @@ EOD';
     });
 }
 process.env.DEBUG = true;
-runCmd('mocha', ['--inspect', '--debug-brk'], processMochaOutput, {env:process.env});
-
-
-
+runCmd('mocha', ['--inspect', '--debug-brk'], processMochaOutput, {
+    env: process.env
+});

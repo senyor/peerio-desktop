@@ -5,7 +5,6 @@
 const { extendObservable, observable, computed } = require('mobx');
 const _ = require('lodash');
 
-
 class OrderedFormStore {
     /**
      * kv pairs of field name and ValidatedInput component
@@ -21,7 +20,8 @@ class OrderedFormStore {
      *
      * @type {boolean}
      */
-    @computed get initialized() {
+    @computed
+    get initialized() {
         const fieldsExpected = this.fieldsExpected || 0;
 
         return this.fieldsInitialized >= fieldsExpected;
@@ -52,7 +52,9 @@ class OrderedFormStore {
         this.fields[fieldName] = validatedInputComponent;
         // attach validation function for easy calling
         const validationFnName = _.camelCase(`validate_${fieldName}`);
-        this[validationFnName] = validatedInputComponent.validateConnected.bind(validatedInputComponent);
+        this[validationFnName] = validatedInputComponent.validateConnected.bind(
+            validatedInputComponent
+        );
         // adds additional observables to the store
         const validationProps = {};
         validationProps[`${fieldName}Valid`] = false;

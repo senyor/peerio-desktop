@@ -31,9 +31,37 @@ class LanguageStore {
         tr: 'Türkçe'
     };
     // ui
-    translationLangs = ['en', 'cs', 'zh-CN', 'de', 'es', 'fr', 'it', 'ja', 'hu', 'nb-NO', 'pt-BR', 'ru', 'tr'];
+    translationLangs = [
+        'en',
+        'cs',
+        'zh-CN',
+        'de',
+        'es',
+        'fr',
+        'it',
+        'ja',
+        'hu',
+        'nb-NO',
+        'pt-BR',
+        'ru',
+        'tr'
+    ];
     // passphrases
-    dictionaryLangs = ['en', 'cs', 'zh-CN', 'de', 'es', 'fr', 'it', 'ja', 'hu', 'nb-NO', 'pt-BR', 'ru', 'tr'];
+    dictionaryLangs = [
+        'en',
+        'cs',
+        'zh-CN',
+        'de',
+        'es',
+        'fr',
+        'it',
+        'ja',
+        'hu',
+        'nb-NO',
+        'pt-BR',
+        'ru',
+        'tr'
+    ];
 
     get translationLangsDataSource() {
         if (!this._translationLangsCache) {
@@ -56,16 +84,22 @@ class LanguageStore {
     buildDictionary() {
         const txtPath = path.join(
             electron.app.getAppPath(),
-            `/node_modules/peerio-copy/phrase/dict/${this.language}.txt`);
+            `/node_modules/peerio-copy/phrase/dict/${this.language}.txt`
+        );
         const dict = fs.readFileSync(txtPath, 'utf8');
         PhraseDictionary.setDictionary(this.language, dict);
     }
 
-    @action changeLanguage(code) {
+    @action
+    changeLanguage(code) {
         try {
             const jsonPath = path.join(
                 electron.app.getAppPath(),
-                `/node_modules/peerio-icebear/src/copy/${code.replace('-', '_')}.json`);
+                `/node_modules/peerio-icebear/src/copy/${code.replace(
+                    '-',
+                    '_'
+                )}.json`
+            );
             const translation = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
             setLocale(code, translation);
             this.language = code;
@@ -77,12 +111,16 @@ class LanguageStore {
             moment.locale(code);
             console.log(`Language changed to ${code}`);
         } catch (err) {
-            console.error(`Failed switch language to: ${code} ${normalizeError(err)}`);
+            console.error(
+                `Failed switch language to: ${code} ${normalizeError(err)}`
+            );
         }
     }
 
-    @action loadSavedLanguage() {
-        db.system.getValue('language')
+    @action
+    loadSavedLanguage() {
+        db.system
+            .getValue('language')
             .then(lang => this.changeLanguage(lang || 'en'))
             .catch(err => {
                 console.error(err);
@@ -90,6 +128,5 @@ class LanguageStore {
             });
     }
 }
-
 
 module.exports = new LanguageStore();

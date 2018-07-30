@@ -13,9 +13,11 @@ class Dev extends React.Component {
         return (
             <div>
                 <section>
-                    <Switch checked={uiStore.sharedPrefs.prereleaseUpdatesEnabled}
+                    <Switch
+                        checked={uiStore.sharedPrefs.prereleaseUpdatesEnabled}
                         label="Enable pre-release updates (requires app restart)"
-                        onChange={this.onPrereleaseChange} />
+                        onChange={this.onPrereleaseChange}
+                    />
                 </section>
             </div>
         );

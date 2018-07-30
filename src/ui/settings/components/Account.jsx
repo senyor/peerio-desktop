@@ -12,34 +12,33 @@ const config = require('~/config');
 class Account extends React.Component {
     @observable deleteAccountDialogActive = false;
 
-    onPromoSubscriptionChanged = (ev) => {
+    onPromoSubscriptionChanged = ev => {
         User.current.settings.subscribeToPromoEmails = ev.target.checked;
         User.current.saveSettings();
-    }
+    };
 
-    onErrorTrackingChanged = (ev) => {
+    onErrorTrackingChanged = ev => {
         User.current.settings.errorTracking = ev.target.checked;
         User.current.saveSettings();
-    }
+    };
 
-    onDataCollectionChanged = (ev) => {
+    onDataCollectionChanged = ev => {
         User.current.settings.dataCollection = ev.target.checked;
         User.current.saveSettings();
-    }
+    };
 
     showConfirmDelete = () => {
         this.deleteAccountDialogActive = true;
-    }
+    };
 
     hideConfirmDelete = () => {
         this.deleteAccountDialogActive = false;
-    }
-
+    };
 
     onDeleteConfirmed = () => {
         User.current.deleteAccount(User.current.username);
         this.deleteAccountDialogActive = false;
-    }
+    };
 
     toUpgrade() {
         return window.open(urls.upgrade);
@@ -52,39 +51,58 @@ class Account extends React.Component {
         ];
         return (
             <div className="settings-container-account">
-                {config.disablePayments || User.current.hasActivePlans ? null
-                    : <section className="upgrade-message-container">
-                        <div className="message">{t('title_upgradeMessage')}</div>
-                        <Button label={t('button_upgrade')}
+                {config.disablePayments ||
+                User.current.hasActivePlans ? null : (
+                    <section className="upgrade-message-container">
+                        <div className="message">
+                            {t('title_upgradeMessage')}
+                        </div>
+                        <Button
+                            label={t('button_upgrade')}
                             onClick={this.toUpgrade}
                         />
                     </section>
-                }
+                )}
                 <section className="section-divider">
-                    <div className="title">{t('title_promoConsentRequestTitle')}</div>
-                    <Switch checked={User.current.settings.subscribeToPromoEmails}
+                    <div className="title">
+                        {t('title_promoConsentRequestTitle')}
+                    </div>
+                    <Switch
+                        checked={User.current.settings.subscribeToPromoEmails}
                         label={t('title_promoConsent')}
-                        onChange={this.onPromoSubscriptionChanged} />
+                        onChange={this.onPromoSubscriptionChanged}
+                    />
                 </section>
                 <section>
                     <div className="title">{t('title_dataPreferences')}</div>
-                    <p>
-                        {t('title_dataDetail')}
-                    </p>
-                    <Switch checked={User.current.settings.errorTracking}
+                    <p>{t('title_dataDetail')}</p>
+                    <Switch
+                        checked={User.current.settings.errorTracking}
                         label={t('title_errorTrackingMessage')}
-                        onChange={this.onErrorTrackingChanged} />
-                    <Switch checked={User.current.settings.dataCollection}
+                        onChange={this.onErrorTrackingChanged}
+                    />
+                    <Switch
+                        checked={User.current.settings.dataCollection}
                         label={t('title_dataCollectionMessage')}
-                        onChange={this.onDataCollectionChanged} />
+                        onChange={this.onDataCollectionChanged}
+                    />
                 </section>
                 <section className="delete-account">
-                    <Button label={t('button_accountDelete')} onClick={this.showConfirmDelete} />
+                    <Button
+                        label={t('button_accountDelete')}
+                        onClick={this.showConfirmDelete}
+                    />
                 </section>
-                <Dialog active={this.deleteAccountDialogActive} actions={dialogActions}
-                    onCancel={this.hideConfirmDelete} title={t('title_accountDelete')}>
-                    <T k="title_accountDeleteDescription1" tag="p" /><br />
-                    <T k="title_accountDeleteDescription2" tag="p" /><br />
+                <Dialog
+                    active={this.deleteAccountDialogActive}
+                    actions={dialogActions}
+                    onCancel={this.hideConfirmDelete}
+                    title={t('title_accountDelete')}
+                >
+                    <T k="title_accountDeleteDescription1" tag="p" />
+                    <br />
+                    <T k="title_accountDeleteDescription2" tag="p" />
+                    <br />
                     <T k="title_accountDeleteDescription3" tag="p" />
                 </Dialog>
             </div>

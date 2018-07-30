@@ -4,7 +4,6 @@ const isDevEnv = require('~/helpers/is-dev-env');
 
 const rightClickPos = { x: 0, y: 0 };
 
-
 const inputMenu = Menu.buildFromTemplate([
     { role: 'undo' },
     { role: 'redo' },
@@ -40,7 +39,6 @@ function buildContextMenu(mainWindow) {
         });
     }
 
-
     mainWindow.webContents.on('context-menu', (e, props) => {
         rightClickPos.x = props.x;
         rightClickPos.y = props.y;
@@ -52,6 +50,5 @@ function buildContextMenu(mainWindow) {
         }
     });
 }
-
 
 module.exports = buildContextMenu;

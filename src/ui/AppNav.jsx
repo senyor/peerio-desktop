@@ -19,7 +19,6 @@ const config = require('~/config');
 
 const { app, nativeImage } = remote;
 
-
 // todo: move this somewhere more appropriate
 let dockNotifsStarted = false;
 function startDockNotifications() {
@@ -48,9 +47,17 @@ function startTaskbarOverlay() {
         // windows
         if (typeof remote.getCurrentWindow().setOverlayIcon === 'function') {
             const overlay = nativeImage.createFromPath(
-                path.join(app.getAppPath(), 'build/static/img/taskbar-overlay.png')
+                path.join(
+                    app.getAppPath(),
+                    'build/static/img/taskbar-overlay.png'
+                )
             );
-            remote.getCurrentWindow().setOverlayIcon(unreadItems ? overlay : null, unreadItems ? 'newmessages' : '');
+            remote
+                .getCurrentWindow()
+                .setOverlayIcon(
+                    unreadItems ? overlay : null,
+                    unreadItems ? 'newmessages' : ''
+                );
         }
     }, 250);
 }
@@ -59,12 +66,18 @@ let desktopNotificationsStarted = false;
 function startDesktopNotifications() {
     if (desktopNotificationsStarted) return;
     desktopNotificationsStarted = true;
-    chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived,
-        notificationFactory.sendMessageNotification);
-    chatStore.events.on(chatStore.EVENT_TYPES.invitedToChannel,
-        notificationFactory.sendInviteNotification);
-    contactStore.events.on(contactStore.EVENT_TYPES.inviteAccepted,
-        notificationFactory.sendInviteAcceptedNotification);
+    chatStore.events.on(
+        chatStore.EVENT_TYPES.messagesReceived,
+        notificationFactory.sendMessageNotification
+    );
+    chatStore.events.on(
+        chatStore.EVENT_TYPES.invitedToChannel,
+        notificationFactory.sendInviteNotification
+    );
+    contactStore.events.on(
+        contactStore.EVENT_TYPES.inviteAccepted,
+        notificationFactory.sendInviteAcceptedNotification
+    );
 }
 
 @observer
@@ -73,13 +86,24 @@ class AppNav extends React.Component {
 
     constructor() {
         super();
-        ['mail', 'chats', 'files', 'contacts', 'profile', 'security', 'prefs', 'account', 'about', 'help', 'onboarding']
-            .forEach(route => {
-                this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
-                    this.enableColorIcons();
-                    routerStore.navigateTo(routerStore.ROUTES[route]);
-                };
-            });
+        [
+            'mail',
+            'chats',
+            'files',
+            'contacts',
+            'profile',
+            'security',
+            'prefs',
+            'account',
+            'about',
+            'help',
+            'onboarding'
+        ].forEach(route => {
+            this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
+                this.enableColorIcons();
+                routerStore.navigateTo(routerStore.ROUTES[route]);
+            };
+        });
     }
 
     componentWillMount() {
@@ -89,19 +113,19 @@ class AppNav extends React.Component {
         startTaskbarOverlay();
     }
 
-    @computed get menuItems() {
-        const hideUpgrade = config.disablePayments || User.current.hasActivePlans;
+    @computed
+    get menuItems() {
+        const hideUpgrade =
+            config.disablePayments || User.current.hasActivePlans;
 
         const menuContent = [
             {
                 value: 'Profile',
                 customIcon: 'public-profile',
                 caption: 'title_settingsProfile',
-                className: css(
-                    'profile',
-                    'custom-icon-hover-container',
-                    { 'avatar-notify': !User.current.primaryAddressConfirmed }
-                )
+                className: css('profile', 'custom-icon-hover-container', {
+                    'avatar-notify': !User.current.primaryAddressConfirmed
+                })
             },
             {
                 value: 'Security',
@@ -159,7 +183,9 @@ class AppNav extends React.Component {
             const value = m.value.toLowerCase();
             const className = m.className ? m.className : value;
             const route = m.route ? m.route : value;
-            const clickFunction = m.clickFunction ? m.clickFunction : `to${m.value}`;
+            const clickFunction = m.clickFunction
+                ? m.clickFunction
+                : `to${m.value}`;
 
             return (
                 <MenuItem
@@ -169,7 +195,9 @@ class AppNav extends React.Component {
                     className={className}
                     icon={m.icon}
                     customIcon={m.customIcon}
-                    selected={routerStore.currentRoute === routerStore.ROUTES[route]}
+                    selected={
+                        routerStore.currentRoute === routerStore.ROUTES[route]
+                    }
                     onClick={this[clickFunction]}
                 />
             );
@@ -177,22 +205,28 @@ class AppNav extends React.Component {
     }
 
     @observable colorIcons = true;
-    @action.bound enableColorIcons() { this.colorIcons = true; }
-    @action.bound disableColorIcons() { this.colorIcons = false; }
+    @action.bound
+    enableColorIcons() {
+        this.colorIcons = true;
+    }
+    @action.bound
+    disableColorIcons() {
+        this.colorIcons = false;
+    }
 
-    _doSignout = async (untrust) => {
+    _doSignout = async untrust => {
         await autologin.disable();
         await User.current.signout(untrust);
         appControl.relaunch();
-    }
+    };
 
     signout = async () => {
         this.isConfirmSignOutVisible = true;
-    }
+    };
 
     cancelSignout = () => {
         this.isConfirmSignOutVisible = false;
-    }
+    };
 
     toUpgrade() {
         return window.open(urls.upgrade);
@@ -206,39 +240,68 @@ class AppNav extends React.Component {
         return (
             <div className="app-nav">
                 <div className="avatar-menu-wrapper">
-                    <div className={css({ 'avatar-notify': !primaryAddressConfirmed })} />
+                    <div
+                        className={css({
+                            'avatar-notify': !primaryAddressConfirmed
+                        })}
+                    />
                     <Menu
-                        customButton={<Avatar contact={contact} size="medium" />}
+                        customButton={
+                            <Avatar contact={contact} size="medium" />
+                        }
                         position="top-left"
                         theme="wide"
-                        innerClassName={css('app-nav-menu', { 'color-icons': this.colorIcons })}
+                        innerClassName={css('app-nav-menu', {
+                            'color-icons': this.colorIcons
+                        })}
                     >
                         <MenuHeader
-                            leftContent={<Avatar contact={contact} size="medium" onClick={this.toProfile} />}
+                            leftContent={
+                                <Avatar
+                                    contact={contact}
+                                    size="medium"
+                                    onClick={this.toProfile}
+                                />
+                            }
                             caption={contact.fullName}
                             legend={contact.username}
                         />
                         <Divider />
-                        <div onMouseEnter={this.disableColorIcons} onMouseLeave={this.enableColorIcons}>
+                        <div
+                            onMouseEnter={this.disableColorIcons}
+                            onMouseLeave={this.enableColorIcons}
+                        >
                             {this.menuItems}
                         </div>
                     </Menu>
                 </div>
                 <div className="app-menu">
-                    <AppNavButton tooltip={t('title_chats')} icon="forum"
-                        active={currentRoute.startsWith(ROUTES.chats) || currentRoute.startsWith(ROUTES.patients)}
+                    <AppNavButton
+                        tooltip={t('title_chats')}
+                        icon="forum"
+                        active={
+                            currentRoute.startsWith(ROUTES.chats) ||
+                            currentRoute.startsWith(ROUTES.patients)
+                        }
                         showBadge={chatStore.badgeCount > 0}
                         badge={chatStore.badgeCount}
-                        onClick={this.toChats} />
+                        onClick={this.toChats}
+                    />
 
-                    <AppNavButton tooltip={t('title_files')} icon="folder"
+                    <AppNavButton
+                        tooltip={t('title_files')}
+                        icon="folder"
                         active={currentRoute.startsWith(ROUTES.files)}
                         showBadge={fileStore.unreadFiles > 0}
-                        onClick={this.toFiles} />
+                        onClick={this.toFiles}
+                    />
 
-                    <AppNavButton tooltip={t('title_contacts')} icon="people"
+                    <AppNavButton
+                        tooltip={t('title_contacts')}
+                        icon="people"
                         active={currentRoute.startsWith(ROUTES.contacts)}
-                        onClick={this.toContacts} />
+                        onClick={this.toContacts}
+                    />
 
                     <UsageCloud onClick={this.toOnboarding} />
                 </div>

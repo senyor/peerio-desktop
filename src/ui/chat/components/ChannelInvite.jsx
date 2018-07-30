@@ -3,7 +3,12 @@ const React = require('react');
 const { action, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 
-const { chatStore, chatInviteStore, contactStore, User } = require('peerio-icebear');
+const {
+    chatStore,
+    chatInviteStore,
+    contactStore,
+    User
+} = require('peerio-icebear');
 const urls = require('~/config').translator.urlMap;
 
 const css = require('classnames');
@@ -21,16 +26,20 @@ class ChannelInvite extends React.Component {
 
     componentDidMount() {
         // TODO: refactor when better server/sdk support for room invites
-        this.disposer = reaction(() => !chatStore.chats.length && !chatInviteStore.received.length, () => {
-            routerStore.navigateTo(routerStore.ROUTES.zeroChats);
-        });
+        this.disposer = reaction(
+            () => !chatStore.chats.length && !chatInviteStore.received.length,
+            () => {
+                routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+            }
+        );
     }
 
     componentWillUnmount() {
         this.disposer();
     }
 
-    @action.bound async acceptInvite() {
+    @action.bound
+    async acceptInvite() {
         const kegDbId = chatInviteStore.activeInvite.kegDbId;
         chatInviteStore.deactivateInvite();
         this.inProgress = true;
@@ -43,7 +52,8 @@ class ChannelInvite extends React.Component {
         this.inProgress = false;
     }
 
-    @action.bound rejectInvite() {
+    @action.bound
+    rejectInvite() {
         chatInviteStore.rejectInvite(chatInviteStore.activeInvite.kegDbId);
     }
 
@@ -69,17 +79,33 @@ class ChannelInvite extends React.Component {
     maxParticipants = 6;
 
     get renderParticipants() {
-        const { channelName, participants, username } = chatInviteStore.activeInvite;
+        const {
+            channelName,
+            participants,
+            username
+        } = chatInviteStore.activeInvite;
         if (participants.length <= this.minParticipants) return null;
 
         const participantsToShow = [];
 
-        for (let i = 0; i < participants.length && participantsToShow.length < this.maxAvatars; i++) {
+        for (
+            let i = 0;
+            i < participants.length &&
+            participantsToShow.length < this.maxAvatars;
+            i++
+        ) {
             const participant = participants[i];
 
-            if (participant !== username && participant !== User.current.username) {
+            if (
+                participant !== username &&
+                participant !== User.current.username
+            ) {
                 participantsToShow.push(
-                    <AvatarWithPopup key={participant} contact={contactStore.getContact(participant)} tooltip />
+                    <AvatarWithPopup
+                        key={participant}
+                        contact={contactStore.getContact(participant)}
+                        tooltip
+                    />
                 );
             }
         }
@@ -87,24 +113,32 @@ class ChannelInvite extends React.Component {
         return (
             <div className="participant-list">
                 <span>
-                    <T k="title_whoIsAlreadyIn" className="already-in-room" tag="span" />&nbsp;
+                    <T
+                        k="title_whoIsAlreadyIn"
+                        className="already-in-room"
+                        tag="span"
+                    />&nbsp;
                     <span className="room-name">{`# ${channelName}`}</span>
                 </span>
                 <div className="avatars">
                     {participantsToShow}
-                    {participants.length > this.maxParticipants
-                        ? <div className="more-participants">
+                    {participants.length > this.maxParticipants ? (
+                        <div className="more-participants">
                             +{participants.length - this.maxParticipants}
                         </div>
-                        : null
-                    }
+                    ) : null}
                 </div>
-            </div>);
+            </div>
+        );
         // }
     }
 
     render() {
-        if (chatInviteStore.activeInvite && chatInviteStore.activeInvite.declined) return this.declineControl;
+        if (
+            chatInviteStore.activeInvite &&
+            chatInviteStore.activeInvite.declined
+        )
+            return this.declineControl;
         if (this.inProgress) return <ProgressBar mode="indeterminate" />;
         const { activeInvite } = chatInviteStore;
         if (!activeInvite) return null;
@@ -119,41 +153,56 @@ class ChannelInvite extends React.Component {
                         <span className="channel-name"># {channelName}</span>
                     </div>
 
-                    {User.current.channelsLeft > 0
-                        ? <div className="buttons">
-                            <Button label={t('button_decline')}
+                    {User.current.channelsLeft > 0 ? (
+                        <div className="buttons">
+                            <Button
+                                label={t('button_decline')}
                                 theme="affirmative secondary"
                                 onClick={this.rejectInvite}
                             />
-                            <Button label={t('button_accept')}
+                            <Button
+                                label={t('button_accept')}
                                 theme="affirmative"
                                 onClick={this.acceptInvite}
                             />
                         </div>
-                        : <div className="upgrade-prompt">
+                    ) : (
+                        <div className="upgrade-prompt">
                             <div className="upgrade-content">
                                 <span className="upgrade-text">
-                                    👋 <T k="title_roomInviteUpgradeNotice" tag="span" />
+                                    👋{' '}
+                                    <T
+                                        k="title_roomInviteUpgradeNotice"
+                                        tag="span"
+                                    />
                                 </span>
-                                <Button label={t('button_upgrade')}
+                                <Button
+                                    label={t('button_upgrade')}
                                     onClick={this.toUpgrade}
                                 />
                             </div>
-                            <Button label={t('button_declineInvite')}
+                            <Button
+                                label={t('button_declineInvite')}
                                 theme="affirmative secondary"
                                 onClick={this.rejectInvite}
                             />
                         </div>
-                    }
+                    )}
                 </div>
 
-                {User.current.channelsLeft > 0
-                    ? <div className="participants">
+                {User.current.channelsLeft > 0 ? (
+                    <div className="participants">
                         <Divider />
                         <div className="participant-list">
                             <span>
-                                <T k="title_hostedBy" className="hosted-by" tag="span" />&nbsp;
-                                <span className="host-username">{contact.fullName}</span>
+                                <T
+                                    k="title_hostedBy"
+                                    className="hosted-by"
+                                    tag="span"
+                                />&nbsp;
+                                <span className="host-username">
+                                    {contact.fullName}
+                                </span>
                             </span>
                             <div className="avatars">
                                 <AvatarWithPopup contact={contact} tooltip />
@@ -161,8 +210,7 @@ class ChannelInvite extends React.Component {
                         </div>
                         {this.renderParticipants}
                     </div>
-                    : null
-                }
+                ) : null}
             </div>
         );
     }

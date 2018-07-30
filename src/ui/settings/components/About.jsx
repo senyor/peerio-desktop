@@ -35,9 +35,9 @@ class About extends React.Component {
                         {t('title_version')} <strong>{version}</strong>
                     </p>
                     <p>
-                        {t('title_networkLatency')} <strong>{socket.latency}ms</strong>
+                        {t('title_networkLatency')}{' '}
+                        <strong>{socket.latency}ms</strong>
                     </p>
-
                 </section>
                 <section>
                     <Copyright />
@@ -51,10 +51,12 @@ class About extends React.Component {
                     </div>
                 </section>
 
-                <Dialog active={this.termsDialogOpen}
+                <Dialog
+                    active={this.termsDialogOpen}
                     actions={termsDialogActions}
                     onCancel={this.hideTermsDialog}
-                    className="terms-container">
+                    className="terms-container"
+                >
                     <Terms />
                 </Dialog>
             </div>

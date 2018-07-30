@@ -16,19 +16,22 @@ const isDev = process.env.NODE_ENV !== 'production';
  */
 function startApp(context) {
     context.app = isDev
-            ? new Application({ path: electron, args: ['./app'] })
-            : new Application({
-                path: `./dist/mac/Peerio Messenger.app/Contents/MacOS/Peerio Messenger`
-            });
+        ? new Application({ path: electron, args: ['./app'] })
+        : new Application({
+              path: `./dist/mac/Peerio Messenger.app/Contents/MacOS/Peerio Messenger`
+          });
 
-    return context.app.start().then(() => {
-        expect(context.app.isRunning()).to.be.true;
-        chaiAsPromised.transferPromiseness = context.app.transferPromiseness;
-        return context.app.client.windowByIndex(1);
-    })
-    .then(() => {
-        return context.app.client.waitUntilWindowLoaded();
-    });
+    return context.app
+        .start()
+        .then(() => {
+            expect(context.app.isRunning()).to.be.true;
+            chaiAsPromised.transferPromiseness =
+                context.app.transferPromiseness;
+            return context.app.client.windowByIndex(1);
+        })
+        .then(() => {
+            return context.app.client.waitUntilWindowLoaded();
+        });
 }
 
 /**
@@ -37,15 +40,22 @@ function startApp(context) {
  * @returns Promise
  */
 function startAppAndConnect(context) {
-    return startApp(context)
-        .then(() => {
-            return context.app.client.waitUntil(() => {
-                return context.app.client.execute(() => {
-                    return ice.socket.connected; // eslint-disable-line no-undef
-                })
-                .then((c) => { return c.value; });
-            }, 5000, 'websocket connection timed out', 500);
-        });
+    return startApp(context).then(() => {
+        return context.app.client.waitUntil(
+            () => {
+                return context.app.client
+                    .execute(() => {
+                        return ice.socket.connected; // eslint-disable-line no-undef
+                    })
+                    .then(c => {
+                        return c.value;
+                    });
+            },
+            5000,
+            'websocket connection timed out',
+            500
+        );
+    });
 }
 
 /**
@@ -55,8 +65,7 @@ function startAppAndConnect(context) {
  * @returns Promise
  */
 function startAppAndLogin(context) {
-    return startAppAndConnect(context)
-        .then(() => login(context));
+    return startAppAndConnect(context).then(() => login(context));
 }
 
 /**
@@ -71,28 +80,40 @@ function startAppAndLogin(context) {
  * @returns Promise
  */
 function login(context) {
-    return context.app.electron.remote.app.getPath('userData')
-        .then((p) => {
+    return context.app.electron.remote.app
+        .getPath('userData')
+        .then(p => {
             // wipe the passcode
-            const systemTinyDb = JSON.parse(fs.readFileSync(`${p}/system_tinydb.json`));
+            const systemTinyDb = JSON.parse(
+                fs.readFileSync(`${p}/system_tinydb.json`)
+            );
             delete systemTinyDb[`${testUser.username}:passcode`];
-            fs.writeFileSync(`${p}/system_tinydb.json`, JSON.stringify(systemTinyDb));
-            return context.app.client
-                .isVisible('.welcome-back');
+            fs.writeFileSync(
+                `${p}/system_tinydb.json`,
+                JSON.stringify(systemTinyDb)
+            );
+            return context.app.client.isVisible('.welcome-back');
         })
-        .then((returning) => {
+        .then(returning => {
             return returning ? context.app.client.click('.welcome-back') : true;
         })
         .then(() => {
-            return context.app.client.setValue('div.login-form > div:nth-child(2) input', testUser.username)
-                .setValue('div.login-form > div.password input', testUser.passphrase)
+            return context.app.client
+                .setValue(
+                    'div.login-form > div:nth-child(2) input',
+                    testUser.username
+                )
+                .setValue(
+                    'div.login-form > div.password input',
+                    testUser.passphrase
+                )
                 .waitForEnabled('div.login > button')
                 .click('div.login > button');
         })
         .then(() => {
             return context.app.client.waitForVisible('.test-new-device', 30000);
         })
-        .catch((err) => {
+        .catch(err => {
             return Promise.reject(err);
         });
 }

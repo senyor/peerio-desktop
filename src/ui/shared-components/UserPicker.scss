@@ -63,7 +63,7 @@ $userlist-maxwidth: 608px; // $userpicker-maxwidth - $userpicker-margin-large
     }
 
     &.warning {
-      background-color: rgba($color-error, .25);
+      background-color: rgba($color-error, 0.25);
 
       .right .material-icons {
         color: $color-error;

@@ -6,7 +6,8 @@ const { Dialog } = require('peer-ui');
 const Terms = require('~/ui/shared-components/Terms');
 const { t } = require('peerio-translator');
 
-@observer class TermsDialog extends Component {
+@observer
+class TermsDialog extends Component {
     @observable static show = false;
 
     static hideDialog() {
@@ -23,10 +24,12 @@ const { t } = require('peerio-translator');
             { label: t('button_ok'), onClick: hideDialog }
         ];
         return (
-            <Dialog active={show}
+            <Dialog
+                active={show}
                 actions={termsDialogActions}
                 onCancel={hideDialog}
-                className="terms-container">
+                className="terms-container"
+            >
                 <Terms />
             </Dialog>
         );

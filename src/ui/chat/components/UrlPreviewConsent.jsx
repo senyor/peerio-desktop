@@ -23,14 +23,14 @@ class UrlPreviewConsent extends React.Component {
         { value: DISABLED, label: t('title_disable') }
     ];
 
-    onSelectedModeChange = (value) => {
+    onSelectedModeChange = value => {
         this.selectedMode = value;
-    }
+    };
 
     onDismiss = () => {
         this.selectedMode = DISABLED;
         this.onSubmitConsent();
-    }
+    };
 
     onSubmitConsent = () => {
         this.firstSave = true;
@@ -48,18 +48,22 @@ class UrlPreviewConsent extends React.Component {
                 uiStore.prefs.externalContentEnabled = false;
                 break;
         }
-    }
+    };
 
     goToSettings = () => {
         routerStore.navigateTo(routerStore.ROUTES.prefs);
-    }
+    };
 
     render() {
         // need to erase this for now bc urlData is empty, which iss the reason for shifting consent to new component
         // const urlData = this.props.urlData;
 
         const textParser = {
-            toSettings: text => <a className="clickable" onClick={this.goToSettings}>{text}</a>
+            toSettings: text => (
+                <a className="clickable" onClick={this.goToSettings}>
+                    {text}
+                </a>
+            )
         };
 
         return (
@@ -90,16 +94,21 @@ class UrlPreviewConsent extends React.Component {
                         />
                     </div>
                 </div>
-                { this.firstSave &&
-                    <div className={css('update-settings', { nomargin: !uiStore.prefs.externalContentEnabled })}>
+                {this.firstSave && (
+                    <div
+                        className={css('update-settings', {
+                            nomargin: !uiStore.prefs.externalContentEnabled
+                        })}
+                    >
                         <MaterialIcon icon="check_circle" />
-                        <T k="title_updateSettingsAnyTime" className="text">{textParser}</T>
+                        <T k="title_updateSettingsAnyTime" className="text">
+                            {textParser}
+                        </T>
                     </div>
-                }
+                )}
             </div>
         );
     }
 }
-
 
 module.exports = UrlPreviewConsent;

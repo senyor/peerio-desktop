@@ -6,8 +6,6 @@ dist
 /autologin.json
 npm-debug.log.*
 npm-debug.log
-.vscode/*
-!.vscode/launch.json
 .opt-in
 .app.package.json.md5
 .package.json.md5

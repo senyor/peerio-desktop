@@ -12,7 +12,8 @@
   // Marks:
   em,         // em
   s,          // strike
-  strong {    // strong
+  strong {
+    // strong
     @extend %selectable;
   }
 
@@ -53,18 +54,18 @@
     font-weight: $font-weight-semibold;
     transition: background-color 50ms;
     color: $text-dark-default;
-    background-color: rgba($peerio-blue, .45);
+    background-color: rgba($peerio-blue, 0.45);
     border-radius: 3px;
 
     &:hover {
-      background-color: rgba($peerio-blue, .15);
+      background-color: rgba($peerio-blue, 0.15);
     }
 
     &.self {
       background-color: $peerio-teal;
 
       &:hover {
-        background-color: rgba($peerio-teal, .15);
+        background-color: rgba($peerio-teal, 0.15);
       }
     }
   }

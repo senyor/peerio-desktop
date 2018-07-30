@@ -8,7 +8,6 @@ const cp = require('child_process');
 /** @type {any} */
 const emojione = require('emojione');
 
-
 const srcImages = './node_modules/emojione-assets/png/32/';
 const srcSprites = './node_modules/emojione-assets/sprites/*-32-*@2x.png';
 const srcCss = './node_modules/emojione-assets/sprites/emojione-sprite-32.css';
@@ -16,7 +15,6 @@ const srcJson = './node_modules/emojione/emoji.json';
 const srcJs = './node_modules/emojione/lib/js/emojione.js';
 const outDir = './src/static/emoji/';
 const relativePngFolder = './static/emoji/png/';
-
 
 // We need this so we can detect when new category has been added, it requires manual actions.
 // Value should be an ascending index.
@@ -44,7 +42,6 @@ console.log(`Raw data source contains ${asArray.length} records`);
 const { byCanonicalShortname, byAllShortnames, byAscii } = buildMaps(asArray);
 const byCategory = groupByCategory(asArray);
 
-
 cleanOutputDir();
 
 const dataToWrite = {
@@ -62,7 +59,6 @@ fs.mkdirSync(`${outDir}sprites`);
 cp.execSync(`cp ${srcSprites} ${outDir}sprites`);
 cp.execSync(`cp ${srcJs} ${outDir}emojione.js`);
 
-
 console.log('Adjusting CSS.');
 let css = fs.readFileSync(srcCss, 'utf8');
 let repl;
@@ -70,7 +66,8 @@ let repl;
 while (true) {
     repl = css.replace(
         '@media only screen and (-webkit-min-device-pixel-ratio: 2),\nonly screen and (min-device-pixel-ratio: 2)',
-        '@media all');
+        '@media all'
+    );
     if (repl !== css) {
         css = repl;
         continue;
@@ -91,11 +88,16 @@ function cleanOutputDir() {
     console.log('Cleaning output directory.');
     if (fs.existsSync(outDir)) cp.execSync(`rm -rf ${outDir}`);
     fs.mkdirSync(outDir);
-    fs.writeFileSync(`${outDir}README.md`, '```\r\nThis directory is wiped and re-generated on build.\r\n' +
-        'Do not add or modify files manually\r\n```');
+    fs.writeFileSync(
+        `${outDir}README.md`,
+        '```\r\nThis directory is wiped and re-generated on build.\r\n' +
+            'Do not add or modify files manually\r\n```'
+    );
 }
 
-function getCSSCategoryName(emoji) { return (emoji.diversity ? 'diversity' : (emoji.origCategory || emoji.category)); }
+function getCSSCategoryName(emoji) {
+    return emoji.diversity ? 'diversity' : emoji.origCategory || emoji.category;
+}
 
 function convertToArrayAndCleanup(emojiJson) {
     console.log('Converting raw emoji data to array.');
@@ -131,7 +133,9 @@ function convertToArrayAndCleanup(emojiJson) {
             .map(code => String.fromCodePoint(Number.parseInt(code, 16)))
             .join('');
 
-        item.className = `emojione emojione-32-${getCSSCategoryName(item)} _${keys[k]}`;
+        item.className = `emojione emojione-32-${getCSSCategoryName(item)} _${
+            keys[k]
+        }`;
 
         delete item.shortname_alternates;
         delete item.keywords;
@@ -148,8 +152,10 @@ function convertToArrayAndCleanup(emojiJson) {
         arr.push(item);
     }
 
-    arr.sort((a, b) => a.order > b.order ? 1 : (a.order === b.order ? 0 : -1)); //eslint-disable-line
-    arr.forEach(item => { delete item.order; });
+    arr.sort((a, b) => (a.order > b.order ? 1 : a.order === b.order ? 0 : -1)); //eslint-disable-line
+    arr.forEach(item => {
+        delete item.order;
+    });
 
     return arr;
 }
@@ -164,19 +170,29 @@ function buildMaps(emojiArray) {
 
     emojiArray.forEach(emoji => {
         if (emoji.shortname in byCanonicalShortname) {
-            throw new Error(`Duplicate shortname detected: '${emoji.shortname}'`);
+            throw new Error(
+                `Duplicate shortname detected: '${emoji.shortname}'`
+            );
         }
         byCanonicalShortname[emoji.shortname] = emoji;
         byAllShortnames[emoji.shortname] = emoji.shortname;
         emoji.tempAliases.forEach(alias => {
             if (alias in byAllShortnames) {
-                throw new Error(`Duplicate shortname alias detected: '${alias}' => '${byAllShortnames[alias]}'`);
+                throw new Error(
+                    `Duplicate shortname alias detected: '${alias}' => '${
+                        byAllShortnames[alias]
+                    }'`
+                );
             }
             byAllShortnames[alias] = emoji.shortname;
         });
         emoji.tempAscii.forEach(ascii => {
             if (ascii in byAscii) {
-                throw new Error(`Duplicate ascii sequence detected: '${ascii}' => '${byAscii[ascii]}'`);
+                throw new Error(
+                    `Duplicate ascii sequence detected: '${ascii}' => '${
+                        byAscii[ascii]
+                    }'`
+                );
             }
             byAscii[ascii] = emoji.shortname;
         });
@@ -191,7 +207,9 @@ function buildMaps(emojiArray) {
 function groupByCategory(emojiArray) {
     console.log('Grouping emojis by category.');
     const grouped = {};
-    Object.keys(knownCategories).forEach(category => { grouped[category] = []; });
+    Object.keys(knownCategories).forEach(category => {
+        grouped[category] = [];
+    });
 
     emojiArray.forEach(item => {
         if (typeof knownCategories[item.category] === 'undefined') {
@@ -211,7 +229,9 @@ function checkConsistencyWithLib(emojiJson) {
     for (let i = 0; i < keys.length; i++) {
         if (emojione.emojioneList[emojiJson[keys[i]].shortname]) continue;
         console.log(
-            `WARNING: '${emojiJson[keys[i]].shortname}' is missing from emojione lib. Deleting from emoji data.`
+            `WARNING: '${
+                emojiJson[keys[i]].shortname
+            }' is missing from emojione lib. Deleting from emoji data.`
         );
         delete emojiJson[keys[i]];
     }

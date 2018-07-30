@@ -24,11 +24,18 @@ function ensureMentions(state) {
             if (node.isText) {
                 const match = mentionEnsurePattern.exec(node.text);
                 if (match) {
-                    const $from = mentionifiedState.doc.resolve(pos + match.index);
+                    const $from = mentionifiedState.doc.resolve(
+                        pos + match.index
+                    );
                     tr.replaceWith(
                         $from.pos,
                         $from.pos + match[0].length,
-                        chatSchema.node('mention', { username: match[1].toLowerCase() }, null, node.marks)
+                        chatSchema.node(
+                            'mention',
+                            { username: match[1].toLowerCase() },
+                            null,
+                            node.marks
+                        )
                     );
                     didMatch = true;
                 }

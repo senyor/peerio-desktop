@@ -1,7 +1,9 @@
 const React = require('react');
+const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 
+@observer
 class ZeroMail extends React.Component {
     render() {
         return (

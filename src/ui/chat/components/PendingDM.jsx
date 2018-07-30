@@ -18,11 +18,13 @@ class PendingDM extends React.Component {
     onMessage = () => {
         chatStore.activeChat.start();
         if (this.props.onMessage) this.props.onMessage();
-    }
+    };
 
     render() {
         if (!chatStore.activeChat) return null;
-        const c = chatStore.activeChat.contact || chatStore.activeChat.otherParticipants[0];
+        const c =
+            chatStore.activeChat.contact ||
+            chatStore.activeChat.otherParticipants[0];
         if (!c) return null;
 
         return (

@@ -12,14 +12,15 @@ const PlusIcon = require('~/ui/shared-components/PlusIcon');
 
 @observer
 class PendingDMDismissed extends React.Component {
-    @computed get chatListEmpty() {
+    @computed
+    get chatListEmpty() {
         // TODO: refactor when SDK is there for chat invites
         return !chatStore.chats.length && !chatInviteStore.received.length;
     }
 
     onCancel = () => {
         routerStore.navigateTo(routerStore.ROUTES.zeroChats);
-    }
+    };
 
     render() {
         return (
@@ -29,13 +30,13 @@ class PendingDMDismissed extends React.Component {
                     {{ plusIcon: () => <PlusIcon /> }}
                 </T>
 
-                {this.chatListEmpty &&
+                {this.chatListEmpty && (
                     <div className="button-container">
                         <Button onClick={this.onCancel}>
                             <T k="button_dismiss" />
                         </Button>
                     </div>
-                }
+                )}
             </div>
         );
     }

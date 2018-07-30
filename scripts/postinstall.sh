@@ -1,3 +1,5 @@
+#!/bin/bash
+
 electron-builder install-app-deps
 
 node ./scripts/store_package_json_hash.js

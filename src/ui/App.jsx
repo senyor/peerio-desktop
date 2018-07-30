@@ -11,16 +11,15 @@ const MigrationDialog = require('~/ui/shared-components/MigrationDialog');
 class App extends React.Component {
     get signatureErrorDialog() {
         const hide = uiStore.hideFileSignatureErrorDialog;
-        const dialogActions = [
-            { label: t('button_dismiss'), onClick: hide }
-        ];
+        const dialogActions = [{ label: t('button_dismiss'), onClick: hide }];
         return (
             <Dialog
                 active={uiStore.isFileSignatureErrorDialogActive}
                 actions={dialogActions}
                 onCancel={hide}
                 title={t('title_invalidFileSignature')}
-                theme="error">
+                theme="error"
+            >
                 <p>{t('error_invalidFileSignatureLong')}</p>
             </Dialog>
         );
@@ -34,9 +33,11 @@ class App extends React.Component {
         return (
             <div className="app-root">
                 <AppNav />
-                {clientApp.updatingAfterReconnect
-                    ? <div className="global-update-progress"><ProgressBar type="linear" mode="indeterminate" /></div>
-                    : null}
+                {clientApp.updatingAfterReconnect ? (
+                    <div className="global-update-progress">
+                        <ProgressBar type="linear" mode="indeterminate" />
+                    </div>
+                ) : null}
 
                 {this.props.children}
                 <MigrationDialog />

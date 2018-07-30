@@ -52,31 +52,38 @@ class FileActions extends React.Component {
     shareWithMultipleDialogRef = React.createRef();
 
     @observable limitedActionsVisible = false;
-    @action.bound showLimitedActions() {
+    @action.bound
+    showLimitedActions() {
         this.limitedActionsVisible = true;
     }
-    @action.bound hideLimitedActions() {
+    @action.bound
+    hideLimitedActions() {
         this.limitedActionsVisible = false;
     }
 
     downloadFile = () => {
         downloadFile(this.props.file);
-    }
+    };
 
     moveFile = () => {
         if (this.props.onActionInProgress) this.props.onActionInProgress();
         const folder = this.props.file.folder || fileStore.folderStore.root;
         this.moveFileDialogRef.current.show(folder, this.props.file);
-    }
+    };
 
     shareFile = async () => {
         if (this.props.onActionInProgress) this.props.onActionInProgress();
-        const contacts = await this.shareWithMultipleDialogRef.current.show(null, 'sharefiles');
+        const contacts = await this.shareWithMultipleDialogRef.current.show(
+            null,
+            'sharefiles'
+        );
         if (!contacts || !contacts.length) return;
 
-        contacts.forEach(c => chatStore.startChatAndShareFiles([c], this.props.file));
+        contacts.forEach(c =>
+            chatStore.startChatAndShareFiles([c], this.props.file)
+        );
         if (this.props.onActionComplete) this.props.onActionComplete();
-    }
+    };
 
     render() {
         const { file } = this.props;
@@ -91,58 +98,70 @@ class FileActions extends React.Component {
                     onHide={this.props.onMenuHide}
                     disabled={this.props.disabled}
                 >
-                    {file.isLegacy
-                        ? <MenuItem caption={t('button_learnMore')}
+                    {file.isLegacy ? (
+                        <MenuItem
+                            caption={t('button_learnMore')}
                             icon="info"
                             onClick={this.showLimitedActions}
                         />
-                        : null
-                    }
+                    ) : null}
 
-                    <MenuItem caption={t('button_share')}
+                    <MenuItem
+                        caption={t('button_share')}
                         icon="person_add"
                         onClick={this.shareFile}
                         disabled={!isFileShareable(file) || file.isLegacy}
                     />
-                    <MenuItem caption={t('title_download')}
+                    <MenuItem
+                        caption={t('title_download')}
                         icon="file_download"
                         onClick={this.downloadFile}
                         disabled={!fileDownloadUIEnabled(file)}
                     />
-                    {isFileOrFolderMoveable(file)
-                        ? <MenuItem caption={t('button_move')}
+                    {isFileOrFolderMoveable(file) ? (
+                        <MenuItem
+                            caption={t('button_move')}
                             className="custom-icon-hover-container"
                             customIcon="move"
                             onClick={this.moveFile}
                         />
-                        : null
-                    }
-                    {false // eslint-disable-line no-constant-condition, TODO
-                        ? <MenuItem caption={t('button_rename')}
+                    ) : null}
+                    {false ? ( // eslint-disable-line no-constant-condition, TODO
+                        <MenuItem
+                            caption={t('button_rename')}
                             icon="mode_edit"
                             onClick={this.props.onRename}
                         />
-                        : null
-                    }
-                    {isFileDeleteable(file)
-                        ? <React.Fragment>
+                    ) : null}
+                    {isFileDeleteable(file) ? (
+                        <React.Fragment>
                             <Divider />
-                            {this.props.onDelete && <MenuItem
-                                caption={t('button_delete')}
-                                icon="delete"
-                                onClick={this.props.onDelete}
-                            />}
+                            {this.props.onDelete && (
+                                <MenuItem
+                                    caption={t('button_delete')}
+                                    icon="delete"
+                                    onClick={this.props.onDelete}
+                                />
+                            )}
                             {/* Unshare conditions are the same as delete conditions */}
-                            {this.props.onUnshare && <MenuItem caption={t('button_unshare')}
-                                className="custom-icon-hover-container"
-                                customIcon="remove-member"
-                                onClick={this.props.onUnshare}
-                            />}
+                            {this.props.onUnshare && (
+                                <MenuItem
+                                    caption={t('button_unshare')}
+                                    className="custom-icon-hover-container"
+                                    customIcon="remove-member"
+                                    onClick={this.props.onUnshare}
+                                />
+                            )}
                         </React.Fragment>
-                        : null}
+                    ) : null}
                 </Menu>
-                <LimitedActionsDialog active={this.limitedActionsVisible} onDismiss={this.hideLimitedActions} />
-                <ShareWithMultipleDialog ref={this.shareWithMultipleDialogRef} />
+                <LimitedActionsDialog
+                    active={this.limitedActionsVisible}
+                    onDismiss={this.hideLimitedActions}
+                />
+                <ShareWithMultipleDialog
+                    ref={this.shareWithMultipleDialogRef}
+                />
                 <MoveFileDialog ref={this.moveFileDialogRef} />
             </React.Fragment>
         );

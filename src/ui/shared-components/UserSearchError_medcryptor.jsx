@@ -17,7 +17,9 @@ class UserSearchError extends React.Component {
         It's less standard but in this case I feel better about checking the route inside this component
         than having an additional UserPicker prop that isn't used anywhere else in the app.
     */
-    get inviteDisabled() { return routerStore.currentRoute === routerStore.ROUTES.newChannel; }
+    get inviteDisabled() {
+        return routerStore.currentRoute === routerStore.ROUTES.newChannel;
+    }
 
     options = [
         { value: DOCTOR_OR_ADMIN, label: t('title_inviteDoctorOrAdmin') },
@@ -25,7 +27,8 @@ class UserSearchError extends React.Component {
     ];
 
     @observable selected = DOCTOR_OR_ADMIN;
-    @action.bound onChange(value) {
+    @action.bound
+    onChange(value) {
         this.selected = value;
     }
 
@@ -35,30 +38,37 @@ class UserSearchError extends React.Component {
         } else {
             this.props.onInvite('medcryptor-patient');
         }
-    }
+    };
 
     render() {
         return (
             <div className="user-search-error medcryptor">
                 <div className="search-error-text">
                     <MaterialIcon icon="help_outline" />
-                    {this.props.userAlreadyAdded
-                        ? <T k="error_userAlreadyAdded" tag="div">{{ user: this.props.userAlreadyAdded }}</T>
-                        : null
-                    }
-                    {this.props.userNotFound
-                        ? <T k="error_userNotFoundTryEmail" tag="div">{{ user: this.props.userNotFound }}</T>
-                        : null
-                    }
-                    {this.props.suggestInviteEmail
-                        ? this.inviteDisabled
-                            ? <T k="error_emailNotFound">{{ email: this.props.suggestInviteEmail }}</T>
-                            : <T k="title_inviteContactByEmailGeneric">{{ email: this.props.suggestInviteEmail }}</T>
-                        : null
-                    }
+                    {this.props.userAlreadyAdded ? (
+                        <T k="error_userAlreadyAdded" tag="div">
+                            {{ user: this.props.userAlreadyAdded }}
+                        </T>
+                    ) : null}
+                    {this.props.userNotFound ? (
+                        <T k="error_userNotFoundTryEmail" tag="div">
+                            {{ user: this.props.userNotFound }}
+                        </T>
+                    ) : null}
+                    {this.props.suggestInviteEmail ? (
+                        this.inviteDisabled ? (
+                            <T k="error_emailNotFound">
+                                {{ email: this.props.suggestInviteEmail }}
+                            </T>
+                        ) : (
+                            <T k="title_inviteContactByEmailGeneric">
+                                {{ email: this.props.suggestInviteEmail }}
+                            </T>
+                        )
+                    ) : null}
                 </div>
-                {this.props.suggestInviteEmail && !this.inviteDisabled
-                    ? <div className="radio-container">
+                {this.props.suggestInviteEmail && !this.inviteDisabled ? (
+                    <div className="radio-container">
                         <RadioButtons
                             value={this.selected}
                             onChange={this.onChange}
@@ -69,8 +79,7 @@ class UserSearchError extends React.Component {
                             label={t('button_sendInvite')}
                         />
                     </div>
-                    : null
-                }
+                ) : null}
             </div>
         );
     }

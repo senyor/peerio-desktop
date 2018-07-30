@@ -1,5 +1,12 @@
 const React = require('react');
-const { Button, Chip, Divider, MaterialIcon, Menu, MenuItem } = require('peer-ui');
+const {
+    Button,
+    Chip,
+    Divider,
+    MaterialIcon,
+    Menu,
+    MenuItem
+} = require('peer-ui');
 const { User, socket, util } = require('peerio-icebear');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
@@ -30,27 +37,45 @@ class DevTools extends React.Component {
     render() {
         return (
             <div className="dev-tools-root">
-                <link key="dev_tools_style" rel="stylesheet" href="./dev-tools-style.css" />
+                <link
+                    key="dev_tools_style"
+                    rel="stylesheet"
+                    href="./dev-tools-style.css"
+                />
                 <div className="top-bar">
                     <Menu icon="menu" className="menu" position="top-left">
-                        <MenuItem icon="dashboard" caption="Dashboard" onClick={this.gotoDashboard} />
-                        <MenuItem icon="grid_on" caption="Keg Editor" onClick={this.gotoKegEditor} />
+                        <MenuItem
+                            icon="dashboard"
+                            caption="Dashboard"
+                            onClick={this.gotoDashboard}
+                        />
+                        <MenuItem
+                            icon="grid_on"
+                            caption="Keg Editor"
+                            onClick={this.gotoKegEditor}
+                        />
                         <Divider />
-                        <MenuItem icon="close" caption="Close" onClick={this.quit} />
+                        <MenuItem
+                            icon="close"
+                            caption="Close"
+                            onClick={this.quit}
+                        />
                     </Menu>
-                    <MaterialIcon icon="file_upload" /> {util.formatBytes(socket.bytesSent)}&nbsp;&nbsp;&nbsp;
-                    <MaterialIcon icon="file_download" /> {util.formatBytes(socket.bytesReceived)}
+                    <MaterialIcon icon="file_upload" />{' '}
+                    {util.formatBytes(socket.bytesSent)}&nbsp;&nbsp;&nbsp;
+                    <MaterialIcon icon="file_download" />{' '}
+                    {util.formatBytes(socket.bytesReceived)}
                     <div className="separator" />
-                    {
-                        socket.connected
-                            ? <Chip className="good-bg">connected</Chip>
-                            : <Chip className="bad-bg">disconnected</Chip>
-                    }
-                    {
-                        socket.authenticated
-                            ? <Chip className="good-bg">authenticated</Chip>
-                            : <Chip className="bad-bg">not authenticated</Chip>
-                    }
+                    {socket.connected ? (
+                        <Chip className="good-bg">connected</Chip>
+                    ) : (
+                        <Chip className="bad-bg">disconnected</Chip>
+                    )}
+                    {socket.authenticated ? (
+                        <Chip className="good-bg">authenticated</Chip>
+                    ) : (
+                        <Chip className="bad-bg">not authenticated</Chip>
+                    )}
                     <div className="separator" />
                     <Button icon="close" onClick={this.quit} />
                 </div>
@@ -59,6 +84,5 @@ class DevTools extends React.Component {
         );
     }
 }
-
 
 module.exports = DevTools;

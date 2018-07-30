@@ -15,21 +15,24 @@ let disposer;
 
 function start() {
     if (disposer) return;
-    disposer = reaction(() => socket.connected, connected => {
-        if (!connected) return;
-        // caution: this is not an array, no forEach is available
-        const elements = document.getElementsByTagName('img');
-        for (let i = 0; i < elements.length; i++) {
-            const img = elements[i];
-            // complete - means it's currently not loading
-            // naturalHeight - will be 0 if loading failed
-            if (!img || !img.complete || img.naturalHeight > 0) continue;
-            // not interested in local URIs
-            if (img.src.startsWith('file://')) continue;
-            // magically making image reload
-            img.src = img.src;
+    disposer = reaction(
+        () => socket.connected,
+        connected => {
+            if (!connected) return;
+            // caution: this is not an array, no forEach is available
+            const elements = document.getElementsByTagName('img');
+            for (let i = 0; i < elements.length; i++) {
+                const img = elements[i];
+                // complete - means it's currently not loading
+                // naturalHeight - will be 0 if loading failed
+                if (!img || !img.complete || img.naturalHeight > 0) continue;
+                // not interested in local URIs
+                if (img.src.startsWith('file://')) continue;
+                // magically making image reload
+                img.src = img.src;
+            }
         }
-    });
+    );
 }
 
 function stop() {

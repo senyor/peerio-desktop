@@ -19,18 +19,12 @@ const editMenu = {
 
 const viewMenu = {
     label: 'View',
-    submenu: [
-        { role: 'reload' },
-        { role: 'toggledevtools' }
-    ]
+    submenu: [{ role: 'reload' }, { role: 'toggledevtools' }]
 };
 
 const windowMenu = {
     role: 'window',
-    submenu: [
-        { role: 'minimize' },
-        { role: 'close' }
-    ]
+    submenu: [{ role: 'minimize' }, { role: 'close' }]
 };
 
 const helpMenu = {
@@ -38,7 +32,11 @@ const helpMenu = {
     submenu: [
         {
             label: 'Support', // don't use https: url due to weird redirect issues
-            click() { require('electron').shell.openExternal(config.translator.urlMap.helpCenter); }
+            click() {
+                require('electron').shell.openExternal(
+                    config.translator.urlMap.helpCenter
+                );
+            }
         }
     ]
 };
@@ -49,10 +47,7 @@ if (isDevEnv) {
     template.push(viewMenu);
 }
 
-template.push(
-    windowMenu,
-    helpMenu
-);
+template.push(windowMenu, helpMenu);
 
 if (process.platform === 'darwin') {
     template.unshift({
@@ -79,10 +74,7 @@ if (process.platform === 'darwin') {
         },
         {
             label: 'Speech',
-            submenu: [
-                { role: 'startspeaking' },
-                { role: 'stopspeaking' }
-            ]
+            submenu: [{ role: 'startspeaking' }, { role: 'stopspeaking' }]
         }
     );
     // Window menu.
@@ -110,7 +102,9 @@ if (process.platform === 'darwin') {
         {
             label: 'Main Window',
             accelerator: 'CmdOrCtrl+0',
-            click() { app.emit('activate'); }
+            click() {
+                app.emit('activate');
+            }
         },
         {
             type: 'separator'

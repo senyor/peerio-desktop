@@ -12,19 +12,24 @@ class ConfirmFolderDeleteDialog extends React.Component {
     @observable visible = false;
     folder = null;
 
-    @action.bound show(folder) {
+    @action.bound
+    show(folder) {
         this.folder = folder;
         this.visible = true;
-        return new Promise(resolve => { this.resolve = resolve; });
+        return new Promise(resolve => {
+            this.resolve = resolve;
+        });
     }
 
-    @action.bound close() {
+    @action.bound
+    close() {
         this.visible = false;
         this.resolve(false);
         this.resolve = null;
     }
 
-    @action.bound confirm() {
+    @action.bound
+    confirm() {
         this.visible = false;
         this.resolve(true);
         this.resolve = null;
@@ -42,19 +47,24 @@ class ConfirmFolderDeleteDialog extends React.Component {
         // TODO: isOwner property is removed, I don't like it, need to change this after some refactor // anri
         const { isShared, isOwner } = this.folder;
         if (isShared) {
-            text = isOwner ? 'dialog_deleteSharedFolderText' : 'dialog_deleteSharedFolderNonOwnerText';
+            text = isOwner
+                ? 'dialog_deleteSharedFolderText'
+                : 'dialog_deleteSharedFolderNonOwnerText';
         }
 
         return (
             <Dialog
                 title={
-                    <T k="dialog_deleteFolderTitle">{{ folderName: this.folder.name }}</T>
+                    <T k="dialog_deleteFolderTitle">
+                        {{ folderName: this.folder.name }}
+                    </T>
                 }
                 active={this.visible}
                 actions={dialogActions}
                 onCancel={this.close}
                 className="delete-folder-popup"
-                theme="small warning">
+                theme="small warning"
+            >
                 <T k={text} />
             </Dialog>
         );

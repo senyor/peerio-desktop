@@ -12,10 +12,8 @@ const css = require('classnames');
 const { Plugin } = require('prosemirror-state');
 const { isEmpty } = require('~/helpers/chat/prosemirror/chat-schema');
 
-
 class FormattingToolbar {
-    @observable
-    enabled = false;
+    @observable enabled = false;
 
     @action.bound
     plugin(doc) {
@@ -25,21 +23,27 @@ class FormattingToolbar {
             view() {
                 return {
                     update({ state: newState }) {
-                        runInAction(() => { self.enabled = !isEmpty(newState.doc); });
+                        runInAction(() => {
+                            self.enabled = !isEmpty(newState.doc);
+                        });
                     }
                 };
             }
         });
     }
 
-    Component = observer((props) => {
+    Component = observer(props => {
         const { enabled } = this;
 
-        return (<div
-            className={css('formatting-toolbar', { 'formatting-toolbar-visible': enabled })}
-        >
-            {props.children}
-        </div>);
+        return (
+            <div
+                className={css('formatting-toolbar', {
+                    'formatting-toolbar-visible': enabled
+                })}
+            >
+                {props.children}
+            </div>
+        );
     });
 }
 

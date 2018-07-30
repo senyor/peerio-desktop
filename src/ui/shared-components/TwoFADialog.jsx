@@ -11,7 +11,8 @@ const appControl = require('~/helpers/app-control');
 @observer
 class TwoFADialog extends React.Component {
     @observable totpCode = '';
-    @computed get readyToSubmit() {
+    @computed
+    get readyToSubmit() {
         return validateCode(this.totpCode).readyToSubmit;
     }
 
@@ -22,7 +23,10 @@ class TwoFADialog extends React.Component {
 
     @action.bound
     submitCode() {
-        clientApp.active2FARequest.submit(this.totpCode, uiStore.prefs.last2FATrustDeviceSetting);
+        clientApp.active2FARequest.submit(
+            this.totpCode,
+            uiStore.prefs.last2FATrustDeviceSetting
+        );
         this.totpCode = '';
     }
 
@@ -30,7 +34,7 @@ class TwoFADialog extends React.Component {
         if (this.readyToSubmit && e.key === 'Enter') {
             this.submitCode();
         }
-    }
+    };
 
     cancel() {
         if (clientApp.active2FARequest.type === 'login') {
@@ -42,42 +46,55 @@ class TwoFADialog extends React.Component {
     getTitle(request) {
         if (!request) return '';
         switch (request.type) {
-            case 'login': return 'title_2FALoginAuth';
-            case 'backupCodes': return 'title_2FABackupCodeAuth';
-            case 'disable': return 'title_2FADisableAuth';
-            default: return '';
+            case 'login':
+                return 'title_2FALoginAuth';
+            case 'backupCodes':
+                return 'title_2FABackupCodeAuth';
+            case 'disable':
+                return 'title_2FADisableAuth';
+            default:
+                return '';
         }
     }
 
     getPreText(request) {
         if (!request) return '';
         switch (request.type) {
-            case 'login': return t('title_2FALoginAuthPreText');
-            case 'backupCodes': return t('title_2FABackupCodeAuthPreText');
-            case 'disable': return t('title_2FADisableAuthPreText');
-            default: return '';
+            case 'login':
+                return t('title_2FALoginAuthPreText');
+            case 'backupCodes':
+                return t('title_2FABackupCodeAuthPreText');
+            case 'disable':
+                return t('title_2FADisableAuthPreText');
+            default:
+                return '';
         }
     }
 
     getPostText(request) {
         if (!request) return '';
         switch (request.type) {
-            case 'login': return '';
-            case 'backupCodes': return t('title_2FABackupCodeAuthPostText');
-            case 'disable': return t('title_2FADisableAuthPostText');
-            default: return '';
+            case 'login':
+                return '';
+            case 'backupCodes':
+                return t('title_2FABackupCodeAuthPostText');
+            case 'disable':
+                return t('title_2FADisableAuthPostText');
+            default:
+                return '';
         }
     }
 
-    setInputRef = (ref) => {
+    setInputRef = ref => {
         if (ref) {
             this.inputRef = ref;
             if (clientApp.active2FARequest) ref.focus();
         }
-    }
+    };
 
     onToggleTrust() {
-        uiStore.prefs.last2FATrustDeviceSetting = !uiStore.prefs.last2FATrustDeviceSetting;
+        uiStore.prefs.last2FATrustDeviceSetting = !uiStore.prefs
+            .last2FATrustDeviceSetting;
     }
 
     render() {
@@ -102,10 +119,7 @@ class TwoFADialog extends React.Component {
                 theme="small"
                 headerImage="./static/img/dialogs/2sv.svg"
             >
-                {this.getPreText(req)
-                    ? <p>{this.getPreText(req)}</p>
-                    : null
-                }
+                {this.getPreText(req) ? <p>{this.getPreText(req)}</p> : null}
                 <div className="text-center">
                     <Input
                         className="totp-input"
@@ -117,16 +131,14 @@ class TwoFADialog extends React.Component {
                         autoFocus
                     />
                 </div>
-                {req && req.type === 'login' ?
+                {req && req.type === 'login' ? (
                     <Checkbox
                         checked={uiStore.prefs.last2FATrustDeviceSetting}
                         label={t('title_trustThisDevice')}
                         onChange={this.onToggleTrust}
-                    /> : null}
-                {this.getPostText(req)
-                    ? <p>{this.getPostText(req)}</p>
-                    : null
-                }
+                    />
+                ) : null}
+                {this.getPostText(req) ? <p>{this.getPostText(req)}</p> : null}
             </Dialog>
         );
     }

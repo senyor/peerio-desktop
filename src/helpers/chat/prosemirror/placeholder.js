@@ -23,7 +23,8 @@ function placeholder(text, emptyState, emptyClassName = 'ProseMirror-empty') {
 
             return {
                 update(view) {
-                    if (view.state.doc.eq(emptyState)) view.dom.classList.add(emptyClassName);
+                    if (view.state.doc.eq(emptyState))
+                        view.dom.classList.add(emptyClassName);
                     else view.dom.classList.remove(emptyClassName);
                 },
                 destroy() {

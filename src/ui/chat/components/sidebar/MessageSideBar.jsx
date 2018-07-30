@@ -11,7 +11,7 @@ const { t } = require('peerio-translator');
 
 @observer
 class MessageSideBar extends React.Component {
-    validate = (chat) => {
+    validate = chat => {
         if (!uiStore.selectedMessage) return false;
         if (!chat || chat.id !== uiStore.selectedMessage.db.id) {
             this.close();
@@ -29,13 +29,16 @@ class MessageSideBar extends React.Component {
         this.reactionsToDispose.forEach(d => d());
     }
 
-    setContactProfileRef = (ref) => {
+    setContactProfileRef = ref => {
         if (ref) this.contactProfileRef = ref;
-    }
+    };
 
     @observable clickedContact;
-    @action.bound openContact(ev) {
-        this.clickedContact = contactStore.getContact(ev.currentTarget.attributes['data-username'].value);
+    @action.bound
+    openContact(ev) {
+        this.clickedContact = contactStore.getContact(
+            ev.currentTarget.attributes['data-username'].value
+        );
         this.contactProfileRef.openDialog();
     }
 
@@ -48,29 +51,34 @@ class MessageSideBar extends React.Component {
         if (m.systemData) {
             return <em>{systemMessages.getSystemMessageText(m)}</em>;
         }
-        return (<span>
-            {m.files && m.files.length
-                ? t('title_filesShared', { count: m.files.length })
-                : m.text}
-        </span>
+        return (
+            <span>
+                {m.files && m.files.length
+                    ? t('title_filesShared', { count: m.files.length })
+                    : m.text}
+            </span>
         );
     }
-    renderReceipt = (entry) => {
-        return !entry || entry[1].signatureError
-            ? null
-            : <ListItem
+    renderReceipt = entry => {
+        return !entry || entry[1].signatureError ? null : (
+            <ListItem
                 data-username={entry[0].username}
                 key={entry[0].username}
-                leftContent={<Avatar key="a" contact={entry[0]} size="small" clickable />}
+                leftContent={
+                    <Avatar key="a" contact={entry[0]} size="small" clickable />
+                }
                 caption={entry[0].username}
                 legend={entry[0].fullName}
                 onClick={this.openContact}
-            />;
-    }
+            />
+        );
+    };
     compareReceipts(r1, r2) {
         if (!r1) return 1;
         if (!r2) return -1;
-        return r1[0].fullNameAndUsername.localeCompare(r2[0].fullNameAndUsername);
+        return r1[0].fullNameAndUsername.localeCompare(
+            r2[0].fullNameAndUsername
+        );
     }
     getReceipts(msg) {
         const entries = chatStore.activeChat.receipts.entries();
@@ -93,12 +101,21 @@ class MessageSideBar extends React.Component {
                 <div className="header">
                     <List theme="large no-hover">
                         <div className="title">
-                            <T k="title_messageInfo" tag="div" className="p-list-heading" />
+                            <T
+                                k="title_messageInfo"
+                                tag="div"
+                                className="p-list-heading"
+                            />
                             <Button icon="close" onClick={this.close} />
                         </div>
                         <ListItem
                             leftContent={
-                                <AvatarWithPopup key="a" contact={msg.sender} size="small" tooltip />
+                                <AvatarWithPopup
+                                    key="a"
+                                    contact={msg.sender}
+                                    size="small"
+                                    tooltip
+                                />
                             }
                             caption={msg.sender.fullName}
                             legend={this.renderMessage(msg)}

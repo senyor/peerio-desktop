@@ -12,19 +12,21 @@ let disposer;
 // online event is fired.
 function start() {
     if (disposer) return;
-    disposer = reaction(() => appState.isOnline, isOnline => {
-        if (isOnline) {
-            socket.open();
-        } else {
-            socket.close();
+    disposer = reaction(
+        () => appState.isOnline,
+        isOnline => {
+            if (isOnline) {
+                socket.open();
+            } else {
+                socket.close();
+            }
         }
-    });
+    );
 }
 
 function stop() {
     if (disposer) disposer();
     disposer = null;
 }
-
 
 module.exports = { start, stop };

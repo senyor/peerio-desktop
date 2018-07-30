@@ -50,10 +50,10 @@ class ChannelSideBar extends React.Component {
     showChatPurposeEditor = () => {
         if (!chatStore.activeChat.canIAdmin) return;
         this.chatPurposeEditorVisible = true;
-    }
+    };
     hideChatPurposeEditor = () => {
         this.chatPurposeEditorVisible = false;
-    }
+    };
     chatPurposeEditorRef = ref => {
         if (ref) {
             this.chatPurposeTextarea = ref;
@@ -68,14 +68,15 @@ class ChannelSideBar extends React.Component {
         } else {
             this.openSection = section;
         }
-    }
+    };
 
     handleKeyDown = () => {
         this.resizeTextarea();
-    }
+    };
 
     resizeTextarea = () => {
-        const actualHeight = this.chatPurposeTextarea.getBoundingClientRect().height;
+        const actualHeight = this.chatPurposeTextarea.getBoundingClientRect()
+            .height;
         const scrollHeight = this.chatPurposeTextarea.scrollHeight;
 
         if (scrollHeight > actualHeight) {
@@ -84,7 +85,7 @@ class ChannelSideBar extends React.Component {
         if (scrollHeight < actualHeight) {
             this.chatPurposeTextarea.style.height = 'auto';
         }
-    }
+    };
 
     render() {
         const chat = chatStore.activeChat;
@@ -98,57 +99,86 @@ class ChannelSideBar extends React.Component {
                 <div>
                     <div className="title">{t('title_About')}</div>
                     <div>
-                        <ChatNameEditor className="title-editor" showLabel tabIndex="-1" readOnly={!canIAdmin} />
+                        <ChatNameEditor
+                            className="title-editor"
+                            showLabel
+                            tabIndex="-1"
+                            readOnly={!canIAdmin}
+                        />
                         <div onClick={this.showChatPurposeEditor}>
-                            {
-                                this.chatPurposeEditorVisible
-                                    ? <ChatNameEditor
-                                        showLabel
-                                        tabIndex="-1"
-                                        purpose
-                                        multiline
-                                        readOnly={!canIAdmin}
-                                        onBlur={this.hideChatPurposeEditor}
-                                        onKeyDown={this.handleKeyDown}
-                                        className="purpose-editor"
-                                        innerRef={this.chatPurposeEditorRef} />
-                                    : <div className="purpose-container">
-                                        {chat.purpose
-                                            ? [<T tag="div" k="title_purpose" className="purpose-label" key="1" />,
-                                                <div key="2" className="purpose-text">{chat.purpose}</div>]
-                                            : <T tag="div" k="title_purpose" className="purpose-label-big" />}
-                                    </div>
-                            }
+                            {this.chatPurposeEditorVisible ? (
+                                <ChatNameEditor
+                                    showLabel
+                                    tabIndex="-1"
+                                    purpose
+                                    multiline
+                                    readOnly={!canIAdmin}
+                                    onBlur={this.hideChatPurposeEditor}
+                                    onKeyDown={this.handleKeyDown}
+                                    className="purpose-editor"
+                                    innerRef={this.chatPurposeEditorRef}
+                                />
+                            ) : (
+                                <div className="purpose-container">
+                                    {chat.purpose ? (
+                                        [
+                                            <T
+                                                tag="div"
+                                                k="title_purpose"
+                                                className="purpose-label"
+                                                key="1"
+                                            />,
+                                            <div
+                                                key="2"
+                                                className="purpose-text"
+                                            >
+                                                {chat.purpose}
+                                            </div>
+                                        ]
+                                    ) : (
+                                        <T
+                                            tag="div"
+                                            k="title_purpose"
+                                            className="purpose-label-big"
+                                        />
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
                 <div className="sidebar-section">
                     <List clickable>
-                        {canILeave ?
+                        {canILeave ? (
                             <ListItem
                                 className="custom-icon-hover-container"
                                 disabled={chatStore.hidingChat}
                                 caption={t('button_leaveChannel')}
                                 onClick={this.leaveChannel}
                                 leftContent={<CustomIcon icon="leave" hover />}
-                            /> : null
-                        }
-                        {canIAdmin ?
-                            <ListItem className="admin-controls delete-room"
+                            />
+                        ) : null}
+                        {canIAdmin ? (
+                            <ListItem
+                                className="admin-controls delete-room"
                                 leftIcon="delete"
                                 caption={t('button_deleteChannel')}
-                                onClick={this.deleteChannel} />
-                            : null
-                        }
+                                onClick={this.deleteChannel}
+                            />
+                        ) : null}
                     </List>
                 </div>
-                <MembersSection onAddParticipants={this.props.onAddParticipants}
+                <MembersSection
+                    onAddParticipants={this.props.onAddParticipants}
                     onToggle={() => this.onToggleSection(MEMBERS)}
-                    open={this.openSection === MEMBERS} />
-                {hasFiles
-                    ? <FilesSection onToggle={() => this.onToggleSection(FILES)}
-                        open={this.openSection === FILES} />
-                    : null}
+                    open={this.openSection === MEMBERS}
+                />
+                {hasFiles ? (
+                    <FilesSection
+                        onToggle={() => this.onToggleSection(FILES)}
+                        open={this.openSection === FILES}
+                    />
+                ) : null}
             </div>
         );
     }

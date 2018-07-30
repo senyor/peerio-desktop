@@ -43,18 +43,30 @@ class ContactList extends React.Component {
     }
 
     contactActions(c) {
-        return (<div data-id={c.username}>
-            {c.isDeleted
-                ? null
-                : <Button icon="forum" tooltip={t('title_haveAChat')} onClick={this.startChat} />}
-            {c.isAdded
-                ? <Button className="gold"
-                    icon="star"
-                    tooltip={t('button_removeFavourite')}
-                    onClick={this.removeContact} />
-                : <Button icon="star_outline" tooltip={t('button_addFavourite')}
-                    onClick={this.addContact} />}
-        </div>
+        return (
+            <div data-id={c.username}>
+                {c.isDeleted ? null : (
+                    <Button
+                        icon="forum"
+                        tooltip={t('title_haveAChat')}
+                        onClick={this.startChat}
+                    />
+                )}
+                {c.isAdded ? (
+                    <Button
+                        className="gold"
+                        icon="star"
+                        tooltip={t('button_removeFavourite')}
+                        onClick={this.removeContact}
+                    />
+                ) : (
+                    <Button
+                        icon="star_outline"
+                        tooltip={t('button_addFavourite')}
+                        onClick={this.addContact}
+                    />
+                )}
+            </div>
         );
     }
 
@@ -69,14 +81,21 @@ class ContactList extends React.Component {
     render() {
         const textParser = {
             searchString: contactStore.uiViewSearchQuery,
-            toAddContact: text => <a className="clickable" onClick={this.goToAddContact}>{text}</a>
+            toAddContact: text => (
+                <a className="clickable" onClick={this.goToAddContact}>
+                    {text}
+                </a>
+            )
         };
         return (
             <div className="contacts-view">
                 <div className="toolbar">
                     <MaterialIcon icon="search" />
-                    <Input placeholder={t('title_findAContact')} value={contactStore.uiViewSearchQuery}
-                        onChange={this.handleSearchQueryChange} />
+                    <Input
+                        placeholder={t('title_findAContact')}
+                        value={contactStore.uiViewSearchQuery}
+                        onChange={this.handleSearchQueryChange}
+                    />
                 </div>
 
                 <div className="list-sort">
@@ -88,40 +107,52 @@ class ContactList extends React.Component {
                     />
                 </div>
 
-                {contactStore.uiView.length
-                    ? <div className="contact-list">
-                        {contactStore.uiView.map(section =>
-                            (
-                                <div key={section.letter} className="contact-list-section">
-                                    <div className="contact-list-section-marker">
-                                        {section.letter}
-                                    </div>
-                                    <List
-                                        className="contact-list-section-content"
-                                        theme="large"
-                                    >
-                                        {section.items.map(c =>
-                                            (
-                                                <ListItem key={c.username}
-                                                    leftContent={<Avatar key="a" contact={c} size="medium" />}
-                                                    legend={c.usernameTag}
-                                                    caption={`${c.firstName} ${c.lastName}`}
-                                                    rightContent={this.contactActions(c)}
-                                                />
-                                            )
-                                        )}
-                                    </List>
+                {contactStore.uiView.length ? (
+                    <div className="contact-list">
+                        {contactStore.uiView.map(section => (
+                            <div
+                                key={section.letter}
+                                className="contact-list-section"
+                            >
+                                <div className="contact-list-section-marker">
+                                    {section.letter}
                                 </div>
-                            )
-                        )}
+                                <List
+                                    className="contact-list-section-content"
+                                    theme="large"
+                                >
+                                    {section.items.map(c => (
+                                        <ListItem
+                                            key={c.username}
+                                            leftContent={
+                                                <Avatar
+                                                    key="a"
+                                                    contact={c}
+                                                    size="medium"
+                                                />
+                                            }
+                                            legend={c.usernameTag}
+                                            caption={`${c.firstName} ${
+                                                c.lastName
+                                            }`}
+                                            rightContent={this.contactActions(
+                                                c
+                                            )}
+                                        />
+                                    ))}
+                                </List>
+                            </div>
+                        ))}
                     </div>
-                    : <div className="no-contact-found">
-                        <T k="error_contactNotFound" className="text">{textParser}</T>
+                ) : (
+                    <div className="no-contact-found">
+                        <T k="error_contactNotFound" className="text">
+                            {textParser}
+                        </T>
                         <img src="./static/img/illustration-no-results.svg" />
                     </div>
-                }
+                )}
             </div>
-
         );
     }
 }

@@ -45,20 +45,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load translations and render once they're loaded.
     languageStore.loadSavedLanguage();
-    when(() => languageStore.language, () => {
-        render(React.createElement(Router, { history: window.router, routes }), document.getElementById('root'));
+    when(
+        () => languageStore.language,
+        () => {
+            render(
+                React.createElement(Router, { history: window.router, routes }),
+                document.getElementById('root')
+            );
 
-        ipcRenderer.on('router', (event, message) => {
-            window.router.push(message);
-        });
+            ipcRenderer.on('router', (event, message) => {
+                window.router.push(message);
+            });
 
-        // starting power management
-        require('~/helpers/power').start();
-        // starting network management
-        require('~/helpers/network').start();
-        // starting failed image reload management
-        require('~/helpers/image-retry').start();
-    });
+            // starting power management
+            require('~/helpers/power').start();
+            // starting network management
+            require('~/helpers/network').start();
+            // starting failed image reload management
+            require('~/helpers/image-retry').start();
+        }
+    );
 });
 
 // Disable zoom.

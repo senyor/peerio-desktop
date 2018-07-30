@@ -7,7 +7,6 @@ const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
 const { EditorView } = require('prosemirror-view'); // eslint-disable-line no-unused-vars, (for typechecking)
 const { Node } = require('prosemirror-model'); // eslint-disable-line no-unused-vars, (for typechecking)
 
-
 const shortnames = Object.keys(emojiByAllShortnames);
 
 /**
@@ -24,7 +23,9 @@ function makeEmojiSuggestions(getView) {
         source(matchData) {
             // TODO: use emoji index or split shortname by "_" instead of startsWith; maybe selecta-style matching?
             return shortnames
-                .filter(name => name.startsWith(matchData.match[1].toLowerCase()))
+                .filter(name =>
+                    name.startsWith(matchData.match[1].toLowerCase())
+                )
                 .map(name => ({ emoji: emojiByAllShortnames[name], name }));
         },
         formatter: data => (
@@ -42,11 +43,15 @@ function makeEmojiSuggestions(getView) {
         onAcceptSuggestion: (matchData, acceptedSuggestion) => {
             const view = getView();
             if (view) {
-                view.dispatch(view.state.tr.replaceWith(
-                    matchData.from,
-                    matchData.to,
-                    chatSchema.node('emoji', { shortname: acceptedSuggestion.emoji.shortname })
-                ));
+                view.dispatch(
+                    view.state.tr.replaceWith(
+                        matchData.from,
+                        matchData.to,
+                        chatSchema.node('emoji', {
+                            shortname: acceptedSuggestion.emoji.shortname
+                        })
+                    )
+                );
             }
         }
     });

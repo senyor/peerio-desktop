@@ -9,7 +9,8 @@ const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerific
 
 @observer
 class ChatHeader extends React.Component {
-    @computed get displayParticipants() {
+    @computed
+    get displayParticipants() {
         const chat = chatStore.activeChat;
         if (!chat) return [];
         if (chat.isChannel) return chat.allParticipants;
@@ -22,10 +23,12 @@ class ChatHeader extends React.Component {
                 <div className="identity-verification-notice">
                     <div className="notice-container">
                         <MaterialIcon className="notice-icon" icon="security" />
-                        <T className="text-content"
-                            k={chatStore.spaces.isPatientRoomOpen
-                                ? 'mcr_title_patientRoomNotice'
-                                : 'mcr_title_internalRoomNotice'
+                        <T
+                            className="text-content"
+                            k={
+                                chatStore.spaces.isPatientRoomOpen
+                                    ? 'mcr_title_patientRoomNotice'
+                                    : 'mcr_title_internalRoomNotice'
                             }
                         />
                     </div>
@@ -42,29 +45,46 @@ class ChatHeader extends React.Component {
         return (
             <div className="messages-start">
                 <div className="avatars">
-                    {this.displayParticipants.map(
-                        c => <AvatarWithPopup size="large" key={c.username} contact={c} tooltip />
-                    )}
+                    {this.displayParticipants.map(c => (
+                        <AvatarWithPopup
+                            size="large"
+                            key={c.username}
+                            contact={c}
+                            tooltip
+                        />
+                    ))}
                 </div>
-                {chatStore.activeChat.isInSpace
-                    ? chatStore.spaces.isPatientRoomOpen
-                        ? <T k="mcr_title_chatHeaderPatientRoom" tag="div" className="title">
+                {chatStore.activeChat.isInSpace ? (
+                    chatStore.spaces.isPatientRoomOpen ? (
+                        <T
+                            k="mcr_title_chatHeaderPatientRoom"
+                            tag="div"
+                            className="title"
+                        >
                             {{ patientName: chatStore.spaces.currentSpaceName }}
                         </T>
-                        : <T k="mcr_title_chatHeaderInternalRoom" tag="div" className="title">
+                    ) : (
+                        <T
+                            k="mcr_title_chatHeaderInternalRoom"
+                            tag="div"
+                            className="title"
+                        >
                             {{ roomName: chat.nameInSpace }}
                         </T>
-                    : <T
-                        k={chat.isChannel
-                            ? 'title_chatBeginningRoom'
-                            : 'title_chatBeginning'
+                    )
+                ) : (
+                    <T
+                        k={
+                            chat.isChannel
+                                ? 'title_chatBeginningRoom'
+                                : 'title_chatBeginning'
                         }
                         tag="div"
                         className="title"
                     >
                         {{ chatName: chat.name }}
                     </T>
-                }
+                )}
                 {this.chatHeaderNotice}
             </div>
         );

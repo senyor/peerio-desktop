@@ -16,10 +16,12 @@ class SystemWarningDialog extends WarningDisplayBase {
         const w = warnings.current;
 
         return (
-            <Dialog theme="warning"
+            <Dialog
+                theme="warning"
                 active={this.isVisible}
                 title={w ? t(w.title) : ''}
-                actions={[{ label: t('button_ok'), onClick: this.dismiss }]}>
+                actions={[{ label: t('button_ok'), onClick: this.dismiss }]}
+            >
                 {w ? <T k={w.content}>{w.data}</T> : null}
             </Dialog>
         );

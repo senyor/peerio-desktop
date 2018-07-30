@@ -35,11 +35,15 @@ class Root extends React.Component {
                 This covers the case where we are in `chats` or `patients` view but without MessageInput
                 e.g. zero states, new DM, new room
     */
-    @computed get snackbarVisible() {
+    @computed
+    get snackbarVisible() {
         return (
-            !routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)
-            && !routerStore.currentRoute.startsWith(routerStore.ROUTES.patients)
-        ) || !chatStore.activeChat;
+            (!routerStore.currentRoute.startsWith(routerStore.ROUTES.chats) &&
+                !routerStore.currentRoute.startsWith(
+                    routerStore.ROUTES.patients
+                )) ||
+            !chatStore.activeChat
+        );
     }
 
     @observable showOfflineNotification = false;
@@ -57,45 +61,62 @@ class Root extends React.Component {
             appState.devModeEnabled = true;
         });
 
-        reaction(() => socket.connected, (connected) => {
-            if (connected) {
-                this.showOfflineNotification = false;
-                return;
-            }
-            setTimeout(() => {
-                this.showOfflineNotification = !socket.connected;
-            }, 5000);
-        }, { fireImmediately: true });
+        reaction(
+            () => socket.connected,
+            connected => {
+                if (connected) {
+                    this.showOfflineNotification = false;
+                    return;
+                }
+                setTimeout(() => {
+                    this.showOfflineNotification = !socket.connected;
+                }, 5000);
+            },
+            { fireImmediately: true }
+        );
 
         when(() => clientApp.clientSessionExpired, () => appControl.relaunch());
     }
 
     componentWillMount() {
         clientApp.isFocused = appState.isFocused;
-        reaction(() => appState.isFocused, (focused) => {
-            clientApp.isFocused = focused;
-        });
+        reaction(
+            () => appState.isFocused,
+            focused => {
+                clientApp.isFocused = focused;
+            }
+        );
     }
     renderReconnectSection() {
-        return (<span>
-            {socket.reconnectTimer.counter || ' '}&nbsp;
-            <Button
-                className="reconnect"
-                label={t('button_retry')}
-                onClick={socket.resetReconnectTimer}
-                theme="inverted"
-            />
-        </span>);
+        return (
+            <span>
+                {socket.reconnectTimer.counter || ' '}&nbsp;
+                <Button
+                    className="reconnect"
+                    label={t('button_retry')}
+                    onClick={socket.resetReconnectTimer}
+                    theme="inverted"
+                />
+            </span>
+        );
     }
 
     render() {
         return (
             <div>
-                <div className={`status-bar ${this.showOfflineNotification ? 'visible' : ''}`}>
-                    {this.showOfflineNotification
-                        ? <ProgressBar type="circular" mode="indeterminate" theme="light" size="small" />
-                        : null
-                    }
+                <div
+                    className={`status-bar ${
+                        this.showOfflineNotification ? 'visible' : ''
+                    }`}
+                >
+                    {this.showOfflineNotification ? (
+                        <ProgressBar
+                            type="circular"
+                            mode="indeterminate"
+                            theme="light"
+                            size="small"
+                        />
+                    ) : null}
                     #{socket.reconnectAttempt}&nbsp;{t('error_connecting')}&nbsp;
                     {appState.isOnline && this.renderReconnectSection()}
                 </div>

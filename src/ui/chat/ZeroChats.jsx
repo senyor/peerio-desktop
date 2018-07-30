@@ -37,41 +37,85 @@ class ZeroChats extends React.Component {
             <div className="zero-chats-container">
                 <div className="zero-chats-content">
                     <div className="header">
-                        <T k="title_zeroChat" tag="div" className="welcome-title" />
-                        <T k="title_zeroChatSubtitle" tag="div" className="subtitle" />
+                        <T
+                            k="title_zeroChat"
+                            tag="div"
+                            className="welcome-title"
+                        />
+                        <T
+                            k="title_zeroChatSubtitle"
+                            tag="div"
+                            className="subtitle"
+                        />
                     </div>
 
                     <div className="instructions-container">
                         <div className="instructions create-rooms">
                             <div className="text">
                                 <div className="text-header">
-                                    <PlusIcon onClick={this.goToAddChannel} label={t('button_createRooms')} />
+                                    <PlusIcon
+                                        onClick={this.goToAddChannel}
+                                        label={t('button_createRooms')}
+                                    />
                                 </div>
                                 <div className="text-description">
-                                    <T k="title_roomsDescription1" tag="div" className="description-large" />
-                                    <T k="title_roomsDescription2" tag="div" className="description-small" />
-                                    <T k="title_roomsDescription3" tag="div" className="description-small" />
+                                    <T
+                                        k="title_roomsDescription1"
+                                        tag="div"
+                                        className="description-large"
+                                    />
+                                    <T
+                                        k="title_roomsDescription2"
+                                        tag="div"
+                                        className="description-small"
+                                    />
+                                    <T
+                                        k="title_roomsDescription3"
+                                        tag="div"
+                                        className="description-small"
+                                    />
                                 </div>
                             </div>
                             <div className="image">
                                 <img src="./static/img/zero-state-rooms.png" />
-                                <img src="./static/img/zero-state-bg-rooms.png" className="background" />
+                                <img
+                                    src="./static/img/zero-state-bg-rooms.png"
+                                    className="background"
+                                />
                             </div>
                         </div>
 
                         <div className="instructions create-dms">
                             <div className="image">
                                 <img src="./static/img/zero-state-dms.png" />
-                                <img src="./static/img/zero-state-bg-dms.png" className="background" />
+                                <img
+                                    src="./static/img/zero-state-bg-dms.png"
+                                    className="background"
+                                />
                             </div>
                             <div className="text">
                                 <div className="text-header">
-                                    <PlusIcon onClick={this.goToAddChat} label={t('button_createDMs')} />
+                                    <PlusIcon
+                                        onClick={this.goToAddChat}
+                                        label={t('button_createDMs')}
+                                    />
                                 </div>
                                 <div className="text-description">
-                                    <T k="title_dmDescription1" tag="div" className="description-large" />
-                                    <T k="title_dmDescription2" tag="div" className="description-small" />
-                                    <T k="title_dmDescription3" tag="div" className="description-small" />
+                                    <T
+                                        k="title_dmDescription1"
+                                        tag="div"
+                                        className="description-large"
+                                    />
+                                    <T
+                                        k="title_dmDescription2"
+                                        tag="div"
+                                        className="description-small"
+                                    />
+                                    <T
+                                        k="title_dmDescription3"
+                                        tag="div"
+                                        className="description-small"
+                                    />
                                 </div>
                             </div>
                         </div>

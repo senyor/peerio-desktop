@@ -24,7 +24,7 @@
     min-height: 40px;
     padding: 0 $padding-default;
     font-weight: $font-weight-semibold;
-    background-color: rgba($peerio-blue, .3);
+    background-color: rgba($peerio-blue, 0.3);
 
     .buttons-container {
       margin-left: auto;
@@ -89,20 +89,26 @@
       margin-left: auto;
     }
 
-    .find-file { display: none; }
+    .find-file {
+      display: none;
+    }
 
     &:hover {
       background-color: $background-hover-accent;
 
-      .completed { display: none; }
-      .find-file { display: inline-block; }
+      .completed {
+        display: none;
+      }
+      .find-file {
+        display: inline-block;
+      }
     }
 
     &.error {
       pointer-events: none;
 
       .file-sprite-icon {
-        opacity: .6;
+        opacity: 0.6;
       }
 
       .file-name {

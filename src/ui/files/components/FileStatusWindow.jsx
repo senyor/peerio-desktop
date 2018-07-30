@@ -29,16 +29,18 @@ class FileStatusWindow extends React.Component {
     @observable allCompleted = true;
 
     @observable.ref bodyRef;
-    setBodyRef = (ref) => {
+    setBodyRef = ref => {
         if (ref) this.bodyRef = ref;
-    }
+    };
 
-    @computed get hasScrollBar() {
+    @computed
+    get hasScrollBar() {
         if (!this.bodyRef) return null;
         return this.bodyRef.scrollHeight > this.bodyRef.clientHeight;
     }
 
-    @action.bound toggleWindow() {
+    @action.bound
+    toggleWindow() {
         uiStore.fileStatusWindowCollapsed = !uiStore.fileStatusWindowCollapsed;
     }
 
@@ -46,11 +48,18 @@ class FileStatusWindow extends React.Component {
         console.log('close window');
     }
 
-    @computed get downloadQueue() { return DOWNLOAD_FILES.map(f => this.fileItem(f, 'download')); }
-    @computed get uploadQueue() { return UPLOAD_FILES.map(f => this.fileItem(f, 'upload')); }
+    @computed
+    get downloadQueue() {
+        return DOWNLOAD_FILES.map(f => this.fileItem(f, 'download'));
+    }
+    @computed
+    get uploadQueue() {
+        return UPLOAD_FILES.map(f => this.fileItem(f, 'upload'));
+    }
 
     fileItem(file, actionType) {
-        const cancelFunction = `onCancel${actionType[0].toUpperCase() + actionType.slice(1)}`;
+        const cancelFunction = `onCancel${actionType[0].toUpperCase() +
+            actionType.slice(1)}`;
 
         return (
             <div
@@ -61,32 +70,34 @@ class FileStatusWindow extends React.Component {
                 <FileSpriteIcon type={file.iconType} size="small" />
                 <span className="file-name">{file.name}</span>
 
-                {file.error
-                    ? <MaterialIcon icon="error_outline" className="right-icon error" />
-                    : file.completed
-                        ? (
-                            <span className="right-icon">
-                                <MaterialIcon className="completed confirmation" icon="check" />
-                                <Button
-                                    className="find-file"
-                                    icon="search"
-                                    theme="small"
-                                    onClick={() => this.findFile(file)}
-                                />
-                            </span>
-                        )
-                        : <Button
-                            className="right-icon"
-                            icon="highlight_off"
-                            theme="small"
-                            onClick={this[cancelFunction]}
+                {file.error ? (
+                    <MaterialIcon
+                        icon="error_outline"
+                        className="right-icon error"
+                    />
+                ) : file.completed ? (
+                    <span className="right-icon">
+                        <MaterialIcon
+                            className="completed confirmation"
+                            icon="check"
                         />
-                }
+                        <Button
+                            className="find-file"
+                            icon="search"
+                            theme="small"
+                            onClick={() => this.findFile(file)}
+                        />
+                    </span>
+                ) : (
+                    <Button
+                        className="right-icon"
+                        icon="highlight_off"
+                        theme="small"
+                        onClick={this[cancelFunction]}
+                    />
+                )}
 
-                {file.progress
-                    ? <ProgressBar value={50} max={100} />
-                    : null
-                }
+                {file.progress ? <ProgressBar value={50} max={100} /> : null}
             </div>
         );
     }
@@ -108,30 +119,44 @@ class FileStatusWindow extends React.Component {
         if (!DOWNLOAD_FILES.length && !UPLOAD_FILES.length) return null;
 
         return (
-            <div className={css('file-status-window', { collapsed: uiStore.fileStatusWindowCollapsed })}>
+            <div
+                className={css('file-status-window', {
+                    collapsed: uiStore.fileStatusWindowCollapsed
+                })}
+            >
                 <div className="title-bar">
-                    <T k="title_fileStatus">{{ number: DOWNLOAD_FILES.length + UPLOAD_FILES.length }}</T>
+                    <T k="title_fileStatus">
+                        {{
+                            number: DOWNLOAD_FILES.length + UPLOAD_FILES.length
+                        }}
+                    </T>
                     <div className="buttons-container">
                         <Button
-                            icon={uiStore.fileStatusWindowCollapsed ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}
+                            icon={
+                                uiStore.fileStatusWindowCollapsed
+                                    ? 'keyboard_arrow_up'
+                                    : 'keyboard_arrow_down'
+                            }
                             onClick={this.toggleWindow}
                             theme="small"
                         />
-                        {this.allCompleted
-                            ? <Button
+                        {this.allCompleted ? (
+                            <Button
                                 icon="close"
                                 onClick={this.closeWindow}
                                 theme="small"
                             />
-                            : null
-                        }
+                        ) : null}
                     </div>
                 </div>
-                <div className={css('body', { 'has-scrollbar': this.hasScrollBar })}
+                <div
+                    className={css('body', {
+                        'has-scrollbar': this.hasScrollBar
+                    })}
                     ref={this.setBodyRef}
                 >
-                    {DOWNLOAD_FILES.length
-                        ? <React.Fragment>
+                    {DOWNLOAD_FILES.length ? (
+                        <React.Fragment>
                             <div className="heading">
                                 <T k="title_downloads" />&nbsp;
                                 <span>({DOWNLOAD_FILES.length})</span>
@@ -140,11 +165,10 @@ class FileStatusWindow extends React.Component {
                                 {this.downloadQueue}
                             </div>
                         </React.Fragment>
-                        : null
-                    }
+                    ) : null}
 
-                    {UPLOAD_FILES.length
-                        ? <React.Fragment>
+                    {UPLOAD_FILES.length ? (
+                        <React.Fragment>
                             <div className="heading">
                                 <T k="title_uploads" />&nbsp;
                                 <span>({UPLOAD_FILES.length})</span>
@@ -153,8 +177,7 @@ class FileStatusWindow extends React.Component {
                                 {this.uploadQueue}
                             </div>
                         </React.Fragment>
-                        : null
-                    }
+                    ) : null}
                 </div>
             </div>
         );

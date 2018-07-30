@@ -53,7 +53,11 @@ class FileStatusWindow extends React.Component {
         const cancelFunction = `onCancel${actionType[0].toUpperCase() + actionType.slice(1)}`;
 
         return (
-            <div className={css('file-item', { error: file.error })}>
+            <div
+                // TODO: need unique key for iterator
+                // file name won't work? because of the weird case where user uploads multiple files of same name
+                className={css('file-item', { error: file.error })}
+            >
                 <FileSpriteIcon type={file.iconType} size="small" />
                 <span className="file-name">{file.name}</span>
 

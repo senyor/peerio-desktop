@@ -142,25 +142,7 @@ class Beacon extends React.Component {
         return this.rectangleRef.current.getBoundingClientRect().height < 72;
     }
 
-    // The inner content of the circle needs to have a calculated position based on circle width
-    // This is so that the content is properly centered
-    @computed
-    get circleContentOffset() {
-        if (!this.contentRef) return null;
-        const { width, height } = this.contentRef.getBoundingClientRect();
-
-        return {
-            marginTop: -height / 2,
-            marginLeft: -width / 2
-        };
-    }
-
     beaconClick = () => {
-        const sliceHeight = window.innerHeight / 5;
-        const sliceNumber = Math.floor(this.contentRect.top / sliceHeight) + 1;
-
-        console.log(sliceNumber);
-
         console.log('beacon click');
     };
 

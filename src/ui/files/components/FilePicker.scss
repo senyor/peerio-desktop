@@ -1,8 +1,25 @@
 .file-picker {
+  // Override default padding so that file list can be full-width
+  .body {
+    padding: 0;
+
+    .title,
+    .p-progress-bar {
+      padding: $padding-large;
+      margin: 0;
+    }
+  }
+
+  .file-picker-body {
+    display: flex;
+    flex-direction: column;
+  }
+
   .search {
-    height: 50px;
-    width: 100%;
-    margin-top: $margin-large;
+    flex-grow: 1;
+    height: 48px;
+    width: auto;
+    margin: 0 $margin-large;
     border-radius: 24px;
 
     input {
@@ -11,8 +28,7 @@
   }
 
   .breadcrumb-container {
-    margin-left: $margin-default;
-    margin-top: $margin-default;
+    margin: $margin-large;
   }
 
   .breadcrumb * {
@@ -26,23 +42,16 @@
     color: $text-dark-inactive;
   }
 
-  .file-picker-body {
-    display: flex;
-    flex-direction: column;
-  }
-
   // overriding File table defaults
   .file-table-wrapper {
     height: 55vh;
 
-    .row {
-      padding-left: 0;
-      border: none;
+    .file-table-body {
+      background-color: transparent;
     }
 
-    .file-checkbox {
-      justify-content: flex-end;
-      visibility: visible;
+    .row-container {
+      padding-left: $padding-large;
     }
   }
 }

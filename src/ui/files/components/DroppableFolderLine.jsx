@@ -70,10 +70,12 @@ const folderDropSpec = {
         disabledCheckbox?: boolean
         className?: string,
         folderDetails?: true,
-        folderActions?: true
+        folderDetailsMini?: boolean,
+        folderActions?: true,
         isDragging?: boolean,
         isBeingDraggedOver?: boolean,
-        canBeDroppedInto?: boolean
+        canBeDroppedInto?: boolean,
+        showNavigation?: boolean
     }} FolderLineProps
  */
 

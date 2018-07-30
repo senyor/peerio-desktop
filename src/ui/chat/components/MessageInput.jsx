@@ -6,6 +6,7 @@ const path = require('path');
 const React = require('react');
 const { computed, observable, action } = require('mobx');
 const { observer } = require('mobx-react');
+const { debounce } = require('lodash');
 
 const css = require('classnames');
 const { t } = require('peerio-translator');
@@ -123,6 +124,7 @@ class MessageInput extends React.Component {
     }
 
     @observable snackbarRef;
+    @observable wheelOverJumpToBottom;
     @action.bound
     setSnackbarRef(ref) {
         if (ref) this.snackbarRef = ref;
@@ -137,12 +139,22 @@ class MessageInput extends React.Component {
     @computed
     get jumpToBottomVisible() {
         return (
-            this.props.messageListScrolledUp ||
-            chatStore.activeChat.canGoDown ||
-            (!clientApp.isReadingNewestMessages &&
-                chatStore.activeChat.unreadCount > 0)
+            !this.wheelOverJumpToBottom &&
+            (this.props.messageListScrolledUp ||
+                chatStore.activeChat.canGoDown ||
+                (!clientApp.isReadingNewestMessages &&
+                    chatStore.activeChat.unreadCount > 0))
         );
     }
+
+    cancelWheelOverJumpToBottom = debounce(() => {
+        this.wheelOverJumpToBottom = false;
+    }, 1000);
+
+    handleWheelOverJumpToBottom = () => {
+        this.wheelOverJumpToBottom = true;
+        this.cancelWheelOverJumpToBottom();
+    };
 
     renderJumpToBottom() {
         if (!this.jumpToBottomVisible) return null;
@@ -153,6 +165,7 @@ class MessageInput extends React.Component {
                     'snackbar-visible': this.snackbarVisible,
                     'share-in-progress': this.props.shareInProgress
                 })}
+                onWheel={this.handleWheelOverJumpToBottom}
             >
                 <Button
                     icon="keyboard_arrow_down"

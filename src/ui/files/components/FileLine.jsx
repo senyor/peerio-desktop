@@ -16,6 +16,7 @@ const { Checkbox, ProgressBar, Tooltip } = require('peer-ui');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const FileActions = require('./FileActions');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
+const FileFolderDetailsRow = require('./FileFolderDetailsRow');
 
 /**
  * @augments {React.Component<{
@@ -25,6 +26,7 @@ const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
         className?: string,
         clickToSelect?: true,
         fileDetails?: true,
+        fileDetailsMini?: boolean,
         fileActions?: true
     }, {}>}
  */
@@ -165,6 +167,10 @@ class FileLine extends React.Component {
                         }
                     >
                         {file.name}
+
+                        {this.props.fileDetailsMini && (
+                            <FileFolderDetailsRow file={file} />
+                        )}
                     </div>
 
                     {this.props.fileDetails && (

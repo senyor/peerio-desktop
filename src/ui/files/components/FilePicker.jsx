@@ -131,9 +131,16 @@ class FilePicker extends React.Component {
                         disabledCheckbox={
                             (!f.isShared && f.root.isShared) || !canShareFolder
                         }
+                        folderDetailsMini
                     />
                 ) : (
-                    <FileLine key={f.fileId} file={f} checkbox clickToSelect />
+                    <FileLine
+                        key={f.fileId}
+                        file={f}
+                        checkbox
+                        clickToSelect
+                        fileDetailsMini
+                    />
                 )
             );
         }

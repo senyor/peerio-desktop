@@ -29,8 +29,7 @@ module.exports = function(api) {
         env: {
             production: {
                 sourceMaps: false,
-                comments: false,
-                plugins: ['console-kungfu']
+                comments: false
             },
             development: {
                 sourceMaps: true,

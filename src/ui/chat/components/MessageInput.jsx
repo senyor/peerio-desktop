@@ -17,6 +17,7 @@ const FilePicker = require('~/ui/files/components/FilePicker');
 const Snackbar = require('~/ui/shared-components/Snackbar');
 const { pickLocalFiles, getFileList } = require('~/helpers/file');
 const UploadDialog = require('~/ui/shared-components/UploadDialog');
+const Beacon = require('~/ui/shared-components/Beacon');
 
 const MessageInputProseMirror = require('./MessageInputProseMirror');
 
@@ -203,7 +204,7 @@ class MessageInput extends React.Component {
                     onDrop={this.preventDrop}
                     onPaste={this.onPaste}
                 >
-                    <Menu
+                    <Beacon active header="Beak on alright" text="Beak on beakin' on"><Menu
                         position="bottom-left"
                         icon="add_circle_outline"
                         tooltip={t('title_shareToChat')}
@@ -218,7 +219,7 @@ class MessageInput extends React.Component {
                             caption={t('title_uploadAndShare')}
                             onClick={this.activateUploadDialog}
                         />
-                    </Menu>
+                    </Menu></Beacon>
                     {this.props.readonly ? (
                         <div className="message-editor-empty">&nbsp;</div>
                     ) : (

@@ -60,10 +60,14 @@ class Beacon extends React.Component {
     @computed
     get beaconStyle() {
         return {
+            // Anchor top-left corner to child content centre
             top: this.contentRect.top + this.contentRect.height / 2,
             left: this.contentRect.left + this.contentRect.width / 2,
+
+            // Then offset back by circleSize, so that circle content centre aligns with child content centre
             marginTop: -this.circleSize / 2,
             marginLeft: -this.circleSize / 2,
+
             height: this.circleSize,
             width: this.circleSize
         };

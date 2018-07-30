@@ -6,8 +6,8 @@ const { observer } = require('mobx-react');
 /**
  * @augments {React.Component<{
         position?: 'left' | 'right'
+        header?: string
         text: string
-        header: string
     }, {}>}
  */
 @observer
@@ -74,27 +74,59 @@ class Beacon extends React.Component {
     }
 
     // Rectangle's positioning
+    @observable
+    rectangleRef = React.createRef();
+
     @computed
     get rectangleStyle() {
-        const obj = {};
-        const offset = this.circleSize / 2;
+        const ret = {};
+        const circleOffset = this.circleSize / 2;
 
-        // For human-friendliness, the beacon `position` property refers to circle's position relative to rectangle.
-        // However the actual positioning is opposite; circle is anchored to content, rectangle is moved around.
-        // As a result, the left/right calculations are reversed from what you might expect.
-        if (this.props.position === 'right') {
-            obj.right = '100%';
-            obj.paddingRight = offset;
-            obj.marginRight = -offset;
+        // The bubble's vertical position is determined by the beacon's position in the window.
+        // The window is divided into 5 horizontal "slices", each corresponding to a bubble position.
+        const sliceHeight = window.innerHeight / 5;
+        const sliceNumber = Math.floor(this.contentRect.top / sliceHeight) + 1;
+        const rectangleOffset = (this.rectangleRef && this.rectangleRef.current)
+            ? this.rectangleRef.current.getBoundingClientRect().height / 2
+            : 0;
 
-        } else {
-            // Left is the default
-            obj.left = '100%';
-            obj.paddingLeft = offset;
-            obj.marginLeft = -offset;
+        switch (sliceNumber) {
+            case 1:
+                ret.bottom = '0';
+                ret.marginBottom = -rectangleOffset;
+                break;
+            case 2:
+            default:
+                ret.bottom = '0';
+                break;
+            case 3:
+                ret.top = '50%';
+                ret.marginTop = -rectangleOffset;
+                break;
+            case 4:
+                ret.top = '0';
+                break;
+            case 5:
+                ret.top = '0';
+                ret.marginTop = -rectangleOffset;
+                break;
         }
 
-        return obj;
+        // For human-friendliness, `position` prop refers to circle's horizontal position relative to rectangle.
+        // The actual positioning is opposite: circle is anchored to content, rectangle is moved around.
+        // As a result, the calculations may be reversed from what you expect.
+        if (this.props.position === 'right') {
+            ret.right = '100%';
+            ret.paddingRight = circleOffset;
+            ret.marginRight = -circleOffset;
+        } else {
+            // Left is the default
+            ret.left = '100%';
+            ret.paddingLeft = circleOffset;
+            ret.marginLeft = -circleOffset;
+        }
+
+        return ret;
     }
 
     // The inner content of the circle needs to have a calculated position based on circle width
@@ -137,11 +169,14 @@ class Beacon extends React.Component {
                 style={this.beaconStyle}
             >
                 <div
+                    ref={this.rectangleRef}
                     className="rectangle"
                     style={this.rectangleStyle}
                 >
                     <div className="rectangle-content">
-                        <div className="header">{this.props.header}</div>
+                        {this.props.header ? (
+                            <div className="header">{this.props.header}</div>
+                        ) : null}
                         {this.props.text}
                     </div>
                 </div>

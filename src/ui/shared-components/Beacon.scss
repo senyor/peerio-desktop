@@ -16,6 +16,10 @@
 
     .rectangle-content {
       padding: $padding-small;
+
+      .header {
+        margin-bottom: $margin-default;
+      }
     }
   }
 

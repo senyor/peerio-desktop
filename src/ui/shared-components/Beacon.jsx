@@ -55,9 +55,7 @@ class Beacon extends React.Component {
     @computed
     get circleSize() {
         const { height, width } = this.contentRect;
-        return height > width
-            ? height + 8
-            : width + 8;
+        return height > width ? height + 8 : width + 8;
     }
 
     // Beacon's overall positioning
@@ -96,7 +94,7 @@ class Beacon extends React.Component {
 
         switch (sliceNumber) {
             case 1:
-                ret.top = '0';    
+                ret.top = '0';
                 ret.marginTop = circleOffset;
                 break;
             case 2:
@@ -188,7 +186,7 @@ class Beacon extends React.Component {
             >
                 <div
                     ref={this.rectangleRef}
-                    className={css('rectangle', {narrow: this.isNarrow})}
+                    className={css('rectangle', { narrow: this.isNarrow })}
                     style={this.rectangleStyle}
                 >
                     <div className="rectangle-content">

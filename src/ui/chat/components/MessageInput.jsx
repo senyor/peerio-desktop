@@ -204,22 +204,28 @@ class MessageInput extends React.Component {
                     onDrop={this.preventDrop}
                     onPaste={this.onPaste}
                 >
-                    <Beacon active header="Beak on alright" text="Beak on beakin' on"><Menu
-                        position="bottom-left"
-                        icon="add_circle_outline"
-                        tooltip={t('title_shareToChat')}
+                    <Beacon
+                        active
+                        header="Beak on alright"
+                        text="Beak on beakin' on"
                     >
-                        <MenuItem
-                            value="share"
-                            caption={t('title_shareFromFiles')}
-                            onClick={this.showFilePicker}
-                        />
-                        <MenuItem
-                            value="upload"
-                            caption={t('title_uploadAndShare')}
-                            onClick={this.activateUploadDialog}
-                        />
-                    </Menu></Beacon>
+                        <Menu
+                            position="bottom-left"
+                            icon="add_circle_outline"
+                            tooltip={t('title_shareToChat')}
+                        >
+                            <MenuItem
+                                value="share"
+                                caption={t('title_shareFromFiles')}
+                                onClick={this.showFilePicker}
+                            />
+                            <MenuItem
+                                value="upload"
+                                caption={t('title_uploadAndShare')}
+                                onClick={this.activateUploadDialog}
+                            />
+                        </Menu>
+                    </Beacon>
                     {this.props.readonly ? (
                         <div className="message-editor-empty">&nbsp;</div>
                     ) : (

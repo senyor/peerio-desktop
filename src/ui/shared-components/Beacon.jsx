@@ -6,6 +6,7 @@ const css = require('classnames');
 
 /**
  * @augments {React.Component<{
+        active?: boolean
         position?: 'left' | 'right'
         header?: string
         text: string
@@ -54,7 +55,9 @@ class Beacon extends React.Component {
     @computed
     get circleSize() {
         const { height, width } = this.contentRect;
-        return height > width ? height : width;
+        return height > width
+            ? height + 8
+            : width + 8;
     }
 
     // Beacon's overall positioning
@@ -93,11 +96,11 @@ class Beacon extends React.Component {
 
         switch (sliceNumber) {
             case 1:
-                ret.bottom = '0';
-                ret.marginBottom = -circleOffset;
+                ret.top = '0';    
+                ret.marginTop = circleOffset;
                 break;
             case 2:
-                ret.bottom = '0';
+                ret.top = '0';
                 break;
             case 3:
             default:
@@ -105,11 +108,11 @@ class Beacon extends React.Component {
                 ret.marginTop = -rectangleOffset;
                 break;
             case 4:
-                ret.top = '0';
+                ret.bottom = '0';
                 break;
             case 5:
-                ret.top = '0';
-                ret.marginTop = -circleOffset;
+                ret.bottom = '0';
+                ret.marginBottom = circleOffset;
                 break;
         }
 
@@ -154,6 +157,11 @@ class Beacon extends React.Component {
     }
 
     beaconClick = () => {
+        const sliceHeight = window.innerHeight / 5;
+        const sliceNumber = Math.floor(this.contentRect.top / sliceHeight) + 1;
+
+        console.log(sliceNumber);
+
         console.log('beacon click');
     };
 
@@ -210,6 +218,7 @@ class Beacon extends React.Component {
     }
 
     render() {
+        // if (!this.props.active) return this.props.children;
         return [this.childContent, this.beaconContent];
     }
 }

@@ -2,6 +2,7 @@
   position: fixed;
   left: 50%;
   top: 50%;
+  z-index: 10;
 
   .rectangle {
     position: absolute;
@@ -11,6 +12,7 @@
     // top: 0;
 
     box-shadow: $shadow-8;
+    color: $white;
     background-color: $peerio-purple;
     border-radius: 8px;
 

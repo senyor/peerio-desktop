@@ -1,5 +1,6 @@
 // @ts-check
 const React = require('react');
+const { observer } = require('mobx-react');
 const { DragLayer } = require('react-dnd');
 const DragPreview = require('./DragPreview');
 const DragDropTypes = require('../helpers/dragDropTypes');
@@ -51,6 +52,7 @@ function getItemStyles(props) {
         canDrop
     };
 })
+@observer
 class DragPreviewLayer extends React.Component {
     render() {
         const { isDragging, canDrop, itemType } = this.props;

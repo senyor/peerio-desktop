@@ -1,5 +1,7 @@
 const React = require('react');
+const { observer } = require('mobx-react');
 
+@observer
 class Copyright extends React.Component {
     render() {
         return (

@@ -1,5 +1,6 @@
 // @ts-check
 const React = require('react');
+const { observer } = require('mobx-react');
 const { DropTarget } = require('react-dnd');
 
 const { fileStore, warnings } = require('peerio-icebear');
@@ -93,6 +94,7 @@ const folderDropSpec = {
         canBeDroppedInto: monitor.canDrop()
     })
 )
+@observer
 class DroppableFolderLine extends React.Component {
     render() {
         const {

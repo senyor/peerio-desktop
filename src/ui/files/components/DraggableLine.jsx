@@ -1,5 +1,6 @@
 // @ts-check
 const React = require('react');
+const { observer } = require('mobx-react');
 const { runInAction } = require('mobx');
 const { DragSource } = require('react-dnd');
 const { getEmptyImage } = require('react-dnd-html5-backend');
@@ -75,6 +76,7 @@ const fileOrFolderDragSpec = {
         isDragging: monitor.isDragging()
     })
 )
+@observer
 class DraggableLine extends React.Component {
     componentDidMount() {
         // Disable the built-in HTML5 drag preview -- we render our own with a custom DragLayer.

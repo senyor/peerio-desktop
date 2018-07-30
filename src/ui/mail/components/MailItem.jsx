@@ -1,8 +1,10 @@
 const React = require('react');
 // const { Menu, MenuItem } = require('peer-ui');
+const { observer } = require('mobx-react');
 const css = require('classnames');
 const { ghostStore } = require('peerio-icebear');
 
+@observer
 class MailItem extends React.Component {
     handleSelect = () => {
         ghostStore.selectedId = this.props.ghostId;

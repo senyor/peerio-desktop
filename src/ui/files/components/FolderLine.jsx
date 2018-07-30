@@ -4,15 +4,19 @@ const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const FolderActions = require('./FolderActions');
-const { Checkbox, CustomIcon, MaterialIcon, ProgressBar } = require('peer-ui');
+const FileFolderDetailsRow = require('./FileFolderDetailsRow');
+const {
+    Button,
+    Checkbox,
+    CustomIcon,
+    MaterialIcon,
+    ProgressBar
+} = require('peer-ui');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { User, contactStore, fileStore } = require('peerio-icebear');
 const { setCurrentFolder } = require('../helpers/sharedFileAndFolderActions');
-
-// TESTING
-const { volumeStore } = require('peerio-icebear');
 
 /**
  * HACK: defs are MIRRORED in DroppableFolderLine.jsx (since that extends these props to pass them through).
@@ -26,10 +30,12 @@ const { volumeStore } = require('peerio-icebear');
         disabledCheckbox?: boolean
         className?: string,
         folderDetails?: true,
-        folderActions?: true
+        folderDetailsMini?: boolean,
+        folderActions?: true,
         isDragging?: boolean,
         isBeingDraggedOver?: boolean,
-        canBeDroppedInto?: boolean
+        canBeDroppedInto?: boolean,
+        showNavigation?: boolean
     }} FolderLineProps
  */
 
@@ -47,10 +53,6 @@ class FolderLine extends React.Component {
     onMenuHide() {
         this.hovered = false;
     }
-
-    testClick = () => {
-        volumeStore.mockProgress(this.props.folder);
-    };
 
     setContactProfileRef = ref => {
         if (ref) this.contactProfileRef = ref;
@@ -82,13 +84,15 @@ class FolderLine extends React.Component {
             folder,
             isDragging,
             isBeingDraggedOver,
-            canBeDroppedInto
+            canBeDroppedInto,
+            showNavigation
         } = this.props;
 
         const selectDisabled = this.props.disabledCheckbox;
         const { progress, progressMax, progressPercentage } = folder;
         const shareInProgress =
             folder.convertingToVolume || folder.convertingFromFolder;
+
         return (
             <div
                 data-folderid={folder.id}
@@ -144,6 +148,10 @@ class FolderLine extends React.Component {
                         onClick={this.onClickFolder}
                     >
                         {folder.name}
+
+                        {this.props.folderDetailsMini && (
+                            <FileFolderDetailsRow folder={folder} />
+                        )}
                     </div>
 
                     {this.props.folderDetails && (
@@ -177,6 +185,13 @@ class FolderLine extends React.Component {
                                 onActionInProgress={this.onActionInProgress}
                             />
                         </div>
+                    )}
+
+                    {showNavigation && (
+                        <Button
+                            icon="keyboard_arrow_right"
+                            onClick={this.onClickFolder}
+                        />
                     )}
                 </div>
 

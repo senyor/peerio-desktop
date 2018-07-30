@@ -19,7 +19,12 @@
 
       .header {
         margin-bottom: $margin-default;
+        font-weight: $font-weight-bold;
       }
+    }
+
+    &.narrow {
+      font-weight: $font-weight-semibold;
     }
   }
 

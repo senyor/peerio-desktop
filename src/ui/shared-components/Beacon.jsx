@@ -2,6 +2,7 @@
 const React = require('react');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
+const css = require('classnames');
 
 /**
  * @augments {React.Component<{
@@ -74,8 +75,7 @@ class Beacon extends React.Component {
     }
 
     // Rectangle's positioning
-    @observable
-    rectangleRef = React.createRef();
+    @observable rectangleRef = React.createRef();
 
     @computed
     get rectangleStyle() {
@@ -86,20 +86,21 @@ class Beacon extends React.Component {
         // The window is divided into 5 horizontal "slices", each corresponding to a bubble position.
         const sliceHeight = window.innerHeight / 5;
         const sliceNumber = Math.floor(this.contentRect.top / sliceHeight) + 1;
-        const rectangleOffset = (this.rectangleRef && this.rectangleRef.current)
-            ? this.rectangleRef.current.getBoundingClientRect().height / 2
-            : 0;
+        const rectangleOffset =
+            this.rectangleRef && this.rectangleRef.current
+                ? this.rectangleRef.current.getBoundingClientRect().height / 2
+                : null;
 
         switch (sliceNumber) {
             case 1:
                 ret.bottom = '0';
-                ret.marginBottom = -rectangleOffset;
+                ret.marginBottom = -circleOffset;
                 break;
             case 2:
-            default:
                 ret.bottom = '0';
                 break;
             case 3:
+            default:
                 ret.top = '50%';
                 ret.marginTop = -rectangleOffset;
                 break;
@@ -108,7 +109,7 @@ class Beacon extends React.Component {
                 break;
             case 5:
                 ret.top = '0';
-                ret.marginTop = -rectangleOffset;
+                ret.marginTop = -circleOffset;
                 break;
         }
 
@@ -119,14 +120,24 @@ class Beacon extends React.Component {
             ret.right = '100%';
             ret.paddingRight = circleOffset;
             ret.marginRight = -circleOffset;
+            ret.paddingLeft = 8; // add $padding-default to the non-bubble side
         } else {
             // Left is the default
             ret.left = '100%';
             ret.paddingLeft = circleOffset;
             ret.marginLeft = -circleOffset;
+            ret.paddingRight = 8;
         }
 
         return ret;
+    }
+
+    // `narrow` class added when rectangle height is less than two lines of text
+    // (currently a hardcoded pixel value hardcoded)
+    @computed
+    get isNarrow() {
+        if (!this.rectangleRef || !this.rectangleRef.current) return null;
+        return this.rectangleRef.current.getBoundingClientRect().height < 72;
     }
 
     // The inner content of the circle needs to have a calculated position based on circle width
@@ -143,8 +154,7 @@ class Beacon extends React.Component {
     }
 
     beaconClick = () => {
-        console.log(this.contentRect);
-        console.log(this.contentRef.getBoundingClientRect());
+        console.log('beacon click');
     };
 
     // Render the child content, wrapped in .beacon-container div so we can make the above positioning calculations
@@ -170,7 +180,7 @@ class Beacon extends React.Component {
             >
                 <div
                     ref={this.rectangleRef}
-                    className="rectangle"
+                    className={css('rectangle', {narrow: this.isNarrow})}
                     style={this.rectangleStyle}
                 >
                     <div className="rectangle-content">

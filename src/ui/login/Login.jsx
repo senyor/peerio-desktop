@@ -269,7 +269,7 @@ class Login extends Component {
                                   onChange={languageStore.changeLanguage} />
                         */}
                     </div>
-                    <Beacon>
+                    <Beacon header="bl" text="bla doodly bla bla bla bla.">
                         <Button
                             className="login-button"
                             label={t('button_login')}

@@ -10,10 +10,13 @@
     // right: 0;
     // top: 0;
 
-    padding: $padding-small;
     box-shadow: $shadow-8;
     background-color: $peerio-purple;
     border-radius: 8px;
+
+    .rectangle-content {
+      padding: $padding-small;
+    }
   }
 
   .circle {

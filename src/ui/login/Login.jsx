@@ -14,7 +14,6 @@ const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
 const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
-const Beacon = require('~/ui/shared-components/Beacon');
 const T = require('~/ui/shared-components/T');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
@@ -269,15 +268,13 @@ class Login extends Component {
                                   onChange={languageStore.changeLanguage} />
                         */}
                     </div>
-                    <Beacon header="bl" text="bla doodly bla bla bla bla.">
-                        <Button
-                            className="login-button"
-                            label={t('button_login')}
-                            onClick={this.onLoginClick}
-                            disabled={this.loginStore.hasErrors}
-                            theme="affirmative"
-                        />
-                    </Beacon>
+                    <Button
+                        className="login-button"
+                        label={t('button_login')}
+                        onClick={this.onLoginClick}
+                        disabled={this.loginStore.hasErrors}
+                        theme="affirmative"
+                    />
 
                     <SignupLink />
                 </div>

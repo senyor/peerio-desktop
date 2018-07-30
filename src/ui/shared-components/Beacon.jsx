@@ -194,7 +194,7 @@ class Beacon extends React.Component {
     }
 
     render() {
-        if (!this.props.active) return this.props.children;
+        if (!this.props.active) return this.childContent;
         return [this.childContent, this.beaconContent];
     }
 }

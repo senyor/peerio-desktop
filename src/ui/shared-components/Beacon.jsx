@@ -18,10 +18,12 @@ class Beacon extends React.Component {
     // We make a lot of calculations based on child content size and position
     // `contentRef` stores the ref for the .beacon-container component which contains the child content
     @observable contentRef;
+    @observable renderBeacon;
     setContentRef = ref => {
         if (ref) {
             this.contentRef = ref;
             this.setContentRect();
+            this.renderBeacon = true;
         }
     };
 
@@ -169,7 +171,9 @@ class Beacon extends React.Component {
     get beaconContent() {
         return (
             <div
-                className={css('beacon', this.positionClasses)}
+                className={css('beacon', this.positionClasses, {
+                    show: this.renderBeacon
+                })}
                 key="beacon"
                 onClick={this.beaconClick}
                 style={this.beaconStyle}

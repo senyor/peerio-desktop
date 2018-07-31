@@ -3,6 +3,12 @@
   z-index: 10;
   left: 50%;
   top: 50%;
+  transition: opacity 350ms;
+  opacity: 0;
+
+  &.show {
+    opacity: 1;
+  }
 
   .rectangle {
     position: absolute;

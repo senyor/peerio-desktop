@@ -159,6 +159,17 @@
       display: none;
     }
 
+    &.narrow {
+      &.slice-2,
+      &.slice-3,
+      &.slice-4 {
+        &::before,
+        &::after {
+          display: none;
+        }
+      }
+    }
+
     .circle-content {
       display: flex;
       align-items: center;

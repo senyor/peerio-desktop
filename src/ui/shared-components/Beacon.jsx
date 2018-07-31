@@ -194,7 +194,9 @@ class Beacon extends React.Component {
                 </div>
 
                 <div
-                    className={css('circle', this.positionClasses)}
+                    className={css('circle', this.positionClasses, {
+                        narrow: this.isNarrow
+                    })}
                     style={{
                         height: this.circleSize,
                         width: this.circleSize

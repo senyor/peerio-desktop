@@ -79,21 +79,32 @@ class Beacon extends React.Component {
     // Rectangle's positioning
     @observable rectangleRef = React.createRef();
 
+    // The bubble's vertical position is determined by the beacon's position in the window.
+    // The window is divided into 5 horizontal "slices", each corresponding to a bubble position.
+    @computed
+    get slicePosition() {
+        const sliceHeight = window.innerHeight / 5;
+        return Math.floor(this.contentRect.top / sliceHeight) + 1;
+    }
+
+    // Position and 'slice' classes get repeated for the beacon itself, and the .rectangle and .circle divs
+    // This is redundant, but helps keep the styles more organized
+    @computed
+    get positionClasses() {
+        return `${this.props.position || 'left'} slice-${this.slicePosition}`;
+    }
+
     @computed
     get rectangleStyle() {
         const ret = {};
         const circleOffset = this.circleSize / 2;
 
-        // The bubble's vertical position is determined by the beacon's position in the window.
-        // The window is divided into 5 horizontal "slices", each corresponding to a bubble position.
-        const sliceHeight = window.innerHeight / 5;
-        const sliceNumber = Math.floor(this.contentRect.top / sliceHeight) + 1;
         const rectangleOffset =
             this.rectangleRef && this.rectangleRef.current
                 ? this.rectangleRef.current.getBoundingClientRect().height / 2
                 : null;
 
-        switch (sliceNumber) {
+        switch (this.slicePosition) {
             case 1:
                 ret.top = '0';
                 ret.marginTop = circleOffset;
@@ -119,16 +130,12 @@ class Beacon extends React.Component {
         // The actual positioning is opposite: circle is anchored to content, rectangle is moved around.
         // As a result, the calculations may be reversed from what you expect.
         if (this.props.position === 'right') {
-            ret.right = '100%';
             ret.paddingRight = circleOffset;
             ret.marginRight = -circleOffset;
-            ret.paddingLeft = 8; // add $padding-default to the non-bubble side
         } else {
             // Left is the default
-            ret.left = '100%';
             ret.paddingLeft = circleOffset;
             ret.marginLeft = -circleOffset;
-            ret.paddingRight = 8;
         }
 
         return ret;
@@ -162,14 +169,16 @@ class Beacon extends React.Component {
     get beaconContent() {
         return (
             <div
-                className="beacon"
+                className={css('beacon', this.positionClasses)}
                 key="beacon"
                 onClick={this.beaconClick}
                 style={this.beaconStyle}
             >
                 <div
                     ref={this.rectangleRef}
-                    className={css('rectangle', { narrow: this.isNarrow })}
+                    className={css('rectangle', this.positionClasses, {
+                        narrow: this.isNarrow
+                    })}
                     style={this.rectangleStyle}
                 >
                     <div className="rectangle-content">
@@ -181,13 +190,15 @@ class Beacon extends React.Component {
                 </div>
 
                 <div
-                    className="circle"
+                    className={css('circle', this.positionClasses)}
                     style={{
                         height: this.circleSize,
                         width: this.circleSize
                     }}
                 >
-                    {this.props.circleContent}
+                    <div className="circle-content">
+                        {this.props.circleContent}
+                    </div>
                 </div>
             </div>
         );

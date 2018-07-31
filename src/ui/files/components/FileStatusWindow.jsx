@@ -50,17 +50,14 @@ class FileStatusWindow extends React.Component {
 
     @computed
     get downloadQueue() {
-        return DOWNLOAD_FILES.map(f => this.fileItem(f, 'download'));
+        return DOWNLOAD_FILES.map(f => this.fileItem(f, this.onCancelDownload));
     }
     @computed
     get uploadQueue() {
-        return UPLOAD_FILES.map(f => this.fileItem(f, 'upload'));
+        return UPLOAD_FILES.map(f => this.fileItem(f, this.onCancelUpload));
     }
 
-    fileItem(file, actionType) {
-        const cancelFunction = `onCancel${actionType[0].toUpperCase() +
-            actionType.slice(1)}`;
-
+    fileItem(file, buttonAction) {
         return (
             <div
                 // TODO: need unique key for iterator
@@ -93,7 +90,7 @@ class FileStatusWindow extends React.Component {
                         className="right-icon"
                         icon="highlight_off"
                         theme="small"
-                        onClick={this[cancelFunction]}
+                        onClick={buttonAction}
                     />
                 )}
 

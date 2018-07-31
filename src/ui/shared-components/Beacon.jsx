@@ -3,6 +3,7 @@ const React = require('react');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
+const uiStore = require('~/stores/ui-store');
 
 /**
  * @augments {React.Component<{
@@ -18,12 +19,12 @@ class Beacon extends React.Component {
     // We make a lot of calculations based on child content size and position
     // `contentRef` stores the ref for the .beacon-container component which contains the child content
     @observable contentRef;
-    @observable renderBeacon;
+    @observable rendered;
     setContentRef = ref => {
         if (ref) {
             this.contentRef = ref;
             this.setContentRect();
-            this.renderBeacon = true;
+            this.rendered = true;
         }
     };
 
@@ -151,9 +152,16 @@ class Beacon extends React.Component {
         return this.rectangleRef.current.getBoundingClientRect().height < 72;
     }
 
-    beaconClick = () => {
-        console.log('beacon click');
-    };
+    @action.bound
+    beaconClick() {
+        this.rendered = false;
+
+        uiStore.beaconNumber += 1;
+        if (!uiStore.currentBeacon) {
+            uiStore.beaconNumber = -1;
+            uiStore.currentBeaconFlow = '';
+        }
+    }
 
     // Render the child content, wrapped in .beacon-container div so we can make the above positioning calculations
     childContent = (
@@ -172,7 +180,7 @@ class Beacon extends React.Component {
         return (
             <div
                 className={css('beacon', this.positionClasses, {
-                    show: this.renderBeacon
+                    show: this.rendered
                 })}
                 key="beacon"
                 onClick={this.beaconClick}

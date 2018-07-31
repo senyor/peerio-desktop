@@ -1,4 +1,4 @@
-const { observable, reaction } = require('mobx');
+const { observable, reaction, computed } = require('mobx');
 const { TinyDb, Clock, User, warnings, clientApp } = require('peerio-icebear');
 const autologin = require('~/helpers/autologin');
 const appControl = require('~/helpers/app-control');
@@ -34,6 +34,22 @@ class UIStore {
             this.messageInputEditorView.focus();
         }
     };
+
+    // Beacon activation
+    // Each beacon sequence or "flow" is an array stored in `beaconFlows` object
+    @observable
+    beaconFlows = {
+        messageInput: ['plus-icon']
+    };
+    @observable currentBeaconFlow = '';
+    @observable beaconNumber = -1;
+
+    // Current beacon returns the appropriate entry from `beaconFlows`
+    @computed
+    get currentBeacon() {
+        if (this.beaconNumber < 0 || !this.currentBeaconFlow) return null;
+        return this.beaconFlows[this.currentBeaconFlow][this.beaconNumber];
+    }
 
     // anything you add here will be stored with 'pref_' prefix in personal tinydb
     @observable

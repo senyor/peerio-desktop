@@ -61,6 +61,7 @@ class Preferences extends React.Component {
     @action.bound
     onSoundSelection(val) {
         this.soundSelected = val;
+        this.playSound();
     }
 
     playSound = () => {

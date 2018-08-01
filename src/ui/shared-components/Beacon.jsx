@@ -175,10 +175,14 @@ class Beacon extends React.Component {
         this.rendered = false;
 
         this.renderTimeout = setTimeout(() => {
+            // If incrementing beaconNumber will go past length of current beaconFlow array, current beacon flow is done
             if (
                 uiStore.beaconNumber + 2 >
                 uiStore.beaconFlows[uiStore.currentBeaconFlow].length
             ) {
+                // // Reset beacon flow
+                // uiStore.beaconNumber = -1;
+                // uiStore.currentBeaconFlow = '';
                 uiStore.beaconNumber = 0;
             } else {
                 uiStore.beaconNumber += 1;

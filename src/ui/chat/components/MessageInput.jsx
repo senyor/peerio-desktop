@@ -206,7 +206,7 @@ class MessageInput extends React.Component {
                     onPaste={this.onPaste}
                 >
                     <Beacon
-                        active={uiStore.currentBeacon === 'plus-icon'}
+                        activeId="plus-icon"
                         header="Beak on alright"
                         text="Beak on beakin' on"
                         circleContent={

@@ -254,7 +254,7 @@ class AppNav extends React.Component {
                         circleContent={
                             <Avatar contact={contact} size="medium" />
                         }
-                        active={uiStore.currentBeacon === 'app-nav'}
+                        activeId="app-nav"
                     >
                         <Menu
                             customButton={

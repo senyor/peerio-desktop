@@ -7,7 +7,7 @@ const uiStore = require('~/stores/ui-store');
 
 /**
  * @augments {React.Component<{
-        active?: boolean
+        activeId: string
         position?: 'left' | 'right'
         header?: string
         text: string
@@ -16,6 +16,10 @@ const uiStore = require('~/stores/ui-store');
  */
 @observer
 class Beacon extends React.Component {
+    @computed
+    get active() {
+        return uiStore.currentBeacon === this.props.activeId;
+    }
     // We make a lot of calculations based on child content size and position
     // `contentRef` stores the ref for the .beacon-container component which contains the child content
     @observable contentRef;
@@ -44,12 +48,12 @@ class Beacon extends React.Component {
         }
     }
 
-    // Update `contentRect` on window resize
     componentWillMount() {
+        // Update `contentRect` on window resize
         window.addEventListener('resize', this.setContentRect);
 
         this.dispose = reaction(
-            () => this.props.active && !!this.contentRef,
+            () => this.active && !!this.contentRef,
             active => {
                 if (active) {
                     this.renderTimeout = setTimeout(() => {
@@ -237,7 +241,7 @@ class Beacon extends React.Component {
     }
 
     render() {
-        if (!this.props.active && !this.rendered) return this.childContent;
+        if (!this.active && !this.rendered) return this.childContent;
 
         const beaconContent = this.beaconContent();
         return [this.childContent, beaconContent];

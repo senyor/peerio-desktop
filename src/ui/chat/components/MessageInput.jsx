@@ -18,6 +18,7 @@ const Snackbar = require('~/ui/shared-components/Snackbar');
 const { pickLocalFiles, getFileList } = require('~/helpers/file');
 const UploadDialog = require('~/ui/shared-components/UploadDialog');
 const Beacon = require('~/ui/shared-components/Beacon');
+const uiStore = require('~/stores/ui-store');
 
 const MessageInputProseMirror = require('./MessageInputProseMirror');
 
@@ -205,7 +206,7 @@ class MessageInput extends React.Component {
                     onPaste={this.onPaste}
                 >
                     <Beacon
-                        active
+                        active={uiStore.currentBeacon === 'plus-icon'}
                         header="Beak on alright"
                         text="Beak on beakin' on"
                         circleContent={

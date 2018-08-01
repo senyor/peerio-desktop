@@ -39,10 +39,10 @@ class UIStore {
     // Each beacon sequence or "flow" is an array stored in `beaconFlows` object
     @observable
     beaconFlows = {
-        messageInput: ['plus-icon']
+        messageInput: ['plus-icon', 'app-nav']
     };
-    @observable currentBeaconFlow = '';
-    @observable beaconNumber = -1;
+    @observable currentBeaconFlow = 'messageInput';
+    @observable beaconNumber = 0;
 
     // Current beacon returns the appropriate entry from `beaconFlows`
     @computed

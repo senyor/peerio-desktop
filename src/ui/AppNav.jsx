@@ -17,6 +17,9 @@ const autologin = require('~/helpers/autologin');
 const path = require('path');
 const config = require('~/config');
 
+const uiStore = require('~/stores/ui-store');
+const Beacon = require('~/ui/shared-components/Beacon');
+
 const { app, nativeImage } = remote;
 
 // todo: move this somewhere more appropriate
@@ -245,35 +248,44 @@ class AppNav extends React.Component {
                             'avatar-notify': !primaryAddressConfirmed
                         })}
                     />
-                    <Menu
-                        customButton={
+                    <Beacon
+                        header="Beacoooooooooon"
+                        text="Beepity boopity boo"
+                        circleContent={
                             <Avatar contact={contact} size="medium" />
                         }
-                        position="top-left"
-                        theme="wide"
-                        innerClassName={css('app-nav-menu', {
-                            'color-icons': this.colorIcons
-                        })}
+                        active={uiStore.currentBeacon === 'app-nav'}
                     >
-                        <MenuHeader
-                            leftContent={
-                                <Avatar
-                                    contact={contact}
-                                    size="medium"
-                                    onClick={this.toProfile}
-                                />
+                        <Menu
+                            customButton={
+                                <Avatar contact={contact} size="medium" />
                             }
-                            caption={contact.fullName}
-                            legend={contact.username}
-                        />
-                        <Divider />
-                        <div
-                            onMouseEnter={this.disableColorIcons}
-                            onMouseLeave={this.enableColorIcons}
+                            position="top-left"
+                            theme="wide"
+                            innerClassName={css('app-nav-menu', {
+                                'color-icons': this.colorIcons
+                            })}
                         >
-                            {this.menuItems}
-                        </div>
-                    </Menu>
+                            <MenuHeader
+                                leftContent={
+                                    <Avatar
+                                        contact={contact}
+                                        size="medium"
+                                        onClick={this.toProfile}
+                                    />
+                                }
+                                caption={contact.fullName}
+                                legend={contact.username}
+                            />
+                            <Divider />
+                            <div
+                                onMouseEnter={this.disableColorIcons}
+                                onMouseLeave={this.enableColorIcons}
+                            >
+                                {this.menuItems}
+                            </div>
+                        </Menu>
+                    </Beacon>
                 </div>
                 <div className="app-menu">
                     <AppNavButton

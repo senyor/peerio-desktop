@@ -1,6 +1,6 @@
 // @ts-check
 const React = require('react');
-const { action, computed, observable } = require('mobx');
+const { action, computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const uiStore = require('~/stores/ui-store');
@@ -19,12 +19,11 @@ class Beacon extends React.Component {
     // We make a lot of calculations based on child content size and position
     // `contentRef` stores the ref for the .beacon-container component which contains the child content
     @observable contentRef;
-    @observable rendered;
+    @observable rendered = false;
     setContentRef = ref => {
         if (ref) {
             this.contentRef = ref;
             this.setContentRect();
-            this.rendered = true;
         }
     };
 
@@ -48,10 +47,25 @@ class Beacon extends React.Component {
     // Update `contentRect` on window resize
     componentWillMount() {
         window.addEventListener('resize', this.setContentRect);
+
+        this.dispose = reaction(
+            () => this.props.active && !!this.contentRef,
+            active => {
+                if (active) {
+                    this.renderTimeout = setTimeout(() => {
+                        this.rendered = true;
+                    }, 1);
+                } else {
+                    this.rendered = false;
+                }
+            }
+        );
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.setContentRect);
+        this.dispose();
+        this.renderTimeout = null;
     }
 
     // The size of the circle is the greater of the child content's width and height
@@ -156,11 +170,16 @@ class Beacon extends React.Component {
     beaconClick() {
         this.rendered = false;
 
-        uiStore.beaconNumber += 1;
-        if (!uiStore.currentBeacon) {
-            uiStore.beaconNumber = -1;
-            uiStore.currentBeaconFlow = '';
-        }
+        this.renderTimeout = setTimeout(() => {
+            if (
+                uiStore.beaconNumber + 2 >
+                uiStore.beaconFlows[uiStore.currentBeaconFlow].length
+            ) {
+                uiStore.beaconNumber = 0;
+            } else {
+                uiStore.beaconNumber += 1;
+            }
+        }, 250);
     }
 
     // Render the child content, wrapped in .beacon-container div so we can make the above positioning calculations
@@ -175,8 +194,7 @@ class Beacon extends React.Component {
     );
 
     // Beacon content needs to be `computed` because styles (positioning & sizing) can change based on observables
-    @computed
-    get beaconContent() {
+    beaconContent() {
         return (
             <div
                 className={css('beacon', this.positionClasses, {
@@ -219,8 +237,10 @@ class Beacon extends React.Component {
     }
 
     render() {
-        if (!this.props.active) return this.childContent;
-        return [this.childContent, this.beaconContent];
+        if (!this.props.active && !this.rendered) return this.childContent;
+
+        const beaconContent = this.beaconContent();
+        return [this.childContent, beaconContent];
     }
 }
 

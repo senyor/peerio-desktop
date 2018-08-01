@@ -12,11 +12,11 @@ const { action, observable } = require('mobx');
 const sounds = require('~/helpers/sounds');
 
 const TEST_SOUNDS = [
-    { value: 'ack', label: t('ack') },
-    { value: 'sending', label: t('sending') },
-    { value: 'sent', label: t('sent') },
-    { value: 'received', label: t('received') },
-    { value: 'destroy', label: t('destroy') }
+    { value: 'ack', label: 'ack' },
+    { value: 'sending', label: 'sending' },
+    { value: 'sent', label: 'sent' },
+    { value: 'received', label: 'received' },
+    { value: 'destroy', label: 'destroy' }
 ];
 
 @observer
@@ -99,8 +99,12 @@ class Preferences extends React.Component {
         return (
             <div className="preferences">
                 <section className="section-divider">
-                    <div className="title">{t('title_emailNotifications')}</div>
-                    <p>{t('title_emailsDetail')}</p>
+                    <T
+                        k="title_emailNotifications"
+                        tag="div"
+                        className="title"
+                    />
+                    <T k="title_emailsDetail" tag="p" className="subheading" />
                     <Switch
                         checked={User.current.settings.messageNotifications}
                         label={t('title_notificationsEmailMessage')}
@@ -108,8 +112,12 @@ class Preferences extends React.Component {
                     />
                 </section>
                 <section className="section-divider prefs-sounds">
-                    <div className="title">{t('title_soundNotifications')}</div>
-                    <p>{t('title_soundsDetail')}</p>
+                    <T
+                        k="title_soundNotifications"
+                        tag="div"
+                        className="title"
+                    />
+                    <T k="title_soundsDetail" tag="p" className="subheading" />
                     <Switch
                         checked={uiStore.prefs.messageSoundsEnabled}
                         label={t('title_soundsMessage')}
@@ -144,10 +152,16 @@ class Preferences extends React.Component {
                     </div>
                 </section>
                 <section className="section-divider">
-                    <div className="title">
-                        {t('title_desktopNotifications')}
-                    </div>
-                    <p>{t('title_desktopNotificationsDetail')}</p>
+                    <T
+                        k="title_desktopNotifications"
+                        tag="div"
+                        className="title"
+                    />
+                    <T
+                        k="title_desktopNotificationsDetail"
+                        tag="p"
+                        className="subheading"
+                    />
                     <Switch
                         checked={
                             uiStore.prefs.messageDesktopNotificationsEnabled
@@ -185,38 +199,51 @@ class Preferences extends React.Component {
                 </section>
         */}
                 <section className="section-divider prefs-display">
-                    <div className="title">{t('title_displayPreferences')}</div>
-                    <p className="subheading">{t('title_imageFilePreviews')}</p>
+                    <T
+                        k="title_displayPreferences"
+                        tag="div"
+                        className="title"
+                    />
+                    <T
+                        k="title_imageFilePreviews"
+                        tag="p"
+                        className="subheading"
+                    />
                     <Switch
                         className="narrow"
                         label={t('title_showImagePreviews')}
                         checked={uiStore.prefs.peerioContentEnabled}
                         onChange={this.onPeerioContentPreviewToggle}
                     />
-                    <p className="narrow smalltext">
-                        {t('title_showImagePreviewsDescription2')}
-                    </p>
+                    <T
+                        k="title_showImagePreviewsDescription2"
+                        tag="p"
+                        className="narrow smalltext"
+                    />
                     <Switch
+                        className="narrow"
                         label={t('title_showLargeImages', {
                             size: fileStore.inlineImageSizeLimitFormatted
                         })}
                         checked={!uiStore.prefs.limitInlineImageSize}
                         onChange={this.onInlineContentSizeLimitToggle}
                     />
-                    <p className="narrow smalltext">
-                        {t('title_imageTooBigCutoff', {
+                    <T
+                        k="title_imageTooBigCutoff"
+                        tag="p"
+                        className="narrow smalltext"
+                    >
+                        {{
                             size: fileStore.inlineImageSizeLimitCutoffFormatted
-                        })}
-                    </p>
+                        }}
+                    </T>
                 </section>
                 <section className="section-divider prefs-url">
                     <p className="subheading">{t('title_urlPreview')}</p>
                     <div className="warning">
                         <MaterialIcon icon="security" />
                         <div>
-                            <span>
-                                {t('title_EnableUrlPreviewWarning')}&nbsp;
-                            </span>
+                            <T k="title_EnableUrlPreviewWarning" />&nbsp;
                             <T k="title_learnMore" />
                         </div>
                     </div>

@@ -1,12 +1,23 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { Checkbox } = require('peer-ui');
-const { MaterialIcon, Switch } = require('peer-ui');
+const { Button, Dropdown, MaterialIcon, Switch } = require('peer-ui');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { User, chatStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 const { fileStore } = require('peerio-icebear');
+
+const { action, observable } = require('mobx');
+const sounds = require('~/helpers/sounds');
+
+const TEST_SOUNDS = [
+    { value: 'ack', label: t('ack') },
+    { value: 'sending', label: t('sending') },
+    { value: 'sent', label: t('sent') },
+    { value: 'received', label: t('received') },
+    { value: 'destroy', label: t('destroy') }
+];
 
 @observer
 class Preferences extends React.Component {
@@ -44,6 +55,17 @@ class Preferences extends React.Component {
     onInviteDesktopNotificationsChanged(ev) {
         uiStore.prefs.inviteDesktopNotificationsEnabled = ev.target.checked;
     }
+
+    @observable soundSelected = 'sending';
+
+    @action.bound
+    onSoundSelection(val) {
+        this.soundSelected = val;
+    }
+
+    playSound = () => {
+        sounds[this.soundSelected].play();
+    };
 
     onUnreadChatSorting(ev) {
         chatStore.unreadChatsAlwaysOnTop = ev.target.checked;
@@ -103,6 +125,18 @@ class Preferences extends React.Component {
                         label={t('title_soundsError')}
                         onChange={this.onErrorSoundsChanged}
                     />
+
+                    <T k="title_soundSelectHeader" tag="p" />
+                    <div className="sound-selection">
+                        <Dropdown
+                            options={TEST_SOUNDS}
+                            onChange={this.onSoundSelection}
+                            value={this.soundSelected}
+                        />
+                        <Button onClick={this.playSound}>
+                            <T k="title_preview" />
+                        </Button>
+                    </div>
                 </section>
                 <section className="section-divider">
                     <div className="title">

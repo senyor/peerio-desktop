@@ -19,6 +19,34 @@ $pref-width: 480px;
     color: $text-dark-inactive;
   }
 
+  .prefs-sounds {
+    .sound-selection-heading {
+      margin-top: $margin-large;
+      margin-bottom: $margin-default;
+    }
+
+    .sound-selection-container {
+      display: flex;
+      align-items: center;
+      width: $pref-width;
+
+      .p-dropdown {
+        flex-grow: 1;
+        height: 40px;
+        border: 1px solid $divider-dark;
+        border-radius: 8px;
+
+        .inputs-container {
+          width: 100%;
+        }
+      }
+
+      .p-button {
+        margin-left: $margin-default;
+      }
+    }
+  }
+
   .prefs-files {
     .files-location-container {
       .narrow {

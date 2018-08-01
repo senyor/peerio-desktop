@@ -107,7 +107,7 @@ class Preferences extends React.Component {
                         onChange={this.onMsgNotifChanged}
                     />
                 </section>
-                <section className="section-divider">
+                <section className="section-divider prefs-sounds">
                     <div className="title">{t('title_soundNotifications')}</div>
                     <p>{t('title_soundsDetail')}</p>
                     <Switch
@@ -127,8 +127,12 @@ class Preferences extends React.Component {
                         onChange={this.onErrorSoundsChanged}
                     />
 
-                    <T k="title_soundSelectHeader" tag="p" />
-                    <div className="sound-selection">
+                    <T
+                        k="title_soundSelectHeader"
+                        tag="p"
+                        className="subheading sound-selection-heading"
+                    />
+                    <div className="sound-selection-container">
                         <Dropdown
                             options={TEST_SOUNDS}
                             onChange={this.onSoundSelection}

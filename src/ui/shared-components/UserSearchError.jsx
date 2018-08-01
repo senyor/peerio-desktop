@@ -33,7 +33,7 @@ class UserSearchError extends React.Component {
                     ) : null}
                 </div>
                 {this.props.suggestInviteEmail ? (
-                    <Button onClick={this.invite} label={t('button_send')} />
+                    <Button onClick={this.invite} label={t('button_invite')} />
                 ) : null}
             </div>
         );

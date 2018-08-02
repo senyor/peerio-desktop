@@ -7,8 +7,6 @@ const T = require('~/ui/shared-components/T');
 const { User, chatStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 const { fileStore } = require('peerio-icebear');
-
-const { action, observable } = require('mobx');
 const sounds = require('~/helpers/sounds');
 
 const TEST_SOUNDS = [
@@ -56,17 +54,19 @@ class Preferences extends React.Component {
         uiStore.prefs.inviteDesktopNotificationsEnabled = ev.target.checked;
     }
 
-    @observable soundSelected = 'sending';
+    onSoundSelection = val => {
+        const prev = User.current.notificationSound;
+        User.current.notificationSound = val;
+        User.current.saveProfile().catch(() => {
+            User.current.notificationSound = prev;
+        });
 
-    @action.bound
-    onSoundSelection(val) {
-        this.soundSelected = val;
         this.playSound();
-    }
-
-    playSound = () => {
-        sounds[this.soundSelected].play();
     };
+
+    playSound() {
+        sounds[User.current.notificationSound].play();
+    }
 
     onUnreadChatSorting(ev) {
         chatStore.unreadChatsAlwaysOnTop = ev.target.checked;
@@ -144,7 +144,7 @@ class Preferences extends React.Component {
                         <Dropdown
                             options={TEST_SOUNDS}
                             onChange={this.onSoundSelection}
-                            value={this.soundSelected}
+                            value={User.current.notificationSound}
                         />
                         <Button onClick={this.playSound}>
                             <T k="title_preview" />

@@ -16,7 +16,7 @@ const uiStore = require('~/stores/ui-store');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 
-const MessageInput = require('./components/MessageInput');
+const MessageInput = require('./components/MessageInput').default;
 const MessageList = require('./components/MessageList');
 const MessageSideBar = require('./components/sidebar/MessageSideBar');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');

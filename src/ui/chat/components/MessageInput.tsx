@@ -1,52 +1,50 @@
-// @ts-check
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
 
-const React = require('react');
-const { computed, observable, action } = require('mobx');
-const { observer } = require('mobx-react');
-const { debounce } = require('lodash');
+import React from 'react';
+import { computed, observable, action } from 'mobx';
+import { observer } from 'mobx-react';
+import { debounce } from 'lodash';
 
-const css = require('classnames');
-const { t } = require('peerio-translator');
-const { fileStore, chatStore, clientApp } = require('peerio-icebear');
-const { Button, Menu, MenuItem } = require('peer-ui');
+import css from 'classnames';
+import { t } from 'peerio-translator';
+import { fileStore, chatStore, clientApp } from 'peerio-icebear';
+import { Button, Menu, MenuItem } from 'peer-ui';
 
-const FilePicker = require('~/ui/files/components/FilePicker');
-const Snackbar = require('~/ui/shared-components/Snackbar');
-const { pickLocalFiles, getFileList } = require('~/helpers/file');
-const UploadDialog = require('~/ui/shared-components/UploadDialog');
+import FilePicker from '~/ui/files/components/FilePicker';
+import Snackbar from '~/ui/shared-components/Snackbar';
+import { pickLocalFiles, getFileList } from '~/helpers/file';
+import UploadDialog from '~/ui/shared-components/UploadDialog';
 
-const MessageInputProseMirror = require('./MessageInputProseMirror');
+import MessageInputProseMirror from './MessageInputProseMirror';
 
-/**
- * @augments {React.Component<{
-        readonly : boolean
-        placeholder: string
-        onSend : (richText : Object, legacyText : string) => void
-        onAck : () => void
-        onFileShare: (files : any) => void
-        messageListScrolledUp: boolean
-        shareInProgress: boolean
-        onJumpToBottom: () => void
-    }, {}>}
- */
+interface MessageInputProps {
+    readonly: boolean;
+    placeholder: string;
+    onSend: (richText: Object, legacyText: string) => void;
+    onAck: () => void;
+    onFileShare: (files: any) => void; // TODO: TS audit
+    messageListScrolledUp: boolean;
+    shareInProgress: boolean;
+    onJumpToBottom: () => void;
+}
+
 @observer
-class MessageInput extends React.Component {
+export default class MessageInput extends React.Component<MessageInputProps> {
     @observable filePickerActive = false;
 
     @observable uploadDialogActive = false;
-    selectedFiles = [];
+    selectedFiles: string[] = [];
 
     @action.bound
     activateUploadDialog() {
         const chat = chatStore.activeChat;
         if (!chat) return;
         pickLocalFiles().then(paths => {
-            paths = getFileList(paths).success; // eslint-disable-line
-            if (!paths || !paths.length) return;
-            this.selectedFiles = paths;
+            const recognizedPaths = getFileList(paths).success;
+            if (!recognizedPaths || !recognizedPaths.length) return;
+            this.selectedFiles = recognizedPaths;
             this.uploadDialogActive = true;
         });
     }
@@ -61,7 +59,7 @@ class MessageInput extends React.Component {
      * Drag-and-drop is handled by another component higher in the hierarchy,
      * so we use this event handler to ensure drops aren't caught in our input field.
      */
-    preventDrop = e => {
+    preventDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         return false;
     };
@@ -70,7 +68,8 @@ class MessageInput extends React.Component {
         this.filePickerActive = false;
     };
 
-    shareFiles = selected => {
+    // TODO: TS audit
+    shareFiles = (selected: any) => {
         this.props.onFileShare(selected);
         this.handleFilePickerClose();
     };
@@ -80,7 +79,7 @@ class MessageInput extends React.Component {
         this.filePickerActive = true;
     };
 
-    onPaste = ev => {
+    onPaste = (ev: React.ClipboardEvent<HTMLDivElement>) => {
         const chat = chatStore.activeChat;
         if (!chat) return;
         const { items } = ev.clipboardData;
@@ -98,7 +97,7 @@ class MessageInput extends React.Component {
             );
 
             reader.onloadend = () => {
-                const buffer = Buffer.from(reader.result);
+                const buffer = Buffer.from(reader.result as ArrayBuffer);
                 fs.writeFile(tmpPath, buffer, {}, err => {
                     if (err) {
                         console.error(err);
@@ -123,10 +122,10 @@ class MessageInput extends React.Component {
         );
     }
 
-    @observable snackbarRef;
-    @observable wheelOverJumpToBottom;
+    @observable snackbarRef!: Snackbar;
+    @observable wheelOverJumpToBottom = false;
     @action.bound
-    setSnackbarRef(ref) {
+    setSnackbarRef(ref: Snackbar | null) {
         if (ref) this.snackbarRef = ref;
     }
 
@@ -245,5 +244,3 @@ class MessageInput extends React.Component {
         );
     }
 }
-
-module.exports = MessageInput;

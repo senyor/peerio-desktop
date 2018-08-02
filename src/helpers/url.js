@@ -1,4 +1,6 @@
 // @ts-check
+
+/** @type {any} */ // bad typings
 const { Url: UrlMatcher, Email: EmailMatcher } = require('autolinker').matcher;
 
 const allowedProtocols = ['HTTP://', 'HTTPS://', 'MAILTO:'];

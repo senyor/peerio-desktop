@@ -1,3 +1,4 @@
+// @ts-check
 const React = require('react');
 const { DragDropContext } = require('react-dnd');
 const HTML5Backend = require('react-dnd-html5-backend').default;
@@ -11,9 +12,10 @@ const { socket, clientApp, warnings, chatStore } = require('peerio-icebear');
 const { computed, reaction, observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const SystemWarningDialog = require('~/ui/shared-components/SystemWarningDialog');
+const SystemWarningDialog = require('~/ui/shared-components/SystemWarningDialog')
+    .default;
 const TwoFADialog = require('~/ui/shared-components/TwoFADialog');
-const Snackbar = require('~/ui/shared-components/Snackbar');
+const Snackbar = require('~/ui/shared-components/Snackbar').default;
 const UpdateFailedDialog = require('./updater/UpdateFailedDialog');
 const InstallingUpdateDialog = require('./updater/InstallingUpdateDialog');
 const ReadyToInstallUpdateDialog = require('./updater/ReadyToInstallUpdateDialog');
@@ -48,8 +50,8 @@ class Root extends React.Component {
 
     @observable showOfflineNotification = false;
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         if (isDevEnv) {
             appState.devModeEnabled = true;
         }
@@ -122,7 +124,6 @@ class Root extends React.Component {
                 </div>
                 {this.props.children}
 
-                {this.devtools}
                 {this.snackbarVisible ? <Snackbar /> : null}
                 <SystemWarningDialog />
                 <TwoFADialog />

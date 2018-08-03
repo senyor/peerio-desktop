@@ -3,7 +3,12 @@ const sounds = require('~/helpers/sounds');
 const uiStore = require('~/stores/ui-store');
 const appState = require('~/stores/app-state');
 const routerStore = require('~/stores/router-store');
-const { contactStore, chatStore, chatInviteStore } = require('peerio-icebear');
+const {
+    contactStore,
+    chatStore,
+    chatInviteStore,
+    User
+} = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const path = require('path');
 const { app, getCurrentWindow } = require('electron').remote;
@@ -53,7 +58,7 @@ class MessageNotification {
     }
 
     playSound() {
-        sounds.received.play();
+        sounds[User.current.notificationSound].play();
     }
 
     handleClick = () => {
@@ -167,7 +172,7 @@ class InviteNotification {
     }
 
     playSound() {
-        sounds.received.play();
+        sounds[User.current.notificationSound].play();
     }
 
     handleClick = () => {
@@ -247,7 +252,7 @@ class InviteAcceptedNotification {
     }
 
     playSound() {
-        sounds.received.play();
+        sounds[User.current.notificationSound].play();
     }
 
     handleClick = () => {

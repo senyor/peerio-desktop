@@ -240,7 +240,7 @@ class Files extends React.Component {
                 <FilesHeader />
                 <div className="file-wrapper">
                     <div
-                        className="file-table-wrapper scrollable"
+                        className="file-table-wrapper"
                         ref={this.setContainerRef}
                         onScroll={this.enqueueCheck}
                     >
@@ -314,7 +314,6 @@ class Files extends React.Component {
                                 >
                                     {this.renderedItems}
                                 </div>
-                                <div className="file-bottom-filler" />
                             </div>
                         )}
                     </div>

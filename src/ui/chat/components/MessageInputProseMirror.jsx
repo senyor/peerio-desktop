@@ -51,11 +51,12 @@ const { chatStore } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 
 const EmojiPicker = require('~/ui/emoji/Picker');
-const makeUsernameSuggestions = require('./suggestions/UsernameSuggestions');
-const makeEmojiSuggestions = require('./suggestions/EmojiSuggestions');
+const makeUsernameSuggestions = require('./suggestions/UsernameSuggestions')
+    .default;
+const makeEmojiSuggestions = require('./suggestions/EmojiSuggestions').default;
 
 // eslint-disable-next-line no-unused-vars, (used for typechecking)
-const Suggestions = require('./suggestions/Suggestions');
+const Suggestions = require('./suggestions/Suggestions').default;
 
 const {
     BoldButton,

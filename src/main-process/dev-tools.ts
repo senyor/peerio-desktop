@@ -1,7 +1,14 @@
-const { MenuItem } = require('electron');
-const isDevEnv = require('~/helpers/is-dev-env');
-const path = require('path');
-const appControl = require('~/helpers/app-control');
+import path from 'path';
+import { MenuItem, Menu, BrowserWindow } from 'electron';
+
+import install, {
+    REACT_DEVELOPER_TOOLS,
+    REACT_PERF,
+    MOBX_DEVTOOLS
+} from 'electron-devtools-installer';
+
+import * as appControl from '~/helpers/app-control';
+import isDevEnv from '~/helpers/is-dev-env';
 
 const appRootPath = path.resolve(`${__dirname}/../`); // app/build
 const repoRootPath = path.resolve(`${__dirname}/../../../`);
@@ -24,32 +31,29 @@ if (isDevEnv) {
     });
 }
 
-function onAppReady(mainWindow) {
+export function onAppReady(mainWindow: BrowserWindow): void {
     if (!isDevEnv) return;
     if (process.env.REMOTE_DEBUG_PORT === undefined) {
-        mainWindow.openDevTools();
+        mainWindow.webContents.openDevTools();
     }
 }
 
-function installExtensions() {
+export function installExtensions(): Promise<void> {
     if (!isDevEnv) return Promise.resolve();
     console.log('installing extensions.');
     const devtron = require('devtron');
     devtron.install();
-
-    const {
-        default: install,
-        REACT_DEVELOPER_TOOLS,
-        REACT_PERF,
-        MOBX_DEVTOOLS
-    } = require('electron-devtools-installer');
 
     return install([REACT_DEVELOPER_TOOLS, REACT_PERF, MOBX_DEVTOOLS])
         .then(name => console.log(`Added Extension:  ${name}`))
         .catch(err => console.log('An error occurred: ', err));
 }
 
-function extendContextMenu(menu, mainWindow, rightClickPos) {
+export function extendContextMenu(
+    menu: Menu,
+    mainWindow: BrowserWindow,
+    rightClickPos: { x: number; y: number }
+): void {
     console.log('Extending context menu with dev tools.');
     menu.append(new MenuItem({ type: 'separator' }));
     menu.append(
@@ -83,10 +87,11 @@ function extendContextMenu(menu, mainWindow, rightClickPos) {
         new MenuItem({
             label: '☝️ Inspect Element',
             click() {
-                mainWindow.inspectElement(rightClickPos.x, rightClickPos.y);
+                mainWindow.webContents.inspectElement(
+                    rightClickPos.x,
+                    rightClickPos.y
+                );
             }
         })
     );
 }
-
-module.exports = { onAppReady, extendContextMenu, installExtensions };

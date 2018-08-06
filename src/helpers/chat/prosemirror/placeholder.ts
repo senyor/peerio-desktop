@@ -1,6 +1,5 @@
-// @ts-check
-const { Plugin } = require('prosemirror-state');
-const { Node } = require('prosemirror-model'); // eslint-disable-line no-unused-vars, (for typechecking)
+import { Plugin } from 'prosemirror-state';
+import { Node } from 'prosemirror-model';
 
 /**
  * A ProseMirror plugin that applies a CSS class to the editor view when the document is empty, as well as a
@@ -8,15 +7,18 @@ const { Node } = require('prosemirror-model'); // eslint-disable-line no-unused-
  *
  * If you need to update the placeholder text, you can call `EditorState.reconfigure` with a new placeholder plugin.
  *
- * @param {string} text The placeholder text.
- * @param {Node} emptyState If the document state is equal to this state, the editor will be considered empty.
- * @param {string} [emptyClassName] The CSS class to apply to the editor view when the document is empty.
+ * @param text The placeholder text.
+ * @param emptyState If the document state is equal to this state, the editor will be considered empty.
+ * @param emptyClassName The CSS class to apply to the editor view when the document is empty.
  */
-function placeholder(text, emptyState, emptyClassName = 'ProseMirror-empty') {
+export function placeholder(
+    text: string,
+    emptyState: Node,
+    emptyClassName: string = 'ProseMirror-empty'
+) {
     const placeholderPlugin = new Plugin({
         view(editorView) {
-            // @ts-ignore (dom typed as Element instead of HTMLElement)
-            editorView.dom.dataset.placeholder = text;
+            (editorView.dom as HTMLElement).dataset.placeholder = text;
             if (editorView.state.doc.eq(emptyState)) {
                 editorView.dom.classList.add(emptyClassName);
             }
@@ -30,8 +32,8 @@ function placeholder(text, emptyState, emptyClassName = 'ProseMirror-empty') {
                 destroy() {
                     if (editorView && editorView.dom) {
                         editorView.dom.classList.remove(emptyClassName);
-                        // @ts-ignore (dom typed as Element instead of HTMLElement)
-                        delete editorView.dom.dataset.placeholder;
+                        delete (editorView.dom as HTMLElement).dataset
+                            .placeholder;
                     }
                 }
             };
@@ -40,7 +42,3 @@ function placeholder(text, emptyState, emptyClassName = 'ProseMirror-empty') {
 
     return placeholderPlugin;
 }
-
-module.exports = {
-    placeholder
-};

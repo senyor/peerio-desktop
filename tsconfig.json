@@ -11,8 +11,8 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true,
-    "noUnusedLocals": false, // TODO: enable
-    "noUnusedParameters": false, // TODO: enable
+    // "noUnusedLocals": true, // TODO: https://github.com/PeerioTechnologies/peerio-updater/pull/3
+    "noUnusedParameters": true,
     "noImplicitAny": false, // TODO: enable (default enabled under `strict`, so just remove this line)
     "strictNullChecks": false, // TODO: enable (default enabled under `strict`, so just remove this line)
     "paths": {
@@ -25,5 +25,5 @@
     }
   },
   "include": ["src/**/*", "test/**/*"],
-  "exclude": ["src/static", "src/styles", "node_modules", "app/node_modules"]
+  "exclude": ["src/static/**/*"]
 }

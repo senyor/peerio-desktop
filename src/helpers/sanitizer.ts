@@ -1,12 +1,10 @@
-const DOMPurify = require('dompurify');
+import DOMPurify from 'dompurify';
 
 const chatMsgOptions = {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: []
 };
 
-function sanitizeChatMessage(msg) {
+export function sanitizeChatMessage(msg: string): string {
     return DOMPurify.sanitize(msg, chatMsgOptions);
 }
-
-module.exports = { sanitizeChatMessage };

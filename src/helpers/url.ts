@@ -1,10 +1,9 @@
-// @ts-check
-
-/** @type {any} */ // bad typings
-const { Url: UrlMatcher, Email: EmailMatcher } = require('autolinker').matcher;
+import { matcher } from 'autolinker';
+const { Url: UrlMatcher, Email: EmailMatcher } = matcher as any; // bad typings
 
 const allowedProtocols = ['HTTP://', 'HTTPS://', 'MAILTO:'];
-function isUrlAllowed(url) {
+
+export function isUrlAllowed(url: string): boolean {
     if (typeof url !== 'string') return false;
     const URL = url.toLocaleUpperCase().trim();
     for (let i = 0; i < allowedProtocols.length; i++) {
@@ -33,10 +32,11 @@ const urlMatcher = new UrlMatcher({
 const emailMatcher = new EmailMatcher({ tagBuilder: {} });
 
 /**
- * @param {string} text The string to search for URL matches.
- * @returns {{ text: string, index: number, href: string }[]}
+ * @param text The string to search for URL matches.
  */
-function parseUrls(text) {
+export function parseUrls(
+    text: string
+): { text: string; index: number; href: string }[] {
     return urlMatcher
         .parseMatches(text)
         .concat(emailMatcher.parseMatches(text))
@@ -47,5 +47,3 @@ function parseUrls(text) {
         }))
         .filter(match => isUrlAllowed(match.href));
 }
-
-module.exports = { isUrlAllowed, parseUrls };

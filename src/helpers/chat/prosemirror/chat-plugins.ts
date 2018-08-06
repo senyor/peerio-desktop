@@ -1,56 +1,47 @@
-// @ts-check
-const os = require('os');
+import os from 'os';
 
-const {
+import {
     exitCode,
     toggleMark,
     chainCommands,
     baseKeymap
-} = require('prosemirror-commands');
-const { keymap } = require('prosemirror-keymap');
-const { undo, redo } = require('prosemirror-history');
-const {
-    undoInputRule,
-    inputRules,
-    InputRule
-} = require('prosemirror-inputrules');
-const { history } = require('prosemirror-history');
-const { dropCursor } = require('prosemirror-dropcursor');
-const { gapCursor } = require('prosemirror-gapcursor');
+} from 'prosemirror-commands';
+import { keymap } from 'prosemirror-keymap';
+import { undo, redo, history } from 'prosemirror-history';
+import { undoInputRule, inputRules, InputRule } from 'prosemirror-inputrules';
+import { dropCursor } from 'prosemirror-dropcursor';
+import { gapCursor } from 'prosemirror-gapcursor';
+import { EditorState, Transaction } from 'prosemirror-state';
 
-const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
-const {
+import { chatSchema } from '~/helpers/chat/prosemirror/chat-schema';
+import {
     emojiByAllShortnames,
     emojiByAsciiSequences
-} = require('~/helpers/chat/emoji');
-const { emojiPlugin } = require('~/helpers/chat/prosemirror/emoji-plugin');
-const {
-    ensuredInputRules
-} = require('~/helpers/chat/prosemirror/ensured-input-rules');
-
-// eslint-disable-next-line no-unused-vars, (for typechecking)
-const { EditorState, Transaction } = require('prosemirror-state');
+} from '~/helpers/chat/emoji';
+import { emojiPlugin } from '~/helpers/chat/prosemirror/emoji-plugin';
+import { ensuredInputRules } from '~/helpers/chat/prosemirror/ensured-input-rules';
 
 // We want most of the keys from the base keymap but filter a few out
 const { Enter, ...passthroughKeys } = baseKeymap;
 
-/* eslint-disable quote-props */
 /* eslint-disable dot-notation */
 const chatKeys = {
     ...passthroughKeys,
-    'Shift-Enter': chainCommands(exitCode, (
-        /** @type {EditorState} */ state,
-        /** @type {(tr : Transaction) => void} */ dispatch
-    ) => {
-        if (dispatch) {
-            dispatch(
-                state.tr
-                    .replaceSelectionWith(chatSchema.nodes.hard_break.create())
-                    .scrollIntoView()
-            );
+    'Shift-Enter': chainCommands(
+        exitCode,
+        (state: EditorState, dispatch: (tr: Transaction) => void) => {
+            if (dispatch) {
+                dispatch(
+                    state.tr
+                        .replaceSelectionWith(
+                            chatSchema.nodes.hard_break.create()
+                        )
+                        .scrollIntoView()
+                );
+            }
+            return true;
         }
-        return true;
-    }),
+    ),
     // keybindings are referenced in the FormattingButton component, so if
     // they're being changed here make sure they're reflected there as well!
     'Mod-b': toggleMark(chatSchema.marks.strong),
@@ -79,7 +70,6 @@ if (os.type() !== 'Darwin') {
     chatKeys['Ctrl-Enter'] = chatKeys['Shift-Enter'];
 }
 /* eslint-enable dot-notation */
-/* eslint-enable quote-props */
 
 const chatKeymap = keymap(chatKeys);
 
@@ -149,14 +139,12 @@ const emojiAsciiInputRule = new InputRule(
     }
 );
 
-module.exports = {
-    chatPlugins: [
-        chatKeymap,
-        dropCursor(),
-        gapCursor(),
-        history(),
-        inputRules({ rules: [emojiShortnameInputRule, emojiAsciiInputRule] }),
-        ensuredInputRules({ rules: [mentionInputRule] }),
-        emojiPlugin()
-    ]
-};
+export const chatPlugins = [
+    chatKeymap,
+    dropCursor(),
+    gapCursor(),
+    history(),
+    inputRules({ rules: [emojiShortnameInputRule, emojiAsciiInputRule] }),
+    ensuredInputRules({ rules: [mentionInputRule] }),
+    emojiPlugin()
+];

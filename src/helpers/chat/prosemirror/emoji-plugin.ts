@@ -1,11 +1,11 @@
-// @ts-check
-const { Plugin } = require('prosemirror-state');
-const { DOMParser } = require('prosemirror-model');
-const cheerio = require('cheerio');
-const debounce = require('lodash/debounce');
+import { Plugin } from 'prosemirror-state';
+import { DOMParser } from 'prosemirror-model';
+import { EditorView } from 'prosemirror-view';
+import cheerio from 'cheerio';
+import debounce from 'lodash/debounce';
 
-const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
-const { emojiByCanonicalShortname } = require('~/helpers/chat/emoji');
+import { chatSchema } from '~/helpers/chat/prosemirror/chat-schema';
+import { emojiByCanonicalShortname, Emoji } from '~/helpers/chat/emoji';
 
 const unicodeToEmoji = {};
 const unicodeSequences = [];
@@ -34,15 +34,15 @@ const parser = DOMParser.fromSchema(chatSchema);
  * their own PM nodes -- instead they just manipulate the HTML string that's
  * passed to the parser.
  */
-function emojiPlugin() {
+export function emojiPlugin() {
     // ProseMirror's handleTextInput prop seems to always work with surrogate
     // halves, so an IME that inserts an emoji may call it twice or more with
     // meaningless characters each time.
     //
     // As a solution, we accumulate characters with a short debounce, and check
     // them all on the trailing edge.
-    let charAccumulator;
-    let _from;
+    let charAccumulator: string;
+    let _from: number;
 
     function resetCharacterCheck() {
         charAccumulator = '';
@@ -52,7 +52,7 @@ function emojiPlugin() {
 
     // TODO: verify if we need a debounce time in any scenarios or if the
     // nextTick-like default behaviour is always sufficient.
-    const checkCharacters = debounce(view => {
+    const checkCharacters = debounce((view: EditorView) => {
         const emoji = unicodeToEmoji[charAccumulator];
         if (emoji) {
             const { state } = view;
@@ -71,7 +71,7 @@ function emojiPlugin() {
     // Note that this mirrors the values returned by toDOM and toReact in the
     // chat schema, and the DOM tag we build in clipboardTextParser below -- if
     // any of them change, the change should be reflected everywhere!
-    const unicodeToImg = unicode => {
+    const unicodeToImg = (unicode: string) => {
         const emoji = unicodeToEmoji[unicode];
         if (!emoji) return unicode;
         return `<img class="emojione" alt="${emoji.characters}" title="${
@@ -94,17 +94,15 @@ function emojiPlugin() {
             // works reliably and allows us to do a quick replacement on HTML
             // without worrying that we're eg. invalidating the HTML by replacing
             // inside an attribute value.
-            transformPastedHTML(html) {
-                // @ts-ignore bad typings
+            transformPastedHTML(html: string) {
                 const $ = cheerio.load(html);
                 $('*')
                     .contents()
-                    .filter((i, el) => el.type === 'text')
-                    .each((i, el) => {
+                    .filter((_i, el) => el.type === 'text')
+                    .each((_i, el) => {
                         const wrapped = $(el);
 
-                        /** @type {string} */
-                        const text = wrapped.text();
+                        const text: string = wrapped.text();
                         const replacement = text.replace(
                             emojiRegex,
                             unicodeToImg
@@ -124,17 +122,14 @@ function emojiPlugin() {
             // additionally we test each line for emoji, and if we match any, we
             // split the line and build text nodes and <img> tags within its <p>
             // tag.
-            clipboardTextParser(text) {
+            clipboardTextParser(text: string) {
                 const dom = document.createElement('div');
                 text.trim()
                     .split(/(?:\r\n?|\n)+/)
                     .forEach(block => {
-                        /** @type {RegExpMatchArray | undefined} */
-                        let match;
+                        let match: RegExpMatchArray | undefined;
 
-                        // FIXME/TS: interface 'Emoji' from heplers/chat/emoji.js, not this inline def
-                        /** @type {({characters, shortname, filename} | string)[]} */
-                        const result = [];
+                        const result: (Emoji | string)[] = [];
 
                         let lastIndex = 0;
 
@@ -194,7 +189,7 @@ function emojiPlugin() {
                 return parser.parseSlice(dom);
             },
             // Handle unicode input directly from keyboard.
-            handleTextInput(view, from, to, text) {
+            handleTextInput(view, from, _to, text) {
                 charAccumulator += text;
                 _from = Math.min(_from, from);
                 checkCharacters(view);
@@ -203,5 +198,3 @@ function emojiPlugin() {
         }
     });
 }
-
-module.exports = { emojiPlugin };

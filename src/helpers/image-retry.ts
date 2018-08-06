@@ -8,12 +8,12 @@
  * 3. It forces reload of failed images.
  */
 
-const { socket } = require('peerio-icebear');
-const { reaction } = require('mobx');
+import { reaction, IReactionDisposer } from 'mobx';
+import { socket } from 'peerio-icebear';
 
-let disposer;
+let disposer: IReactionDisposer | null = null;
 
-function start() {
+export function start(): void {
     if (disposer) return;
     disposer = reaction(
         () => socket.connected,
@@ -35,9 +35,7 @@ function start() {
     );
 }
 
-function stop() {
+export function stop(): void {
     if (disposer) disposer();
     disposer = null;
 }
-
-module.exports = { start, stop };

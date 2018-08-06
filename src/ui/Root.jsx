@@ -57,8 +57,8 @@ class Root extends React.Component {
         }
 
         // events from main process
-        ipcRenderer.on('warning', (ev, key) => warnings.add(key)); // TODO: not needed anymore?
-        ipcRenderer.on('console_log', (ev, arg) => console.log(arg));
+        ipcRenderer.on('warning', (_ev, key) => warnings.add(key)); // TODO: not needed anymore?
+        ipcRenderer.on('console_log', (_ev, arg) => console.log(arg));
         ipcRenderer.on('activate_dev_mode', () => {
             appState.devModeEnabled = true;
         });

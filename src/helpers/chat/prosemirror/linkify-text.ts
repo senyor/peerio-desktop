@@ -1,14 +1,9 @@
-// @ts-check
-const { parseUrls } = require('~/helpers/url');
-const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
+import { parseUrls } from '~/helpers/url';
+import { chatSchema } from '~/helpers/chat/prosemirror/chat-schema';
 
-const { EditorState } = require('prosemirror-state'); // eslint-disable-line no-unused-vars, (used for typechecking)
+import { EditorState } from 'prosemirror-state';
 
-/**
- * @param {EditorState} state
- * @returns {EditorState}
- */
-function linkify(state) {
+export function linkify(state: EditorState): EditorState {
     // this is basically nonsense, but i can't for the life of me figure out a
     // way to make multiple replacements in a single transaction in prosemirror
     // -- when there's several matches being applied, it sometimes corrupts the
@@ -17,7 +12,7 @@ function linkify(state) {
     // not ideal, but messages are short and not deep and we're only doing this
     // once on send, so it's ok if it's a bit more work.
     let linkifiedState = state;
-    let didMatch;
+    let didMatch: boolean;
     do {
         didMatch = false;
         const { tr } = linkifiedState;
@@ -30,7 +25,7 @@ function linkify(state) {
             // is bolded. in practice this should never be an issue, and text
             // that's fully-styled works.
             if (node.isText) {
-                const matches = parseUrls(node.text);
+                const matches = parseUrls(node.text!);
                 // because of our weird approach, instead of iterating through
                 // the matches we just grab the first one each time.
                 if (matches.length > 0) {
@@ -56,5 +51,3 @@ function linkify(state) {
 
     return linkifiedState;
 }
-
-module.exports = { linkify };

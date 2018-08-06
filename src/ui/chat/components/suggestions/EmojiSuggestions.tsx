@@ -1,19 +1,14 @@
-// @ts-check
-const React = require('react');
-const Suggestions = require('./Suggestions');
-const { emojiByAllShortnames } = require('~/helpers/chat/emoji');
-const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
+import React from 'react';
+import { EditorView } from 'prosemirror-view';
 
-const { EditorView } = require('prosemirror-view'); // eslint-disable-line no-unused-vars, (for typechecking)
-const { Node } = require('prosemirror-model'); // eslint-disable-line no-unused-vars, (for typechecking)
+import { emojiByAllShortnames, Emoji } from '~/helpers/chat/emoji';
+import { chatSchema } from '~/helpers/chat/prosemirror/chat-schema';
+import Suggestions from './Suggestions';
 
 const shortnames = Object.keys(emojiByAllShortnames);
 
-/**
- * @param {() => EditorView} getView
- */
-function makeEmojiSuggestions(getView) {
-    return new Suggestions({
+export default function makeEmojiSuggestions(getView: () => EditorView) {
+    return new Suggestions<{ emoji: Emoji; name: string }>({
         // Match (but don't include) the start of the input, or any kind of
         // whitespace, or the unicode object replacement character (which we use
         // in the Suggestions to replace leaf nodes that don't contain text),
@@ -56,5 +51,3 @@ function makeEmojiSuggestions(getView) {
         }
     });
 }
-
-module.exports = makeEmojiSuggestions;

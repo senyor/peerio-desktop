@@ -1,6 +1,6 @@
-const { Menu, globalShortcut } = require('electron');
-const devtools = require('~/main-process/dev-tools');
-const isDevEnv = require('~/helpers/is-dev-env');
+import { Menu, globalShortcut } from 'electron';
+import * as devtools from '~/main-process/dev-tools';
+import isDevEnv from '~/helpers/is-dev-env';
 
 const rightClickPos = { x: 0, y: 0 };
 
@@ -26,7 +26,7 @@ Menu.buildFromTemplate([
 
 let devToolsMenuCreated = false;
 
-function buildContextMenu(mainWindow) {
+export default function buildContextMenu(mainWindow) {
     console.log('Building context menu.');
     if (isDevEnv) {
         devtools.extendContextMenu(menu, mainWindow, rightClickPos);
@@ -39,7 +39,7 @@ function buildContextMenu(mainWindow) {
         });
     }
 
-    mainWindow.webContents.on('context-menu', (e, props) => {
+    mainWindow.webContents.on('context-menu', (_e, props) => {
         rightClickPos.x = props.x;
         rightClickPos.y = props.y;
         const { isEditable } = props;
@@ -50,5 +50,3 @@ function buildContextMenu(mainWindow) {
         }
     });
 }
-
-module.exports = buildContextMenu;

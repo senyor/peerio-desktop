@@ -1,11 +1,14 @@
 /**
  * Looks for an attribute value in html element's parent chain.
  * Starts checks from the element itself.
- * @param {Object} element - html element
- * @param {string} attribute - attribute name
- * @returns {string|null} found attribute value or null
+ * @param element - html element
+ * @param attribute - attribute name
+ * @returns found attribute value or null
  */
-function getAttributeInParentChain(element, attribute) {
+export function getAttributeInParentChain(
+    element: HTMLElement,
+    attribute: string
+): string | null {
     let el = element;
 
     while (el) {
@@ -18,11 +21,14 @@ function getAttributeInParentChain(element, attribute) {
 
 /**
  * Returns html element in parent chain that has a certain class.
- * @param {Object} element - html element
- * @param {string} attribute - attribute name
- * @returns {Object} found html element or null
+ * @param element - html element
+ * @param attribute - attribute name
+ * @returns found html element or null
  */
-function getParentWithClass(element, className) {
+export function getParentWithClass(
+    element: HTMLElement,
+    className
+): HTMLElement | null {
     let el = element;
 
     while (el) {
@@ -35,11 +41,10 @@ function getParentWithClass(element, className) {
 
 /**
  * Finds all 'data-...' props of an instance of a component
- * @param {Object} - props from component
- * @returns {Object}
+ * @param props from component
  */
-function getDataProps(props) {
-    const dataProps = {};
+export function getDataProps<T extends {}>(props: T): T {
+    const dataProps = {} as T;
 
     Object.keys(props)
         .filter(p => p.startsWith('data-'))
@@ -49,9 +54,3 @@ function getDataProps(props) {
 
     return dataProps;
 }
-
-module.exports = {
-    getAttributeInParentChain,
-    getParentWithClass,
-    getDataProps
-};

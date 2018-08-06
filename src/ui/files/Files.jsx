@@ -35,7 +35,7 @@ const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 @DropTarget(
     [DragDropTypes.NATIVEFILE],
     {
-        drop(props, monitor) {
+        drop(_props, monitor) {
             if (monitor.didDrop()) return; // drop was already handled by eg. a droppable folder line
             uploadDroppedFiles(
                 monitor.getItem().files,

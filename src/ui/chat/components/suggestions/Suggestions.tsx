@@ -1,5 +1,3 @@
-// @ts-check
-
 /*
 
 This class is slightly strange -- you'll notice it's not a React component, but
@@ -15,12 +13,17 @@ hierarchy, respectively, and call 'cleanup' when unmounting.
 
 */
 
-const React = require('react');
-const { observable, autorun, action, computed, runInAction } = require('mobx');
-const { observer } = require('mobx-react');
-const { Plugin } = require('prosemirror-state');
-
-const { ResolvedPos } = require('prosemirror-model'); // eslint-disable-line no-unused-vars, (for typechecking)
+import React from 'react';
+import {
+    observable,
+    autorun,
+    action,
+    computed,
+    runInAction,
+    IReactionDisposer
+} from 'mobx';
+import { observer } from 'mobx-react';
+import { Plugin, TextSelection } from 'prosemirror-state';
 
 /**
  * The maximum amount of leading text (before the cursor) we'll check when
@@ -28,52 +31,64 @@ const { ResolvedPos } = require('prosemirror-model'); // eslint-disable-line no-
  */
 const MATCH_BEFORE = 100; // TODO: consider making tunable in Suggestions constuctor
 
-/**
- * @typedef MatchData
- *
- * @property {RegExpMatchArray} match
- *
- * @property {number} from
- *
- * @property {number} to
- *
- */
+interface MatchData {
+    match: RegExpMatchArray;
+    from: number;
+    to: number;
+}
 
-/**
- * @typedef SuggestionsConfig
- *
- * @property {RegExp[]} matchers Regular expressions against which the input
- * will be tested to see if we have a token for matching against our
- * suggestion source. The capture group is allowed to match an empty string.
- *
- * @property {(matchData : MatchData) => any[]} source Given an object with
- * a match from one of our matchers, return the actual object we can use in
- * the suggestions component.
- *
- * @property {(match : any) => string | JSX.Element} formatter Given the
- * object returned from our suggestions source, return a JSX element or
- * string formatted for display in our suggestions list.
- *
- * @property {string} keySource key of our returned object that we should
- * use when mapping the suggestion results in the React component.
- *
- * @property { (matchData : MatchData, acceptedSuggestion : any) => any } onAcceptSuggestion
- */
+interface SuggestionsConfig<T> {
+    /**
+     * Regular expressions against which the input will be tested to see if we
+     * have a token for matching against our suggestion source. The capture
+     * group is allowed to match an empty string.
+     */
+    matchers: RegExp[];
 
-class Suggestions {
+    /**
+     * Given an object with a match from one of our matchers, return the actual
+     * object we can use in the suggestions component.
+     */
+    source: (matchData: MatchData) => T[];
+
+    /**
+     * Given the object returned from our suggestions source, return a JSX
+     * element or string formatted for display in our suggestions list.
+     */
+    formatter: (match: T) => string | JSX.Element;
+
+    /**
+     * key of our returned object that we should use when mapping the suggestion
+     * results in the React component.
+     */
+    keySource: string;
+
+    onAcceptSuggestion: (matchData: MatchData, acceptedSuggestion: T) => void;
+}
+
+export default class Suggestions<T> {
     @observable selectedIndex = 0;
 
-    /** @type {MatchData | null} */
-    @observable.shallow matchData = null;
+    @observable.shallow matchData: MatchData | null = null;
 
     /* FIXME/TS: this class should be generic:
        'any'/'any[]' should be 'T'/'T[]', keySource should be 'keyof T'.
     */
 
-    /**
-     * @param {SuggestionsConfig} config
-     */
-    constructor(config) {
+    readonly matchers: RegExp[];
+    readonly source: (matchData: MatchData) => T[];
+    readonly formatter: (match: T) => string | JSX.Element;
+    readonly keySource: string;
+    readonly onAcceptSuggestion: (
+        matchData: MatchData,
+        acceptedSuggestion: T
+    ) => void;
+
+    readonly plugin: Plugin;
+
+    readonly disposer: IReactionDisposer;
+
+    constructor(config: SuggestionsConfig<T>) {
         const {
             matchers,
             source,
@@ -98,11 +113,13 @@ class Suggestions {
                 );
             }
 
-            /** @type {any} */
             const el = document.querySelector(
                 `.suggests>.suggest-item:nth-of-type(${this.selectedIndex + 1})`
             );
-            if (el) el.scrollIntoViewIfNeeded(true);
+            if (el) {
+                // Chrome-only method, so not available in typings
+                (el as any).scrollIntoViewIfNeeded(true);
+            }
         });
     }
 
@@ -175,10 +192,10 @@ class Suggestions {
     });
 }
 
-function makePlugin(/** @type {Suggestions} */ self) {
+function makePlugin(self: Suggestions<any>) {
     return new Plugin({
         props: {
-            handleKeyDown(view, ev) {
+            handleKeyDown(_view, ev) {
                 switch (ev.key) {
                     case 'ArrowDown':
                         if (self.visible && self.suggestions.length > 0) {
@@ -248,9 +265,7 @@ function makePlugin(/** @type {Suggestions} */ self) {
                         return;
                     }
 
-                    // FIXME/TS: cast selection as TextSelection here instead of using index notation hack
-                    /** @type {ResolvedPos} */
-                    const cursor = view.state.selection['$cursor']; // eslint-disable-line dot-notation
+                    const cursor = (state.selection as TextSelection).$cursor;
                     if (cursor) {
                         // Adapted from logic in https://github.com/ProseMirror/prosemirror-inputrules
                         const textBefore = cursor.parent.textBetween(
@@ -282,5 +297,3 @@ function makePlugin(/** @type {Suggestions} */ self) {
         }
     });
 }
-
-module.exports = Suggestions;

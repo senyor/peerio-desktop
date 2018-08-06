@@ -1,20 +1,15 @@
-// @ts-check
-const { chatSchema } = require('~/helpers/chat/prosemirror/chat-schema');
+import { chatSchema } from '~/helpers/chat/prosemirror/chat-schema';
 
-const { EditorState } = require('prosemirror-state'); // eslint-disable-line no-unused-vars, (used for typechecking)
+import { EditorState } from 'prosemirror-state';
 
 // Same as the input rule pattern, but we can lookahead for whitespace OR the end of the input
 const mentionEnsurePattern = /(?<=^|\s|\u{fffc})@([a-zA-Z0-9_]{1,32})(?=\s|$)/u;
 
 // See linkify-text.js for explanation of this approach.
 
-/**
- * @param {EditorState} state
- * @returns {EditorState}
- */
-function ensureMentions(state) {
+export function ensureMentions(state: EditorState): EditorState {
     let mentionifiedState = state;
-    let didMatch;
+    let didMatch: boolean;
     do {
         didMatch = false;
         const { tr } = mentionifiedState;
@@ -46,5 +41,3 @@ function ensureMentions(state) {
 
     return mentionifiedState;
 }
-
-module.exports = { ensureMentions };

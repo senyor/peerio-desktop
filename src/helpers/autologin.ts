@@ -1,15 +1,15 @@
-const { User, warnings, crypto, TinyDb } = require('peerio-icebear');
-const keychain = require('~/helpers/keychain');
+import { User, warnings, crypto, TinyDb } from 'peerio-icebear';
+import * as keychain from '~/helpers/keychain';
 
-function enable() {
+export function enable(): void {
     return _setAutologin(true);
 }
 
-function disable() {
+export function disable(): void {
     return _setAutologin(false);
 }
 
-function _setAutologin(enabled) {
+function _setAutologin(enabled: boolean): void {
     User.current.autologinEnabled = enabled;
     if (enabled) {
         keychain
@@ -43,7 +43,7 @@ function _setAutologin(enabled) {
     }
 }
 
-function getPassphrase(username) {
+export function getPassphrase(username: string): Promise<string | false> {
     return keychain.getSecret(username).then(padded => {
         if (padded) return crypto.cryptoUtil.unpadPassphrase(padded);
         return false;
@@ -53,19 +53,11 @@ function getPassphrase(username) {
 /**
  * Marks current user on current device as 'should not be suggested to enablie autologin'
  */
-function dontSuggestEnablingAgain() {
+export function dontSuggestEnablingAgain() {
     return TinyDb.user.setValue('autologinSuggested', true);
 }
 
-async function shouldSuggestEnabling() {
+export async function shouldSuggestEnabling() {
     const ret = await TinyDb.user.getValue('autologinSuggested');
     return !ret;
 }
-
-module.exports = {
-    enable,
-    disable,
-    getPassphrase,
-    dontSuggestEnablingAgain,
-    shouldSuggestEnabling
-};

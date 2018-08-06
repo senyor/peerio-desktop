@@ -1,5 +1,5 @@
-const electron = require('electron').remote;
-const { socket } = require('peerio-icebear');
+import { remote as electron } from 'electron';
+import { socket } from 'peerio-icebear';
 
 /*
   When we receive power event there can be 3 cases:
@@ -9,7 +9,7 @@ const { socket } = require('peerio-icebear');
   - We are connected, but not authenticated yet, can't even send the message.
  */
 
-function suspendHandler() {
+function suspendHandler(): void {
     console.log('The system is going to sleep');
     if (!socket.authenticated) return;
     socket.send('/auth/push/enable').catch(err => {
@@ -18,7 +18,7 @@ function suspendHandler() {
     });
 }
 
-function resumeHandler() {
+function resumeHandler(): void {
     console.log('The system is going to resume');
     if (!socket.authenticated) return;
     socket
@@ -33,14 +33,12 @@ function resumeHandler() {
         });
 }
 
-function start() {
+export function start(): void {
     electron.powerMonitor.on('suspend', suspendHandler);
     electron.powerMonitor.on('resume', resumeHandler);
 }
 
-function stop() {
+export function stop(): void {
     electron.powerMonitor.removeListener('suspend', suspendHandler);
     electron.powerMonitor.removeListener('resume', resumeHandler);
 }
-
-module.exports = { start, stop };

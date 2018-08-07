@@ -16,7 +16,7 @@ const { Checkbox, ProgressBar, Tooltip } = require('peer-ui');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const FileActions = require('./FileActions');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
-
+const FileFolderDetailsRow = require('./FileFolderDetailsRow');
 
 /**
  * @augments {React.Component<{
@@ -26,6 +26,7 @@ const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
         className?: string,
         clickToSelect?: true,
         fileDetails?: true,
+        fileDetailsMini?: boolean,
         fileActions?: true
     }, {}>}
  */
@@ -35,14 +36,20 @@ class FileLine extends React.Component {
     static relativeTimeDisplayLimit = 21 * 60 * 60 * 1000;
 
     @observable hovered;
-    @action.bound onMenuClick() { this.hovered = true; }
-    @action.bound onMenuHide() { this.hovered = false; }
+    @action.bound
+    onMenuClick() {
+        this.hovered = true;
+    }
+    @action.bound
+    onMenuHide() {
+        this.hovered = false;
+    }
 
     // When dialog is opened by FileActions menu, clear the selection and select only this file
     onActionInProgress = () => {
         fileStore.clearSelection();
         this.toggleSelected();
-    }
+    };
 
     // Most actions will clear file selection on their own, but this will handle actions that don't.
     onActionComplete() {
@@ -59,7 +66,9 @@ class FileLine extends React.Component {
     };
 
     deleteFile = () => {
-        let msg = t('title_confirmRemoveFilename', { name: this.props.file.name });
+        let msg = t('title_confirmRemoveFilename', {
+            name: this.props.file.name
+        });
         if (this.props.file.shared) {
             msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
         }
@@ -68,9 +77,9 @@ class FileLine extends React.Component {
         }
     };
 
-    setContactProfileRef = (ref) => {
+    setContactProfileRef = ref => {
         if (ref) this.contactProfileRef = ref;
-    }
+    };
 
     @action.bound
     toggleSelected() {
@@ -78,8 +87,11 @@ class FileLine extends React.Component {
     }
 
     @observable clickedContact;
-    @action.bound openContact() {
-        this.clickedContact = contactStore.getContact(this.props.file.fileOwner);
+    @action.bound
+    openContact() {
+        this.clickedContact = contactStore.getContact(
+            this.props.file.fileOwner
+        );
         this.contactProfileRef.openDialog();
     }
 
@@ -92,7 +104,10 @@ class FileLine extends React.Component {
 
         if (file.uploadedAt) {
             // if file timestamp is past the limit...
-            if (Date.now() - file.uploadedAt > FileLine.relativeTimeDisplayLimit) {
+            if (
+                Date.now() - file.uploadedAt >
+                FileLine.relativeTimeDisplayLimit
+            ) {
                 uploadedAt = file.uploadedAt.toLocaleString();
                 // this condition is always true and we need it only to subscribe to clock updates
             } else if (uiStore.minuteClock.now) {
@@ -106,71 +121,91 @@ class FileLine extends React.Component {
                 This superfluous row-container is needed to make styles consistent with FolderLine,
                 which *does* need the container to hold elements other than .row
             */
-            <div className={css(
-                'row-container',
-                'file-row-container',
-                this.props.className,
-                {
-                    hover: this.hovered,
-                    selected: file.selected,
-                    'selected-row': file.selected,
-                    'waiting-3rd-party': !file.uploading && !file.readyForDownload,
-                    'dragged-row': isDragging
-                }
-            )}>
+            <div
+                className={css(
+                    'row-container',
+                    'file-row-container',
+                    this.props.className,
+                    {
+                        hover: this.hovered,
+                        selected: file.selected,
+                        'selected-row': file.selected,
+                        'waiting-3rd-party':
+                            !file.uploading && !file.readyForDownload,
+                        'dragged-row': isDragging
+                    }
+                )}
+            >
                 <div className="row">
-                    {this.props.checkbox ?
+                    {this.props.checkbox ? (
                         <Checkbox
                             className="file-checkbox"
                             checked={file.selected}
                             onChange={this.toggleSelected}
                         />
-                        : <div className="file-checkbox" />
-                    }
+                    ) : (
+                        <div className="file-checkbox" />
+                    )}
 
-                    <div className="file-icon"
-                        onClick={this.props.clickToSelect
-                            ? this.toggleSelected
-                            : this.download
-                        } >
-                        <FileSpriteIcon
-                            type={file.iconType}
-                            size="medium"
-                        />
+                    <div
+                        className="file-icon"
+                        onClick={
+                            this.props.clickToSelect
+                                ? this.toggleSelected
+                                : this.download
+                        }
+                    >
+                        <FileSpriteIcon type={file.iconType} size="medium" />
                     </div>
 
-                    <div className="file-name"
-                        onClick={this.props.clickToSelect
-                            ? this.toggleSelected
-                            : this.download
-                        } >
+                    <div
+                        className="file-name"
+                        onClick={
+                            this.props.clickToSelect
+                                ? this.toggleSelected
+                                : this.download
+                        }
+                    >
                         {file.name}
+
+                        {this.props.fileDetailsMini && (
+                            <FileFolderDetailsRow file={file} />
+                        )}
                     </div>
 
-                    {this.props.fileDetails &&
-                        <div className="file-owner clickable" onClick={this.openContact}>
-                            {file.fileOwner === User.current.username ? `${t('title_you')}` : file.fileOwner}
+                    {this.props.fileDetails && (
+                        <div
+                            className="file-owner clickable"
+                            onClick={this.openContact}
+                        >
+                            {file.fileOwner === User.current.username
+                                ? `${t('title_you')}`
+                                : file.fileOwner}
                         </div>
-                    }
+                    )}
 
-                    {this.props.fileDetails &&
-                        <div className="file-uploaded" title={uploadedAtTooltip}>
+                    {this.props.fileDetails && (
+                        <div
+                            className="file-uploaded"
+                            title={uploadedAtTooltip}
+                        >
                             {uploadedAt}
-                            {file.isLegacy &&
+                            {file.isLegacy && (
                                 <div className="badge-old-version">
                                     <T k="title_pending" />
-                                    <Tooltip text={t('title_oldVersionTooltip')} />
+                                    <Tooltip
+                                        text={t('title_oldVersionTooltip')}
+                                    />
                                 </div>
-                            }
+                            )}
                         </div>
-                    }
+                    )}
 
-                    {this.props.fileDetails &&
-
+                    {this.props.fileDetails && (
                         <div className="file-size">{file.sizeFormatted}</div>
-                    }
+                    )}
 
-                    {this.props.fileActions &&
+                    {this.props.fileActions && (
                         <div className="file-actions">
                             <FileActions
                                 file={file}
@@ -181,20 +216,24 @@ class FileLine extends React.Component {
                                 onDelete={this.deleteFile}
                             />
                         </div>
-                    }
+                    )}
                 </div>
 
-                {(file.downloading || file.uploading)
-                    ? <ProgressBar type="linear" mode="determinate" value={file.progress}
-                        max={file.progressMax} />
-                    : null}
+                {file.downloading || file.uploading ? (
+                    <ProgressBar
+                        type="linear"
+                        mode="determinate"
+                        value={file.progress}
+                        max={file.progressMax}
+                    />
+                ) : null}
 
-                {this.props.fileDetails &&
+                {this.props.fileDetails && (
                     <ContactProfile
                         ref={this.setContactProfileRef}
                         contact={this.clickedContact}
                     />
-                }
+                )}
             </div>
         );
     }

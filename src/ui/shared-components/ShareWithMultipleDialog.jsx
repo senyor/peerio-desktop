@@ -3,7 +3,15 @@ const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { contactStore, User } = require('peerio-icebear');
-const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('peer-ui');
+const {
+    Avatar,
+    Dialog,
+    Input,
+    List,
+    ListItem,
+    MaterialIcon,
+    Button
+} = require('peer-ui');
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
@@ -26,8 +34,7 @@ class ShareWithMultipleDialog extends React.Component {
      * @private
      * @type {(contactsToShareWith: any[] | null) => void | null}
      */
-    @observable.ref
-    resolver;
+    @observable.ref resolver;
 
     @observable query = '';
     selectedUsers = observable.map();
@@ -43,21 +50,25 @@ class ShareWithMultipleDialog extends React.Component {
     /** @type {ShareContext} */
     @observable shareContext = '';
 
-    @action.bound handleTextChange(newVal) {
+    @action.bound
+    handleTextChange(newVal) {
         this.query = newVal;
     }
 
     get existingUsers() {
-        return this.folderWithExistingShare ? this.folderWithExistingShare.otherParticipants : [];
+        return this.folderWithExistingShare
+            ? this.folderWithExistingShare.otherParticipants
+            : [];
     }
 
-    filterExisting = (c) => {
+    filterExisting = c => {
         return !this.existingUsers.find(u => u.username === c.username);
-    }
-    @computed get contacts() {
+    };
+    @computed
+    get contacts() {
         const selectedUsernames = this.selectedUsers.keys();
-        let ret = contactStore
-            .whitelabel.filter(this.query, this.shareContext)
+        let ret = contactStore.whitelabel
+            .filter(this.query, this.shareContext)
             .filter(c => !c.isDeleted)
             .filter(c => c.username !== User.current.username)
             .sort((c1, c2) => c1.username.localeCompare(c2.username));
@@ -65,7 +76,6 @@ class ShareWithMultipleDialog extends React.Component {
         if (this.existingUsers && this.existingUsers.length > 0) {
             ret = ret.filter(this.filterExisting);
         }
-
 
         selectedUsernames.forEach(username => {
             if (!ret.find(c => c.username === username)) {
@@ -75,7 +85,8 @@ class ShareWithMultipleDialog extends React.Component {
         return ret;
     }
 
-    @action.bound async onContactClick(ev) {
+    @action.bound
+    async onContactClick(ev) {
         const contact = await getContactByEvent(ev);
         if (this.selectedUsers.has(contact.username)) {
             this.selectedUsers.delete(contact.username);
@@ -84,34 +95,41 @@ class ShareWithMultipleDialog extends React.Component {
         }
     }
 
-    renderContact = (c) => {
+    renderContact = c => {
         const selected = this.selectedUsers.has(c.username);
         return (
             <div data-username={c.username} key={c.username}>
                 <ListItem
                     className={css({ selected })}
-                    leftIcon={selected ? 'check_box' : 'check_box_outline_blank'}
+                    leftIcon={
+                        selected ? 'check_box' : 'check_box_outline_blank'
+                    }
                     leftContent={<Avatar key="a" contact={c} size="small" />}
-                    onClick={this.onContactClick}>
+                    onClick={this.onContactClick}
+                >
                     <span className="full-name">{c.fullName}</span>
                     <span className="username">@{c.username}</span>
                 </ListItem>
             </div>
         );
-    }
+    };
 
     /**
      * @param {any?} folderWithExistingShare
      * @param {ShareContext} shareContext
      */
-    @action.bound show(folderWithExistingShare, shareContext) {
+    @action.bound
+    show(folderWithExistingShare, shareContext) {
         this.folderWithExistingShare = folderWithExistingShare;
         this.shareContext = shareContext;
         this.selectedUsers.clear();
-        return new Promise(resolve => { this.resolver = resolve; });
+        return new Promise(resolve => {
+            this.resolver = resolve;
+        });
     }
 
-    @action.bound close() {
+    @action.bound
+    close() {
         if (this.resolver) {
             this.resolver(null);
             this.resolver = null;
@@ -122,23 +140,20 @@ class ShareWithMultipleDialog extends React.Component {
         this.selectedUsers.clear();
     }
 
-    @action.bound share() {
+    @action.bound
+    share() {
         this.resolver(this.selectedUsers.values());
         this.close();
     }
 
     get sharedWithBlock() {
         return this.existingUsers.map(c => (
-            <Avatar
-                key={c.username}
-                contact={c}
-                size="tiny"
-                tooltip
-            />
+            <Avatar key={c.username} contact={c} size="tiny" tooltip />
         ));
     }
 
-    @action.bound modifySharedWith() {
+    @action.bound
+    modifySharedWith() {
         this.modifyShareDialog.show();
     }
 
@@ -146,30 +161,40 @@ class ShareWithMultipleDialog extends React.Component {
         return this.selectedUsers.size;
     }
 
-    setModifyShareDialogRef = (ref) => { this.modifyShareDialog = ref; };
+    setModifyShareDialogRef = ref => {
+        this.modifyShareDialog = ref;
+    };
 
     render() {
         if (!this.resolver) return null;
 
         const dialogActions = [
             { label: t('button_cancel'), onClick: this.close },
-            { label: t('button_share'), onClick: this.share, disabled: !this.usersSelected }
+            {
+                label: t('button_share'),
+                onClick: this.share,
+                disabled: !this.usersSelected
+            }
         ];
         const item = this.folderWithExistingShare;
 
         return (
             <div>
-                {
-                    item && item.isFolder && item.isShared
-                        ? <ModifyShareDialog ref={this.setModifyShareDialogRef} folder={item}
-                            contacts={this.existingUsers} />
-                        : null
-                }
-                <Dialog active noAnimation
+                {item && item.isFolder && item.isShared ? (
+                    <ModifyShareDialog
+                        ref={this.setModifyShareDialogRef}
+                        folder={item}
+                        contacts={this.existingUsers}
+                    />
+                ) : null}
+                <Dialog
+                    active
+                    noAnimation
                     className="share-with-dialog share-folder"
                     actions={dialogActions}
                     onCancel={this.close}
-                    title={t('title_shareWith')}>
+                    title={t('title_shareWith')}
+                >
                     <div className="share-with-contents">
                         <div className="user-search">
                             <MaterialIcon icon="search" />
@@ -187,24 +212,35 @@ class ShareWithMultipleDialog extends React.Component {
                                     <T k="title_contacts" />
                                     &nbsp;({this.contacts.length})
                                 </div>
-                                <List className="list-chats list-contacts" clickable>
+                                <List
+                                    className="list-chats list-contacts"
+                                    clickable
+                                >
                                     {this.contacts.map(this.renderContact)}
                                 </List>
                             </div>
                         </div>
-                        {item && item.isFolder && item.isShared && this.existingUsers.length ?
+                        {item &&
+                        item.isFolder &&
+                        item.isShared &&
+                        this.existingUsers.length ? (
                             <div className="receipt-wrapper">
-                                <Button label={t('title_viewSharedWith')} onClick={this.modifySharedWith} />
+                                <Button
+                                    label={t('title_viewSharedWith')}
+                                    onClick={this.modifySharedWith}
+                                />
                                 {this.sharedWithBlock}
-                            </div> : null
-                        }
-                        {item && item.isFolder && !item.isShared && !item.parent.isRoot
-                            ? <div className="move-to-root-notif p-list-heading">
+                            </div>
+                        ) : null}
+                        {item &&
+                        item.isFolder &&
+                        !item.isShared &&
+                        !item.parent.isRoot ? (
+                            <div className="move-to-root-notif p-list-heading">
                                 <MaterialIcon icon="info" />
                                 <T k="title_shareWillMoveToRoot" />
                             </div>
-                            : null
-                        }
+                        ) : null}
                     </div>
                 </Dialog>
             </div>

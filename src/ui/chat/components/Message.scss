@@ -1,5 +1,5 @@
 .message-content-wrapper {
-  $error-bg: rgba($color-error, .03);
+  $error-bg: rgba($color-error, 0.03);
 
   // stylelint-disable-next-line
   @extend %flex-col;
@@ -179,8 +179,12 @@
       }
 
       @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
       }
     }
   }

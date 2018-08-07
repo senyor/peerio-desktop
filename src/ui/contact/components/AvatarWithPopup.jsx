@@ -6,14 +6,14 @@ const ContactProfile = require('./ContactProfile');
 
 @observer
 class AvatarWithPopup extends React.Component {
-    setDialogRef = (ref) => {
+    setDialogRef = ref => {
         if (ref) this.dialogRef = ref;
-    }
+    };
 
-    openDialog = (ev) => {
+    openDialog = ev => {
         ev.stopPropagation();
         this.dialogRef.openDialog();
-    }
+    };
 
     render() {
         const popup = (
@@ -34,10 +34,7 @@ class AvatarWithPopup extends React.Component {
             />
         );
 
-        return [
-            avatar,
-            popup
-        ];
+        return [avatar, popup];
     }
 }
 

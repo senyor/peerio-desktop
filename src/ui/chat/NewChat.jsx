@@ -16,7 +16,7 @@ class NewChat extends React.Component {
         chatStore.deactivateCurrentChat();
     }
 
-    handleAccept = async (selected) => {
+    handleAccept = async selected => {
         this.waiting = true;
         if (!selected.length || selected.filter(c => c.notFound).length) {
             this.waiting = false;
@@ -27,10 +27,13 @@ class NewChat extends React.Component {
             this.waiting = false;
             return;
         }
-        when(() => chat.added === true, () => {
-            this.waiting = false;
-            window.router.push('/app/chats');
-        });
+        when(
+            () => chat.added === true,
+            () => {
+                this.waiting = false;
+                window.router.push('/app/chats');
+            }
+        );
     };
 
     handleClose() {
@@ -56,6 +59,5 @@ class NewChat extends React.Component {
         );
     }
 }
-
 
 module.exports = NewChat;

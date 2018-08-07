@@ -27,7 +27,7 @@
     overflow: hidden;
 
     transition: max-height 250ms, min-height 250ms, border-top 250ms;
-    background-color: rgba(4, 11, 65, .15);
+    background-color: rgba(4, 11, 65, 0.15);
     border-top: 4px solid $color-confirmation;
 
     .p-button {
@@ -68,14 +68,8 @@
     }
 
     &.converting-to-volume {
-      background-color: rgba($color-error, .05);
+      background-color: rgba($color-error, 0.05);
     }
-  }
-
-  .file-bottom-filler {
-    display: flex;
-    flex-grow: 1;
-    background-color: $file-bottom-filler;
   }
 
   .drop-zone {
@@ -85,9 +79,10 @@
     @extend %flex-col;
     @extend %flex-grow-1;
     @extend %flex-shrink-0;
+    flex: 1;
   }
 
   .drop-zone-droppable-hovered {
-    background-color: rgba($peerio-teal, .38);
+    background-color: rgba($peerio-teal, 0.38);
   }
 }

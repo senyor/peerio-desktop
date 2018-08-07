@@ -5,9 +5,7 @@
 
 // 1. add file to static/snd
 // 2. add file name here
-const files = [
-    'ack', 'sending', 'sent', 'received', 'destroy'
-];
+const files = ['ack', 'sending', 'sent', 'received', 'destroy'];
 
 class Sound {
     constructor(id) {
@@ -28,8 +26,7 @@ class Sound {
     }
 }
 
-const sounds = {
-};
+const sounds = {};
 
 files.forEach(id => {
     sounds[id] = new Sound(id);

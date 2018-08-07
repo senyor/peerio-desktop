@@ -2,7 +2,13 @@
 const React = require('react');
 const { action, computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, CustomIcon, MaterialIcon, ProgressBar, Tooltip } = require('peer-ui');
+const {
+    Button,
+    CustomIcon,
+    MaterialIcon,
+    ProgressBar,
+    Tooltip
+} = require('peer-ui');
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const sounds = require('~/helpers/sounds');
@@ -10,7 +16,7 @@ const uiStore = require('~/stores/ui-store');
 const { t } = require('peerio-translator');
 const css = require('classnames');
 
-const MessageInput = require('./components/MessageInput');
+const MessageInput = require('./components/MessageInput').default;
 const MessageList = require('./components/MessageList');
 const MessageSideBar = require('./components/sidebar/MessageSideBar');
 const ChatSideBar = require('./components/sidebar/ChatSideBar');
@@ -31,7 +37,12 @@ class ChatView extends React.Component {
 
     componentDidMount() {
         this.reactionsToDispose = [
-            reaction(() => chatStore.activeChat, () => { this.showUserPicker = false; })
+            reaction(
+                () => chatStore.activeChat,
+                () => {
+                    this.showUserPicker = false;
+                }
+            )
 
             // TODO: refactor when SDK is there for chat invites
             // reaction(() => !chatStore.chats.length && !chatInviteStore.received.length, () => {
@@ -66,7 +77,8 @@ class ChatView extends React.Component {
      */
     sendMessage(text) {
         try {
-            chatStore.activeChat.sendMessage(text)
+            chatStore.activeChat
+                .sendMessage(text)
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
@@ -78,37 +90,43 @@ class ChatView extends React.Component {
      * @param {Object} richText A ProseMirror document tree, in JSON.
      * @param {string} legacyText The rendered HTML of the rich text, for back-compat with older clients
      */
-    @action.bound sendRichTextMessage(richText, legacyText) {
+    @action.bound
+    sendRichTextMessage(richText, legacyText) {
         try {
             this.scrollToBottom();
-            chatStore.activeChat.sendRichTextMessage(richText, legacyText)
+            chatStore.activeChat
+                .sendRichTextMessage(richText, legacyText)
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
         }
     }
 
-    @action.bound sendAck() {
+    @action.bound
+    sendAck() {
         try {
             this.scrollToBottom();
-            chatStore.activeChat.sendAck()
+            chatStore.activeChat
+                .sendAck()
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
         }
     }
 
-    @action.bound shareFilesAndFolders(filesAndFolders) {
+    @action.bound
+    shareFilesAndFolders(filesAndFolders) {
         try {
             this.scrollToBottom();
-            chatStore.activeChat.shareFilesAndFolders(filesAndFolders)
+            chatStore.activeChat
+                .shareFilesAndFolders(filesAndFolders)
                 .catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
         }
     }
 
-    addParticipants = (contacts) => {
+    addParticipants = contacts => {
         chatStore.activeChat.addParticipants(contacts);
         this.closeUserPicker();
     };
@@ -131,7 +149,8 @@ class ChatView extends React.Component {
     };
 
     showChatNameEditor = () => {
-        if (!(chatStore.activeChat.canIAdmin && chatStore.activeChat.isChannel)) return;
+        if (!(chatStore.activeChat.canIAdmin && chatStore.activeChat.isChannel))
+            return;
         this.chatNameEditorVisible = true;
     };
 
@@ -155,11 +174,13 @@ class ChatView extends React.Component {
         this.toggleJitsiDialog();
     };
 
-    @computed get shareInProgress() {
+    @computed
+    get shareInProgress() {
         const chat = chatStore.activeChat;
         if (!chat) return false;
         return (
-            (chat.uploadQueue && chat.uploadQueue.length) || (chat.folderShareQueue && chat.folderShareQueue.length)
+            (chat.uploadQueue && chat.uploadQueue.length) ||
+            (chat.folderShareQueue && chat.folderShareQueue.length)
         );
     }
 
@@ -170,7 +191,7 @@ class ChatView extends React.Component {
 
         let listMembers = participants[0];
         for (let i = 1; i < participants.length; i++) {
-            if ((`${listMembers}, ${participants[i]}`).length < 100) {
+            if (`${listMembers}, ${participants[i]}`.length < 100) {
                 listMembers += `, ${participants[i]}`;
             } else {
                 listMembers += ' ...';
@@ -180,60 +201,76 @@ class ChatView extends React.Component {
 
         return (
             <div className="message-toolbar">
-                <div className="message-toolbar-inner" >
+                <div className="message-toolbar-inner">
                     <div className="title" onClick={this.showChatNameEditor}>
-                        {
-                            this.chatNameEditorVisible
-                                ? <ChatNameEditor showLabel={false} className="name-editor"
-                                    readOnly={!chat.canIAdmin}
-                                    onBlur={this.hideChatNameEditor} />
-                                : <div className="name-editor-inner">
-                                    {chat.canIAdmin && chat.isChannel ? <MaterialIcon icon="edit" /> : null}
-                                    {chat.isChannel
-                                        ? ELEMENTS.chatView.title(ELEMENTS.chatEditor.displayName(chat))
-                                        : <div className="title-content">{chat.name}</div>
-                                    }
-                                </div>
-                        }
+                        {this.chatNameEditorVisible ? (
+                            <ChatNameEditor
+                                showLabel={false}
+                                className="name-editor"
+                                readOnly={!chat.canIAdmin}
+                                onBlur={this.hideChatNameEditor}
+                            />
+                        ) : (
+                            <div className="name-editor-inner">
+                                {chat.canIAdmin && chat.isChannel ? (
+                                    <MaterialIcon icon="edit" />
+                                ) : null}
+                                {chat.isChannel ? (
+                                    ELEMENTS.chatView.title(
+                                        ELEMENTS.chatEditor.displayName(chat)
+                                    )
+                                ) : (
+                                    <div className="title-content">
+                                        {chat.name}
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                     <div className="meta-nav">
-                        {chat.isChannel
-                            ? <div className="member-count">
-                                <MaterialIcon icon="person"
+                        {chat.isChannel ? (
+                            <div className="member-count">
+                                <MaterialIcon
+                                    icon="person"
                                     tooltip={listMembers}
                                     tooltipPosition="bottom"
                                 />
                                 {chat.allParticipants.length || ''}
                             </div>
-                            : (chat.changingFavState
-                                ? <ProgressBar type="circular" mode="indeterminate" size="small" />
-                                :
-                                <div
-                                    onClick={chat.toggleFavoriteState}
-                                    className={css(
-                                        'pin-toggle',
-                                        'clickable',
-                                        'custom-icon-hover-container'
-                                    )}
-                                >
-                                    <CustomIcon
-                                        active={chat.isFavorite}
-                                        icon={chat.isFavorite ? 'pin-on' : 'pin-off'}
-                                        className="small"
-                                        hover={!chat.isFavorite}
-                                    />
-                                    <Tooltip
-                                        text={chat.isFavorite
+                        ) : chat.changingFavState ? (
+                            <ProgressBar
+                                type="circular"
+                                mode="indeterminate"
+                                size="small"
+                            />
+                        ) : (
+                            <div
+                                onClick={chat.toggleFavoriteState}
+                                className={css(
+                                    'pin-toggle',
+                                    'clickable',
+                                    'custom-icon-hover-container'
+                                )}
+                            >
+                                <CustomIcon
+                                    active={chat.isFavorite}
+                                    icon={
+                                        chat.isFavorite ? 'pin-on' : 'pin-off'
+                                    }
+                                    className="small"
+                                    hover={!chat.isFavorite}
+                                />
+                                <Tooltip
+                                    text={
+                                        chat.isFavorite
                                             ? t('button_unpinChat')
                                             : t('button_pinChat')
-                                        }
-                                        position="bottom"
-                                    />
-                                </div>
-                            )
-                        }
+                                    }
+                                    position="bottom"
+                                />
+                            </div>
+                        )}
                     </div>
-
                 </div>
                 <div className="message-toolbar-inner-right">
                     <Button
@@ -262,13 +299,19 @@ class ChatView extends React.Component {
         if (uiStore.selectedMessage) {
             return <MessageSideBar />;
         }
-        return chatStore.activeChat.isChannel ?
-            <ChannelSideBar open={uiStore.prefs.chatSideBarIsOpen} onAddParticipants={this.openUserPicker} /> :
-            <ChatSideBar open={uiStore.prefs.chatSideBarIsOpen} />;
+        return chatStore.activeChat.isChannel ? (
+            <ChannelSideBar
+                open={uiStore.prefs.chatSideBarIsOpen}
+                onAddParticipants={this.openUserPicker}
+            />
+        ) : (
+            <ChatSideBar open={uiStore.prefs.chatSideBarIsOpen} />
+        );
     }
 
     @observable messageListRef;
-    @action.bound setMessageListRef(ref) {
+    @action.bound
+    setMessageListRef(ref) {
         if (ref) this.messageListRef = ref;
     }
 
@@ -281,9 +324,10 @@ class ChatView extends React.Component {
         }
 
         this.scrollToBottom();
-    }
+    };
 
-    @computed get pageScrolledUp() {
+    @computed
+    get pageScrolledUp() {
         return this.messageListRef && this.messageListRef.pageScrolledUp;
     }
 
@@ -294,9 +338,7 @@ class ChatView extends React.Component {
         if (!chat) return null;
 
         if (chat.isInvite) {
-            return (
-                <PendingDM />
-            );
+            return <PendingDM />;
         }
 
         const jitsiActions = [
@@ -308,48 +350,52 @@ class ChatView extends React.Component {
             <div className="message-view">
                 {this.renderHeader()}
                 <div className="messages-and-sidebar-container">
-                    {
-                        this.showUserPicker
-                            ? <div className="create-new-chat">
-                                <UserPicker
-                                    closeable
-                                    onClose={this.closeUserPicker}
-                                    onAccept={this.addParticipants}
-                                    exceptContacts={chat.allParticipants}
-                                    title={t('title_addParticipants')}
-                                    noDeleted
-                                    context={ELEMENTS.chatView.currentContext}
+                    {this.showUserPicker ? (
+                        <div className="create-new-chat">
+                            <UserPicker
+                                closeable
+                                onClose={this.closeUserPicker}
+                                onAccept={this.addParticipants}
+                                exceptContacts={chat.allParticipants}
+                                title={t('title_addParticipants')}
+                                noDeleted
+                                context={ELEMENTS.chatView.currentContext}
+                            />
+                        </div>
+                    ) : (
+                        <div className="messages-container">
+                            {chatStore.chats.length === 0 &&
+                            !chatStore.loading ? null : (
+                                <MessageList ref={this.setMessageListRef} />
+                            )}
+                            {this.shareInProgress ? (
+                                <ShareToChatProgress
+                                    uploadQueue={chat.uploadQueue}
+                                    folderShareQueue={chat.folderShareQueue}
                                 />
-                            </div>
-                            : <div className="messages-container">
-                                {chatStore.chats.length === 0 && !chatStore.loading
-                                    ? null
-                                    : <MessageList ref={this.setMessageListRef} />
+                            ) : null}
+                            <MessageInput
+                                readonly={
+                                    !chat || !chat.metaLoaded || chat.isReadOnly
                                 }
-                                {
-                                    this.shareInProgress
-                                        ? <ShareToChatProgress uploadQueue={chat.uploadQueue}
-                                            folderShareQueue={chat.folderShareQueue} />
+                                placeholder={
+                                    chat
+                                        ? t('title_messageInputPlaceholder', {
+                                              chatName: `${
+                                                  chat.isChannel ? '# ' : ''
+                                              }${chat.name}`
+                                          })
                                         : null
                                 }
-                                <MessageInput
-                                    readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
-                                    placeholder={
-                                        chat
-                                            ? t(
-                                                'title_messageInputPlaceholder',
-                                                { chatName: `${chat.isChannel ? '# ' : ''}${chat.name}` })
-                                            : null
-                                    }
-                                    onSend={this.sendRichTextMessage}
-                                    onAck={this.sendAck}
-                                    onFileShare={this.shareFilesAndFolders}
-                                    messageListScrolledUp={this.pageScrolledUp}
-                                    onJumpToBottom={this.jumpToBottom}
-                                    shareInProgress={this.shareInProgress}
-                                />
-                            </div>
-                    }
+                                onSend={this.sendRichTextMessage}
+                                onAck={this.sendAck}
+                                onFileShare={this.shareFilesAndFolders}
+                                messageListScrolledUp={this.pageScrolledUp}
+                                onJumpToBottom={this.jumpToBottom}
+                                shareInProgress={this.shareInProgress}
+                            />
+                        </div>
+                    )}
                     {this.sidebar}
                 </div>
                 {chat.leaving ? <FullCoverLoader show /> : null}
@@ -357,13 +403,13 @@ class ChatView extends React.Component {
                     active={this.jitsiDialogVisible}
                     actions={jitsiActions}
                     onCancel={this.toggleJitsiDialog}
-                    title={t('title_videoCall')}>
+                    title={t('title_videoCall')}
+                >
                     {t('dialog_videoCall')}
                 </Dialog>
             </div>
         );
     }
 }
-
 
 module.exports = ChatView;

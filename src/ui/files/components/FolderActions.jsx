@@ -41,11 +41,11 @@ class FolderActions extends React.Component {
 
     deleteFolder = () => {
         deleteFileOrFolder(this.props.folder);
-    }
+    };
 
     downloadFolder = () => {
         downloadFolder(this.props.folder);
-    }
+    };
 
     shareFolder = async () => {
         if (this.props.onActionInProgress) this.props.onActionInProgress();
@@ -58,24 +58,23 @@ class FolderActions extends React.Component {
 
         if (!contacts || !contacts.length) return;
         await volumeStore.shareFolder(f, contacts);
-    }
+    };
 
     renameFolder = () => {
         if (this.props.onActionInProgress) this.props.onActionInProgress();
         this.renameFolderDialogRef.current.show(this.props.folder);
-    }
+    };
 
     moveFolder = () => {
         if (this.props.onActionInProgress) this.props.onActionInProgress();
-        this.moveFileDialogRef.current.show(this.props.folder.parent, this.props.folder);
-    }
+        this.moveFileDialogRef.current.show(
+            this.props.folder.parent,
+            this.props.folder
+        );
+    };
 
     render() {
-        const {
-            folder,
-            downloadVisible,
-            downloadDisabled
-        } = this.props;
+        const { folder, downloadVisible, downloadDisabled } = this.props;
 
         /** @type {boolean} */
         const shareVisible = folder.isShared || folder.canShare;
@@ -90,31 +89,38 @@ class FolderActions extends React.Component {
                     onHide={this.props.onMenuHide}
                     disabled={this.props.disabled}
                 >
-                    {shareVisible && config.enableVolumes
-                        ? <MenuItem caption={t('button_share')}
+                    {shareVisible && config.enableVolumes ? (
+                        <MenuItem
+                            caption={t('button_share')}
                             icon="person_add"
                             onClick={this.shareFolder}
                             disabled={this.props.shareDisabled}
                         />
-                        : null
-                    }
-                    {downloadVisible && <MenuItem caption={t('title_download')}
-                        icon="file_download"
-                        onClick={this.downloadFolder}
-                        disabled={downloadDisabled}
-                    />}
-                    {isFileOrFolderMoveable(folder) &&
-                        <MenuItem caption={t('button_move')}
+                    ) : null}
+                    {downloadVisible && (
+                        <MenuItem
+                            caption={t('title_download')}
+                            icon="file_download"
+                            onClick={this.downloadFolder}
+                            disabled={downloadDisabled}
+                        />
+                    )}
+                    {isFileOrFolderMoveable(folder) && (
+                        <MenuItem
+                            caption={t('button_move')}
                             className="custom-icon-hover-container"
                             customIcon="move"
                             onClick={this.moveFolder}
                         />
-                    }
-                    <MenuItem caption={t('button_rename')}
+                    )}
+                    <MenuItem
+                        caption={t('button_rename')}
                         icon="mode_edit"
-                        onClick={this.renameFolder} />
+                        onClick={this.renameFolder}
+                    />
                     <Divider />
-                    <MenuItem caption={t('button_delete')}
+                    <MenuItem
+                        caption={t('button_delete')}
                         icon="delete"
                         onClick={this.deleteFolder}
                         disabled={this.props.deleteDisabled}
@@ -122,7 +128,9 @@ class FolderActions extends React.Component {
                 </Menu>
                 <AddOrRenameDialog ref={this.renameFolderDialogRef} />
                 <MoveFileDialog ref={this.moveFileDialogRef} />
-                <ShareWithMultipleDialog ref={this.shareWithMultipleDialogRef} />
+                <ShareWithMultipleDialog
+                    ref={this.shareWithMultipleDialogRef}
+                />
             </React.Fragment>
         );
     }

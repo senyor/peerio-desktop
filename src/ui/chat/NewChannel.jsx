@@ -23,14 +23,22 @@ class NewChannel extends React.Component {
 
     handleAccept = async () => {
         this.waiting = true;
-        const chat = await chatStore.startChat(this.userPicker.selected, true, this.channelName, this.purpose);
+        const chat = await chatStore.startChat(
+            this.userPicker.selected,
+            true,
+            this.channelName,
+            this.purpose
+        );
         if (!chat) {
             this.waiting = false;
             return;
         }
-        when(() => chat.added === true, () => {
-            window.router.push('/app/chats');
-        });
+        when(
+            () => chat.added === true,
+            () => {
+                window.router.push('/app/chats');
+            }
+        );
     };
 
     gotoNewChat() {
@@ -39,11 +47,11 @@ class NewChannel extends React.Component {
 
     handleNameChange = val => {
         this.channelName = val;
-    }
+    };
 
     handlePurposeChange = val => {
         this.purpose = val;
-    }
+    };
 
     setUserPickerRef = ref => {
         this.userPicker = ref;
@@ -61,14 +69,20 @@ class NewChannel extends React.Component {
     render() {
         const textParser = {
             toCreateDM: text => (
-                <a className="clickable" onClick={this.gotoNewChat}>{text}</a>
+                <a className="clickable" onClick={this.gotoNewChat}>
+                    {text}
+                </a>
             )
         };
 
         if (this.waiting) {
-            return (<div className="new-channel create-new-chat">
-                <div className="create-channel-loading"><ProgressBar type="circular" /></div>
-            </div>);
+            return (
+                <div className="new-channel create-new-chat">
+                    <div className="create-channel-loading">
+                        <ProgressBar type="circular" />
+                    </div>
+                </div>
+            );
         }
         return (
             <div className="new-channel create-new-chat">
@@ -85,7 +99,9 @@ class NewChannel extends React.Component {
                     <div className="message-search-wrapper-new-channel message-search-wrapper">
                         <div className="new-chat-search">
                             <div className="chip-wrapper">
-                                <Input placeholder={t('title_channelName')} innerRef={this.setNameInputRef}
+                                <Input
+                                    placeholder={t('title_channelName')}
+                                    innerRef={this.setNameInputRef}
                                     value={this.channelName}
                                     onChange={this.handleNameChange}
                                     maxLength={config.chat.maxChatNameLength}
@@ -97,18 +113,27 @@ class NewChannel extends React.Component {
                     <div className="message-search-wrapper-new-channel message-search-wrapper">
                         <div className="new-chat-search">
                             <div className="chip-wrapper">
-                                <Input placeholder={t('title_purpose')}
+                                <Input
+                                    placeholder={t('title_purpose')}
                                     value={this.purpose}
                                     onChange={this.handlePurposeChange}
                                     maxLength={config.chat.maxChatPurposeLength}
                                 />
                             </div>
                         </div>
-                        <T k="title_optional" tag="div" className="helper-text" />
+                        <T
+                            k="title_optional"
+                            tag="div"
+                            className="helper-text"
+                        />
                     </div>
                     <div className="user-picker-container">
-                        <UserPicker ref={this.setUserPickerRef} title={t('title_chatWith')}
-                            noHeader onlyPick noAutoFocus
+                        <UserPicker
+                            ref={this.setUserPickerRef}
+                            title={t('title_chatWith')}
+                            noHeader
+                            onlyPick
+                            noAutoFocus
                             onAccept={this.handleAccept}
                             noSubmit={!this.channelName.length}
                         />
@@ -119,6 +144,5 @@ class NewChannel extends React.Component {
         );
     }
 }
-
 
 module.exports = NewChannel;

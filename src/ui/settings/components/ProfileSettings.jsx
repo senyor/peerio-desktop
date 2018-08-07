@@ -1,7 +1,14 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar, Button, List, ListItem, MaterialIcon, ProgressBar } = require('peer-ui');
+const {
+    Avatar,
+    Button,
+    List,
+    ListItem,
+    MaterialIcon,
+    ProgressBar
+} = require('peer-ui');
 const { User, contactStore, validation } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const BetterInput = require('~/ui/shared-components/BetterInput');
@@ -39,7 +46,7 @@ class Profile extends React.Component {
         User.current.deleteAvatar();
     };
 
-    saveAvatar = async (blobs) => {
+    saveAvatar = async blobs => {
         const buffers = await AvatarEditor.closeAndReturnBuffers(blobs);
         await User.current.saveAvatar(buffers);
     };
@@ -59,7 +66,7 @@ class Profile extends React.Component {
         this.newEmail = val;
         this.newEmailValid = isValid;
         this.saveNewEmail();
-    }
+    };
 
     cancelNewEmail = () => {
         this.addMode = false;
@@ -68,7 +75,8 @@ class Profile extends React.Component {
     };
 
     saveNewEmail = () => {
-        if (this.newEmail && this.newEmailValid) User.current.addEmail(this.newEmail);
+        if (this.newEmail && this.newEmailValid)
+            User.current.addEmail(this.newEmail);
         this.cancelNewEmail();
     };
 
@@ -88,25 +96,32 @@ class Profile extends React.Component {
     renderButton(a) {
         return (
             <div>
-                {a.confirmed
-                    ? null
-                    : <Button tooltip={t('button_resend')} icon="mail" theme="no-hover"
-                        onClick={() => { this.resendConfirmation(a.address); }} />
-                }
-                {a.primary
-                    ? null
-                    : <Button tooltip={t('button_delete')} icon="delete" theme="no-hover"
-                        onClick={() => { this.removeEmail(a.address); }} />
-                }
+                {a.confirmed ? null : (
+                    <Button
+                        tooltip={t('button_resend')}
+                        icon="mail"
+                        theme="no-hover"
+                        onClick={() => {
+                            this.resendConfirmation(a.address);
+                        }}
+                    />
+                )}
+                {a.primary ? null : (
+                    <Button
+                        tooltip={t('button_delete')}
+                        icon="delete"
+                        theme="no-hover"
+                        onClick={() => {
+                            this.removeEmail(a.address);
+                        }}
+                    />
+                )}
             </div>
         );
     }
 
     renderPrimaryEmail(a) {
-        return (
-            a.primary
-                ? t('title_primaryEmail')
-                : null);
+        return a.primary ? t('title_primaryEmail') : null;
     }
 
     // ------ /Emails -----
@@ -114,91 +129,133 @@ class Profile extends React.Component {
         const f = this.contact.fingerprint.split('-');
         const user = User.current;
         if (AvatarEditor.state.showEditor) {
-            return (<section className="settings-avatar-editor">
-                <AvatarEditor onSave={this.saveAvatar} />
-            </section>);
+            return (
+                <section className="settings-avatar-editor">
+                    <AvatarEditor onSave={this.saveAvatar} />
+                </section>
+            );
         }
         return (
             <div className="settings-container-profile">
                 <div>
                     <div className="input-row">
-                        <BetterInput onAccept={this.saveFirstName}
+                        <BetterInput
+                            onAccept={this.saveFirstName}
                             label={t('title_firstName')}
-                            value={user.firstName} />
-                        <BetterInput onAccept={this.saveLastName}
+                            value={user.firstName}
+                        />
+                        <BetterInput
+                            onAccept={this.saveLastName}
                             label={t('title_lastName')}
-                            value={user.lastName} />
+                            value={user.lastName}
+                        />
                     </div>
                     <div className="dark-label label-email">
                         {t('title_email')}
                     </div>
                     <List theme="no-hover">
-                        {
-                            user.addresses.map(a => {
-                                const leftButton = a.primary
-                                    ? <MaterialIcon icon="radio_button_checked" className="selected" />
-                                    : (<Button className={a.confirmed ? '' : 'hide'}
-                                        disabled={!a.confirmed} tooltip={t('button_makePrimary')}
-                                        icon="radio_button_unchecked"
-                                        onClick={() => { this.makePrimary(a.address); }}
-                                        theme="small no-hover"
-                                    />);
+                        {user.addresses.map(a => {
+                            const leftButton = a.primary ? (
+                                <MaterialIcon
+                                    icon="radio_button_checked"
+                                    className="selected"
+                                />
+                            ) : (
+                                <Button
+                                    className={a.confirmed ? '' : 'hide'}
+                                    disabled={!a.confirmed}
+                                    tooltip={t('button_makePrimary')}
+                                    icon="radio_button_unchecked"
+                                    onClick={() => {
+                                        this.makePrimary(a.address);
+                                    }}
+                                    theme="small no-hover"
+                                />
+                            );
 
-                                const legend = a.confirmed
-                                    ? (a.primary ? t('title_primaryEmail') : null)
-                                    : t('error_unconfirmedEmail');
+                            const legend = a.confirmed
+                                ? a.primary
+                                    ? t('title_primaryEmail')
+                                    : null
+                                : t('error_unconfirmedEmail');
 
-                                const rightButton = a.confirmed && !a.primary
-                                    ? (<Button tooltip={t('button_delete')} icon="delete"
-                                        onClick={() => { this.removeEmail(a.address); }}
+                            const rightButton =
+                                a.confirmed && !a.primary ? (
+                                    <Button
+                                        tooltip={t('button_delete')}
+                                        icon="delete"
+                                        onClick={() => {
+                                            this.removeEmail(a.address);
+                                        }}
                                         theme="no-hover"
-                                    />)
-                                    : this.renderButton(a);
-
-                                return (
-                                    <ListItem
-                                        key={a.address}
-                                        className={css('email-row', { unconfirmed: !a.confirmed })}
-                                        leftContent={leftButton}
-                                        caption={a.address}
-                                        legend={legend}
-                                        rightContent={rightButton}
                                     />
+                                ) : (
+                                    this.renderButton(a)
                                 );
-                            })
-                        }
+
+                            return (
+                                <ListItem
+                                    key={a.address}
+                                    className={css('email-row', {
+                                        unconfirmed: !a.confirmed
+                                    })}
+                                    leftContent={leftButton}
+                                    caption={a.address}
+                                    legend={legend}
+                                    rightContent={rightButton}
+                                />
+                            );
+                        })}
                     </List>
-                    {
-                        this.addMode
-                            ? <div className="addemail-container">
-                                <BetterInput type="email" label={t('title_email')} acceptOnBlur="false"
-                                    validator={validation.validators.emailFormat.action}
-                                    onChange={this.onNewEmailChange} value={this.newEmail} error="error_invalidEmail"
-                                    onAccept={this.onNewEmailAccept} onReject={this.cancelNewEmail}
-                                />
-                                <Button tooltip={t('button_save')} icon="done"
-                                    onClick={this.saveNewEmail} disabled={!this.newEmailValid}
-                                    theme="no-hover"
-                                />
-                                <Button tooltip={t('button_cancel')} icon="cancel"
-                                    onClick={this.cancelNewEmail}
-                                    theme="no-hover"
-                                />
-                            </div>
-                            : null
-                    }
-                    {
-                        this.addMode || user.addresses.length > 2
-                            ? null
-                            : <Button label={t('button_addEmail')} onClick={this.switchToAddMode} />
-                    }
+                    {this.addMode ? (
+                        <div className="addemail-container">
+                            <BetterInput
+                                type="email"
+                                label={t('title_email')}
+                                acceptOnBlur="false"
+                                validator={
+                                    validation.validators.emailFormat.action
+                                }
+                                onChange={this.onNewEmailChange}
+                                value={this.newEmail}
+                                error="error_invalidEmail"
+                                onAccept={this.onNewEmailAccept}
+                                onReject={this.cancelNewEmail}
+                            />
+                            <Button
+                                tooltip={t('button_save')}
+                                icon="done"
+                                onClick={this.saveNewEmail}
+                                disabled={!this.newEmailValid}
+                                theme="no-hover"
+                            />
+                            <Button
+                                tooltip={t('button_cancel')}
+                                icon="cancel"
+                                onClick={this.cancelNewEmail}
+                                theme="no-hover"
+                            />
+                        </div>
+                    ) : null}
+                    {this.addMode || user.addresses.length > 2 ? null : (
+                        <Button
+                            label={t('button_addEmail')}
+                            onClick={this.switchToAddMode}
+                        />
+                    )}
 
                     <div className="row peerio-id-container">
-                        <div className="list-title"> {t('title_publicKey')}</div>
-                        <div className="monospace selectable">{f[0]} {f[1]} {f[2]}</div>
-                        <div className="monospace selectable">{f[3]} {f[4]} {f[5]}</div>
+                        <div className="list-title">
+                            {' '}
+                            {t('title_publicKey')}
+                        </div>
+                        <div className="monospace selectable">
+                            {f[0]} {f[1]} {f[2]}
+                        </div>
+                        <div className="monospace selectable">
+                            {f[3]} {f[4]} {f[5]}
+                        </div>
                     </div>
-
                 </div>
                 <div className="avatar-card">
                     <div className="card-header">
@@ -207,19 +264,23 @@ class Profile extends React.Component {
                     </div>
                     <Avatar contact={this.contact} size="full" />
                     <div className="card-footer">
-                        <Button icon="delete"
+                        <Button
+                            icon="delete"
                             className={css({ banish: !this.contact.hasAvatar })}
                             onClick={this.handleDeleteAvatar}
-                            tooltip={t('button_delete')} />
-                        <Button icon="add_a_photo"
+                            tooltip={t('button_delete')}
+                        />
+                        <Button
+                            icon="add_a_photo"
                             onClick={AvatarEditor.selectFile}
-                            tooltip={t('button_updateAvatar')} />
+                            tooltip={t('button_updateAvatar')}
+                        />
                     </div>
-                    {User.current.savingAvatar
-                        ? <div className="save-progress-overlay">
+                    {User.current.savingAvatar ? (
+                        <div className="save-progress-overlay">
                             <ProgressBar type="circular" mode="indeterminate" />
                         </div>
-                        : null}
+                    ) : null}
                 </div>
             </div>
         );

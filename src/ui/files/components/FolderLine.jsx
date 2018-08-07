@@ -4,16 +4,19 @@ const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 const FolderActions = require('./FolderActions');
-const { Checkbox, CustomIcon, MaterialIcon, ProgressBar } = require('peer-ui');
+const FileFolderDetailsRow = require('./FileFolderDetailsRow');
+const {
+    Button,
+    Checkbox,
+    CustomIcon,
+    MaterialIcon,
+    ProgressBar
+} = require('peer-ui');
 const ContactProfile = require('~/ui/contact/components/ContactProfile');
 const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { User, contactStore, fileStore } = require('peerio-icebear');
 const { setCurrentFolder } = require('../helpers/sharedFileAndFolderActions');
-
-// TESTING
-const { volumeStore } = require('peerio-icebear');
-
 
 /**
  * HACK: defs are MIRRORED in DroppableFolderLine.jsx (since that extends these props to pass them through).
@@ -27,10 +30,12 @@ const { volumeStore } = require('peerio-icebear');
         disabledCheckbox?: boolean
         className?: string,
         folderDetails?: true,
-        folderActions?: true
+        folderDetailsMini?: boolean,
+        folderActions?: true,
         isDragging?: boolean,
         isBeingDraggedOver?: boolean,
-        canBeDroppedInto?: boolean
+        canBeDroppedInto?: boolean,
+        showNavigation?: boolean
     }} FolderLineProps
  */
 
@@ -40,20 +45,22 @@ const { volumeStore } = require('peerio-icebear');
 @observer
 class FolderLine extends React.Component {
     @observable hovered;
-    @action.bound onMenuClick() { this.hovered = true; }
-    @action.bound onMenuHide() { this.hovered = false; }
-
-    testClick = () => {
-        volumeStore.mockProgress(this.props.folder);
+    @action.bound
+    onMenuClick() {
+        this.hovered = true;
+    }
+    @action.bound
+    onMenuHide() {
+        this.hovered = false;
     }
 
-    setContactProfileRef = (ref) => {
+    setContactProfileRef = ref => {
         if (ref) this.contactProfileRef = ref;
-    }
+    };
 
     onClickFolder = () => {
         setCurrentFolder(this.props.folder);
-    }
+    };
 
     @action.bound
     toggleSelected() {
@@ -63,10 +70,11 @@ class FolderLine extends React.Component {
     onActionInProgress = () => {
         fileStore.clearSelection();
         this.toggleSelected();
-    }
+    };
 
     @observable clickedContact;
-    @action.bound openContact() {
+    @action.bound
+    openContact() {
         this.clickedContact = contactStore.getContact(this.props.folder.owner);
         this.contactProfileRef.openDialog();
     }
@@ -76,14 +84,18 @@ class FolderLine extends React.Component {
             folder,
             isDragging,
             isBeingDraggedOver,
-            canBeDroppedInto
+            canBeDroppedInto,
+            showNavigation
         } = this.props;
 
         const selectDisabled = this.props.disabledCheckbox;
         const { progress, progressMax, progressPercentage } = folder;
-        const shareInProgress = folder.convertingToVolume || folder.convertingFromFolder;
+        const shareInProgress =
+            folder.convertingToVolume || folder.convertingFromFolder;
+
         return (
-            <div data-folderid={folder.id}
+            <div
+                data-folderid={folder.id}
                 data-storeid={folder.store.id}
                 className={css(
                     'row-container',
@@ -95,53 +107,75 @@ class FolderLine extends React.Component {
                         'selected-row': folder.selected,
                         'share-in-progress': shareInProgress,
                         'dragged-row': isDragging,
-                        'folder-row-droppable-hovered': isBeingDraggedOver && canBeDroppedInto
+                        'folder-row-droppable-hovered':
+                            isBeingDraggedOver && canBeDroppedInto
                     }
                 )}
             >
-
                 <div className="row">
-                    {shareInProgress
-                        ? <div className="file-checkbox percent-progress">
+                    {shareInProgress ? (
+                        <div className="file-checkbox percent-progress">
                             {`${progressPercentage}%`}
                         </div>
-                        : this.props.checkbox
-                            ? <Checkbox
-                                className={css('file-checkbox', { disabled: selectDisabled })}
-                                checked={folder.selected}
-                                onChange={selectDisabled ? null : this.toggleSelected}
-                            />
-                            : <div className="file-checkbox" />
-                    }
-
-                    <div className="file-icon"
-                        onClick={this.onClickFolder} >
-                        {folder.canShare
-                            ? <MaterialIcon icon="folder" />
-                            : <CustomIcon icon="folder-shared" hover selected={folder.selected} />
-                        }
-                    </div>
-
-                    <div className="file-name clickable selectable"
-                        onClick={this.onClickFolder} >
-                        {folder.name}
-                    </div>
-
-                    {this.props.folderDetails &&
-                        <div className="file-owner clickable" onClick={this.openContact}>
-                            {shareInProgress
-                                ? <T k="title_convertingToShared" />
-                                : folder.owner === User.current.username ? t('title_you') : folder.owner
+                    ) : this.props.checkbox ? (
+                        <Checkbox
+                            className={css('file-checkbox', {
+                                disabled: selectDisabled
+                            })}
+                            checked={folder.selected}
+                            onChange={
+                                selectDisabled ? null : this.toggleSelected
                             }
-                        </div>
-                    }
+                        />
+                    ) : (
+                        <div className="file-checkbox" />
+                    )}
 
-                    {this.props.folderDetails && <div className="file-uploaded" />}
+                    <div className="file-icon" onClick={this.onClickFolder}>
+                        {folder.canShare ? (
+                            <MaterialIcon icon="folder" />
+                        ) : (
+                            <CustomIcon
+                                icon="folder-shared"
+                                hover
+                                selected={folder.selected}
+                            />
+                        )}
+                    </div>
+
+                    <div
+                        className="file-name clickable selectable"
+                        onClick={this.onClickFolder}
+                    >
+                        {folder.name}
+
+                        {this.props.folderDetailsMini && (
+                            <FileFolderDetailsRow folder={folder} />
+                        )}
+                    </div>
+
+                    {this.props.folderDetails && (
+                        <div
+                            className="file-owner clickable"
+                            onClick={this.openContact}
+                        >
+                            {shareInProgress ? (
+                                <T k="title_convertingToShared" />
+                            ) : folder.owner === User.current.username ? (
+                                t('title_you')
+                            ) : (
+                                folder.owner
+                            )}
+                        </div>
+                    )}
+
+                    {this.props.folderDetails && (
+                        <div className="file-uploaded" />
+                    )}
 
                     {this.props.folderDetails && <div className="file-size" />}
 
-                    {
-                        this.props.folderActions &&
+                    {this.props.folderActions && (
                         <div className="file-actions">
                             <FolderActions
                                 folder={folder}
@@ -151,10 +185,17 @@ class FolderLine extends React.Component {
                                 onActionInProgress={this.onActionInProgress}
                             />
                         </div>
-                    }
+                    )}
+
+                    {showNavigation && (
+                        <Button
+                            icon="keyboard_arrow_right"
+                            onClick={this.onClickFolder}
+                        />
+                    )}
                 </div>
 
-                {shareInProgress &&
+                {shareInProgress && (
                     <div className="row sub-row">
                         <div className="file-checkbox" />
 
@@ -174,20 +215,26 @@ class FolderLine extends React.Component {
                         <div className="file-size" />
                         <div className="file-actions" />
                     </div>
-                }
+                )}
 
-                {shareInProgress && <ProgressBar type="linear" mode="determinate" value={progress} max={progressMax} />}
+                {shareInProgress && (
+                    <ProgressBar
+                        type="linear"
+                        mode="determinate"
+                        value={progress}
+                        max={progressMax}
+                    />
+                )}
 
-                {this.props.folderDetails &&
+                {this.props.folderDetails && (
                     <ContactProfile
                         ref={this.setContactProfileRef}
                         contact={this.clickedContact}
                     />
-                }
+                )}
             </div>
         );
     }
 }
-
 
 module.exports = FolderLine;

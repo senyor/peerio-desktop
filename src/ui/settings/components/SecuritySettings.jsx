@@ -1,7 +1,13 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog, MaterialIcon, Switch, ProgressBar } = require('peer-ui');
+const {
+    Button,
+    Dialog,
+    MaterialIcon,
+    Switch,
+    ProgressBar
+} = require('peer-ui');
 const { User } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const autologin = require('~/helpers/autologin');
@@ -34,13 +40,16 @@ class SecuritySettings extends React.Component {
             this.twoFASecret = secret;
             QR.toDataURL(
                 // eslint-disable-next-line
-                `otpauth://totp/Peerio:${User.current.username}?secret=${secret}&issuer=Peerio&algorithm=SHA1&digits=6&period=30`,
+                `otpauth://totp/Peerio:${
+                    User.current.username
+                }?secret=${secret}&issuer=Peerio&algorithm=SHA1&digits=6&period=30`,
                 (err, dataUrl) => {
                     if (err) console.error(err);
                     this.twoFAQRCode = dataUrl;
-                });
+                }
+            );
         });
-    }
+    };
 
     togglePassphraseVisibility = () => {
         this.passphraseVisible = !this.passphraseVisible;
@@ -75,7 +84,8 @@ class SecuritySettings extends React.Component {
         this.totpCodeError = false;
         if (this.totpCode.replace(/\s+/g, '').length >= 6) {
             this.totpCodeValidating = true;
-            User.current.confirm2faSetup(this.totpCode, false)
+            User.current
+                .confirm2faSetup(this.totpCode, false)
                 .then(backupCodes => {
                     this.backupCodes = backupCodes;
                 })
@@ -91,7 +101,7 @@ class SecuritySettings extends React.Component {
 
     downloadBackupCodes = () => {
         if (!this.backupCodes) {
-            User.current.reissueBackupCodes().then((codes) => {
+            User.current.reissueBackupCodes().then(codes => {
                 this.backupCodes = codes;
                 this.downloadBackupCodes();
             });
@@ -100,12 +110,14 @@ class SecuritySettings extends React.Component {
         const txtContents = this.backupCodes.join('\n\r');
         const win = electron.getCurrentWindow();
         electron.dialog.showSaveDialog(
-            win, { defaultPath: `${User.current.username}_2fa_backup.txt` },
+            win,
+            { defaultPath: `${User.current.username}_2fa_backup.txt` },
             fileSavePath => {
                 if (fileSavePath) {
                     fs.writeFileSync(fileSavePath, txtContents);
                 }
-            });
+            }
+        );
     };
 
     disable2fa = () => {
@@ -126,27 +138,37 @@ class SecuritySettings extends React.Component {
                 <T k="title_AccountKey" tag="div" className="title" />
                 <T k="title_AKDetail" tag="p" />
                 <div className="account-key-toggle">
-                    {this.passphraseVisible
-                        ? <span className="selectable">{User.current.passphrase}</span>
-                        : <span>••••••••••••••••••••••••••••••••••••••••••</span>}&nbsp;&nbsp;
-                    <Button icon="visibility"
-                        tooltip={this.passphraseVisible ?
-                            t('title_hideAccountKey') : t('title_showAccountKey')}
+                    {this.passphraseVisible ? (
+                        <span className="selectable">
+                            {User.current.passphrase}
+                        </span>
+                    ) : (
+                        <span>••••••••••••••••••••••••••••••••••••••••••</span>
+                    )}&nbsp;&nbsp;
+                    <Button
+                        icon="visibility"
+                        tooltip={
+                            this.passphraseVisible
+                                ? t('title_hideAccountKey')
+                                : t('title_showAccountKey')
+                        }
                         tooltipPosition="right"
                         onClick={this.togglePassphraseVisibility}
                         selected={this.passphraseVisible}
                         theme="no-hover"
                     />
-
-                    <Button icon="file_download"
+                    <Button
+                        icon="file_download"
                         className="save-button"
                         label={t('button_saveAccountKey')}
                         onClick={this.backupAccountKey}
                         theme="primary"
                     />
                 </div>
-                <PDFSaver ref={this.setAccountKeyPDFRef} template="./AccountKeyBackup.html" />
-
+                <PDFSaver
+                    ref={this.setAccountKeyPDFRef}
+                    template="./AccountKeyBackup.html"
+                />
             </section>
         );
     }
@@ -154,11 +176,17 @@ class SecuritySettings extends React.Component {
     renderAutologinSection() {
         return (
             <section className="with-bg">
-                <T k="title_securityDeviceSettings" tag="div" className="title" />
+                <T
+                    k="title_securityDeviceSettings"
+                    tag="div"
+                    className="title"
+                />
                 <T k="title_securityDeviceSettingsDetail" tag="p" />
-                <Switch checked={User.current.autologinEnabled}
+                <Switch
+                    checked={User.current.autologinEnabled}
                     label={t('title_autologinSetting')}
-                    onChange={this.onToggleAutologin} />
+                    onChange={this.onToggleAutologin}
+                />
             </section>
         );
     }
@@ -170,58 +198,98 @@ class SecuritySettings extends React.Component {
                 <p>
                     <T k="title_2FADetailDesktop" />
                     <a onClick={this.openAuthApps}>
-                        <Button icon="help" tooltip={t('title_readMore')} theme="no-hover" />
+                        <Button
+                            icon="help"
+                            tooltip={t('title_readMore')}
+                            theme="no-hover"
+                        />
                     </a>
-                    <Dialog active={this.authAppsDialogActive} title={t('title_authApps')}
+                    <Dialog
+                        active={this.authAppsDialogActive}
+                        title={t('title_authApps')}
                         onCancel={this.closeAuthApps}
-                        actions={[{ label: t('button_close'), onClick: this.closeAuthApps }]}>
+                        actions={[
+                            {
+                                label: t('button_close'),
+                                onClick: this.closeAuthApps
+                            }
+                        ]}
+                    >
                         <T k="title_authAppsDetails" tag="p" />
                     </Dialog>
                 </p>
                 <div className="twofa-container">
                     <div className="qr-code">
                         <T k="title_step1" className="bold" />
-                        {
-                            this.twoFAQRCode
-                                ? (
-                                    this.qrCodeVisible
-                                        ? <div>
-                                            <T k="title_scanQRCode" tag="div" />
-                                            <br />
-                                            <img alt={this.twoFASecret} src={this.twoFAQRCode} />
-                                            <a onClick={this.toggleQRCode}>
-                                                <T k="button_2FAShowSecret" tag="div" className="text-center" />
-                                            </a>
-                                        </div>
-                                        : <div>
-                                            <T k="title_pasteTOTPKey" tag="div" />
-                                            <br />
-                                            <T k="title_2FASecretKey" className="dark-label" tag="div" />
+                        {this.twoFAQRCode ? (
+                            this.qrCodeVisible ? (
+                                <div>
+                                    <T k="title_scanQRCode" tag="div" />
+                                    <br />
+                                    <img
+                                        alt={this.twoFASecret}
+                                        src={this.twoFAQRCode}
+                                    />
+                                    <a onClick={this.toggleQRCode}>
+                                        <T
+                                            k="button_2FAShowSecret"
+                                            tag="div"
+                                            className="text-center"
+                                        />
+                                    </a>
+                                </div>
+                            ) : (
+                                <div>
+                                    <T k="title_pasteTOTPKey" tag="div" />
+                                    <br />
+                                    <T
+                                        k="title_2FASecretKey"
+                                        className="dark-label"
+                                        tag="div"
+                                    />
 
-                                            <div className="bold selectable">{this.twoFASecret}
-                                                <Button icon="content_copy" onClick={this.copyTOTPSecret}
-                                                    tooltip={t('title_copy')} primary />
-                                            </div>
-                                            <br />
-                                            <a onClick={this.toggleQRCode}>
-                                                <T k="button_2FAShowQRCode" tag="div" className="text-center" />
-                                            </a>
-                                        </div>
-                                )
-                                : <ProgressBar type="circular" className="block" />
-                        }
+                                    <div className="bold selectable">
+                                        {this.twoFASecret}
+                                        <Button
+                                            icon="content_copy"
+                                            onClick={this.copyTOTPSecret}
+                                            tooltip={t('title_copy')}
+                                            primary
+                                        />
+                                    </div>
+                                    <br />
+                                    <a onClick={this.toggleQRCode}>
+                                        <T
+                                            k="button_2FAShowQRCode"
+                                            tag="div"
+                                            className="text-center"
+                                        />
+                                    </a>
+                                </div>
+                            )
+                        ) : (
+                            <ProgressBar type="circular" className="block" />
+                        )}
                     </div>
                     <div className="totp-code">
                         <T k="title_step2" tag="div" className="bold" />
                         <T k="title_enterTOTPCodeFromApp" tag="div" />
                         <br />
-                        <BetterInput label={t('title_enterTOTPCode')}
-                            className={css('totp-input', { 'totp-error': this.totpCodeError })}
+                        <BetterInput
+                            label={t('title_enterTOTPCode')}
+                            className={css('totp-input', {
+                                'totp-error': this.totpCodeError
+                            })}
                             value={this.totpCode}
                             onChange={this.onTOTPCodeChange}
                             acceptOnBlur="false"
                         />
-                        {this.totpCodeValidating ? <ProgressBar type="circular" className="totp-progress" /> : null}
+                        {this.totpCodeValidating ? (
+                            <ProgressBar
+                                type="circular"
+                                className="totp-progress"
+                            />
+                        ) : null}
                     </div>
                 </div>
             </section>
@@ -233,7 +301,10 @@ class SecuritySettings extends React.Component {
             <section className="with-bg">
                 <T k="title_2FA" className="title" tag="div" />
                 <p>
-                    <MaterialIcon icon="check_circle" className="icon-affirmative icon-large" />
+                    <MaterialIcon
+                        icon="check_circle"
+                        className="icon-affirmative icon-large"
+                    />
                     &nbsp;&nbsp;
                     <T k="title_2FAEnabledThanks" />
                 </p>
@@ -259,7 +330,9 @@ class SecuritySettings extends React.Component {
         return (
             <div className="security-settings">
                 {this.renderAccountKeySection()}
-                {User.current.twoFAEnabled ? this.render2faEnabledSection() : this.render2faSetupSection()}
+                {User.current.twoFAEnabled
+                    ? this.render2faEnabledSection()
+                    : this.render2faSetupSection()}
                 {this.renderAutologinSection()}
             </div>
         );

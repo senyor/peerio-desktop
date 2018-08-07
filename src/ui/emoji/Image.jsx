@@ -12,7 +12,8 @@ class EmojiImage extends React.Component {
                 className={css(
                     'emoji-image',
                     this.props.size,
-                    emojiByCanonicalShortname[`:${this.props.emoji}:`].className,
+                    emojiByCanonicalShortname[`:${this.props.emoji}:`]
+                        .className,
                     this.props.className
                 )}
                 title={this.props.emoji}

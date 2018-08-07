@@ -1,3 +1,4 @@
+// @ts-check
 const React = require('react');
 const { DragDropContext } = require('react-dnd');
 const HTML5Backend = require('react-dnd-html5-backend').default;
@@ -11,9 +12,10 @@ const { socket, clientApp, warnings, chatStore } = require('peerio-icebear');
 const { computed, reaction, observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const SystemWarningDialog = require('~/ui/shared-components/SystemWarningDialog');
+const SystemWarningDialog = require('~/ui/shared-components/SystemWarningDialog')
+    .default;
 const TwoFADialog = require('~/ui/shared-components/TwoFADialog');
-const Snackbar = require('~/ui/shared-components/Snackbar');
+const Snackbar = require('~/ui/shared-components/Snackbar').default;
 const UpdateFailedDialog = require('./updater/UpdateFailedDialog');
 const InstallingUpdateDialog = require('./updater/InstallingUpdateDialog');
 const ReadyToInstallUpdateDialog = require('./updater/ReadyToInstallUpdateDialog');
@@ -35,73 +37,93 @@ class Root extends React.Component {
                 This covers the case where we are in `chats` or `patients` view but without MessageInput
                 e.g. zero states, new DM, new room
     */
-    @computed get snackbarVisible() {
+    @computed
+    get snackbarVisible() {
         return (
-            !routerStore.currentRoute.startsWith(routerStore.ROUTES.chats)
-            && !routerStore.currentRoute.startsWith(routerStore.ROUTES.patients)
-        ) || !chatStore.activeChat;
+            (!routerStore.currentRoute.startsWith(routerStore.ROUTES.chats) &&
+                !routerStore.currentRoute.startsWith(
+                    routerStore.ROUTES.patients
+                )) ||
+            !chatStore.activeChat
+        );
     }
 
     @observable showOfflineNotification = false;
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         if (isDevEnv) {
             appState.devModeEnabled = true;
         }
 
         // events from main process
-        ipcRenderer.on('warning', (ev, key) => warnings.add(key)); // TODO: not needed anymore?
-        ipcRenderer.on('console_log', (ev, arg) => console.log(arg));
+        ipcRenderer.on('warning', (_ev, key) => warnings.add(key)); // TODO: not needed anymore?
+        ipcRenderer.on('console_log', (_ev, arg) => console.log(arg));
         ipcRenderer.on('activate_dev_mode', () => {
             appState.devModeEnabled = true;
         });
 
-        reaction(() => socket.connected, (connected) => {
-            if (connected) {
-                this.showOfflineNotification = false;
-                return;
-            }
-            setTimeout(() => {
-                this.showOfflineNotification = !socket.connected;
-            }, 5000);
-        }, { fireImmediately: true });
+        reaction(
+            () => socket.connected,
+            connected => {
+                if (connected) {
+                    this.showOfflineNotification = false;
+                    return;
+                }
+                setTimeout(() => {
+                    this.showOfflineNotification = !socket.connected;
+                }, 5000);
+            },
+            { fireImmediately: true }
+        );
 
         when(() => clientApp.clientSessionExpired, () => appControl.relaunch());
     }
 
     componentWillMount() {
         clientApp.isFocused = appState.isFocused;
-        reaction(() => appState.isFocused, (focused) => {
-            clientApp.isFocused = focused;
-        });
+        reaction(
+            () => appState.isFocused,
+            focused => {
+                clientApp.isFocused = focused;
+            }
+        );
     }
     renderReconnectSection() {
-        return (<span>
-            {socket.reconnectTimer.counter || ' '}&nbsp;
-            <Button
-                className="reconnect"
-                label={t('button_retry')}
-                onClick={socket.resetReconnectTimer}
-                theme="inverted"
-            />
-        </span>);
+        return (
+            <span>
+                {socket.reconnectTimer.counter || ' '}&nbsp;
+                <Button
+                    className="reconnect"
+                    label={t('button_retry')}
+                    onClick={socket.resetReconnectTimer}
+                    theme="inverted"
+                />
+            </span>
+        );
     }
 
     render() {
         return (
             <div>
-                <div className={`status-bar ${this.showOfflineNotification ? 'visible' : ''}`}>
-                    {this.showOfflineNotification
-                        ? <ProgressBar type="circular" mode="indeterminate" theme="light" size="small" />
-                        : null
-                    }
+                <div
+                    className={`status-bar ${
+                        this.showOfflineNotification ? 'visible' : ''
+                    }`}
+                >
+                    {this.showOfflineNotification ? (
+                        <ProgressBar
+                            type="circular"
+                            mode="indeterminate"
+                            theme="light"
+                            size="small"
+                        />
+                    ) : null}
                     #{socket.reconnectAttempt}&nbsp;{t('error_connecting')}&nbsp;
                     {appState.isOnline && this.renderReconnectSection()}
                 </div>
                 {this.props.children}
 
-                {this.devtools}
                 {this.snackbarVisible ? <Snackbar /> : null}
                 <SystemWarningDialog />
                 <TwoFADialog />

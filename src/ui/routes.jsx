@@ -40,14 +40,17 @@ module.exports = (
         <Route path="/signup" component={Signup} />
         <Route path="/new-device" component={NewDevice} />
         <Route path="autologin" component={AutoLogin} />
-        <Route path="/app" component={App} >
+        <Route path="/app" component={App}>
             <IndexRoute component={Loading} />
             <Route path="chats" component={Chat}>
                 <IndexRoute component={ChatView} />
                 <Route path="channel-invite" component={ChannelInvite} />
                 <Route path="new-chat" component={NewChat} />
                 <Route path="new-channel" component={NewChannel} />
-                <Route path="pending-dm-dismissed" component={PendingDMDismissed} />
+                <Route
+                    path="pending-dm-dismissed"
+                    component={PendingDMDismissed}
+                />
                 <Route path="new-patient" component={NewChannel} />
             </Route>
             <Route path="patients" component={Patient}>
@@ -58,7 +61,7 @@ module.exports = (
             <Route path="zero-chats" component={ZeroChats} />
             <Route path="files" component={Files} />
             <Route path="onboarding" component={Onboarding} />
-            <Route path="contacts" component={Contacts} >
+            <Route path="contacts" component={Contacts}>
                 <IndexRoute component={ContactList} />
                 <Route path="invited" component={InvitedContacts} />
                 <Route path="new-contact" component={NewContact} />
@@ -75,7 +78,7 @@ module.exports = (
                 <Route path="dev" component={DevSettings} />
             </Route>
         </Route>
-        <Route path="/dev-tools" component={DevTools} >
+        <Route path="/dev-tools" component={DevTools}>
             <IndexRoute component={DTDashboard} />
             <Route path="kegs" component={KegEditor} />
         </Route>

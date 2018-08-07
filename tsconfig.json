@@ -9,24 +9,21 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true,
+    // "noUnusedLocals": true, // TODO: https://github.com/PeerioTechnologies/peerio-updater/pull/3
+    "noUnusedParameters": true,
+    "noImplicitAny": false, // TODO: enable (default enabled under `strict`, so just remove this line)
+    "strictNullChecks": false, // TODO: enable (default enabled under `strict`, so just remove this line)
     "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "*": [
-        "*",
-        "../app/node_modules/*"
-      ]
+      "~/*": ["./*"],
+      "*": ["*", "../app/node_modules/*"],
+      // Since desktop app uses self-compiled sdk from node_modules/peerio-icebear/dist
+      // and main file of the sdk is /dist/index.js,
+      // we give a hint to typescript where to look for sources.
+      "peerio-icebear": ["../app/node_modules/peerio-icebear/src"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "docs",
-    "dist-assets",
-    "icons",
-    "scripts",
-    "dist",
-    "test",
-    "app"
-  ]
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["src/static/**/*"]
 }

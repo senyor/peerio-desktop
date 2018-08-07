@@ -14,8 +14,12 @@ class UIStore {
 
     // show dialog about signature error
     @observable isFileSignatureErrorDialogActive = false;
-    hideFileSignatureErrorDialog = () => { this.isFileSignatureErrorDialogActive = false; };
-    showFileSignatureErrorDialog = () => { this.isFileSignatureErrorDialogActive = true; };
+    hideFileSignatureErrorDialog = () => {
+        this.isFileSignatureErrorDialogActive = false;
+    };
+    showFileSignatureErrorDialog = () => {
+        this.isFileSignatureErrorDialogActive = true;
+    };
 
     // subscribe to this observable and it will change every minute
     minuteClock = new Clock(60);
@@ -29,10 +33,11 @@ class UIStore {
         if (this.messageInputEditorView) {
             this.messageInputEditorView.focus();
         }
-    }
+    };
 
     // anything you add here will be stored with 'pref_' prefix in personal tinydb
-    @observable prefs = {
+    @observable
+    prefs = {
         messageSoundsEnabled: true,
         mentionSoundsEnabled: false,
         errorSoundsEnabled: true,
@@ -51,67 +56,84 @@ class UIStore {
     };
 
     // anything you add here will be stored with 'pref_' prefix in shared (system) tinydb
-    @observable sharedPrefs = {
+    @observable
+    sharedPrefs = {
         prereleaseUpdatesEnabled: false
-    }
+    };
 
     // initializes prefs and sharePrefs with stored data and subscribes to changes to persist them
     observePreference(key, dbName, localStore) {
         const prefKey = `pref_${key}`;
-        return TinyDb[dbName].getValue(prefKey)
-            .then((loadedValue) => {
-                if (loadedValue || loadedValue === false) {
-                    localStore[key] = loadedValue;
-                } else if (key === 'peerioContentEnabled') {
-                    // TODO: to be removed in next release after 2.108
-                    localStore[key] = null;
-                }
-                reaction(() => localStore[key], () => {
+        return TinyDb[dbName].getValue(prefKey).then(loadedValue => {
+            if (loadedValue || loadedValue === false) {
+                localStore[key] = loadedValue;
+            } else if (key === 'peerioContentEnabled') {
+                // TODO: to be removed in next release after 2.108
+                localStore[key] = null;
+            }
+            reaction(
+                () => localStore[key],
+                () => {
                     TinyDb[dbName].setValue(prefKey, localStore[key]);
-                });
-            });
+                }
+            );
+        });
     }
 
     // should be called only once, after user has been authenticated first time
     // currently authenticated app root component calls it on mount
     async init() {
         await Promise.all(
-            Object.keys(this.prefs).map(
-                key => this.observePreference(key, 'user', this.prefs)
-            ));
+            Object.keys(this.prefs).map(key =>
+                this.observePreference(key, 'user', this.prefs)
+            )
+        );
         await Promise.all(
-            Object.keys(this.sharedPrefs).map(
-                key => this.observePreference(key, 'system', this.sharedPrefs)
-            ));
+            Object.keys(this.sharedPrefs).map(key =>
+                this.observePreference(key, 'system', this.sharedPrefs)
+            )
+        );
 
         // TODO: to be removed
         // Due to bug and changing defaults of peerioContentEnabled
         // from true to false, if we have peerioContentEnabled undefined
         // and peerioContentConsented set to true, that means user
         // has expressed agreement to display content
-        if (this.prefs.peerioContentEnabled === null && this.prefs.peerioContentConsented) {
+        if (
+            this.prefs.peerioContentEnabled === null &&
+            this.prefs.peerioContentConsented
+        ) {
             this.prefs.peerioContentEnabled = true;
         }
 
         // clear user data and relaunch when user has been deleted
-        reaction(() => User.current.deleted,
-            async (deleted) => {
+        reaction(
+            () => User.current.deleted,
+            async deleted => {
                 if (!deleted) return;
                 await autologin.disable();
                 // await User.current.clearFromTinyDb();
                 appControl.relaunch();
-            });
+            }
+        );
 
         // warn user when blacklisted and relaunch
-        reaction(() => User.current.blacklisted, (blacklisted) => {
-            if (!blacklisted) return;
-            warnings.addSevere('error_accountSuspendedText', 'error_accountSuspendedTitle', null,
-                async () => {
-                    await autologin.disable();
-                    await User.current.clearFromTinyDb();
-                    appControl.relaunch();
-                });
-        });
+        reaction(
+            () => User.current.blacklisted,
+            blacklisted => {
+                if (!blacklisted) return;
+                warnings.addSevere(
+                    'error_accountSuspendedText',
+                    'error_accountSuspendedTitle',
+                    null,
+                    async () => {
+                        await autologin.disable();
+                        await User.current.clearFromTinyDb();
+                        appControl.relaunch();
+                    }
+                );
+            }
+        );
     }
 }
 

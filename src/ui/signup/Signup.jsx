@@ -18,7 +18,8 @@ const ConfirmKey = require('~/ui/signup/ConfirmKey');
 const TermsDialog = require('./TermsDialog');
 const config = require('~/config');
 
-@observer class Signup extends React.Component {
+@observer
+class Signup extends React.Component {
     @observable busy = false;
     @observable show = false; // starts show animation
     @observable step = 0;
@@ -27,9 +28,21 @@ const config = require('~/config');
 
     steps = [
         () => <Welcome returnHandler={this.advance} />,
-        () => <Profile store={this.profileStore} returnHandler={this.advance} />,
-        () => <AccountKey store={this.profileStore} returnHandler={this.advance} />,
-        () => <ConfirmKey store={this.profileStore} returnHandler={this.advance} />
+        () => (
+            <Profile store={this.profileStore} returnHandler={this.advance} />
+        ),
+        () => (
+            <AccountKey
+                store={this.profileStore}
+                returnHandler={this.advance}
+            />
+        ),
+        () => (
+            <ConfirmKey
+                store={this.profileStore}
+                returnHandler={this.advance}
+            />
+        )
     ];
 
     titles = [
@@ -39,7 +52,9 @@ const config = require('~/config');
         t('title_AccountKey')
     ];
 
-    get title() { return this.titles[this.step]; }
+    get title() {
+        return this.titles[this.step];
+    }
 
     @observable profileStore = new ProfileStore();
 
@@ -51,14 +66,20 @@ const config = require('~/config');
             this.profileStore.temporaryAvatarDataUrl = reader.result;
         };
         reader.readAsDataURL(blob);
-    }
+    };
 
-    @computed get hasErrors() {
+    @computed
+    get hasErrors() {
         return this.step === 1 ? this.profileStore.hasErrors : false;
     }
 
-    @computed get readyToSignup() {
-        return !this.profileStore.hasErrors && (this.profileStore.keyBackedUp || this.profileStore.confirmedKeyBackup);
+    @computed
+    get readyToSignup() {
+        return (
+            !this.profileStore.hasErrors &&
+            (this.profileStore.keyBackedUp ||
+                this.profileStore.confirmedKeyBackup)
+        );
     }
 
     componentWillMount() {
@@ -82,12 +103,16 @@ const config = require('~/config');
         u.passphrase = this.profileStore.passphrase;
 
         // DEV MODE ONLY
-        if (config.devAutologin && config.devAutologin.signupPassphraseOverride) {
+        if (
+            config.devAutologin &&
+            config.devAutologin.signupPassphraseOverride
+        ) {
             u.passphrase = config.devAutologin.signupPassphraseOverride;
         }
 
         User.current = u;
-        return u.createAccountAndLogin()
+        return u
+            .createAccountAndLogin()
             .then(() => {
                 this.busy = false;
                 autologin.enable();
@@ -99,14 +124,16 @@ const config = require('~/config');
                 this.busy = false;
                 this.errorVisible = true;
                 // todo: error message will not be localized, maybe don't use it at all
-                this.errorMessage = `${t('error_signupServerError')} ${errors.normalize(err).message}`;
+                this.errorMessage = `${t('error_signupServerError')} ${
+                    errors.normalize(err).message
+                }`;
             })
             .then(async () => {
                 const { avatarBuffers, keyBackedUp } = this.profileStore;
-                keyBackedUp && await User.current.setAccountKeyBackedUp();
-                avatarBuffers && await User.current.saveAvatar(avatarBuffers);
+                keyBackedUp && (await User.current.setAccountKeyBackedUp());
+                avatarBuffers && (await User.current.saveAvatar(avatarBuffers));
             });
-    }
+    };
 
     navigateToLogin = () => {
         window.router.push('/');
@@ -167,7 +194,9 @@ const config = require('~/config');
         return (
             <div className="signup-nav">
                 <Button
-                    label={this.step === 1 ? t('button_cancel') : t('button_back')}
+                    label={
+                        this.step === 1 ? t('button_cancel') : t('button_back')
+                    }
                     onClick={this.retreat}
                     theme="secondary"
                 />
@@ -186,9 +215,13 @@ const config = require('~/config');
             { label: t('button_retry'), onClick: this.createAccount }
         ];
         return (
-            <Dialog actions={errorActions} active={this.errorVisible}
+            <Dialog
+                actions={errorActions}
+                active={this.errorVisible}
                 onCancel={this.hideError}
-                title={t('title_error')}>{this.errorMessage}
+                title={t('title_error')}
+            >
+                {this.errorMessage}
             </Dialog>
         );
     }
@@ -197,30 +230,49 @@ const config = require('~/config');
         const { step, steps } = this;
         return (
             <div className={css('signup', { show: this.show })}>
-                <SignupProgress step={step} count={steps.length - 1} title={this.title} />
+                <SignupProgress
+                    step={step}
+                    count={steps.length - 1}
+                    title={this.title}
+                />
                 <div className="signup-content-container">
-                    <div className={step === 0 || step === 3 ? 'signup-welcome' : 'signup-content'} >
+                    <div
+                        className={
+                            step === 0 || step === 3
+                                ? 'signup-welcome'
+                                : 'signup-content'
+                        }
+                    >
                         {steps[this.step]()}
                         {this.signupNav}
                         {this.errorDialog}
-                        {step === 0 ?
-                            <T k="title_TOSRequestText" className="terms-smallprint">
+                        {step === 0 ? (
+                            <T
+                                k="title_TOSRequestText"
+                                className="terms-smallprint"
+                            >
                                 {{
-                                    tosButton: text => (<Button onClick={TermsDialog.showDialog}
-                                        label={text}
-                                        theme="link" />)
+                                    tosButton: text => (
+                                        <Button
+                                            onClick={TermsDialog.showDialog}
+                                            label={text}
+                                            theme="link"
+                                        />
+                                    )
                                 }}
                             </T>
-                            : null
-                        }
+                        ) : null}
                     </div>
-                    {step === 0 || step === 1
-                        ? <div className="back-to-login">
+                    {step === 0 || step === 1 ? (
+                        <div className="back-to-login">
                             <T k="title_alreadyHaveAccount" />&nbsp;
-                            <Button label={t('button_login')} theme="link" onClick={this.retreat} />
+                            <Button
+                                label={t('button_login')}
+                                theme="link"
+                                onClick={this.retreat}
+                            />
                         </div>
-                        : null
-                    }
+                    ) : null}
                 </div>
                 <TermsDialog />
                 <AvatarDialog onSave={this.handleSaveAvatar} />

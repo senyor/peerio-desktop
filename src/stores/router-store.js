@@ -24,12 +24,24 @@ class RouterStore {
         });
     }
 
-    get isNewChat() { return this.currentRoute === this.ROUTES.newChat; }
-    get isNewChannel() { return this.currentRoute === this.ROUTES.newChannel; }
-    get isPatientSpace() { return this.currentRoute.startsWith('/app/patients'); }
-    get isNewPatient() { return this.currentRoute === this.ROUTES.newPatient; }
-    get isNewPatientRoom() { return this.currentRoute === this.ROUTES.newPatientRoom; }
-    get isNewInternalRoom() { return this.currentRoute === this.ROUTES.newInternalRoom; }
+    get isNewChat() {
+        return this.currentRoute === this.ROUTES.newChat;
+    }
+    get isNewChannel() {
+        return this.currentRoute === this.ROUTES.newChannel;
+    }
+    get isPatientSpace() {
+        return this.currentRoute.startsWith('/app/patients');
+    }
+    get isNewPatient() {
+        return this.currentRoute === this.ROUTES.newPatient;
+    }
+    get isNewPatientRoom() {
+        return this.currentRoute === this.ROUTES.newPatientRoom;
+    }
+    get isNewInternalRoom() {
+        return this.currentRoute === this.ROUTES.newInternalRoom;
+    }
 
     get ROUTES() {
         return {

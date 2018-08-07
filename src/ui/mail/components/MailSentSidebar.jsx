@@ -11,14 +11,12 @@ class MailSentSidebar extends React.Component {
     @observable revokeDialogActive = false;
     @observable ghostActive = true;
 
-
     revokeGhost = () => {
-        return this.props.ghost.revoke()
-            .then(() => {
-                this.hideRevokeDialog();
-                warnings.add('warning_mailRevoked');
-            });
-    }
+        return this.props.ghost.revoke().then(() => {
+            this.hideRevokeDialog();
+            warnings.add('warning_mailRevoked');
+        });
+    };
 
     showRevokeDialog = () => {
         this.revokeDialogActive = true;
@@ -29,7 +27,8 @@ class MailSentSidebar extends React.Component {
     };
 
     componentDidUpdate() {
-        this.ghostActive = !this.props.ghost.expired && !this.props.ghost.revoked;
+        this.ghostActive =
+            !this.props.ghost.expired && !this.props.ghost.revoked;
     }
 
     copyLink = () => {
@@ -44,8 +43,18 @@ class MailSentSidebar extends React.Component {
 
     render() {
         const revokeDialogActions = [
-            { label: t('button_cancel'), onClick: () => { this.hideRevokeDialog(); } },
-            { label: t('button_mailRevoke'), onClick: () => { this.revokeGhost(); } }
+            {
+                label: t('button_cancel'),
+                onClick: () => {
+                    this.hideRevokeDialog();
+                }
+            },
+            {
+                label: t('button_mailRevoke'),
+                onClick: () => {
+                    this.revokeGhost();
+                }
+            }
         ];
         return (
             <div className="mail-sent-sidebar">
@@ -54,38 +63,58 @@ class MailSentSidebar extends React.Component {
                     <div className="read-recipt">
                         <div className="dark-label">{t('title_mailUrl')}</div>
                         <div className="mail-link">
-                            <a href={this.props.ghost.url} ref={(l) => { this.link = l; }}>{this.props.ghost.url}</a>
+                            <a
+                                href={this.props.ghost.url}
+                                ref={l => {
+                                    this.link = l;
+                                }}
+                            >
+                                {this.props.ghost.url}
+                            </a>
                             <Button
                                 tooltip={t('title_copy')}
                                 tooltipPosition="bottom"
                                 icon="content_copy"
-                                onClick={this.copyLink} />
+                                onClick={this.copyLink}
+                            />
                         </div>
                     </div>
                     <div className="expire-info">
-                        {
-                            this.ghostActive ?
-                                <div className="content">
-                                    <div className="dark-label">{t('title_mailExpires')}</div>
-                                    <div>{this.props.ghost.expiryDate.toLocaleString()}</div>
-                                    <Button className="mail-revoke"
-                                        label={t('button_mailRevoke')}
-                                        onClick={this.showRevokeDialog}
-                                    />
-                                </div>
-                                :
+                        {this.ghostActive ? (
+                            <div className="content">
                                 <div className="dark-label">
-                                    {this.props.ghost.revoked ? t('warning_mailRevoked') : t('title_mailExpired')}
+                                    {t('title_mailExpires')}
                                 </div>
-                        }
+                                <div>
+                                    {this.props.ghost.expiryDate.toLocaleString()}
+                                </div>
+                                <Button
+                                    className="mail-revoke"
+                                    label={t('button_mailRevoke')}
+                                    onClick={this.showRevokeDialog}
+                                />
+                            </div>
+                        ) : (
+                            <div className="dark-label">
+                                {this.props.ghost.revoked
+                                    ? t('warning_mailRevoked')
+                                    : t('title_mailExpired')}
+                            </div>
+                        )}
                     </div>
                 </div>
-                {this.ghostActive ? <Dialog actions={revokeDialogActions}
-                    active={this.revokeDialogActive}
-                    onCancel={this.handleRevokeDialogToggle}
-                    title={t('title_mailRevoke')}>
-                    <p>{t('dialog_mailRevokeText')}</p>
-                </Dialog> : ''}
+                {this.ghostActive ? (
+                    <Dialog
+                        actions={revokeDialogActions}
+                        active={this.revokeDialogActive}
+                        onCancel={this.handleRevokeDialogToggle}
+                        title={t('title_mailRevoke')}
+                    >
+                        <p>{t('dialog_mailRevokeText')}</p>
+                    </Dialog>
+                ) : (
+                    ''
+                )}
             </div>
         );
     }

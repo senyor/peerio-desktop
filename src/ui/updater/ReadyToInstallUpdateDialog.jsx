@@ -6,7 +6,8 @@ const T = require('~/ui/shared-components/T');
 const { Dialog } = require('peer-ui');
 const updaterStore = require('~/stores/updater-store');
 
-@observer class ReadyToInstallUpdateDialog extends Component {
+@observer
+class ReadyToInstallUpdateDialog extends Component {
     handleUpdate() {
         updaterStore.quitAndInstall();
     }
@@ -18,18 +19,25 @@ const updaterStore = require('~/stores/updater-store');
             { label: t('button_installUpdate'), onClick: this.handleUpdate }
         ];
         if (!updaterStore.mandatory) {
-            actions.unshift({ label: t('button_installUpdateLater'), onClick: this.handleLater });
+            actions.unshift({
+                label: t('button_installUpdateLater'),
+                onClick: this.handleLater
+            });
         }
         return (
             <Dialog
                 className="dialog-ready-to-install"
-                active={updaterStore.readyToInstall && updaterStore.askToInstall && !updaterStore.installing}
-                actions={actions}>
+                active={
+                    updaterStore.readyToInstall &&
+                    updaterStore.askToInstall &&
+                    !updaterStore.installing
+                }
+                actions={actions}
+            >
                 <T k="title_updateWillRestart" />
             </Dialog>
         );
     }
 }
-
 
 module.exports = ReadyToInstallUpdateDialog;

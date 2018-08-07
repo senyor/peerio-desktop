@@ -9,21 +9,28 @@
             "experimentalObjectRestSpread": true
         }
     },
-    "extends": [
-        "peerio"
-    ],
+    "plugins": ["typescript"],
+    "extends": ["peerio", "prettier"],
     "settings": {
-        "import/core-modules": [
-            "electron"
-        ]
+        "import/core-modules": ["electron"],
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".ts"]
+            }
+        }
     },
     "rules": {
         "global-require": 0,
+        "import/extensions": 0,
+        "import/newline-after-import": 0,
         "import/no-dynamic-require": 0,
         "import/no-unresolved": 0,
         "import/no-extraneous-dependencies": 0,
+        "import/prefer-default-export": 0,
         "react/prop-types": 0,
         "react/sort-comp": 0,
+        "react/jsx-indent": 0,
+        "react/jsx-filename-extension": [2, { "extensions": [".jsx", ".tsx"] }],
         "react/prefer-stateless-function": 0,
         "react/no-unescaped-entities": 0,
         "react/no-multi-comp": 0,
@@ -35,7 +42,9 @@
         "no-multi-assign": 0,
         "no-void": 0,
         "no-nested-ternary": 0,
-        "prefer-destructuring": 0
+        "prefer-destructuring": 0,
+        "strict": 0,
+        "typescript/no-unused-vars": 2
     },
     "globals": {
         "document": false,

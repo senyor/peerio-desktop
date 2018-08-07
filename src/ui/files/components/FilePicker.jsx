@@ -34,7 +34,10 @@ class FilePicker extends React.Component {
             return;
         }
 
-        const distanceToBottom = this.container.scrollHeight - this.container.scrollTop - this.container.clientHeight;
+        const distanceToBottom =
+            this.container.scrollHeight -
+            this.container.scrollTop -
+            this.container.clientHeight;
         if (distanceToBottom < 250) {
             this.renderedItemsCount += this.pageSize;
         }
@@ -53,7 +56,7 @@ class FilePicker extends React.Component {
         ref.scrollListener = true;
         this.container = ref;
         this.enqueueCheck(); // check the initial situation
-    }
+    };
 
     handleClose = () => {
         fileStore.clearSelection();
@@ -92,7 +95,8 @@ class FilePicker extends React.Component {
         );
     }
 
-    @computed get items() {
+    @computed
+    get items() {
         return fileStore.searchQuery
             ? fileStore.filesAndFoldersSearchResult
             : fileStore.folderStore.currentFolder.filesAndFoldersDefaultSorting;
@@ -111,43 +115,61 @@ class FilePicker extends React.Component {
 
         const items = [];
         const data = this.items;
-        const canShareFolder = chatStore.activeChat && !chatStore.activeChat.isChannel;
+        const canShareFolder =
+            chatStore.activeChat && !chatStore.activeChat.isChannel;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             if (f.isLegacy && this.props.hideLegacy) continue;
 
             // TODO: re-enable checkbox when folder sharing is allowed
-            items.push(f.isFolder ?
-                <FolderLine
-                    key={f.id}
-                    folder={f}
-                    checkbox={false}
-                    disabledCheckbox={(!f.isShared && f.root.isShared) || !canShareFolder}
-                /> :
-                <FileLine
-                    key={f.fileId}
-                    file={f}
-                    checkbox
-                    clickToSelect
-                />);
+            items.push(
+                f.isFolder ? (
+                    <FolderLine
+                        key={f.id}
+                        folder={f}
+                        checkbox={false}
+                        disabledCheckbox={
+                            (!f.isShared && f.root.isShared) || !canShareFolder
+                        }
+                        folderDetailsMini
+                    />
+                ) : (
+                    <FileLine
+                        key={f.fileId}
+                        file={f}
+                        checkbox
+                        clickToSelect
+                        fileDetailsMini
+                    />
+                )
+            );
         }
 
         return (
-            <Dialog title={t('title_shareFromFiles')}
+            <Dialog
+                title={t('title_shareFromFiles')}
                 className="file-picker"
                 actions={actions}
                 active={this.props.active}
-                onCancel={this.handleClose}>
-                {!fileStore.loading && this.props.active ?
+                onCancel={this.handleClose}
+            >
+                {!fileStore.loading && this.props.active ? (
                     <div className="file-picker-body">
-                        <Search onChange={this.handleSearch} query={fileStore.searchQuery} />
-                        {fileStore.searchQuery ? this.searchResultsHeader : this.breadCrumbsHeader}
-                        <div ref={this.setScrollerRef} className="file-table-wrapper">
-                            <div className="file-table-body">
-                                {items}
-                            </div>
+                        <Search
+                            onChange={this.handleSearch}
+                            query={fileStore.searchQuery}
+                        />
+                        {fileStore.searchQuery
+                            ? this.searchResultsHeader
+                            : this.breadCrumbsHeader}
+                        <div
+                            ref={this.setScrollerRef}
+                            className="file-table-wrapper"
+                        >
+                            <div className="file-table-body">{items}</div>
                         </div>
-                    </div> : null}
+                    </div>
+                ) : null}
                 {fileStore.loading && this.renderLoader()}
             </Dialog>
         );
@@ -161,6 +183,5 @@ class FilePicker extends React.Component {
         );
     }
 }
-
 
 module.exports = FilePicker;

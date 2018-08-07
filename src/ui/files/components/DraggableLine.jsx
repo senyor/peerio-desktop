@@ -1,5 +1,6 @@
 // @ts-check
 const React = require('react');
+const { observer } = require('mobx-react');
 const { runInAction } = require('mobx');
 const { DragSource } = require('react-dnd');
 const { getEmptyImage } = require('react-dnd-html5-backend');
@@ -9,8 +10,9 @@ const DroppableFolderLine = require('./DroppableFolderLine');
 
 const DragDropTypes = require('../helpers/dragDropTypes');
 const { getAllDraggedItems } = require('../helpers/dragDropHelpers');
-const { isFileOrFolderMoveable } = require('../helpers/sharedFileAndFolderActions');
-
+const {
+    isFileOrFolderMoveable
+} = require('../helpers/sharedFileAndFolderActions');
 
 const fileOrFolderDragSpec = {
     beginDrag(props) {
@@ -20,7 +22,9 @@ const fileOrFolderDragSpec = {
         // need to rely on our singleton store/mutable global state to figure
         // out what we're dragging, so what's another log on the fire
         if (initialSelectionState === false) {
-            runInAction(() => { props.fileOrFolder.selected = true; });
+            runInAction(() => {
+                props.fileOrFolder.selected = true;
+            });
         }
 
         // in fact, that means we simply rely on our global selection state to
@@ -33,7 +37,9 @@ const fileOrFolderDragSpec = {
         if (!monitor.didDrop()) {
             const { initialSelectionState } = monitor.getItem();
             if (initialSelectionState === false) {
-                runInAction(() => { props.fileOrFolder.selected = false; });
+                runInAction(() => {
+                    props.fileOrFolder.selected = false;
+                });
             }
         }
     },
@@ -44,7 +50,6 @@ const fileOrFolderDragSpec = {
         return getAllDraggedItems().filesOrFolders.includes(props.fileOrFolder);
     }
 };
-
 
 // Due to limitations with react-dnd, we need a component that declares a shared
 // DragSource spec to detect dragging multiple lines at the same time (otherwise
@@ -62,7 +67,8 @@ const fileOrFolderDragSpec = {
     }, {}>}
  */
 @DragSource(
-    props => props.fileOrFolder.isFolder ? DragDropTypes.FOLDER : DragDropTypes.FILE,
+    props =>
+        props.fileOrFolder.isFolder ? DragDropTypes.FOLDER : DragDropTypes.FILE,
     fileOrFolderDragSpec,
     (connect, monitor) => ({
         connectDragPreview: connect.dragPreview(),
@@ -70,13 +76,13 @@ const fileOrFolderDragSpec = {
         isDragging: monitor.isDragging()
     })
 )
+@observer
 class DraggableLine extends React.Component {
     componentDidMount() {
         // Disable the built-in HTML5 drag preview -- we render our own with a custom DragLayer.
         const { connectDragPreview } = this.props;
         connectDragPreview(getEmptyImage());
     }
-
 
     render() {
         const {
@@ -88,8 +94,8 @@ class DraggableLine extends React.Component {
 
         return connectDragSource(
             <div>
-                {f.isFolder
-                    ? <DroppableFolderLine
+                {f.isFolder ? (
+                    <DroppableFolderLine
                         folder={f}
                         folderActions
                         folderDetails
@@ -97,14 +103,15 @@ class DraggableLine extends React.Component {
                         isDragging={isDragging}
                         confirmShare={confirmShare}
                     />
-                    : <FileLine
+                ) : (
+                    <FileLine
                         file={f}
                         fileActions
                         fileDetails
                         checkbox
                         isDragging={isDragging}
                     />
-                }
+                )}
             </div>
         );
     }

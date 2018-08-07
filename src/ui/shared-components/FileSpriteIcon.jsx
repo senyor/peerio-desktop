@@ -1,6 +1,8 @@
 const React = require('react');
+const { observer } = require('mobx-react');
 const css = require('classnames');
 
+@observer
 class FileSpriteIcon extends React.Component {
     /* props
         size: small, medium, large, xlarge
@@ -24,7 +26,13 @@ class FileSpriteIcon extends React.Component {
     render() {
         const fileIconType = `ic-file-${this.props.type}-${this.props.size}`;
         return (
-            <div className={css('file-sprite-icon', fileIconType, this.pxResolution)} />
+            <div
+                className={css(
+                    'file-sprite-icon',
+                    fileIconType,
+                    this.pxResolution
+                )}
+            />
         );
     }
 }

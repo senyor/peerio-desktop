@@ -19,7 +19,10 @@ class SignoutDialog extends React.Component {
     render() {
         const actions = [
             { label: t('button_cancel'), onClick: this.props.onHide },
-            { label: t('button_logout'), onClick: () => this.props.onSignout(this.untrustDevice) }
+            {
+                label: t('button_logout'),
+                onClick: () => this.props.onSignout(this.untrustDevice)
+            }
         ];
 
         return (
@@ -28,14 +31,20 @@ class SignoutDialog extends React.Component {
                 actions={actions}
                 className="signout-dialog"
                 onCancel={this.props.onHide}
-                title={t('button_logout')}>
+                title={t('button_logout')}
+                theme="warning"
+            >
                 {t('title_signOutConfirmKeys')}
-                {User.current.trustedDevice ?
-                    <div><br /><Checkbox
-                        checked={this.untrustDevice}
-                        label={t('title_stopTrustingThisDevice')}
-                        onChange={this.onToggleUntrust}
-                    /></div> : null}
+                {User.current.trustedDevice ? (
+                    <div>
+                        <br />
+                        <Checkbox
+                            checked={this.untrustDevice}
+                            label={t('title_stopTrustingThisDevice')}
+                            onChange={this.onToggleUntrust}
+                        />
+                    </div>
+                ) : null}
             </Dialog>
         );
     }

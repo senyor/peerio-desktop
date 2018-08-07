@@ -23,16 +23,45 @@ async function handleLaunchFromDMG() {
             // app.moveToApplicationsFolder() will ask for administrator's
             // credentials; however due to a bug in Electron 1.8.2,
             // it doesn't work. Revisit this later.
-            dialog.showMessageBox({
-                type: 'info',
-                message: `${appName} is running from a disk image`,
-                detail: `It is not recommended to run ${appName} directly from the disk image. ` +
-                    `Please copy it to the Applications folder and run it from there.`,
+            dialog.showMessageBox(
+                {
+                    type: 'info',
+                    message: `${appName} is running from a disk image`,
+                    detail:
+                        `It is not recommended to run ${appName} directly from the disk image. ` +
+                        `Please copy it to the Applications folder and run it from there.`,
+                    checkboxLabel: 'Do not show this message again',
+                    buttons: ['Quit', 'Launch Anyway'],
+                    defaultId: 0,
+                    cancelId: 1
+                },
+                async (response, doNotAsk) => {
+                    if (doNotAsk) {
+                        await TinyDb.system.setValue(DO_NOT_COPY_SETTING, true);
+                    }
+                    if (response !== 0) {
+                        resolve();
+                        return;
+                    }
+                    app.exit(0);
+                }
+            );
+            return;
+        }
+
+        dialog.showMessageBox(
+            {
+                type: 'question',
+                message: 'Copy to Applications folder?',
+                detail:
+                    `${appName} is running from a disk image. ` +
+                    `It is recommended to copy it to the Applications folder and run it from there.`,
                 checkboxLabel: 'Do not show this message again',
-                buttons: ['Quit', 'Launch Anyway'],
+                buttons: ['Copy to Applications Folder', 'Do Not Copy'],
                 defaultId: 0,
                 cancelId: 1
-            }, async (response, doNotAsk) => {
+            },
+            async (response, doNotAsk) => {
                 if (doNotAsk) {
                     await TinyDb.system.setValue(DO_NOT_COPY_SETTING, true);
                 }
@@ -40,49 +69,35 @@ async function handleLaunchFromDMG() {
                     resolve();
                     return;
                 }
-                app.exit(0);
-            });
-            return;
-        }
-
-        dialog.showMessageBox({
-            type: 'question',
-            message: 'Copy to Applications folder?',
-            detail: `${appName} is running from a disk image. ` +
-                `It is recommended to copy it to the Applications folder and run it from there.`,
-            checkboxLabel: 'Do not show this message again',
-            buttons: ['Copy to Applications Folder', 'Do Not Copy'],
-            defaultId: 0,
-            cancelId: 1
-        }, async (response, doNotAsk) => {
-            if (doNotAsk) {
-                await TinyDb.system.setValue(DO_NOT_COPY_SETTING, true);
-            }
-            if (response !== 0) {
-                resolve();
-                return;
-            }
-            try {
-                // Copy (not move, since we're in read-only DMG) to Applications
-                // and restart if it succeeds.
-                if (!app.moveToApplicationsFolder()) {
-                    // Note: the docs are currently wrong, if non-admin user cancels
-                    // authorization, an exception gets thrown rather than returning
-                    // false. We don't mind.
-                    console.log('User cancelled moving to Applications folder');
+                try {
+                    // Copy (not move, since we're in read-only DMG) to Applications
+                    // and restart if it succeeds.
+                    if (!app.moveToApplicationsFolder()) {
+                        // Note: the docs are currently wrong, if non-admin user cancels
+                        // authorization, an exception gets thrown rather than returning
+                        // false. We don't mind.
+                        console.log(
+                            'User cancelled moving to Applications folder'
+                        );
+                    }
+                } catch (ex) {
+                    console.error(ex);
+                    dialog.showMessageBox(
+                        {
+                            type: 'error',
+                            message:
+                                'Failed to copy the app into the Applications folder',
+                            detail:
+                                'Please copy it manually by dragging the app icon.',
+                            buttons: ['Quit']
+                        },
+                        () => {
+                            app.exit(0);
+                        }
+                    );
                 }
-            } catch (ex) {
-                console.error(ex);
-                dialog.showMessageBox({
-                    type: 'error',
-                    message: 'Failed to copy the app into the Applications folder',
-                    detail: 'Please copy it manually by dragging the app icon.',
-                    buttons: ['Quit']
-                }, () => {
-                    app.exit(0);
-                });
             }
-        });
+        );
     });
 }
 
@@ -109,13 +124,16 @@ function isAppInDMG() {
             resolve(isInDMG);
             return;
         }
-        if (process.platform !== 'darwin' || !process.execPath.startsWith('/Volumes')) {
+        if (
+            process.platform !== 'darwin' ||
+            !process.execPath.startsWith('/Volumes')
+        ) {
             isInDMG = false;
             resolve(false);
             return;
         }
         fs.access(process.execPath, fs.constants.W_OK, err => {
-            isInDMG = (err && err.code === 'EROFS');
+            isInDMG = err && err.code === 'EROFS';
             resolve(isInDMG);
         });
     });

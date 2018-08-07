@@ -7,8 +7,13 @@ class AppState {
     // network status as reported by chromium
     @observable isOnline = navigator.onLine;
 
-    @action.bound changeOnlineStatus() {
-        console.log(`Chromium reports state change to: ${navigator.onLine ? 'ONLINE' : 'OFFLINE'}`);
+    @action.bound
+    changeOnlineStatus() {
+        console.log(
+            `Chromium reports state change to: ${
+                navigator.onLine ? 'ONLINE' : 'OFFLINE'
+            }`
+        );
         this.isOnline = navigator.onLine;
     }
 

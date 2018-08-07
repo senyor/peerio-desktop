@@ -8,7 +8,8 @@ const { Dialog } = require('peer-ui');
 const updaterStore = require('~/stores/updater-store');
 const config = require('~/config');
 
-@observer class UpdateFailedDialog extends Component {
+@observer
+class UpdateFailedDialog extends Component {
     handleTryAgain() {
         updaterStore.quitAndRetryInstall();
     }
@@ -29,15 +30,28 @@ const config = require('~/config');
         if (!updaterStore.lastUpdateFailed) return null;
 
         return (
-            <Dialog className="dialog-update-failed"
+            <Dialog
+                className="dialog-update-failed"
                 theme="error"
-                active={updaterStore.lastUpdateFailed && !updaterStore.installing}
+                active={
+                    updaterStore.lastUpdateFailed && !updaterStore.installing
+                }
                 title={t('title_updateFailed')}
                 actions={[
-                    { label: t('button_continueUsingOlderVersion'), onClick: this.handleContinue },
-                    { label: t('button_downloadManually'), onClick: this.handleDownloadManually },
-                    { label: t('button_tryAgain'), onClick: this.handleTryAgain }
-                ]}>
+                    {
+                        label: t('button_continueUsingOlderVersion'),
+                        onClick: this.handleContinue
+                    },
+                    {
+                        label: t('button_downloadManually'),
+                        onClick: this.handleDownloadManually
+                    },
+                    {
+                        label: t('button_tryAgain'),
+                        onClick: this.handleTryAgain
+                    }
+                ]}
+            >
                 <T k="title_updateFailedMessage" />
             </Dialog>
         );

@@ -11,9 +11,12 @@ const ZeroChats = require('~/ui/chat/ZeroChats_medcryptor');
 
 @observer
 class Chat extends React.Component {
-    @computed get zeroState() {
+    @computed
+    get zeroState() {
         return (
-            !chatStore.loading && !chatStore.activeChat && routerStore.currentRoute === routerStore.ROUTES.chats
+            !chatStore.loading &&
+            !chatStore.activeChat &&
+            routerStore.currentRoute === routerStore.ROUTES.chats
         );
     }
 

@@ -1,4 +1,3 @@
-
 const safeJsonStringify = require('safe-json-stringify');
 
 const originals = {
@@ -27,7 +26,6 @@ console.history = {
     toString() {
         return this.cache.join('\r\n');
     }
-
 };
 
 const h = console.history;

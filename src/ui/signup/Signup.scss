@@ -79,7 +79,9 @@
     margin: 0 48px;
     background-image: url('./static/img/welcome-safe.png');
 
-    @media (max-width: 1023px) { margin: 0 16px; }
+    @media (max-width: 1023px) {
+      margin: 0 16px;
+    }
   }
 
   .fast {
@@ -143,11 +145,31 @@
 
   @media all and (max-height: 768px) {
     .signup-content {
-      margin-top: 48px;
+      margin-top: 40px;
+    }
+
+    .welcome-content {
+      margin-top: 0;
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    .private,
+    .safe,
+    .fast {
+      padding-top: 120px;
     }
 
     .p-input {
-      margin-top: 28px;
+      margin-top: 20px;
+    }
+
+    .confirm-key {
+      p {
+        margin: 0;
+      }
     }
   }
 }

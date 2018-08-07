@@ -14,9 +14,12 @@ const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipl
 
 @observer
 class FilesSection extends React.Component {
-    refShareWithMultipleDialog = ref => { this.shareWithMultipleDialog = ref; };
+    refShareWithMultipleDialog = ref => {
+        this.shareWithMultipleDialog = ref;
+    };
 
-    @action.bound async share(ev) {
+    @action.bound
+    async share(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
         const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
@@ -31,7 +34,8 @@ class FilesSection extends React.Component {
         this.isUnmounted = true;
     }
 
-    @action.bound async download(ev) {
+    @action.bound
+    async download(ev) {
         ev.stopPropagation();
         const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
         const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
@@ -78,10 +82,14 @@ class FilesSection extends React.Component {
 
     renderFileItem = file => {
         return (
-            <ListItem key={file.fileId} data-fileid={file.fileId}
+            <ListItem
+                key={file.fileId}
+                data-fileid={file.fileId}
                 className="sidebar-file-container"
                 onClick={this.download}
-                leftContent={<FileSpriteIcon type={file.iconType} size="large" />}
+                leftContent={
+                    <FileSpriteIcon type={file.iconType} size="large" />
+                }
                 rightContent={this.menu(file)}
             >
                 <div className="meta">
@@ -102,29 +110,38 @@ class FilesSection extends React.Component {
                 </div>
             </ListItem>
         );
-    }
+    };
 
     render() {
         const chat = chatStore.activeChat;
         if (!chat) return null;
         const textParser = {
             clickHere: text => (
-                <a className="clickable" onClick={this.handleUpload}>{text}</a>
+                <a className="clickable" onClick={this.handleUpload}>
+                    {text}
+                </a>
             )
         };
         return (
-            <SideBarSection title={t('title_recentFiles')} onToggle={this.props.onToggle} open={this.props.open}>
+            <SideBarSection
+                title={t('title_recentFiles')}
+                onToggle={this.props.onToggle}
+                open={this.props.open}
+            >
                 <div className="member-list scrollable">
                     <List className="sidebar-file-list" clickable>
                         {chat.recentFiles.map(this.renderFileItem)}
                     </List>
                 </div>
-                {!chat.recentFiles.length &&
+                {!chat.recentFiles.length && (
                     <div className="sidebar-zero-files">
                         <T k="title_noRecentFiles">{textParser}</T>
                     </div>
-                }
-                <ShareWithMultipleDialog ref={this.refShareWithMultipleDialog} context="sharefiles" />
+                )}
+                <ShareWithMultipleDialog
+                    ref={this.refShareWithMultipleDialog}
+                    context="sharefiles"
+                />
             </SideBarSection>
         );
     }

@@ -1,10 +1,10 @@
 // @ts-check
 const React = require('react');
+const { observer } = require('mobx-react');
 const { DragLayer } = require('react-dnd');
 const DragPreview = require('./DragPreview');
 const DragDropTypes = require('../helpers/dragDropTypes');
 const { getAllDraggedItems } = require('../helpers/dragDropHelpers');
-
 
 function getItemStyles(props) {
     const { currentOffset } = props;
@@ -38,7 +38,11 @@ function getItemStyles(props) {
     let canDrop = false;
     if (isDragging) {
         /** @type {any} */ const m = monitor; // bad typings
-        canDrop = m.getTargetIds().some(target => m.isOverTarget(target) && m.canDropOnTarget(target));
+        canDrop = m
+            .getTargetIds()
+            .some(
+                target => m.isOverTarget(target) && m.canDropOnTarget(target)
+            );
     }
 
     return {
@@ -48,6 +52,7 @@ function getItemStyles(props) {
         canDrop
     };
 })
+@observer
 class DragPreviewLayer extends React.Component {
     render() {
         const { isDragging, canDrop, itemType } = this.props;
@@ -65,7 +70,11 @@ class DragPreviewLayer extends React.Component {
         return (
             <div className="files-dragpreviewlayer">
                 <div style={getItemStyles(this.props)}>
-                    <DragPreview files={files} folders={folders} canDrop={canDrop} />
+                    <DragPreview
+                        files={files}
+                        folders={folders}
+                        canDrop={canDrop}
+                    />
                 </div>
             </div>
         );

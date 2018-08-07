@@ -1,5 +1,6 @@
 // @ts-check
 const React = require('react');
+const { observer } = require('mobx-react');
 const { DropTarget } = require('react-dnd');
 
 const { fileStore, warnings } = require('peerio-icebear');
@@ -21,15 +22,16 @@ const folderDropSpec = {
         }
 
         const { filesOrFolders } = getAllDraggedItems();
-        const snackbarCopy = filesOrFolders.length === 1
-            ? t('warning_oneFileOrFolderMoved', {
-                fileOrFolderName: filesOrFolders[0].name,
-                targetFolderName: props.folder.name
-            })
-            : t('warning_multipleFilesOrFoldersMoved', {
-                count: filesOrFolders.length,
-                targetFolderName: props.folder.name
-            });
+        const snackbarCopy =
+            filesOrFolders.length === 1
+                ? t('warning_oneFileOrFolderMoved', {
+                      fileOrFolderName: filesOrFolders[0].name,
+                      targetFolderName: props.folder.name
+                  })
+                : t('warning_multipleFilesOrFoldersMoved', {
+                      count: filesOrFolders.length,
+                      targetFolderName: props.folder.name
+                  });
 
         if (props.folder.root.isShared) {
             (async () => {
@@ -68,13 +70,14 @@ const folderDropSpec = {
         disabledCheckbox?: boolean
         className?: string,
         folderDetails?: true,
-        folderActions?: true
+        folderDetailsMini?: boolean,
+        folderActions?: true,
         isDragging?: boolean,
         isBeingDraggedOver?: boolean,
-        canBeDroppedInto?: boolean
+        canBeDroppedInto?: boolean,
+        showNavigation?: boolean
     }} FolderLineProps
  */
-
 
 /**
  * @augments {React.Component<{
@@ -93,6 +96,7 @@ const folderDropSpec = {
         canBeDroppedInto: monitor.canDrop()
     })
 )
+@observer
 class DroppableFolderLine extends React.Component {
     render() {
         const {
@@ -104,11 +108,15 @@ class DroppableFolderLine extends React.Component {
 
         // react-dnd requires its connectors' children to be a native element
         // like <div> for some reason.
-        return connectDropTarget(<div><FolderLine
-            {...passthroughProps}
-            isBeingDraggedOver={isBeingDraggedOver}
-            canBeDroppedInto={canBeDroppedInto}
-        /></div>);
+        return connectDropTarget(
+            <div>
+                <FolderLine
+                    {...passthroughProps}
+                    isBeingDraggedOver={isBeingDraggedOver}
+                    canBeDroppedInto={canBeDroppedInto}
+                />
+            </div>
+        );
     }
 }
 

@@ -1,12 +1,9 @@
+//
+// WARNING:
+// This module is being loaded in prod env too, make sure devDependencies are not getting required in prod env
+//
 import path from 'path';
 import { MenuItem, Menu, BrowserWindow } from 'electron';
-
-import install, {
-    REACT_DEVELOPER_TOOLS,
-    REACT_PERF,
-    MOBX_DEVTOOLS
-} from 'electron-devtools-installer';
-
 import * as appControl from '~/helpers/app-control';
 import isDevEnv from '~/helpers/is-dev-env';
 
@@ -43,6 +40,13 @@ export function installExtensions(): Promise<void> {
     console.log('installing extensions.');
     const devtron = require('devtron');
     devtron.install();
+
+    const {
+        default: install,
+        REACT_DEVELOPER_TOOLS,
+        REACT_PERF,
+        MOBX_DEVTOOLS
+    } = require('electron-devtools-installer');
 
     return install([REACT_DEVELOPER_TOOLS, REACT_PERF, MOBX_DEVTOOLS])
         .then(name => console.log(`Added Extension:  ${name}`))

@@ -202,7 +202,19 @@ app.on('ready', async () => {
             console.error(err);
         }
         if (process.platform === 'darwin' && !mustCloseWindow) {
-            mainWindow.hide();
+            if (mainWindow.isFullScreen()) {
+                mainWindow.setFullScreen(false);
+                // Electron doesn't want to hide window until full screen
+                // animation is complete and provides no way to know when
+                // it completes, so we do our best guess of hiding after
+                // 1 second. Worst case if it doesn't work: the user will
+                // have to press close again.
+                setTimeout(() => {
+                    mainWindow.hide();
+                }, 1000);
+            } else {
+                mainWindow.hide();
+            }
         } else {
             mainWindow.removeListener('close', handleClose);
             mainWindow.close();

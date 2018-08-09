@@ -11,7 +11,7 @@ process.on('uncaughtException', error => {
     console.error('uncaughtException in Node:', error);
 });
 
-const isDevEnv = require('~/helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env').default;
 
 if (!isDevEnv && !process.argv.includes('--allow-multiple-instances')) {
     // In production version, don't allow running more than one instance.

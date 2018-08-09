@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== 'development') {
     process.env.NODE_ENV = 'production';
 }
 
-const isDevEnv = require('~/helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env').default;
 if (!isDevEnv) require('~/helpers/console-history');
 const { ipcRenderer, webFrame } = require('electron');
 const { when } = require('mobx');

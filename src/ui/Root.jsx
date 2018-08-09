@@ -3,7 +3,7 @@ const React = require('react');
 const { DragDropContext } = require('react-dnd');
 const HTML5Backend = require('react-dnd-html5-backend').default;
 
-const isDevEnv = require('~/helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env').default;
 const { Button, ProgressBar } = require('peer-ui');
 const DropTarget = require('./shared-components/DropTarget');
 const DragPreviewLayer = require('~/ui/files/components/DragPreviewLayer');

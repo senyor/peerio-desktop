@@ -162,11 +162,13 @@ class FilePicker extends React.Component {
                         {fileStore.searchQuery
                             ? this.searchResultsHeader
                             : this.breadCrumbsHeader}
-                        <div
-                            ref={this.setScrollerRef}
-                            className="file-table-wrapper"
-                        >
-                            <div className="file-table-body">{items}</div>
+                        <div className="file-table-wrapper">
+                            <div
+                                className="file-table-body"
+                                ref={this.setScrollerRef}
+                            >
+                                {items}
+                            </div>
                         </div>
                     </div>
                 ) : null}

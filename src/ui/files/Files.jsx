@@ -241,8 +241,6 @@ class Files extends React.Component {
                 <div className="file-wrapper">
                     <div
                         className="file-table-wrapper"
-                        ref={this.setContainerRef}
-                        onScroll={this.enqueueCheck}
                     >
                         <div className="file-table-header row-container">
                             <Checkbox
@@ -308,6 +306,8 @@ class Files extends React.Component {
                                 })}
                             >
                                 <div
+                                    ref={this.setContainerRef}
+                                    onScroll={this.enqueueCheck}
                                     className={css('file-table-body', {
                                         'hide-checkboxes': selectedCount === 0
                                     })}

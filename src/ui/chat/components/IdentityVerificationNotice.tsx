@@ -1,11 +1,13 @@
-const { observer } = require('mobx-react');
-const React = require('react');
-const T = require('~/ui/shared-components/T');
-const { MaterialIcon } = require('peer-ui');
-const css = require('classnames');
+import { observer } from 'mobx-react';
+import React from 'react';
+import T from '~/ui/shared-components/T';
+import { MaterialIcon } from 'peer-ui';
+import css from 'classnames';
 
 @observer
-class IdentityVerificationNotice extends React.Component {
+export default class IdentityVerificationNotice extends React.Component<{
+    extraMargin?: boolean;
+}> {
     render() {
         return (
             <div className="identity-verification-notice">
@@ -21,5 +23,3 @@ class IdentityVerificationNotice extends React.Component {
         );
     }
 }
-
-module.exports = IdentityVerificationNotice;

@@ -1,40 +1,42 @@
-const React = require('react');
-const { Route, IndexRoute } = require('react-router');
-const App = require('./App');
-const Root = require('./Root');
-const Onboarding = require('./Onboarding');
-const Login = require('./login/Login');
-const Signup = require('./signup/Signup');
-const Loading = require('./Loading');
-const Chat = require('~/whitelabel/components/Chat');
-const ChatView = require('./chat/ChatView');
-const NewChannel = require('~/whitelabel/components/NewChannel');
-const NewChat = require('./chat/NewChat');
-const ChannelInvite = require('./chat/components/ChannelInvite');
-const PendingDMDismissed = require('./chat/components/PendingDMDismissed');
-const Patient = require('./whitelabel/medcryptor/Patient');
-const ZeroChats = require('~/whitelabel/components/ZeroChats');
-const Files = require('./files/Files');
-const Mail = require('./mail/Mail');
-const Settings = require('./settings/Settings');
-const Profile = require('./settings/components/ProfileSettings');
-const Security = require('./settings/components/SecuritySettings');
-const Preferences = require('./settings/components/Preferences');
-const Account = require('./settings/components/Account');
-const About = require('./settings/components/About');
-const Help = require('./settings/components/Help');
-const DevTools = require('./dev-tools/DevTools');
-const DTDashboard = require('./dev-tools/Dashboard');
-const KegEditor = require('./dev-tools/KegEditor');
-const NewDevice = require('./login/NewDevice');
-const AutoLogin = require('~/ui/login/AutoLogin');
-const Contacts = require('./contact/Contacts');
-const InvitedContacts = require('./contact/InvitedContacts');
-const ContactList = require('./contact/ContactList');
-const NewContact = require('./contact/NewContact');
-const DevSettings = require('./settings/components/Dev');
+import React from 'react';
+import { Route, IndexRoute } from 'react-router';
 
-module.exports = (
+import App from '~/ui/App';
+import Root from '~/ui/Root';
+import Chat from '~/whitelabel/components/Chat';
+import NewChannel from '~/whitelabel/components/NewChannel';
+import ZeroChats from '~/whitelabel/components/ZeroChats';
+
+import Onboarding from './Onboarding';
+import Login from './login/Login';
+import Signup from './signup/Signup';
+import Loading from './Loading';
+import ChatView from './chat/ChatView';
+import NewChat from './chat/NewChat';
+import ChannelInvite from './chat/components/ChannelInvite';
+import PendingDMDismissed from './chat/components/PendingDMDismissed';
+import Patient from './whitelabel/medcryptor/Patient';
+import Files from './files/Files';
+import Mail from './mail/Mail';
+import Settings from './settings/Settings';
+import Profile from './settings/components/ProfileSettings';
+import Security from './settings/components/SecuritySettings';
+import Preferences from './settings/components/Preferences';
+import Account from './settings/components/Account';
+import About from './settings/components/About';
+import Help from './settings/components/Help';
+import DevTools from './dev-tools/DevTools';
+import DTDashboard from './dev-tools/Dashboard';
+import KegEditor from './dev-tools/KegEditor';
+import NewDevice from './login/NewDevice';
+import AutoLogin from './login/AutoLogin';
+import Contacts from './contact/Contacts';
+import InvitedContacts from './contact/InvitedContacts';
+import ContactList from './contact/ContactList';
+import NewContact from './contact/NewContact';
+import DevSettings from './settings/components/Dev';
+
+export default (
     <Route path="/" component={Root}>
         <IndexRoute component={Login} />
         <Route path="/signup" component={Signup} />

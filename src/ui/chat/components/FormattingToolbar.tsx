@@ -1,22 +1,21 @@
-// @ts-check
-
 /*
  * See documentation for the Suggestions plugin for discussion of this component
  * structure.
  */
 
-const React = require('react');
-const { observable, action, runInAction } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
-const { Plugin } = require('prosemirror-state');
-const { isEmpty } = require('~/helpers/chat/prosemirror/chat-schema');
+import React from 'react';
+import { observable, action, runInAction } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+import { Node } from 'prosemirror-model';
+import { Plugin } from 'prosemirror-state';
+import { isEmpty } from '~/helpers/chat/prosemirror/chat-schema';
 
-class FormattingToolbar {
+export default class FormattingToolbar {
     @observable enabled = false;
 
     @action.bound
-    plugin(doc) {
+    plugin(doc: Node) {
         const self = this;
         self.enabled = !isEmpty(doc);
         return new Plugin({
@@ -46,5 +45,3 @@ class FormattingToolbar {
         );
     });
 }
-
-module.exports = FormattingToolbar;

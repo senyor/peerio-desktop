@@ -1,6 +1,6 @@
 // We import the keytar module here for typechecking but don't use it yet; this
-// statement should be removed by the compiler. (We could alternately use
-// `typeof import('keytar')` syntax, but @babel/plugin-transform-typescript
+// statement should be removed by the compiler. (We could more simply use the
+// `let keytar = typeof import('keytar')` syntax, but @babel/plugin-transform-typescript
 // doesn't support it yet; see https://github.com/babel/babel/issues/7749.)
 import Keytar from 'keytar';
 
@@ -24,34 +24,34 @@ export async function saveSecret(
     username: string,
     passphrase: string
 ): Promise<boolean> {
-    if (!keytar) return Promise.resolve(false);
+    if (!keytar) return false;
     try {
         await keytar.setPassword(service, username, passphrase);
-        return Promise.resolve(true); // we want bluebird promises
+        return true;
     } catch (err) {
         console.error('Error setting passphrase with keytar', err);
-        return Promise.resolve(false);
+        return false;
     }
 }
 
 export async function getSecret(username: string): Promise<string | false> {
-    if (!keytar) return Promise.resolve<false>(false);
+    if (!keytar) return false;
     try {
         const ret = await keytar.getPassword(service, username);
-        return ret || Promise.resolve<false>(false);
+        return ret || false;
     } catch (err) {
         console.error('Error getting passphrase with keytar', err);
-        return Promise.resolve<false>(false);
+        return false;
     }
 }
 
 export async function removeSecret(username: string): Promise<boolean> {
-    if (!keytar) return Promise.resolve(false);
+    if (!keytar) return false;
     try {
         await keytar.deletePassword(service, username);
-        return Promise.resolve(true);
+        return true;
     } catch (err) {
         console.error('Error deleting passphrase with keytar', err);
-        return Promise.resolve(false);
+        return false;
     }
 }

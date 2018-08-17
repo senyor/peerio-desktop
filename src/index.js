@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const { render } = require('react-dom');
     const { Router, createMemoryHistory } = require('react-router');
     window.router = createMemoryHistory();
-    const routes = require('~/ui/routes');
+    const routes = require('~/ui/routes').default;
 
     socket.start();
 

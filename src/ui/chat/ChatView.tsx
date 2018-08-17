@@ -1,37 +1,45 @@
-// @ts-check
-const React = require('react');
-const { action, computed, observable, reaction } = require('mobx');
-const { observer } = require('mobx-react');
-const {
+import React from 'react';
+import {
+    action,
+    computed,
+    observable,
+    reaction,
+    IReactionDisposer
+} from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+
+import {
     Button,
     CustomIcon,
+    Dialog,
     MaterialIcon,
     ProgressBar,
     Tooltip
-} = require('peer-ui');
-const { chatStore, chatInviteStore } = require('peerio-icebear');
-const routerStore = require('~/stores/router-store');
-const sounds = require('~/helpers/sounds');
-const uiStore = require('~/stores/ui-store');
-const { t } = require('peerio-translator');
-const css = require('classnames');
+} from 'peer-ui';
+import { chatStore, chatInviteStore } from 'peerio-icebear';
+import { t } from 'peerio-translator';
 
-const MessageInput = require('./components/MessageInput').default;
-const MessageList = require('./components/MessageList');
-const MessageSideBar = require('./components/sidebar/MessageSideBar');
-const ChatSideBar = require('./components/sidebar/ChatSideBar');
-const ChannelSideBar = require('./components/sidebar/ChannelSideBar');
-const ChatNameEditor = require('./components/ChatNameEditor');
-const ShareToChatProgress = require('./components/ShareToChatProgress');
+import routerStore from '~/stores/router-store';
+import sounds from '~/helpers/sounds';
+import uiStore from '~/stores/ui-store';
+import UserPicker from '~/ui/shared-components/UserPicker';
+import FullCoverLoader from '~/ui/shared-components/FullCoverLoader';
+import ELEMENTS from '~/whitelabel/helpers/elements';
 
-const UserPicker = require('~/ui/shared-components/UserPicker');
-const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
-const PendingDM = require('./components/PendingDM');
-const { Dialog } = require('peer-ui');
-const ELEMENTS = require('~/whitelabel/helpers/elements');
+import MessageInput from './components/MessageInput';
+import MessageList from './components/MessageList';
+import MessageSideBar from './components/sidebar/MessageSideBar';
+import ChatSideBar from './components/sidebar/ChatSideBar';
+import ChannelSideBar from './components/sidebar/ChannelSideBar';
+import ChatNameEditor from './components/ChatNameEditor';
+import ShareToChatProgress from './components/ShareToChatProgress';
+import PendingDM from './components/PendingDM';
 
 @observer
-class ChatView extends React.Component {
+export default class ChatView extends React.Component {
+    reactionsToDispose!: IReactionDisposer[];
+
     @observable chatNameEditorVisible = false;
     @observable showUserPicker = false;
 
@@ -65,17 +73,17 @@ class ChatView extends React.Component {
         this.reactionsToDispose.forEach(dispose => dispose());
     }
 
-    scrollToBottom() {
-        if (this.messageListRef) {
-            this.messageListRef.scrollToBottom();
+    scrollToBottom(): void {
+        if (this.messageListRef.current) {
+            this.messageListRef.current.scrollToBottom();
         }
     }
 
     /**
      * Create a new Message keg with the given plaintext and send it to server as part of this chat.
-     * @param {string} text The plaintext of the message.
+     * @param text The plaintext of the message.
      */
-    sendMessage(text) {
+    sendMessage(text: string): void {
         try {
             chatStore.activeChat
                 .sendMessage(text)
@@ -87,11 +95,11 @@ class ChatView extends React.Component {
 
     /**
      * Create a new Message keg with the given plaintext and send it to server as part of this chat.
-     * @param {Object} richText A ProseMirror document tree, in JSON.
-     * @param {string} legacyText The rendered HTML of the rich text, for back-compat with older clients
+     * @param richText A ProseMirror document tree, in JSON.
+     * @param legacyText The rendered HTML of the rich text, for back-compat with older clients
      */
     @action.bound
-    sendRichTextMessage(richText, legacyText) {
+    sendRichTextMessage(richText: unknown, legacyText: string): void {
         try {
             this.scrollToBottom();
             chatStore.activeChat
@@ -103,7 +111,7 @@ class ChatView extends React.Component {
     }
 
     @action.bound
-    sendAck() {
+    sendAck(): void {
         try {
             this.scrollToBottom();
             chatStore.activeChat
@@ -309,11 +317,7 @@ class ChatView extends React.Component {
         );
     }
 
-    @observable messageListRef;
-    @action.bound
-    setMessageListRef(ref) {
-        if (ref) this.messageListRef = ref;
-    }
+    @observable.ref messageListRef = React.createRef<MessageList>();
 
     jumpToBottom = () => {
         const chat = chatStore.activeChat;
@@ -328,7 +332,10 @@ class ChatView extends React.Component {
 
     @computed
     get pageScrolledUp() {
-        return this.messageListRef && this.messageListRef.pageScrolledUp;
+        return (
+            this.messageListRef.current &&
+            this.messageListRef.current.pageScrolledUp
+        );
     }
 
     render() {
@@ -366,7 +373,7 @@ class ChatView extends React.Component {
                         <div className="messages-container">
                             {chatStore.chats.length === 0 &&
                             !chatStore.loading ? null : (
-                                <MessageList ref={this.setMessageListRef} />
+                                <MessageList ref={this.messageListRef} />
                             )}
                             {this.shareInProgress ? (
                                 <ShareToChatProgress
@@ -411,5 +418,3 @@ class ChatView extends React.Component {
         );
     }
 }
-
-module.exports = ChatView;

@@ -11,7 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true,
-    // "noUnusedLocals": true, // TODO: https://github.com/PeerioTechnologies/peerio-updater/pull/3
+    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitAny": false, // TODO: enable (default enabled under `strict`, so just remove this line)
     "strictNullChecks": false, // TODO: enable (default enabled under `strict`, so just remove this line)

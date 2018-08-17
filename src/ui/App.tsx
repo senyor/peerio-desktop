@@ -1,14 +1,14 @@
-const React = require('react');
-const AppNav = require('~/ui/AppNav');
-const uiStore = require('~/stores/ui-store');
-const { Dialog, ProgressBar } = require('peer-ui');
-const { t } = require('peerio-translator');
-const { observer } = require('mobx-react');
-const { clientApp } = require('peerio-icebear');
-const MigrationDialog = require('~/ui/shared-components/MigrationDialog');
+import React from 'react';
+import AppNav from '~/ui/AppNav';
+import uiStore from '~/stores/ui-store';
+import { Dialog, ProgressBar } from 'peer-ui';
+import { t } from 'peerio-translator';
+import { observer } from 'mobx-react';
+import { clientApp } from 'peerio-icebear';
+import MigrationDialog from '~/ui/shared-components/MigrationDialog';
 
 @observer
-class App extends React.Component {
+export default class App extends React.Component {
     get signatureErrorDialog() {
         const hide = uiStore.hideFileSignatureErrorDialog;
         const dialogActions = [{ label: t('button_dismiss'), onClick: hide }];
@@ -46,5 +46,3 @@ class App extends React.Component {
         );
     }
 }
-
-module.exports = App;

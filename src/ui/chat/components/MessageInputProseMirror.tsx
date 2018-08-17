@@ -1,7 +1,3 @@
-// @ts-check
-
-/* eslint no-warning-comments: ["error", { "terms": ["!FIX"] }] */
-
 /*
 
 For simplicity, this component's render method returns an array of components,
@@ -19,51 +15,42 @@ field their own named keys manually.
 
 */
 
-const React = require('react');
-const { observable, observe, action } = require('mobx');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { observable, observe, action, Lambda } from 'mobx';
+import { observer } from 'mobx-react';
 
-const { Node } = require('prosemirror-model');
-const { EditorView } = require('prosemirror-view');
-const {
-    EditorState,
-    Selection,
-    Plugin, // eslint-disable-line no-unused-vars, (used for typechecking)
-    Transaction // eslint-disable-line no-unused-vars, (used for typechecking)
-} = require('prosemirror-state');
-const { keymap } = require('prosemirror-keymap');
+import { Node } from 'prosemirror-model';
+import { EditorView } from 'prosemirror-view';
+import { EditorState, Selection, Plugin, Transaction } from 'prosemirror-state';
+import { keymap } from 'prosemirror-keymap';
 
-const {
+import { t } from 'peerio-translator';
+import { Button } from 'peer-ui';
+import { chatStore } from 'peerio-icebear';
+
+import {
     chatSchema,
     isWhitespaceOnly,
     emptyDoc
-} = require('~/helpers/chat/prosemirror/chat-schema');
-const { chatPlugins } = require('~/helpers/chat/prosemirror/chat-plugins');
-const { placeholder } = require('~/helpers/chat/prosemirror/placeholder');
-const { linkify } = require('~/helpers/chat/prosemirror/linkify-text');
-const {
-    ensureMentions
-} = require('~/helpers/chat/prosemirror/ensure-mentions');
+} from '~/helpers/chat/prosemirror/chat-schema';
 
-const { t } = require('peerio-translator');
-const { Button } = require('peer-ui');
-const { chatStore } = require('peerio-icebear');
-const uiStore = require('~/stores/ui-store');
+import { Emoji } from '~/helpers/chat/emoji';
+import { chatPlugins } from '~/helpers/chat/prosemirror/chat-plugins';
+import { placeholder } from '~/helpers/chat/prosemirror/placeholder';
+import { linkify } from '~/helpers/chat/prosemirror/linkify-text';
+import { ensureMentions } from '~/helpers/chat/prosemirror/ensure-mentions';
+import uiStore from '~/stores/ui-store';
 
-const EmojiPicker = require('~/ui/emoji/Picker');
-const makeUsernameSuggestions = require('./suggestions/UsernameSuggestions')
-    .default;
-const makeEmojiSuggestions = require('./suggestions/EmojiSuggestions').default;
+import EmojiPicker from '~/ui/emoji/Picker';
+import makeUsernameSuggestions, {
+    Contact_TEMP as Contact
+} from './suggestions/UsernameSuggestions';
+import makeEmojiSuggestions from './suggestions/EmojiSuggestions';
 
-// eslint-disable-next-line no-unused-vars, (used for typechecking)
-const Suggestions = require('./suggestions/Suggestions').default;
+import Suggestions from './suggestions/Suggestions';
 
-const {
-    BoldButton,
-    ItalicButton,
-    StrikeButton
-} = require('./FormattingButton');
-const FormattingToolbar = require('./FormattingToolbar');
+import { BoldButton, ItalicButton, StrikeButton } from './FormattingButton';
+import FormattingToolbar from './FormattingToolbar';
 
 const Toolbar = new FormattingToolbar();
 
@@ -83,20 +70,18 @@ let currentInputInstance;
 function onEmojiPicked(emoji) {
     currentInputInstance.hideEmojiPicker();
 
-    /** @type {EditorView} */
-    const view = currentInputInstance.editorView;
+    const view: EditorView = currentInputInstance.editorView;
     if (!view) return;
 
     insertEmoji(emoji, view.state, view.dispatch);
     view.focus();
 }
 
-/**
- * @param {{shortname : string}} emoji
- * @param {EditorState} state
- * @param {(tr : Transaction) => void} dispatch
- */
-function insertEmoji(emoji, state, dispatch) {
+function insertEmoji(
+    emoji: { shortname: string },
+    state: EditorState,
+    dispatch: (tr: Transaction) => void
+) {
     const type = chatSchema.nodes.emoji;
     const { $from } = state.selection;
     if (!$from.parent.canReplaceWith($from.index(), $from.index(), type))
@@ -114,49 +99,32 @@ function insertEmoji(emoji, state, dispatch) {
 }
 // ---------------------------------
 
-// Reminder that the JSDoc modifiers @private and @readonly below are basically
-// for fun, since we're not generating documentation and TypeScript can't
-// enforce them in JS files.
-
-/**
- * @augments {React.Component<{
-        placeholder : string
-        onSend : (richText : Object, legacyText : string) => void
-    }, {}>}
- */
 @observer
-class MessageInputProseMirror extends React.Component {
+export default class MessageInputProseMirror extends React.Component<{
+    placeholder: string;
+    onSend: (richText: Object, legacyText: string) => void;
+}> {
     @observable emojiPickerVisible = false;
 
     /**
      * The ProseMirror editor view. Should only be assigned when we get a render
      * ref, and destroyed when the component will unmount.
-     * @private
-     * @type {EditorView | null}
      */
-    editorView = null;
+    private editorView: EditorView | null = null;
 
     /**
      * ProseMirror plugins that we won't need to reconfigure.
-     * @readonly
-     * @private
-     * @type {Plugin[]}
      */
-    basePlugins;
+    private readonly basePlugins: Plugin[];
 
-    /**
-     * @readonly
-     * @private
-     * @type {Suggestions}
-     */
-    usernameSuggestions;
+    private readonly usernameSuggestions: Suggestions<Contact>;
 
-    /**
-     * @readonly
-     * @private
-     * @type {Suggestions}
-     */
-    emojiSuggestions;
+    private readonly emojiSuggestions: Suggestions<{
+        emoji: Emoji;
+        name: string;
+    }>;
+
+    private disposer!: Lambda;
 
     getEmptyState() {
         return EditorState.create({
@@ -169,9 +137,8 @@ class MessageInputProseMirror extends React.Component {
      * Get the full set of plugins for the ProseMirror editor, including those
      * which can be reconfigured or aren't necessarily known while the
      * constructor is running.
-     * @param {any} doc FIXME/TS: untypable in js, should be ProseMirrorNode
      */
-    getConfiguredPlugins(doc) {
+    getConfiguredPlugins(doc: Node) {
         return [
             placeholder(this.props.placeholder, emptyDoc),
             Toolbar.plugin(doc),
@@ -213,10 +180,9 @@ class MessageInputProseMirror extends React.Component {
                 // we have to declare this command in the class body since we're
                 // using `this.props.onSend` and `this.clearEditor`.
                 Enter: (
-                    // TODO/TS: these can be added to the PM typings on definitelytyped
-                    /** @type {EditorState} */ state,
-                    /** @type {(tr : Transaction) => void} */ dispatch,
-                    /** @type {EditorView} */ view
+                    state: EditorState,
+                    dispatch: (tr: Transaction) => void,
+                    view: EditorView
                 ) => {
                     if (isWhitespaceOnly(state.doc)) return false;
 
@@ -249,9 +215,7 @@ class MessageInputProseMirror extends React.Component {
                         // insert line breaks after them, to extract text with proper
                         // line breaks, we deep clone the editor's DOM node and append
                         // '\n' after each <br>.
-                        const domClone = /** @type {Element} */ (view.dom.cloneNode(
-                            true
-                        ));
+                        const domClone = view.dom.cloneNode(true) as Element;
                         domClone.querySelectorAll('br').forEach(br => {
                             br.insertAdjacentText('afterend', '\n');
                         });
@@ -358,11 +322,8 @@ class MessageInputProseMirror extends React.Component {
         }
     }
 
-    /**
-     * @param {HTMLDivElement} el
-     */
     @action.bound
-    mountProseMirror(el) {
+    mountProseMirror(el: HTMLDivElement) {
         if (!el) {
             uiStore.messageInputEditorView = null;
             return;
@@ -420,5 +381,3 @@ class MessageInputProseMirror extends React.Component {
         ];
     }
 }
-
-module.exports = MessageInputProseMirror;

@@ -8,7 +8,7 @@ import Suggestions from './Suggestions';
 
 // FIXME: use icebear Contact type
 import { ContactProps } from 'peer-ui/dist/components/helpers/interfaces'; // eslint-disable-line import/first
-type Contact_TEMP = ContactProps & { fullName: string }; // eslint-disable-line camelcase
+export type Contact_TEMP = ContactProps & { fullName: string }; // eslint-disable-line camelcase
 
 export default function makeUsernameSuggestions(getView: () => EditorView) {
     return new Suggestions<Contact_TEMP>({

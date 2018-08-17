@@ -1,52 +1,37 @@
-// @ts-check
-
 /*
  * See documentation for the Suggestions plugin for discussion of this component
  * structure.
  */
 
-const os = require('os');
-const React = require('react');
-const { observable, action, runInAction } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
+import os from 'os';
+import React from 'react';
+import { observable, action, runInAction } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
 
-const {
-    EditorView // eslint-disable-line no-unused-vars, (used for typechecking)
-} = require('prosemirror-view');
-const {
-    MarkType // eslint-disable-line no-unused-vars, (used for typechecking)
-} = require('prosemirror-model');
-const {
-    Plugin,
-    Transaction, // eslint-disable-line no-unused-vars, (used for typechecking)
-    EditorState // eslint-disable-line no-unused-vars, (used for typechecking)
-} = require('prosemirror-state');
-const { toggleMark } = require('prosemirror-commands');
+import { EditorView } from 'prosemirror-view';
+import { MarkType } from 'prosemirror-model';
+import { Plugin, Transaction, EditorState } from 'prosemirror-state';
+import { toggleMark } from 'prosemirror-commands';
 
-const {
-    chatSchema,
-    isEmpty
-} = require('~/helpers/chat/prosemirror/chat-schema');
+import { chatSchema, isEmpty } from '~/helpers/chat/prosemirror/chat-schema';
 
-/**
- * @typedef FormattingConfig
- *
- * @property {MarkType} markType
- * @property {string} label
- * @property {(state: EditorState, dispatch: (tr: Transaction) => any) => any} onClick
- */
+interface FormattingConfig {
+    markType: MarkType;
+    label: string;
+    onClick: (state: EditorState, dispatch: (tr: Transaction) => void) => void;
+}
 
 class FormattingButton {
+    markType: MarkType;
+    label: string;
+    onClick: (state: EditorState, dispatch: (tr: Transaction) => void) => void;
+
     @observable active = false;
 
-    /** @type {EditorView} */
-    view;
+    view: EditorView;
 
-    /**
-     * @param {FormattingConfig} config
-     */
-    constructor(config) {
+    constructor(config: FormattingConfig) {
         const { markType, onClick, label } = config;
         this.markType = markType;
         this.onClick = onClick;
@@ -107,11 +92,8 @@ class FormattingButton {
 
 /**
  * Is the given mark active in the given editor state's selection set?
- * @param {EditorState} state
- * @param {MarkType} markType
- * @returns {boolean}
  */
-function isMarkActive(state, markType) {
+function isMarkActive(state: EditorState, markType: MarkType): boolean {
     const { from, $from, to, empty } = state.selection;
     if (empty)
         return markType.isInSet(state.storedMarks || $from.marks()) != null;
@@ -138,8 +120,4 @@ const StrikeButton = new FormattingButton({
     onClick: toggleMark(chatSchema.marks.strike)
 });
 
-module.exports = {
-    BoldButton,
-    ItalicButton,
-    StrikeButton
-};
+export { BoldButton, ItalicButton, StrikeButton };

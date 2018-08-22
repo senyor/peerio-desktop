@@ -34,7 +34,7 @@
     "=== TEST ===": "",
     "test": "npm run compile && run-s -l test:*",
     "test:mocha": "mocha --color --require ./test/unit/global-setup.js 'test/unit/**/*.test.js'",
-    "test:ts": "tsc --noEmit",
+    "test:ts": "tsc --noEmit --pretty",
     "=== BUILD ===": "",
     "internal-build": "NODE_ENV=production npm run compile && NODE_ENV=production build --mac --windows --x64 --publish never",
     "internal-build-mac": "NODE_ENV=production npm run compile && NODE_ENV=production build --mac --x64 --publish never",

@@ -2,7 +2,7 @@ if (process.env.NODE_ENV !== 'development') {
     process.env.NODE_ENV = 'production';
 }
 
-const isDevEnv = require('~/helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env').default;
 if (!isDevEnv) require('~/helpers/console-history');
 const { ipcRenderer, webFrame } = require('electron');
 const { when } = require('mobx');
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const { render } = require('react-dom');
     const { Router, createMemoryHistory } = require('react-router');
     window.router = createMemoryHistory();
-    const routes = require('~/ui/routes');
+    const routes = require('~/ui/routes').default;
 
     socket.start();
 

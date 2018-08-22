@@ -1,6 +1,6 @@
 const { app, Menu } = require('electron');
 const config = require('~/config');
-const isDevEnv = require('~/helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env').default;
 
 const editMenu = {
     label: 'Edit',

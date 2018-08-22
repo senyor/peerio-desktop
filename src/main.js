@@ -11,7 +11,7 @@ process.on('uncaughtException', error => {
     console.error('uncaughtException in Node:', error);
 });
 
-const isDevEnv = require('~/helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env').default;
 
 if (!isDevEnv && !process.argv.includes('--allow-multiple-instances')) {
     // In production version, don't allow running more than one instance.
@@ -89,7 +89,7 @@ if (isDevEnv) {
 require('~/helpers/logging');
 
 const devtools = require('~/main-process/dev-tools');
-const buildContextMenu = require('~/main-process/context-menu');
+const buildContextMenu = require('~/main-process/context-menu').default;
 const buildGlobalShortcuts = require('~/main-process/global-shortcuts');
 const applyMiscHooks = require('~/main-process/misc-hooks');
 const {
@@ -202,7 +202,19 @@ app.on('ready', async () => {
             console.error(err);
         }
         if (process.platform === 'darwin' && !mustCloseWindow) {
-            mainWindow.hide();
+            if (mainWindow.isFullScreen()) {
+                mainWindow.setFullScreen(false);
+                // Electron doesn't want to hide window until full screen
+                // animation is complete and provides no way to know when
+                // it completes, so we do our best guess of hiding after
+                // 1 second. Worst case if it doesn't work: the user will
+                // have to press close again.
+                setTimeout(() => {
+                    mainWindow.hide();
+                }, 1000);
+            } else {
+                mainWindow.hide();
+            }
         } else {
             mainWindow.removeListener('close', handleClose);
             mainWindow.close();

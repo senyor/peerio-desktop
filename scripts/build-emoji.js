@@ -127,8 +127,10 @@ function convertToArrayAndCleanup(emojiJson) {
         item.ascii = item.ascii.slice(0, 2).join('  ');
 
         item.filename = `${relativePngFolder}${keys[k]}.png`;
-
-        item.characters = item.code_points.fully_qualified
+        // item.code_points.fully_qualified can be null
+        item.characters = (
+            item.code_points.fully_qualified || item.code_points.base
+        )
             .split('-')
             .map(code => String.fromCodePoint(Number.parseInt(code, 16)))
             .join('');

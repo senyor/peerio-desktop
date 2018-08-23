@@ -20,7 +20,8 @@ const uiStore = require('~/stores/ui-store');
 const InlineFiles = require('./InlineFiles');
 const UrlPreview = require('./UrlPreview');
 const UrlPreviewConsent = require('./UrlPreviewConsent');
-const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
+const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice')
+    .default;
 const InlineSharedFolder = require('../../files/components/InlineSharedFolder');
 
 /** @type {

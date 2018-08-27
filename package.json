@@ -32,7 +32,7 @@
     "icebear-watch-src": "./scripts/link_local_icebear.js -w",
     "icebear-watch-dist": "npm run compile:icebear -- -w --skip-initial-build",
     "=== TEST ===": "",
-    "test": "npm run compile && run-s -l test:*",
+    "test": "npm run compile && run-s -l test:mocha",
     "test:mocha": "mocha --color --require ./test/unit/global-setup.js 'test/unit/**/*.test.js'",
     "test:ts": "tsc --noEmit --pretty",
     "=== BUILD ===": "",

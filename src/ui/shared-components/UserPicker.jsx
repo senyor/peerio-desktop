@@ -471,16 +471,14 @@ class UserPicker extends React.Component {
                             <List theme="large" clickable>
                                 {this.foundContact &&
                                     this.renderList(null, [this.foundContact])}
-                                {!this.foundContact &&
-                                    this.renderList(
-                                        'title_favoriteContacts',
-                                        this.options.favorites
-                                    )}
-                                {!this.foundContact &&
-                                    this.renderList(
-                                        'title_allContacts',
-                                        this.options.normal
-                                    )}
+                                {this.renderList(
+                                    'title_favoriteContacts',
+                                    this.options.favorites
+                                )}
+                                {this.renderList(
+                                    'title_allContacts',
+                                    this.options.normal
+                                )}
                             </List>
                         </div>
                     </div>

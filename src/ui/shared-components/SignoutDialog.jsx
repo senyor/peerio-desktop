@@ -32,6 +32,7 @@ class SignoutDialog extends React.Component {
                 className="signout-dialog"
                 onCancel={this.props.onHide}
                 title={t('button_logout')}
+                theme="warning"
             >
                 {t('title_signOutConfirmKeys')}
                 {User.current.trustedDevice ? (

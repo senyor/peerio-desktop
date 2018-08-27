@@ -9,9 +9,12 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "strict": true,
-    "noImplicitAny": false, // FIXME: remove
-    "strictNullChecks": false, // FIXME: remove
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": false, // TODO: enable (default enabled under `strict`, so just remove this line)
+    "strictNullChecks": false, // TODO: enable (default enabled under `strict`, so just remove this line)
     "paths": {
       "~/*": ["./*"],
       "*": ["*", "../app/node_modules/*"],
@@ -22,5 +25,5 @@
     }
   },
   "include": ["src/**/*", "test/**/*"],
-  "exclude": ["src/static", "src/styles", "node_modules", "app/node_modules"]
+  "exclude": ["src/static/**/*"]
 }

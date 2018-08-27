@@ -12,7 +12,7 @@ class IndexedDbStorage extends CacheEngineBase {
             .objectStore(this.name);
     }
 
-    open() {
+    openInternal() {
         return new Promise((resolve, reject) => {
             const req = indexedDB.open(this.name, 1);
             req.onerror = ev => {
@@ -22,7 +22,6 @@ class IndexedDbStorage extends CacheEngineBase {
             };
             req.onsuccess = ev => {
                 this.db = ev.target.result;
-                this.isOpen = true;
                 resolve();
             };
             req.onupgradeneeded = ev => {

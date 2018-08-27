@@ -16,8 +16,6 @@ const urls = require('~/config').translator.urlMap;
 const autologin = require('~/helpers/autologin');
 const path = require('path');
 const config = require('~/config');
-
-const uiStore = require('~/stores/ui-store');
 const Beacon = require('~/ui/shared-components/Beacon');
 
 const { app, nativeImage } = remote;

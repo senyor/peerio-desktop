@@ -2,7 +2,7 @@ const os = require('os');
 const path = require('path');
 const cfg = require('peerio-icebear').config;
 const app = require('electron').app || require('electron').remote.app;
-const isDevEnv = require('~/helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env').default;
 const FileStream = require('peerio-icebear/dist/models/files/node-file-stream');
 const StorageEngine = require('peerio-icebear/dist/models/storage/node-json-storage');
 const CacheEngine = require('~/stores/indexed-db-storage');
@@ -64,6 +64,9 @@ cfg.chat.maxInitialChats = 20;
 cfg.chat.inlineImageSizeLimit = 10 * 1024 * 1024;
 cfg.chat.inlineImageSizeLimitCutoff = 30 * 1024 * 1024;
 
+cfg.assetPathResolver = fileName => {
+    return `./app/node_modules/peerio-icebear/src/assets/${fileName}`;
+};
 // --- DEBUG
 cfg.nodeLogFolder = path.join(app.getPath('userData'), 'logs');
 

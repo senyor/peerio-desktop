@@ -5,7 +5,8 @@ const { chatStore } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 const { MaterialIcon } = require('peer-ui');
 const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
-const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
+const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice')
+    .default;
 
 @observer
 class ChatHeader extends React.Component {

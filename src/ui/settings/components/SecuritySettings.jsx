@@ -1,3 +1,4 @@
+import { requestDownloadPath } from '~/helpers/file';
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
@@ -8,13 +9,12 @@ const {
     Switch,
     ProgressBar
 } = require('peer-ui');
-const { User } = require('peerio-icebear');
+const { User, saveAccountKeyBackup } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const autologin = require('~/helpers/autologin');
 const electron = require('electron').remote;
 const T = require('~/ui/shared-components/T');
 const QR = require('qrcode');
-const PDFSaver = require('~/ui/shared-components/PDFSaver');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const css = require('classnames');
 const fs = require('fs');
@@ -55,19 +55,25 @@ class SecuritySettings extends React.Component {
         this.passphraseVisible = !this.passphraseVisible;
     };
 
-    setAccountKeyPDFRef = ref => {
-        this.accountKeyPDFRef = ref;
-    };
-
     backupAccountKey = async () => {
-        const tplVars = {
-            username: User.current.username,
-            email: User.current.email,
-            key: User.current.passphrase
-        };
+        let path = '';
+        try {
+            path = await requestDownloadPath(
+                `${User.current.username}-${t('title_appName')}.pdf`
+            );
+        } catch (err) {
+            // user cancel
+        }
 
-        this.accountKeyPDFRef.save(tplVars, `${User.current.username}.pdf`);
-        await User.current.setAccountKeyBackedUp();
+        if (path) {
+            saveAccountKeyBackup(
+                path,
+                User.current.fullName,
+                User.current.username,
+                User.current.passphrase
+            );
+            User.current.setAccountKeyBackedUp();
+        }
     };
 
     onToggleAutologin(ev) {
@@ -165,10 +171,6 @@ class SecuritySettings extends React.Component {
                         theme="primary"
                     />
                 </div>
-                <PDFSaver
-                    ref={this.setAccountKeyPDFRef}
-                    template="./AccountKeyBackup.html"
-                />
             </section>
         );
     }

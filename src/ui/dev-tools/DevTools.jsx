@@ -1,13 +1,6 @@
 const React = require('react');
-const {
-    Button,
-    Chip,
-    Divider,
-    MaterialIcon,
-    Menu,
-    MenuItem
-} = require('peer-ui');
-const { User, socket, util } = require('peerio-icebear');
+const { Button, Chip, Divider, Menu, MenuItem } = require('peer-ui');
+const { User, socket } = require('peerio-icebear');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 
@@ -61,10 +54,6 @@ class DevTools extends React.Component {
                             onClick={this.quit}
                         />
                     </Menu>
-                    <MaterialIcon icon="file_upload" />{' '}
-                    {util.formatBytes(socket.bytesSent)}&nbsp;&nbsp;&nbsp;
-                    <MaterialIcon icon="file_download" />{' '}
-                    {util.formatBytes(socket.bytesReceived)}
                     <div className="separator" />
                     {socket.connected ? (
                         <Chip className="good-bg">connected</Chip>

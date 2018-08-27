@@ -35,7 +35,7 @@ const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 @DropTarget(
     [DragDropTypes.NATIVEFILE],
     {
-        drop(props, monitor) {
+        drop(_props, monitor) {
             if (monitor.didDrop()) return; // drop was already handled by eg. a droppable folder line
             uploadDroppedFiles(
                 monitor.getItem().files,
@@ -239,11 +239,7 @@ class Files extends React.Component {
             <div className="files">
                 <FilesHeader />
                 <div className="file-wrapper">
-                    <div
-                        className="file-table-wrapper scrollable"
-                        ref={this.setContainerRef}
-                        onScroll={this.enqueueCheck}
-                    >
+                    <div className="file-table-wrapper">
                         <div className="file-table-header row-container">
                             <Checkbox
                                 className={css('file-checkbox', {
@@ -308,13 +304,14 @@ class Files extends React.Component {
                                 })}
                             >
                                 <div
+                                    ref={this.setContainerRef}
+                                    onScroll={this.enqueueCheck}
                                     className={css('file-table-body', {
                                         'hide-checkboxes': selectedCount === 0
                                     })}
                                 >
                                     {this.renderedItems}
                                 </div>
-                                <div className="file-bottom-filler" />
                             </div>
                         )}
                     </div>

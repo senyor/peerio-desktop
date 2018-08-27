@@ -1,5 +1,5 @@
 const path = require('path');
-const isDevEnv = require('~/helpers/is-dev-env');
+const isDevEnv = require('~/helpers/is-dev-env').default;
 const { app, ipcMain } = require('electron');
 const TinyDb = require('peerio-icebear/dist/db/tiny-db');
 const autoUpdater = require('@peerio/updater')();

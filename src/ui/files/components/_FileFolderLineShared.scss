@@ -1,19 +1,23 @@
+$file-top-ui-height: 144px;
+$file-table-header-height: 56px;
+$row-height: 48px;
+
 // file "table" shared by Files and FilePicker
 .file-table-wrapper {
   @extend %flex-col;
   @extend %flex-grow-1;
   @extend %flex-shrink-0;
   position: relative;
-  height: calc(100vh - 144px);
+  height: calc(100vh - #{$file-top-ui-height});
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   background: $white;
   border-spacing: 0;
 
   .row-container {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     position: relative;
     padding: 0 24px 0 48px;
     border-bottom: 1px solid $divider-dark;
@@ -137,8 +141,10 @@
   .file-table-header {
     flex-direction: row;
     align-items: center;
-    height: 56px;
-    min-height: 56px;
+    z-index: 1;
+    height: $file-table-header-height;
+    min-height: $file-table-header-height;
+    background-color: $background-root;
 
     > div {
       padding-right: 24px;
@@ -150,13 +156,19 @@
   }
 
   .file-table-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
     background-color: $background-hover-default;
   }
 
   .row,
   .sub-row {
     position: relative;
-    height: 48px;
+    height: $row-height;
+    min-height: $row-height;
 
     > div {
       padding-right: 24px;
@@ -189,6 +201,7 @@
 
     .file-icon .material-icons {
       color: $icon-dark-active;
+      cursor: pointer;
     }
   }
 

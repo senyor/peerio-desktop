@@ -64,6 +64,9 @@ cfg.chat.maxInitialChats = 20;
 cfg.chat.inlineImageSizeLimit = 10 * 1024 * 1024;
 cfg.chat.inlineImageSizeLimitCutoff = 30 * 1024 * 1024;
 
+cfg.assetPathResolver = fileName => {
+    return `./app/node_modules/peerio-icebear/src/assets/${fileName}`;
+};
 // --- DEBUG
 cfg.nodeLogFolder = path.join(app.getPath('userData'), 'logs');
 

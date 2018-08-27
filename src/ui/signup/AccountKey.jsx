@@ -1,12 +1,12 @@
+import { requestDownloadPath } from '~/helpers/file';
 const React = require('react');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Button } = require('peer-ui');
 const { clipboard } = require('electron').remote;
-const PDFSaver = require('~/ui/shared-components/PDFSaver');
 const AvatarControl = require('./AvatarControl');
 const { t } = require('peerio-translator');
-const { warnings } = require('peerio-icebear');
+const { warnings, saveAccountKeyBackup } = require('peerio-icebear');
 
 @observer
 class AccountKey extends Component {
@@ -16,16 +16,25 @@ class AccountKey extends Component {
         }
     };
 
-    backupAccountKey = () => {
-        const { username, email, passphrase } = this.props.store;
-        const tplVars = {
-            username,
-            email,
-            key: passphrase
-        };
+    backupAccountKey = async () => {
+        const { username, firstName, lastName, passphrase } = this.props.store;
+        let path = '';
+        try {
+            path = await requestDownloadPath(
+                `${username}-${t('title_appName')}.pdf`
+            );
+        } catch (err) {
+            // user cancel
+        }
 
-        this.pdfSaver.save(tplVars, `${username}.pdf`);
-
+        if (path) {
+            saveAccountKeyBackup(
+                path,
+                `${firstName} ${lastName}`,
+                username,
+                passphrase
+            );
+        }
         // NOTICE: user can press cancel and this flag would still be set to true
         this.props.store.keyBackedUp = true;
     };
@@ -67,12 +76,6 @@ class AccountKey extends Component {
                     className="pdf-download"
                     onClick={this.backupAccountKey}
                     theme="primary"
-                />
-                <PDFSaver
-                    ref={ref => {
-                        this.pdfSaver = ref;
-                    }}
-                    template="./AccountKeyBackup.html"
                 />
             </div>
         );

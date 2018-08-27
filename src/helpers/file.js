@@ -4,7 +4,7 @@ const _ = require('lodash');
 const path = require('path');
 const sanitize = require('sanitize-filename');
 const { t } = require('peerio-translator');
-const { fileHelpers } = require('peerio-icebear');
+const { fileHelpers, errors } = require('peerio-icebear');
 
 function selectDownloadFolder() {
     return new Promise(resolve => {
@@ -88,7 +88,12 @@ function requestDownloadPath(fileName) {
             },
             fileSavePath => {
                 if (fileSavePath) resolve(fileSavePath);
-                else reject(new Error('User cancelled save dialog.'));
+                else
+                    reject(
+                        new errors.UserCancelError(
+                            'User cancelled save dialog.'
+                        )
+                    );
             }
         );
     });
@@ -218,5 +223,6 @@ module.exports = {
     getFileList,
     selectDownloadFolder,
     pickSavePath,
-    getFileTree
+    getFileTree,
+    requestDownloadPath
 };

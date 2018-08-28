@@ -178,7 +178,7 @@ class ValidatedInput extends Component {
     render() {
         return (
             <div
-                className={css('validated-input', this.props.theme, {
+                className={css('validated-input', {
                     focused: this.props.store[this.fFocused]
                 })}
             >
@@ -188,6 +188,7 @@ class ValidatedInput extends Component {
                     label={this.props.label}
                     onChange={this.handleChange}
                     onKeyPress={this.props.onKeyPress}
+                    onClear={this.props.onClear}
                     onBlur={this.handleBlur}
                     onFocus={this.toggleFocus}
                     error={this.validationMessage}
@@ -195,10 +196,9 @@ class ValidatedInput extends Component {
                     maxLength={this.props.maxLength}
                     disabled={this.props.disabled}
                     innerRef={this.onRef}
+                    hint={this.props.hint}
+                    theme={this.props.theme}
                 />
-                {!this.validationMessage && (
-                    <div className="helper-text">{this.props.hint}</div>
-                )}
             </div>
         );
     }

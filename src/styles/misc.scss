@@ -112,3 +112,34 @@ a.clickable {
     border: 0;
   }
 }
+
+// LAYOUT MIXINS
+$break-width-default: 1280px;
+$break-height-default: 900px;
+
+@mixin onboarding-content-sizing() {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 500px;
+  padding-top: 272px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media all and (max-width: $break-width-default),
+    all and (max-height: $break-height-default) {
+    width: 344px;
+    padding-top: 128px;
+  }
+}
+
+@mixin onboarding-right-content-padding() {
+  padding-right: 168px;
+  padding-top: 272px;
+
+  @media all and (max-width: $break-width-default),
+    all and (max-height: $break-height-default) {
+    padding-right: 80px;
+    padding-top: 128px;
+  }
+}

@@ -11,14 +11,27 @@
     color: inherit;
   }
 
+  .login-inputs-container {
+    width: 400px;
+    padding: $padding-default;
+    margin: $margin-large 0;
+    color: $text-dark-default;
+    background-color: $background-root;
+    border-radius: 4px;
+  }
+
   .login-form {
-    width: 275px;
-    margin-top: 24px;
+    padding: $padding-default;
+  }
+
+  .title {
+    margin-bottom: $margin-default;
+    font-weight: $font-weight-bold;
   }
 
   .password {
     position: relative;
-    margin-top: 40px;
+    margin-top: $margin-default;
 
     input {
       padding-right: 48px;
@@ -27,48 +40,36 @@
     .p-button {
       position: absolute;
       right: 6px;
-      top: 50%;
-      margin-top: -18px; // half of icon height
+      top: 16px;
     }
   }
 
-  .title + .validated-input .p-input {
-    margin-top: $margin-default;
-  }
-
-  .login-button {
-    margin: 48px 0;
-
-    &:disabled {
-      color: $text-light-disabled;
-      background-color: transparent;
-    }
-  }
-
-  .welcome-back-wrapper {
+  .login-button-container {
+    display: flex;
     margin-top: $margin-large;
-    background-color: $darkblue;
-    border-radius: 4px;
+
+    .p-button {
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   .welcome-back {
-    @extend %flex-col;
-    @extend %flex-align-center;
-    @extend %flex-shrink-0;
-    @extend %flex-justify-center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     cursor: pointer;
-    min-width: 375px;
-    padding: 24px;
+    padding: $padding-default;
     font-size: 20px;
     // TODO: make transition vars
     transition: 250ms;
-    color: $text-dark-inactive;
-    background: $white-70;
+    color: $text-dark-secondary;
+    background-color: $background-hover-default;
     border-radius: 4px;
 
     &:hover {
-      background: $white;
+      background: $background-neutral;
     }
 
     .overflow {

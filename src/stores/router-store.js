@@ -45,6 +45,10 @@ class RouterStore {
 
     get ROUTES() {
         return {
+            login: '/',
+            signup: '/signup',
+            newUser: '/new-user',
+
             loading: '/app',
             chats: '/app/chats',
             zeroChats: '/app/zero-chats',

@@ -31,7 +31,7 @@ export default class TermsOfUse extends React.Component<SignupStep> {
         return (
             <div className="ak-backup-reminder">
                 <div className="title">
-                    <img src="./static/img/icon-helmet.svg" />
+                    <MaterialIcon icon="get_app" />
                     <T k="title_backupAk" />
                 </div>
                 <div className="description">

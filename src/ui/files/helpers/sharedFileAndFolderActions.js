@@ -3,11 +3,7 @@ const { action } = require('mobx');
 
 const { User, fileStore } = require('peerio-icebear');
 
-const {
-    pickLocalFiles,
-    getFileTree,
-    selectDownloadFolder
-} = require('~/helpers/file');
+const { selectDownloadFolder } = require('~/helpers/file');
 
 /**
  * Remember that these are just for play until we introduce real types -- any
@@ -117,26 +113,6 @@ class FilesAndFoldersSharedMethods {
             fileStore.searchQuery = '';
             fileStore.clearSelection();
         }
-    }
-
-    static async handleUpload() {
-        const paths = await pickLocalFiles();
-        if (!paths || !paths.length) return;
-        const trees = paths.map(getFileTree);
-        // @ts-ignore bluebird
-        await Promise.map(trees, tree => {
-            if (typeof tree === 'string') {
-                return fileStore.upload(
-                    tree,
-                    null,
-                    fileStore.folderStore.currentFolder
-                );
-            }
-            return fileStore.uploadFolder(
-                tree,
-                fileStore.folderStore.currentFolder
-            );
-        });
     }
 }
 

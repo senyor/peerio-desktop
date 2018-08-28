@@ -35,18 +35,21 @@ export default class MessageInput extends React.Component<MessageInputProps> {
     @observable filePickerActive = false;
 
     @observable uploadDialogActive = false;
-    selectedFiles: string[] = [];
+    @observable.shallow selectedFiles: string[] = [];
 
     @action.bound
-    activateUploadDialog() {
+    async activateUploadDialog() {
         const chat = chatStore.activeChat;
         if (!chat) return;
-        pickLocalFiles().then(paths => {
-            const recognizedPaths = getFileList(paths).success;
-            if (!recognizedPaths || !recognizedPaths.length) return;
-            this.selectedFiles = recognizedPaths;
-            this.uploadDialogActive = true;
-        });
+        const files = await pickLocalFiles();
+        if (!files || !files.length) return;
+        this.uploadDialogActive = true;
+        const paths = await getFileList(files);
+        if (!paths || !paths.success || !paths.success.length) {
+            this.uploadDialogActive = false;
+            return;
+        }
+        this.selectedFiles = paths.success;
     }
 
     @action.bound

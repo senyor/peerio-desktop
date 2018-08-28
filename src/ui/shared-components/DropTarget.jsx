@@ -52,7 +52,7 @@ class DropTarget extends React.Component {
     render() {
         if (routerStore.currentRoute === routerStore.ROUTES.files) return null;
 
-        if (this.dialogActive) {
+        if (this.dialogActive || dragStore.preparingForUpload) {
             return (
                 <UploadDialog
                     deactivate={() => this.dialogDeactivate()}
@@ -62,6 +62,7 @@ class DropTarget extends React.Component {
         }
 
         if (!dragStore.hovering) return null;
+
         return (
             <div className="global-drop-target">
                 <div className="drop-content">

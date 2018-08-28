@@ -22,7 +22,7 @@ const DragDropTypes = require('./helpers/dragDropTypes');
 const { uploadDroppedFiles } = require('./helpers/dragDropHelpers');
 
 const { selectDownloadFolder, pickSavePath } = require('~/helpers/file');
-const { handleUpload } = require('./helpers/sharedFileAndFolderActions');
+const LocalFileManager = require('./helpers/LocalFileManager').default;
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -52,6 +52,7 @@ const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 class Files extends React.Component {
     @observable renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
     pageSize = DEFAULT_RENDERED_ITEMS_COUNT;
+    localFileManager = new LocalFileManager();
 
     shareConfirmDialogRef = React.createRef();
 
@@ -227,7 +228,9 @@ class Files extends React.Component {
             !fileStore.folderStore.root.folders.length &&
             fileStore.loaded
         )
-            return <ZeroScreen onUpload={handleUpload} />;
+            return (
+                <ZeroScreen onUpload={this.localFileManager.pickAndUpload} />
+            );
 
         const currentFolder = fileStore.folderStore.currentFolder;
         const selectedCount = fileStore.selectedFilesOrFolders.length;
@@ -237,7 +240,7 @@ class Files extends React.Component {
         this.enqueueCheck();
         return (
             <div className="files">
-                <FilesHeader />
+                <FilesHeader onUpload={this.localFileManager.pickAndUpload} />
                 <div className="file-wrapper">
                     <div className="file-table-wrapper">
                         <div className="file-table-header row-container">
@@ -297,6 +300,11 @@ class Files extends React.Component {
                                 />
                             </div>
                         )}
+                        {this.localFileManager.preparingForUpload ? (
+                            <div className="row-container">
+                                <ProgressBar mode="indeterminate" />
+                            </div>
+                        ) : null}
                         {connectDropTarget(
                             <div
                                 className={css('drop-zone', {

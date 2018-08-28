@@ -11,8 +11,10 @@ const { fileStore } = require('peerio-icebear');
 @observer
 class Preferences extends React.Component {
     onMsgNotifChanged(ev) {
-        User.current.settings.messageNotifications = ev.target.checked;
-        User.current.saveSettings();
+        const { checked } = ev.target;
+        User.current.saveSettings(settings => {
+            settings.messageNotifications = checked;
+        });
     }
 
     onErrorSoundsChanged(ev) {
@@ -47,7 +49,6 @@ class Preferences extends React.Component {
 
     onUnreadChatSorting(ev) {
         chatStore.unreadChatsAlwaysOnTop = ev.target.checked;
-        User.current.saveSettings();
     }
 
     onUrlPreviewToggle(ev) {

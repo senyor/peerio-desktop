@@ -52,68 +52,78 @@ export default class TermsOfUse extends React.Component<SignupStep> {
         this.selectedTerm = number;
     }
 
+    termsTextContent = [
+        {
+            icon: 'help_outline',
+            titleLeft: t('title_termsDataCollection'),
+            titleRight: t('title_termsDataCollection'),
+            textContent: [
+                {
+                    heading: null,
+                    paragraph: t('title_termsDataCollectionIntro')
+                },
+                {
+                    heading: t('title_metadata'),
+                    paragraph: t('title_termsMetadataParagraph')
+                },
+                {
+                    heading: t('title_accountInformation'),
+                    paragraph: t('title_termsAccountInfoParagraph')
+                },
+                {
+                    heading: t('title_ipAddress'),
+                    paragraph: t('title_termsIpParagraph')
+                }
+            ]
+        },
+        {
+            icon: 'settings',
+            titleLeft: t('title_termsDataThirdParty'),
+            titleRight: t('title_termsDataThirdParty'),
+            textContent: [
+                {
+                    heading: t('title_service'),
+                    paragraph: t('title_termsServiceParagraph')
+                },
+                {
+                    heading: t('title_communications'),
+                    paragraph: t('title_termsCommunicationsParagraph')
+                },
+                {
+                    heading: t('title_analytics'),
+                    paragraph: t('title_termsAnalyticsParagraph')
+                }
+            ]
+        },
+        {
+            spriteIcon: 'txt',
+            titleLeft: t('title_termsMainPoints'),
+            textContent: [
+                {
+                    heading: null,
+                    paragraph: t('title_termsIntro')
+                },
+                {
+                    heading: t('title_content'),
+                    paragraph: t('title_termsContentParagraph')
+                },
+                {
+                    heading: t('title_behaviour'),
+                    paragraph: t('title_termsBehaviourParagraph')
+                },
+                {
+                    heading: t('title_security'),
+                    paragraph: t('title_termsSecurityParagraph')
+                }
+            ]
+        }
+    ];
+
     get termsItems() {
         const left = [];
         const right = [];
 
-        [
-            {
-                spriteIcon: 'txt',
-                titleLeft: t('title_termsMainPoints'),
-                textContent: [
-                    {
-                        heading: t('title_content'),
-                        paragraph: t('title_termsContentParagraph')
-                    },
-                    {
-                        heading: t('title_behaviour'),
-                        paragraph: t('title_termsBehaviourParagraph')
-                    },
-                    {
-                        heading: t('title_security'),
-                        paragraph: t('title_termsSecurityParagraph')
-                    }
-                ]
-            },
-            {
-                icon: 'help_outline',
-                titleLeft: t('title_termsDataCollection'),
-                titleRight: t('title_termsDataCollection'),
-                textContent: [
-                    {
-                        heading: t('title_metadata'),
-                        paragraph: t('title_termsMetadataParagraph')
-                    },
-                    {
-                        heading: t('title_accountInformation'),
-                        paragraph: t('title_termsAccountInfoParagraph')
-                    },
-                    {
-                        heading: t('title_ipAddress'),
-                        paragraph: t('title_termsIpParagraph')
-                    }
-                ]
-            },
-            {
-                icon: 'settings',
-                titleLeft: t('title_termsDataThirdParty'),
-                titleRight: t('title_termsDataThirdParty'),
-                textContent: [
-                    {
-                        heading: t('title_service'),
-                        paragraph: t('title_termsServiceParagraph')
-                    },
-                    {
-                        heading: t('title_communications'),
-                        paragraph: t('title_termsCommunicationsParagraph')
-                    },
-                    {
-                        heading: t('title_analytics'),
-                        paragraph: t('title_termsAnalyticsParagraph')
-                    }
-                ]
-            }
-        ].forEach((term, index) => {
+        this.termsTextContent.forEach((term, index) => {
             const isSelected = this.selectedTerm === index;
 
             left.push(
@@ -166,7 +176,11 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                                 // eslint-disable-next-line
                                 key={`textcontent-${i}`}
                             >
-                                <h4 className="question">{content.heading}</h4>
+                                {content.heading ? (
+                                    <h4 className="question">
+                                        {content.heading}
+                                    </h4>
+                                ) : null}
                                 <p>{content.paragraph}</p>
                             </React.Fragment>
                         );
@@ -286,6 +300,16 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                                     return (
                                         <Button
                                             onClick={this.showTermsDialog}
+                                            theme="link"
+                                        >
+                                            {text}
+                                        </Button>
+                                    );
+                                },
+                                openPrivacy: text => {
+                                    return (
+                                        <Button
+                                            onClick={this.showPrivacyDialog}
                                             theme="link"
                                         >
                                             {text}

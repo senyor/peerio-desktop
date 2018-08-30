@@ -19,6 +19,18 @@ class UploadDialog extends React.Component {
         this.targetChat = chatStore.activeChat;
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (
+            (!this.props.files || !this.props.files.length) &&
+            nextProps.files &&
+            nextProps.files.length
+        ) {
+            setTimeout(() => {
+                this.previewNextFile();
+            });
+        }
+    }
+
     @observable fileName = '';
 
     // the chat we are sharing the file into
@@ -30,12 +42,12 @@ class UploadDialog extends React.Component {
     /**
      * Multiple files may be shared
      */
-    @observable currentFileIndex = 0;
+    @observable currentFileIndex = -1;
     @computed
     get currentFile() {
         if (
             !this.props.files ||
-            this.props.files.length < this.currentFileIndex
+            this.props.files.length <= this.currentFileIndex
         )
             return null;
         return this.props.files[this.currentFileIndex];

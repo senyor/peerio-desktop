@@ -101,22 +101,15 @@ export default class Signup extends React.Component {
             .then(async () => {
                 const { keyBackedUp } = this.profileStore;
                 keyBackedUp && (await User.current.setAccountKeyBackedUp());
-                // right after signup there's setting keg loading event going on
-                // next lines are avoiding race condition
-                const { settings } = User.current;
                 const {
                     consentUsageData,
                     subscribeNewsletter
                 } = this.profileStore;
-                when(
-                    () => !settings.loading,
-                    () => {
-                        settings.dataCollection = consentUsageData;
-                        settings.errorTracking = consentUsageData;
-                        settings.subscribeToPromoEmails = subscribeNewsletter;
-                        User.current.saveSettings();
-                    }
-                );
+                User.current.saveSettings(settings => {
+                    settings.dataCollection = consentUsageData;
+                    settings.errorTracking = consentUsageData;
+                    settings.subscribeToPromoEmails = subscribeNewsletter;
+                });
             });
     };
 

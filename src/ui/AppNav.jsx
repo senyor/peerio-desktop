@@ -16,7 +16,7 @@ const urls = require('~/config').translator.urlMap;
 const autologin = require('~/helpers/autologin');
 const path = require('path');
 const config = require('~/config');
-const Beacon = require('~/ui/shared-components/Beacon');
+const Beacon = require('~/ui/shared-components/Beacon').default;
 
 const { app, nativeImage } = remote;
 

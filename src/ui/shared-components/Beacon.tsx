@@ -1,21 +1,36 @@
-// @ts-check
-const React = require('react');
-const { action, computed, observable, reaction } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
-const uiStore = require('~/stores/ui-store');
+import React from 'react';
+import {
+    action,
+    computed,
+    observable,
+    reaction,
+    IReactionDisposer
+} from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+import uiStore from '~/stores/ui-store';
 
-/**
- * @augments {React.Component<{
-        activeId: string
-        position?: 'left' | 'right'
-        header?: string
-        text: string
-        circleContent: any
-    }, {}>}
- */
+interface BeaconProps {
+    activeId: string;
+    position?: 'left' | 'right';
+    header?: string;
+    text: string;
+    circleContent: any;
+}
+
+interface RectanglePosition {
+    top?: string;
+    bottom?: string;
+    marginTop?: number;
+    marginRight?: number;
+    marginBottom?: number;
+    marginLeft?: number;
+    paddingRight?: number;
+    paddingLeft?: number;
+}
+
 @observer
-class Beacon extends React.Component {
+export default class Beacon extends React.Component<BeaconProps> {
     @computed
     get active() {
         return uiStore.currentBeacon === this.props.activeId;
@@ -48,6 +63,8 @@ class Beacon extends React.Component {
         }
     }
 
+    @observable dispose: IReactionDisposer;
+    @observable renderTimeout: NodeJS.Timer;
     componentWillMount() {
         // Update `contentRect` on window resize
         window.addEventListener('resize', this.setContentRect);
@@ -98,7 +115,8 @@ class Beacon extends React.Component {
     }
 
     // Rectangle's positioning
-    @observable rectangleRef = React.createRef();
+    @observable
+    rectangleRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     // The bubble's vertical position is determined by the beacon's position in the window.
     // The window is divided into 5 horizontal "slices", each corresponding to a bubble position.
@@ -116,8 +134,8 @@ class Beacon extends React.Component {
     }
 
     @computed
-    get rectangleStyle() {
-        const ret = {};
+    get rectangleStyle(): RectanglePosition {
+        const ret = {} as RectanglePosition;
         const circleOffset = this.circleSize / 2;
 
         const rectangleOffset =
@@ -251,5 +269,3 @@ class Beacon extends React.Component {
         return [this.childContent, beaconContent];
     }
 }
-
-module.exports = Beacon;

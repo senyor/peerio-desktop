@@ -1,6 +1,7 @@
 import React from 'react';
 import AppNav from '~/ui/AppNav';
 import uiStore from '~/stores/ui-store';
+import beaconStore from '~/stores/beacon-store';
 import { Dialog, ProgressBar } from 'peer-ui';
 import { t } from 'peerio-translator';
 import { observer } from 'mobx-react';
@@ -27,6 +28,7 @@ export default class App extends React.Component {
 
     componentWillMount() {
         uiStore.init();
+        beaconStore.init();
     }
 
     render() {

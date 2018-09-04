@@ -2,7 +2,7 @@ const React = require('react');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, fileHelpers, contactStore } = require('peerio-icebear');
-const { Button, Dialog, Input } = require('peer-ui');
+const { Button, Dialog, Input, ProgressBar } = require('peer-ui');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const ShareWithDialog = require('~/ui/shared-components/ShareWithDialog');
 const css = require('classnames');
@@ -13,11 +13,22 @@ const { t } = require('peerio-translator');
 class UploadDialog extends React.Component {
     /* props:
         deactivate()    function    deactivate this dialog
-        files           array       files that are being uploaded
+        files           array       files that are being uploaded (if empty)
     */
     componentWillMount() {
         this.targetChat = chatStore.activeChat;
-        this.previewNextFile();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (
+            (!this.props.files || !this.props.files.length) &&
+            nextProps.files &&
+            nextProps.files.length
+        ) {
+            setTimeout(() => {
+                this.previewNextFile();
+            });
+        }
     }
 
     @observable fileName = '';
@@ -31,13 +42,12 @@ class UploadDialog extends React.Component {
     /**
      * Multiple files may be shared
      */
-    // start with -1 because we call previewNextFile on mount
     @observable currentFileIndex = -1;
     @computed
     get currentFile() {
         if (
             !this.props.files ||
-            this.props.files.length < this.currentFileIndex
+            this.props.files.length <= this.currentFileIndex
         )
             return null;
         return this.props.files[this.currentFileIndex];
@@ -200,12 +210,18 @@ class UploadDialog extends React.Component {
 
     @computed
     get dialogTitle() {
-        return this.props.files.length > 1
-            ? t('title_uploadAndShareCount', {
-                  current: this.currentFileIndex + 1,
-                  total: this.props.files.length
-              })
-            : t('title_uploadAndShare');
+        if (!this.props.files || !this.props.files.length) {
+            return t('title_preparingForUpload');
+        }
+
+        if (this.props.files.length > 1) {
+            return t('title_uploadAndShareCount', {
+                current: this.currentFileIndex + 1,
+                total: this.props.files.length
+            });
+        }
+
+        return t('title_uploadAndShare');
     }
 
     render() {
@@ -229,74 +245,82 @@ class UploadDialog extends React.Component {
             );
         }
 
+        const haveFiles = this.props.files && this.props.files.length;
+
         return (
             <Dialog
                 active
                 noAnimation
                 className="upload-dialog"
-                actions={uploadActions}
+                actions={haveFiles ? uploadActions : null}
                 onCancel={this.cancelUpload}
                 title={this.dialogTitle}
             >
-                <div className="upload-dialog-contents">
-                    <div
-                        className={css('image-or-icon', {
-                            'icon-container': this.fileType !== 'img'
-                        })}
-                    >
-                        {this.fileType === 'img' ? (
-                            <div className="thumbnail">
-                                <img
-                                    src={this.currentFileForceNoCache}
-                                    alt=""
-                                />
-                            </div>
-                        ) : (
-                            <div className="icon-inner">
-                                <FileSpriteIcon
-                                    type={this.fileType}
-                                    size="xlarge"
-                                />
-                                <T
-                                    k="title_previewUnavailable"
-                                    tag="div"
-                                    className="preview-unavailable"
-                                />
-                            </div>
-                        )}
+                {!haveFiles ? (
+                    <div className="upload-dialog-contents">
+                        <ProgressBar mode="indeterminate" />
                     </div>
-                    <div className="info-and-inputs">
-                        <Input
-                            label={t('title_fileName')}
-                            value={this.displayFileName}
-                            onChange={this.onFileNameChange}
-                            onFocus={this.onInputFocus}
-                            onBlur={this.onInputBlur}
-                        />
-                        <div className="share-with">
-                            <div className="user-list">
-                                <T
-                                    k="title_shareWith"
-                                    className="heading"
-                                    tag="div"
+                ) : (
+                    <div className="upload-dialog-contents">
+                        <div
+                            className={css('image-or-icon', {
+                                'icon-container': this.fileType !== 'img'
+                            })}
+                        >
+                            {this.fileType === 'img' ? (
+                                <div className="thumbnail">
+                                    <img
+                                        src={this.currentFileForceNoCache}
+                                        alt=""
+                                    />
+                                </div>
+                            ) : (
+                                <div className="icon-inner">
+                                    <FileSpriteIcon
+                                        type={this.fileType}
+                                        size="xlarge"
+                                    />
+                                    <T
+                                        k="title_previewUnavailable"
+                                        tag="div"
+                                        className="preview-unavailable"
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        <div className="info-and-inputs">
+                            <Input
+                                label={t('title_fileName')}
+                                value={this.displayFileName}
+                                onChange={this.onFileNameChange}
+                                onFocus={this.onInputFocus}
+                                onBlur={this.onInputBlur}
+                            />
+                            <div className="share-with">
+                                <div className="user-list">
+                                    <T
+                                        k="title_shareWith"
+                                        className="heading"
+                                        tag="div"
+                                    />
+                                    {this.targetTitle}
+                                </div>
+                                <Button
+                                    icon="edit"
+                                    onClick={this.showShareWithDialog}
+                                    theme="small"
                                 />
-                                {this.targetTitle}
                             </div>
-                            <Button
-                                icon="edit"
-                                onClick={this.showShareWithDialog}
-                                theme="small"
+                            <Input
+                                placeholder={t('title_addCommentOptional')}
+                                value={this.messageText}
+                                onChange={this.onMessageChange}
+                                multiline
+                                className="add-a-message"
                             />
                         </div>
-                        <Input
-                            placeholder={t('title_addCommentOptional')}
-                            value={this.messageText}
-                            onChange={this.onMessageChange}
-                            multiline
-                            className="add-a-message"
-                        />
                     </div>
-                </div>
+                )}
             </Dialog>
         );
     }

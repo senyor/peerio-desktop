@@ -5,7 +5,8 @@ const T = require('~/ui/shared-components/T');
 
 const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
 const EmojiImage = require('~/ui/emoji/Image');
-const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
+const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice')
+    .default;
 
 @observer
 class PendingDMHeader extends React.Component {

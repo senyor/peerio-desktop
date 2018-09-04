@@ -10,6 +10,7 @@ import ZeroChats from '~/whitelabel/components/ZeroChats';
 import Onboarding from './Onboarding';
 import Login from './login/Login';
 import Signup from './signup/Signup';
+import NewUser from './login/NewUser';
 import Loading from './Loading';
 import ChatView from './chat/ChatView';
 import NewChat from './chat/NewChat';
@@ -39,7 +40,9 @@ import DevSettings from './settings/components/Dev';
 export default (
     <Route path="/" component={Root}>
         <IndexRoute component={Login} />
+        <Route path="/" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/new-user" component={NewUser} />
         <Route path="/new-device" component={NewDevice} />
         <Route path="autologin" component={AutoLogin} />
         <Route path="/app" component={App}>

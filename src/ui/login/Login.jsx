@@ -20,6 +20,7 @@ const css = require('classnames');
 const autologin = require('~/helpers/autologin');
 const routerStore = require('~/stores/router-store');
 const updaterStore = require('~/stores/updater-store');
+const uiStore = require('~/stores/ui-store');
 
 const PoweredByLogin = require('~/whitelabel/components/PoweredByLogin');
 const SignupLink = require('~/whitelabel/components/SignupLink');
@@ -98,7 +99,12 @@ class Login extends Component {
                     .catch(() => {
                         this.loginStore.busy = false;
                     });
-            } else this.loginStore.busy = false;
+            } else {
+                this.loginStore.busy = false;
+                if (uiStore.newUserPageOpen) {
+                    routerStore.navigateTo(routerStore.ROUTES.newUser);
+                }
+            }
         });
     }
 
@@ -174,32 +180,31 @@ class Login extends Component {
 
     getWelcomeBlock = () => {
         return (
-            <div className="welcome-back-wrapper">
-                <div className="welcome-back" onClick={this.unsetLastUser}>
-                    <div className="overflow ">
-                        {t('title_welcomeBack')}&nbsp;
-                        <strong>
-                            {this.loginStore.lastAuthenticatedUser.firstName ||
-                                this.loginStore.lastAuthenticatedUser.username}
-                        </strong>
-                    </div>
-                    <div className="subtitle">
-                        <div className="overflow">
-                            <T k="button_changeUserDesktop">
-                                {{
-                                    username:
-                                        this.loginStore.lastAuthenticatedUser
-                                            .firstName ||
-                                        this.loginStore.lastAuthenticatedUser
-                                            .username
-                                }}
-                            </T>
-                        </div>
+            <div className="welcome-back" onClick={this.unsetLastUser}>
+                <div className="overflow ">
+                    {t('title_welcomeBack')}&nbsp;
+                    <strong>
+                        {this.loginStore.lastAuthenticatedUser.firstName ||
+                            this.loginStore.lastAuthenticatedUser.username}
+                    </strong>
+                </div>
+                <div className="subtitle">
+                    <div className="overflow">
+                        <T k="button_changeUserDesktop">
+                            {{
+                                username:
+                                    this.loginStore.lastAuthenticatedUser
+                                        .firstName ||
+                                    this.loginStore.lastAuthenticatedUser
+                                        .username
+                            }}
+                        </T>
                     </div>
                 </div>
             </div>
         );
     };
+
     render() {
         return (
             <div className="app-root">
@@ -211,70 +216,75 @@ class Login extends Component {
                         src="static/img/logo-mark.svg"
                     />
                     <PoweredByLogin />
-                    {this.loginStore.lastAuthenticatedUser
-                        ? this.getWelcomeBlock()
-                        : ''}
-                    <div className="login-form">
-                        <div
-                            className={css('title', {
-                                banish: this.loginStore.lastAuthenticatedUser
-                            })}
-                        >
-                            {t('title_login')}
-                        </div>
-                        <ValidatedInput
-                            label={t('title_username')}
-                            name="username"
-                            position="0"
-                            lowercase="true"
-                            store={this.loginStore}
-                            validator={validators.usernameLogin}
-                            onKeyPress={this.handleKeyPress}
-                            className={css({
-                                banish: this.loginStore.lastAuthenticatedUser
-                            })}
-                            theme="dark"
-                        />
-                        <div className="password">
+                    <div className="login-inputs-container">
+                        {this.loginStore.lastAuthenticatedUser
+                            ? this.getWelcomeBlock()
+                            : ''}
+                        <div className="login-form">
+                            <div
+                                className={css('title', {
+                                    banish: this.loginStore
+                                        .lastAuthenticatedUser
+                                })}
+                            >
+                                {t('title_login')}
+                            </div>
                             <ValidatedInput
-                                type={
-                                    this.loginStore.passwordVisible
-                                        ? 'text'
-                                        : 'password'
-                                }
-                                label={t('title_AccountKey')}
-                                position="1"
+                                label={t('title_username')}
+                                name="username"
+                                position="0"
+                                lowercase="true"
                                 store={this.loginStore}
-                                validator={validators.stringExists}
-                                name="passcodeOrPassphrase"
+                                validator={validators.usernameLogin}
                                 onKeyPress={this.handleKeyPress}
-                                ref={this.onAKRef}
+                                className={css({
+                                    banish: this.loginStore
+                                        .lastAuthenticatedUser
+                                })}
                                 theme="dark"
                             />
-                            <Button
-                                icon="visibility"
-                                active={this.loginStore.passwordVisible}
-                                tooltip={
-                                    this.loginStore.passwordVisible
-                                        ? t('title_hideAccountKey')
-                                        : t('title_showAccountKey')
-                                }
-                                tooltipPosition="right"
-                                onClick={this.togglePasswordVisibility}
-                            />
-                        </div>
-                        {/* <Dropdown value={languageStore.language}
+                            <div className="password">
+                                <ValidatedInput
+                                    type={
+                                        this.loginStore.passwordVisible
+                                            ? 'text'
+                                            : 'password'
+                                    }
+                                    label={t('title_AccountKey')}
+                                    position="1"
+                                    store={this.loginStore}
+                                    validator={validators.stringExists}
+                                    name="passcodeOrPassphrase"
+                                    onKeyPress={this.handleKeyPress}
+                                    ref={this.onAKRef}
+                                    theme="dark"
+                                />
+                                <Button
+                                    icon="visibility"
+                                    active={this.loginStore.passwordVisible}
+                                    tooltip={
+                                        this.loginStore.passwordVisible
+                                            ? t('title_hideAccountKey')
+                                            : t('title_showAccountKey')
+                                    }
+                                    tooltipPosition="right"
+                                    onClick={this.togglePasswordVisibility}
+                                />
+                            </div>
+                            {/* <Dropdown value={languageStore.language}
                                   options={languageStore.translationLangsDataSource}
                                   onChange={languageStore.changeLanguage} />
                         */}
+                            <div className="login-button-container">
+                                <Button
+                                    label={t('button_login')}
+                                    onClick={this.onLoginClick}
+                                    disabled={this.loginStore.hasErrors}
+                                    theme="affirmative"
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <Button
-                        className="login-button"
-                        label={t('button_login')}
-                        onClick={this.onLoginClick}
-                        disabled={this.loginStore.hasErrors}
-                        theme="affirmative"
-                    />
 
                     <SignupLink />
                 </div>

@@ -62,3 +62,20 @@
   font-size: 24px;
   font-weight: $font-weight-bold;
 }
+
+// New typography styles below!
+// TODO: consolidate old classes/styles into these rules
+.heading {
+  line-height: 48px;
+  font-family: $font-serif;
+  font-size: 36px;
+  font-weight: $font-weight-semibold;
+  color: $darkblue;
+}
+
+.guide-text {
+  margin-bottom: $margin-large;
+  line-height: 25px;
+  font-size: 18px;
+  color: $text-dark-secondary;
+}

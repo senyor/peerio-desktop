@@ -7,9 +7,11 @@ const { observer } = require('mobx-react');
 class SignupLink extends React.Component {
     render() {
         return (
-            <div>
-                {t('title_newUser')} &nbsp;{' '}
-                <Link to="/signup">{t('button_CreateAccount')}</Link>
+            <div className="signup-link">
+                <strong>
+                    {t('title_newUser')} &nbsp;{' '}
+                    <Link to="/signup">{t('button_CreateAccount')}</Link>
+                </strong>
             </div>
         );
     }

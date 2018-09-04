@@ -1,10 +1,14 @@
 const electron = require('electron').remote;
 const fs = require('fs');
-const _ = require('lodash');
 const path = require('path');
+const util = require('util');
+const _ = require('lodash');
 const sanitize = require('sanitize-filename');
 const { t } = require('peerio-translator');
 const { fileHelpers, errors } = require('peerio-icebear');
+
+const lstatAsync = util.promisify(fs.lstat);
+const readdirAsync = util.promisify(fs.readdir);
 
 function selectDownloadFolder() {
     return new Promise(resolve => {
@@ -139,10 +143,9 @@ function pickLocalFiles() {
  * Takes an array of file/folder paths,
  * returns an array of passed files and all files in passed folders recursively
  * @param {Array<string>} mixed files/folders paths
- * @returns {getListFilesResult}
+ * @returns {Promise<getListFilesResult>}
  */
-function getFileList(paths) {
-    // console.debug(paths);
+async function getFileList(paths) {
     const ret = {
         success: [],
         error: [],
@@ -150,41 +153,43 @@ function getFileList(paths) {
     };
     if (!paths) return ret;
     ret.successBytes = 0;
-    paths.forEach(p => {
+    for (let i = 0; i < paths.length; i++) {
+        const p = paths[i];
         try {
-            const stat = fs.lstatSync(p);
+            const stat = await lstatAsync(p);
             if (stat.isFile()) {
                 ret.success.push(p);
                 ret.successBytes += stat.size;
-                return;
+                continue;
             }
             if (stat.isDirectory()) {
                 // going into recursion
-                const namesInDir = fs.readdirSync(p);
-                for (let i = 0; i < namesInDir.length; i++)
-                    namesInDir[i] = path.join(p, namesInDir[i]);
-                const nested = getFileList(namesInDir);
+                const namesInDir = await readdirAsync(p);
+                for (let j = 0; j < namesInDir.length; j++) {
+                    namesInDir[j] = path.join(p, namesInDir[j]);
+                }
+                const nested = await getFileList(namesInDir);
                 ret.success.push(...nested.success);
                 ret.error.push(...nested.error);
                 ret.restricted.push(...nested.restricted);
                 ret.successBytes += nested.successBytes;
-                return;
+                continue;
             }
             ret.error.push(p);
         } catch (err) {
             ret.error.push(p);
             console.error(err);
         }
-    });
+    }
     ret.success = _.uniq(ret.success);
     ret.error = _.uniq(ret.error);
     ret.restricted = _.uniq(ret.restricted);
     return ret;
 }
 
-function getFileTree(filePath) {
+async function getFileTree(filePath) {
     try {
-        const stat = fs.lstatSync(filePath);
+        const stat = await lstatAsync(filePath);
         if (stat.isFile()) {
             return filePath;
         }
@@ -195,19 +200,19 @@ function getFileTree(filePath) {
                 files: []
             };
 
-            const namesInDir = fs.readdirSync(filePath);
-            for (let i = 0; i < namesInDir.length; i++)
-                namesInDir[i] = path.join(filePath, namesInDir[i]);
-            namesInDir.forEach(child => {
-                child = getFileTree(child); //eslint-disable-line
-                if (!child) return;
+            const namesInDir = await readdirAsync(filePath);
+            for (let i = 0; i < namesInDir.length; i++) {
+                const child = await getFileTree(
+                    path.join(filePath, namesInDir[i])
+                );
+                if (!child) continue;
 
                 if (typeof child === 'object') {
                     folder.folders.push(child);
                 } else {
                     folder.files.push(child);
                 }
-            });
+            }
             return folder;
         }
         return null;
@@ -220,9 +225,9 @@ function getFileTree(filePath) {
 module.exports = {
     downloadFile,
     pickLocalFiles,
-    getFileList,
     selectDownloadFolder,
     pickSavePath,
+    getFileList,
     getFileTree,
     requestDownloadPath
 };

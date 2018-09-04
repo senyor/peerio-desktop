@@ -13,18 +13,24 @@ class Account extends React.Component {
     @observable deleteAccountDialogActive = false;
 
     onPromoSubscriptionChanged = ev => {
-        User.current.settings.subscribeToPromoEmails = ev.target.checked;
-        User.current.saveSettings();
+        const { checked } = ev.target;
+        User.current.saveSettings(settings => {
+            settings.subscribeToPromoEmails = checked;
+        });
     };
 
     onErrorTrackingChanged = ev => {
-        User.current.settings.errorTracking = ev.target.checked;
-        User.current.saveSettings();
+        const { checked } = ev.target;
+        User.current.saveSettings(settings => {
+            settings.errorTracking = checked;
+        });
     };
 
     onDataCollectionChanged = ev => {
-        User.current.settings.dataCollection = ev.target.checked;
-        User.current.saveSettings();
+        const { checked } = ev.target;
+        User.current.saveSettings(settings => {
+            settings.dataCollection = checked;
+        });
     };
 
     showConfirmDelete = () => {

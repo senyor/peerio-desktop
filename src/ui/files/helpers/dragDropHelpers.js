@@ -18,10 +18,11 @@ function getAllDraggedItems() {
  * @param {any} targetFolder
  */
 async function uploadDroppedFiles(files, targetFolder) {
-    const trees = files
-        .map(f => f.path)
-        .map(getFileTree)
-        .filter(tree => tree);
+    const trees = [];
+    for (let i = 0; i < files.length; i++) {
+        const tree = await getFileTree(files[i].path);
+        if (tree) trees.push(tree);
+    }
 
     // @ts-ignore can't specify bluebird typings without ts
     await Promise.map(trees, tree => {

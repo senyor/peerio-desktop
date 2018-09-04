@@ -17,7 +17,6 @@ const MoveFileDialog = require('./MoveFileDialog');
 const Breadcrumb = require('./Breadcrumb');
 const {
     setCurrentFolder,
-    handleUpload,
     handleSearch
 } = require('../helpers/sharedFileAndFolderActions');
 
@@ -26,7 +25,7 @@ const {
  */
 
 /**
- * @augments {React.Component<{}, {}>}
+ * @augments {React.Component<{ onUpload: () => void }, {}>}
  */
 @observer
 class FilesHeader extends React.Component {
@@ -143,7 +142,7 @@ class FilesHeader extends React.Component {
                         <Button
                             className="button-affirmative"
                             label={t('button_upload')}
-                            onClick={handleUpload}
+                            onClick={this.props.onUpload}
                             theme="affirmative"
                         />
                     </div>

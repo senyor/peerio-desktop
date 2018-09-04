@@ -1,8 +1,7 @@
-/* eslint-disable max-len */
-const React = require('react');
+/* eslint-disable */
+import React from 'react';
 
-// no @observer, static component
-class Terms extends React.Component {
+export default class Terms extends React.PureComponent {
     render() {
         return (
             <div className="terms-of-use">
@@ -544,5 +543,3 @@ class Terms extends React.Component {
         );
     }
 }
-
-module.exports = Terms;

@@ -210,11 +210,7 @@ export default class Beacon extends React.Component<BeaconProps> {
 
     // Render the child content, wrapped in .beacon-container div so we can make the above positioning calculations
     childContent = (
-        <div
-            className="beacon-container"
-            key="container"
-            ref={this.setContentRef}
-        >
+        <div className="beacon-container" ref={this.setContentRef}>
             {this.props.children}
         </div>
     );
@@ -226,7 +222,6 @@ export default class Beacon extends React.Component<BeaconProps> {
                 className={css('beacon', this.positionClasses, {
                     show: this.rendered
                 })}
-                key="beacon"
                 onClick={this.beaconClick}
                 style={this.beaconStyle}
             >
@@ -266,6 +261,11 @@ export default class Beacon extends React.Component<BeaconProps> {
         if (!this.active && !this.rendered) return this.childContent;
 
         const beaconContent = this.beaconContent();
-        return [this.childContent, beaconContent];
+        return (
+            <React.Fragment>
+                {this.childContent}
+                {beaconContent}
+            </React.Fragment>
+        );
     }
 }

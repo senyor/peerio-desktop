@@ -8,7 +8,7 @@ import {
 } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
-import uiStore from '~/stores/ui-store';
+import beaconStore from '~/stores/beacon-store';
 
 interface BeaconProps {
     activeId: string;
@@ -33,7 +33,7 @@ interface RectanglePosition {
 export default class Beacon extends React.Component<BeaconProps> {
     @computed
     get active() {
-        return uiStore.currentBeacon === this.props.activeId;
+        return beaconStore.currentBeacon === this.props.activeId;
     }
     // We make a lot of calculations based on child content size and position
     // `contentRef` stores the ref for the .beacon-container component which contains the child content
@@ -195,15 +195,15 @@ export default class Beacon extends React.Component<BeaconProps> {
         this.renderTimeout = setTimeout(() => {
             // If incrementing beaconNumber will go past length of current beaconFlow array, current beacon flow is done
             if (
-                uiStore.beaconNumber + 2 >
-                uiStore.beaconFlows[uiStore.currentBeaconFlow].length
+                beaconStore.beaconNumber + 2 >
+                beaconStore.beaconFlows[beaconStore.currentBeaconFlow].length
             ) {
                 // // Reset beacon flow
-                // uiStore.beaconNumber = -1;
-                // uiStore.currentBeaconFlow = '';
-                uiStore.beaconNumber = 0;
+                // beaconStore.beaconNumber = -1;
+                // beaconStore.currentBeaconFlow = '';
+                beaconStore.beaconNumber = 0;
             } else {
-                uiStore.beaconNumber += 1;
+                beaconStore.beaconNumber += 1;
             }
         }, 250);
     }

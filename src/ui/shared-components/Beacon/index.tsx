@@ -13,11 +13,18 @@ import beaconStore from '~/stores/beacon-store';
 
 const appRoot: HTMLElement = document.getElementById('root');
 
-interface BeaconProps {
+interface BeaconBaseProps {
     name: string;
-    position?: 'left' | 'right';
-    circleContent?: any;
-    type: 'spot' | 'area';
+}
+
+interface SpotBeaconProps extends BeaconBaseProps {
+    type: 'spot';
+    circleContent: any;
+    position: 'left' | 'right';
+}
+
+interface AreaBeaconProps extends BeaconBaseProps {
+    type: 'area';
 }
 
 interface RectanglePosition {
@@ -32,7 +39,9 @@ interface RectanglePosition {
 }
 
 @observer
-export default class Beacon extends React.Component<BeaconProps> {
+export default class Beacon extends React.Component<
+    SpotBeaconProps | AreaBeaconProps
+> {
     @computed
     get active() {
         return beaconStore.currentBeacon.name === this.props.name;

@@ -215,7 +215,6 @@ export default class Beacon extends React.Component<BeaconProps> {
         </div>
     );
 
-    // Beacon content needs to be `computed` because styles (positioning & sizing) can change based on observables
     beaconContent() {
         return (
             <div

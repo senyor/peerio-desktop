@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {
     action,
     computed,
@@ -9,6 +10,8 @@ import {
 import { observer } from 'mobx-react';
 import css from 'classnames';
 import beaconStore from '~/stores/beacon-store';
+
+const appRoot: HTMLElement = document.getElementById('root');
 
 interface BeaconProps {
     activeId: string;
@@ -210,7 +213,11 @@ export default class Beacon extends React.Component<BeaconProps> {
 
     // Render the child content, wrapped in .beacon-container div so we can make the above positioning calculations
     childContent = (
-        <div className="beacon-container" ref={this.setContentRef}>
+        <div
+            key="beacon-container"
+            className="beacon-container"
+            ref={this.setContentRef}
+        >
             {this.props.children}
         </div>
     );
@@ -218,6 +225,7 @@ export default class Beacon extends React.Component<BeaconProps> {
     beaconContent() {
         return (
             <div
+                key="beacon-content"
                 className={css('beacon', this.positionClasses, {
                     show: this.rendered
                 })}
@@ -260,11 +268,10 @@ export default class Beacon extends React.Component<BeaconProps> {
         if (!this.active && !this.rendered) return this.childContent;
 
         const beaconContent = this.beaconContent();
-        return (
-            <React.Fragment>
-                {this.childContent}
-                {beaconContent}
-            </React.Fragment>
-        );
+
+        return [
+            this.childContent,
+            ReactDOM.createPortal(beaconContent, appRoot)
+        ];
     }
 }

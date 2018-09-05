@@ -14,12 +14,10 @@ import beaconStore from '~/stores/beacon-store';
 const appRoot: HTMLElement = document.getElementById('root');
 
 interface BeaconProps {
-    activeId: string;
+    name: string;
     position?: 'left' | 'right';
-    header?: string;
-    text: string;
-    circleContent: any;
-    type?: 'spot' | 'area';
+    circleContent?: any;
+    type: 'spot' | 'area';
 }
 
 interface RectanglePosition {
@@ -37,8 +35,9 @@ interface RectanglePosition {
 export default class Beacon extends React.Component<BeaconProps> {
     @computed
     get active() {
-        return beaconStore.currentBeacon === this.props.activeId;
+        return beaconStore.currentBeacon.name === this.props.name;
     }
+
     // We make a lot of calculations based on child content size and position
     // `contentRef` stores the ref for the .beacon-container component which contains the child content
     @observable contentRef;
@@ -224,12 +223,14 @@ export default class Beacon extends React.Component<BeaconProps> {
     );
 
     beaconContent() {
+        const { currentBeacon } = beaconStore;
+
         return (
             <div
                 key="beacon-content"
                 className={css(
                     'beacon',
-                    `${this.props.type || 'spot'}-beacon`,
+                    `${this.props.type}-beacon`,
                     this.positionClasses,
                     {
                         show: this.rendered
@@ -246,10 +247,10 @@ export default class Beacon extends React.Component<BeaconProps> {
                     style={this.rectangleStyle}
                 >
                     <div className="rectangle-content">
-                        {this.props.header ? (
-                            <div className="header">{this.props.header}</div>
+                        {currentBeacon.header ? (
+                            <div className="header">{currentBeacon.header}</div>
                         ) : null}
-                        {this.props.text}
+                        {currentBeacon.body}
                     </div>
                 </div>
 

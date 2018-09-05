@@ -207,9 +207,8 @@ export default class MessageInput extends React.Component<MessageInputProps> {
                     onPaste={this.onPaste}
                 >
                     <Beacon
-                        activeId="plus-icon"
-                        header="Beak on alright"
-                        text="Beak on beakin' on"
+                        type="spot"
+                        name="plus-icon"
                         circleContent={
                             <MaterialIcon icon="add_circle_outline" />
                         }

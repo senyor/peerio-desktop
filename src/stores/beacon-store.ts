@@ -1,10 +1,11 @@
 import { computed, observable } from 'mobx';
 import { User } from 'peerio-icebear';
 
-// interface BeaconText {
-//     header?: string;
-//     body: string;
-// }
+interface BeaconText {
+    name: string;
+    header?: string;
+    body: string;
+}
 
 class BeaconStore {
     @observable beacons;
@@ -12,8 +13,20 @@ class BeaconStore {
     // Test beacons
     // Will change based on how state mgmt works in SDK
     @observable
-    beaconFlows = {
-        messageInput: ['plus-icon', 'app-nav']
+    beaconFlows: { [key: string]: BeaconText[] } = {
+        messageInput: [
+            {
+                name: 'plus-icon',
+                header: 'sup',
+                body:
+                    'tesjklsgjdk gjlsdg ksdjglskdjg lskdgj sdlkgj sdlgksjd glksdjg lsdkgj'
+            },
+            {
+                name: 'app-nav',
+                body:
+                    'tesjklsgjdk gjlsdg ksdjglskdjg lskdgj sdlkgj sdlgksjd glksdjg lsdkgj'
+            }
+        ]
     };
     @observable currentBeaconFlow = 'messageInput';
     @observable beaconNumber = 0;
@@ -25,10 +38,6 @@ class BeaconStore {
     }
 
     async init() {
-        console.log(
-            '_______________________INIT BEACONS______________________'
-        );
-        console.log(User.current.beacons);
         this.beacons = User.current.beacons;
     }
 }

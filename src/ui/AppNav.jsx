@@ -248,11 +248,10 @@ class AppNav extends React.Component {
                     />
                     <Beacon
                         header="Beacoooooooooon"
-                        text="Beepity boopity boo"
+                        name="app-nav"
                         circleContent={
                             <Avatar contact={contact} size="medium" />
                         }
-                        activeId="app-nav"
                     >
                         <Menu
                             customButton={

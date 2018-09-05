@@ -19,6 +19,7 @@ interface BeaconProps {
     header?: string;
     text: string;
     circleContent: any;
+    type?: 'spot' | 'area';
 }
 
 interface RectanglePosition {
@@ -226,9 +227,14 @@ export default class Beacon extends React.Component<BeaconProps> {
         return (
             <div
                 key="beacon-content"
-                className={css('beacon', this.positionClasses, {
-                    show: this.rendered
-                })}
+                className={css(
+                    'beacon',
+                    this.props.type || 'spot',
+                    this.positionClasses,
+                    {
+                        show: this.rendered
+                    }
+                )}
                 onClick={this.beaconClick}
                 style={this.beaconStyle}
             >

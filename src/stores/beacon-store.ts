@@ -1,6 +1,11 @@
 import { computed, observable } from 'mobx';
 import { User } from 'peerio-icebear';
 
+// interface BeaconText {
+//     header?: string;
+//     body: string;
+// }
+
 class BeaconStore {
     @observable beacons;
 

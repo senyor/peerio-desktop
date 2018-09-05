@@ -1,4 +1,4 @@
-const { observable, reaction, computed } = require('mobx');
+const { observable, reaction } = require('mobx');
 const { TinyDb, Clock, User, warnings, clientApp } = require('peerio-icebear');
 const autologin = require('~/helpers/autologin');
 const appControl = require('~/helpers/app-control');

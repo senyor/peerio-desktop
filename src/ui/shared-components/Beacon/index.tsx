@@ -229,7 +229,7 @@ export default class Beacon extends React.Component<BeaconProps> {
                 key="beacon-content"
                 className={css(
                     'beacon',
-                    this.props.type || 'spot',
+                    `${this.props.type || 'spot'}-beacon`,
                     this.positionClasses,
                     {
                         show: this.rendered

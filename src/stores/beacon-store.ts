@@ -1,6 +1,9 @@
 import { computed, observable } from 'mobx';
+import { User } from 'peerio-icebear';
 
 class BeaconStore {
+    @observable beacons;
+
     // Test beacons
     // Will change based on how state mgmt works in SDK
     @observable
@@ -17,8 +20,11 @@ class BeaconStore {
     }
 
     async init() {
-        // Plug in to SDK here
-        console.log('init');
+        console.log(
+            '_______________________INIT BEACONS______________________'
+        );
+        console.log(User.current.beacons);
+        this.beacons = User.current.beacons;
     }
 }
 

@@ -11,21 +11,9 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 import beaconStore from '~/stores/beacon-store';
 
+import { SpotBeaconProps, AreaBeaconProps } from './types';
+
 const appRoot: HTMLElement = document.getElementById('root');
-
-interface BeaconBaseProps {
-    name: string;
-}
-
-interface SpotBeaconProps extends BeaconBaseProps {
-    type: 'spot';
-    circleContent: any;
-    position: 'left' | 'right';
-}
-
-interface AreaBeaconProps extends BeaconBaseProps {
-    type: 'area';
-}
 
 interface RectanglePosition {
     top?: string;

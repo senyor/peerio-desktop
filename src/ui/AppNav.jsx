@@ -247,7 +247,7 @@ class AppNav extends React.Component {
                         })}
                     />
                     <Beacon
-                        header="Beacoooooooooon"
+                        type="spot"
                         name="app-nav"
                         circleContent={
                             <Avatar contact={contact} size="medium" />

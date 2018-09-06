@@ -9,9 +9,25 @@ import {
 } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
-import beaconStore from '~/stores/beacon-store';
 
-import { SpotBeaconProps, AreaBeaconProps } from './types';
+import beaconStore from '~/stores/beacon-store';
+import Arrow from './Arrow';
+import Bubble from './Bubble';
+
+interface BeaconBaseProps {
+    name: string;
+}
+
+export interface SpotBeaconProps extends BeaconBaseProps {
+    type: 'spot';
+    circleContent: any;
+    position?: 'right' | 'left'; // position of the bubble
+}
+
+export interface AreaBeaconProps extends BeaconBaseProps {
+    type: 'area';
+    position?: 'top' | 'right' | 'bottom' | 'left'; // position of the arrow
+}
 
 const appRoot: HTMLElement = document.getElementById('root');
 
@@ -89,8 +105,8 @@ export default class Beacon extends React.Component<
         this.renderTimeout = null;
     }
 
-    // The size of the circle is the greater of the child content's width and height
-    // Circle size is needed to calculate the positioning of the beacon
+    // The size of the SpotBeacon circle is the greater of the child content's width and height.
+    // Circle size is calculated here (as opposed to in the SpotBeacon component) because it affects the positioning of the beacon rectangle.
     @computed
     get circleSize() {
         const { height, width } = this.contentRect;
@@ -129,8 +145,10 @@ export default class Beacon extends React.Component<
     // Position and 'slice' classes get repeated for the beacon itself, and the .rectangle and .circle divs
     // This is redundant, but helps keep the styles more organized
     @computed
-    get positionClasses() {
-        return `${this.props.position || 'left'} slice-${this.slicePosition}`;
+    get positionClasses(): string {
+        return this.props.type === 'spot'
+            ? `${this.props.position || 'left'} slice-${this.slicePosition}`
+            : this.props.position || 'bottom';
     }
 
     @computed
@@ -221,7 +239,6 @@ export default class Beacon extends React.Component<
 
     beaconContent() {
         const { currentBeacon } = beaconStore;
-
         return (
             <div
                 key="beacon-content"
@@ -251,19 +268,15 @@ export default class Beacon extends React.Component<
                     </div>
                 </div>
 
-                <div
-                    className={css('circle', this.positionClasses, {
-                        narrow: this.isNarrow
-                    })}
-                    style={{
-                        height: this.circleSize,
-                        width: this.circleSize
-                    }}
-                >
-                    <div className="circle-content">
-                        {this.props.circleContent}
-                    </div>
-                </div>
+                {this.props.type === 'spot' ? (
+                    <Bubble
+                        position={this.positionClasses}
+                        size={this.circleSize}
+                        content={this.props.circleContent}
+                    />
+                ) : (
+                    <Arrow position={this.positionClasses} />
+                )}
             </div>
         );
     }

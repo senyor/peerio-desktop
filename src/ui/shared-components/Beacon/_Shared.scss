@@ -15,30 +15,6 @@
   );
 }
 
-@mixin tab-top-left() {
-  @include tab-base(0, 0);
-  left: 31%;
-  top: -16%;
-}
-
-@mixin tab-bottom-left() {
-  @include tab-base(0, 100%);
-  left: 31%;
-  bottom: -16%;
-}
-
-@mixin tab-bottom-right() {
-  @include tab-base(100%, 100%);
-  right: 31%;
-  bottom: -16%;
-}
-
-@mixin tab-top-right() {
-  @include tab-base(100%, 0);
-  right: 31%;
-  top: -16%;
-}
-
 // Positioning for the beacon overall, and styles for the beacon's main rectangular portion
 .beacon {
   position: fixed;

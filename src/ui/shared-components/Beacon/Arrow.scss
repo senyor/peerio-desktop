@@ -1,2 +1,37 @@
 .area-beacon {
+  .arrow {
+    content: ' ';
+    position: absolute;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+    margin-left: -24px;
+    border: solid transparent;
+    border-color: $peerio-purple;
+    border-width: 24px;
+
+    &.top {
+      left: 50%;
+      bottom: 100%;
+      border-bottom-color: $peerio-purple;
+    }
+
+    &.right {
+      left: 100%;
+      top: 50%;
+      border-left-color: $peerio-purple;
+    }
+
+    &.bottom {
+      left: 50%;
+      top: 100%;
+      border-top-color: $peerio-purple;
+    }
+
+    &.left {
+      right: 100%;
+      top: 50%;
+      border-right-color: $peerio-purple;
+    }
+  }
 }

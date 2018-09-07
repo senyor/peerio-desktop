@@ -208,6 +208,8 @@ export default class MessageInput extends React.Component<MessageInputProps> {
                 >
                     <Beacon
                         type="area"
+                        arrowPosition="bottom"
+                        arrowDistance={25}
                         name="plus-icon"
                         circleContent={
                             <MaterialIcon icon="add_circle_outline" />

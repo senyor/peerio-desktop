@@ -9,8 +9,9 @@ import {
 } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
-
 import beaconStore from '~/stores/beacon-store';
+
+const MARGIN_DEFAULT = 16; // same as $margin-default in SCSS
 
 interface BeaconBaseProps {
     name: string;
@@ -115,29 +116,63 @@ export default class Beacon extends React.Component<
     // Beacon's overall positioning
     @computed
     get beaconStyle() {
-        let top = this.contentRect.top;
-        let left = this.contentRect.left;
+        const contentTop = this.contentRect.top;
+        const contentLeft = this.contentRect.left;
+        const contentHeight = this.contentRect.height;
+        const contentWidth = this.contentRect.width;
+
+        let top: number;
+        let left: number;
         let marginSize: number;
         let size: number;
 
         if (this.props.type === 'spot') {
-            top = this.contentRect.top + this.contentRect.height / 2;
-            left = this.contentRect.left + this.contentRect.width / 2;
-            marginSize = -this.circleSize / 2;
             size = this.circleSize;
+
+            /*
+                To center the SpotBeacon over the child content,
+                first the entire beacon is oriented to the center of the child content,
+                then it is negatively offset by 50% of the bubble's diameter.
+            */
+            top = contentTop + contentHeight / 2;
+            left = contentLeft + contentWidth / 2;
+            marginSize = -this.circleSize / 2;
+        } else {
+            /*
+                AreaBeacon anchor changes based on the arrow position.
+                It will always be the edge of child content along one axis and the centered on the other axis.
+                e.g. right arrow => anchor is centered along left edge of content
+            */
+            switch (this.props.arrowPosition) {
+                case 'top':
+                    top = contentTop + contentHeight;
+                    left = contentLeft + contentWidth / 2;
+                    break;
+                case 'right':
+                    top = contentTop + contentHeight / 2;
+                    left = contentLeft;
+                    break;
+                case 'bottom':
+                default:
+                    top = contentTop;
+                    left = contentLeft + contentWidth / 2;
+                    break;
+                case 'left':
+                    top = contentTop + contentHeight / 2;
+                    left = contentLeft + contentWidth;
+                    break;
+            }
         }
 
         return {
-            // Anchor top-left corner to child content centre
+            height: size,
+            width: size,
+
             top: top,
             left: left,
 
-            // Then offset back by circleSize, so that circle content centre aligns with child content centre
             marginTop: marginSize,
-            marginLeft: marginSize,
-
-            height: size,
-            width: size
+            marginLeft: marginSize
         };
     }
 
@@ -303,9 +338,6 @@ export default class Beacon extends React.Component<
                         ) : null}
                         {currentBeacon.body}
                     </div>
-                    {this.props.type === 'area' ? (
-                        <Arrow position={this.positionClasses} />
-                    ) : null}
                 </div>
 
                 {this.props.type === 'spot' ? (
@@ -314,7 +346,9 @@ export default class Beacon extends React.Component<
                         size={this.circleSize}
                         content={this.props.circleContent}
                     />
-                ) : null}
+                ) : (
+                    <Arrow position={this.positionClasses} />
+                )}
             </div>
         );
     }

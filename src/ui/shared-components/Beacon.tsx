@@ -11,8 +11,6 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 
 import beaconStore from '~/stores/beacon-store';
-import Arrow from './Arrow';
-import Bubble from './Bubble';
 
 interface BeaconBaseProps {
     name: string;
@@ -26,7 +24,8 @@ export interface SpotBeaconProps extends BeaconBaseProps {
 
 export interface AreaBeaconProps extends BeaconBaseProps {
     type: 'area';
-    position?: 'top' | 'right' | 'bottom' | 'left'; // position of the arrow
+    arrowPosition?: 'top' | 'right' | 'bottom' | 'left'; // position of the arrow on the rectangle
+    arrowDistance?: number; // how far along the side of the rectangle to place the arrow, as a percentage
 }
 
 const appRoot: HTMLElement = document.getElementById('root');
@@ -116,23 +115,31 @@ export default class Beacon extends React.Component<
     // Beacon's overall positioning
     @computed
     get beaconStyle() {
+        let top = this.contentRect.top;
+        let left = this.contentRect.left;
+        let marginSize: number;
+        let size: number;
+
+        if (this.props.type === 'spot') {
+            top = this.contentRect.top + this.contentRect.height / 2;
+            left = this.contentRect.left + this.contentRect.width / 2;
+            marginSize = -this.circleSize / 2;
+            size = this.circleSize;
+        }
+
         return {
             // Anchor top-left corner to child content centre
-            top: this.contentRect.top + this.contentRect.height / 2,
-            left: this.contentRect.left + this.contentRect.width / 2,
+            top: top,
+            left: left,
 
             // Then offset back by circleSize, so that circle content centre aligns with child content centre
-            marginTop: -this.circleSize / 2,
-            marginLeft: -this.circleSize / 2,
+            marginTop: marginSize,
+            marginLeft: marginSize,
 
-            height: this.circleSize,
-            width: this.circleSize
+            height: size,
+            width: size
         };
     }
-
-    // Rectangle's positioning
-    @observable
-    rectangleRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     // The bubble's vertical position is determined by the beacon's position in the window.
     // The window is divided into 5 horizontal "slices", each corresponding to a bubble position.
@@ -148,51 +155,81 @@ export default class Beacon extends React.Component<
     get positionClasses(): string {
         return this.props.type === 'spot'
             ? `${this.props.position || 'left'} slice-${this.slicePosition}`
-            : this.props.position || 'bottom';
+            : this.props.arrowPosition || 'bottom';
     }
 
+    /*
+        Rectangle's positioning
+        This is one of the trickier calculations, in part because it's completely different for Area and Spot Beacons
+    */
+    @observable
+    rectangleRef: React.RefObject<HTMLDivElement> = React.createRef();
+
     @computed
-    get rectangleStyle(): RectanglePosition {
+    get rectanglePosition(): RectanglePosition | null {
         const ret = {} as RectanglePosition;
-        const circleOffset = this.circleSize / 2;
 
-        const rectangleOffset =
-            this.rectangleRef && this.rectangleRef.current
-                ? this.rectangleRef.current.getBoundingClientRect().height / 2
-                : null;
-
-        switch (this.slicePosition) {
-            case 1:
-                ret.top = '0';
-                ret.marginTop = circleOffset;
-                break;
-            case 2:
-                ret.top = '0';
-                break;
-            case 3:
-            default:
-                ret.top = '50%';
-                ret.marginTop = -rectangleOffset;
-                break;
-            case 4:
-                ret.bottom = '0';
-                break;
-            case 5:
-                ret.bottom = '0';
-                ret.marginBottom = circleOffset;
-                break;
+        let rectHeight, rectWidth;
+        if (this.rectangleRef && this.rectangleRef.current) {
+            const rectangle = this.rectangleRef.current.getBoundingClientRect();
+            rectHeight = rectangle.height;
+            rectWidth = rectangle.width;
         }
 
-        // For human-friendliness, `position` prop refers to circle's horizontal position relative to rectangle.
-        // The actual positioning is opposite: circle is anchored to content, rectangle is moved around.
-        // As a result, the calculations may be reversed from what you expect.
-        if (this.props.position === 'right') {
-            ret.paddingRight = circleOffset;
-            ret.marginRight = -circleOffset;
+        /*
+            For SpotBeacon, rectangle needs to be positioned very precisely based on own size and circle size.
+            There's a lot of offsets based on half of the rectangle height, or half the circle diameter.
+        */
+        if (this.props.type === 'spot') {
+            const rectangleOffset = rectHeight / 2;
+            const circleOffset = this.circleSize / 2;
+
+            switch (this.slicePosition) {
+                case 1:
+                    ret.top = '0';
+                    ret.marginTop = circleOffset;
+                    break;
+                case 2:
+                    ret.top = '0';
+                    break;
+                case 3:
+                default:
+                    ret.top = '50%';
+                    ret.marginTop = -rectangleOffset;
+                    break;
+                case 4:
+                    ret.bottom = '0';
+                    break;
+                case 5:
+                    ret.bottom = '0';
+                    ret.marginBottom = circleOffset;
+                    break;
+            }
+
+            if (this.props.position === 'right') {
+                ret.paddingRight = circleOffset;
+                ret.marginRight = -circleOffset;
+            } else {
+                ret.paddingLeft = circleOffset;
+                ret.marginLeft = -circleOffset;
+            }
         } else {
-            // Left is the default
-            ret.paddingLeft = circleOffset;
-            ret.marginLeft = -circleOffset;
+            const arrowPos = this.props.arrowPosition;
+            const xAxis = arrowPos === 'top' || arrowPos === 'bottom';
+            const yAxis = arrowPos === 'left' || arrowPos === 'right';
+
+            switch (arrowPos) {
+                case 'top':
+                    break;
+                case 'right':
+                    break;
+                case 'bottom':
+                default:
+                    ret.bottom = '0';
+                    break;
+                case 'left':
+                    break;
+            }
         }
 
         return ret;
@@ -258,7 +295,7 @@ export default class Beacon extends React.Component<
                     className={css('rectangle', this.positionClasses, {
                         narrow: this.isNarrow
                     })}
-                    style={this.rectangleStyle}
+                    style={this.rectanglePosition}
                 >
                     <div className="rectangle-content">
                         {currentBeacon.header ? (
@@ -266,6 +303,9 @@ export default class Beacon extends React.Component<
                         ) : null}
                         {currentBeacon.body}
                     </div>
+                    {this.props.type === 'area' ? (
+                        <Arrow position={this.positionClasses} />
+                    ) : null}
                 </div>
 
                 {this.props.type === 'spot' ? (
@@ -274,9 +314,7 @@ export default class Beacon extends React.Component<
                         size={this.circleSize}
                         content={this.props.circleContent}
                     />
-                ) : (
-                    <Arrow position={this.positionClasses} />
-                )}
+                ) : null}
             </div>
         );
     }
@@ -290,5 +328,53 @@ export default class Beacon extends React.Component<
             this.childContent,
             ReactDOM.createPortal(beaconContent, appRoot)
         ];
+    }
+}
+
+interface ArrowProps {
+    classNames?: string;
+    position: string;
+}
+
+@observer
+class Arrow extends React.Component<ArrowProps> {
+    render() {
+        return (
+            <div
+                className={css(
+                    'arrow',
+                    this.props.classNames,
+                    this.props.position
+                )}
+            />
+        );
+    }
+}
+
+interface BubbleProps {
+    classNames?: string;
+    position: string;
+    size: number;
+    content: any;
+}
+
+@observer
+class Bubble extends React.Component<BubbleProps> {
+    render() {
+        return (
+            <div
+                className={css(
+                    'circle',
+                    this.props.classNames,
+                    this.props.position
+                )}
+                style={{
+                    height: this.props.size,
+                    width: this.props.size
+                }}
+            >
+                <div className="circle-content">{this.props.content}</div>
+            </div>
+        );
     }
 }

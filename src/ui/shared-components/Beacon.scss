@@ -5,7 +5,8 @@ $arrow-size: 12px;
   content: ' ';
   position: absolute;
 
-  // Circular "cut out" is made by using a transparent radial-background with a very quick color transition
+  // Circular cut-out effect is made by using a transparent radial-background with a very quick color transition
+  // Somewhat hacky but there aren't really better alternatives
   background: radial-gradient(
     circle at $x $y,
     transparent 50%,
@@ -13,8 +14,11 @@ $arrow-size: 12px;
   );
 }
 
-// The relative size and positioning should be adaptable to different bubble sizes,
-// but because bubble has static border of 4px, tab positioning will grow inaccurate when bubble is huge.
+/*
+  SpotBeacon uses relative size/positioning for tabs, so they will grow with the bubble size.
+  So size and positioning should be adaptable to different bubble sizes generally,
+  though note that, since bubble has static border of 4px, tab positioning will grow inaccurate when bubble is really, really huge.
+*/
 @mixin tab-relative($x, $y) {
   @include tab-base($x, $y);
   height: 25%;
@@ -23,8 +27,8 @@ $arrow-size: 12px;
 
 @mixin tab-pixel($x, $y) {
   @include tab-base($x, $y);
-  height: $arrow-size;
-  width: $arrow-size;
+  height: 6px;
+  width: 6px;
 }
 
 // Positioning for the beacon overall, and styles for the beacon's main rectangular portion
@@ -50,6 +54,7 @@ $arrow-size: 12px;
     border-radius: 8px;
 
     .rectangle-content {
+      position: relative;
       padding: $padding-small;
 
       .header {
@@ -85,9 +90,9 @@ $arrow-size: 12px;
     min-width: 32px;
 
     /*
-    The rules for these tabs are very annoying.
-    In general, :before = top tab, :after = bottom tab.
-    The default tabs are defined first, followed by the individual "slice" exceptions.
+      The rules for these tabs are very annoying.
+      In general, :before = top tab, :after = bottom tab.
+      The default tabs are defined first, followed by the individual "slice" exceptions.
     */
     @mixin tab-top-left() {
       @include tab-relative(0, 0);
@@ -233,12 +238,6 @@ $arrow-size: 12px;
       top: 0;
       margin-left: -$arrow-size;
       border-top-color: $peerio-purple;
-
-      &::before {
-        @include tab-relative(0, 0);
-        left: 0;
-        top: 0;
-      }
     }
 
     &.left {

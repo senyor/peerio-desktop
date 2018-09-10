@@ -11,8 +11,6 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 import beaconStore from '~/stores/beacon-store';
 
-const MARGIN_DEFAULT = 16; // same as $margin-default in SCSS
-
 interface BeaconBaseProps {
     name: string;
 }
@@ -236,6 +234,11 @@ export default class Beacon extends React.Component<
             const arrowPos = this.props.arrowPosition;
             const arrowDistance = this.props.arrowDistance;
 
+            /*
+                arrowDistance is an integer representing far along the edge the arrow is placed, as a percent of the edge's length.
+                However, remember that the beacon's arrow is in fact the anchor, and the rectangle is oriented according to the arrow.
+                This means that the rectangle's position is offset in the *negative* direction.
+            */
             const xOffset =
                 arrowPos === 'top' || arrowPos === 'bottom'
                     ? `-${(arrowDistance * rectWidth) / 100}px`
@@ -270,7 +273,7 @@ export default class Beacon extends React.Component<
     }
 
     // `narrow` class added when rectangle height is less than two lines of text
-    // (currently a hardcoded pixel value hardcoded)
+    // (currently a hardcoded pixel value of 72)
     @computed
     get isNarrow() {
         if (!this.rectangleRef || !this.rectangleRef.current) return null;

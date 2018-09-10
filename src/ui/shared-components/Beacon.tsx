@@ -238,25 +238,29 @@ export default class Beacon extends React.Component<
 
             const xOffset =
                 arrowPos === 'top' || arrowPos === 'bottom'
-                    ? (arrowDistance * rectWidth) / 100
+                    ? `-${(arrowDistance * rectWidth) / 100}px`
                     : null;
             const yOffset =
                 arrowPos === 'left' || arrowPos === 'right'
-                    ? (arrowDistance * rectHeight) / 100
+                    ? `-${(arrowDistance * rectHeight) / 100}px`
                     : null;
 
             switch (arrowPos) {
                 case 'top':
                     ret.top = '100%';
+                    ret.left = xOffset;
                     break;
                 case 'right':
+                    ret.top = yOffset;
                     ret.right = '100%';
                     break;
                 case 'bottom':
                 default:
                     ret.bottom = '100%';
+                    ret.left = xOffset;
                     break;
                 case 'left':
+                    ret.top = yOffset;
                     ret.left = '100%';
                     break;
             }

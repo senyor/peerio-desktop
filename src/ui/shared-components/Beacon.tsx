@@ -33,7 +33,9 @@ const appRoot: HTMLElement = document.getElementById('root');
 
 interface RectanglePosition {
     top?: string;
+    right?: string;
     bottom?: string;
+    left?: string;
     marginTop?: number;
     marginRight?: number;
     marginBottom?: number;
@@ -121,13 +123,15 @@ export default class Beacon extends React.Component<
         const contentHeight = this.contentRect.height;
         const contentWidth = this.contentRect.width;
 
+        let height: number;
+        let width: number;
         let top: number;
         let left: number;
         let marginSize: number;
-        let size: number;
 
         if (this.props.type === 'spot') {
-            size = this.circleSize;
+            height = this.circleSize;
+            width = this.circleSize;
 
             /*
                 To center the SpotBeacon over the child content,
@@ -138,35 +142,15 @@ export default class Beacon extends React.Component<
             left = contentLeft + contentWidth / 2;
             marginSize = -this.circleSize / 2;
         } else {
-            /*
-                AreaBeacon anchor changes based on the arrow position.
-                It will always be the edge of child content along one axis and the centered on the other axis.
-                e.g. right arrow => anchor is centered along left edge of content
-            */
-            switch (this.props.arrowPosition) {
-                case 'top':
-                    top = contentTop + contentHeight;
-                    left = contentLeft + contentWidth / 2;
-                    break;
-                case 'right':
-                    top = contentTop + contentHeight / 2;
-                    left = contentLeft;
-                    break;
-                case 'bottom':
-                default:
-                    top = contentTop;
-                    left = contentLeft + contentWidth / 2;
-                    break;
-                case 'left':
-                    top = contentTop + contentHeight / 2;
-                    left = contentLeft + contentWidth;
-                    break;
-            }
+            height = contentHeight;
+            width = contentWidth;
+            top = contentTop;
+            left = contentLeft;
         }
 
         return {
-            height: size,
-            width: size,
+            height: height,
+            width: width,
 
             top: top,
             left: left,
@@ -250,19 +234,30 @@ export default class Beacon extends React.Component<
             }
         } else {
             const arrowPos = this.props.arrowPosition;
-            const xAxis = arrowPos === 'top' || arrowPos === 'bottom';
-            const yAxis = arrowPos === 'left' || arrowPos === 'right';
+            const arrowDistance = this.props.arrowDistance;
+
+            const xOffset =
+                arrowPos === 'top' || arrowPos === 'bottom'
+                    ? (arrowDistance * rectWidth) / 100
+                    : null;
+            const yOffset =
+                arrowPos === 'left' || arrowPos === 'right'
+                    ? (arrowDistance * rectHeight) / 100
+                    : null;
 
             switch (arrowPos) {
                 case 'top':
+                    ret.top = '100%';
                     break;
                 case 'right':
+                    ret.right = '100%';
                     break;
                 case 'bottom':
                 default:
-                    ret.bottom = '0';
+                    ret.bottom = '100%';
                     break;
                 case 'left':
+                    ret.left = '100%';
                     break;
             }
         }

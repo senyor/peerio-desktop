@@ -1,11 +1,9 @@
+$arrow-size: 12px;
+
 // Rounded 'tabs' on either side of the circle or arrow, to make it look more continuous with text box
-// The relative size and positioning should be adaptable to different bubble sizes,
-// but because bubble has static border of 4px, tab positioning will grow inaccurate when bubble is huge.
 @mixin tab-base($x, $y) {
   content: ' ';
   position: absolute;
-  height: 25%;
-  width: 25%;
 
   // Circular "cut out" is made by using a transparent radial-background with a very quick color transition
   background: radial-gradient(
@@ -13,6 +11,20 @@
     transparent 50%,
     $peerio-purple 51%
   );
+}
+
+// The relative size and positioning should be adaptable to different bubble sizes,
+// but because bubble has static border of 4px, tab positioning will grow inaccurate when bubble is huge.
+@mixin tab-relative($x, $y) {
+  @include tab-base($x, $y);
+  height: 25%;
+  width: 25%;
+}
+
+@mixin tab-pixel($x, $y) {
+  @include tab-base($x, $y);
+  height: $arrow-size;
+  width: $arrow-size;
 }
 
 // Positioning for the beacon overall, and styles for the beacon's main rectangular portion
@@ -78,25 +90,25 @@
     The default tabs are defined first, followed by the individual "slice" exceptions.
     */
     @mixin tab-top-left() {
-      @include tab-base(0, 0);
+      @include tab-relative(0, 0);
       left: 31%;
       top: -16%;
     }
 
     @mixin tab-bottom-left() {
-      @include tab-base(0, 100%);
+      @include tab-relative(0, 100%);
       left: 31%;
       bottom: -16%;
     }
 
     @mixin tab-bottom-right() {
-      @include tab-base(100%, 100%);
+      @include tab-relative(100%, 100%);
       right: 31%;
       bottom: -16%;
     }
 
     @mixin tab-top-right() {
-      @include tab-base(100%, 0);
+      @include tab-relative(100%, 0);
       right: 31%;
       top: -16%;
     }
@@ -200,30 +212,30 @@
     width: 0;
     border: solid transparent;
     // border-color: $peerio-purple;
-    border-width: 12px;
+    border-width: $arrow-size;
 
     &.top {
       left: 50%;
       bottom: 0;
-      margin-left: -12px;
+      margin-left: -$arrow-size;
       border-bottom-color: $peerio-purple;
     }
 
     &.right {
       left: 0;
       top: 50%;
-      margin-top: -12px;
+      margin-top: -$arrow-size;
       border-left-color: $peerio-purple;
     }
 
     &.bottom {
       left: 50%;
       top: 0;
-      margin-left: -12px;
+      margin-left: -$arrow-size;
       border-top-color: $peerio-purple;
 
       &::before {
-        @include tab-base(0, 0);
+        @include tab-relative(0, 0);
         left: 0;
         top: 0;
       }
@@ -232,7 +244,7 @@
     &.left {
       right: 0;
       top: 50%;
-      margin-top: -12px;
+      margin-top: -$arrow-size;
       border-right-color: $peerio-purple;
     }
   }

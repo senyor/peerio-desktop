@@ -6,7 +6,7 @@ const isDevEnv = require('~/helpers/is-dev-env').default;
 if (!isDevEnv) require('~/helpers/console-history');
 const { ipcRenderer, webFrame } = require('electron');
 const { when } = require('mobx');
-const languageStore = require('~/stores/language-store');
+const languageStore = require('~/stores/language-store').default;
 
 // apply desktop config values to icebear
 require('~/config');

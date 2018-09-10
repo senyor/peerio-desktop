@@ -1,15 +1,18 @@
-const React = require('react');
-const { reaction, computed, observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { ProgressBar } = require('peer-ui');
-const Message = require('./Message');
-const { chatStore, clientApp } = require('peerio-icebear');
-const { t } = require('peerio-translator');
-const PendingDMHeader = require('~/ui/chat/components/PendingDMHeader');
-const ChatHeader = require('~/whitelabel/components/ChatHeader');
+import React from 'react';
+import { reaction, computed, observable } from 'mobx';
+import { observer } from 'mobx-react';
+
+import { chatStore, clientApp } from 'peerio-icebear';
+import { t } from 'peerio-translator';
+import { ProgressBar } from 'peer-ui';
+
+import PendingDMHeader from '~/ui/chat/components/PendingDMHeader';
+import ChatHeader from '~/whitelabel/components/ChatHeader';
+
+import Message from './Message';
 
 @observer
-class MessageList extends React.Component {
+export default class MessageList extends React.Component {
     loadTriggerDistance = 20;
     stickDistance = 50;
     lastRenderedChatId = null;
@@ -310,5 +313,3 @@ class MessageList extends React.Component {
         );
     }
 }
-
-module.exports = MessageList;

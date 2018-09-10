@@ -3,7 +3,8 @@ const { observer } = require('mobx-react');
 const { chatStore } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 
-const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup')
+    .default;
 const EmojiImage = require('~/ui/emoji/Image');
 const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice')
     .default;

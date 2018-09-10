@@ -3,8 +3,10 @@ const path = require('path');
 const cfg = require('peerio-icebear').config;
 const app = require('electron').app || require('electron').remote.app;
 const isDevEnv = require('~/helpers/is-dev-env').default;
-const FileStream = require('peerio-icebear/dist/models/files/node-file-stream');
-const StorageEngine = require('peerio-icebear/dist/models/storage/node-json-storage');
+const FileStream = require('peerio-icebear/dist/models/files/node-file-stream')
+    .default;
+const StorageEngine = require('peerio-icebear/dist/models/storage/node-json-storage')
+    .default;
 const CacheEngine = require('~/stores/indexed-db-storage');
 const {
     setUrlMap,

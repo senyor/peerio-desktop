@@ -11,7 +11,6 @@ import css from 'classnames';
 import { t } from 'peerio-translator';
 import { fileStore, chatStore, clientApp } from 'peerio-icebear';
 import { Button, MaterialIcon, Menu, MenuItem } from 'peer-ui';
-import Beacon from '~/ui/shared-components/Beacon';
 
 import FilePicker from '~/ui/files/components/FilePicker';
 import Snackbar from '~/ui/shared-components/Snackbar';
@@ -206,32 +205,23 @@ export default class MessageInput extends React.Component<MessageInputProps> {
                     onDrop={this.preventDrop}
                     onPaste={this.onPaste}
                 >
-                    <Beacon
-                        type="area"
-                        arrowPosition="bottom"
-                        arrowDistance={25}
-                        name="plus-icon"
-                        circleContent={
-                            <MaterialIcon icon="add_circle_outline" />
-                        }
+                    <Menu
+                        position="bottom-left"
+                        icon="add_circle_outline"
+                        tooltip={t('title_shareToChat')}
                     >
-                        <Menu
-                            position="bottom-left"
-                            icon="add_circle_outline"
-                            tooltip={t('title_shareToChat')}
-                        >
-                            <MenuItem
-                                value="share"
-                                caption={t('title_shareFromFiles')}
-                                onClick={this.showFilePicker}
-                            />
-                            <MenuItem
-                                value="upload"
-                                caption={t('title_uploadAndShare')}
-                                onClick={this.activateUploadDialog}
-                            />
-                        </Menu>
-                    </Beacon>
+                        <MenuItem
+                            value="share"
+                            caption={t('title_shareFromFiles')}
+                            onClick={this.showFilePicker}
+                        />
+                        <MenuItem
+                            value="upload"
+                            caption={t('title_uploadAndShare')}
+                            onClick={this.activateUploadDialog}
+                        />
+                    </Menu>
+
                     {this.props.readonly ? (
                         <div className="message-editor-empty">&nbsp;</div>
                     ) : (

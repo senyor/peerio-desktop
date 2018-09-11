@@ -16,7 +16,6 @@ const urls = require('~/config').translator.urlMap;
 const autologin = require('~/helpers/autologin');
 const path = require('path');
 const config = require('~/config');
-const Beacon = require('~/ui/shared-components/Beacon').default;
 
 const { app, nativeImage } = remote;
 
@@ -246,43 +245,35 @@ class AppNav extends React.Component {
                             'avatar-notify': !primaryAddressConfirmed
                         })}
                     />
-                    <Beacon
-                        type="spot"
-                        name="app-nav"
-                        circleContent={
+                    <Menu
+                        customButton={
                             <Avatar contact={contact} size="medium" />
                         }
+                        position="top-left"
+                        theme="wide"
+                        innerClassName={css('app-nav-menu', {
+                            'color-icons': this.colorIcons
+                        })}
                     >
-                        <Menu
-                            customButton={
-                                <Avatar contact={contact} size="medium" />
+                        <MenuHeader
+                            leftContent={
+                                <Avatar
+                                    contact={contact}
+                                    size="medium"
+                                    onClick={this.toProfile}
+                                />
                             }
-                            position="top-left"
-                            theme="wide"
-                            innerClassName={css('app-nav-menu', {
-                                'color-icons': this.colorIcons
-                            })}
+                            caption={contact.fullName}
+                            legend={contact.username}
+                        />
+                        <Divider />
+                        <div
+                            onMouseEnter={this.disableColorIcons}
+                            onMouseLeave={this.enableColorIcons}
                         >
-                            <MenuHeader
-                                leftContent={
-                                    <Avatar
-                                        contact={contact}
-                                        size="medium"
-                                        onClick={this.toProfile}
-                                    />
-                                }
-                                caption={contact.fullName}
-                                legend={contact.username}
-                            />
-                            <Divider />
-                            <div
-                                onMouseEnter={this.disableColorIcons}
-                                onMouseLeave={this.enableColorIcons}
-                            >
-                                {this.menuItems}
-                            </div>
-                        </Menu>
-                    </Beacon>
+                            {this.menuItems}
+                        </div>
+                    </Menu>
                 </div>
                 <div className="app-menu">
                     <AppNavButton

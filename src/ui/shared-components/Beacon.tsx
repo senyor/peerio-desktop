@@ -238,33 +238,38 @@ export default class Beacon extends React.Component<
                 arrowDistance is an integer representing far along the edge the arrow is placed, as a percent of the edge's length.
                 However, remember that the beacon's arrow is in fact the anchor, and the rectangle is oriented according to the arrow.
                 This means that the rectangle's position is offset in the *negative* direction.
+                (The `24` is a hardcoded pixel value for the arrow's width, so that the rectangle offset can't overshoot the arrow.)
             */
             const xOffset =
                 arrowPos === 'top' || arrowPos === 'bottom'
-                    ? `-${(arrowDistance * rectWidth) / 100}px`
+                    ? `-${(arrowDistance * (rectWidth - 24)) / 100}px`
                     : null;
             const yOffset =
                 arrowPos === 'left' || arrowPos === 'right'
-                    ? `-${(arrowDistance * rectHeight) / 100}px`
+                    ? `-${(arrowDistance * (rectHeight - 24)) / 100}px`
                     : null;
 
             switch (arrowPos) {
                 case 'top':
                     ret.top = '100%';
-                    ret.left = xOffset;
+                    ret.left = this.contentRect.width / 2;
+                    ret.marginLeft = xOffset;
                     break;
                 case 'right':
-                    ret.top = yOffset;
+                    ret.top = this.contentRect.height / 2;
                     ret.right = '100%';
+                    ret.marginTop = yOffset;
                     break;
                 case 'bottom':
                 default:
                     ret.bottom = '100%';
-                    ret.left = xOffset;
+                    ret.left = this.contentRect.width / 2;
+                    ret.marginLeft = xOffset;
                     break;
                 case 'left':
-                    ret.top = yOffset;
+                    ret.top = this.contentRect.height / 2;
                     ret.left = '100%';
+                    ret.marginTop = yOffset;
                     break;
             }
         }

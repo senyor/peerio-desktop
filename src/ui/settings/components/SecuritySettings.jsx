@@ -1,3 +1,4 @@
+// @ts-check
 import { requestDownloadPath } from '~/helpers/file';
 const React = require('react');
 const { observable } = require('mobx');
@@ -20,7 +21,7 @@ const css = require('classnames');
 const fs = require('fs');
 
 @observer
-class SecuritySettings extends React.Component {
+export default class SecuritySettings extends React.Component {
     @observable passphraseVisible = false;
     @observable twoFASecret = null;
     @observable twoFAQRCode = null;
@@ -340,5 +341,3 @@ class SecuritySettings extends React.Component {
         );
     }
 }
-
-module.exports = SecuritySettings;

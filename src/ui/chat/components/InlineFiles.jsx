@@ -1,5 +1,9 @@
-// -@ts-check
+// @ts-check
 const React = require('react');
+const { observable, when } = require('mobx');
+const { observer } = require('mobx-react');
+const css = require('classnames');
+
 const { fileStore, chatStore } = require('peerio-icebear');
 const {
     Button,
@@ -8,17 +12,16 @@ const {
     ProgressBar,
     RadioButtons
 } = require('peer-ui');
-const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
-const { downloadFile } = require('~/helpers/file');
-const { observable, when } = require('mobx');
-const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
+
 const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
-const css = require('classnames');
-const FileActions = require('~/ui/files/components/FileActions');
+const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
+const T = require('~/ui/shared-components/T');
+const FileActions = require('~/ui/files/components/FileActions').default;
 const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
+const { downloadFile } = require('~/helpers/file');
+
 const {
     isFileShareable,
     isFileDeleteable,

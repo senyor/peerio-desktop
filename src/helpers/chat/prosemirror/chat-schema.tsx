@@ -326,7 +326,7 @@ export function isWhitespaceOnly(node: Node): boolean {
     return false;
 }
 
-export const Renderer = makeReactRenderer(
-    chatSchema,
-    'MessageRichTextRenderer'
-);
+export const Renderer = makeReactRenderer<{
+    onClickContact: React.MouseEventHandler;
+    currentUser: string;
+}>(chatSchema, 'MessageRichTextRenderer');

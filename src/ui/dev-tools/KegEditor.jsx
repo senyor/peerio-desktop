@@ -6,7 +6,8 @@ const secret = require('peerio-icebear/dist/crypto/secret');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const ChatKegDb = require('peerio-icebear/dist/models/kegs/chat-keg-db');
+const ChatKegDb = require('peerio-icebear/dist/models/kegs/chat-keg-db')
+    .default;
 
 @observer
 class KegEditor extends React.Component {

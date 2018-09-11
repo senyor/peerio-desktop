@@ -6,7 +6,7 @@ const { observer } = require('mobx-react');
 
 const { chatStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
-const ChatList = require('./components/ChatList');
+const ChatList = require('./components/ChatList').default;
 const ZeroChats = require('~/ui/chat/ZeroChats_medcryptor');
 
 @observer

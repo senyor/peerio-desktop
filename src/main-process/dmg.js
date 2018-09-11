@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { app, dialog } = require('electron');
-const TinyDb = require('peerio-icebear/dist/db/tiny-db');
+const TinyDb = require('peerio-icebear/dist/db/tiny-db').default;
 
 const DO_NOT_COPY_SETTING = 'doNotCopyToApplicationsFolder';
 

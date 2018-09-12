@@ -4,7 +4,7 @@ import { action, computed, observable, reaction } from 'mobx';
 import { t } from 'peerio-translator';
 import css from 'classnames';
 import { Button, Checkbox, Divider, MaterialIcon } from 'peer-ui';
-import { validation } from 'peerio-icebear';
+import { config, validation } from 'peerio-icebear';
 import uiStore from '~/stores/ui-store';
 import routerStore from '~/stores/router-store';
 import T from '~/ui/shared-components/T';
@@ -17,6 +17,8 @@ import { SignupStep, StepContentObject } from './SignupStepTypes';
 // Input validation
 const { validators } = validation; // use common validation from core
 const { suggestUsername } = validators;
+const MAX_NAME_LENGTH = config.user.maxNameLength;
+const MAX_USERNAME_LENGTH = config.user.maxUsernameLength;
 
 @observer
 export default class CreateAccount extends React.Component<SignupStep> {
@@ -149,7 +151,12 @@ export default class CreateAccount extends React.Component<SignupStep> {
                     onKeyPress={this.handleKeyPress}
                     onClear={() => this.handleClearInput('firstName')}
                     store={this.props.store}
-                    hint={t('title_nameHint')}
+                    hint={
+                        this.props.store.firstName.length >= MAX_NAME_LENGTH
+                            ? t('title_characterLimitReached')
+                            : null
+                    }
+                    maxLength={MAX_NAME_LENGTH}
                 />
                 <ValidatedInput
                     key="lastName"
@@ -160,6 +167,12 @@ export default class CreateAccount extends React.Component<SignupStep> {
                     onKeyPress={this.handleKeyPress}
                     onClear={() => this.handleClearInput('lastName')}
                     store={this.props.store}
+                    hint={
+                        this.props.store.lastName.length >= MAX_NAME_LENGTH
+                            ? t('title_characterLimitReached')
+                            : null
+                    }
+                    maxLength={MAX_NAME_LENGTH}
                 />
             </React.Fragment>
         );
@@ -219,14 +232,16 @@ export default class CreateAccount extends React.Component<SignupStep> {
                     position={3}
                     lowercase="true"
                     validator={validators.username}
-                    maxLength={16}
+                    maxLength={MAX_USERNAME_LENGTH}
                     name="username"
                     store={this.props.store}
-                    hint={
-                        this.props.store.usernameValid
-                            ? t('title_hintUsernameValid')
-                            : t('title_hintUsername')
-                    }
+                    hint={t(
+                        this.props.store.username.length < MAX_USERNAME_LENGTH
+                            ? this.props.store.usernameValid
+                                ? 'title_hintUsernameValid'
+                                : 'title_hintUsername'
+                            : 'title_characterLimitReached'
+                    )}
                     onKeyPress={this.handleKeyPress}
                     onClear={() => this.handleClearInput('username')}
                 />

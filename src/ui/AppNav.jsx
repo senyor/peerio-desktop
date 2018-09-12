@@ -26,7 +26,7 @@ const config = require('~/config');
 
 const { app, nativeImage } = remote;
 
-const beaconStore = require('~/stores/beacon-store');
+// const beaconStore = require('~/stores/beacon-store');
 const Beacon = require('~/ui/shared-components/Beacon').default;
 
 // todo: move this somewhere more appropriate

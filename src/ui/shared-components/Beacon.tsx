@@ -14,12 +14,14 @@ import beaconStore from '~/stores/beacon-store';
 
 interface BeaconBaseProps {
     name: string;
+    className?: string; // applied to the beacon itself. needed for styling, since beacon is portaled to appRoot.
 }
 
 export interface SpotBeaconProps extends BeaconBaseProps {
     type: 'spot';
     circleContent: any;
     position?: 'right' | 'left'; // position of the bubble
+    size?: number; // force a certain bubble size
 }
 
 export interface AreaBeaconProps extends BeaconBaseProps {
@@ -106,10 +108,11 @@ export default class Beacon extends React.Component<
         this.renderTimeout = null;
     }
 
-    // The size of the SpotBeacon circle is the greater of the child content's width and height.
-    // Circle size is calculated here (as opposed to in the SpotBeacon component) because it affects the positioning of the beacon rectangle.
+    // The size of the SpotBeacon bubble can be defined in prop `size`.
+    // If not defined, it is the greater of the child content's width and height.
     @computed
     get circleSize() {
+        if (this.props.size) return this.props.size;
         const { height, width } = this.contentRect;
         return height > width ? height + 8 : width + 8;
     }
@@ -313,6 +316,7 @@ export default class Beacon extends React.Component<
                 key="beacon-content"
                 className={css(
                     'beacon',
+                    this.props.className,
                     `${this.props.type}-beacon`,
                     this.positionClasses,
                     {

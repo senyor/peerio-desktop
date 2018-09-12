@@ -49,7 +49,7 @@ export default class Beacon extends React.Component<
 > {
     @computed
     get active() {
-        return beaconStore.currentBeacon.name === this.props.name;
+        return beaconStore.currentBeacon === this.props.name;
     }
 
     // We make a lot of calculations based on child content size and position
@@ -290,19 +290,9 @@ export default class Beacon extends React.Component<
     beaconClick() {
         this.rendered = false;
 
+        // Timeout is needed because we need the current beacon to stay "active" until it's done fading out.
         this.renderTimeout = setTimeout(() => {
-            // If incrementing beaconNumber will go past length of current beaconFlow array, current beacon flow is done
-            if (
-                beaconStore.beaconNumber + 2 >
-                beaconStore.beaconFlows[beaconStore.currentBeaconFlow].length
-            ) {
-                // // Reset beacon flow
-                // beaconStore.beaconNumber = -1;
-                // beaconStore.currentBeaconFlow = '';
-                beaconStore.beaconNumber = 0;
-            } else {
-                beaconStore.beaconNumber += 1;
-            }
+            beaconStore.increment;
         }, 250);
     }
 
@@ -318,7 +308,6 @@ export default class Beacon extends React.Component<
     );
 
     beaconContent() {
-        const { currentBeacon } = beaconStore;
         return (
             <div
                 key="beacon-content"

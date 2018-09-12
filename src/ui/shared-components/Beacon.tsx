@@ -15,6 +15,8 @@ import beaconStore from '~/stores/beacon-store';
 interface BeaconBaseProps {
     name: string;
     className?: string; // applied to the beacon itself. needed for styling, since beacon is portaled to appRoot.
+    offsetX?: number;
+    offsetY?: number;
 }
 
 export interface SpotBeaconProps extends BeaconBaseProps {
@@ -149,6 +151,10 @@ export default class Beacon extends React.Component<
             top = contentTop;
             left = contentLeft;
         }
+
+        // `offestX` and `offsetY` props can shift beacon position by arbitrary pixel value
+        left = this.props.offsetX ? left + this.props.offsetX : left;
+        top = this.props.offsetY ? top + this.props.offsetY : top;
 
         return {
             height: height,

@@ -30,16 +30,16 @@ export interface AreaBeaconProps extends BeaconBaseProps {
 const appRoot: HTMLElement = document.getElementById('root');
 
 interface RectanglePosition {
-    top?: string;
-    right?: string;
-    bottom?: string;
-    left?: string;
-    marginTop?: number;
-    marginRight?: number;
-    marginBottom?: number;
-    marginLeft?: number;
-    paddingRight?: number;
-    paddingLeft?: number;
+    top?: string | number;
+    right?: string | number;
+    bottom?: string | number;
+    left?: string | number;
+    marginTop?: string | number;
+    marginRight?: string | number;
+    marginBottom?: string | number;
+    marginLeft?: string | number;
+    paddingRight?: string | number;
+    paddingLeft?: string | number;
 }
 
 @observer

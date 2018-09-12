@@ -1,7 +1,14 @@
 const React = require('react');
 const { autorunAsync, observable, action, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Avatar, Divider, Menu, MenuHeader, MenuItem } = require('peer-ui');
+const {
+    Avatar,
+    Divider,
+    MaterialIcon,
+    Menu,
+    MenuHeader,
+    MenuItem
+} = require('peer-ui');
 const { User, contactStore, chatStore, fileStore } = require('peerio-icebear');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const SignoutDialog = require('~/ui/shared-components/SignoutDialog');
@@ -18,6 +25,9 @@ const path = require('path');
 const config = require('~/config');
 
 const { app, nativeImage } = remote;
+
+const beaconStore = require('~/stores/beacon-store');
+const Beacon = require('~/ui/shared-components/Beacon').default;
 
 // todo: move this somewhere more appropriate
 let dockNotifsStarted = false;
@@ -296,12 +306,21 @@ class AppNav extends React.Component {
                         onClick={this.toFiles}
                     />
 
-                    <AppNavButton
-                        tooltip={t('title_contacts')}
-                        icon="people"
-                        active={currentRoute.startsWith(ROUTES.contacts)}
-                        onClick={this.toContacts}
-                    />
+                    <Beacon
+                        type="spot"
+                        name="contact"
+                        circleContent={<MaterialIcon icon="people" />}
+                        size={48}
+                        offsetY={12}
+                        className="appnav-beacon"
+                    >
+                        <AppNavButton
+                            tooltip={t('title_contacts')}
+                            icon="people"
+                            active={currentRoute.startsWith(ROUTES.contacts)}
+                            onClick={this.toContacts}
+                        />
+                    </Beacon>
 
                     <UsageCloud onClick={this.toOnboarding} />
                 </div>

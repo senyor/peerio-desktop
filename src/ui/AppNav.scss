@@ -131,3 +131,16 @@
     }
   }
 }
+
+// 'contact' beacon gets portaled out of parent tree, so style it here
+.appnav-beacon {
+  margin-top: $margin-large;
+
+  .circle .circle-content {
+    background-color: $darkteal;
+
+    .material-icons {
+      color: $icon-light-inactive;
+    }
+  }
+}

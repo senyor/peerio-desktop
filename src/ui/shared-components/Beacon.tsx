@@ -9,6 +9,7 @@ import {
 } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
+import { t } from 'peerio-translator';
 import beaconStore from '~/stores/beacon-store';
 
 interface BeaconBaseProps {
@@ -340,10 +341,12 @@ export default class Beacon extends React.Component<
                     style={this.rectanglePosition}
                 >
                     <div className="rectangle-content">
-                        {currentBeacon.header ? (
-                            <div className="header">{currentBeacon.header}</div>
+                        {t(`title_${this.props.name}_beacon`) ? (
+                            <div className="header">
+                                {t(`title_${this.props.name}_beacon`)}
+                            </div>
                         ) : null}
-                        {currentBeacon.body}
+                        {t(`description_${this.props.name}_beacon`)}
                     </div>
                 </div>
 

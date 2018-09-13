@@ -89,7 +89,7 @@ export default class Signup extends React.Component {
                 autologin.dontSuggestEnablingAgain();
                 routerStore.navigateTo(routerStore.ROUTES.chats);
             })
-            .catch(err => {
+            .tapCatch(err => {
                 User.current = null;
                 this.busy = false;
                 this.errorVisible = true;

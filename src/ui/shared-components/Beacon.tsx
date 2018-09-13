@@ -21,7 +21,7 @@ interface BeaconBaseProps {
 
 export interface SpotBeaconProps extends BeaconBaseProps {
     type: 'spot';
-    circleContent: any;
+    circleContent?: any; // duplicates child content if this prop is not provided
     position?: 'right' | 'left'; // position of the bubble
     size?: number; // force a certain bubble size
 }
@@ -306,15 +306,17 @@ export default class Beacon extends React.Component<
     }
 
     // Render the child content, wrapped in .beacon-container div so we can make the above positioning calculations
-    childContent = (
-        <div
-            key="beacon-container"
-            className="beacon-container"
-            ref={this.setContentRef}
-        >
-            {this.props.children}
-        </div>
-    );
+    get childContent() {
+        return (
+            <div
+                key="beacon-container"
+                className="beacon-container"
+                ref={this.setContentRef}
+            >
+                {this.props.children}
+            </div>
+        );
+    }
 
     beaconContent() {
         return (
@@ -353,7 +355,9 @@ export default class Beacon extends React.Component<
                     <Bubble
                         position={this.positionClasses}
                         size={this.circleSize}
-                        content={this.props.circleContent}
+                        content={
+                            this.props.circleContent || this.props.children
+                        }
                     />
                 ) : (
                     <Arrow position={this.positionClasses} />

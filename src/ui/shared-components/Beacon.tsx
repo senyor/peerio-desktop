@@ -152,8 +152,8 @@ export default class Beacon extends React.Component<
         }
 
         // `offestX` and `offsetY` props can shift beacon position by arbitrary pixel value
-        left = this.props.offsetX ? left + this.props.offsetX : left;
-        top = this.props.offsetY ? top + this.props.offsetY : top;
+        if (this.props.offsetX) left = left + this.props.offsetX;
+        if (this.props.offsetY) top = top + this.props.offsetY;
 
         return {
             height: height,

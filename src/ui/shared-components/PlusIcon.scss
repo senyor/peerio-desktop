@@ -33,4 +33,21 @@
       color: $color-affirmative;
     }
   }
+
+  // Beacon on plus icon itself
+  .beacon-container {
+    margin-left: auto;
+    color: inherit;
+  }
+
+  .beacon {
+    .circle-content {
+      color: $text-light-inactive;
+      background-color: $darkblue;
+
+      .plus-icon {
+        margin-left: 0;
+      }
+    }
+  }
 }

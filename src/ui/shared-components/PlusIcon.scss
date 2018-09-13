@@ -39,15 +39,26 @@
     margin-left: auto;
     color: inherit;
   }
+}
 
-  .beacon {
-    .circle-content {
-      color: $text-light-inactive;
-      background-color: $darkblue;
+.beacon-chat {
+  .circle-content {
+    color: $text-light-inactive;
+    background-color: $darkblue;
 
-      .plus-icon {
-        margin-left: 0;
-      }
+    .plus-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
+      height: 24px;
+      width: 24px;
+
+      font-size: 24px;
+      font-weight: $font-weight-semibold;
+      border: 2px solid;
+      border-radius: 4px;
     }
   }
 }

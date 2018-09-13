@@ -381,6 +381,7 @@ export default class ChatList extends React.Component {
                                 <PlusIcon
                                     onClick={this.newMessage}
                                     label={t('title_directMessages')}
+                                    beacon="chat"
                                 />
                                 <Tooltip
                                     text={t('title_addDirectMessage')}

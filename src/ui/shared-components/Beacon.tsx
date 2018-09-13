@@ -346,7 +346,7 @@ export default class Beacon extends React.Component<
                     style={this.rectanglePosition}
                 >
                     <div className="rectangle-content">
-                        {title ? <div className="header">title</div> : null}
+                        {title ? <div className="header">{title}</div> : null}
                         {description}
                     </div>
                 </div>

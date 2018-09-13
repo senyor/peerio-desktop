@@ -139,8 +139,12 @@
   .circle .circle-content {
     background-color: $darkteal;
 
-    .material-icons {
+    .p-button {
       color: $icon-light-inactive;
+
+      &:hover {
+        color: $icon-light-active;
+      }
     }
   }
 }

@@ -112,6 +112,7 @@ class AppNav extends React.Component {
             this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
                 this.enableColorIcons();
                 routerStore.navigateTo(routerStore.ROUTES[route]);
+                console.log(routerStore.currentRoute);
             };
         });
     }
@@ -309,10 +310,18 @@ class AppNav extends React.Component {
                     <Beacon
                         type="spot"
                         name="contact"
-                        circleContent={<MaterialIcon icon="people" />}
                         size={48}
                         offsetY={12}
                         className="appnav-beacon"
+                        circleContent={
+                            <AppNavButton
+                                icon="people"
+                                active={currentRoute.startsWith(
+                                    ROUTES.contacts
+                                )}
+                                onClick={this.toContacts}
+                            />
+                        }
                     >
                         <AppNavButton
                             tooltip={t('title_contacts')}

@@ -13,6 +13,8 @@ import beaconStore from '~/stores/beacon-store';
 
 interface BeaconBaseProps {
     name: string;
+    title?: string; // if no title, will check t('title_${name}_beacon')
+    description?: string; // if no description, will use t('description_${name}_beacon')
     className?: string; // applied to the beacon itself. needed for styling, since beacon is portaled to appRoot.
     offsetX?: number;
     offsetY?: number;
@@ -316,6 +318,11 @@ export default class Beacon extends React.Component<
     }
 
     beaconContent() {
+        const title = this.props.title || t(`title_${this.props.name}_beacon`);
+        const description =
+            this.props.description ||
+            t(`description_${this.props.name}_beacon`);
+
         return (
             <div
                 key="beacon-content"
@@ -339,12 +346,8 @@ export default class Beacon extends React.Component<
                     style={this.rectanglePosition}
                 >
                     <div className="rectangle-content">
-                        {t(`title_${this.props.name}_beacon`) ? (
-                            <div className="header">
-                                {t(`title_${this.props.name}_beacon`)}
-                            </div>
-                        ) : null}
-                        {t(`description_${this.props.name}_beacon`)}
+                        {title ? <div className="header">title</div> : null}
+                        {description}
                     </div>
                 </div>
 

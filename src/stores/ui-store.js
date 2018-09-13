@@ -1,8 +1,9 @@
-const { observable, reaction } = require('mobx');
+const { observable, reaction, action } = require('mobx');
 const { TinyDb, Clock, User, warnings, clientApp } = require('peerio-icebear');
 const autologin = require('~/helpers/autologin');
 const appControl = require('~/helpers/app-control');
 
+const PENDING_FILES_BANNER_KEY = 'hidePendingFilesBanner';
 /**
  * This is a global UI state store. File where all things that couldn't find a place yet live.
  * Every time you add something in here - a beautiful kitten dies.
@@ -14,6 +15,15 @@ class UIStore {
 
     // Message object to show in sidebar when clicking on receipts
     @observable selectedMessage;
+
+    // Controls the banner/warning about file migration deprecation and removal of pending files
+    // all this will get deleted soon, as soon as migration is deprecated
+    @observable pendingFilesBannerVisible = false;
+    @action.bound
+    hidePendingFilesBanner() {
+        TinyDb.user.setValue(PENDING_FILES_BANNER_KEY, true);
+        this.pendingFilesBannerVisible = false;
+    }
 
     // show dialog about signature error
     @observable isFileSignatureErrorDialogActive = false;
@@ -86,6 +96,9 @@ class UIStore {
     // should be called only once, after user has been authenticated first time
     // currently authenticated app root component calls it on mount
     async init() {
+        this.pendingFilesBannerVisible = !(await TinyDb.user.getValue(
+            PENDING_FILES_BANNER_KEY
+        ));
         await Promise.all(
             Object.keys(this.prefs).map(key =>
                 this.observePreference(key, 'user', this.prefs)

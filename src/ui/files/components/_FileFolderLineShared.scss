@@ -14,6 +14,12 @@ $row-height: 48px;
   background: $white;
   border-spacing: 0;
 
+  &.with-banner {
+    height: calc(
+      100vh - #{$file-top-ui-height} - #{$pending-files-banner-height}
+    );
+  }
+
   .row-container {
     display: flex;
     flex-direction: column;
@@ -200,8 +206,8 @@ $row-height: 48px;
     }
 
     .file-icon .material-icons {
-      color: $icon-dark-active;
       cursor: pointer;
+      color: $icon-dark-active;
     }
   }
 

@@ -15,6 +15,7 @@ import {
     ProgressBar,
     Tooltip
 } from 'peer-ui';
+import Beacon from '~/ui/shared-components/Beacon';
 
 import routerStore from '~/stores/router-store';
 
@@ -378,11 +379,17 @@ export default class ChatList extends React.Component {
 
                         <List clickable>
                             <div>
-                                <PlusIcon
-                                    onClick={this.newMessage}
-                                    label={t('title_directMessages')}
-                                    beacon="chat"
-                                />
+                                <Beacon
+                                    name="chat"
+                                    type="spot"
+                                    size={48}
+                                    circleContent={<PlusIcon />}
+                                >
+                                    <PlusIcon
+                                        onClick={this.newMessage}
+                                        label={t('title_directMessages')}
+                                    />
+                                </Beacon>
                                 <Tooltip
                                     text={t('title_addDirectMessage')}
                                     position="right"

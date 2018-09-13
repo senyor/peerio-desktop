@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {
     action,
     computed,
@@ -10,6 +11,8 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 import { t } from 'peerio-translator';
 import beaconStore from '~/stores/beacon-store';
+
+const appRoot = document.getElementById('root');
 
 interface BeaconBaseProps {
     name: string;
@@ -371,7 +374,10 @@ export default class Beacon extends React.Component<
 
         const beaconContent = this.beaconContent();
 
-        return [this.childContent, beaconContent];
+        return [
+            this.childContent,
+            ReactDOM.createPortal(beaconContent, appRoot)
+        ];
     }
 }
 

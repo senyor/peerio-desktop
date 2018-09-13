@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
     action,
     computed,
@@ -31,8 +30,6 @@ export interface AreaBeaconProps extends BeaconBaseProps {
     arrowPosition?: 'top' | 'right' | 'bottom' | 'left'; // position of the arrow on the rectangle
     arrowDistance?: number; // how far along the side of the rectangle to place the arrow, as a percentage
 }
-
-const appRoot: HTMLElement = document.getElementById('root');
 
 interface RectanglePosition {
     top?: string | number;
@@ -371,10 +368,7 @@ export default class Beacon extends React.Component<
 
         const beaconContent = this.beaconContent();
 
-        return [
-            this.childContent,
-            ReactDOM.createPortal(beaconContent, appRoot)
-        ];
+        return [this.childContent, beaconContent];
     }
 }
 

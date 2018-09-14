@@ -383,7 +383,11 @@ export default class ChatList extends React.Component {
                                     name="chat"
                                     type="spot"
                                     size={48}
-                                    circleContent={<PlusIcon />}
+                                    offsetX={100}
+                                    circleContent={
+                                        <PlusIcon onClick={this.newMessage} />
+                                    }
+                                    className="chatlist-plusicon-beacon"
                                 >
                                     <PlusIcon
                                         onClick={this.newMessage}

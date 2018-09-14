@@ -112,7 +112,6 @@ class AppNav extends React.Component {
             this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
                 this.enableColorIcons();
                 routerStore.navigateTo(routerStore.ROUTES[route]);
-                console.log(routerStore.currentRoute);
             };
         });
     }
@@ -287,17 +286,35 @@ class AppNav extends React.Component {
                     </Menu>
                 </div>
                 <div className="app-menu">
-                    <AppNavButton
-                        tooltip={t('title_chats')}
-                        icon="forum"
-                        active={
-                            currentRoute.startsWith(ROUTES.chats) ||
-                            currentRoute.startsWith(ROUTES.patients)
+                    <Beacon
+                        type="spot"
+                        name="startChat"
+                        size={48}
+                        offsetY={12}
+                        className="appnav-beacon"
+                        circleContent={
+                            <AppNavButton
+                                icon="forum"
+                                active={
+                                    currentRoute.startsWith(ROUTES.chats) ||
+                                    currentRoute.startsWith(ROUTES.patients)
+                                }
+                                onClick={this.toChats}
+                            />
                         }
-                        showBadge={chatStore.badgeCount > 0}
-                        badge={chatStore.badgeCount}
-                        onClick={this.toChats}
-                    />
+                    >
+                        <AppNavButton
+                            tooltip={t('title_chats')}
+                            icon="forum"
+                            active={
+                                currentRoute.startsWith(ROUTES.chats) ||
+                                currentRoute.startsWith(ROUTES.patients)
+                            }
+                            showBadge={chatStore.badgeCount > 0}
+                            badge={chatStore.badgeCount}
+                            onClick={this.toChats}
+                        />
+                    </Beacon>
 
                     <AppNavButton
                         tooltip={t('title_files')}

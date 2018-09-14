@@ -141,6 +141,14 @@
 
     .menu-item {
       margin-top: 0;
+
+      .material-icons {
+        color: $icon-light-inactive;
+      }
+
+      &:hover .material-icons {
+        color: $icon-light-active;
+      }
     }
   }
 }

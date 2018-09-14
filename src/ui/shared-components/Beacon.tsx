@@ -21,6 +21,7 @@ interface BeaconBaseProps {
     className?: string; // applied to the beacon itself. needed for styling, since beacon is portaled to appRoot.
     offsetX?: number;
     offsetY?: number;
+    onClick?: () => void;
 }
 
 export interface SpotBeaconProps extends BeaconBaseProps {
@@ -243,8 +244,8 @@ export default class Beacon extends React.Component<
                 ret.marginLeft = -circleOffset;
             }
         } else {
-            const arrowPos = this.props.arrowPosition;
-            const arrowDistance = this.props.arrowDistance;
+            const arrowPos = this.props.arrowPosition || 'bottom';
+            const arrowDistance = this.props.arrowDistance || 0;
 
             /*
                 arrowDistance is an integer representing far along the edge the arrow is placed, as a percent of the edge's length.
@@ -299,6 +300,7 @@ export default class Beacon extends React.Component<
 
     @action.bound
     beaconClick() {
+        if (!!this.props.onClick) this.props.onClick();
         this.rendered = false;
 
         // Timeout is needed because we need the current beacon to stay "active" until it's done fading out.
@@ -335,10 +337,10 @@ export default class Beacon extends React.Component<
                     `${this.props.type}-beacon`,
                     this.positionClasses,
                     {
-                        show: this.rendered
+                        show: this.rendered,
+                        clickable: !!this.props.onClick
                     }
                 )}
-                onClick={this.beaconClick}
                 style={this.beaconStyle}
             >
                 <div
@@ -347,6 +349,7 @@ export default class Beacon extends React.Component<
                         narrow: this.isNarrow
                     })}
                     style={this.rectanglePosition}
+                    onClick={this.beaconClick}
                 >
                     <div className="rectangle-content">
                         {title ? <div className="header">{title}</div> : null}

@@ -300,6 +300,7 @@ export default class Beacon extends React.Component<
 
     @action.bound
     beaconClick() {
+        console.log('beacon');
         if (!!this.props.onClick) this.props.onClick();
         this.rendered = false;
 
@@ -364,6 +365,7 @@ export default class Beacon extends React.Component<
                         content={
                             this.props.circleContent || this.props.children
                         }
+                        onClick={this.beaconClick}
                     />
                 ) : (
                     <Arrow position={this.positionClasses} />
@@ -409,6 +411,7 @@ interface BubbleProps {
     position: string;
     size: number;
     content: any;
+    onClick?: () => void;
 }
 
 @observer
@@ -425,6 +428,7 @@ class Bubble extends React.Component<BubbleProps> {
                     height: this.props.size,
                     width: this.props.size
                 }}
+                onClick={this.props.onClick}
             >
                 <div className="circle-content">{this.props.content}</div>
             </div>

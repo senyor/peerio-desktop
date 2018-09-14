@@ -1,6 +1,7 @@
 {
   "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
   "plugins": ["stylelint-scss", "stylelint-order"],
+  "ignoreFiles": ["./src/static/emoji/**"],
   "rules": {
     "at-rule-no-unknown": null,
     "block-no-empty": null,

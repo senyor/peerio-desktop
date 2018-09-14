@@ -17,6 +17,7 @@ import { t } from 'peerio-translator';
 
 import T from '~/ui/shared-components/T';
 import ConfirmFolderDeleteDialog from '~/ui/shared-components/ConfirmFolderDeleteDialog';
+import uiStore from '~/stores/ui-store';
 
 import { selectDownloadFolder, pickSavePath } from '~/helpers/file';
 
@@ -28,6 +29,7 @@ import ShareConfirmDialog from './components/ShareConfirmDialog';
 import DragDropTypes from './helpers/dragDropTypes';
 import { uploadDroppedFiles } from './helpers/dragDropHelpers';
 import LocalFileManager from './helpers/LocalFileManager';
+import PendingFilesBanner from './components/PendingFilesBanner';
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -62,6 +64,15 @@ export default class Files extends React.Component<FilesProps> {
 
     disposers!: IReactionDisposer[];
     container: HTMLElement | null = null;
+
+    @computed
+    get showPendingFilesBanner() {
+        return (
+            uiStore.pendingFilesBannerVisible &&
+            fileStore.loaded &&
+            fileStore.folderStore.root.hasLegacyFiles
+        );
+    }
 
     componentWillMount() {
         clientApp.isInFilesView = true;
@@ -246,9 +257,14 @@ export default class Files extends React.Component<FilesProps> {
         this.enqueueCheck();
         return (
             <div className="files">
+                {this.showPendingFilesBanner ? <PendingFilesBanner /> : null}
                 <FilesHeader onUpload={this.localFileManager.pickAndUpload} />
                 <div className="file-wrapper">
-                    <div className="file-table-wrapper">
+                    <div
+                        className={css('file-table-wrapper', {
+                            'with-banner': this.showPendingFilesBanner
+                        })}
+                    >
                         <div className="file-table-header row-container">
                             <Checkbox
                                 className={css('file-checkbox', {

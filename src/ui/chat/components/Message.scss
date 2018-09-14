@@ -1,9 +1,8 @@
 .message-content-wrapper {
-  $error-bg: rgba($color-error, 0.03);
-
   // stylelint-disable-next-line
   @extend %flex-col;
   @extend %flex-shrink-0;
+  $error-bg: rgba($color-error, 0.03);
   position: relative;
   padding: $padding-tiny 24px;
   margin: 12px 0 0;

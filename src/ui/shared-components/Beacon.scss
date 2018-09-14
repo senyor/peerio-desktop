@@ -35,6 +35,7 @@ $arrow-size: 12px;
 .beacon {
   position: fixed;
   z-index: 20;
+  pointer-events: none;
   left: 50%;
   top: 50%;
   transition: opacity 250ms;
@@ -46,6 +47,7 @@ $arrow-size: 12px;
 
   .rectangle {
     position: absolute;
+    pointer-events: all;
     width: 272px;
     min-height: 40px;
     color: $white;

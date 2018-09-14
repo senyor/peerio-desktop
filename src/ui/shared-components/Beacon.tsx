@@ -250,15 +250,15 @@ export default class Beacon extends React.Component<
                 arrowDistance is an integer representing far along the edge the arrow is placed, as a percent of the edge's length.
                 However, remember that the beacon's arrow is in fact the anchor, and the rectangle is oriented according to the arrow.
                 This means that the rectangle's position is offset in the *negative* direction.
-                (The `24` is a hardcoded pixel value for the arrow's width, so that the rectangle offset can't overshoot the arrow.)
+                (The `24` is a hardcoded pixel value for the arrow's width, so that the rectangle offset can't under/overshoot the arrow.)
             */
             const xOffset =
                 arrowPos === 'top' || arrowPos === 'bottom'
-                    ? `-${(arrowDistance * (rectWidth - 24)) / 100}px`
+                    ? `-${(arrowDistance * (rectWidth - 48)) / 100 + 24}px`
                     : null;
             const yOffset =
                 arrowPos === 'left' || arrowPos === 'right'
-                    ? `-${(arrowDistance * (rectHeight - 24)) / 100}px`
+                    ? `-${(arrowDistance * (rectHeight - 48)) / 100 + 24}px`
                     : null;
 
             switch (arrowPos) {

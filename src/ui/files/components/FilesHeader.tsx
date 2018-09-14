@@ -139,7 +139,7 @@ export default class FilesHeader extends React.Component<{
                             type="area"
                             arrowPosition="top"
                             arrowDistance={100}
-                            name="files"
+                            name="uploadFiles"
                         >
                             <Button
                                 className="button-affirmative"

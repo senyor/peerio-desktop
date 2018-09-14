@@ -5,6 +5,7 @@ import { action, computed } from 'mobx';
 import { Button } from 'peer-ui';
 import { fileStore, chatStore, volumeStore } from 'peerio-icebear';
 import { t } from 'peerio-translator';
+import Beacon from '~/ui/shared-components/Beacon';
 
 import config from '~/config';
 import Search from '~/ui/shared-components/Search';
@@ -134,12 +135,19 @@ export default class FilesHeader extends React.Component<{
                             onClick={this.showAddFolder}
                             theme="affirmative secondary"
                         />
-                        <Button
-                            className="button-affirmative"
-                            label={t('button_upload')}
-                            onClick={this.props.onUpload}
-                            theme="affirmative"
-                        />
+                        <Beacon
+                            type="area"
+                            arrowPosition="top"
+                            arrowDistance={100}
+                            name="files"
+                        >
+                            <Button
+                                className="button-affirmative"
+                                label={t('button_upload')}
+                                onClick={this.props.onUpload}
+                                theme="affirmative"
+                            />
+                        </Beacon>
                     </div>
                 )}
             </div>

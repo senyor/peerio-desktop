@@ -10,6 +10,7 @@ const UserSearchError = require('~/whitelabel/components/UserSearchError');
 const urls = require('peerio-icebear').config.translator.urlMap;
 
 const routerStore = require('~/stores/router-store');
+const Beacon = require('~/ui/shared-components/Beacon').default;
 
 @observer
 class NewContact extends React.Component {
@@ -162,7 +163,13 @@ class NewContact extends React.Component {
 
                         <div className="message-search-wrapper">
                             <div className="new-chat-search">
-                                <MaterialIcon icon="search" />
+                                <Beacon
+                                    name="search"
+                                    type="area"
+                                    arrowPosition="right"
+                                >
+                                    <MaterialIcon icon="search" />
+                                </Beacon>
                                 <div className="chip-wrapper">
                                     <Input
                                         innerRef={this.onInputMount}

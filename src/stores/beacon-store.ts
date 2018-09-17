@@ -30,7 +30,7 @@ class BeaconStore {
         }
     };
 
-    // Function for pushing to currentBeacons, checking beacon status in icebear first
+    // Function for pushing to currentBeacons which checks beacon read status in icebear first
     @action.bound
     pushBeacon(b: string): void {
         if (!User.current.beacons[b]) {

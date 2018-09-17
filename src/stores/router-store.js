@@ -50,6 +50,7 @@ class RouterStore {
             newUser: '/new-user',
 
             loading: '/app',
+            welcome: '/app/welcome',
             chats: '/app/chats',
             newChat: '/app/chats/new-chat',
             newChannel: '/app/chats/new-channel',

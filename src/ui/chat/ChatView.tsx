@@ -23,6 +23,8 @@ import { t } from 'peerio-translator';
 import routerStore from '~/stores/router-store';
 import sounds from '~/helpers/sounds';
 import uiStore from '~/stores/ui-store';
+import beaconStore from '~/stores/beacon-store';
+
 import UserPicker from '~/ui/shared-components/UserPicker';
 import FullCoverLoader from '~/ui/shared-components/FullCoverLoader';
 import ELEMENTS from '~/whitelabel/helpers/elements';
@@ -59,10 +61,15 @@ export default class ChatView extends React.Component {
         }
 
         ELEMENTS.chatView.checkActiveSpace();
+
+        if (!chatStore.chats.length && !chatInviteStore.received.length) {
+            beaconStore.addBeacons('chat');
+        }
     }
 
     componentWillUnmount() {
         this.reactionsToDispose.forEach(dispose => dispose());
+        beaconStore.clearBeacons();
     }
 
     scrollToBottom(): void {

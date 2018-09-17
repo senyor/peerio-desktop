@@ -159,16 +159,17 @@ export default class Beacon extends React.Component<
         }
 
         // `offestX` and `offsetY` props can shift beacon position by arbitrary pixel value
+        /* eslint-disable operator-assignment */
         if (this.props.offsetX) left = left + this.props.offsetX;
         if (this.props.offsetY) top = top + this.props.offsetY;
+        /* eslint-enable operator-assignment */
+        // In this instance operator-assignment looks more clunky and unintuitive
 
         return {
-            height: height,
-            width: width,
-
-            top: top,
-            left: left,
-
+            height,
+            width,
+            top,
+            left,
             marginTop: marginSize,
             marginLeft: marginSize
         };
@@ -305,7 +306,7 @@ export default class Beacon extends React.Component<
     // Clicking the rectangle
     beaconClick = () => {
         this.beaconFadeout();
-        if (!!this.props.onBeaconClick) this.props.onBeaconClick();
+        if (this.props.onBeaconClick) this.props.onBeaconClick();
     };
 
     // Clicking the content of the bubble in a SpotBeacon

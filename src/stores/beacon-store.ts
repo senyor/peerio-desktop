@@ -2,7 +2,7 @@ import { action, computed, observable } from 'mobx';
 import { User } from 'peerio-icebear';
 
 class BeaconStore {
-    @observable currentBeacons: string[];
+    @observable currentBeacons: string[] = ['contact'];
 
     @computed
     get activeBeacon() {

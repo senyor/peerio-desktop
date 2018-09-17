@@ -21,7 +21,7 @@ interface BeaconBaseProps {
     className?: string; // applied to the beacon itself. needed for styling, since beacon is portaled to appRoot.
     offsetX?: number;
     offsetY?: number;
-    onClick?: () => void;
+    onBeaconClick?: () => void;
 }
 
 export interface SpotBeaconProps extends BeaconBaseProps {
@@ -29,6 +29,7 @@ export interface SpotBeaconProps extends BeaconBaseProps {
     circleContent?: any; // duplicates child content if this prop is not provided
     position?: 'right' | 'left'; // position of the bubble
     size?: number; // force a certain bubble size
+    onContentClick?: () => void;
 }
 
 export interface AreaBeaconProps extends BeaconBaseProps {
@@ -56,7 +57,7 @@ export default class Beacon extends React.Component<
 > {
     @computed
     get active() {
-        return beaconStore.currentBeacon === this.props.name;
+        return beaconStore.activeBeacon === this.props.name;
     }
 
     // We make a lot of calculations based on child content size and position
@@ -117,7 +118,8 @@ export default class Beacon extends React.Component<
     // If not defined, it is the greater of the child content's width and height.
     @computed
     get circleSize() {
-        if (this.props.size) return this.props.size;
+        if (this.props.type === 'spot' && !!this.props.size)
+            return this.props.size;
         const { height, width } = this.contentRect;
         return height > width ? height + 8 : width + 8;
     }
@@ -298,10 +300,22 @@ export default class Beacon extends React.Component<
         return this.rectangleRef.current.getBoundingClientRect().height < 72;
     }
 
+    // Clicking the rectangle
+    beaconClick = () => {
+        this.beaconFadeout();
+        if (!!this.props.onBeaconClick) this.props.onBeaconClick();
+    };
+
+    // Clicking the content of the bubble in a SpotBeacon
+    contentClick = () => {
+        this.beaconFadeout();
+        if (this.props.type === 'spot' && !!this.props.onContentClick)
+            this.props.onContentClick();
+    };
+
+    // Fading out current beacon is called on both beaconClick and contentClick
     @action.bound
-    beaconClick() {
-        console.log('beacon');
-        if (!!this.props.onClick) this.props.onClick();
+    beaconFadeout() {
         this.rendered = false;
 
         // Timeout is needed because we need the current beacon to stay "active" until it's done fading out.
@@ -338,8 +352,7 @@ export default class Beacon extends React.Component<
                     `${this.props.type}-beacon`,
                     this.positionClasses,
                     {
-                        show: this.rendered,
-                        clickable: !!this.props.onClick
+                        show: this.rendered
                     }
                 )}
                 style={this.beaconStyle}
@@ -365,7 +378,7 @@ export default class Beacon extends React.Component<
                         content={
                             this.props.circleContent || this.props.children
                         }
-                        onClick={this.beaconClick}
+                        onClick={this.contentClick}
                     />
                 ) : (
                     <Arrow position={this.positionClasses} />

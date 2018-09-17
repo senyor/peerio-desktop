@@ -105,13 +105,18 @@ export default class Files extends React.Component<FilesProps> {
         // icebear will call this function trying to pick a file or folder name which doesn't overwrite existing file
         fileStore.bulk.pickPathSelector = pickSavePath;
 
-        // Show beacons if user has no files
+        // Show uploadFiles beacons if user has no files
         if (
             fileStore.loaded &&
             !fileStore.files.length &&
             !fileStore.folderStore.folders.length
         ) {
-            beaconStore.addBeacons(['uploadFiles', 'startChat']);
+            beaconStore.addBeacons('uploadFiles');
+        }
+
+        // If user is on first login, add startChat beacon and timeout to auto-clear uploadFiles beacon
+        if (uiStore.firstLogin) {
+            beaconStore.addBeacons('startChat');
             this.beaconTimer = setTimeout(() => {
                 if (beaconStore.activeBeacon === 'uploadFiles') {
                     beaconStore.increment();

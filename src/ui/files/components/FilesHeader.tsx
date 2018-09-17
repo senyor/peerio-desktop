@@ -138,8 +138,9 @@ export default class FilesHeader extends React.Component<{
                         <Beacon
                             type="area"
                             arrowPosition="top"
-                            arrowDistance={100}
+                            arrowDistance={90}
                             name="uploadFiles"
+                            offsetY={16}
                         >
                             <Button
                                 className="button-affirmative"

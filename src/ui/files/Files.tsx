@@ -18,6 +18,7 @@ import { t } from 'peerio-translator';
 import T from '~/ui/shared-components/T';
 import ConfirmFolderDeleteDialog from '~/ui/shared-components/ConfirmFolderDeleteDialog';
 import uiStore from '~/stores/ui-store';
+import beaconStore from '~/stores/beacon-store';
 
 import { selectDownloadFolder, pickSavePath } from '~/helpers/file';
 
@@ -84,6 +85,14 @@ export default class Files extends React.Component<FilesProps> {
                 }
             )
         ];
+
+        if (
+            fileStore.loaded &&
+            !fileStore.files.length &&
+            !fileStore.folderStore.folders.length
+        ) {
+            beaconStore.addBeacons('uploadFiles');
+        }
     }
 
     componentDidMount() {
@@ -116,6 +125,7 @@ export default class Files extends React.Component<FilesProps> {
         fileStore.bulk.downloadFolderSelector = null;
         fileStore.bulk.pickPathSelector = null;
         this.disposers.forEach(d => d());
+        beaconStore.clearBeacons();
     }
 
     readonly toggleSelectAll = (ev: React.MouseEvent<HTMLInputElement>) => {

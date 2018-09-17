@@ -4,9 +4,7 @@ import T from '~/ui/shared-components/T';
 
 @observer
 export default class Welcome extends React.Component {
-    componentWillMount() {
-        console.log('mount');
-    }
+    componentWillMount() {}
 
     render() {
         return (

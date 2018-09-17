@@ -3,17 +3,29 @@ import { observer } from 'mobx-react';
 import T from '~/ui/shared-components/T';
 import { t } from 'peerio-translator';
 import { Button } from 'peer-ui';
-
+import * as telemetry from '~/telemetry';
 import { SignupStep } from './SignupStepTypes';
 
 @observer
 export default class ShareUsageData extends React.Component<SignupStep> {
+    startTime: number;
+
+    componentDidMount() {
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        telemetry.signup.durationShareData(this.startTime);
+    }
+
     decline = () => {
+        telemetry.signup.declineShareData();
         this.props.store.consentUsageData = false;
         this.props.onComplete();
     };
 
     accept = () => {
+        telemetry.signup.acceptShareData();
         this.props.store.consentUsageData = true;
         this.props.onComplete();
     };

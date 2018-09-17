@@ -5,6 +5,7 @@ import uiStore from '~/stores/ui-store';
 import { Button } from 'peer-ui';
 import { t } from 'peerio-translator';
 import T from '~/ui/shared-components/T';
+import * as telemetry from '~/telemetry';
 
 interface NewUserProps {
     onClose: () => void;
@@ -12,13 +13,25 @@ interface NewUserProps {
 
 @observer
 export default class NewUser extends React.Component<NewUserProps> {
+    startTime: number;
+
+    componentWillMount() {
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        telemetry.login.newUserDuration(this.startTime);
+    }
+
     goToSignup() {
         routerStore.navigateTo(routerStore.ROUTES.signup);
+        telemetry.login.newUserNavToCreateAccount();
     }
 
     goToLogin = () => {
         uiStore.newUserPageOpen = false;
         routerStore.navigateTo(routerStore.ROUTES.login);
+        telemetry.login.newUserNavToSignIn();
     };
 
     render() {

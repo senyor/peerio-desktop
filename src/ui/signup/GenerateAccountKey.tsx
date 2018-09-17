@@ -7,6 +7,7 @@ import { Button, MaterialIcon } from 'peer-ui';
 import { warnings } from 'peerio-icebear';
 import T from '~/ui/shared-components/T';
 import { saveAkPdf } from '~/helpers/account-key';
+import * as telemetry from '~/telemetry';
 import * as Mock from './MockUI';
 import { SignupStep } from './SignupStepTypes';
 const { clipboard } = require('electron').remote;
@@ -15,7 +16,7 @@ const { clipboard } = require('electron').remote;
 export default class GenerateAccountKey extends React.Component<SignupStep> {
     @observable keyReady = false;
     generateTimer;
-    pdfSaver;
+    startTime: number;
 
     componentWillMount() {
         this.props.store.rerollPassphrase();
@@ -23,11 +24,15 @@ export default class GenerateAccountKey extends React.Component<SignupStep> {
             this.keyReady = true;
             this.generateTimer = null;
         }, 11900);
+
+        this.startTime = Date.now();
     }
 
     componentWillUnmount() {
-        if (this.generateTimer) this.generateTimer();
-        this.generateTimer = null;
+        if (this.generateTimer) {
+            this.generateTimer = null;
+        }
+        telemetry.signup.durationGenerateAk(this.startTime);
     }
 
     get loadingAnimation() {
@@ -97,15 +102,22 @@ export default class GenerateAccountKey extends React.Component<SignupStep> {
     }
 
     akCopy = () => {
+        telemetry.signup.copyAk();
         clipboard.writeText(this.props.store.passphrase);
         warnings.add('title_copied');
     };
 
     akDownload = async () => {
+        telemetry.signup.downloadAk();
         await saveAkPdf(this.props.store);
 
         // NOTICE: user can press cancel and this flag would still be set to true
         this.props.store.keyBackedUp = true;
+    };
+
+    advanceStep = () => {
+        telemetry.signup.completeGenerateAk(this.props.store.keyBackedUp);
+        this.props.onComplete();
     };
 
     get mockLogin() {
@@ -192,7 +204,7 @@ export default class GenerateAccountKey extends React.Component<SignupStep> {
                                     {this.akPreview}
                                     <Button
                                         className="skip-backup fade-2"
-                                        onClick={this.props.onComplete}
+                                        onClick={this.advanceStep}
                                     >
                                         {this.props.store.keyBackedUp
                                             ? 'Next'

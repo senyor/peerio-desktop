@@ -1,10 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, observable, when } from 'mobx';
+import { action, observable } from 'mobx';
 import { t } from 'peerio-translator';
 import { Dialog } from 'peer-ui';
 import { User, errors } from 'peerio-icebear';
 import routerStore from '~/stores/router-store';
+import * as telemetry from '~/telemetry';
 
 // Profile save handling
 import languageStore from '~/stores/language-store';
@@ -84,6 +85,7 @@ export default class Signup extends React.Component {
         return u
             .createAccountAndLogin()
             .then(() => {
+                telemetry.signup.finishAccountCreation();
                 this.busy = false;
                 autologin.enable();
                 autologin.dontSuggestEnablingAgain();

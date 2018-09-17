@@ -1,6 +1,7 @@
 import { requestDownloadPath } from '~/helpers/file';
 import { saveAccountKeyBackup } from 'peerio-icebear';
 import { t } from 'peerio-translator';
+import * as telemetry from '~/telemetry';
 
 export async function saveAkPdf(store) {
     const { username, firstName, lastName, passphrase } = store;
@@ -9,6 +10,7 @@ export async function saveAkPdf(store) {
         path = await requestDownloadPath(
             `${username}-${t('title_appName')}.pdf`
         );
+        telemetry.signup.confirmDownloadAk();
     } catch (err) {
         // user cancel
     }

@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from 'react';
+import * as telemetry from '~/telemetry';
 
 export default class Terms extends React.PureComponent {
     render() {
@@ -24,7 +25,7 @@ export default class Terms extends React.PureComponent {
 
                 <p>
                     If you are primarily interested in what data is available to
-                    Peerio and how your data is handled, please view our{' '}
+                    Peerio and how your data is handled, please view our&nbsp;
                     <a href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Privacy_Policy.md">
                         Privacy Policy
                     </a>.
@@ -32,8 +33,11 @@ export default class Terms extends React.PureComponent {
 
                 <p>
                     If you are primarily interested in how Peerio responds to
-                    law enforcement, please view our{' '}
-                    <a href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Law_Enforcement_Guidelines.md">
+                    law enforcement, please view our&nbsp;
+                    <a
+                        href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Law_Enforcement_Guidelines.md"
+                        onClick={telemetry.shared.lawEnforcementLink}
+                    >
                         Law Enforcement Guidelines
                     </a>.
                 </p>

@@ -23,11 +23,11 @@ const urls = require('~/config').translator.urlMap;
 const autologin = require('~/helpers/autologin');
 const path = require('path');
 const config = require('~/config');
+const uiStore = require('~/stores/ui-store');
+const beaconStore = require('~/stores/beacon-store').default;
+const Beacon = require('~/ui/shared-components/Beacon').default;
 
 const { app, nativeImage } = remote;
-
-// const beaconStore = require('~/stores/beacon-store');
-const Beacon = require('~/ui/shared-components/Beacon').default;
 
 // todo: move this somewhere more appropriate
 let dockNotifsStarted = false;
@@ -114,6 +114,39 @@ class AppNav extends React.Component {
                 routerStore.navigateTo(routerStore.ROUTES[route]);
             };
         });
+    }
+
+    /*
+        Specific functions for AppNav buttons, since they control Beacon state as well as navigation
+        * click AppNav itself => click[Route]() => disables onboarding Beacons
+        * click AppNav button inside Beacon bubble => to[Route]() => does not affect onboarding Beacons
+    */
+    clickChats = () => {
+        this.toChats();
+        if (uiStore.firstLogin) {
+            this.cancelOnboardingBeacons();
+        }
+    };
+
+    clickFiles = () => {
+        this.toFiles();
+        if (uiStore.firstLogin) {
+            this.cancelOnboardingBeacons();
+        }
+    };
+
+    clickContacts = () => {
+        this.toContacts();
+        if (uiStore.firstLogin) {
+            this.cancelOnboardingBeacons();
+        }
+    };
+
+    // onBeaconClick
+    cancelOnboardingBeacons() {
+        if (uiStore.firstLogin) {
+            beaconStore.markAsRead(['chat', 'files', 'contact']);
+        }
     }
 
     componentWillMount() {
@@ -299,9 +332,10 @@ class AppNav extends React.Component {
                                     currentRoute.startsWith(ROUTES.chats) ||
                                     currentRoute.startsWith(ROUTES.patients)
                                 }
-                                onClick={this.toChats}
                             />
                         }
+                        onContentClick={this.toChats}
+                        onBeaconClick={this.beaconClick}
                     >
                         <AppNavButton
                             tooltip={t('title_chats')}
@@ -312,17 +346,33 @@ class AppNav extends React.Component {
                             }
                             showBadge={chatStore.badgeCount > 0}
                             badge={chatStore.badgeCount}
-                            onClick={this.toChats}
+                            onClick={this.clickChats}
                         />
                     </Beacon>
 
-                    <AppNavButton
-                        tooltip={t('title_files')}
-                        icon="folder"
-                        active={currentRoute.startsWith(ROUTES.files)}
-                        showBadge={fileStore.unreadFiles > 0}
-                        onClick={this.toFiles}
-                    />
+                    <Beacon
+                        type="spot"
+                        name="files"
+                        size={48}
+                        offsetY={12}
+                        className="appnav-beacon"
+                        circleContent={
+                            <AppNavButton
+                                icon="folder"
+                                active={currentRoute.startsWith(ROUTES.files)}
+                            />
+                        }
+                        onContentClick={this.toFiles}
+                        onBeaconClick={this.beaconClick}
+                    >
+                        <AppNavButton
+                            tooltip={t('title_files')}
+                            icon="folder"
+                            active={currentRoute.startsWith(ROUTES.files)}
+                            showBadge={fileStore.unreadFiles > 0}
+                            onClick={this.clickFiles}
+                        />
+                    </Beacon>
 
                     <Beacon
                         type="spot"
@@ -336,15 +386,16 @@ class AppNav extends React.Component {
                                 active={currentRoute.startsWith(
                                     ROUTES.contacts
                                 )}
-                                onClick={this.toContacts}
                             />
                         }
+                        onContentClick={this.toContacts}
+                        onBeaconClick={this.beaconClick}
                     >
                         <AppNavButton
                             tooltip={t('title_contacts')}
                             icon="people"
                             active={currentRoute.startsWith(ROUTES.contacts)}
-                            onClick={this.toContacts}
+                            onClick={this.clickContacts}
                         />
                     </Beacon>
 

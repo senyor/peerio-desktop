@@ -11,10 +11,11 @@ import * as telemetry from '~/telemetry';
 import * as Mock from './MockUI';
 import { SignupStep } from './SignupStepTypes';
 const { clipboard } = require('electron').remote;
+import isDevEnv from '~/helpers/is-dev-env';
 
 @observer
 export default class GenerateAccountKey extends React.Component<SignupStep> {
-    @observable keyReady = false;
+    @observable keyReady = isDevEnv;
     generateTimer;
     startTime: number;
 

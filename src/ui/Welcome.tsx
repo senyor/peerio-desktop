@@ -5,16 +5,17 @@ import beaconStore from '~/stores/beacon-store';
 
 @observer
 export default class Welcome extends React.Component {
-    timer: NodeJS.Timer;
+    beaconTimer: NodeJS.Timer;
 
     componentWillMount() {
-        this.timer = setTimeout(() => {
+        this.beaconTimer = setTimeout(() => {
             beaconStore.addBeacons('contact');
         }, 5000);
     }
 
     componentWillUnmount() {
-        this.timer = null;
+        clearTimeout(this.beaconTimer);
+        this.beaconTimer = null;
     }
 
     render() {

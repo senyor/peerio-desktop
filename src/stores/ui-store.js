@@ -13,6 +13,9 @@ class UIStore {
     // Display NewUser page
     @observable newUserPageOpen = true;
 
+    // If current session is user's first time using app, immediately after signup.
+    @observable firstLogin = false;
+
     // Message object to show in sidebar when clicking on receipts
     @observable selectedMessage;
 

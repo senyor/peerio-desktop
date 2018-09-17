@@ -9,7 +9,7 @@ export default class Welcome extends React.Component {
     render() {
         return (
             <div className="welcome">
-                <T k="title_zeroFirstLoginTitleDesktop" className="title" />
+                <T k="title_zeroFirstLoginTitleDesktop" className="headline" />
                 <T k="title_zeroFirstLoginMessage" className="subtitle" />
                 <T k="title_learnFollowWalkthrough" className="small-print" />
             </div>

@@ -122,24 +122,27 @@ class AppNav extends React.Component {
         * click AppNav button inside Beacon bubble => to[Route]() => does not affect onboarding Beacons
     */
     clickChats = () => {
-        this.toChats();
+        beaconStore.clearBeacons();
         if (uiStore.firstLogin) {
             this.cancelOnboardingBeacons();
         }
+        this.toChats();
     };
 
     clickFiles = () => {
-        this.toFiles();
+        beaconStore.clearBeacons();
         if (uiStore.firstLogin) {
             this.cancelOnboardingBeacons();
         }
+        this.toFiles();
     };
 
     clickContacts = () => {
-        this.toContacts();
+        beaconStore.clearBeacons();
         if (uiStore.firstLogin) {
             this.cancelOnboardingBeacons();
         }
+        this.toContacts();
     };
 
     // When Beacon is directly dismissed (rather than Beacon bubble being clicked), cancel remaining onboarding beacons
@@ -321,7 +324,7 @@ class AppNav extends React.Component {
                 <div className="app-menu">
                     <Beacon
                         type="spot"
-                        name="startChat"
+                        name="chat"
                         size={48}
                         offsetY={12}
                         className="appnav-beacon"
@@ -335,7 +338,7 @@ class AppNav extends React.Component {
                             />
                         }
                         onContentClick={this.toChats}
-                        onBeaconClick={this.beaconClick}
+                        onBeaconClick={this.cancelOnboardingBeacons}
                     >
                         <AppNavButton
                             tooltip={t('title_chats')}
@@ -363,7 +366,7 @@ class AppNav extends React.Component {
                             />
                         }
                         onContentClick={this.toFiles}
-                        onBeaconClick={this.beaconClick}
+                        onBeaconClick={this.cancelOnboardingBeacons}
                     >
                         <AppNavButton
                             tooltip={t('title_files')}
@@ -389,7 +392,7 @@ class AppNav extends React.Component {
                             />
                         }
                         onContentClick={this.toContacts}
-                        onBeaconClick={this.beaconClick}
+                        onBeaconClick={this.cancelOnboardingBeacons}
                     >
                         <AppNavButton
                             tooltip={t('title_contacts')}

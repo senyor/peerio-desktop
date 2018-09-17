@@ -132,11 +132,11 @@ export default class Beacon extends React.Component<
         const contentHeight = this.contentRect.height;
         const contentWidth = this.contentRect.width;
 
-        let height: number;
-        let width: number;
-        let top: number;
-        let left: number;
-        let marginSize: number;
+        let height: number = 0;
+        let width: number = 0;
+        let top: number = 0;
+        let left: number = 0;
+        let marginSize: number = 0;
 
         if (this.props.type === 'spot') {
             height = this.circleSize;
@@ -201,7 +201,8 @@ export default class Beacon extends React.Component<
     get rectanglePosition(): RectanglePosition | null {
         const ret = {} as RectanglePosition;
 
-        let rectHeight, rectWidth;
+        let rectHeight: number = 0;
+        let rectWidth: number = 0;
         if (this.rectangleRef && this.rectangleRef.current) {
             const rectangle = this.rectangleRef.current.getBoundingClientRect();
             rectHeight = rectangle.height;
@@ -258,11 +259,11 @@ export default class Beacon extends React.Component<
             const xOffset =
                 arrowPos === 'top' || arrowPos === 'bottom'
                     ? `-${(arrowDistance * (rectWidth - 48)) / 100 + 24}px`
-                    : null;
+                    : 0;
             const yOffset =
                 arrowPos === 'left' || arrowPos === 'right'
                     ? `-${(arrowDistance * (rectHeight - 48)) / 100 + 24}px`
-                    : null;
+                    : 0;
 
             switch (arrowPos) {
                 case 'top':

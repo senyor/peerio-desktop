@@ -24,7 +24,7 @@ class BeaconStore {
         }, 250);
     }
 
-    markAsRead(b: string | string[]): void {
+    async markAsRead(b: string | string[]): Promise<void> {
         console.log(`mark as read ${b}`);
 
         // if (typeof b === 'string') {
@@ -34,6 +34,7 @@ class BeaconStore {
         //         User.current.beacons[beacon] = true;
         //     });
         // }
+        // await User.current.saveBeacons();
     }
 
     // Argument can be string (single beacon) or array (multiple)

@@ -1,10 +1,21 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import T from '~/ui/shared-components/T';
+import beaconStore from '~/stores/beacon-store';
 
 @observer
 export default class Welcome extends React.Component {
-    componentWillMount() {}
+    timer: NodeJS.Timer;
+
+    componentWillMount() {
+        this.timer = setTimeout(() => {
+            beaconStore.addBeacons('contact');
+        }, 5000);
+    }
+
+    componentWillUnmount() {
+        this.timer = null;
+    }
 
     render() {
         return (

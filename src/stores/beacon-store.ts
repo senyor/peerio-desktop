@@ -23,10 +23,10 @@ class BeaconStore {
 
     async markAsRead(b: string | string[]): Promise<void> {
         if (typeof b === 'string') {
-            User.current.beacons[b] = true;
+            User.current.beacons.set(b, true);
         } else {
             b.forEach(beacon => {
-                User.current.beacons[beacon] = true;
+                User.current.beacons.set(beacon, true);
             });
         }
         await User.current.saveBeacons();
@@ -45,8 +45,9 @@ class BeaconStore {
 
     // Pushing to currentBeacons but check beacon read status in icebear first
     @action.bound
-    pushBeacon(b: string): void {
-        if (!User.current.beacons[b]) {
+    async pushBeacon(b: string): Promise<void> {
+        const beaconStatus = await User.current.beacons.get(b);
+        if (!beaconStatus) {
             this.currentBeacons.push(b);
         }
     }

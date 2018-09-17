@@ -9,7 +9,9 @@ const { contactStore, User, warnings } = require('peerio-icebear');
 const UserSearchError = require('~/whitelabel/components/UserSearchError');
 const urls = require('peerio-icebear').config.translator.urlMap;
 
+const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
+const beaconStore = require('~/stores/beacon-store').default;
 const Beacon = require('~/ui/shared-components/Beacon').default;
 
 @observer
@@ -19,6 +21,7 @@ class NewContact extends React.Component {
     @observable suggestInviteEmail = '';
     @observable waiting = false;
     @observable isInviteView = false;
+    @observable beaconTimeout;
 
     @computed
     get showSearchError() {
@@ -32,11 +35,37 @@ class NewContact extends React.Component {
     componentWillMount() {
         this.isInviteView =
             routerStore.currentRoute === routerStore.ROUTES.newInvite;
+
+        if (!contactStore.contacts.length) {
+            beaconStore.addBeacons('search');
+        }
+
+        if (uiStore.firstLogin) {
+            beaconStore.addBeacons('files');
+
+            this.beaconTimeout = setTimeout(() => {
+                if (beaconStore.activeBeacon === 'search') {
+                    beaconStore.increment();
+                }
+            }, 5000);
+        }
     }
+
     componentWillUpdate() {
+        if (this.beaconTimeout) {
+            clearTimeout(this.beaconTimeout);
+        }
+
         this.isInviteView =
             routerStore.currentRoute === routerStore.ROUTES.newInvite;
     }
+
+    componentWillUnmount() {
+        clearTimeout(this.beaconTimeout);
+        this.beaconTimeout = null;
+        beaconStore.clearBeacons();
+    }
+
     // Don't use onKeyUp - text change fires earlier
     handleKeyDown = async e => {
         if (e.key === 'Enter' && this.query !== '') {
@@ -162,49 +191,52 @@ class NewContact extends React.Component {
                         />
 
                         <div className="message-search-wrapper">
-                            <div className="new-chat-search">
-                                <Beacon
-                                    name="search"
-                                    type="area"
-                                    arrowPosition="right"
-                                >
+                            <Beacon
+                                name="search"
+                                type="area"
+                                arrowPosition="top"
+                                arrowDistance={75}
+                                offsetX={168}
+                                offsetY={12}
+                            >
+                                <div className="new-chat-search">
                                     <MaterialIcon icon="search" />
-                                </Beacon>
-                                <div className="chip-wrapper">
-                                    <Input
-                                        innerRef={this.onInputMount}
-                                        placeholder={t(
+                                    <div className="chip-wrapper">
+                                        <Input
+                                            innerRef={this.onInputMount}
+                                            placeholder={t(
+                                                this.isInviteView
+                                                    ? 'title_enterEmail'
+                                                    : 'title_userSearch'
+                                            )}
+                                            value={this.query}
+                                            onChange={this.handleTextChange}
+                                            onKeyDown={this.handleKeyDown}
+                                        />
+                                    </div>
+                                    <Button
+                                        className={css({ hide: hideButton })}
+                                        label={t(
                                             this.isInviteView
-                                                ? 'title_enterEmail'
-                                                : 'title_userSearch'
+                                                ? 'button_invite'
+                                                : 'button_add'
                                         )}
-                                        value={this.query}
-                                        onChange={this.handleTextChange}
-                                        onKeyDown={this.handleKeyDown}
+                                        onClick={
+                                            this.isInviteView
+                                                ? this.invite
+                                                : this.tryAdd
+                                        }
+                                        theme="affirmative"
                                     />
-                                </div>
-                                <Button
-                                    className={css({ hide: hideButton })}
-                                    label={t(
-                                        this.isInviteView
-                                            ? 'button_invite'
-                                            : 'button_add'
+                                    {this.waiting && (
+                                        <ProgressBar
+                                            type="circular"
+                                            mode="indeterminate"
+                                            theme="small"
+                                        />
                                     )}
-                                    onClick={
-                                        this.isInviteView
-                                            ? this.invite
-                                            : this.tryAdd
-                                    }
-                                    theme="affirmative"
-                                />
-                                {this.waiting && (
-                                    <ProgressBar
-                                        type="circular"
-                                        mode="indeterminate"
-                                        theme="small"
-                                    />
-                                )}
-                            </div>
+                                </div>
+                            </Beacon>
                             {this.showSearchError ? (
                                 <UserSearchError
                                     userNotFound={

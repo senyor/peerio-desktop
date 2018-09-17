@@ -18,13 +18,11 @@ class BeaconStore {
         this.markAsRead(this.activeBeacon);
 
         // Remove activeBeacon from currentBeacons array
-        // Timeout is necessary to keep beacon "active" (rendered) until it has faded out
-        setTimeout(() => {
-            this.currentBeacons.shift();
-        }, 250);
+        this.currentBeacons.shift();
     }
 
     async markAsRead(b: string | string[]): Promise<void> {
+        console.log(this.currentBeacons);
         console.log(`mark as read ${b}`);
 
         // if (typeof b === 'string') {

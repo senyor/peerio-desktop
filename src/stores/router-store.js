@@ -51,7 +51,6 @@ class RouterStore {
 
             loading: '/app',
             chats: '/app/chats',
-            zeroChats: '/app/zero-chats',
             newChat: '/app/chats/new-chat',
             newChannel: '/app/chats/new-channel',
             channelInvite: '/app/chats/channel-invite',

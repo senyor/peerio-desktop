@@ -8,6 +8,7 @@ import Privacy from './Privacy';
 
 interface LegalTypes {
     content: 'terms' | 'privacy';
+    onHide?: () => void;
 }
 
 @observer
@@ -22,14 +23,23 @@ export default class LegalDialog extends React.Component<LegalTypes> {
         LegalDialog.show = true;
     }
 
+    onCancel = () => {
+        LegalDialog.hideDialog();
+        if (this.props.onHide) {
+            this.props.onHide();
+        }
+    };
+
     render() {
-        const { hideDialog, show } = LegalDialog;
-        const dialogActions = [{ label: t('button_ok'), onClick: hideDialog }];
+        const { show } = LegalDialog;
+        const dialogActions = [
+            { label: t('button_ok'), onClick: this.onCancel }
+        ];
         return (
             <Dialog
                 active={show}
                 actions={dialogActions}
-                onCancel={hideDialog}
+                onCancel={this.onCancel}
                 className="terms-container"
             >
                 {this.props.content === 'terms' ? <Terms /> : null}

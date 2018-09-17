@@ -83,11 +83,6 @@ class Account extends React.Component {
                     <div className="title">{t('title_dataPreferences')}</div>
                     <p>{t('title_dataDetail')}</p>
                     <Switch
-                        checked={User.current.settings.errorTracking}
-                        label={t('title_errorTrackingMessage')}
-                        onChange={this.onErrorTrackingChanged}
-                    />
-                    <Switch
                         checked={User.current.settings.dataCollection}
                         label={t('title_dataCollectionMessage')}
                         onChange={this.onDataCollectionChanged}

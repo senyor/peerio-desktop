@@ -9,6 +9,7 @@ import uiStore from '~/stores/ui-store';
 import routerStore from '~/stores/router-store';
 import T from '~/ui/shared-components/T';
 import ValidatedInput from '~/ui/shared-components/ValidatedInput';
+import * as telemetry from '~/telemetry';
 import * as Mock from './MockUI';
 
 // Types
@@ -22,6 +23,9 @@ const MAX_USERNAME_LENGTH = config.user.maxUsernameLength;
 
 @observer
 export default class CreateAccount extends React.Component<SignupStep> {
+    // For measuring time-on-screen per step, for telemetry
+    startTimeByStep: number[] = new Array(3);
+
     // Run username suggestion as soon as first and last name are found valid
     usernameReaction;
 
@@ -36,6 +40,7 @@ export default class CreateAccount extends React.Component<SignupStep> {
                 }
             }
         );
+        this.startTimeByStep[0] = Date.now();
     }
 
     componentWillUnmount() {
@@ -90,16 +95,30 @@ export default class CreateAccount extends React.Component<SignupStep> {
         const noAdvance = this.advanceDisabled();
         if (noAdvance) return;
 
+        telemetry.signup.advanceButton(this.currentStep);
+        telemetry.signup.durationCreateAccount(
+            this.currentStep,
+            this.startTimeByStep[this.currentStep]
+        );
+
         if (this.currentStep + 1 > this.steps.length - 1) {
             this.props.onComplete();
         } else {
             this.currentStep += 1;
+            this.startTimeByStep[this.currentStep] = Date.now();
         }
     }
 
     @action.bound
     retreatStep() {
+        telemetry.signup.retreatButton(this.currentStep);
+        telemetry.signup.durationCreateAccount(
+            this.currentStep,
+            this.startTimeByStep[this.currentStep]
+        );
+
         this.currentStep -= 1;
+        this.startTimeByStep[this.currentStep] = Date.now();
     }
 
     @action.bound
@@ -114,10 +133,15 @@ export default class CreateAccount extends React.Component<SignupStep> {
         }
     }
 
-    goToLogin() {
+    goToLogin = () => {
+        telemetry.signup.goToLogin();
+        telemetry.signup.durationCreateAccount(
+            this.currentStep,
+            this.startTimeByStep[this.currentStep]
+        );
         uiStore.newUserPageOpen = false;
         routerStore.navigateTo(routerStore.ROUTES.login);
-    }
+    };
 
     // Steps of account creation
     get steps(): StepContentObject[] {
@@ -242,8 +266,9 @@ export default class CreateAccount extends React.Component<SignupStep> {
                                 : 'title_hintUsername'
                             : 'title_characterLimitReached'
                     )}
-                    onKeyPress={this.handleKeyPress}
+                    onKeyPress={this.handleUsernameKeyPress}
                     onClear={() => this.handleClearInput('username')}
+                    onError={telemetry.signup.onErrorUsername}
                 />
                 {this.usernameSuggestions.length > 0 ? (
                     <React.Fragment>
@@ -272,8 +297,17 @@ export default class CreateAccount extends React.Component<SignupStep> {
         );
     }
 
+    @observable usernameEnteredManually = false;
+
+    @action.bound
+    handleUsernameKeyPress(ev) {
+        this.usernameEnteredManually = true;
+        this.handleKeyPress(ev);
+    }
+
     @action.bound
     setUsername(name) {
+        telemetry.signup.useSuggestedUsername(this.usernameEnteredManually);
         this.props.store.username = name;
     }
 
@@ -384,6 +418,7 @@ export default class CreateAccount extends React.Component<SignupStep> {
     onSubscriptionChange() {
         this.props.store.subscribeNewsletter = !this.props.store
             .subscribeNewsletter;
+        telemetry.signup.clickNewsletter(this.props.store.subscribeNewsletter);
     }
 
     get showEmail() {

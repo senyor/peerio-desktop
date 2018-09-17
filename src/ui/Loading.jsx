@@ -26,7 +26,7 @@ class Loading extends React.Component {
                 if (chatStore.chats.length || chatInviteStore.received.length) {
                     ELEMENTS.loading.goToActiveChat();
                 } else {
-                    routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+                    routerStore.navigateTo(routerStore.ROUTES.chats);
                 }
                 this.dispose = null;
             }

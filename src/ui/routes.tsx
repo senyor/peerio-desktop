@@ -5,7 +5,6 @@ import App from '~/ui/App';
 import Root from '~/ui/Root';
 import Chat from '~/whitelabel/components/Chat';
 import NewChannel from '~/whitelabel/components/NewChannel';
-import ZeroChats from '~/whitelabel/components/ZeroChats';
 
 import Onboarding from './Onboarding';
 import Login from './login/Login';
@@ -63,7 +62,6 @@ export default (
                 <Route path="new-internal-room" component={NewChannel} />
                 <Route path="new-patient-room" component={NewChannel} />
             </Route>
-            <Route path="zero-chats" component={ZeroChats} />
             <Route path="files" component={Files} />
             <Route path="onboarding" component={Onboarding} />
             <Route path="contacts" component={Contacts}>

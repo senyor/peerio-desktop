@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import * as telemetry from '~/telemetry';
 const React = require('react');
 const { Component } = require('react');
 const { Button } = require('peer-ui');
@@ -80,6 +81,7 @@ class Login extends Component {
                 return;
             }
             if (lastUserObject) {
+                uiStore.newUserPageOpen = false;
                 this.loginStore.lastAuthenticatedUser = lastUserObject;
                 this.loginStore.username = lastUserObject.username;
                 autologin
@@ -106,14 +108,24 @@ class Login extends Component {
                 }
             }
         });
+
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        if (!uiStore.newUserPageOpen) {
+            telemetry.login.duration(this.startTime);
+        }
     }
 
     togglePasswordVisibility = () => {
         this.loginStore.passwordVisible = !this.loginStore.passwordVisible;
         if (this.akRef) this.akRef.inputRef.focus();
+        telemetry.login.toggleAkVisibility(this.loginStore.passwordVisible);
     };
 
     unsetLastUser = () => {
+        telemetry.login.changeUser();
         return User.removeLastAuthenticated().then(() => {
             this.loginStore.lastAuthenticatedUser = undefined;
             this.loginStore.username = undefined;
@@ -122,6 +134,7 @@ class Login extends Component {
 
     onLoginClick = () => {
         this.login();
+        telemetry.login.onLoginClick();
     };
 
     login = (isAutologin = false) => {
@@ -159,6 +172,7 @@ class Login extends Component {
                 this.loginStore.passcodeOrPassphraseValidationMessageText = t(
                     'error_loginFailed'
                 );
+                telemetry.login.loginFailed();
                 if (user.blacklisted) {
                     warnings.addSevere(
                         'error_accountSuspendedText',
@@ -172,6 +186,13 @@ class Login extends Component {
         if (e.key === 'Enter') {
             this.login();
         }
+    };
+
+    usernameHandleKeyPress = e => {
+        if (e.key === '@') {
+            telemetry.login.onLoginWithEmail();
+        }
+        this.handleKeyPress(e);
     };
 
     onAKRef = ref => {
@@ -220,6 +241,7 @@ class Login extends Component {
                         {this.loginStore.lastAuthenticatedUser
                             ? this.getWelcomeBlock()
                             : ''}
+
                         <div className="login-form">
                             <div
                                 className={css('title', {
@@ -229,6 +251,7 @@ class Login extends Component {
                             >
                                 {t('title_login')}
                             </div>
+
                             <ValidatedInput
                                 label={t('title_username')}
                                 name="username"
@@ -236,7 +259,7 @@ class Login extends Component {
                                 lowercase="true"
                                 store={this.loginStore}
                                 validator={validators.usernameLogin}
-                                onKeyPress={this.handleKeyPress}
+                                onKeyPress={this.usernameHandleKeyPress}
                                 className={css({
                                     banish: this.loginStore
                                         .lastAuthenticatedUser

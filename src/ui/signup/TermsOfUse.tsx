@@ -4,10 +4,10 @@ import { action, observable } from 'mobx';
 import { t } from 'peerio-translator';
 import css from 'classnames';
 import { Button, Divider, MaterialIcon } from 'peer-ui';
+import * as telemetry from '~/telemetry';
 
 // Stores and helpers
 import routerStore from '~/stores/router-store';
-import uiStore from '~/stores/ui-store';
 import { saveAkPdf } from '~/helpers/account-key';
 
 // UI
@@ -20,7 +20,14 @@ import { SignupStep } from './SignupStepTypes';
 
 @observer
 export default class TermsOfUse extends React.Component<SignupStep> {
+    @observable termsStartTime: number;
+
+    componentDidMount() {
+        this.termsStartTime = Date.now();
+    }
+
     akDownload = async () => {
+        telemetry.signup.downloadAkReminder();
         await saveAkPdf(this.props.store);
 
         // NOTICE: user can press cancel and this flag would still be set to true
@@ -50,6 +57,9 @@ export default class TermsOfUse extends React.Component<SignupStep> {
     @action.bound
     selectTerm(number) {
         this.selectedTerm = number;
+        telemetry.signup.readMore(
+            this.termsTextContent[this.selectedTerm].titleLeft
+        );
     }
 
     termsTextContent = [
@@ -192,22 +202,36 @@ export default class TermsOfUse extends React.Component<SignupStep> {
         return { left, right };
     }
 
+    @observable cancelTermsStartTime: number;
     @observable termsDeclined = false;
+
     @action.bound
     declineTerms() {
+        telemetry.signup.declineTerms();
+        telemetry.signup.durationTerms(this.termsStartTime);
         this.termsDeclined = true;
+        this.cancelTermsStartTime = Date.now();
     }
+
+    acceptTerms = () => {
+        telemetry.signup.acceptTerms();
+        telemetry.signup.durationTerms(this.termsStartTime);
+        this.props.onComplete();
+    };
 
     @action.bound
     backToTerms() {
+        telemetry.signup.durationCancelTerms(this.cancelTermsStartTime);
+        this.termsStartTime = Date.now();
         this.termsDeclined = false;
     }
 
     // "Confirm cancellation" page
-    confirmCancel() {
-        uiStore.newUserPageOpen = false;
-        routerStore.navigateTo(routerStore.ROUTES.login);
-    }
+    confirmCancel = () => {
+        telemetry.signup.confirmDeclineTerms();
+        telemetry.signup.durationCancelTerms(this.cancelTermsStartTime);
+        routerStore.navigateTo(routerStore.ROUTES.newUser);
+    };
 
     get confirmCancelPage() {
         return (
@@ -263,25 +287,41 @@ export default class TermsOfUse extends React.Component<SignupStep> {
 
     // Legal dialog for displaying full Terms of Use, Privacy Policy
     @observable legalDialogContent: 'terms' | 'privacy';
+    @observable dialogStartTime: number;
 
     @action.bound
     showTermsDialog() {
         this.legalDialogContent = 'terms';
         LegalDialog.showDialog();
+        telemetry.signup.openTermsDialog();
+        this.dialogStartTime = Date.now();
     }
 
     @action.bound
     showPrivacyDialog() {
         this.legalDialogContent = 'privacy';
         LegalDialog.showDialog();
+        telemetry.signup.openPrivacyDialog();
+        this.dialogStartTime = Date.now();
     }
+
+    onHideLegalDialog = () => {
+        const contentType =
+            this.legalDialogContent.charAt(0).toUpperCase() +
+            this.legalDialogContent.slice(1);
+
+        telemetry.signup[`duration${contentType}Dialog`](this.dialogStartTime);
+    };
 
     render() {
         if (this.termsDeclined)
             return (
                 <React.Fragment>
                     {this.confirmCancelPage}
-                    <LegalDialog content={this.legalDialogContent} />
+                    <LegalDialog
+                        content={this.legalDialogContent}
+                        onHide={this.onHideLegalDialog}
+                    />
                 </React.Fragment>
             );
 
@@ -325,7 +365,7 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                                 label={t('button_decline')}
                             />
                             <Button
-                                onClick={this.props.onComplete}
+                                onClick={this.acceptTerms}
                                 theme="affirmative"
                                 label={t('button_accept')}
                             />
@@ -341,7 +381,10 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                     <div className="terms-right">{this.termsItems.right}</div>
                 </div>
 
-                <LegalDialog content={this.legalDialogContent} />
+                <LegalDialog
+                    content={this.legalDialogContent}
+                    onHide={this.onHideLegalDialog}
+                />
             </div>
         );
     }

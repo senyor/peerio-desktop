@@ -19,7 +19,7 @@ class PendingDMDismissed extends React.Component {
     }
 
     onCancel = () => {
-        routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+        routerStore.navigateTo(routerStore.ROUTES.chats);
     };
 
     render() {

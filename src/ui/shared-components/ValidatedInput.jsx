@@ -33,13 +33,12 @@ const css = require('classnames');
 
 @observer
 class ValidatedInput extends Component {
-    @observable isFocused = false;
-
     @computed
     get validationMessage() {
         if (
             this.props.store[this.fDirty] === true &&
-            this.props.store[this.fMsgText]
+            this.props.store[this.fMsgText] &&
+            !this.props.store[this.fFocused]
         ) {
             return t(this.props.store[this.fMsgText]);
         }
@@ -48,10 +47,6 @@ class ValidatedInput extends Component {
 
     constructor(props) {
         super(props);
-        // bind stuff
-        this.toggleFocus = this.toggleFocus.bind(this);
-        this.handleBlur = this.handleBlur.bind(this);
-        this.handleChange = this.handleChange.bind(this);
 
         // ward off misuse
         if (
@@ -139,14 +134,14 @@ class ValidatedInput extends Component {
         });
     }
 
-    @action
+    @action.bound
     toggleFocus() {
-        this.props.store[this.fFocused] = !this.props.store[this.fFocused];
+        this.props.store[this.fFocused] = true;
         if (this.props.propagateFocus !== undefined)
             this.props.propagateFocus(this.props.store[this.fFocused]);
     }
 
-    @action
+    @action.bound
     handleBlur() {
         this.props.store[this.fDirty] = true;
         // mark all subsequent as dirty
@@ -160,10 +155,10 @@ class ValidatedInput extends Component {
                 }
             );
         }
-        this.toggleFocus();
+        this.props.store[this.fFocused] = false;
     }
 
-    @action
+    @action.bound
     handleChange(val) {
         this.props.store[this.fName] = this.props.lowercase
             ? val.toLocaleLowerCase()

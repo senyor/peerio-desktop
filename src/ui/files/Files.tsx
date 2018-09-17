@@ -111,7 +111,7 @@ export default class Files extends React.Component<FilesProps> {
             !fileStore.files.length &&
             !fileStore.folderStore.folders.length
         ) {
-            beaconStore.addBeacons(['uploadFiles', 'chat']);
+            beaconStore.addBeacons(['uploadFiles', 'startChat']);
             this.beaconTimer = setTimeout(() => {
                 if (beaconStore.activeBeacon === 'uploadFiles') {
                     beaconStore.increment();

@@ -148,7 +148,7 @@ class AppNav extends React.Component {
     // When Beacon is directly dismissed (rather than Beacon bubble being clicked), cancel remaining onboarding beacons
     cancelOnboardingBeacons() {
         if (uiStore.firstLogin) {
-            beaconStore.markAsRead(['chat', 'files', 'contact']);
+            beaconStore.markAsRead(['startChat', 'files', 'contact']);
         }
     }
 
@@ -324,7 +324,7 @@ class AppNav extends React.Component {
                 <div className="app-menu">
                     <Beacon
                         type="spot"
-                        name="chat"
+                        name="startChat"
                         size={48}
                         offsetY={12}
                         className="appnav-beacon"

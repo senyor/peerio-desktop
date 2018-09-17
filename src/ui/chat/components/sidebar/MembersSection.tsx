@@ -15,7 +15,7 @@ import SideBarSection from './SideBarSection';
 
 // ///////
 // FIXME: use icebear Contact type
-import { ContactProps } from 'peer-ui/dist/components/helpers/interfaces'; // eslint-disable-line import/first
+import { ContactProps } from 'peer-ui/dist/components/helpers/interfaces';
 type Contact_TEMP = ContactProps & { fullName: string }; // eslint-disable-line camelcase
 type Chat_TEMP = { isAdmin(contact: Contact_TEMP): boolean }; // eslint-disable-line camelcase
 // ///////

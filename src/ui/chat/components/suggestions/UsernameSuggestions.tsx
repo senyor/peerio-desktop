@@ -7,7 +7,7 @@ import { chatSchema } from '~/helpers/chat/prosemirror/chat-schema';
 import Suggestions from './Suggestions';
 
 // FIXME: use icebear Contact type
-import { ContactProps } from 'peer-ui/dist/components/helpers/interfaces'; // eslint-disable-line import/first
+import { ContactProps } from 'peer-ui/dist/components/helpers/interfaces';
 export type Contact_TEMP = ContactProps & { fullName: string }; // eslint-disable-line camelcase
 
 export default function makeUsernameSuggestions(getView: () => EditorView) {

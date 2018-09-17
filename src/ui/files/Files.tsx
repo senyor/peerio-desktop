@@ -85,15 +85,9 @@ export default class Files extends React.Component<FilesProps> {
                 }
             )
         ];
-
-        if (
-            fileStore.loaded &&
-            !fileStore.files.length &&
-            !fileStore.folderStore.folders.length
-        ) {
-            beaconStore.addBeacons('uploadFiles');
-        }
     }
+
+    @observable beaconTimer: NodeJS.Timer;
 
     componentDidMount() {
         window.addEventListener('resize', this.enqueueCheck, false);
@@ -110,6 +104,20 @@ export default class Files extends React.Component<FilesProps> {
 
         // icebear will call this function trying to pick a file or folder name which doesn't overwrite existing file
         fileStore.bulk.pickPathSelector = pickSavePath;
+
+        // Show beacons if user has no
+        if (
+            fileStore.loaded &&
+            !fileStore.files.length &&
+            !fileStore.folderStore.folders.length
+        ) {
+            beaconStore.addBeacons(['uploadFiles', 'chat']);
+            this.beaconTimer = setTimeout(() => {
+                if (beaconStore.activeBeacon === 'uploadFiles') {
+                    beaconStore.increment();
+                }
+            }, 5000);
+        }
     }
 
     componentWillUnmount() {
@@ -125,6 +133,9 @@ export default class Files extends React.Component<FilesProps> {
         fileStore.bulk.downloadFolderSelector = null;
         fileStore.bulk.pickPathSelector = null;
         this.disposers.forEach(d => d());
+
+        // Clean up beacons
+        clearTimeout(this.beaconTimer);
         beaconStore.clearBeacons();
     }
 

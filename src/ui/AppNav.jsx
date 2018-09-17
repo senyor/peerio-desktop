@@ -142,7 +142,7 @@ class AppNav extends React.Component {
         }
     };
 
-    // onBeaconClick
+    // When Beacon is directly dismissed (rather than Beacon bubble being clicked), cancel remaining onboarding beacons
     cancelOnboardingBeacons() {
         if (uiStore.firstLogin) {
             beaconStore.markAsRead(['chat', 'files', 'contact']);

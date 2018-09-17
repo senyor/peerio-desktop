@@ -13,10 +13,22 @@ class BeaconStore {
     @action.bound
     increment() {
         // Mark activeBeacon as seen in User beacons
-        User.current.beacons[this.activeBeacon] = true;
+        this.markAsRead(this.activeBeacon);
 
         // Remove activeBeacon from currentBeacons array
         this.currentBeacons.unshift();
+    }
+
+    markAsRead(b: string[] | string): void {
+        console.log(`mark as read ${b}`);
+
+        // if (typeof b === 'string') {
+        //     User.current.beacons[b] = true;
+        // } else {
+        //     b.forEach(beacon => {
+        //         User.current.beacons[beacon] = true;
+        //     });
+        // }
     }
 
     // Argument can be string (single beacon) or array (multiple)
@@ -39,7 +51,7 @@ class BeaconStore {
     }
 
     @action.bound
-    clearBeacons() {
+    clearBeacons(): void {
         this.currentBeacons = [];
     }
 }

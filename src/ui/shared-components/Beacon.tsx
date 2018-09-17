@@ -321,7 +321,7 @@ export default class Beacon extends React.Component<
 
         // Timeout is needed because we need the current beacon to stay "active" until it's done fading out.
         this.renderTimeout = setTimeout(() => {
-            beaconStore.increment;
+            beaconStore.increment();
         }, 250);
     }
 

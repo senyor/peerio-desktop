@@ -1,35 +1,46 @@
 import { action, computed, observable } from 'mobx';
 import { User } from 'peerio-icebear';
 
-interface BeaconText {
-    name: string;
-    header?: string;
-    body: string;
-}
-
 class BeaconStore {
-    @observable currentBeaconFlow = 'messageInput';
-    @observable beaconNumber = 0;
+    @observable currentBeacons: string[];
 
     @computed
-    get currentBeacon() {
-        // if (this.beaconNumber < 0 || !this.currentBeaconFlow) return null;
-        return 'contact';
+    get activeBeacon() {
+        if (!this.currentBeacons.length) return null;
+        return this.currentBeacons[0];
     }
 
     @action.bound
     increment() {
-        if (
-            this.beaconNumber + 2 >
-            this.beaconFlows[this.currentBeaconFlow].length
-        ) {
-            // // Reset beacon flow
-            // this.beaconNumber = -1;
-            // this.currentBeaconFlow = '';
-            this.beaconNumber = 0;
+        // Mark activeBeacon as seen in User beacons
+        User.current.beacons[this.activeBeacon] = true;
+
+        // Remove activeBeacon from currentBeacons array
+        this.currentBeacons.unshift();
+    }
+
+    // Argument can be string (single beacon) or array (multiple)
+    addBeacons = (b: string[] | string): void => {
+        if (typeof b === 'string') {
+            this.pushBeacon(b);
         } else {
-            this.beaconNumber += 1;
+            b.forEach(beacon => {
+                this.pushBeacon(beacon);
+            });
         }
+    };
+
+    // Function for pushing to currentBeacons, checking beacon status in icebear first
+    @action.bound
+    pushBeacon(b: string): void {
+        if (!User.current.beacons[b]) {
+            this.currentBeacons.push(b);
+        }
+    }
+
+    @action.bound
+    clearBeacons() {
+        this.currentBeacons = [];
     }
 }
 

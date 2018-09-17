@@ -105,7 +105,7 @@ export default class Files extends React.Component<FilesProps> {
         // icebear will call this function trying to pick a file or folder name which doesn't overwrite existing file
         fileStore.bulk.pickPathSelector = pickSavePath;
 
-        // Show beacons if user has no
+        // Show beacons if user has no files
         if (
             fileStore.loaded &&
             !fileStore.files.length &&

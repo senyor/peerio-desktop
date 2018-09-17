@@ -22,7 +22,7 @@ import uiStore from '~/stores/ui-store';
 import { selectDownloadFolder, pickSavePath } from '~/helpers/file';
 
 import DraggableLine from './components/DraggableLine';
-import ZeroScreen from './components/ZeroScreen';
+import ZeroFiles from './components/ZeroFiles';
 import FilesHeader from './components/FilesHeader';
 import ShareConfirmDialog from './components/ShareConfirmDialog';
 
@@ -240,15 +240,6 @@ export default class Files extends React.Component<FilesProps> {
     };
 
     render() {
-        if (
-            !fileStore.files.length &&
-            !fileStore.folderStore.root.folders.length &&
-            fileStore.loaded
-        )
-            return (
-                <ZeroScreen onUpload={this.localFileManager.pickAndUpload} />
-            );
-
         const currentFolder = fileStore.folderStore.currentFolder;
         const selectedCount = fileStore.selectedFilesOrFolders.length;
 
@@ -344,6 +335,12 @@ export default class Files extends React.Component<FilesProps> {
                                     })}
                                 >
                                     {this.renderedItems}
+                                    {fileStore.loaded &&
+                                    currentFolder.isEmpty ? (
+                                        <ZeroFiles
+                                            isRoot={currentFolder.isRoot}
+                                        />
+                                    ) : null}
                                 </div>
                             </div>
                         )}

@@ -32,7 +32,7 @@ export default class ChannelInvite extends React.Component<ChannelInviteProps> {
         this.disposer = reaction(
             () => !chatStore.chats.length && !chatInviteStore.received.length,
             () => {
-                routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+                routerStore.navigateTo(routerStore.ROUTES.chats);
             }
         );
     }

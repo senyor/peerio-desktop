@@ -26,6 +26,7 @@ import uiStore from '~/stores/ui-store';
 import UserPicker from '~/ui/shared-components/UserPicker';
 import FullCoverLoader from '~/ui/shared-components/FullCoverLoader';
 import ELEMENTS from '~/whitelabel/helpers/elements';
+import ZeroChats from '~/whitelabel/components/ZeroChats';
 
 import MessageInput from './components/MessageInput';
 import MessageList from './components/MessageList';
@@ -51,19 +52,10 @@ export default class ChatView extends React.Component {
                     this.showUserPicker = false;
                 }
             )
-
-            // TODO: refactor when SDK is there for chat invites
-            // reaction(() => !chatStore.chats.length && !chatInviteStore.received.length, () => {
-            //     routerStore.navigateTo(routerStore.ROUTES.zeroChats);
-            // }, true)
         ];
 
         if (chatInviteStore.activeInvite) {
             routerStore.navigateTo(routerStore.ROUTES.channelInvite);
-        }
-
-        if (!chatStore.chats.length && !chatInviteStore.received.length) {
-            routerStore.navigateTo(routerStore.ROUTES.zeroChats);
         }
 
         ELEMENTS.chatView.checkActiveSpace();
@@ -339,7 +331,9 @@ export default class ChatView extends React.Component {
     }
 
     render() {
-        if (!chatStore.chats.length) return null;
+        if (!chatStore.chats.length && !chatInviteStore.received.length) {
+            return <ZeroChats />;
+        }
 
         const chat = chatStore.activeChat;
         if (!chat) return null;

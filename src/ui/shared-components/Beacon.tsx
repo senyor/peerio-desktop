@@ -111,6 +111,7 @@ export default class Beacon extends React.Component<
     componentWillUnmount() {
         window.removeEventListener('resize', this.setContentRect);
         this.dispose();
+        clearTimeout(this.renderTimeout);
         this.renderTimeout = null;
     }
 
@@ -318,11 +319,7 @@ export default class Beacon extends React.Component<
     @action.bound
     beaconFadeout() {
         this.rendered = false;
-
-        // Timeout is needed because we need the current beacon to stay "active" until it's done fading out.
-        this.renderTimeout = setTimeout(() => {
-            beaconStore.increment();
-        }, 250);
+        beaconStore.increment();
     }
 
     // Render the child content, wrapped in .beacon-container div so we can make the above positioning calculations

@@ -12,14 +12,19 @@ class BeaconStore {
 
     @action.bound
     increment() {
+        if (!this.currentBeacons.length) return;
+
         // Mark activeBeacon as seen in User beacons
         this.markAsRead(this.activeBeacon);
 
         // Remove activeBeacon from currentBeacons array
-        this.currentBeacons.unshift();
+        // Timeout is necessary to keep beacon "active" (rendered) until it has faded out
+        setTimeout(() => {
+            this.currentBeacons.shift();
+        }, 250);
     }
 
-    markAsRead(b: string[] | string): void {
+    markAsRead(b: string | string[]): void {
         console.log(`mark as read ${b}`);
 
         // if (typeof b === 'string') {
@@ -32,7 +37,7 @@ class BeaconStore {
     }
 
     // Argument can be string (single beacon) or array (multiple)
-    addBeacons = (b: string[] | string): void => {
+    addBeacons = (b: string | string[]): void => {
         if (typeof b === 'string') {
             this.pushBeacon(b);
         } else {
@@ -49,6 +54,8 @@ class BeaconStore {
             this.currentBeacons.push(b);
         }
     }
+
+    @observable clearTimer: NodeJS.Timer;
 
     @action.bound
     clearBeacons(): void {

@@ -146,7 +146,7 @@ export default class SecuritySettings extends React.Component {
                 <T k="title_AKDetail" tag="p" />
                 <div className="account-key-toggle">
                     {this.passphraseVisible ? (
-                        <span className="selectable">
+                        <span className="selectable monospace">
                             {User.current.passphrase}
                         </span>
                     ) : (

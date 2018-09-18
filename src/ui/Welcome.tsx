@@ -14,6 +14,7 @@ export default class Welcome extends React.Component {
 
     @action.bound
     setBeaconTimer() {
+        if (this.beaconTimer) clearTimeout(this.beaconTimer);
         this.beaconTimer = setTimeout(() => {
             beaconStore.addBeacons('contact');
             this.clearBeaconTimer();
@@ -26,19 +27,14 @@ export default class Welcome extends React.Component {
         this.beaconTimer = null;
     }
 
-    resetBeaconTimer = () => {
-        this.clearBeaconTimer();
-        this.setBeaconTimer();
-    };
-
     componentWillMount() {
         this.setBeaconTimer();
-        addInputListener(this.resetBeaconTimer);
+        addInputListener(this.setBeaconTimer);
     }
 
     componentWillUnmount() {
         this.clearBeaconTimer();
-        removeInputListener(this.resetBeaconTimer);
+        removeInputListener(this.setBeaconTimer);
     }
 
     render() {

@@ -15,19 +15,17 @@ import {
     ProgressBar,
     Tooltip
 } from 'peer-ui';
-import Beacon from '~/ui/shared-components/Beacon';
 
 import routerStore from '~/stores/router-store';
-
 import T from '~/ui/shared-components/T';
 import AvatarWithPopup from '~/ui/contact/components/AvatarWithPopup';
 import PlusIcon from '~/ui/shared-components/PlusIcon';
-import PlusIconBeaconed from './PlusIconBeaconed';
 import MaintenanceWarning from '~/ui/shared-components/MaintenanceWarning';
 import { getAttributeInParentChain } from '~/helpers/dom';
-
 import PatientList from '~/whitelabel/components/PatientList';
 import ELEMENTS from '~/whitelabel/helpers/elements';
+
+import PlusIconBeaconed from './PlusIconBeaconed';
 
 // Variables to calculate position-in-window of unread messages
 const paddingTop = 20;

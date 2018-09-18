@@ -109,6 +109,7 @@ class ShareWithDialog extends React.Component {
                                 value={this.query}
                                 onChange={this.handleTextChange}
                                 onKeyDown={this.handleKeyDown}
+                                noHelperText
                             />
                         </div>
                     </div>

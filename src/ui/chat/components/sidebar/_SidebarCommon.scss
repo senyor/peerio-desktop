@@ -65,8 +65,7 @@
 
   .p-input {
     height: auto;
-    padding-left: $padding-small;
-    padding-bottom: $padding-small;
+    padding: 0 $padding-default $padding-small;
     border-bottom: 1px solid $divider-dark;
 
     &.purpose-editor {

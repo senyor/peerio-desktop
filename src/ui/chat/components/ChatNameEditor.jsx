@@ -57,6 +57,7 @@ class ChatNameEditor extends React.Component {
                         ? config.chat.maxChatPurposeLength
                         : config.chat.maxChatNameLength
                 }
+                theme="transparent"
             />
         );
     }

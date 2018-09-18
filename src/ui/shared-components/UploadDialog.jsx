@@ -295,12 +295,13 @@ class UploadDialog extends React.Component {
                                 onChange={this.onFileNameChange}
                                 onFocus={this.onInputFocus}
                                 onBlur={this.onInputBlur}
+                                noHelperText
                             />
                             <div className="share-with">
                                 <div className="user-list">
                                     <T
                                         k="title_shareWith"
-                                        className="heading"
+                                        className="label"
                                         tag="div"
                                     />
                                     {this.targetTitle}

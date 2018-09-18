@@ -2,7 +2,7 @@ import { telemetry } from 'peerio-icebear';
 import { setup } from '~/telemetry/main';
 import { DurationEvent, TextInputEvent } from '~/telemetry/types';
 
-const { S, duration } = telemetry;
+const { S, duration, errorMessage } = telemetry;
 
 const login = setup({
     // Login.tsx
@@ -46,7 +46,7 @@ const login = setup({
             location: S.SIGN_IN,
             sublocation: S.SIGN_IN,
             state: S.ERROR,
-            errorType: 'Wrong AK'
+            errorType: errorMessage('error_wrongAK')
         }
     ],
 

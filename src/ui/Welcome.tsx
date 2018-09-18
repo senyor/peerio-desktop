@@ -1,23 +1,44 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import { action, observable } from 'mobx';
 import T from '~/ui/shared-components/T';
 import beaconStore from '~/stores/beacon-store';
+import {
+    addInputListener,
+    removeInputListener
+} from '~/helpers/input-listener';
 
 @observer
 export default class Welcome extends React.Component {
-    beaconTimer: NodeJS.Timer;
+    @observable beaconTimer: NodeJS.Timer;
 
-    componentWillMount() {
-        // TODO: this is supposed to be an inactivity timer, not plain timeout
-        // @lucas
+    @action.bound
+    setBeaconTimer() {
         this.beaconTimer = setTimeout(() => {
             beaconStore.addBeacons('contact');
+            this.clearBeaconTimer();
         }, 5000);
     }
 
-    componentWillUnmount() {
+    @action.bound
+    clearBeaconTimer() {
         clearTimeout(this.beaconTimer);
         this.beaconTimer = null;
+    }
+
+    resetBeaconTimer = () => {
+        this.clearBeaconTimer();
+        this.setBeaconTimer();
+    };
+
+    componentWillMount() {
+        this.setBeaconTimer();
+        addInputListener(this.resetBeaconTimer);
+    }
+
+    componentWillUnmount() {
+        this.clearBeaconTimer();
+        removeInputListener(this.resetBeaconTimer);
     }
 
     render() {

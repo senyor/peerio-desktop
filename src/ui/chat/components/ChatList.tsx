@@ -22,6 +22,7 @@ import routerStore from '~/stores/router-store';
 import T from '~/ui/shared-components/T';
 import AvatarWithPopup from '~/ui/contact/components/AvatarWithPopup';
 import PlusIcon from '~/ui/shared-components/PlusIcon';
+import PlusIconBeaconed from './PlusIconBeaconed';
 import MaintenanceWarning from '~/ui/shared-components/MaintenanceWarning';
 import { getAttributeInParentChain } from '~/helpers/dom';
 
@@ -379,21 +380,11 @@ export default class ChatList extends React.Component {
 
                         <List clickable>
                             <div>
-                                <Beacon
-                                    name="chat"
-                                    type="spot"
-                                    size={48}
-                                    offsetX={100}
-                                    circleContent={
-                                        <PlusIcon onClick={this.newMessage} />
-                                    }
-                                    className="chatlist-plusicon-beacon"
-                                >
-                                    <PlusIcon
-                                        onClick={this.newMessage}
-                                        label={t('title_directMessages')}
-                                    />
-                                </Beacon>
+                                <PlusIconBeaconed
+                                    beaconName="chat"
+                                    label={t('title_directMessages')}
+                                    onClick={this.newMessage}
+                                />
                                 <Tooltip
                                     text={t('title_addDirectMessage')}
                                     position="right"

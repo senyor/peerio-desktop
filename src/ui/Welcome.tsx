@@ -8,6 +8,8 @@ export default class Welcome extends React.Component {
     beaconTimer: NodeJS.Timer;
 
     componentWillMount() {
+        // TODO: this is supposed to be an inactivity timer, not plain timeout
+        // @lucas
         this.beaconTimer = setTimeout(() => {
             beaconStore.addBeacons('contact');
         }, 5000);

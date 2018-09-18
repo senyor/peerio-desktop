@@ -52,8 +52,6 @@ class BeaconStore {
         }
     }
 
-    @observable clearTimer: NodeJS.Timer;
-
     @action.bound
     clearBeacons(): void {
         this.currentBeacons = [];

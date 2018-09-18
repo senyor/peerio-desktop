@@ -9,16 +9,13 @@ const css = require('classnames');
 const { remote } = require('electron');
 const notificationFactory = require('~/helpers/notifications');
 const appControl = require('~/helpers/app-control');
-const AppNavButton = require('./AppNavButton');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
 const urls = require('~/config').translator.urlMap;
 const autologin = require('~/helpers/autologin');
 const path = require('path');
 const config = require('~/config');
-const uiStore = require('~/stores/ui-store');
-const beaconStore = require('~/stores/beacon-store').default;
-const Beacon = require('~/ui/shared-components/Beacon').default;
+const AppNavBeaconedItem = require('./AppNavBeaconedItem');
 
 const { app, nativeImage } = remote;
 
@@ -107,42 +104,6 @@ class AppNav extends React.Component {
                 routerStore.navigateTo(routerStore.ROUTES[route]);
             };
         });
-    }
-
-    /*
-        Specific functions for AppNav buttons, since they control Beacon state as well as navigation
-        * click AppNav itself => click[Route]() => disables onboarding Beacons
-        * click AppNav button inside Beacon bubble => to[Route]() => does not affect onboarding Beacons
-    */
-    clickChats = () => {
-        beaconStore.clearBeacons();
-        if (uiStore.firstLogin) {
-            this.cancelOnboardingBeacons();
-        }
-        this.toChats();
-    };
-
-    clickFiles = () => {
-        beaconStore.clearBeacons();
-        if (uiStore.firstLogin) {
-            this.cancelOnboardingBeacons();
-        }
-        this.toFiles();
-    };
-
-    clickContacts = () => {
-        beaconStore.clearBeacons();
-        if (uiStore.firstLogin) {
-            this.cancelOnboardingBeacons();
-        }
-        this.toContacts();
-    };
-
-    // When Beacon is directly dismissed (rather than Beacon bubble being clicked), cancel remaining onboarding beacons
-    cancelOnboardingBeacons() {
-        if (uiStore.firstLogin) {
-            beaconStore.markAsRead(['startChat', 'files', 'contact']);
-        }
     }
 
     componentWillMount() {
@@ -315,86 +276,33 @@ class AppNav extends React.Component {
                     </Menu>
                 </div>
                 <div className="app-menu">
-                    <Beacon
-                        type="spot"
-                        name="startChat"
-                        size={48}
-                        offsetY={12}
-                        className="appnav-beacon"
-                        circleContent={
-                            <AppNavButton
-                                icon="forum"
-                                active={
-                                    currentRoute.startsWith(ROUTES.chats) ||
-                                    currentRoute.startsWith(ROUTES.patients)
-                                }
-                            />
+                    <AppNavBeaconedItem
+                        beaconName="startChat"
+                        tooltip={t('title_chats')}
+                        icon="forum"
+                        active={
+                            currentRoute.startsWith(ROUTES.chats) ||
+                            currentRoute.startsWith(ROUTES.patients)
                         }
-                        onContentClick={this.toChats}
-                        onBeaconClick={this.cancelOnboardingBeacons}
-                    >
-                        <AppNavButton
-                            tooltip={t('title_chats')}
-                            icon="forum"
-                            active={
-                                currentRoute.startsWith(ROUTES.chats) ||
-                                currentRoute.startsWith(ROUTES.patients)
-                            }
-                            showBadge={chatStore.badgeCount > 0}
-                            badge={chatStore.badgeCount}
-                            onClick={this.clickChats}
-                        />
-                    </Beacon>
-
-                    <Beacon
-                        type="spot"
-                        name="files"
-                        size={48}
-                        offsetY={12}
-                        className="appnav-beacon"
-                        circleContent={
-                            <AppNavButton
-                                icon="folder"
-                                active={currentRoute.startsWith(ROUTES.files)}
-                            />
-                        }
-                        onContentClick={this.toFiles}
-                        onBeaconClick={this.cancelOnboardingBeacons}
-                    >
-                        <AppNavButton
-                            tooltip={t('title_files')}
-                            icon="folder"
-                            active={currentRoute.startsWith(ROUTES.files)}
-                            showBadge={fileStore.unreadFiles > 0}
-                            onClick={this.clickFiles}
-                        />
-                    </Beacon>
-
-                    <Beacon
-                        type="spot"
-                        name="contact"
-                        size={48}
-                        offsetY={12}
-                        className="appnav-beacon"
-                        circleContent={
-                            <AppNavButton
-                                icon="people"
-                                active={currentRoute.startsWith(
-                                    ROUTES.contacts
-                                )}
-                            />
-                        }
-                        onContentClick={this.toContacts}
-                        onBeaconClick={this.cancelOnboardingBeacons}
-                    >
-                        <AppNavButton
-                            tooltip={t('title_contacts')}
-                            icon="people"
-                            active={currentRoute.startsWith(ROUTES.contacts)}
-                            onClick={this.clickContacts}
-                        />
-                    </Beacon>
-
+                        showBadge={chatStore.badgeCount > 0}
+                        badge={chatStore.badgeCount}
+                        onClick={this.toChats}
+                    />
+                    <AppNavBeaconedItem
+                        beaconName="files"
+                        tooltip={t('title_files')}
+                        icon="folder"
+                        active={currentRoute.startsWith(ROUTES.files)}
+                        showBadge={fileStore.unreadFiles > 0}
+                        onClick={this.toFiles}
+                    />
+                    <AppNavBeaconedItem
+                        beaconName="contact"
+                        tooltip={t('title_contacts')}
+                        icon="people"
+                        active={currentRoute.startsWith(ROUTES.contacts)}
+                        onClick={this.toContacts}
+                    />
                     <UsageCloud onClick={this.toOnboarding} />
                 </div>
                 <SignoutDialog

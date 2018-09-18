@@ -168,17 +168,27 @@ class Login extends Component {
             .catch(() => {
                 User.current = null;
                 this.loginStore.busy = false;
-                // show error inline
-                this.loginStore.passcodeOrPassphraseValidationMessageText = t(
-                    'error_loginFailed'
-                );
-                telemetry.login.loginFailed();
+                let errorMsg = 'error_wrongAK';
+
+                // Error messages in snackbar
                 if (user.blacklisted) {
+                    errorMsg = 'error_accountSuspendedTitle';
                     warnings.addSevere(
                         'error_accountSuspendedText',
                         'error_accountSuspendedTitle'
                     );
                 }
+                if (user.deleted) {
+                    errorMsg = 'title_accountDeleted';
+                    warnings.addSevere('title_accountDeleted');
+                }
+
+                // Error message below AK input
+                this.loginStore.passcodeOrPassphraseValidationMessageText = t(
+                    errorMsg
+                );
+
+                telemetry.login.loginFailed();
             });
     };
 

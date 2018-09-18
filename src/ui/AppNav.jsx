@@ -277,7 +277,7 @@ class AppNav extends React.Component {
                 </div>
                 <div className="app-menu">
                     <AppNavBeaconedItem
-                        beaconName="startChat"
+                        beaconName="chat"
                         tooltip={t('title_chats')}
                         icon="forum"
                         active={

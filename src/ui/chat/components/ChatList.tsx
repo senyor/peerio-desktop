@@ -379,7 +379,7 @@ export default class ChatList extends React.Component {
                         <List clickable>
                             <div>
                                 <PlusIconBeaconed
-                                    beaconName="chat"
+                                    beaconName="startChat"
                                     label={t('title_directMessages')}
                                     onClick={this.newMessage}
                                 />

@@ -1,6 +1,7 @@
 /*
-*  Attach and remove a function to any user input event (keyup, mousemove, mouseup)
-*/
+ * Attach a function to fire on any user input event (keyup, mousemove, mouseup)
+ * Basically a "user activity" listener
+ */
 
 import _ from 'lodash';
 

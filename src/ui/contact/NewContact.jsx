@@ -76,7 +76,7 @@ class NewContact extends React.Component {
         this.query = newVal.toLocaleLowerCase().trim();
 
         // Beacon management
-        if (beaconStore.activeBeacon) {
+        if (beaconStore.activeBeacon === 'search') {
             beaconStore.clearBeacons();
         }
 

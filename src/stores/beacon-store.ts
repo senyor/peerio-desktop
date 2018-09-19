@@ -76,32 +76,24 @@ class BeaconStore {
             this.beaconsInQueue = b;
         }
         this.delay = delay;
-
         this.setBeaconTimer();
-        addInputListener(this.setBeaconTimer);
-    }
-
-    clearQueuedBeacons = () => {
-        this.clearBeaconTimer();
-        removeInputListener(this.setBeaconTimer);
-    };
-
-    @observable beaconTimer: NodeJS.Timer;
-    @action.bound
-    setBeaconTimer() {
-        if (this.beaconTimer) clearTimeout(this.beaconTimer);
-        this.beaconTimer = setTimeout(() => {
-            this.addBeacons(this.beaconsInQueue);
-            this.clearQueuedBeacons();
-        }, this.delay);
     }
 
     @action.bound
-    clearBeaconTimer() {
+    clearQueuedBeacons() {
         clearTimeout(this.beaconTimer);
         this.beaconTimer = null;
         this.beaconsInQueue = [];
         this.delay = 0;
+    }
+
+    @observable beaconTimer: NodeJS.Timer;
+    @action.bound
+    setBeaconTimer() {
+        this.beaconTimer = setTimeout(() => {
+            this.addBeacons(this.beaconsInQueue);
+            this.clearQueuedBeacons();
+        }, this.delay);
     }
 }
 

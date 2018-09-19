@@ -18,7 +18,7 @@ export default class Welcome extends React.Component {
         this.beaconTimer = setTimeout(() => {
             beaconStore.addBeacons('contact');
             this.clearBeaconTimer();
-        }, 5000);
+        }, 2000);
     }
 
     @action.bound

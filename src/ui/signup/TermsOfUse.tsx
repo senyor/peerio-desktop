@@ -286,42 +286,31 @@ export default class TermsOfUse extends React.Component<SignupStep> {
     }
 
     // Legal dialog for displaying full Terms of Use, Privacy Policy
-    @observable legalDialogContent: 'terms' | 'privacy';
-    @observable dialogStartTime: number;
+    @observable legalDialogRef = React.createRef<LegalDialog>();
+
+    showLegalDialog = (dialogType: string): void => {
+        this.legalDialogRef.current.content = dialogType;
+        this.legalDialogRef.current.showDialog();
+    };
 
     @action.bound
     showTermsDialog() {
-        this.legalDialogContent = 'terms';
-        LegalDialog.showDialog();
+        this.showLegalDialog('terms');
         telemetry.signup.openTermsDialog();
-        this.dialogStartTime = Date.now();
     }
 
     @action.bound
     showPrivacyDialog() {
-        this.legalDialogContent = 'privacy';
-        LegalDialog.showDialog();
+        this.showLegalDialog('privacy');
         telemetry.signup.openPrivacyDialog();
-        this.dialogStartTime = Date.now();
     }
-
-    onHideLegalDialog = () => {
-        const contentType =
-            this.legalDialogContent.charAt(0).toUpperCase() +
-            this.legalDialogContent.slice(1);
-
-        telemetry.signup[`duration${contentType}Dialog`](this.dialogStartTime);
-    };
 
     render() {
         if (this.termsDeclined)
             return (
                 <React.Fragment>
                     {this.confirmCancelPage}
-                    <LegalDialog
-                        content={this.legalDialogContent}
-                        onHide={this.onHideLegalDialog}
-                    />
+                    <LegalDialog ref={this.legalDialogRef} />
                 </React.Fragment>
             );
 
@@ -381,10 +370,7 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                     <div className="terms-right">{this.termsItems.right}</div>
                 </div>
 
-                <LegalDialog
-                    content={this.legalDialogContent}
-                    onHide={this.onHideLegalDialog}
-                />
+                <LegalDialog ref={this.legalDialogRef} />
             </div>
         );
     }

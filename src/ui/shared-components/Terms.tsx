@@ -1,8 +1,30 @@
-/* eslint-disable */
+/* eslint-disable spaced-comment */
+// lint throwing weird `spaced-comment` error on the raw text dump
+
 import React from 'react';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
 import * as telemetry from '~/telemetry';
 
-export default class Terms extends React.PureComponent {
+@observer
+export default class Terms extends React.Component<{
+    onToggleContent?: (content: string) => void;
+}> {
+    @observable startTime: number;
+
+    componentDidMount() {
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        telemetry.shared.durationTermsDialog(this.startTime);
+    }
+
+    openPrivacy = () => {
+        telemetry.shared.openPrivacyDialog();
+        this.props.onToggleContent('privacy');
+    };
+
     render() {
         return (
             <div className="terms-of-use">
@@ -25,8 +47,8 @@ export default class Terms extends React.PureComponent {
 
                 <p>
                     If you are primarily interested in what data is available to
-                    Peerio and how your data is handled, please view our&nbsp;
-                    <a href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Privacy_Policy.md">
+                    Peerio and how your data is handled, please view our{' '}
+                    <a className="clickable" onClick={this.openPrivacy}>
                         Privacy Policy
                     </a>.
                 </p>
@@ -520,7 +542,7 @@ export default class Terms extends React.PureComponent {
                 <p>
                     By using the Services, you also agree to be bound by
                     Peerio's{' '}
-                    <a href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Privacy_Policy.md">
+                    <a className="clickable" onClick={this.openPrivacy}>
                         Privacy Policy
                     </a>.
                 </p>

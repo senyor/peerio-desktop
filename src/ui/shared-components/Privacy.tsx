@@ -1,7 +1,27 @@
-/* eslint-disable */
 import React from 'react';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
+import * as telemetry from '~/telemetry';
 
-export default class Privacy extends React.PureComponent {
+@observer
+export default class Privacy extends React.Component<{
+    onToggleContent?: (content: string) => void;
+}> {
+    @observable startTime: number;
+
+    componentDidMount() {
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        telemetry.shared.durationPrivacyDialog(this.startTime);
+    }
+
+    openTerms = () => {
+        telemetry.shared.openTermsDialog();
+        this.props.onToggleContent('terms');
+    };
+
     render() {
         return (
             <div className="privacy-policy">
@@ -21,7 +41,7 @@ export default class Privacy extends React.PureComponent {
 
                 <p>
                     This policy is subject to our{' '}
-                    <a href="https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Terms_of_Use.md">
+                    <a className="clickable" onClick={this.openTerms}>
                         Terms of Use
                     </a>{' '}
                     as well as any other agreements or notices that may be

@@ -220,28 +220,6 @@ const signup = setup({
         }
     ],
 
-    durationTermsDialog: (startTime: number): DurationEvent => {
-        return [
-            S.DURATION,
-            {
-                location: S.ONBOARDING,
-                item: S.TERMS_OF_USE,
-                totalTime: duration(startTime)
-            }
-        ];
-    },
-
-    durationPrivacyDialog: (startTime: number) => {
-        return [
-            S.DURATION,
-            {
-                location: S.ONBOARDING,
-                item: S.PRIVACY_POLICY,
-                totalTime: duration(startTime)
-            }
-        ];
-    },
-
     // ShareUsageData.tsx
     acceptShareData: [
         S.SET_SETTING,

@@ -15,6 +15,7 @@ class AppNavBeaconedItem extends React.Component {
     }
 
     onNavigateClick = () => {
+        beaconStore.clearBeacons();
         this.cancelOnboardingBeacons();
         this.props.onClick();
     };

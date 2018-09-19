@@ -87,8 +87,6 @@ export default class Files extends React.Component<FilesProps> {
         ];
     }
 
-    @observable beaconTimer: NodeJS.Timer;
-
     componentDidMount() {
         window.addEventListener('resize', this.enqueueCheck, false);
         // icebear will call this function to confirm file deletion
@@ -117,11 +115,7 @@ export default class Files extends React.Component<FilesProps> {
         // If user is on first login, add startChat beacon and timeout to auto-clear uploadFiles beacon
         if (uiStore.firstLogin) {
             beaconStore.addBeacons('chat');
-            this.beaconTimer = setTimeout(() => {
-                if (beaconStore.activeBeacon === 'uploadFiles') {
-                    beaconStore.increment();
-                }
-            }, 8000);
+            beaconStore.incrementWithDelay(8000, 'uploadFiles');
         }
     }
 
@@ -140,8 +134,8 @@ export default class Files extends React.Component<FilesProps> {
         this.disposers.forEach(d => d());
 
         // Clean up beacons
-        clearTimeout(this.beaconTimer);
         beaconStore.clearBeacons();
+        beaconStore.clearIncrementDelay();
     }
 
     readonly toggleSelectAll = (ev: React.MouseEvent<HTMLInputElement>) => {

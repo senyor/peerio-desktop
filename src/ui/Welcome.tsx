@@ -6,7 +6,7 @@ import beaconStore from '~/stores/beacon-store';
 @observer
 export default class Welcome extends React.Component {
     componentWillMount() {
-        beaconStore.queueBeacons('contact', 2000);
+        beaconStore.queueFirstBeacon('contact', 2000);
     }
 
     componentWillUnmount() {

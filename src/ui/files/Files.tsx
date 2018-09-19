@@ -115,7 +115,7 @@ export default class Files extends React.Component<FilesProps> {
         // If user is on first login, add startChat beacon and timeout to auto-clear uploadFiles beacon
         if (uiStore.firstLogin) {
             beaconStore.addBeacons('chat');
-            beaconStore.incrementWithDelay(8000, 'uploadFiles');
+            beaconStore.queueIncrement(8000, 'uploadFiles');
         }
     }
 
@@ -135,7 +135,7 @@ export default class Files extends React.Component<FilesProps> {
 
         // Clean up beacons
         beaconStore.clearBeacons();
-        beaconStore.clearIncrementDelay();
+        beaconStore.clearIncrementQueue();
     }
 
     readonly toggleSelectAll = (ev: React.MouseEvent<HTMLInputElement>) => {

@@ -33,22 +33,38 @@ class BeaconStore {
 
     // Increment but with a delay passed from component.
     // Optionally, also pass the name of the beacon that needs to be activeBeacon in order to trigger the increment.
+    // Delay is reset on user activity (key press, mouse click, mouse movement)
     @observable incrementTimer: NodeJS.Timer;
+    @observable incrementDelay: number;
+    @observable incrementOnActiveBeacon: string;
 
     @action.bound
-    incrementWithDelay(delay: number, beacon?: string) {
-        this.incrementTimer = setTimeout(() => {
-            if (!!beacon && this.activeBeacon !== beacon) return;
-            this.increment();
-        }, delay);
+    queueIncrement(delay: number, beacon?: string) {
+        this.incrementDelay = delay;
+        this.incrementOnActiveBeacon = beacon;
+        this.setIncrementTimer();
+        addActivityListener(this.setIncrementTimer);
     }
 
     @action.bound
-    clearIncrementDelay() {
+    setIncrementTimer() {
+        if (this.incrementTimer) clearTimeout(this.incrementTimer);
+        this.incrementTimer = setTimeout(() => {
+            this.increment(this.incrementOnActiveBeacon);
+            this.clearIncrementQueue();
+        }, this.incrementDelay);
+    }
+
+    @action.bound
+    clearIncrementQueue() {
         if (this.incrementTimer) {
             clearTimeout(this.incrementTimer);
             this.incrementTimer = null;
         }
+        this.incrementTimer = null;
+        this.incrementDelay = null;
+        this.incrementOnActiveBeacon = null;
+        removeActivityListener(this.setIncrementTimer);
     }
 
     // Mark beacons as read in the user's profile so user is not shown beacons they have dismissed before
@@ -92,7 +108,7 @@ class BeaconStore {
 
     // Adding beacons with a delay
     @observable beaconsInQueue: string[] = [];
-    @observable delay: number;
+    @observable beaconDelay: number;
 
     @action.bound
     queueBeacons(b: string | string[], delay: number) {
@@ -101,7 +117,7 @@ class BeaconStore {
         } else {
             this.beaconsInQueue = b;
         }
-        this.delay = delay;
+        this.beaconDelay = delay;
         this.setBeaconTimer();
         addActivityListener(this.setBeaconTimer);
     }
@@ -113,7 +129,7 @@ class BeaconStore {
             this.beaconTimer = null;
         }
         this.beaconsInQueue = [];
-        this.delay = 0;
+        this.beaconDelay = 0;
         removeActivityListener(this.setBeaconTimer);
     }
 
@@ -124,18 +140,18 @@ class BeaconStore {
         this.beaconTimer = setTimeout(() => {
             this.addBeacons(this.beaconsInQueue);
             this.clearQueuedBeacons();
-        }, this.delay);
+        }, this.beaconDelay);
     }
 
     // First beacon has different rules from the other queued beacons.
-    // Identical except timer does not reset on mouse movement.
+    // Identical except user activity listeners do *not* include mouse movement.
     queueFirstBeacon(b: string | string[], delay: number) {
         if (typeof b === 'string') {
             this.beaconsInQueue = [b];
         } else {
             this.beaconsInQueue = b;
         }
-        this.delay = delay;
+        this.beaconDelay = delay;
         this.setBeaconTimer();
         addActivityListenerWithoutMouseMovement(this.setBeaconTimer);
     }

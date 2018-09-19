@@ -42,7 +42,7 @@ class NewContact extends React.Component {
 
         if (uiStore.firstLogin) {
             beaconStore.addBeacons('files');
-            beaconStore.incrementWithDelay(8000, 'search');
+            beaconStore.queueIncrement(8000, 'search');
         }
     }
 
@@ -59,7 +59,7 @@ class NewContact extends React.Component {
         clearTimeout(this.beaconTimeout);
         this.beaconTimeout = null;
         beaconStore.clearBeacons();
-        beaconStore.clearIncrementDelay();
+        beaconStore.clearIncrementQueue();
     }
 
     // Don't use onKeyUp - text change fires earlier

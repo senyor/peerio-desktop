@@ -24,20 +24,24 @@ class BeaconStore {
         this.currentBeacons.shift();
     }
 
-    // Increment but with a delay passed from component
+    // Increment but with a delay passed from component.
+    // Optionally, also pass the name of the beacon that needs to be activeBeacon in order to trigger the increment.
     @observable incrementTimer: NodeJS.Timer;
 
     @action.bound
-    incrementWithDelay(delay: number) {
+    incrementWithDelay(delay: number, beacon?: string) {
         this.incrementTimer = setTimeout(() => {
+            if (!!beacon && this.activeBeacon !== beacon) return;
             this.increment();
         }, delay);
     }
 
     @action.bound
     clearIncrementDelay() {
-        clearTimeout(this.incrementTimer);
-        this.incrementTimer = null;
+        if (this.incrementTimer) {
+            clearTimeout(this.incrementTimer);
+            this.incrementTimer = null;
+        }
     }
 
     // Mark beacons as read in the user's profile so user is not shown beacons they have dismissed before
@@ -96,8 +100,10 @@ class BeaconStore {
 
     @action.bound
     clearQueuedBeacons() {
-        clearTimeout(this.beaconTimer);
-        this.beaconTimer = null;
+        if (this.beaconTimer) {
+            clearTimeout(this.beaconTimer);
+            this.beaconTimer = null;
+        }
         this.beaconsInQueue = [];
         this.delay = 0;
     }

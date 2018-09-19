@@ -1,7 +1,13 @@
 import { action, computed, observable } from 'mobx';
 import { User } from 'peerio-icebear';
+import {
+    addInputListener,
+    removeInputListener
+} from '~/helpers/input-listener';
 
 class BeaconStore {
+    // Beacons in queue to be shown to user.
+    // 0th item is currently visible.
     @observable currentBeacons: string[] = [];
 
     @computed
@@ -43,13 +49,56 @@ class BeaconStore {
         }
     };
 
+    // Adding beacons with a delay, based on user inactivity
+    @observable beaconsInQueue: string[] = [];
+    @observable delay: number;
+
+    @action.bound
+    queueBeacons(b: string | string[], delay: number) {
+        if (typeof b === 'string') {
+            this.beaconsInQueue.push(b);
+        } else {
+            this.beaconsInQueue = b;
+        }
+        this.delay = delay;
+
+        this.setBeaconTimer();
+        addInputListener(this.setBeaconTimer);
+    }
+
+    @action.bound
+    clearQueuedBeacons() {
+        console.log('clear queued beacons');
+        this.clearBeaconTimer();
+        removeInputListener(this.setBeaconTimer);
+    }
+
+    @observable beaconTimer: NodeJS.Timer;
+    @action.bound
+    setBeaconTimer() {
+        console.log('set beacon timer');
+        if (this.beaconTimer) clearTimeout(this.beaconTimer);
+        this.beaconTimer = setTimeout(() => {
+            this.addBeacons(this.beaconsInQueue);
+            this.clearQueuedBeacons();
+        }, this.delay);
+    }
+    @action.bound
+    clearBeaconTimer() {
+        console.log('clear beacon timer');
+        clearTimeout(this.beaconTimer);
+        this.beaconTimer = null;
+        this.beaconsInQueue = [];
+        this.delay = 0;
+    }
+
     // Pushing to currentBeacons but check beacon read status in User profile first
     @action.bound
     async pushBeacon(b: string): Promise<void> {
-        const beaconStatus = await User.current.beacons.get(b);
-        if (!beaconStatus) {
-            this.currentBeacons.push(b);
-        }
+        // const beaconStatus = await User.current.beacons.get(b);
+        // if (!beaconStatus) {
+        this.currentBeacons.push(b);
+        // }
     }
 
     @action.bound

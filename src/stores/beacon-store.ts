@@ -63,9 +63,10 @@ class BeaconStore {
         }
     };
 
-    // Pushing to currentBeacons but check beacon read status in User profile first
+    // Push to currentBeacons but check beacon read status in User profile first.
+    // This is not intended to be called directly. Component should use addBeacons.
     @action.bound
-    async pushBeacon(b: string): Promise<void> {
+    private async pushBeacon(b: string): Promise<void> {
         const beaconStatus = await User.current.beacons.get(b);
         if (!beaconStatus) {
             this.currentBeacons.push(b);
@@ -78,7 +79,7 @@ class BeaconStore {
         this.currentBeacons = [];
     }
 
-    // Adding beacons with a delay, based on user inactivity
+    // Adding beacons with a delay
     @observable beaconsInQueue: string[] = [];
     @observable delay: number;
 

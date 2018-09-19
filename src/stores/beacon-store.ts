@@ -25,19 +25,19 @@ class BeaconStore {
     }
 
     // Increment but with a delay passed from component
-    @observable delayTimer: NodeJS.Timer;
+    @observable incrementTimer: NodeJS.Timer;
 
     @action.bound
     incrementWithDelay(delay: number) {
-        this.delayTimer = setTimeout(() => {
+        this.incrementTimer = setTimeout(() => {
             this.increment();
         }, delay);
     }
 
     @action.bound
     clearIncrementDelay() {
-        clearTimeout(this.delayTimer);
-        this.delayTimer = null;
+        clearTimeout(this.incrementTimer);
+        this.incrementTimer = null;
     }
 
     // Mark beacons as read in the user's profile so user is not shown beacons they have dismissed before

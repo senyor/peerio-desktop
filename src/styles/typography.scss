@@ -48,8 +48,9 @@
   text-transform: uppercase;
 }
 
-.monospace {
-  font-family: monospace;
+.monospace,
+%monospace {
+  font-family: 'Fira Mono', monospace;
 }
 
 .text-center {

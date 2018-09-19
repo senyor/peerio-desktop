@@ -14,10 +14,10 @@
     align-items: center;
 
     .ak-content {
+      @extend %monospace;
       flex-grow: 1;
       -webkit-user-select: auto;
       padding: $padding-small;
-      font-family: monospace;
       font-size: 12px;
       font-weight: $font-weight-semibold;
       text-align: center;

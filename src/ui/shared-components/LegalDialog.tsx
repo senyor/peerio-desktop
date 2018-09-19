@@ -1,49 +1,59 @@
 import React from 'react';
-import { observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { Dialog } from 'peer-ui';
 import { t } from 'peerio-translator';
 import Terms from './Terms';
 import Privacy from './Privacy';
 
-interface LegalTypes {
-    content: 'terms' | 'privacy';
-    onHide?: () => void;
-}
-
 @observer
-export default class LegalDialog extends React.Component<LegalTypes> {
-    @observable static show = false;
+export default class LegalDialog extends React.Component<{
+    content?: 'terms' | 'privacy';
+}> {
+    @observable show = false;
+    @observable content = '';
 
-    static hideDialog() {
-        LegalDialog.show = false;
+    @computed
+    get currentContent() {
+        /*
+            LegalDialog can be passed `content` directly as a prop
+            Alternatively, can use `this.content`, allowing you to set content in parent (via ref) or child (via toggleContent)
+        */
+        return this.content || this.props.content;
     }
 
-    static showDialog() {
-        LegalDialog.show = true;
+    @action.bound
+    toggleContent(content: string): void {
+        this.content = content;
     }
 
-    onCancel = () => {
-        LegalDialog.hideDialog();
-        if (this.props.onHide) {
-            this.props.onHide();
-        }
-    };
+    @action.bound
+    hideDialog() {
+        this.show = false;
+    }
+
+    @action.bound
+    showDialog() {
+        this.show = true;
+    }
 
     render() {
-        const { show } = LegalDialog;
         const dialogActions = [
-            { label: t('button_ok'), onClick: this.onCancel }
+            { label: t('button_ok'), onClick: this.hideDialog }
         ];
         return (
             <Dialog
-                active={show}
+                active={this.show}
                 actions={dialogActions}
-                onCancel={this.onCancel}
+                onCancel={this.hideDialog}
                 className="terms-container"
             >
-                {this.props.content === 'terms' ? <Terms /> : null}
-                {this.props.content === 'privacy' ? <Privacy /> : null}
+                {this.currentContent === 'terms' ? (
+                    <Terms onToggleContent={this.toggleContent} />
+                ) : null}
+                {this.currentContent === 'privacy' ? (
+                    <Privacy onToggleContent={this.toggleContent} />
+                ) : null}
             </Dialog>
         );
     }

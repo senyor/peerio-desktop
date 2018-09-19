@@ -6,9 +6,9 @@
 
 import { setup } from '~/telemetry/main';
 import routerStore from '~/stores/router-store';
-import { TextInputEvent } from '~/telemetry/types';
+import { DurationEvent, TextInputEvent } from '~/telemetry/types';
 import { telemetry } from 'peerio-icebear';
-const { S, errorMessage } = telemetry;
+const { duration, S, errorMessage } = telemetry;
 
 function context() {
     const { ROUTES, currentRoute } = routerStore;
@@ -22,6 +22,7 @@ function context() {
 
 // TODO: try to get around `any` type
 const shared: any = setup({
+    // ValidatedInput
     validatedInputOnFocus: (label: string): TextInputEvent => {
         return [
             S.TEXT_INPUT,
@@ -59,6 +60,49 @@ const shared: any = setup({
             {
                 item: label,
                 location: context()
+            }
+        ];
+    },
+
+    // LegalDialog
+    openTermsDialog: () => {
+        return [
+            S.READ_MORE,
+            {
+                item: S.TERMS_OF_USE,
+                location: context()
+            }
+        ];
+    },
+
+    openPrivacyDialog: () => {
+        return [
+            S.READ_MORE,
+            {
+                item: S.PRIVACY_POLICY,
+                location: context()
+            }
+        ];
+    },
+
+    durationTermsDialog: (startTime: number): DurationEvent => {
+        return [
+            S.DURATION,
+            {
+                location: context(),
+                item: S.TERMS_OF_USE,
+                totalTime: duration(startTime)
+            }
+        ];
+    },
+
+    durationPrivacyDialog: (startTime: number): DurationEvent => {
+        return [
+            S.DURATION,
+            {
+                location: context(),
+                item: S.PRIVACY_POLICY,
+                totalTime: duration(startTime)
             }
         ];
     },

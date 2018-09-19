@@ -145,6 +145,19 @@ export default class Files extends React.Component<FilesProps> {
         });
     };
 
+    onUploadClick = async () => {
+        // Beacon control
+        if (beaconStore.activeBeacon === 'uploadFiles') {
+            beaconStore.clearBeacons();
+        }
+        if (uiStore.firstLogin && !beaconStore.beaconsInQueue.length) {
+            beaconStore.queueBeacons('chat', 8000);
+        }
+
+        // Actual uploading function
+        await this.localFileManager.pickAndUpload();
+    };
+
     @computed
     get items(): any[] {
         return fileStore.searchQuery
@@ -269,7 +282,7 @@ export default class Files extends React.Component<FilesProps> {
         return (
             <div className="files">
                 {this.showPendingFilesBanner ? <PendingFilesBanner /> : null}
-                <FilesHeader onUpload={this.localFileManager.pickAndUpload} />
+                <FilesHeader onUpload={this.onUploadClick} />
                 <div className="file-wrapper">
                     <div
                         className={css('file-table-wrapper', {

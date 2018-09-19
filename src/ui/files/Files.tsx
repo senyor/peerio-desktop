@@ -116,7 +116,7 @@ export default class Files extends React.Component<FilesProps> {
 
         // If user is on first login, add startChat beacon and timeout to auto-clear uploadFiles beacon
         if (uiStore.firstLogin) {
-            beaconStore.addBeacons('startChat');
+            beaconStore.addBeacons('chat');
             this.beaconTimer = setTimeout(() => {
                 if (beaconStore.activeBeacon === 'uploadFiles') {
                     beaconStore.increment();

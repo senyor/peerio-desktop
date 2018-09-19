@@ -121,7 +121,7 @@ export default class Files extends React.Component<FilesProps> {
                 if (beaconStore.activeBeacon === 'uploadFiles') {
                     beaconStore.increment();
                 }
-            }, 5000);
+            }, 8000);
         }
     }
 

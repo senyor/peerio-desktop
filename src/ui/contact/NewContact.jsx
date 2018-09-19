@@ -47,7 +47,7 @@ class NewContact extends React.Component {
                 if (beaconStore.activeBeacon === 'search') {
                     beaconStore.increment();
                 }
-            }, 5000);
+            }, 8000);
         }
     }
 

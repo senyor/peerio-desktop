@@ -1,9 +1,5 @@
 import { action, computed, observable } from 'mobx';
 import { User } from 'peerio-icebear';
-import {
-    addInputListener,
-    removeInputListener
-} from '~/helpers/input-listener';
 
 class BeaconStore {
     // Beacons in queue to be shown to user.
@@ -16,6 +12,7 @@ class BeaconStore {
         return this.currentBeacons[0];
     }
 
+    // "Advances" the beacon flow by removing the 0th entry
     @action.bound
     increment() {
         if (!this.currentBeacons.length) return;
@@ -27,6 +24,23 @@ class BeaconStore {
         this.currentBeacons.shift();
     }
 
+    // Increment but with a delay passed from component
+    @observable delayTimer: NodeJS.Timer;
+
+    @action.bound
+    incrementWithDelay(delay: number) {
+        this.delayTimer = setTimeout(() => {
+            this.increment();
+        }, delay);
+    }
+
+    @action.bound
+    clearIncrementDelay() {
+        clearTimeout(this.delayTimer);
+        this.delayTimer = null;
+    }
+
+    // Mark beacons as read in the user's profile so user is not shown beacons they have dismissed before
     async markAsRead(b: string | string[]): Promise<void> {
         if (typeof b === 'string') {
             User.current.beacons.set(b, true);
@@ -38,7 +52,7 @@ class BeaconStore {
         await User.current.saveBeacons();
     }
 
-    // Argument can be string (single beacon) or array (multiple)
+    // Add beacons to the currentBeacons array. Argument can be string (single beacon) or array (multiple).
     addBeacons = (b: string | string[]): void => {
         if (typeof b === 'string') {
             this.pushBeacon(b);

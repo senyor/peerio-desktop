@@ -74,6 +74,15 @@ class NewContact extends React.Component {
     handleTextChange(newVal) {
         this.notFound = false;
         this.query = newVal.toLocaleLowerCase().trim();
+
+        // Beacon management
+        if (beaconStore.activeBeacon) {
+            beaconStore.clearBeacons();
+        }
+
+        if (uiStore.firstLogin && !beaconStore.beaconsInQueue.length) {
+            beaconStore.queueBeacons('files', 8000);
+        }
     }
 
     onInputMount(input) {

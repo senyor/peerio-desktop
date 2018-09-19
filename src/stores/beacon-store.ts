@@ -1,5 +1,10 @@
 import { action, computed, observable } from 'mobx';
 import { User } from 'peerio-icebear';
+import {
+    addActivityListener,
+    removeActivityListener,
+    addActivityListenerWithoutMouseMovement
+} from '~/helpers/activity-listeners';
 
 class BeaconStore {
     // Beacons in queue to be shown to user.
@@ -13,9 +18,11 @@ class BeaconStore {
     }
 
     // "Advances" the beacon flow by removing the 0th entry
+    // Optionally, pass the name of the beacon that needs to be activeBeacon in orderto trigger the increment
     @action.bound
-    increment() {
+    increment(beacon?: string) {
         if (!this.currentBeacons.length) return;
+        if (!!beacon && this.activeBeacon !== beacon) return;
 
         // Mark activeBeacon as seen in User beacons
         this.markAsRead(this.activeBeacon);
@@ -96,6 +103,7 @@ class BeaconStore {
         }
         this.delay = delay;
         this.setBeaconTimer();
+        addActivityListener(this.setBeaconTimer);
     }
 
     @action.bound
@@ -106,15 +114,30 @@ class BeaconStore {
         }
         this.beaconsInQueue = [];
         this.delay = 0;
+        removeActivityListener(this.setBeaconTimer);
     }
 
     @observable beaconTimer: NodeJS.Timer;
     @action.bound
     setBeaconTimer() {
+        if (this.beaconTimer) clearTimeout(this.beaconTimer);
         this.beaconTimer = setTimeout(() => {
             this.addBeacons(this.beaconsInQueue);
             this.clearQueuedBeacons();
         }, this.delay);
+    }
+
+    // First beacon has different rules from the other queued beacons.
+    // Identical except timer does not reset on mouse movement.
+    queueFirstBeacon(b: string | string[], delay: number) {
+        if (typeof b === 'string') {
+            this.beaconsInQueue = [b];
+        } else {
+            this.beaconsInQueue = b;
+        }
+        this.delay = delay;
+        this.setBeaconTimer();
+        addActivityListenerWithoutMouseMovement(this.setBeaconTimer);
     }
 }
 

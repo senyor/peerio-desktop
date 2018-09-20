@@ -12,6 +12,7 @@ import FileLine from './FileLine';
 import FolderLine from './FolderLine';
 import Breadcrumb from './Breadcrumb';
 import { setCurrentFolder } from '../helpers/sharedFileAndFolderActions';
+import _ from 'lodash';
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -54,16 +55,19 @@ export default class FilePicker extends React.Component<FilePickerProps> {
         }
     };
 
-    enqueueCheck = () => {
-        window.requestAnimationFrame(this.checkScrollPosition);
-    };
+    readonly enqueueCheck = _.debounce(
+        () => {
+            window.requestAnimationFrame(this.checkScrollPosition);
+        },
+        100,
+        { leading: true, maxWait: 400 }
+    );
 
     readonly setScrollerRef = (ref: HTMLElement | null) => {
         if (!ref) {
             this.container = null;
             return;
         }
-        ref.addEventListener('scroll', this.enqueueCheck, false);
         this.container = ref;
         this.enqueueCheck(); // check the initial situation
     };
@@ -113,6 +117,7 @@ export default class FilePicker extends React.Component<FilePickerProps> {
     }
 
     render() {
+        this.enqueueCheck();
         const actions = [
             { label: t('button_cancel'), onClick: this.handleClose },
             {

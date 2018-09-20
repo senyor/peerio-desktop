@@ -14,7 +14,6 @@ import MoveFileDialog from './MoveFileDialog';
 import {
     isFileOrFolderMoveable,
     isFileShareable,
-    isFileDeleteable,
     fileDownloadUIEnabled
 } from '../helpers/sharedFileAndFolderActions';
 
@@ -142,7 +141,7 @@ export default class FileActions extends React.Component<FileActionsProps> {
                             onClick={this.props.onRename}
                         />
                     ) : null}
-                    {isFileDeleteable(file) ? (
+                    {this.props.file.deleteable ? (
                         <React.Fragment>
                             <Divider />
                             {this.props.onDelete && (

@@ -58,7 +58,7 @@ export function isFileShareable(file: File): boolean {
     return file.readyForDownload && file.canShare;
 }
 
-export function isFileDeleteable(file: File): boolean {
+export function isFileOwnedByCurrentUser(file: File): boolean {
     return file.fileOwner === User.current.username;
 }
 

@@ -17,6 +17,7 @@ import uiStore from '~/stores/ui-store';
 
 import FileActions from './FileActions';
 import FileFolderDetailsRow from './FileFolderDetailsRow';
+import { isFileOwnedByCurrentUser } from '../helpers/sharedFileAndFolderActions';
 
 interface FileLineProps {
     file: any; // TODO:TS
@@ -74,7 +75,10 @@ export default class FileLine extends React.Component<FileLineProps> {
         let msg = t('title_confirmRemoveFilename', {
             name: this.props.file.name
         });
-        if (this.props.file.shared) {
+        if (
+            this.props.file.shared &&
+            isFileOwnedByCurrentUser(this.props.file)
+        ) {
             msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
         }
         if (confirm(msg)) {

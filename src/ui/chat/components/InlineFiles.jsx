@@ -24,7 +24,7 @@ const { downloadFile } = require('~/helpers/file');
 
 const {
     isFileShareable,
-    isFileDeleteable,
+    isFileOwnedByCurrentUser,
     fileDownloadUIEnabled
 } = require('../../files/helpers/sharedFileAndFolderActions');
 
@@ -214,7 +214,7 @@ class InlineFile extends React.Component {
                             disabled={!isFileShareable(file)}
                             theme="small"
                         />
-                        {isFileDeleteable(file) && (
+                        {isFileOwnedByCurrentUser(file) && (
                             <React.Fragment>
                                 <Button
                                     icon="delete"

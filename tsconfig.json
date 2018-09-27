@@ -16,8 +16,9 @@
     "noImplicitAny": false, // TODO: enable (default enabled under `strict`, so just remove this line)
     "strictNullChecks": false, // TODO: enable (default enabled under `strict`, so just remove this line)
     "paths": {
+      // path mappings are mirrored in the jest config in package.json. if you
+      // change them here, update them there as well!
       "~/*": ["./*"],
-      "*": ["*", "../node_modules/*"],
       // Since desktop app uses self-compiled sdk from node_modules/peerio-icebear/dist
       // and main file of the sdk is /dist/index.js,
       // we give a hint to typescript where to look for sources.

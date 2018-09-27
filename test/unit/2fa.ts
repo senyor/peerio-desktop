@@ -1,8 +1,7 @@
-const { validateCode } = require('../../src/helpers/2fa');
+import { validateCode } from '../../src/helpers/2fa';
 
 describe('2fa helper', () => {
     [
-        { code: null, expected: { readyToSubmit: false, isBackupCode: false } },
         { code: '', expected: { readyToSubmit: false, isBackupCode: false } },
         { code: 1234, expected: { readyToSubmit: false, isBackupCode: false } },
         {
@@ -40,8 +39,8 @@ describe('2fa helper', () => {
         { code: '-', expected: { readyToSubmit: false, isBackupCode: true } }
     ].forEach(testCase => {
         it(`should validate code ${JSON.stringify(testCase.code)}`, () => {
-            const actual = validateCode(testCase.code);
-            actual.should.eql(testCase.expected);
+            const actual = validateCode(testCase.code.toString());
+            expect(actual).toEqual(testCase.expected);
         });
     });
 });

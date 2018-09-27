@@ -1,8 +1,8 @@
-const {
+import {
     chatSchema,
     isWhitespaceOnly,
     emptyDoc
-} = require('../../build/helpers/chat/prosemirror/chat-schema');
+} from '../../src/helpers/chat/prosemirror/chat-schema';
 
 // TODO: all the chat schema testing would really benefit from a jsverify-style generator
 
@@ -62,7 +62,7 @@ describe('chat schema', () => {
             testCase.name
         }'`, () => {
             const actual = isWhitespaceOnly(testCase.doc);
-            actual.should.eql(testCase.shouldBeWhitespaceOnly);
+            expect(actual).toEqual(testCase.shouldBeWhitespaceOnly);
         });
     });
 });

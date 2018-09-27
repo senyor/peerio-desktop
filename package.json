@@ -33,8 +33,8 @@
     "icebear-watch-src": "./scripts/link_local_icebear.js -w",
     "icebear-watch-dist": "npm run compile:icebear -- -w --skip-initial-build",
     "=== TEST ===": "",
-    "test": "npm run compile && run-s -l test:mocha",
-    "test:mocha": "mocha --color --require ./test/unit/global-setup.js 'test/unit/**/*.test.js'",
+    "test": "run-s -l test:jest",
+    "test:jest": "jest --colors",
     "test:ts": "tsc --noEmit --pretty",
     "=== BUILD ===": "",
     "internal-build": "NODE_ENV=production npm run compile && NODE_ENV=production build --mac --windows --x64 --publish never",
@@ -170,12 +170,11 @@
     "@babel/register": "7.0.0",
     "@peerio/desktop-release-builder": "7.0.1",
     "@types/bluebird-global": "3.5.9",
-    "@types/chai": "4.1.4",
-    "@types/chai-as-promised": "7.1.0",
     "@types/electron-devtools-installer": "2.2.0",
+    "@types/enzyme": "3.1.13",
+    "@types/jest": "23.3.2",
     "@types/keytar": "4.0.1",
     "@types/lodash": "4.14.116",
-    "@types/mocha": "5.2.5",
     "@types/prosemirror-commands": "1.0.1",
     "@types/prosemirror-history": "1.0.1",
     "@types/prosemirror-inputrules": "1.0.2",
@@ -188,8 +187,6 @@
     "@types/react-dom": "16.0.7",
     "babel-eslint": "9.0.0",
     "babel-plugin-root-import": "6.1.0",
-    "chai": "4.1.2",
-    "chai-as-promised": "7.1.1",
     "chokidar": "2.0.4",
     "cz-conventional-changelog": "2.1.0",
     "debounce-queue": "0.2.2",
@@ -200,13 +197,16 @@
     "electron-reload": "1.2.5",
     "emojione": "3.1.7",
     "emojione-assets": "3.1.1",
+    "enzyme": "3.6.0",
+    "enzyme-adapter-react-16": "1.5.0",
     "eslint-config-peerio": "1.21.7",
     "eslint-config-prettier": "3.0.1",
     "eslint-plugin-typescript": "0.12.0",
     "fs-extra": "7.0.0",
     "husky": "0.14.3",
+    "jest": "23.6.0",
+    "jest-enzyme": "6.0.4",
     "mkdirp": "0.5.1",
-    "mocha": "5.2.0",
     "node-sass": "4.9.2",
     "npm-run-all": "4.1.3",
     "opt-cli": "1.6.0",
@@ -220,6 +220,7 @@
     "stylelint-config-standard": "18.2.0",
     "stylelint-order": "0.8.1",
     "stylelint-scss": "3.2.0",
+    "ts-jest": "23.1.4",
     "typescript": "3.0.3",
     "typescript-eslint-parser": "18.0.0",
     "validate-commit-msg": "2.14.0",
@@ -355,6 +356,34 @@
   "standard-version": {
     "skip": {
       "changelog": true
+    }
+  },
+  "jest": {
+    "testEnvironment": "enzyme",
+    "setupTestFrameworkScriptFile": "./test/setup-enzyme.ts",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testMatch": [
+      "<rootDir>/test/unit/**/*.ts?(x)"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx"
+    ],
+    "moduleNameMapper": {
+      "~/(.*)": "<rootDir>/src/$1",
+      "peerio-icebear": "<rootDir>/node_modules/peerio-icebear/src"
+    },
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "globals": {
+      "ts-jest": {
+        "skipBabel": true
+      }
     }
   }
 }

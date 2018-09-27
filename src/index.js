@@ -14,7 +14,7 @@ require('~/config');
 if (isDevEnv) {
     // to allow require of development modules in dev environment
     const path = require('path');
-    const PATH_APP_NODE_MODULES = path.resolve(path.join('app/node_modules'));
+    const PATH_APP_NODE_MODULES = path.resolve(path.join('node_modules'));
     require('module').globalPaths.push(PATH_APP_NODE_MODULES);
     // enable react-perf chrome dev tool
     // window.Perf = require('react-addons-perf');

@@ -16,9 +16,9 @@ const isDev = process.env.NODE_ENV !== 'production';
  */
 function startApp(context) {
     context.app = isDev
-        ? new Application({ path: electron, args: ['./app'] })
+        ? new Application({ path: electron, args: ['./build'] })
         : new Application({
-              path: `./dist/mac/Peerio Messenger.app/Contents/MacOS/Peerio Messenger`
+              path: `./dist/mac/Peerio 2.app/Contents/MacOS/Peerio 2`
           });
 
     return context.app

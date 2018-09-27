@@ -2,7 +2,7 @@ const {
     chatSchema,
     isWhitespaceOnly,
     emptyDoc
-} = require('../../app/build/helpers/chat/prosemirror/chat-schema');
+} = require('../../build/helpers/chat/prosemirror/chat-schema');
 
 // TODO: all the chat schema testing would really benefit from a jsverify-style generator
 

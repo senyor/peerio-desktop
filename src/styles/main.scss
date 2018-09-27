@@ -1,3 +1,11 @@
+// NOTE: import paths for CSS and SASS are different:
+//
+//   ../node_modules for CSS
+//   ../../node_modules for SASS
+//
+// because the former are resolved at runtime inside Electron app,
+// while the latter are resolved at compile time.
+
 // Libraries
 @import '../node_modules/normalize.css/normalize.css';
 @import '../node_modules/material-design-icons/iconfont/material-icons.css';
@@ -5,21 +13,21 @@
 @import './static/emoji/sprites/emojione.css';
 
 // Brand/identity
-@import 'app/node_modules/peer-ui/src/scss/_branding';
+@import '../../node_modules/peer-ui/src/scss/_branding';
 @import './font';
 @import './whitelabel'; // variable overrides for whitelabel releases
 
 // Variables
-@import 'app/node_modules/peer-ui/src/scss/_colors';
+@import '../../node_modules/peer-ui/src/scss/_colors';
 @import './vars/_colors-white-label'; // variable overrides for whitelabel releases
-@import 'app/node_modules/peer-ui/src/scss/_grid';
-@import 'app/node_modules/peer-ui/src/scss/_layout';
-@import 'app/node_modules/peer-ui/src/scss/_shadows';
-@import 'app/node_modules/peer-ui/src/scss/_transitions';
-@import 'app/node_modules/peer-ui/src/scss/_typography';
+@import '../../node_modules/peer-ui/src/scss/_grid';
+@import '../../node_modules/peer-ui/src/scss/_layout';
+@import '../../node_modules/peer-ui/src/scss/_shadows';
+@import '../../node_modules/peer-ui/src/scss/_transitions';
+@import '../../node_modules/peer-ui/src/scss/_typography';
 
 // PeerUI components
-@import 'app/node_modules/peer-ui/src/components/_all';
+@import '../../node_modules/peer-ui/src/components/_all';
 
 // General reused styles, classes, etc.
 @import './misc';

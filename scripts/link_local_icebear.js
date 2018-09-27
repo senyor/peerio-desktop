@@ -26,7 +26,6 @@ const copy = debounce(
             // const filePath = path.relative(modulePath, fullFilePath);
             const fullDestPath = path.join(
                 cwd,
-                'app',
                 'node_modules',
                 moduleName,
                 filePath

@@ -5,10 +5,8 @@
       "type": "chrome",
       "request": "attach",
       "name": "Attach to Electron main window renderer process",
-      "url": "${workspaceRoot}/app/build/index.html",
-      "skipFiles": [
-        "**/node_modules/*"
-      ],
+      "url": "${workspaceRoot}/build/index.html",
+      "skipFiles": ["**/node_modules/*"],
       "webRoot": "${workspaceRoot}",
       "port": 9222
     }

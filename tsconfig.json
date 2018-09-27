@@ -17,11 +17,11 @@
     "strictNullChecks": false, // TODO: enable (default enabled under `strict`, so just remove this line)
     "paths": {
       "~/*": ["./*"],
-      "*": ["*", "../app/node_modules/*"],
+      "*": ["*", "../node_modules/*"],
       // Since desktop app uses self-compiled sdk from node_modules/peerio-icebear/dist
       // and main file of the sdk is /dist/index.js,
       // we give a hint to typescript where to look for sources.
-      "peerio-icebear": ["../app/node_modules/peerio-icebear/src"]
+      "peerio-icebear": ["../node_modules/peerio-icebear/src"]
     }
   },
   "include": ["src/**/*", "test/**/*"],

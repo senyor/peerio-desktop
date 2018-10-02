@@ -10,7 +10,7 @@ import { debounce } from 'lodash';
 import css from 'classnames';
 import { t } from 'peerio-translator';
 import { fileStore, chatStore, clientApp } from 'peerio-icebear';
-import { Button, Menu, MenuItem } from 'peer-ui';
+import { Button, MaterialIcon, Menu, MenuItem } from 'peer-ui';
 
 import FilePicker from '~/ui/files/components/FilePicker';
 import Snackbar from '~/ui/shared-components/Snackbar';
@@ -221,6 +221,7 @@ export default class MessageInput extends React.Component<MessageInputProps> {
                             onClick={this.activateUploadDialog}
                         />
                     </Menu>
+
                     {this.props.readonly ? (
                         <div className="message-editor-empty">&nbsp;</div>
                     ) : (

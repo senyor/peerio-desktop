@@ -4,6 +4,7 @@ import { action, observable } from 'mobx';
 import { t } from 'peerio-translator';
 import { Dialog } from 'peer-ui';
 import { User, errors } from 'peerio-icebear';
+import uiStore from '~/stores/ui-store';
 import routerStore from '~/stores/router-store';
 import * as telemetry from '~/telemetry';
 
@@ -89,7 +90,8 @@ export default class Signup extends React.Component {
                 this.busy = false;
                 autologin.enable();
                 autologin.dontSuggestEnablingAgain();
-                routerStore.navigateTo(routerStore.ROUTES.chats);
+                uiStore.firstLogin = true;
+                routerStore.navigateTo(routerStore.ROUTES.welcome);
             })
             .tapCatch(err => {
                 User.current = null;

@@ -17,15 +17,15 @@ import {
 } from 'peer-ui';
 
 import routerStore from '~/stores/router-store';
-
 import T from '~/ui/shared-components/T';
 import AvatarWithPopup from '~/ui/contact/components/AvatarWithPopup';
 import PlusIcon from '~/ui/shared-components/PlusIcon';
 import MaintenanceWarning from '~/ui/shared-components/MaintenanceWarning';
 import { getAttributeInParentChain } from '~/helpers/dom';
-
 import PatientList from '~/whitelabel/components/PatientList';
 import ELEMENTS from '~/whitelabel/helpers/elements';
+
+import PlusIconBeaconed from './PlusIconBeaconed';
 
 // Variables to calculate position-in-window of unread messages
 const paddingTop = 20;
@@ -378,9 +378,10 @@ export default class ChatList extends React.Component {
 
                         <List clickable>
                             <div>
-                                <PlusIcon
-                                    onClick={this.newMessage}
+                                <PlusIconBeaconed
+                                    beaconName="startChat"
                                     label={t('title_directMessages')}
+                                    onClick={this.newMessage}
                                 />
                                 <Tooltip
                                     text={t('title_addDirectMessage')}

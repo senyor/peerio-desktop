@@ -9,13 +9,13 @@ const css = require('classnames');
 const { remote } = require('electron');
 const notificationFactory = require('~/helpers/notifications');
 const appControl = require('~/helpers/app-control');
-const AppNavButton = require('./AppNavButton');
 const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
 const urls = require('~/config').translator.urlMap;
 const autologin = require('~/helpers/autologin');
 const path = require('path');
 const config = require('~/config');
+const AppNavBeaconedItem = require('./AppNavBeaconedItem');
 
 const { app, nativeImage } = remote;
 
@@ -276,7 +276,8 @@ class AppNav extends React.Component {
                     </Menu>
                 </div>
                 <div className="app-menu">
-                    <AppNavButton
+                    <AppNavBeaconedItem
+                        beaconName="chat"
                         tooltip={t('title_chats')}
                         icon="forum"
                         active={
@@ -287,22 +288,21 @@ class AppNav extends React.Component {
                         badge={chatStore.badgeCount}
                         onClick={this.toChats}
                     />
-
-                    <AppNavButton
+                    <AppNavBeaconedItem
+                        beaconName="files"
                         tooltip={t('title_files')}
                         icon="folder"
                         active={currentRoute.startsWith(ROUTES.files)}
                         showBadge={fileStore.unreadFiles > 0}
                         onClick={this.toFiles}
                     />
-
-                    <AppNavButton
+                    <AppNavBeaconedItem
+                        beaconName="contact"
                         tooltip={t('title_contacts')}
                         icon="people"
                         active={currentRoute.startsWith(ROUTES.contacts)}
                         onClick={this.toContacts}
                     />
-
                     <UsageCloud onClick={this.toOnboarding} />
                 </div>
                 <SignoutDialog

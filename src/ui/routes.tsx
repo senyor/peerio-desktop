@@ -6,6 +6,7 @@ import Root from '~/ui/Root';
 import Chat from '~/whitelabel/components/Chat';
 import NewChannel from '~/whitelabel/components/NewChannel';
 
+import Welcome from './Welcome';
 import Onboarding from './Onboarding';
 import Login from './login/Login';
 import Signup from './signup/Signup';
@@ -46,6 +47,7 @@ export default (
         <Route path="autologin" component={AutoLogin} />
         <Route path="/app" component={App}>
             <IndexRoute component={Loading} />
+            <Route path="welcome" component={Welcome} />
             <Route path="chats" component={Chat}>
                 <IndexRoute component={ChatView} />
                 <Route path="channel-invite" component={ChannelInvite} />

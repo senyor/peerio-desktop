@@ -18,6 +18,7 @@ import { t } from 'peerio-translator';
 import T from '~/ui/shared-components/T';
 import ConfirmFolderDeleteDialog from '~/ui/shared-components/ConfirmFolderDeleteDialog';
 import uiStore from '~/stores/ui-store';
+import beaconStore from '~/stores/beacon-store';
 
 import { selectDownloadFolder, pickSavePath } from '~/helpers/file';
 
@@ -101,6 +102,21 @@ export default class Files extends React.Component<FilesProps> {
 
         // icebear will call this function trying to pick a file or folder name which doesn't overwrite existing file
         fileStore.bulk.pickPathSelector = pickSavePath;
+
+        // Show uploadFiles beacons if user has no files
+        if (
+            fileStore.loaded &&
+            !fileStore.files.length &&
+            !fileStore.folderStore.folders.length
+        ) {
+            beaconStore.addBeacons('uploadFiles');
+        }
+
+        // If user is on first login, add startChat beacon and timeout to auto-clear uploadFiles beacon
+        if (uiStore.firstLogin) {
+            beaconStore.addBeacons('chat');
+            beaconStore.queueIncrement(8000, 'uploadFiles');
+        }
     }
 
     componentWillUnmount() {
@@ -116,6 +132,10 @@ export default class Files extends React.Component<FilesProps> {
         fileStore.bulk.downloadFolderSelector = null;
         fileStore.bulk.pickPathSelector = null;
         this.disposers.forEach(d => d());
+
+        // Clean up beacons
+        beaconStore.clearBeacons();
+        beaconStore.clearIncrementQueue();
     }
 
     readonly toggleSelectAll = (ev: React.MouseEvent<HTMLInputElement>) => {
@@ -123,6 +143,19 @@ export default class Files extends React.Component<FilesProps> {
             if (item.isShared) return;
             item.selected = !!ev.currentTarget.checked;
         });
+    };
+
+    onUploadClick = async () => {
+        // Beacon control
+        if (beaconStore.activeBeacon === 'uploadFiles') {
+            beaconStore.clearBeacons();
+        }
+        if (uiStore.firstLogin && !beaconStore.beaconsInQueue.length) {
+            beaconStore.queueBeacons('chat', 8000);
+        }
+
+        // Actual uploading function
+        await this.localFileManager.pickAndUpload();
     };
 
     @computed
@@ -249,7 +282,7 @@ export default class Files extends React.Component<FilesProps> {
         return (
             <div className="files">
                 {this.showPendingFilesBanner ? <PendingFilesBanner /> : null}
-                <FilesHeader onUpload={this.localFileManager.pickAndUpload} />
+                <FilesHeader onUpload={this.onUploadClick} />
                 <div className="file-wrapper">
                     <div
                         className={css('file-table-wrapper', {

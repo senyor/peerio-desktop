@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: $margin-xl 0 48px;
+  padding: $padding-xl 0;
+  margin: auto;
   text-align: center;
 
   .headline {
@@ -11,6 +12,7 @@
   }
 
   .illustration {
+    max-width: 320px;
     margin: $margin-xl 0;
   }
 

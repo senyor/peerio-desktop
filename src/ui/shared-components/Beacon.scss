@@ -25,10 +25,28 @@ $arrow-size: 12px;
   width: 25%;
 }
 
-@mixin tab-pixel($x, $y) {
-  @include tab-base($x, $y);
-  height: 6px;
-  width: 6px;
+@mixin tab-top-left() {
+  @include tab-relative(0, 0);
+  left: 31%;
+  top: -16%;
+}
+
+@mixin tab-bottom-left() {
+  @include tab-relative(0, 100%);
+  left: 31%;
+  bottom: -16%;
+}
+
+@mixin tab-bottom-right() {
+  @include tab-relative(100%, 100%);
+  right: 31%;
+  bottom: -16%;
+}
+
+@mixin tab-top-right() {
+  @include tab-relative(100%, 0);
+  right: 31%;
+  top: -16%;
 }
 
 // Positioning for the beacon overall, and styles for the beacon's main rectangular portion
@@ -90,7 +108,11 @@ $arrow-size: 12px;
     min-height: 32px;
     min-width: 32px;
 
-    // stylelint-disable-next-line
+    /*
+      The rules for the tabs themselves are very annoying.
+      In general, :before = top tab, :after = bottom tab.
+      The default tabs are defined first, followed by the individual "slice" exceptions.
+    */
     &.left {
       &::before {
         @include tab-top-left;
@@ -160,35 +182,6 @@ $arrow-size: 12px;
           display: none;
         }
       }
-    }
-
-    /*
-      The rules for these tabs are very annoying.
-      In general, :before = top tab, :after = bottom tab.
-      The default tabs are defined first, followed by the individual "slice" exceptions.
-    */
-    @mixin tab-top-left() {
-      @include tab-relative(0, 0);
-      left: 31%;
-      top: -16%;
-    }
-
-    @mixin tab-bottom-left() {
-      @include tab-relative(0, 100%);
-      left: 31%;
-      bottom: -16%;
-    }
-
-    @mixin tab-bottom-right() {
-      @include tab-relative(100%, 100%);
-      right: 31%;
-      bottom: -16%;
-    }
-
-    @mixin tab-top-right() {
-      @include tab-relative(100%, 0);
-      right: 31%;
-      top: -16%;
     }
   }
 

@@ -90,35 +90,6 @@ $arrow-size: 12px;
     min-height: 32px;
     min-width: 32px;
 
-    /*
-      The rules for these tabs are very annoying.
-      In general, :before = top tab, :after = bottom tab.
-      The default tabs are defined first, followed by the individual "slice" exceptions.
-    */
-    @mixin tab-top-left() {
-      @include tab-relative(0, 0);
-      left: 31%;
-      top: -16%;
-    }
-
-    @mixin tab-bottom-left() {
-      @include tab-relative(0, 100%);
-      left: 31%;
-      bottom: -16%;
-    }
-
-    @mixin tab-bottom-right() {
-      @include tab-relative(100%, 100%);
-      right: 31%;
-      bottom: -16%;
-    }
-
-    @mixin tab-top-right() {
-      @include tab-relative(100%, 0);
-      right: 31%;
-      top: -16%;
-    }
-
     // stylelint-disable-next-line
     &.left {
       &::before {
@@ -189,6 +160,35 @@ $arrow-size: 12px;
           display: none;
         }
       }
+    }
+
+    /*
+      The rules for these tabs are very annoying.
+      In general, :before = top tab, :after = bottom tab.
+      The default tabs are defined first, followed by the individual "slice" exceptions.
+    */
+    @mixin tab-top-left() {
+      @include tab-relative(0, 0);
+      left: 31%;
+      top: -16%;
+    }
+
+    @mixin tab-bottom-left() {
+      @include tab-relative(0, 100%);
+      left: 31%;
+      bottom: -16%;
+    }
+
+    @mixin tab-bottom-right() {
+      @include tab-relative(100%, 100%);
+      right: 31%;
+      bottom: -16%;
+    }
+
+    @mixin tab-top-right() {
+      @include tab-relative(100%, 0);
+      right: 31%;
+      top: -16%;
     }
   }
 

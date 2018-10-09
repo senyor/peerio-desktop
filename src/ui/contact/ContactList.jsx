@@ -131,7 +131,7 @@ class ContactList extends React.Component {
                                                     size="medium"
                                                 />
                                             }
-                                            legend={c.usernameTag}
+                                            legend={c.username}
                                             caption={`${c.firstName} ${
                                                 c.lastName
                                             }`}

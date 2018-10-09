@@ -152,7 +152,8 @@ export default class MembersSection extends React.Component<
                 leftContent={
                     <Avatar key="a" contact={c} size="small" clickable />
                 }
-                caption={
+                caption={c.fullName}
+                legend={
                     <div className="user-caption">
                         <span className="username">{c.username}</span>
                         {chat.isAdmin(c) ? (
@@ -160,7 +161,6 @@ export default class MembersSection extends React.Component<
                         ) : null}
                     </div>
                 }
-                legend={c.fullName}
                 rightContent={
                     showAdmin && User.current.username !== c.username
                         ? chat.isAdmin(c)

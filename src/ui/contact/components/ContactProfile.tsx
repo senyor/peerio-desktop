@@ -10,7 +10,7 @@ import T from '~/ui/shared-components/T';
 const ContactProfileFingerprint = observer(({ contact }) => {
     const f = contact.fingerprint.split('-');
     return (
-        <div className="row">
+        <div className="contact-fingerprint row">
             <div className="list-title"> {t('title_publicKey')}</div>
             <div className="monospace selectable">
                 {f[0]} {f[1]} {f[2]}
@@ -87,7 +87,7 @@ class ContactProfileBody extends React.Component<ContactProfileProps> {
                         <div className="full-name selectable">
                             {c.firstName} {c.lastName}
                         </div>
-                        <div className="selectable">{c.usernameTag}</div>
+                        <div className="username selectable">{c.username}</div>
                         <ContactProfileFingerprint contact={c} />
                     </div>
                 </div>
@@ -141,9 +141,12 @@ export default class ContactProfile extends React.Component<
     render() {
         return (
             <Dialog
+                title={t('title_settingsProfile')}
                 active={this.dialogVisible}
                 onCancel={this.closeDialog}
-                actions={[{ label: t('button_ok'), onClick: this.closeDialog }]}
+                actions={[
+                    { label: t('button_close'), onClick: this.closeDialog }
+                ]}
             >
                 <ContactProfileBody {...this.props} />
             </Dialog>

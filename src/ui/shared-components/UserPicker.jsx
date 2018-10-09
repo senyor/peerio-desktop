@@ -290,8 +290,8 @@ class UserPicker extends React.Component {
                             leftContent={
                                 <Avatar key="a" contact={c} size="medium" />
                             }
-                            caption={c.username}
-                            legend={`${c.firstName} ${c.lastName}`}
+                            caption={c.fullName}
+                            legend={c.username}
                             onClick={this.onContactClick}
                         />
                     </span>

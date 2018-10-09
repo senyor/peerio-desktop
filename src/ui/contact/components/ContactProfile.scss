@@ -20,7 +20,7 @@
   }
 
   .p-avatar {
-    margin-right: 24px;
+    margin-right: $margin-default;
 
     .image-container {
       height: 168px;
@@ -49,6 +49,10 @@
       .full-name {
         @extend %title;
       }
+
+      .username {
+        font-style: italic;
+      }
     }
 
     .deleted-account {
@@ -63,5 +67,10 @@
 
   .list-title {
     margin-bottom: 8px;
+  }
+
+  .contact-fingerprint {
+    margin-top: $margin-small;
+    font-size: 16px;
   }
 }

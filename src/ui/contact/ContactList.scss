@@ -27,9 +27,16 @@
 
         // stylelint-disable-next-line
         .p-list-item {
-          .content .caption {
-            overflow: hidden;
-            text-overflow: ellipsis;
+          .content {
+            .caption {
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .legend {
+              font-size: 12px;
+              font-style: italic;
+            }
           }
 
           .side-content.left {

@@ -61,11 +61,6 @@ class NewChannel extends React.Component {
         this.upgradeDialog = ref;
     };
 
-    setNameInputRef = ref => {
-        if (!ref) return;
-        ref.focus();
-    };
-
     render() {
         const textParser = {
             toCreateDM: text => (
@@ -101,10 +96,10 @@ class NewChannel extends React.Component {
                             <div className="chip-wrapper">
                                 <Input
                                     placeholder={t('title_channelName')}
-                                    innerRef={this.setNameInputRef}
                                     value={this.channelName}
                                     onChange={this.handleNameChange}
                                     maxLength={config.chat.maxChatNameLength}
+                                    autoFocus
                                 />
                             </div>
                         </div>

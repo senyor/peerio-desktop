@@ -85,11 +85,6 @@ class NewContact extends React.Component {
         }
     }
 
-    onInputMount(input) {
-        if (!input) return;
-        input.focus();
-    }
-
     tryAdd = async () => {
         if (this.waiting) return;
         this.waiting = true;
@@ -208,7 +203,6 @@ class NewContact extends React.Component {
                                     <MaterialIcon icon="search" />
                                     <div className="chip-wrapper">
                                         <Input
-                                            innerRef={this.onInputMount}
                                             placeholder={t(
                                                 this.isInviteView
                                                     ? 'title_enterEmail'
@@ -217,6 +211,7 @@ class NewContact extends React.Component {
                                             value={this.query}
                                             onChange={this.handleTextChange}
                                             onKeyDown={this.handleKeyDown}
+                                            autoFocus
                                         />
                                     </div>
                                     <Button

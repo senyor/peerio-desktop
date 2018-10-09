@@ -69,7 +69,6 @@ export default class ChannelSideBar extends React.Component<
     readonly chatPurposeEditorRef = (ref: HTMLInputElement | null) => {
         if (ref) {
             this.chatPurposeTextarea = ref;
-            this.resizeTextarea();
         }
     };
 
@@ -79,23 +78,6 @@ export default class ChannelSideBar extends React.Component<
             this.openSection = null;
         } else {
             this.openSection = section;
-        }
-    };
-
-    handleKeyDown = () => {
-        this.resizeTextarea();
-    };
-
-    resizeTextarea = () => {
-        const actualHeight = this.chatPurposeTextarea.getBoundingClientRect()
-            .height;
-        const scrollHeight = this.chatPurposeTextarea.scrollHeight;
-
-        if (scrollHeight > actualHeight) {
-            this.chatPurposeTextarea.style.height = `${scrollHeight}px`;
-        }
-        if (scrollHeight < actualHeight) {
-            this.chatPurposeTextarea.style.height = 'auto';
         }
     };
 
@@ -126,9 +108,8 @@ export default class ChannelSideBar extends React.Component<
                                     multiline
                                     readOnly={!canIAdmin}
                                     onBlur={this.hideChatPurposeEditor}
-                                    onKeyDown={this.handleKeyDown}
                                     className="purpose-editor"
-                                    innerRef={this.chatPurposeEditorRef}
+                                    autoFocus
                                 />
                             ) : (
                                 <div className="purpose-container">

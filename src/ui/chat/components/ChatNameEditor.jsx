@@ -1,5 +1,4 @@
 const React = require('react');
-const { action } = require('mobx');
 const { observer } = require('mobx-react');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const { chatStore, config } = require('peerio-icebear');
@@ -8,12 +7,6 @@ const ELEMENTS = require('~/whitelabel/helpers/elements');
 
 @observer
 class ChatNameEditor extends React.Component {
-    @action.bound
-    setRef(ref) {
-        if (ref) this.inputRef = ref;
-        if (this.props.innerRef) this.props.innerRef(ref);
-    }
-
     acceptNameEdit = val => {
         try {
             if (this.props.purpose) {
@@ -47,7 +40,6 @@ class ChatNameEditor extends React.Component {
                 onReject={null}
                 onAccept={this.acceptNameEdit}
                 onKeyDown={this.props.onKeyDown}
-                innerRef={this.setRef}
                 value={value}
                 tabIndex={this.props.tabIndex}
                 readOnly={this.props.readOnly}
@@ -58,6 +50,7 @@ class ChatNameEditor extends React.Component {
                         : config.chat.maxChatNameLength
                 }
                 theme="transparent"
+                autoFocus={this.props.autoFocus}
             />
         );
     }

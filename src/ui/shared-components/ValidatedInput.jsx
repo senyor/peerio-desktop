@@ -189,10 +189,6 @@ class ValidatedInput extends Component {
         this.props.onClear();
     };
 
-    onRef = ref => {
-        this.inputRef = ref;
-    };
-
     render() {
         return (
             <div
@@ -213,7 +209,6 @@ class ValidatedInput extends Component {
                     className={this.props.className}
                     maxLength={this.props.maxLength}
                     disabled={this.props.disabled}
-                    innerRef={this.onRef}
                     hint={this.props.hint}
                     theme={this.props.theme}
                 />

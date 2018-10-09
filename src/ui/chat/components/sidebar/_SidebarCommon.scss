@@ -70,6 +70,7 @@
 
     &.purpose-editor {
       padding-bottom: 0;
+      margin-top: $padding-small;
     }
 
     input,
@@ -82,7 +83,7 @@
 
     textarea {
       padding-top: 0;
-      margin-top: 28px;
+      margin-top: 18px;
       line-height: 1.45em;
     }
   }

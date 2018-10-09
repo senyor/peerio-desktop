@@ -165,10 +165,6 @@ export default class ChatView extends React.Component {
         this.chatNameEditorVisible = false;
     };
 
-    chatNameEditorRef = ref => {
-        if (ref) ref.nameInput.focus();
-    };
-
     @observable jitsiDialogVisible = false;
     toggleJitsiDialog = () => {
         this.jitsiDialogVisible = !this.jitsiDialogVisible;
@@ -216,6 +212,7 @@ export default class ChatView extends React.Component {
                                 className="name-editor"
                                 readOnly={!chat.canIAdmin}
                                 onBlur={this.hideChatNameEditor}
+                                autoFocus
                             />
                         ) : (
                             <div className="name-editor-inner">

@@ -245,11 +245,6 @@ class UserPicker extends React.Component {
         this.props.onAccept(this.selected);
     };
 
-    onInputMount = input => {
-        if (!input || this.props.noAutoFocus) return;
-        input.focus();
-    };
-
     handleClose = () => {
         this.props.onClose();
     };
@@ -388,7 +383,6 @@ class UserPicker extends React.Component {
                                                 </Chip>
                                             ))}
                                             <Input
-                                                innerRef={this.onInputMount}
                                                 placeholder={
                                                     routerStore.isNewChannel ||
                                                     routerStore.isPatientSpace
@@ -404,6 +398,9 @@ class UserPicker extends React.Component {
                                                 value={this.query}
                                                 onChange={this.handleTextChange}
                                                 onKeyDown={this.handleKeyDown}
+                                                autoFocus={
+                                                    !this.props.noAutoFocus
+                                                }
                                             />
                                         </div>
                                         {this.props.limit !== 1 &&

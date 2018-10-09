@@ -20,7 +20,6 @@ export default class AddOrRenameFolderDialog extends React.Component {
     @observable.ref resolver: (() => void) | null = null;
 
     @observable inputValue: string;
-    inputRef = React.createRef<HTMLInputElement>();
 
     /**
      * The file or folder to rename.
@@ -42,14 +41,6 @@ export default class AddOrRenameFolderDialog extends React.Component {
             // this.inputValue = t('default_newFolderName');
             this.inputValue = '';
         }
-
-        // focus the ref on next tick, since it won't be mounted until we've rerendered.
-        setTimeout(() => {
-            if (this.inputRef.current !== null) {
-                this.inputRef.current.focus();
-                this.inputRef.current.select();
-            }
-        });
 
         return new Promise(res => {
             this.resolver = res;
@@ -130,8 +121,6 @@ export default class AddOrRenameFolderDialog extends React.Component {
                 className="add-folder-popup"
             >
                 <Input
-                    // @ts-ignore peer-ui should use @types/react's existing declared ref type
-                    innerRef={this.inputRef}
                     placeholder={t('title_folderName')}
                     value={this.inputValue}
                     onChange={this.onInputChange}

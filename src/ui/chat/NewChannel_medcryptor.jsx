@@ -118,11 +118,6 @@ class NewChannel extends React.Component {
         this.userPicker = ref;
     };
 
-    setNameInputRef = ref => {
-        if (!ref) return;
-        ref.focus();
-    };
-
     render() {
         if (this.waiting) {
             return (
@@ -149,7 +144,6 @@ class NewChannel extends React.Component {
                                     placeholder={t(
                                         STRINGS.newChannel.channelName
                                     )}
-                                    innerRef={this.setNameInputRef}
                                     value={this.channelName}
                                     onChange={this.handleNameChange}
                                     maxLength={config.chat.maxChatNameLength}
@@ -172,6 +166,7 @@ class NewChannel extends React.Component {
                                         maxLength={
                                             config.chat.maxChatPurposeLength
                                         }
+                                        autoFocus
                                     />
                                 </div>
                             </div>

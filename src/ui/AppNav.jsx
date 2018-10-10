@@ -1,5 +1,5 @@
 const React = require('react');
-const { autorunAsync, observable, action, computed } = require('mobx');
+const { autorunAsync, observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Avatar, Divider, Menu, MenuHeader, MenuItem } = require('peer-ui');
 const { User, contactStore, chatStore, fileStore } = require('peerio-icebear');
@@ -100,7 +100,6 @@ class AppNav extends React.Component {
             'onboarding'
         ].forEach(route => {
             this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
-                this.enableColorIcons();
                 routerStore.navigateTo(routerStore.ROUTES[route]);
             };
         });
@@ -204,16 +203,6 @@ class AppNav extends React.Component {
         });
     }
 
-    @observable colorIcons = true;
-    @action.bound
-    enableColorIcons() {
-        this.colorIcons = true;
-    }
-    @action.bound
-    disableColorIcons() {
-        this.colorIcons = false;
-    }
-
     _doSignout = async untrust => {
         await autologin.disable();
         await User.current.signout(untrust);
@@ -251,9 +240,7 @@ class AppNav extends React.Component {
                         }
                         position="top-left"
                         theme="wide"
-                        innerClassName={css('app-nav-menu', {
-                            'color-icons': this.colorIcons
-                        })}
+                        innerClassName="app-nav-menu"
                     >
                         <MenuHeader
                             leftContent={
@@ -267,12 +254,7 @@ class AppNav extends React.Component {
                             legend={contact.username}
                         />
                         <Divider />
-                        <div
-                            onMouseEnter={this.disableColorIcons}
-                            onMouseLeave={this.enableColorIcons}
-                        >
-                            {this.menuItems}
-                        </div>
+                        {this.menuItems}
                     </Menu>
                 </div>
                 <div className="app-menu">

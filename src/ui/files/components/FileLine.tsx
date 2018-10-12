@@ -1,7 +1,6 @@
 import React from 'react';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
-import moment from 'moment';
 import css from 'classnames';
 
 import { contactStore, fileStore, User } from 'peerio-icebear';
@@ -13,7 +12,6 @@ import ContactProfile from '~/ui/contact/components/ContactProfile';
 import FileSpriteIcon from '~/ui/shared-components/FileSpriteIcon';
 
 import { downloadFile } from '~/helpers/file';
-import uiStore from '~/stores/ui-store';
 
 import FileActions from './FileActions';
 import FileFolderDetailsRow from './FileFolderDetailsRow';
@@ -102,24 +100,6 @@ export default class FileLine extends React.Component<FileLineProps> {
     render() {
         const { file, isDragging } = this.props;
 
-        // We want relative timestamp in case it's not older then 1 day.
-        // In case of relative timestamp we also want to re-render periodically to update it
-        let uploadedAt, uploadedAtTooltip;
-
-        if (file.uploadedAt) {
-            // if file timestamp is past the limit...
-            if (
-                Date.now() - file.uploadedAt >
-                FileLine.relativeTimeDisplayLimit
-            ) {
-                uploadedAt = file.uploadedAt.toLocaleString();
-                // this condition is always true and we need it only to subscribe to clock updates
-            } else if (uiStore.minuteClock.now) {
-                uploadedAt = moment(file.uploadedAt).fromNow();
-                uploadedAtTooltip = file.uploadedAt.toLocaleString();
-            }
-        }
-
         return (
             /*
                 This superfluous row-container is needed to make styles consistent with FolderLine,
@@ -191,9 +171,9 @@ export default class FileLine extends React.Component<FileLineProps> {
                     {this.props.fileDetails && (
                         <div
                             className="file-uploaded"
-                            title={uploadedAtTooltip}
+                            title={file.uploadedAt.toLocaleString()}
                         >
-                            {uploadedAt}
+                            {file.uploadTimeFormatted}
                             {file.isLegacy && (
                                 <div className="badge-old-version">
                                     <T k="title_pending" />

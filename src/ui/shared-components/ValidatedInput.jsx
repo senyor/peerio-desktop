@@ -21,7 +21,7 @@ const {
     computed,
     reaction,
     when,
-    isObservable,
+    isObservableProp,
     observable,
     action
 } = require('mobx');
@@ -67,7 +67,7 @@ class ValidatedInput extends Component {
         if (!this.props.name) {
             throw new Error('ValidatedInput expects a name property');
         }
-        if (!isObservable(this.props.store, this.props.name)) {
+        if (!isObservableProp(this.props.store, this.props.name)) {
             throw new Error(
                 `ValidatedInput expects ${
                     this.props.name
@@ -93,7 +93,7 @@ class ValidatedInput extends Component {
         reaction(
             () => this.props.store[this.props.name],
             () => this.validate(),
-            true
+            { fireImmediately: true }
         );
     }
 

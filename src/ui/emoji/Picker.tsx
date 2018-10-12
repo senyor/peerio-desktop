@@ -48,8 +48,8 @@ export default class Picker extends React.Component<{
     onBlur: () => void;
 }> {
     @observable searchKeyword = '';
-    selectedCategory = observable.shallowBox(categories[0].id);
-    hoveredEmoji = observable.shallowBox<Emoji | null>(null);
+    selectedCategory = observable.box(categories[0].id, { deep: false });
+    hoveredEmoji = observable.box<Emoji | null>(null, { deep: false });
 
     // if we click within the picker div, a blur event may be fired, but we
     // don't want to blur. onMouseDown fires before onBlur, so in the former we

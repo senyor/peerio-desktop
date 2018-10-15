@@ -16,7 +16,7 @@
     .ak-content {
       @extend %monospace;
       flex-grow: 1;
-      -webkit-user-select: auto;
+      user-select: text;
       padding: $padding-small;
       font-size: 12px;
       font-weight: $font-weight-semibold;
@@ -129,7 +129,7 @@
   .ak-half {
     display: inline-block;
     cursor: text;
-    -webkit-user-select: auto;
+    user-select: text;
     padding-top: 2px;
   }
 

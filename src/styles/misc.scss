@@ -66,7 +66,7 @@ ul {
 .selectable,
 %selectable {
   cursor: text;
-  user-select: auto;
+  user-select: text;
 
   // Children of selectable content may still be clickable, so need to override.
   button,

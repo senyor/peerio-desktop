@@ -74,10 +74,10 @@ class UpdaterStore {
             (ev, downloadedFile, manifest, mandatory) => {
                 console.log('Update downloaded');
                 this.mandatory = mandatory || clientApp.clientVersionDeprecated;
-                this.readyToInstall = true;
                 this.scheduleInstallOnQuit();
                 if (this.mandatory) {
                     this.askToInstall = true;
+                    this.readyToInstall = true;
                 } else {
                     // Turn on askToInstall flag in 12 hours (and every 12 hours after that)
                     // to remind to install updates if the app didn't quit.
@@ -90,7 +90,10 @@ class UpdaterStore {
                         }
                         this.askToInstall = true;
                     }, 12 * 60 * 60 * 1000);
-                    warnings.add('title_updateWillBeInstalled');
+                    if (!this.readyToInstall) {
+                        warnings.add('title_updateWillBeInstalled');
+                    }
+                    this.readyToInstall = true;
                 }
             }
         );
@@ -104,7 +107,9 @@ class UpdaterStore {
             this.checking = false;
             this.downloading = true;
             console.log('Update available.', info);
-            warnings.add('title_updateDownloading');
+            if (!this.readyToInstall) {
+                warnings.add('title_updateDownloading');
+            }
         });
 
         ipcRenderer.on('update-not-available', (ev, info) => {

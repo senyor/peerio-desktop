@@ -20,8 +20,9 @@ const watcher = chokidar.watch(
 );
 
 const copy = debounce(
-    _ =>
-        _.forEach(filePath => {
+    files =>
+        files.forEach(([filePath]) => {
+            console.log(modulePath, filePath);
             const fullFilePath = path.join(modulePath, filePath);
             // const filePath = path.relative(modulePath, fullFilePath);
             const fullDestPath = path.join(

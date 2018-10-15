@@ -32,8 +32,8 @@ export default class ShareUsageData extends React.Component<SignupStep> {
 
     render() {
         return (
-            <div className="left-container">
-                <div className="left-content-container">
+            <div className="real-ui-container">
+                <div className="real-ui-content-container">
                     <T k="title_shareUsageData" tag="div" className="heading" />
                     <T k="title_shareUsageDataDescription" tag="p" />
 

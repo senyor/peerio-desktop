@@ -8,7 +8,7 @@ import { warnings } from 'peerio-icebear';
 import T from '~/ui/shared-components/T';
 import { saveAkPdf } from '~/helpers/account-key';
 import * as telemetry from '~/telemetry';
-import * as Mock from './MockUI';
+import * as Mock from '~/ui/shared-components/MockUI';
 import { SignupStep } from './SignupStepTypes';
 const { clipboard } = require('electron').remote;
 import isDevEnv from '~/helpers/is-dev-env';
@@ -168,8 +168,8 @@ export default class GenerateAccountKey extends React.Component<SignupStep> {
     render() {
         return (
             <div className="generate-account-key">
-                <div className="left-container">
-                    <div className="left-content-container">
+                <div className="real-ui-container">
+                    <div className="real-ui-content-container">
                         <T
                             k="title_generatingAk"
                             tag="h2"
@@ -218,7 +218,7 @@ export default class GenerateAccountKey extends React.Component<SignupStep> {
                         </div>
                     </div>
                 </div>
-                <div className="right-container">
+                <div className="mock-ui-container">
                     <div className="mock-app-ui">{this.mockLogin}</div>
                 </div>
             </div>

@@ -30,7 +30,7 @@
     }
   }
 
-  .left-container p .p-button {
+  .real-ui-container p .p-button {
     text-decoration: none;
   }
 
@@ -60,7 +60,7 @@
       }
 
       /*
-        This is actually the arrow that appears by the right-container content.
+        This is actually the arrow that appears by the mock-ui-container content.
         Orienting it according to .terms-entry position is more reliable.
       */
       .left-arrow {
@@ -87,7 +87,7 @@
     }
   }
 
-  .right-container {
+  .mock-ui-container {
     @include onboarding-right-content-padding();
     justify-content: flex-start;
     overflow-y: auto;

@@ -30,7 +30,7 @@ export class Circle extends React.Component<CircleProps> {
 }
 
 interface LineProps extends MockProps {
-    shade?: 'light' | 'dark' | 'verydark';
+    shade?: 'light' | 'medium' | 'dark' | 'verydark';
     width?: number; // Number between 1-6. Corresponds to the width as fraction /6 of full-width.
 }
 
@@ -65,7 +65,7 @@ interface ChatEntryProps extends MockProps {
 export class ChatEntry extends React.Component<ChatEntryProps> {
     get heading() {
         return typeof this.props.heading === 'number' ? (
-            <Line shade="dark" width={this.props.heading} />
+            <Line shade="medium" width={this.props.heading} />
         ) : (
             <div className="chat-heading">{this.props.heading}</div>
         );
@@ -139,6 +139,17 @@ export class TextInput extends React.Component<TextInputProps> {
                 >
                     {this.props.children || this.props.placeholder}
                 </div>
+            </div>
+        );
+    }
+}
+
+@observer
+export class Avatar extends React.Component<MockProps> {
+    render() {
+        return (
+            <div className="mock-avatar">
+                <MaterialIcon icon="person" />
             </div>
         );
     }

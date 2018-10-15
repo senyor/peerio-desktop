@@ -235,8 +235,8 @@ export default class TermsOfUse extends React.Component<SignupStep> {
 
     get confirmCancelPage() {
         return (
-            <div className="cancel-signup left-container">
-                <div className="left-content-container">
+            <div className="cancel-signup real-ui-container">
+                <div className="real-ui-content-container">
                     <T k="title_cancelSignup" tag="div" className="heading" />
                     <T k="title_declineExplanation" tag="p" />
 
@@ -318,8 +318,8 @@ export default class TermsOfUse extends React.Component<SignupStep> {
             <div className="terms-of-use">
                 {!this.props.store.keyBackedUp ? this.akBackupReminder : null}
 
-                <div className="left-container">
-                    <div className="left-content-container">
+                <div className="real-ui-container">
+                    <div className="real-ui-content-container">
                         <div className="heading">
                             {t('title_termsOfUseSentenceCase')}
                         </div>
@@ -363,7 +363,7 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                 </div>
 
                 <div
-                    className={css('right-container', {
+                    className={css('mock-ui-container', {
                         hide: this.selectedTerm === -1
                     })}
                 >

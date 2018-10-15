@@ -10,7 +10,7 @@ import routerStore from '~/stores/router-store';
 import T from '~/ui/shared-components/T';
 import ValidatedInput from '~/ui/shared-components/ValidatedInput';
 import * as telemetry from '~/telemetry';
-import * as Mock from './MockUI';
+import * as Mock from '~/ui/shared-components/MockUI';
 
 // Types
 import { SignupStep, StepContentObject } from './SignupStepTypes';
@@ -462,8 +462,8 @@ export default class CreateAccount extends React.Component<SignupStep> {
 
         return (
             <div className={css('create-account', `step-${this.currentStep}`)}>
-                <div className="left-container">
-                    <div className="left-content-container">
+                <div className="real-ui-container">
+                    <div className="real-ui-content-container">
                         <h2 className="heading">
                             <Button
                                 className={css({
@@ -495,7 +495,7 @@ export default class CreateAccount extends React.Component<SignupStep> {
                         ) : null}
                     </div>
                 </div>
-                <div className="right-container">
+                <div className="mock-ui-container">
                     <div className="mock-app-ui">{content.right}</div>
                 </div>
             </div>

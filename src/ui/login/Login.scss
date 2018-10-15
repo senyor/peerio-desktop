@@ -1,94 +1,116 @@
-// Login page
+// TODO: it's simplest here to just extend .signup
+// revisit when(if) Login/Signup files get restructured for animations
 .login {
-  @extend %flex-col;
-  @extend %flex-align-center;
-  flex: 0 0 auto;
-  justify-content: center;
-  width: 100vw;
-  color: $text-light-default;
+  @extend .signup;
+}
 
-  a {
-    color: inherit;
+// Extra div selector for specificity
+div.login {
+  display: flex;
+
+  .mock-ui-container {
+    padding: 148px 112px 80px 0;
+
+    @media all and (max-width: $break-width-default),
+      all and (max-height: $break-height-default) {
+      padding: 148px 80px 148px 0;
+    }
   }
 
-  .login-inputs-container {
-    width: 400px;
-    padding: $padding-default;
-    margin: $margin-large 0;
-    color: $text-dark-default;
-    background-color: $background-root;
-    border-radius: 4px;
+  .mock-app-ui {
+    padding: $padding-xxl;
+
+    .mock-line {
+      height: 12px;
+      margin-right: 2px;
+      margin-bottom: 4px;
+
+      &.tall {
+        height: 16px;
+      }
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .profile {
+      margin: $margin-xl 0;
+
+      .profile-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        margin-left: $margin-default;
+      }
+    }
+
+    .mock-avatar {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      height: 128px;
+      width: 128px;
+      background-color: #c3cafd;
+      border-radius: 18px;
+
+      .material-icons {
+        font-size: 96px;
+        color: $white;
+      }
+    }
+
+    .icons {
+      .material-icons {
+        font-size: 32px;
+        color: $white-70;
+
+        &:last-of-type {
+          margin-left: $margin-large;
+          color: $text-dark-hint;
+        }
+      }
+    }
   }
 
-  .login-form {
-    padding: $padding-default;
-  }
-
-  .title {
+  .heading {
+    margin-top: 0;
     margin-bottom: $margin-default;
-    font-weight: $font-weight-bold;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: $text-dark-secondary;
   }
 
   .password {
     position: relative;
-    margin-top: $margin-default;
-
-    input {
-      padding-right: 48px;
-    }
 
     .p-button {
       position: absolute;
       right: 6px;
       top: 16px;
     }
+
+    .validated-input:last-of-type {
+      margin-bottom: $margin-default;
+    }
+  }
+
+  .find-ak {
+    margin-bottom: $margin-large;
+    text-align: center;
   }
 
   .login-button-container {
-    display: flex;
-    margin-top: $margin-large;
-
-    .p-button {
-      margin-left: auto;
-      margin-right: auto;
-    }
+    text-align: right;
   }
 
-  .welcome-back {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: $padding-default;
-    font-size: 20px;
-    // TODO: make transition vars
-    transition: 250ms;
-    color: $text-dark-secondary;
-    background-color: $background-hover-default;
-    border-radius: 4px;
-
-    &:hover {
-      background: $background-neutral;
-    }
-
-    .overflow {
-      width: 100%;
-      padding: 0 $padding-large;
-      overflow: hidden;
-      text-align: center;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    strong {
-      font-weight: $font-weight-bold;
-      color: $text-dark-default;
-    }
-
-    .subtitle {
-      @extend %hint-error-label;
-      margin-top: $margin-small;
-    }
+  .signup-link {
+    margin-top: auto;
+    margin-bottom: $margin-xl;
+    text-align: center;
   }
 }

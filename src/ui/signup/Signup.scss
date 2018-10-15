@@ -14,8 +14,8 @@ $max-signup-input-width: 400px;
   }
 
   // Simple rules for left/right content split
-  .left-container,
-  .right-container {
+  .real-ui-container,
+  .mock-ui-container {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -23,7 +23,7 @@ $max-signup-input-width: 400px;
   }
 
   // Left content container positioning requires flex on parent container
-  .left-content-container {
+  .real-ui-content-container {
     @include onboarding-content-sizing();
   }
 
@@ -36,7 +36,7 @@ $max-signup-input-width: 400px;
     margin-bottom: $margin-large;
   }
 
-  // affirmative/negative buttons in .left-container content
+  // affirmative/negative buttons in .real-ui-container content
   .buttons-container {
     display: flex;
     justify-content: flex-end;
@@ -49,7 +49,7 @@ $max-signup-input-width: 400px;
   }
 
   // Right side (mock app UI)
-  .right-container {
+  .mock-ui-container {
     align-items: flex-end;
     justify-content: center;
     padding: 148px 0 80px 112px;

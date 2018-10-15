@@ -25,8 +25,9 @@ const uiStore = require('~/stores/ui-store');
 
 const PoweredByLogin = require('~/whitelabel/components/PoweredByLogin');
 const SignupLink = require('~/whitelabel/components/SignupLink');
-
 const { validators } = validation; // use common validation from core
+import * as Mock from '~/ui/shared-components/MockUI';
+import { MaterialIcon } from 'peer-ui';
 
 class LoginStore extends OrderedFormStore {
     @observable fieldsExpected = 2;
@@ -211,115 +212,157 @@ class Login extends Component {
 
     getWelcomeBlock = () => {
         return (
-            <div className="welcome-back" onClick={this.unsetLastUser}>
-                <div className="overflow ">
-                    {t('title_welcomeBack')}&nbsp;
-                    <strong>
-                        {this.loginStore.lastAuthenticatedUser.firstName ||
-                            this.loginStore.lastAuthenticatedUser.username}
-                    </strong>
-                </div>
-                <div className="subtitle">
-                    <div className="overflow">
-                        <T k="button_changeUserDesktop">
-                            {{
-                                username:
-                                    this.loginStore.lastAuthenticatedUser
-                                        .firstName ||
-                                    this.loginStore.lastAuthenticatedUser
-                                        .username
-                            }}
-                        </T>
-                    </div>
-                </div>
+            <div className="welcome-back">
+                <T
+                    k="title_welcomeBackFirstnameExclamation"
+                    tag="h2"
+                    className="heading"
+                >
+                    {{
+                        firstName:
+                            this.loginStore.lastAuthenticatedUser.firstName ||
+                            this.loginStore.lastAuthenticatedUser.username
+                    }}
+                </T>
+                <T k="title_switchUser" tag="div" className="subtitle">
+                    {{
+                        username:
+                            this.loginStore.lastAuthenticatedUser.firstName ||
+                            this.loginStore.lastAuthenticatedUser.username,
+                        switchUser: text => {
+                            return (
+                                <a
+                                    className="clickable"
+                                    onClick={this.unsetLastUser}
+                                >
+                                    {text}
+                                </a>
+                            );
+                        }
+                    }}
+                </T>
             </div>
         );
     };
 
     render() {
         return (
-            <div className="app-root">
+            <div className="login">
                 <FullCoverLoader show={this.loginStore.busy} />
-                <div className="login">
-                    <img
-                        alt="Peerio logo"
-                        className="logo"
-                        src="static/img/logo-mark.svg"
-                    />
-                    <PoweredByLogin />
-                    <div className="login-inputs-container">
-                        {this.loginStore.lastAuthenticatedUser
-                            ? this.getWelcomeBlock()
-                            : ''}
-
-                        <div className="login-form">
-                            <div
-                                className={css('title', {
-                                    banish: this.loginStore
-                                        .lastAuthenticatedUser
-                                })}
-                            >
-                                {t('title_login')}
-                            </div>
-
-                            <ValidatedInput
-                                label={t('title_username')}
-                                name="username"
-                                position="0"
-                                lowercase="true"
-                                store={this.loginStore}
-                                validator={validators.usernameLogin}
-                                onKeyPress={this.usernameHandleKeyPress}
-                                className={css({
-                                    banish: this.loginStore
-                                        .lastAuthenticatedUser
-                                })}
-                                theme="dark"
+                <div className="mock-ui-container">
+                    <div className="mock-app-ui">
+                        <div className="row top">
+                            <Mock.Line
+                                shade="verydark"
+                                width={1}
+                                className="tall"
                             />
-                            <div className="password">
-                                <ValidatedInput
-                                    type={
-                                        this.loginStore.passwordVisible
-                                            ? 'text'
-                                            : 'password'
-                                    }
-                                    label={t('title_AccountKey')}
-                                    position="1"
-                                    store={this.loginStore}
-                                    validator={validators.stringExists}
-                                    name="passcodeOrPassphrase"
-                                    onKeyPress={this.handleKeyPress}
-                                    ref={this.onAKRef}
-                                    theme="dark"
-                                />
-                                <Button
-                                    icon="visibility"
-                                    active={this.loginStore.passwordVisible}
-                                    tooltip={
-                                        this.loginStore.passwordVisible
-                                            ? t('title_hideAccountKey')
-                                            : t('title_showAccountKey')
-                                    }
-                                    tooltipPosition="right"
-                                    onClick={this.togglePasswordVisibility}
-                                />
-                            </div>
-                            {/* <Dropdown value={languageStore.language}
-                                  options={languageStore.translationLangsDataSource}
-                                  onChange={languageStore.changeLanguage} />
-                        */}
-                            <div className="login-button-container">
-                                <Button
-                                    label={t('button_login')}
-                                    onClick={this.onLoginClick}
-                                    disabled={this.loginStore.hasErrors}
-                                    theme="affirmative"
-                                />
+                            <Mock.Line
+                                shade="verydark"
+                                width={1}
+                                className="tall"
+                            />
+                        </div>
+
+                        <div className="row profile">
+                            <Mock.Avatar />
+                            <div className="profile-text">
+                                <div className="lines-container">
+                                    <Mock.Line
+                                        shade="medium"
+                                        width={3}
+                                        className="tall"
+                                    />
+                                    <Mock.Line shade="light" width={2} />
+                                    <Mock.Line shade="light" width={3} />
+                                </div>
+
+                                <div className="lines-container">
+                                    <Mock.Line
+                                        shade="medium"
+                                        width={3}
+                                        className="tall"
+                                    />
+                                    <Mock.Line shade="light" width={6} />
+                                    <Mock.Line shade="light" width={3} />
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <SignupLink />
+                        <div className="row icons">
+                            <MaterialIcon icon="star" className="gold" />
+                            <MaterialIcon icon="question_answer" />
+                        </div>
+                    </div>
+                </div>
+                <div className="real-ui-container">
+                    <div className="real-ui-content-container">
+                        <img
+                            alt="Peerio logo"
+                            className="logo"
+                            src="static/img/logo-withtext.svg"
+                        />
+                        {this.loginStore.lastAuthenticatedUser ? (
+                            this.getWelcomeBlock()
+                        ) : (
+                            <h2 className="heading">
+                                {t('title_welcomeBackPeriod')}
+                            </h2>
+                        )}
+                        <PoweredByLogin />
+                        <ValidatedInput
+                            label={t('title_username')}
+                            name="username"
+                            position="0"
+                            lowercase="true"
+                            store={this.loginStore}
+                            validator={validators.usernameLogin}
+                            onKeyPress={this.usernameHandleKeyPress}
+                            className={css({
+                                banish: this.loginStore.lastAuthenticatedUser
+                            })}
+                            theme="dark"
+                        />
+                        <div className="password">
+                            <ValidatedInput
+                                type={
+                                    this.loginStore.passwordVisible
+                                        ? 'text'
+                                        : 'password'
+                                }
+                                label={t('title_AccountKey')}
+                                position="1"
+                                store={this.loginStore}
+                                validator={validators.stringExists}
+                                name="passcodeOrPassphrase"
+                                onKeyPress={this.handleKeyPress}
+                                ref={this.onAKRef}
+                                theme="dark"
+                            />
+                            <Button
+                                icon="visibility"
+                                active={this.loginStore.passwordVisible}
+                                tooltip={
+                                    this.loginStore.passwordVisible
+                                        ? t('title_hideAccountKey')
+                                        : t('title_showAccountKey')
+                                }
+                                tooltipPosition="top"
+                                onClick={this.togglePasswordVisibility}
+                            />
+                        </div>
+                        <T k="title_whereToFind" className="find-ak" />
+                        <div className="login-button-container">
+                            <Button
+                                label={t('button_login')}
+                                onClick={this.onLoginClick}
+                                disabled={this.loginStore.hasErrors}
+                                theme="affirmative"
+                            />
+                        </div>
+
+                        <SignupLink />
+                    </div>
                 </div>
             </div>
         );

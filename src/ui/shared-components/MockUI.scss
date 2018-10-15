@@ -53,8 +53,12 @@
     background-color: $black-06;
   }
 
-  &.dark {
+  &.medium {
     background-color: $black-12;
+  }
+
+  &.dark {
+    background-color: $black-38;
   }
 
   &.verydark {

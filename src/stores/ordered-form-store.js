@@ -49,19 +49,21 @@ class OrderedFormStore {
      * @param {Number} position
      */
     addField(fieldName, validatedInputComponent, position) {
+        if (!this.fields[fieldName]) {
+            // adds additional observables to the store
+            const validationProps = {};
+            validationProps[`${fieldName}Valid`] = false;
+            validationProps[`${fieldName}Dirty`] = false;
+            validationProps[`${fieldName}Focused`] = false;
+            validationProps[`${fieldName}ValidationMessageText`] = '';
+            extendObservable(this, validationProps);
+        }
         this.fields[fieldName] = validatedInputComponent;
         // attach validation function for easy calling
         const validationFnName = _.camelCase(`validate_${fieldName}`);
         this[validationFnName] = validatedInputComponent.validateConnected.bind(
             validatedInputComponent
         );
-        // adds additional observables to the store
-        const validationProps = {};
-        validationProps[`${fieldName}Valid`] = false;
-        validationProps[`${fieldName}Dirty`] = false;
-        validationProps[`${fieldName}Focused`] = false;
-        validationProps[`${fieldName}ValidationMessageText`] = '';
-        extendObservable(this, validationProps);
         // add the field order
         this.fieldOrders[fieldName] = position;
         // alert the store that the above are available -- use in computeds

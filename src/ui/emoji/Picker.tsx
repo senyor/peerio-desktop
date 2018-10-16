@@ -142,7 +142,10 @@ class CategoriesHeader extends React.Component<{
         const el = document.getElementsByClassName(`category-header ${id}`)[0];
         if (!el) return;
         this.props.selectedCategory.set(id);
-        el.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        el.scrollIntoView({
+            block: 'start',
+            behavior: 'auto'
+        });
     }
 
     render() {

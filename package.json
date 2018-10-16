@@ -7,7 +7,7 @@
   "main": "build/main.js",
   "scripts": {
     "=== HOOKS ===": "",
-    "postcheckout": "opt --in npm-install --exec \"npm install\"",
+    "postcheckout": "[ `which opt` ] && opt --in npm-install --exec \"npm install\"",
     "postmerge": "opt --in npm-install --exec \"npm install\"",
     "precommit": "opt --in lint --exec \"npm run verify\"",
     "commitmsg": "validate-commit-msg",

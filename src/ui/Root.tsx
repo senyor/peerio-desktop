@@ -94,11 +94,10 @@ export default class Root extends React.Component {
     renderReconnectSection() {
         return (
             <span>
-                {socket.reconnectTimer.counter || ' '}&nbsp;
                 <Button
                     className="reconnect"
                     label={t('button_retry')}
-                    onClick={socket.resetReconnectTimer}
+                    onClick={socket.reset}
                     theme="inverted"
                 />
             </span>

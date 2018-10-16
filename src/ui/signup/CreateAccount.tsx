@@ -181,6 +181,11 @@ export default class CreateAccount extends React.Component<SignupStep> {
                             : null
                     }
                     maxLength={MAX_NAME_LENGTH}
+                    telemetry={{
+                        item: 'FIRST_NAME',
+                        location: 'ONBOARDING',
+                        sublocation: 'ACCOUNT_NAME'
+                    }}
                 />
                 <ValidatedInput
                     key="lastName"
@@ -197,6 +202,11 @@ export default class CreateAccount extends React.Component<SignupStep> {
                             : null
                     }
                     maxLength={MAX_NAME_LENGTH}
+                    telemetry={{
+                        item: 'LAST_NAME',
+                        location: 'ONBOARDING',
+                        sublocation: 'ACCOUNT_NAME'
+                    }}
                 />
             </React.Fragment>
         );
@@ -269,6 +279,11 @@ export default class CreateAccount extends React.Component<SignupStep> {
                     onKeyPress={this.handleUsernameKeyPress}
                     onClear={() => this.handleClearInput('username')}
                     onError={telemetry.signup.onErrorUsername}
+                    telemetry={{
+                        item: 'USERNAME',
+                        location: 'ONBOARDING',
+                        sublocation: 'ACCOUNT_USERNAME'
+                    }}
                 />
                 {this.usernameSuggestions.length > 0 ? (
                     <React.Fragment>
@@ -403,6 +418,11 @@ export default class CreateAccount extends React.Component<SignupStep> {
                     hint={t('title_hintEmail')}
                     onKeyPress={this.handleKeyPress}
                     onClear={() => this.handleClearInput('email')}
+                    telemetry={{
+                        item: 'EMAIL',
+                        location: 'ONBOARDING',
+                        sublocation: 'ACCOUNT_EMAIL'
+                    }}
                 />
                 <Divider />
                 <Checkbox

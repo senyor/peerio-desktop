@@ -322,6 +322,11 @@ class Login extends Component {
                                 banish: this.loginStore.lastAuthenticatedUser
                             })}
                             theme="dark"
+                            telemetry={{
+                                item: 'USERNAME',
+                                location: 'SIGN_IN',
+                                sublocation: 'SIGN_IN'
+                            }}
                         />
                         <div className="password">
                             <ValidatedInput
@@ -338,6 +343,14 @@ class Login extends Component {
                                 onKeyPress={this.handleKeyPress}
                                 ref={this.onAKRef}
                                 theme="dark"
+                                telemetry={{
+                                    item: 'ACCOUNT_KEY',
+                                    location: 'SIGN_IN',
+                                    sublocation: this.loginStore
+                                        .lastAuthenticatedUser
+                                        ? 'WELCOME_BACK'
+                                        : 'SIGN_IN'
+                                }}
                             />
                             <Button
                                 icon="visibility"

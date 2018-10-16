@@ -6,7 +6,11 @@
 
 import { setup } from '~/telemetry/main';
 import routerStore from '~/stores/router-store';
-import { DurationEvent, TextInputEvent } from '~/telemetry/types';
+import {
+    DurationEvent,
+    TextInputEvent,
+    ValidatedInputObject
+} from '~/telemetry/types';
 import { telemetry } from 'peerio-icebear';
 const { duration, S, errorMessage } = telemetry;
 
@@ -22,18 +26,26 @@ function context() {
 
 const shared = setup({
     // ValidatedInput
-    validatedInputOnFocus: (label: string): TextInputEvent => {
+    validatedInputOnFocus: (obj: ValidatedInputObject): TextInputEvent => {
+        if (!obj) return null;
+
         return [
             S.TEXT_INPUT,
             {
-                item: label,
-                location: context(),
+                item: S[obj.item],
+                location: S[obj.location],
+                sublocation: S[obj.sublocation],
                 state: S.IN_FOCUS
             }
         ];
     },
 
-    validatedInputOnBlur: (label, errorMsg): TextInputEvent => {
+    validatedInputOnBlur: (
+        obj: ValidatedInputObject,
+        errorMsg: string
+    ): TextInputEvent => {
+        if (!obj) return null;
+
         // We're only sending onBlur events if the input is errored
         if (!errorMsg) return null;
 
@@ -45,20 +57,24 @@ const shared = setup({
         return [
             S.TEXT_INPUT,
             {
-                item: label,
-                location: c,
+                item: S[obj.item],
+                location: S[obj.location],
+                sublocation: S[obj.sublocation],
                 state: S.ERROR,
                 errorType: errorMessage(errorMsg)
             }
         ];
     },
 
-    validatedInputOnClear: label => {
+    validatedInputOnClear: (obj: ValidatedInputObject) => {
+        if (!obj) return null;
+
         return [
             S.CLEAR_TEXT,
             {
-                item: label,
-                location: context()
+                item: S[obj.item],
+                location: S[obj.location],
+                sublocation: S[obj.sublocation]
             }
         ];
     },

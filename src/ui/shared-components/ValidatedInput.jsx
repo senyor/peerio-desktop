@@ -147,7 +147,7 @@ class ValidatedInput extends Component {
 
         // currently only used for telemetry
         if (this.props.store[this.fFocused]) {
-            telemetry.shared.validatedInputOnFocus(this.props.label);
+            telemetry.shared.validatedInputOnFocus(this.props.telemetry);
         }
     }
 
@@ -170,7 +170,7 @@ class ValidatedInput extends Component {
         // telemetry: send error on input blur
         if (!this.props.store[this.fFocused]) {
             telemetry.shared.validatedInputOnBlur(
-                this.props.label,
+                this.props.telemetry,
                 this.props.store[this.fMsgText]
             );
         }
@@ -185,7 +185,7 @@ class ValidatedInput extends Component {
     }
 
     onClear = () => {
-        telemetry.shared.validatedInputOnClear(this.props.label);
+        telemetry.shared.validatedInputOnClear(this.props.telemetry);
         this.props.onClear();
     };
 

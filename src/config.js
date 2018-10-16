@@ -78,7 +78,7 @@ cfg.nodeLogFolder = path.join(app.getPath('userData'), 'logs');
 // --- DEV ENV SETTINGS
 if (isDevEnv) {
     try {
-        cfg.devAutologin = require('../../autologin.json'); // eslint-disable-line
+        cfg.devAutologin = require('../autologin.json');
         cfg.debug = cfg.devAutologin.debug || cfg.debug;
     } catch (err) {
         // don't care

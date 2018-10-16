@@ -369,4 +369,4 @@ class Login extends Component {
     }
 }
 
-module.exports = Login;
+export default Login;

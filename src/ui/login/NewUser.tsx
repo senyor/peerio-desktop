@@ -6,6 +6,7 @@ import { Button } from 'peer-ui';
 import { t } from 'peerio-translator';
 import T from '~/ui/shared-components/T';
 import * as telemetry from '~/telemetry';
+import config from '~/config';
 
 interface NewUserProps {
     onClose: () => void;
@@ -17,6 +18,9 @@ export default class NewUser extends React.Component<NewUserProps> {
 
     componentWillMount() {
         this.startTime = Date.now();
+        if (config.devAutoLogin) {
+            setTimeout(() => this.goToLogin());
+        }
     }
 
     componentWillUnmount() {

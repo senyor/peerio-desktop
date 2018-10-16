@@ -1,5 +1,7 @@
 import { remote as electron } from 'electron';
 import { socket } from 'peerio-icebear';
+import { when } from 'mobx';
+import IdleMonitor from './idle-monitor';
 
 /*
   When we receive power event there can be 3 cases:
@@ -9,36 +11,109 @@ import { socket } from 'peerio-icebear';
   - We are connected, but not authenticated yet, can't even send the message.
  */
 
+let enablePushAuthDisposer = null;
+let disablePushAuthDisposer = null;
+
+function enablePushNotification() {
+    if (disablePushAuthDisposer) {
+        disablePushAuthDisposer();
+        disablePushAuthDisposer = null;
+    }
+    if (enablePushAuthDisposer) return;
+    enablePushAuthDisposer = when(
+        () => socket.authenticated,
+        async () => {
+            try {
+                await socket.send('/auth/push/enable');
+                console.log('Enabled push notifications.');
+            } catch (err) {
+                console.error(err);
+                console.log('Failed to enable push notifications.');
+            }
+            enablePushAuthDisposer = null;
+        }
+    );
+}
+
+function disablePushNotifications() {
+    if (enablePushAuthDisposer) {
+        enablePushAuthDisposer();
+        enablePushAuthDisposer = null;
+    }
+    if (disablePushAuthDisposer) return;
+
+    disablePushAuthDisposer = when(
+        () => socket.authenticated,
+        async () => {
+            try {
+                // Short timeout will let us avoid long lags in connection that happen after sleep.
+                await socket.send('/auth/push/disable').timeout(3000);
+                console.log('Disabled push notifications.');
+                disablePushAuthDisposer = null;
+            } catch (err) {
+                console.error(err);
+                console.log(
+                    'Failed to disable push notifications, forcibly reconnecting to avoid lag.'
+                );
+                socket.reset();
+                disablePushAuthDisposer = null;
+                // Try again to disable notifications.
+                socket.onceAuthenticated(disablePushNotifications);
+            }
+        }
+    );
+}
+
 function suspendHandler(): void {
-    console.log('The system is going to sleep');
-    if (!socket.authenticated) return;
-    socket.send('/auth/push/enable').catch(err => {
-        console.error(err);
-        console.log('Failed to enable push notifications on OS sleep.');
-    });
+    console.log('The system is going to sleep.');
+    enablePushNotification();
 }
 
 function resumeHandler(): void {
     console.log('The system is going to resume');
-    if (!socket.authenticated) return;
-    socket
-        .send('/auth/push/disable')
-        .timeout(3000) // short timeout here will let us avoid long lags in connection that happen after sleep
-        .catch(err => {
-            console.error(err);
-            console.log(
-                'Connection seems to be broken after OS resume, forcibly reconnecting to avoid lag.'
-            );
-            socket.reset();
-        });
+    disablePushNotifications();
 }
+
+let screenLocked = false;
+
+function lockScreenHandler(): void {
+    console.log('The screen is locked.');
+    screenLocked = true;
+    enablePushNotification();
+}
+
+function unlockScreenHandler(): void {
+    console.log('The screen is unlocked.');
+    screenLocked = false;
+    disablePushNotifications();
+}
+
+function systemIdleHandler(): void {
+    console.log('The system became idle.');
+    enablePushNotification();
+}
+
+function systemActiveHandler(): void {
+    console.log('The system became active (not idle).');
+    if (!screenLocked) disablePushNotifications();
+}
+
+const idleMonitor = new IdleMonitor(5 * 60); // TODO(dchest): move 5 minutes to config?
 
 export function start(): void {
     electron.powerMonitor.on('suspend', suspendHandler);
     electron.powerMonitor.on('resume', resumeHandler);
+    electron.powerMonitor.on('lock-screen', lockScreenHandler);
+    idleMonitor.on('idle', systemIdleHandler);
+    idleMonitor.on('active', systemActiveHandler);
+    idleMonitor.start();
 }
 
 export function stop(): void {
     electron.powerMonitor.removeListener('suspend', suspendHandler);
     electron.powerMonitor.removeListener('resume', resumeHandler);
+    electron.powerMonitor.removeListener('unlock-screen', unlockScreenHandler);
+    idleMonitor.stop();
+    idleMonitor.removeListener('idle', systemIdleHandler);
+    idleMonitor.removeListener('active', systemActiveHandler);
 }

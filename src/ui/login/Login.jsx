@@ -121,7 +121,7 @@ class Login extends Component {
 
     togglePasswordVisibility = () => {
         this.loginStore.passwordVisible = !this.loginStore.passwordVisible;
-        if (this.akRef) this.akRef.inputRef.focus();
+        if (this.akRef) this.akRef.focus();
         telemetry.login.toggleAkVisibility(this.loginStore.passwordVisible);
     };
 

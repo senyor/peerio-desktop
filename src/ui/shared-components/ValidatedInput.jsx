@@ -97,6 +97,19 @@ class ValidatedInput extends Component {
         );
     }
 
+    @observable inputRef;
+    @action.bound
+    setRef(ref) {
+        if (ref) {
+            this.inputRef = ref;
+        }
+    }
+
+    @action.bound
+    focus() {
+        this.inputRef.focus();
+    }
+
     @action
     validateConnected() {
         const value = this.props.store[this.props.name];
@@ -211,6 +224,7 @@ class ValidatedInput extends Component {
                     disabled={this.props.disabled}
                     hint={this.props.hint}
                     theme={this.props.theme}
+                    ref={this.setRef}
                 />
             </div>
         );

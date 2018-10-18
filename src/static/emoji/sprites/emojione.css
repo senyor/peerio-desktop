@@ -14,7 +14,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-people {
         background-image: url(emojione-sprite-32-people@2x.png);
@@ -1219,7 +1219,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-nature {
         background-image: url(emojione-sprite-32-nature@2x.png);
@@ -1779,7 +1779,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-food {
         background-image: url(emojione-sprite-32-food@2x.png);
@@ -2123,7 +2123,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-activity {
         background-image: url(emojione-sprite-32-activity@2x.png);
@@ -2467,7 +2467,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-travel {
         background-image: url(emojione-sprite-32-travel@2x.png);
@@ -2862,7 +2862,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-objects {
         background-image: url(emojione-sprite-32-objects@2x.png);
@@ -3482,7 +3482,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-symbols {
         background-image: url(emojione-sprite-32-symbols@2x.png);
@@ -4381,7 +4381,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-flags {
         background-image: url(emojione-sprite-32-flags@2x.png);
@@ -5214,7 +5214,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-regional {
         background-image: url(emojione-sprite-32-regional@2x.png);
@@ -5318,7 +5318,7 @@
     background-repeat: no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)
+@media all
 {
     .emojione-32-diversity {
         background-image: url(emojione-sprite-32-diversity@2x.png);

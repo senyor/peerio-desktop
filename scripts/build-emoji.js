@@ -61,11 +61,12 @@ cp.execSync(`cp ${srcJs} ${outDir}emojione.js`);
 
 console.log('Adjusting CSS.');
 let css = fs.readFileSync(srcCss, 'utf8');
+const kindaCheckSum = css.length;
 let repl;
 // eslint-disable-next-line
 while (true) {
     repl = css.replace(
-        '@media only screen and (-webkit-min-device-pixel-ratio: 2),\nonly screen and (min-device-pixel-ratio: 2)',
+        '@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)',
         '@media all'
     );
     if (repl !== css) {
@@ -73,6 +74,9 @@ while (true) {
         continue;
     }
     break;
+}
+if (kindaCheckSum === css.length) {
+    throw new Error('Oh noes, emojione css monkey patch failed.');
 }
 console.log('Writing CSS to file.');
 fs.writeFileSync(`${outDir}sprites/emojione.css`, css);

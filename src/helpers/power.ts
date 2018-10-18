@@ -104,6 +104,7 @@ export function start(): void {
     electron.powerMonitor.on('suspend', suspendHandler);
     electron.powerMonitor.on('resume', resumeHandler);
     electron.powerMonitor.on('lock-screen', lockScreenHandler);
+    electron.powerMonitor.on('unlock-screen', unlockScreenHandler);
     idleMonitor.on('idle', systemIdleHandler);
     idleMonitor.on('active', systemActiveHandler);
     idleMonitor.start();
@@ -112,6 +113,7 @@ export function start(): void {
 export function stop(): void {
     electron.powerMonitor.removeListener('suspend', suspendHandler);
     electron.powerMonitor.removeListener('resume', resumeHandler);
+    electron.powerMonitor.removeListener('lock-screen', lockScreenHandler);
     electron.powerMonitor.removeListener('unlock-screen', unlockScreenHandler);
     idleMonitor.stop();
     idleMonitor.removeListener('idle', systemIdleHandler);

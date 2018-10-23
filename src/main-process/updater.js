@@ -40,7 +40,11 @@ function start(mainWindow) {
 
         ipcMain.on('update-install', () => {
             console.log('Client approved update installation.');
-            app.releaseSingleInstance();
+            try {
+                app.releaseSingleInstanceLock();
+            } catch (err) {
+                console.error('Failed to release single instance lock', err);
+            }
             autoUpdater.quitAndInstall();
         });
 
@@ -51,7 +55,11 @@ function start(mainWindow) {
 
         ipcMain.on('update-retry-install', () => {
             console.log('Retrying update installation.');
-            app.releaseSingleInstance();
+            try {
+                app.releaseSingleInstanceLock();
+            } catch (err) {
+                console.error('Failed to release single instance lock', err);
+            }
             autoUpdater.quitAndRetryInstall();
         });
 

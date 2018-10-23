@@ -13,20 +13,15 @@ process.on('uncaughtException', error => {
 
 const isDevEnv = require('~/helpers/is-dev-env').default;
 
+let singleInstanceLock;
+
 if (!isDevEnv && !process.argv.includes('--allow-multiple-instances')) {
     // In production version, don't allow running more than one instance.
     // This code must be executed as early as possible to prevent the second
     // instance from initializing before it decides to quit.
-    const isAnotherInstance = app.makeSingleInstance(() => {
-        // Another instance launched, restore the current window.
-        if (mainWindow) {
-            if (mainWindow.isMinimized()) {
-                mainWindow.restore();
-            }
-            mainWindow.focus();
-        }
-    });
-    if (isAnotherInstance) {
+    singleInstanceLock = app.requestSingleInstanceLock();
+
+    if (!singleInstanceLock) {
         console.log('Another instance is already running, quitting.');
         process.exit();
     }
@@ -242,6 +237,18 @@ app.on('activate', () => {
         mainWindow.show();
     }
 });
+
+if (singleInstanceLock) {
+    app.on('second-instance', () => {
+        // Restore window if user tried to launch second instance.
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) {
+                mainWindow.restore();
+            }
+            mainWindow.focus();
+        }
+    });
+}
 
 app.once('will-quit', async e => {
     e.preventDefault();

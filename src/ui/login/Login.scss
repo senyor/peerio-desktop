@@ -58,17 +58,16 @@ div.login {
 
       .material-icons {
         font-size: 96px;
-        color: $white;
+        color: $white-70;
       }
     }
 
     .icons {
       .material-icons {
-        font-size: 32px;
-        color: $white-70;
+        font-size: 36px;
 
         &:last-of-type {
-          margin-left: $margin-large;
+          margin-left: $margin-default;
           color: $text-dark-hint;
         }
       }
@@ -87,6 +86,7 @@ div.login {
 
   .password {
     position: relative;
+    max-width: 400px;
 
     .p-button {
       position: absolute;

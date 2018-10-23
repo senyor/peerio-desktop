@@ -13,6 +13,8 @@ import { SignupStep } from './SignupStepTypes';
 const { clipboard } = require('electron').remote;
 import isDevEnv from '~/helpers/is-dev-env';
 
+const telemetryObject = { location: 'ONBOARDING', sublocation: 'ACCOUNT_KEY' };
+
 @observer
 export default class GenerateAccountKey extends React.Component<SignupStep> {
     @observable keyReady = isDevEnv;
@@ -109,8 +111,8 @@ export default class GenerateAccountKey extends React.Component<SignupStep> {
     };
 
     akDownload = async () => {
-        telemetry.signup.downloadAk();
-        await saveAkPdf(this.props.store);
+        telemetry.shared.downloadAk(telemetryObject);
+        await saveAkPdf(this.props.store, telemetryObject);
 
         // NOTICE: user can press cancel and this flag would still be set to true
         this.props.store.keyBackedUp = true;

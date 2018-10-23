@@ -1,6 +1,7 @@
 // Main client-side functionality is here, i.e. converting objects into send() functions, and the send() function itself
-import { telemetry, User } from 'peerio-icebear';
+import { telemetry } from 'peerio-icebear';
 import os from 'os';
+import isDevEnv from '~/helpers/is-dev-env';
 
 // `string` could maybe be `[keyof telemetry.S]`; audit after icebear/ts convert
 type TelemetryPayload =
@@ -63,4 +64,6 @@ function send(ev: TelemetryPayload): void {
 
     // `send` here will check if user is still in signup, and store events for bulk send if so
     telemetry.send(obj);
+
+    if (isDevEnv) console.log(obj);
 }

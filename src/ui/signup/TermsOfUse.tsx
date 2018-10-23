@@ -18,6 +18,8 @@ import LegalDialog from '~/ui/shared-components/LegalDialog';
 // Types
 import { SignupStep } from './SignupStepTypes';
 
+const telemetryObject = { location: 'ONBOARDING', sublocation: 'TOP_DRAWER' };
+
 @observer
 export default class TermsOfUse extends React.Component<SignupStep> {
     @observable termsStartTime: number;
@@ -27,8 +29,8 @@ export default class TermsOfUse extends React.Component<SignupStep> {
     }
 
     akDownload = async () => {
-        telemetry.signup.downloadAkReminder();
-        await saveAkPdf(this.props.store);
+        telemetry.shared.downloadAk(telemetryObject);
+        await saveAkPdf(this.props.store, telemetryObject);
 
         // NOTICE: user can press cancel and this flag would still be set to true
         this.props.store.keyBackedUp = true;

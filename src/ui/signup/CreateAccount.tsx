@@ -276,9 +276,9 @@ export default class CreateAccount extends React.Component<SignupStep> {
                                 : 'title_hintUsername'
                             : 'title_characterLimitReached'
                     )}
-                    onKeyPress={this.handleUsernameKeyPress}
+                    onKeyPress={this.handleKeyPress}
                     onClear={() => this.handleClearInput('username')}
-                    onError={telemetry.signup.onErrorUsername}
+                    onError={this.handleErrorUsername}
                     telemetry={{
                         item: 'USERNAME',
                         location: 'ONBOARDING',
@@ -312,17 +312,17 @@ export default class CreateAccount extends React.Component<SignupStep> {
         );
     }
 
-    @observable usernameEnteredManually = false;
+    @observable hasUsernameInputErrored = false;
 
     @action.bound
-    handleUsernameKeyPress(ev) {
-        this.usernameEnteredManually = true;
-        this.handleKeyPress(ev);
+    handleErrorUsername(ev) {
+        telemetry.signup.onErrorUsername(ev);
+        this.hasUsernameInputErrored = true;
     }
 
     @action.bound
     setUsername(name) {
-        telemetry.signup.useSuggestedUsername(this.usernameEnteredManually);
+        telemetry.signup.useSuggestedUsername(this.hasUsernameInputErrored);
         this.props.store.username = name;
     }
 

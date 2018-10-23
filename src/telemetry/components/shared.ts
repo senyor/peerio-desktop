@@ -79,6 +79,40 @@ const shared = setup({
         ];
     },
 
+    // Account Key download
+    downloadAk: obj => {
+        return [
+            S.DOWNLOAD,
+            {
+                item: S.ACCOUNT_KEY,
+                location: S[obj.location],
+                sublocation: S[obj.sublocation]
+            }
+        ];
+    },
+
+    confirmDownloadAk: obj => {
+        return [
+            S.DOWNLOAD_CONFIRM,
+            {
+                item: S.ACCOUNT_KEY,
+                location: S[obj.location],
+                sublocation: S[obj.sublocation]
+            }
+        ];
+    },
+
+    cancelDownloadAk: obj => {
+        return [
+            S.DOWNLOAD_CANCEL,
+            {
+                item: S.ACCOUNT_KEY,
+                location: S[obj.location],
+                sublocation: S[obj.sublocation]
+            }
+        ];
+    },
+
     // LegalDialog
     openTermsDialog: () => {
         return [

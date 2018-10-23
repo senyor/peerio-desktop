@@ -34,7 +34,7 @@ const CREATE_ACCOUNT_STEPS: ((startTime: number) => DurationEvent)[] = [
             S.DURATION,
             {
                 location: S.ONBOARDING,
-                sublocation: S.ACCOUNT_EMAIL,
+                sublocation: S.ACCOUNT_USERNAME,
                 totalTime: duration(startTime)
             }
         ];
@@ -80,11 +80,11 @@ const signup = setup({
         ];
     },
 
-    useSuggestedUsername: (usernameEnteredManually: boolean) => {
+    useSuggestedUsername: (hasInputErrored: boolean) => {
         return [
             S.PICK_USERNAME,
             {
-                order: usernameEnteredManually ? 'Second' : 'First'
+                order: hasInputErrored ? 'Second' : 'First'
             }
         ];
     },
@@ -112,30 +112,6 @@ const signup = setup({
         {
             item: S.ACCOUNT_KEY,
             sublocation: S.ACCOUNT_KEY
-        }
-    ],
-
-    downloadAk: [
-        S.DOWNLOAD,
-        {
-            item: S.ACCOUNT_KEY,
-            sublocation: S.ACCOUNT_KEY
-        }
-    ],
-
-    confirmDownloadAk: [
-        S.DOWNLOAD,
-        {
-            item: S.ACCOUNT_KEY,
-            action: S.SAVED
-        }
-    ],
-
-    downloadAkReminder: [
-        S.DOWNLOAD,
-        {
-            item: S.ACCOUNT_KEY,
-            sublocation: S.TERMS_TOP_DRAWER
         }
     ],
 
@@ -224,6 +200,8 @@ const signup = setup({
     acceptShareData: [
         S.SET_SETTING,
         {
+            item: S.CRASH_AND_ERROR_DATA,
+            location: S.ONBOARDING,
             option: S.SHARE_DATA,
             on: S.TRUE
         }
@@ -231,6 +209,8 @@ const signup = setup({
     declineShareData: [
         S.SET_SETTING,
         {
+            item: S.CRASH_AND_ERROR_DATA,
+            location: S.ONBOARDING,
             option: S.SHARE_DATA,
             on: S.FALSE
         }

@@ -1,53 +1,56 @@
-// @ts-check
-const React = require('react');
-const { observable, when } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
+import React from 'react';
+import { observable, when, Lambda } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
 
-const { fileStore, chatStore } = require('peerio-icebear');
-const {
+import { fileStore, chatStore } from 'peerio-icebear';
+import { File } from 'peerio-icebear/src/models';
+import {
     Button,
     Dialog,
     MaterialIcon,
     ProgressBar,
     RadioButtons
-} = require('peer-ui');
-const { t } = require('peerio-translator');
+} from 'peer-ui';
+import { t } from 'peerio-translator';
 
-const uiStore = require('~/stores/ui-store');
-const routerStore = require('~/stores/router-store');
-const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
-const T = require('~/ui/shared-components/T');
-const FileActions = require('~/ui/files/components/FileActions').default;
-const ShareWithMultipleDialog = require('~/ui/shared-components/ShareWithMultipleDialog');
-const { downloadFile } = require('~/helpers/file');
+import uiStore from '~/stores/ui-store';
+import routerStore from '~/stores/router-store';
+import FileSpriteIcon from '~/ui/shared-components/FileSpriteIcon';
+import T from '~/ui/shared-components/T';
+import FileActions from '~/ui/files/components/FileActions';
+import ShareWithMultipleDialog from '~/ui/shared-components/ShareWithMultipleDialog';
+import { downloadFile } from '~/helpers/file';
 
-const {
+import {
     isFileShareable,
     isFileOwnedByCurrentUser,
     fileDownloadUIEnabled
-} = require('../../files/helpers/sharedFileAndFolderActions');
+} from '../../files/helpers/sharedFileAndFolderActions';
 
-const ALL_IMAGES = 'all_images';
-const UNDER_LIMIT_ONLY = 'under_limit_only';
-const DISABLED = 'disabled';
+enum ImageDisplayMode {
+    allImages = 'all_images',
+    underLimitOnly = 'under_limit_only',
+    disabled = 'disabled'
+}
 
-/**
- * @augments {React.Component<{
-        file: any
-        onImageLoaded: () => void
-    }, {}>}
- */
+interface InlineFileProps {
+    file: File;
+    onImageLoaded: () => void;
+}
+
 @observer
-class InlineFile extends React.Component {
-    @observable isExpanded;
-    @observable currentImageSrc;
+class InlineFile extends React.Component<InlineFileProps> {
+    @observable isExpanded = false;
+    @observable currentImageSrc: string | null = null;
     @observable imagePopupVisible = false;
 
-    @observable selectedMode = ALL_IMAGES;
+    @observable selectedMode: ImageDisplayMode = ImageDisplayMode.allImages;
     @observable firstSave = false;
 
     @observable errorLoading = false;
+
+    private _reactionToDispose!: Lambda;
 
     // TODO: test cases where file is getting deleted from chat and then reshared
     // most likely there will be this.props.file instance change which messes up visibleCounter
@@ -87,9 +90,12 @@ class InlineFile extends React.Component {
     }
 
     radioOptions = [
-        { value: ALL_IMAGES, label: t('title_forAllImages') },
-        { value: UNDER_LIMIT_ONLY, label: t('title_forImagesUnder10') },
-        { value: DISABLED, label: t('title_disable') }
+        { value: ImageDisplayMode.allImages, label: t('title_forAllImages') },
+        {
+            value: ImageDisplayMode.underLimitOnly,
+            label: t('title_forImagesUnder10')
+        },
+        { value: ImageDisplayMode.disabled, label: t('title_disable') }
     ];
 
     download = () => {
@@ -108,7 +114,9 @@ class InlineFile extends React.Component {
             file = await fileStore.loadKegByFileId(id);
             if (!file) return;
         }
-        let msg = t('title_confirmRemoveFilename', { name: file.name });
+        let msg = t('title_confirmRemoveFilename', {
+            name: file.name
+        }) as string;
         if (file.shared) {
             msg += `\n\n${t('title_confirmRemoveSharedFiles')}`;
         }
@@ -127,7 +135,7 @@ class InlineFile extends React.Component {
 
     onDismiss = () => {
         this.firstSave = true;
-        this.selectedMode = DISABLED;
+        this.selectedMode = ImageDisplayMode.disabled;
         this.onSubmitConsent();
     };
 
@@ -136,11 +144,11 @@ class InlineFile extends React.Component {
         uiStore.prefs.peerioContentConsented = true;
 
         switch (this.selectedMode) {
-            case ALL_IMAGES:
+            case ImageDisplayMode.allImages:
                 uiStore.prefs.peerioContentEnabled = true;
                 uiStore.prefs.limitInlineImageSize = false;
                 break;
-            case UNDER_LIMIT_ONLY:
+            case ImageDisplayMode.underLimitOnly:
                 uiStore.prefs.peerioContentEnabled = true;
                 uiStore.prefs.limitInlineImageSize = true;
                 break;
@@ -299,7 +307,7 @@ class InlineFile extends React.Component {
         )
     };
 
-    shareWithMultipleDialogRef = React.createRef();
+    shareWithMultipleDialogRef = React.createRef<ShareWithMultipleDialog>();
     share = async () => {
         const contacts = await this.shareWithMultipleDialogRef.current.show(
             null,
@@ -440,22 +448,21 @@ class InlineFile extends React.Component {
     }
 }
 
-/**
- * @augments {React.Component<{
-        files: any[]
-        onImageLoaded: () => void
-    }, {}>}
- */
+interface InlineFilesProps {
+    files: string[];
+    onImageLoaded: () => void;
+}
+
 @observer
-class InlineFiles extends React.Component {
-    renderNoFile(fileId) {
+export default class InlineFiles extends React.Component<InlineFilesProps> {
+    renderNoFile(fileId: string) {
         return (
             <div className="inline-files-container" key={fileId}>
                 <div className="unknown-file">{t('error_fileRemoved')}</div>
             </div>
         );
     }
-    renderProgress(fileId) {
+    renderProgress(fileId: string) {
         return (
             <div className="inline-files-container" key={fileId}>
                 <ProgressBar
@@ -467,7 +474,7 @@ class InlineFiles extends React.Component {
         );
     }
 
-    renderNoSignature(fileId) {
+    renderNoSignature(fileId: string) {
         return (
             <div
                 className="inline-files-container"
@@ -485,7 +492,7 @@ class InlineFiles extends React.Component {
     }
 
     render() {
-        if (!this.props.files.map) return null;
+        if (!Array.isArray(this.props.files)) return null;
         return (
             <div>
                 {this.props.files.map(fileId => {
@@ -510,5 +517,3 @@ class InlineFiles extends React.Component {
         );
     }
 }
-
-module.exports = InlineFiles;

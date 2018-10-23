@@ -1,6 +1,7 @@
 import { action } from 'mobx';
 
 import { User, fileStore } from 'peerio-icebear';
+import { File } from 'peerio-icebear/src/models';
 
 import { selectDownloadFolder } from '~/helpers/file';
 
@@ -11,17 +12,6 @@ export interface Folder {
     isShared: boolean;
     selected: boolean;
     rename(newName: string): void;
-}
-
-export interface File {
-    name: string;
-    isFolder: undefined;
-    selected: boolean;
-    isShared: boolean;
-    canShare: boolean;
-    readyForDownload: boolean;
-    fileOwner: string;
-    downloading: boolean;
 }
 
 export type FileOrFolder = File | Folder;

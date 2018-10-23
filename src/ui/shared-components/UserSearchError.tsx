@@ -1,12 +1,21 @@
-const React = require('react');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { observer } from 'mobx-react';
 
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
-const { Button, MaterialIcon } = require('peer-ui');
+import T from '~/ui/shared-components/T';
+import { t } from 'peerio-translator';
+import { Button, MaterialIcon } from 'peer-ui';
+
+interface UserSearchErrorProps {
+    onInvite: () => void;
+    userAlreadyAdded?: boolean;
+    userNotFound?: boolean;
+    suggestInviteEmail?: boolean;
+}
 
 @observer
-class UserSearchError extends React.Component {
+export default class UserSearchError extends React.Component<
+    UserSearchErrorProps
+> {
     invite = () => {
         this.props.onInvite();
     };
@@ -39,5 +48,3 @@ class UserSearchError extends React.Component {
         );
     }
 }
-
-module.exports = UserSearchError;

@@ -1,22 +1,23 @@
-const electron = require('electron').remote;
-const fs = require('fs');
-const path = require('path');
-const util = require('util');
-const _ = require('lodash');
-const sanitize = require('sanitize-filename');
-const { t } = require('peerio-translator');
-const { fileHelpers, errors } = require('peerio-icebear');
+import { remote as electron, OpenDialogOptions } from 'electron';
+import fs from 'fs';
+import path from 'path';
+import util from 'util';
+import _ from 'lodash';
+import sanitize from 'sanitize-filename';
+import { t } from 'peerio-translator';
+import { fileHelpers, errors } from 'peerio-icebear';
+import { File } from 'peerio-icebear/src/models';
 
 const lstatAsync = util.promisify(fs.lstat);
 const readdirAsync = util.promisify(fs.readdir);
 
-function selectDownloadFolder() {
+export function selectDownloadFolder(): Promise<string | null> {
     return new Promise(resolve => {
         const win = electron.getCurrentWindow();
         electron.dialog.showOpenDialog(
             win,
             {
-                buttonLabel: t('button_download'),
+                buttonLabel: t('button_download') as string, // TODO: remove when t() fixed
                 properties: [
                     'openDirectory',
                     'treatPackageAsDirectory',
@@ -34,11 +35,15 @@ function selectDownloadFolder() {
     });
 }
 
-function pickSavePath(folderPath, nameWithoutExtension, extension = '') {
+export function pickSavePath(
+    folderPath: string,
+    nameWithoutExtension: string,
+    extension = ''
+): string {
     console.log(folderPath);
     console.log(nameWithoutExtension);
     console.log(extension);
-    let defaultPath = null;
+    let defaultPath: string;
     let counter = 0;
     do {
         defaultPath = path.join(
@@ -53,8 +58,8 @@ function pickSavePath(folderPath, nameWithoutExtension, extension = '') {
     return defaultPath;
 }
 
-function requestDownloadPath(fileName) {
-    return new Promise((resolve, reject) => {
+export function requestDownloadPath(fileName: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
         let p = sanitize(fileName, { replacement: '_' });
         try {
             const downloadsDir = electron.app.getPath('downloads');
@@ -104,8 +109,8 @@ function requestDownloadPath(fileName) {
 }
 
 // todo: do this in a mobx reaction
-function downloadFile(file) {
-    let finalPath;
+export function downloadFile(file: File): Promise<boolean> {
+    let finalPath: string;
     return requestDownloadPath(file.name)
         .then(p => {
             finalPath = p;
@@ -120,9 +125,9 @@ function downloadFile(file) {
         .then(() => file.cached && electron.shell.showItemInFolder(finalPath));
 }
 
-function pickLocalFiles() {
+export function pickLocalFiles() {
     return new Promise(resolve => {
-        const properties = [
+        const properties: OpenDialogOptions['properties'] = [
             'openFile',
             'multiSelections',
             'treatPackageAsDirectory'
@@ -133,20 +138,20 @@ function pickLocalFiles() {
     });
 }
 
-/**
- * @typedef {Object} getListFilesResult
- * @property {Array<string>} success - list of recognized files
- * @property {Array<string>} error - list of paths failed to read
- * @property {Array<string>} restricted - list of paths refused to read (not supported, like .app on mac)
- */
+interface FileList {
+    success: string[];
+    error: string[];
+    restricted: string[];
+    successBytes?: number;
+}
+
 /**
  * Takes an array of file/folder paths,
  * returns an array of passed files and all files in passed folders recursively
- * @param {Array<string>} mixed files/folders paths
- * @returns {Promise<getListFilesResult>}
+ * @param paths mixed files/folders paths
  */
-async function getFileList(paths) {
-    const ret = {
+export async function getFileList(paths: string[]): Promise<FileList> {
+    const ret: FileList = {
         success: [],
         error: [],
         restricted: []
@@ -187,24 +192,31 @@ async function getFileList(paths) {
     return ret;
 }
 
-async function getFileTree(filePath) {
+type FileTree =
+    | string
+    | null
+    | {
+          name: string;
+          files: string[];
+          folders: FileTree[]; // eslint-disable-line no-use-before-define
+      };
+
+export async function getFileTree(filePath: string): Promise<FileTree> {
     try {
         const stat = await lstatAsync(filePath);
         if (stat.isFile()) {
             return filePath;
         }
         if (stat.isDirectory()) {
-            const folder = {
+            const folder: FileTree = {
                 name: fileHelpers.getFileName(filePath),
                 folders: [],
                 files: []
             };
 
             const namesInDir = await readdirAsync(filePath);
-            for (let i = 0; i < namesInDir.length; i++) {
-                const child = await getFileTree(
-                    path.join(filePath, namesInDir[i])
-                );
+            for (const nameInDir of namesInDir) {
+                const child = await getFileTree(path.join(filePath, nameInDir));
                 if (!child) continue;
 
                 if (typeof child === 'object') {
@@ -221,13 +233,3 @@ async function getFileTree(filePath) {
         return null;
     }
 }
-
-module.exports = {
-    downloadFile,
-    pickLocalFiles,
-    selectDownloadFolder,
-    pickSavePath,
-    getFileList,
-    getFileTree,
-    requestDownloadPath
-};

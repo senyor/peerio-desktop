@@ -61,7 +61,7 @@ interface SuggestionsConfig<T> {
      * key of our returned object that we should use when mapping the suggestion
      * results in the React component.
      */
-    keySource: string;
+    keySource: keyof T;
 
     onAcceptSuggestion: (matchData: MatchData, acceptedSuggestion: T) => void;
 }
@@ -78,7 +78,7 @@ export default class Suggestions<T> {
     readonly matchers: RegExp[];
     readonly source: (matchData: MatchData) => T[];
     readonly formatter: (match: T) => string | JSX.Element;
-    readonly keySource: string;
+    readonly keySource: string | number;
     readonly onAcceptSuggestion: (
         matchData: MatchData,
         acceptedSuggestion: T
@@ -99,7 +99,7 @@ export default class Suggestions<T> {
         this.matchers = matchers;
         this.source = source;
         this.formatter = formatter;
-        this.keySource = keySource;
+        this.keySource = keySource as string | number; // TODO: audit
         this.onAcceptSuggestion = onAcceptSuggestion;
 
         this.plugin = makePlugin(this);

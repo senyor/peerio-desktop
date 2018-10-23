@@ -4,6 +4,7 @@ import { observable, action, runInAction } from 'mobx';
 import css from 'classnames';
 
 import { contactStore, systemMessages, User } from 'peerio-icebear';
+import { Chat, Message as IcebearMessage } from 'peerio-icebear/src/models';
 import { t } from 'peerio-translator';
 import { Button, MaterialIcon } from 'peer-ui';
 
@@ -22,45 +23,19 @@ import InlineSharedFolder from '../../files/components/InlineSharedFolder';
 
 const urls = require('~/config').translator.urlMap;
 
-interface IcebearMessageTEMP {
-    id: string;
-    lastProcessedVersion: any;
-    version: any;
-    processedText: { __html: string };
-    text: string;
-    richText?: { type: 'doc'; content: any };
-    sending: boolean;
-    signatureError: boolean;
-    timestamp: number;
-    sendError: string;
-    sender: any;
-    systemData: any;
-    files: any[];
-    folders: any[];
-    hasUrls: boolean;
-    externalImages?: any[];
-}
-
-let legacyProcessMessageForDisplay: (
-    msg: {
-        lastProcessedVersion;
-        version;
-        processedText: { __html: string };
-        text: string;
-    }
-) => { __html: string };
+let legacyProcessMessageForDisplay: (msg: IcebearMessage) => { __html: string };
 
 interface MessageProps {
     /**
      * the active chat, as defined in icebear's chatStore singleton
      * (chatStore.activeChat) peerio-icebear/src/models/chats/chat.js
      */
-    chat: any;
+    chat: Chat;
 
     /**
      * the message proper, defined in peerio-icebear/src/models/chats/message.js
      */
-    message: IcebearMessageTEMP;
+    message: IcebearMessage;
 
     /**
      * the message.groupWithPrevious field
@@ -118,12 +93,14 @@ export default class Message extends React.Component<MessageProps> {
      *         parsed it, or else an object with an HTML string ready to
      *         directly be used in `dangerouslySetInnerHTML`.
      */
-    getMessageComponent(message: IcebearMessageTEMP): JSX.Element {
+    getMessageComponent(message: IcebearMessage): JSX.Element {
         const richText = message.richText;
         if (
             richText &&
             typeof richText === 'object' &&
+            // @ts-ignore needs icebear fixes
             richText.type === 'doc' &&
+            // @ts-ignore needs icebear fixes
             richText.content
         ) {
             try {
@@ -435,7 +412,7 @@ export default class Message extends React.Component<MessageProps> {
 
 function renderError(
     errorData: { error: Error; info: { componentStack: string } },
-    msg: IcebearMessageTEMP
+    msg: IcebearMessage
 ) {
     console.error('Error rendering the following message:');
     console.dir(msg);

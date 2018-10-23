@@ -27,6 +27,7 @@ import { keymap } from 'prosemirror-keymap';
 import { t } from 'peerio-translator';
 import { Button } from 'peer-ui';
 import { chatStore } from 'peerio-icebear';
+import { Contact } from 'peerio-icebear/src/models';
 
 import {
     chatSchema,
@@ -42,9 +43,7 @@ import { ensureMentions } from '~/helpers/chat/prosemirror/ensure-mentions';
 import uiStore from '~/stores/ui-store';
 
 import EmojiPicker from '~/ui/emoji/Picker';
-import makeUsernameSuggestions, {
-    Contact_TEMP as Contact
-} from './suggestions/UsernameSuggestions';
+import makeUsernameSuggestions from './suggestions/UsernameSuggestions';
 import makeEmojiSuggestions from './suggestions/EmojiSuggestions';
 
 import Suggestions from './suggestions/Suggestions';
@@ -156,7 +155,6 @@ export default class MessageInputProseMirror extends React.Component<{
         if (!cachedPicker) {
             cachedPicker = (
                 <EmojiPicker
-                    key="emoji-picker"
                     onPicked={onEmojiPicked}
                     onBlur={() => {
                         currentInputInstance.hideEmojiPicker();
@@ -349,35 +347,33 @@ export default class MessageInputProseMirror extends React.Component<{
         const UsernameSuggestions = this.usernameSuggestions.Component;
         const EmojiSuggestions = this.emojiSuggestions.Component;
 
-        return [
-            <UsernameSuggestions key="username-suggestions" />,
-            <EmojiSuggestions key="emoji-suggestions" />,
-            <div
-                key="editor"
-                className="message-editor-container-anotherwrapper"
-            >
-                <div
-                    id="messageEditor"
-                    className="message-editor-container-prosemirror"
-                    onBlur={this.onInputBlur}
-                    ref={this.mountProseMirror}
+        return (
+            <>
+                <UsernameSuggestions />
+                <EmojiSuggestions />
+                <div className="message-editor-container-anotherwrapper">
+                    <div
+                        id="messageEditor"
+                        className="message-editor-container-prosemirror"
+                        onBlur={this.onInputBlur}
+                        ref={this.mountProseMirror}
+                    />
+                    <Toolbar.Component>
+                        <BoldButton.Component />
+                        <ItalicButton.Component />
+                        <StrikeButton.Component />
+                    </Toolbar.Component>
+                </div>
+                <Button
+                    icon="mood"
+                    disabled={this.emojiPickerVisible}
+                    onClick={this.showEmojiPicker}
+                    tooltip={t('button_emojis') as string}
+                    tooltipSize="small"
+                    theme="no-hover"
                 />
-                <Toolbar.Component>
-                    <BoldButton.Component />
-                    <ItalicButton.Component />
-                    <StrikeButton.Component />
-                </Toolbar.Component>
-            </div>,
-            <Button
-                key="emoji-picker-open-button"
-                icon="mood"
-                disabled={this.emojiPickerVisible}
-                onClick={this.showEmojiPicker}
-                tooltip={t('button_emojis')}
-                tooltipSize="small"
-                theme="no-hover"
-            />,
-            this.emojiPickerVisible ? cachedPicker : null
-        ];
+                {this.emojiPickerVisible ? cachedPicker : null}
+            </>
+        );
     }
 }

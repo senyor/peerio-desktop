@@ -1,17 +1,14 @@
 import React from 'react';
 import { chatStore, contactStore } from 'peerio-icebear';
+import { Contact } from 'peerio-icebear/src/models';
 import { Avatar } from 'peer-ui';
 import { EditorView } from 'prosemirror-view';
 
 import { chatSchema } from '~/helpers/chat/prosemirror/chat-schema';
 import Suggestions from './Suggestions';
 
-// FIXME: use icebear Contact type
-import { ContactProps } from 'peer-ui/dist/components/helpers/interfaces';
-export type Contact_TEMP = ContactProps & { fullName: string }; // eslint-disable-line camelcase
-
 export default function makeUsernameSuggestions(getView: () => EditorView) {
-    return new Suggestions<Contact_TEMP>({
+    return new Suggestions<Contact>({
         // Match (but don't include) the start of the input, or any kind of
         // whitespace, or the unicode object replacement character (which we use
         // in the Suggestions to replace leaf nodes that don't contain text),

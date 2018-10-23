@@ -1,5 +1,5 @@
 import React from 'react';
-import { reaction, computed, observable } from 'mobx';
+import { reaction, computed, observable, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { chatStore, clientApp } from 'peerio-icebear';
@@ -13,9 +13,17 @@ import Message from './Message';
 
 @observer
 export default class MessageList extends React.Component {
-    loadTriggerDistance = 20;
-    stickDistance = 50;
-    lastRenderedChatId = null;
+    private readonly loadTriggerDistance = 20;
+    private readonly stickDistance = 50;
+    private lastRenderedChatId: string | null = null;
+    private lastTopElement: HTMLElement | null = null;
+    private lastTopElementOffset: number = 0;
+
+    readonly containerRef = React.createRef<HTMLDivElement>();
+    private _topLoadReaction!: IReactionDisposer;
+    private _botLoadReaction!: IReactionDisposer;
+    private _initialLoadReaction!: IReactionDisposer;
+
     @observable pageScrolledUp = false;
 
     @computed
@@ -36,10 +44,12 @@ export default class MessageList extends React.Component {
                     this.lastTopElement = null;
                     for (
                         let i = 0;
-                        i < this.containerRef.childNodes.length;
+                        i < this.containerRef.current.childNodes.length;
                         i++
                     ) {
-                        const el = this.containerRef.childNodes[i];
+                        const el = this.containerRef.current.childNodes[
+                            i
+                        ] as HTMLElement;
                         if (el.classList[0] !== 'message-content-wrapper')
                             continue;
                         this.lastTopElement = el;
@@ -53,7 +63,7 @@ export default class MessageList extends React.Component {
                 if (this.lastTopElement) {
                     if (!this.lastTopElement) return;
                     // todo: animate
-                    this.containerRef.scrollTop =
+                    this.containerRef.current.scrollTop =
                         this.lastTopElement.offsetTop -
                         this.lastTopElementOffset -
                         25;
@@ -101,7 +111,7 @@ export default class MessageList extends React.Component {
     };
 
     smoothScrollStep = () => {
-        const el = this.containerRef;
+        const el = this.containerRef.current;
         if (!el) return;
         const goal = el.scrollHeight - el.clientHeight;
         if (el.scrollTop >= goal - 2) return;
@@ -110,7 +120,7 @@ export default class MessageList extends React.Component {
     };
 
     instantlyScrollToBottom = () => {
-        const el = this.containerRef;
+        const el = this.containerRef.current;
         if (!el) return;
         el.scrollTop = el.scrollHeight - el.clientHeight;
     };
@@ -143,17 +153,16 @@ export default class MessageList extends React.Component {
 
     // todo: investigate why throttling causes lags when scrolling with trackpad at big velocity
     handleScroll = () => {
+        const el = this.containerRef.current;
+        if (!el) return;
         // _.throttle(
         // console.log('SCROLL');
         // we can't handle scroll if content height is too small
-        if (this.containerRef.scrollHeight <= this.containerRef.clientHeight)
-            return;
+        if (el.scrollHeight <= el.clientHeight) return;
 
         const distanceToBottom =
-            this.containerRef.scrollHeight -
-            this.containerRef.scrollTop -
-            this.containerRef.clientHeight;
-        const distanceToTop = this.containerRef.scrollTop;
+            el.scrollHeight - el.scrollTop - el.clientHeight;
+        const distanceToTop = el.scrollTop;
         // console.log(distanceToTop, distanceToBottom);
 
         // detecting sticking state
@@ -162,7 +171,7 @@ export default class MessageList extends React.Component {
             !chatStore.activeChat.canGoDown;
 
         // detecting if we have scrolled up by one "page" or more
-        this.pageScrolledUp = distanceToBottom > this.containerRef.clientHeight;
+        this.pageScrolledUp = distanceToBottom > el.clientHeight;
 
         // triggering page load
         if (distanceToBottom < this.loadTriggerDistance) {
@@ -175,10 +184,6 @@ export default class MessageList extends React.Component {
         }
     }; // , 150, { leading: true, trailing: true });
 
-    setContainerRef = r => {
-        this.containerRef = r;
-    };
-
     /**
      * IMPORTANT:
      * Scroll position retention logic counts on
@@ -187,7 +192,7 @@ export default class MessageList extends React.Component {
      */
     renderMessages() {
         const chat = chatStore.activeChat;
-        const ret = [];
+        const ret: JSX.Element[] = [];
         if (chat.canGoUp) {
             ret.push(
                 <div key="top-progress-bar" className="progress-wrapper">
@@ -296,7 +301,7 @@ export default class MessageList extends React.Component {
             <div
                 className="messages-current scrollable"
                 onScroll={this.handleScroll}
-                ref={this.setContainerRef}
+                ref={this.containerRef}
             >
                 {this.renderChatStart()}
                 {chatStore.activeChat.loadingInitialPage ? (

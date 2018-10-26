@@ -73,7 +73,7 @@ const signup = setup({
             S.TEXT_INPUT,
             {
                 item: S.USERNAME,
-                sublocation: S.SIGN_UP,
+                sublocation: S.ACCOUNT_USERNAME,
                 state: S.ERROR,
                 errorType: errorMessage(errorMsg)
             }

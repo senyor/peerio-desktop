@@ -51,7 +51,7 @@ const shared = setup({
 
         // Sign Up page "Username Not Available" is reported onError; do not send onBlur.
         const c = context();
-        if (c === S.SIGN_UP && errorMsg === 'error_usernameNotAvailable')
+        if (c === 'Onboarding' && errorMsg === 'error_usernameNotAvailable')
             return null;
 
         // On Login do not show "wrong AK" text input error; that should be handled by login event itself

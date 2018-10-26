@@ -65,5 +65,7 @@ function send(ev: TelemetryPayload): void {
     // `send` here will check if user is still in signup, and store events for bulk send if so
     telemetry.send(obj);
 
-    if (isDevEnv) console.log(obj);
+    if (isDevEnv) {
+        console.log(obj);
+    }
 }

@@ -23,6 +23,7 @@ const login = setup({
         {
             item: S.USERNAME,
             location: S.SIGN_IN,
+            sublocation: S.SIGN_IN,
             state: S.ERROR,
             errorType: 'Using @'
         }

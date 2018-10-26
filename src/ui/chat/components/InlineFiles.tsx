@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 
 import { fileStore, chatStore } from 'peerio-icebear';
-import { File } from 'peerio-icebear/src/models';
+import { File } from 'peerio-icebear/dist/models';
 import {
     Button,
     Dialog,
@@ -362,8 +362,6 @@ class InlineFile extends React.Component<InlineFileProps> {
                             </div>
                             {!file.cachingFailed && file.downloading ? (
                                 <ProgressBar
-                                    type="linear"
-                                    mode="determinate"
                                     value={file.progress}
                                     max={file.progressMax}
                                 />
@@ -465,11 +463,7 @@ export default class InlineFiles extends React.Component<InlineFilesProps> {
     renderProgress(fileId: string) {
         return (
             <div className="inline-files-container" key={fileId}>
-                <ProgressBar
-                    type="linear"
-                    mode="indeterminate"
-                    className="unknown-file-progress-bar"
-                />
+                <ProgressBar className="unknown-file-progress-bar" />
             </div>
         );
     }

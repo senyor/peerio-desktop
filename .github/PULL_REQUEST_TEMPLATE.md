@@ -1,8 +1,8 @@
-#### Relevant info and issue/PR links 
+#### Relevant info and issue/PR links
 
-_(Remember to run `tsc --noEmit` and check that you didn't create any new type errors related to your changes)_
 
-#### Testing instructions  
+
+#### Testing instructions
 
 
 ----

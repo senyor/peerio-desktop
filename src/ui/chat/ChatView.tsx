@@ -178,12 +178,12 @@ export default class ChatView extends React.Component {
     };
 
     @computed
-    get shareInProgress() {
+    get shareInProgress(): boolean {
         const chat = chatStore.activeChat;
         if (!chat) return false;
         return (
-            (chat.uploadQueue && chat.uploadQueue.length) ||
-            (chat.folderShareQueue && chat.folderShareQueue.length)
+            (chat.uploadQueue && chat.uploadQueue.length > 0) ||
+            (chat.folderShareQueue && chat.folderShareQueue.length > 0)
         );
     }
 
@@ -242,11 +242,7 @@ export default class ChatView extends React.Component {
                                 {chat.allParticipants.length || ''}
                             </div>
                         ) : chat.changingFavState ? (
-                            <ProgressBar
-                                type="circular"
-                                mode="indeterminate"
-                                size="small"
-                            />
+                            <ProgressBar circular size="small" />
                         ) : (
                             <div
                                 onClick={chat.toggleFavoriteState}

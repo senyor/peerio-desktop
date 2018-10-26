@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { List, ListItem, Menu, MenuItem } from 'peer-ui';
 import { chatStore, fileStore } from 'peerio-icebear';
+import { File } from 'peerio-icebear/dist/models';
 import { t } from 'peerio-translator';
 
 import T from '~/ui/shared-components/T';
@@ -28,7 +29,10 @@ export default class FilesSection extends React.Component<FilesSectionProps> {
     @action.bound
     async share(ev: React.MouseEvent) {
         ev.stopPropagation();
-        const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
+        const fileId = getAttributeInParentChain(
+            ev.currentTarget,
+            'data-fileid'
+        );
         const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
         await file.ensureLoaded();
         if (this.isUnmounted || file.deleted) return;
@@ -51,7 +55,10 @@ export default class FilesSection extends React.Component<FilesSectionProps> {
     @action.bound
     async download(ev: React.MouseEvent) {
         ev.stopPropagation();
-        const fileId = getAttributeInParentChain(ev.target, 'data-fileid');
+        const fileId = getAttributeInParentChain(
+            ev.currentTarget,
+            'data-fileid'
+        );
         const file = fileStore.getByIdInChat(fileId, chatStore.activeChat.id);
         await file.ensureLoaded();
         if (file.deleted) return;
@@ -62,16 +69,17 @@ export default class FilesSection extends React.Component<FilesSectionProps> {
         ev.stopPropagation();
     }
 
-    readonly handleUpload = () => {
+    readonly handleUpload = async () => {
         const chat = chatStore.activeChat;
         if (!chat) return;
-        pickLocalFiles().then(paths => {
-            if (!paths || !paths.length) return Promise.resolve();
-            return Promise.all(paths.map(i => chat.uploadAndShareFile(i)));
-        });
+
+        const paths = await pickLocalFiles();
+        if (!paths || !paths.length) return;
+
+        await Promise.all(paths.map(i => chat.uploadAndShareFile(i)));
     };
 
-    menu(file) {
+    menu(file: File) {
         return (
             <Menu
                 icon="more_vert"
@@ -94,7 +102,7 @@ export default class FilesSection extends React.Component<FilesSectionProps> {
         );
     }
 
-    readonly renderFileItem = file => {
+    readonly renderFileItem = (file: File) => {
         return (
             <ListItem
                 key={file.fileId}
@@ -130,7 +138,7 @@ export default class FilesSection extends React.Component<FilesSectionProps> {
         const chat = chatStore.activeChat;
         if (!chat) return null;
         const textParser = {
-            clickHere: text => (
+            clickHere: (text: string) => (
                 <a className="clickable" onClick={this.handleUpload}>
                     {text}
                 </a>

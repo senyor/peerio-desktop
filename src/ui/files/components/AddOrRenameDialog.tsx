@@ -4,9 +4,7 @@ import { observer } from 'mobx-react';
 import { Dialog, Input } from 'peer-ui';
 import { t } from 'peerio-translator';
 import { fileStore } from 'peerio-icebear';
-
-// TODO/TS: use icebear types
-import { Folder } from '../helpers/sharedFileAndFolderActions';
+import { FileFolder } from 'peerio-icebear/dist/models';
 
 // As of 22/08/18, only folders can be renamed, not files, so there's a bit of
 // naming/typing weirdness.
@@ -25,14 +23,14 @@ export default class AddOrRenameFolderDialog extends React.Component {
      * The file or folder to rename.
      * If null, we're adding a new folder.
      */
-    @observable.ref folderToRename: Folder = null;
+    @observable.ref folderToRename: FileFolder | null = null;
 
     /**
      * @param fileOrFolder The file or folder to rename; if undefined, we're
      *                     adding a new folder.
      */
     @action.bound
-    show(fileOrFolder?: Folder) {
+    show(fileOrFolder?: FileFolder) {
         if (fileOrFolder) {
             this.folderToRename = fileOrFolder;
             this.inputValue = fileOrFolder.name;
@@ -75,11 +73,11 @@ export default class AddOrRenameFolderDialog extends React.Component {
     };
 
     @action.bound
-    onInputChange(val) {
+    onInputChange(val: string) {
         this.inputValue = val;
     }
 
-    readonly onInputKeyDown = ev => {
+    readonly onInputKeyDown = (ev: React.KeyboardEvent) => {
         if (ev.key === 'Enter' && this.canPerformAddOrRename) {
             if (this.folderToRename) {
                 this.performRename();

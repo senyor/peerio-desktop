@@ -209,12 +209,7 @@ export default class FolderLine extends React.Component<FolderLineProps> {
                 )}
 
                 {shareInProgress && (
-                    <ProgressBar
-                        type="linear"
-                        mode="determinate"
-                        value={progress}
-                        max={progressMax}
-                    />
+                    <ProgressBar value={progress} max={progressMax} />
                 )}
 
                 {this.props.folderDetails && (

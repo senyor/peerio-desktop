@@ -7,7 +7,7 @@ const { contactStore, chatStore, chatInviteStore } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const path = require('path');
 const { app, getCurrentWindow } = require('electron').remote;
-const config = require('~/config');
+const config = require('~/config').default;
 
 function bringAppToFront() {
     // Put app window into foreground.

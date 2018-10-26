@@ -344,9 +344,7 @@ export default class ChatList extends React.Component {
         return (
             <div className="feature-navigation-list messages-list">
                 {/* TODO: use a general full width progress bar instead of this one. */}
-                {chatStore.loading ? (
-                    <ProgressBar type="linear" mode="indeterminate" />
-                ) : null}
+                {chatStore.loading ? <ProgressBar /> : null}
                 {!chatStore.loaded ? null : (
                     <div className="list" ref={this.setScrollContainerRef}>
                         <MaintenanceWarning />

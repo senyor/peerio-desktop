@@ -3,9 +3,9 @@ const { observer } = require('mobx-react');
 const { Button } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { User } = require('peerio-icebear');
-const config = require('~/config');
+const config = require('~/config').default;
 const T = require('~/ui/shared-components/T');
-const urls = require('~/config').translator.urlMap;
+const urls = require('~/config').default.translator.urlMap;
 
 @observer
 class ChannelUpgradeOffer extends React.Component {

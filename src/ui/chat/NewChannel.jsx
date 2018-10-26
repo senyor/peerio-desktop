@@ -74,7 +74,7 @@ class NewChannel extends React.Component {
             return (
                 <div className="new-channel create-new-chat">
                     <div className="create-channel-loading">
-                        <ProgressBar type="circular" />
+                        <ProgressBar circular />
                     </div>
                 </div>
             );

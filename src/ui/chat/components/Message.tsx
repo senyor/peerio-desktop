@@ -4,7 +4,7 @@ import { observable, action, runInAction } from 'mobx';
 import css from 'classnames';
 
 import { contactStore, systemMessages, User } from 'peerio-icebear';
-import { Chat, Message as IcebearMessage } from 'peerio-icebear/src/models';
+import { Chat, Message as IcebearMessage } from 'peerio-icebear/dist/models';
 import { t } from 'peerio-translator';
 import { Button, MaterialIcon } from 'peer-ui';
 
@@ -21,7 +21,7 @@ import UrlPreview from './UrlPreview';
 import UrlPreviewConsent from './UrlPreviewConsent';
 import InlineSharedFolder from '../../files/components/InlineSharedFolder';
 
-const urls = require('~/config').translator.urlMap;
+const urls = require('~/config').default.translator.urlMap;
 
 let legacyProcessMessageForDisplay: (msg: IcebearMessage) => { __html: string };
 

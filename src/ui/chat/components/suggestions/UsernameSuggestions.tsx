@@ -1,6 +1,6 @@
 import React from 'react';
 import { chatStore, contactStore } from 'peerio-icebear';
-import { Contact } from 'peerio-icebear/src/models';
+import { Contact } from 'peerio-icebear/dist/models';
 import { Avatar } from 'peer-ui';
 import { EditorView } from 'prosemirror-view';
 

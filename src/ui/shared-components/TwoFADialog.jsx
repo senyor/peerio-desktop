@@ -1,16 +1,45 @@
+import * as telemetry from '~/telemetry';
 const React = require('react');
 const { Checkbox, Dialog, Input } = require('peer-ui');
-const { action, computed, observable } = require('mobx');
+const { action, computed, observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
-const { clientApp } = require('peerio-icebear');
+const { User, clientApp } = require('peerio-icebear');
+const autologin = require('~/helpers/autologin');
 const uiStore = require('~/stores/ui-store');
 const { validateCode } = require('~/helpers/2fa');
 const appControl = require('~/helpers/app-control');
 
 @observer
 class TwoFADialog extends React.Component {
+    componentWillMount() {
+        // For telemetry: listen for "last user" object, check if autologin enabled
+        this.lastUserReaction = when(
+            () => User,
+            () => {
+                User.getLastAuthenticated()
+                    .then(lastUser => {
+                        return lastUser
+                            ? autologin.getPassphrase(lastUser.username)
+                            : null;
+                    })
+                    .then(passphrase => {
+                        this.isAutologinEnabled = !!passphrase;
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            }
+        );
+    }
+
+    componentWillUnmount() {
+        if (this.lastUserReaction) this.lastUserReaction();
+    }
+
     @observable totpCode = '';
+    @observable isAutologinEnabled;
+
     @computed
     get readyToSubmit() {
         return validateCode(this.totpCode).readyToSubmit;
@@ -23,10 +52,12 @@ class TwoFADialog extends React.Component {
 
     @action.bound
     submitCode() {
-        clientApp.active2FARequest.submit(
-            this.totpCode,
-            uiStore.prefs.last2FATrustDeviceSetting
-        );
+        clientApp.active2FARequest
+            .submit(this.totpCode, uiStore.prefs.last2FATrustDeviceSetting)
+            .catch(err => {
+                telemetry.login.twoFaFail(this.isAutologinEnabled);
+                console.error(err);
+            });
         this.totpCode = '';
     }
 
@@ -85,13 +116,6 @@ class TwoFADialog extends React.Component {
         }
     }
 
-    setInputRef = ref => {
-        if (ref) {
-            this.inputRef = ref;
-            if (clientApp.active2FARequest) ref.focus();
-        }
-    };
-
     onToggleTrust() {
         uiStore.prefs.last2FATrustDeviceSetting = !uiStore.prefs
             .last2FATrustDeviceSetting;
@@ -99,6 +123,7 @@ class TwoFADialog extends React.Component {
 
     render() {
         const req = clientApp.active2FARequest;
+
         let actions;
         if (req) {
             actions = [
@@ -123,7 +148,6 @@ class TwoFADialog extends React.Component {
                 <div className="text-center">
                     <Input
                         className="totp-input"
-                        ref={this.setInputRef}
                         value={this.totpCode}
                         onChange={this.onTOTPCodeChange}
                         onKeyDown={this.handleKeyDown}

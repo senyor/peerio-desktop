@@ -28,6 +28,7 @@ const SignupLink = require('~/whitelabel/components/SignupLink');
 const { validators } = validation; // use common validation from core
 import * as Mock from '~/ui/shared-components/MockUI';
 import { MaterialIcon } from 'peer-ui';
+import { clientApp } from 'peerio-icebear';
 
 class LoginStore extends OrderedFormStore {
     @observable fieldsExpected = 2;
@@ -110,6 +111,17 @@ class Login extends Component {
             }
         });
 
+        // For telemetry: listen for active2FARequest to determine if user has 2FA enabled
+        this.twoFaReaction = when(
+            () =>
+                clientApp &&
+                clientApp.active2FARequest &&
+                clientApp.active2FARequest.type === 'login',
+            () => {
+                this.twoFaEnabled = true;
+            }
+        );
+
         this.startTime = Date.now();
     }
 
@@ -117,6 +129,8 @@ class Login extends Component {
         if (!uiStore.newUserPageOpen) {
             telemetry.login.duration(this.startTime);
         }
+
+        if (this.twoFaReaction) this.twoFaReaction();
     }
 
     togglePasswordVisibility = () => {
@@ -153,8 +167,10 @@ class Login extends Component {
         user.passphrase = this.loginStore.passcodeOrPassphrase;
         user.autologinEnabled = isAutologin;
         User.current = user;
+
         user.login()
             .then(() => {
+                telemetry.login.loginSuccess(isAutologin, this.twoFaEnabled);
                 if (!User.current.autologinEnabled) {
                     return autologin.shouldSuggestEnabling().then(suggest => {
                         if (suggest) {
@@ -185,11 +201,9 @@ class Login extends Component {
                 }
 
                 // Error message below AK input
-                this.loginStore.passcodeOrPassphraseValidationMessageText = t(
-                    errorMsg
-                );
+                this.loginStore.passcodeOrPassphraseValidationMessageText = errorMsg;
 
-                telemetry.login.loginFailed();
+                telemetry.login.loginFail();
             });
     };
 

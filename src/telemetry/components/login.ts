@@ -39,18 +39,37 @@ const login = setup({
         ];
     },
 
-    loginFailed: [
-        S.TEXT_INPUT,
+    onLoginClick: [S.SIGN_IN, { option: S.MANUAL }],
+
+    loginFail: [
+        S.SIGN_IN_FAIL,
         {
-            item: S.ACCOUNT_KEY,
-            location: S.SIGN_IN,
-            sublocation: S.SIGN_IN,
-            state: S.ERROR,
-            errorType: errorMessage('error_wrongAK')
+            option: S.MANUAL
         }
     ],
 
-    onLoginClick: [S.SIGN_IN, { text: S.SIGN_IN }],
+    loginSuccess: (autologin: boolean, twoFaEnabled: boolean) => {
+        return [
+            S.SIGN_IN_SUCCESS,
+            {
+                option: autologin ? S.AUTO : S.MANUAL,
+                condition: twoFaEnabled ? S.TSV_ON : S.TSV_OFF
+            }
+        ];
+    },
+
+    // TwoFADialog.jsx
+    twoFaFail: (autologin: boolean) => {
+        return [
+            S.SIGN_IN_FAIL,
+            {
+                option: autologin ? S.AUTO : S.MANUAL,
+                condition: S.TSV_ON,
+                location: S.SIGN_IN,
+                sublocation: S.TSV_DIALOG
+            }
+        ];
+    },
 
     // SignupLink.jsx
     navToCreateAccount: [

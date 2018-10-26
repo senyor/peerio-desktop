@@ -54,6 +54,9 @@ const shared = setup({
         if (c === S.SIGN_UP && errorMsg === 'error_usernameNotAvailable')
             return null;
 
+        // On Login do not show "wrong AK" text input error; that should be handled by login event itself
+        if (c === S.SIGN_IN && errorMsg === 'error_wrongAK') return null;
+
         return [
             S.TEXT_INPUT,
             {

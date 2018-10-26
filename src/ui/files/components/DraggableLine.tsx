@@ -95,7 +95,7 @@ export default class DraggableLine extends React.Component<DraggableLineProps> {
                         folder={f}
                         folderActions
                         folderDetails
-                        checkbox={!f.isShared}
+                        checkbox
                         isDragging={isDragging}
                         confirmShare={confirmShare}
                     />

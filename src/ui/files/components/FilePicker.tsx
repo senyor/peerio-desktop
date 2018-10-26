@@ -142,10 +142,8 @@ export default class FilePicker extends React.Component<FilePickerProps> {
                     <FolderLine
                         key={f.id}
                         folder={f}
-                        checkbox={false}
-                        disabledCheckbox={
-                            (!f.isShared && f.root.isShared) || !canShareFolder
-                        }
+                        checkbox={canShareFolder}
+                        disabledCheckbox={!canShareFolder}
                         folderDetailsMini
                     />
                 ) : (

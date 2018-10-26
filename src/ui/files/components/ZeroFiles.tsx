@@ -4,7 +4,7 @@ import T from '~/ui/shared-components/T';
 import { zeroFilesIllustrationUrl } from '~/whitelabel/components/ZeroFiles';
 
 interface ZeroFilesProps {
-    isRoot?: boolean;
+    isRoot?: boolean; // means absolute FS root, volumes count as folders
 }
 
 @observer

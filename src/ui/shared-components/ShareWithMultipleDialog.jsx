@@ -64,6 +64,7 @@ class ShareWithMultipleDialog extends React.Component {
     filterExisting = c => {
         return !this.existingUsers.find(u => u.username === c.username);
     };
+
     @computed
     get contacts() {
         const selectedUsernames = keys(this.selectedUsers);
@@ -198,13 +199,12 @@ class ShareWithMultipleDialog extends React.Component {
                     <div className="share-with-contents">
                         <div className="user-search">
                             <MaterialIcon icon="search" />
-                            <div className="chip-wrapper">
-                                <Input
-                                    placeholder={t('title_userSearch')}
-                                    value={this.query}
-                                    onChange={this.handleTextChange}
-                                />
-                            </div>
+
+                            <Input
+                                placeholder={t('title_userSearch')}
+                                value={this.query}
+                                onChange={this.handleTextChange}
+                            />
                         </div>
                         <div className="chat-list-container">
                             <div className="list-dms-container">

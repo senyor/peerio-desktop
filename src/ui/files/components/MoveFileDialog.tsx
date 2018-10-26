@@ -103,7 +103,13 @@ export default class MoveFileDialog extends React.Component {
             return;
         }
 
-        if (targetFolder.root.isShared) {
+        if (
+            targetFolder.root.isShared &&
+            ((this.itemToMove && this.itemToMove.store.isMainStore) ||
+                fileStore.selectedFilesOrFolders.some(
+                    item => item.store.isMainStore
+                ))
+        ) {
             // we hide folder selection dialog immediately to prevent flicker
             this.dialogRef.current.hideWithoutAnimation();
             if (!(await this.shareConfirmDialogRef.current.check())) {

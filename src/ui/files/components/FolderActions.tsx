@@ -58,7 +58,7 @@ export default class FolderActions extends React.Component<FolderActionsProps> {
         const f = this.props.folder;
 
         const contacts = await this.shareWithMultipleDialogRef.current.show(
-            f.isShared ? f : null,
+            f,
             'sharefolders'
         );
 

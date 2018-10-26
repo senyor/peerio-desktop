@@ -46,15 +46,20 @@ export default class FilesHeader extends React.Component<{
     protected async shareSelected() {
         let context: ShareContext;
         if (fileStore.selectedFolders.length > 0) {
-            context = 'sharefiles';
-        } else if (fileStore.selectedFiles.length > 0) {
             context = 'sharefolders';
+        } else if (fileStore.selectedFiles.length > 0) {
+            context = 'sharefiles';
         } else {
             context = '';
         }
 
+        // first parameter is a mess trying to fix at least one UX case(when 1 folder is selected),
+        // needs refactor
         const contacts = await this.shareWithMultipleDialogRef.current.show(
-            null,
+            fileStore.selectedFolders.length > 0 &&
+            fileStore.selectedFiles.length === 0
+                ? fileStore.selectedFolders[0]
+                : null,
             context
         );
         if (!contacts || !contacts.length) return;

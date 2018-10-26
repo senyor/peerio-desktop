@@ -140,7 +140,6 @@ export default class Files extends React.Component<FilesProps> {
 
     readonly toggleSelectAll = (ev: React.MouseEvent<HTMLInputElement>) => {
         this.items.forEach(item => {
-            if (item.isShared) return;
             item.selected = !!ev.currentTarget.checked;
         });
     };
@@ -371,7 +370,10 @@ export default class Files extends React.Component<FilesProps> {
                                     {fileStore.loaded &&
                                     currentFolder.isEmpty ? (
                                         <ZeroFiles
-                                            isRoot={currentFolder.isRoot}
+                                            isRoot={
+                                                currentFolder.isRoot &&
+                                                !currentFolder.isShared
+                                            }
                                         />
                                     ) : null}
                                 </div>

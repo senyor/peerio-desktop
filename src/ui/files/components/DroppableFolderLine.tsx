@@ -32,7 +32,12 @@ const folderDropSpec: DropTargetSpec<DroppableFolderLineProps> = {
                       targetFolderName: props.folder.name
                   });
 
-        if (props.folder.root.isShared) {
+        if (
+            props.folder.root.isShared &&
+            fileStore.selectedFilesOrFolders.some(
+                item => item.store.isMainStore
+            )
+        ) {
             (async () => {
                 if (await props.confirmShare()) {
                     await fileStore.bulk.move(props.folder);

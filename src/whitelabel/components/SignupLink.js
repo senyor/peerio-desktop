@@ -1,4 +1,4 @@
-const config = require('~/config').default;
+const config = require('~/config');
 
 let SignupLink = require('~/ui/login/SignupLink');
 

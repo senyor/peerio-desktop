@@ -4,8 +4,8 @@ const { observer } = require('mobx-react');
 const { Button } = require('peer-ui');
 const { t } = require('peerio-translator');
 const T = require('../../shared-components/T');
-const config = require('~/config').default;
-const urls = require('~/config').default.translator.urlMap;
+const config = require('~/config');
+const urls = require('~/config').translator.urlMap;
 const { contactStore, chatStore, warnings } = require('peerio-icebear');
 const { clipboard } = require('electron').remote;
 

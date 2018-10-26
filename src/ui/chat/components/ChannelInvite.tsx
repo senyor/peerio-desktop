@@ -12,7 +12,7 @@ import AvatarWithPopup from '~/ui/contact/components/AvatarWithPopup';
 import EmojiImage from '~/ui/emoji/Image';
 import routerStore from '~/stores/router-store';
 
-const urls = require('~/config').default.translator.urlMap;
+const urls = require('~/config').translator.urlMap;
 
 interface ChannelInviteProps {
     className?: string; // TODO: audit -- isn't this component only mounted on the root? never receives this prop...
@@ -137,7 +137,7 @@ export default class ChannelInvite extends React.Component<ChannelInviteProps> {
             chatInviteStore.activeInvite.declined
         )
             return this.declineControl;
-        if (this.inProgress) return <ProgressBar />;
+        if (this.inProgress) return <ProgressBar mode="indeterminate" />;
         const { activeInvite } = chatInviteStore;
         if (!activeInvite) return null;
         const { channelName, username } = activeInvite;

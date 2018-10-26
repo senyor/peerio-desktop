@@ -113,7 +113,12 @@ export default class Root extends React.Component {
                     }`}
                 >
                     {this.showOfflineNotification ? (
-                        <ProgressBar circular theme="light" size="small" />
+                        <ProgressBar
+                            type="circular"
+                            mode="indeterminate"
+                            theme="light"
+                            size="small"
+                        />
                     ) : null}
                     #{socket.reconnectAttempt}&nbsp;{t('error_connecting')}&nbsp;
                     {appState.isOnline && this.renderReconnectSection()}

@@ -1,17 +1,20 @@
-import { S, duration, errorMessage } from 'peerio-icebear/dist/telemetry';
+import { telemetry } from 'peerio-icebear';
+import { setup } from '~/telemetry/main';
+import { DurationEvent, TextInputEvent } from '~/telemetry/types';
 
-import { setup } from '../main';
-import { DurationEvent, TextInputEvent } from '../types';
+const { S, duration, errorMessage } = telemetry;
 
 const login = setup({
     // Login.tsx
-    duration: (startTime: number): DurationEvent => [
-        S.DURATION,
-        {
-            location: S.SIGN_IN,
-            totalTime: duration(startTime)
-        }
-    ],
+    duration: (startTime: number): DurationEvent => {
+        return [
+            S.DURATION,
+            {
+                location: S.SIGN_IN,
+                totalTime: duration(startTime)
+            }
+        ];
+    },
 
     changeUser: ['Change User'],
 
@@ -26,14 +29,16 @@ const login = setup({
         }
     ] as TextInputEvent,
 
-    toggleAkVisibility: (isVisible: boolean) => [
-        S.TOGGLE_VISIBILITY,
-        {
-            item: S.ACCOUNT_KEY,
-            location: S.SIGN_IN,
-            visible: isVisible
-        }
-    ],
+    toggleAkVisibility: (isVisible: boolean) => {
+        return [
+            S.TOGGLE_VISIBILITY,
+            {
+                item: S.ACCOUNT_KEY,
+                location: S.SIGN_IN,
+                visible: isVisible
+            }
+        ];
+    },
 
     onLoginClick: [S.SIGN_IN, { option: S.MANUAL }],
 
@@ -76,14 +81,16 @@ const login = setup({
     ],
 
     // NewUser.tsx
-    newUserDuration: (startTime: number): DurationEvent => [
-        S.DURATION,
-        {
-            location: S.ONBOARDING,
-            sublocation: S.WELCOME_SCREEN,
-            totalTime: duration(startTime)
-        }
-    ],
+    newUserDuration: (startTime: number): DurationEvent => {
+        return [
+            S.DURATION,
+            {
+                location: S.ONBOARDING,
+                sublocation: S.WELCOME_SCREEN,
+                totalTime: duration(startTime)
+            }
+        ];
+    },
 
     newUserNavToCreateAccount: [
         S.START_ACCOUNT_CREATION,

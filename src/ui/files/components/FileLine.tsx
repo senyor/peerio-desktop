@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 
 import { contactStore, fileStore, User } from 'peerio-icebear';
-import { File } from 'peerio-icebear/dist/models';
 import { t } from 'peerio-translator';
 import { Checkbox, ProgressBar, Tooltip } from 'peer-ui';
 
@@ -19,7 +18,7 @@ import FileFolderDetailsRow from './FileFolderDetailsRow';
 import { isFileOwnedByCurrentUser } from '../helpers/sharedFileAndFolderActions';
 
 interface FileLineProps {
-    file: File;
+    file: any; // TODO:TS
     checkbox: boolean;
     isDragging?: boolean;
     className?: string;
@@ -205,7 +204,12 @@ export default class FileLine extends React.Component<FileLineProps> {
                 </div>
 
                 {file.downloading || file.uploading ? (
-                    <ProgressBar value={file.progress} max={file.progressMax} />
+                    <ProgressBar
+                        type="linear"
+                        mode="determinate"
+                        value={file.progress}
+                        max={file.progressMax}
+                    />
                 ) : null}
 
                 {this.props.fileDetails && (

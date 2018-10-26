@@ -1,4 +1,4 @@
-const config = require('~/config').default;
+const config = require('~/config');
 
 let UserSearchError = require('~/ui/shared-components/UserSearchError').default;
 

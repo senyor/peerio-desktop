@@ -257,7 +257,7 @@ export default class SecuritySettings extends React.Component {
                                             icon="content_copy"
                                             onClick={this.copyTOTPSecret}
                                             tooltip={t('title_copy')}
-                                            theme="primary"
+                                            primary
                                         />
                                     </div>
                                     <br />
@@ -271,7 +271,7 @@ export default class SecuritySettings extends React.Component {
                                 </div>
                             )
                         ) : (
-                            <ProgressBar circular className="block" />
+                            <ProgressBar type="circular" className="block" />
                         )}
                     </div>
                     <div className="totp-code">
@@ -288,7 +288,10 @@ export default class SecuritySettings extends React.Component {
                             acceptOnBlur="false"
                         />
                         {this.totpCodeValidating ? (
-                            <ProgressBar circular className="totp-progress" />
+                            <ProgressBar
+                                type="circular"
+                                className="totp-progress"
+                            />
                         ) : null}
                     </div>
                 </div>
@@ -326,6 +329,7 @@ export default class SecuritySettings extends React.Component {
     }
 
     render() {
+        window.c = this;
         return (
             <div className="security-settings">
                 {this.renderAccountKeySection()}

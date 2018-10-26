@@ -1,4 +1,4 @@
-const config = require('~/config').default;
+const config = require('~/config');
 
 let PatientList = require('~/ui/chat/components/PatientList');
 

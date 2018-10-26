@@ -1,6 +1,7 @@
 class DateTimeFormatter {
     private _lastTimezone: number;
-    private _formatter: Intl.DateTimeFormat;
+    private _formatter: Intl.DateTimeFormatter;
+
     constructor() {
         // Every hour check for time zone change.
         this._initFormatter();

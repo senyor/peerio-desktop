@@ -1,6 +1,6 @@
 // const isDevEnv = require('~/helpers/is-dev-env');
 // const Airbrake = require('airbrake-js');
-// const config = require('~/config').default;
+// const config = require('~/config');
 // const { User, socket } = require('peerio-icebear');
 // const { reaction } = require('mobx');
 

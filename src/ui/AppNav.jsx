@@ -1,23 +1,20 @@
-const path = require('path');
-const { remote } = require('electron');
 const React = require('react');
 const { autorun, observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const css = require('classnames');
-
-const { t } = require('peerio-translator');
 const { Avatar, Divider, Menu, MenuHeader, MenuItem } = require('peer-ui');
 const { User, contactStore, chatStore, fileStore } = require('peerio-icebear');
-
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const SignoutDialog = require('~/ui/shared-components/SignoutDialog');
+const css = require('classnames');
+const { remote } = require('electron');
 const notificationFactory = require('~/helpers/notifications');
 const appControl = require('~/helpers/app-control');
-const autologin = require('~/helpers/autologin');
+const { t } = require('peerio-translator');
 const routerStore = require('~/stores/router-store');
-
-const config = require('~/config').default;
-const urls = config.translator.urlMap;
+const urls = require('~/config').translator.urlMap;
+const autologin = require('~/helpers/autologin');
+const path = require('path');
+const config = require('~/config');
 const AppNavBeaconedItem = require('./AppNavBeaconedItem');
 
 const { app, nativeImage } = remote;

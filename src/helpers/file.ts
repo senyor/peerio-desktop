@@ -6,8 +6,7 @@ import _ from 'lodash';
 import sanitize from 'sanitize-filename';
 import { t } from 'peerio-translator';
 import { fileHelpers, errors } from 'peerio-icebear';
-import { File } from 'peerio-icebear/dist/models';
-import { IUploadFolder } from 'peerio-icebear/dist/models/files/file-store';
+import { File } from 'peerio-icebear/src/models';
 
 const lstatAsync = util.promisify(fs.lstat);
 const readdirAsync = util.promisify(fs.readdir);
@@ -126,7 +125,7 @@ export function downloadFile(file: File): Promise<boolean> {
         .then(() => file.cached && electron.shell.showItemInFolder(finalPath));
 }
 
-export function pickLocalFiles(): Promise<string[]> {
+export function pickLocalFiles() {
     return new Promise(resolve => {
         const properties: OpenDialogOptions['properties'] = [
             'openFile',
@@ -193,7 +192,14 @@ export async function getFileList(paths: string[]): Promise<FileList> {
     return ret;
 }
 
-export type FileTree = string | null | IUploadFolder;
+type FileTree =
+    | string
+    | null
+    | {
+          name: string;
+          files: string[];
+          folders: FileTree[]; // eslint-disable-line no-use-before-define
+      };
 
 export async function getFileTree(filePath: string): Promise<FileTree> {
     try {

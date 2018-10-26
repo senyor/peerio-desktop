@@ -1,16 +1,14 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react';
-import css from 'classnames';
 
-import { t } from 'peerio-translator';
-import { Button, MaterialIcon } from 'peer-ui';
 import { fileStore, chatStore, volumeStore } from 'peerio-icebear';
-import { Volume } from 'peerio-icebear/dist/models';
-
 import routerStore from '~/stores/router-store';
+import css from 'classnames';
 import T from '~/ui/shared-components/T';
+import { t } from 'peerio-translator';
 
+import { Button, MaterialIcon } from 'peer-ui';
 import SharedFolderActions from './SharedFolderActions';
 
 interface InlineSharedFolderProps {
@@ -23,7 +21,7 @@ export default class InlineSharedFolder extends React.Component<
     InlineSharedFolderProps
 > {
     private get volume() {
-        return fileStore.folderStore.getById(this.props.folderId) as Volume;
+        return fileStore.folderStore.getById(this.props.folderId);
     }
 
     private get isShared() {

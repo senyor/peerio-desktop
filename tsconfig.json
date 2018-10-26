@@ -4,8 +4,6 @@
     "jsx": "react",
     "allowJs": true,
     "baseUrl": "./src",
-    // outDir is declared even if it's unused to avoid a class of mixed-js errors
-    "outDir": "./build",
     "target": "esnext",
     "noImplicitThis": true,
     "moduleResolution": "node",
@@ -23,6 +21,6 @@
       "~/*": ["./*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "test/**/*"],
   "exclude": ["src/static/**/*"]
 }

@@ -198,7 +198,8 @@ export default class MessageList extends React.Component {
                 <div key="top-progress-bar" className="progress-wrapper">
                     {chat.loadingTopPage ? (
                         <ProgressBar
-                            circular
+                            type="circular"
+                            mode="indeterminate"
                             theme="multicolor"
                             className="messages-inline-progress-bar"
                         />
@@ -263,7 +264,8 @@ export default class MessageList extends React.Component {
                 <div key="bot-progress-bar" className="progress-wrapper">
                     {chat.loadingBottomPage ? (
                         <ProgressBar
-                            circular
+                            type="circular"
+                            mode="indeterminate"
                             theme="multicolor"
                             className="messages-inline-progress-bar"
                         />
@@ -304,7 +306,8 @@ export default class MessageList extends React.Component {
                 {this.renderChatStart()}
                 {chatStore.activeChat.loadingInitialPage ? (
                     <ProgressBar
-                        circular
+                        type="circular"
+                        mode="indeterminate"
                         theme="multicolor"
                         className="messages-progress-bar"
                     />

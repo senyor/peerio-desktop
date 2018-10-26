@@ -278,7 +278,7 @@ class Profile extends React.Component {
                     </div>
                     {User.current.savingAvatar ? (
                         <div className="save-progress-overlay">
-                            <ProgressBar circular />
+                            <ProgressBar type="circular" mode="indeterminate" />
                         </div>
                     ) : null}
                 </div>

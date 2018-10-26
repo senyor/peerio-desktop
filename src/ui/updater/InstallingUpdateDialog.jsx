@@ -15,7 +15,11 @@ class InstallingUpdateDialog extends Component {
                 active={updaterStore.installing}
                 title={t('title_installingUpdate')}
             >
-                <ProgressBar className="installing-update-progress" circular />
+                <ProgressBar
+                    className="installing-update-progress"
+                    mode="indeterminate"
+                    type="circular"
+                />
                 <div className="installing-update-message">
                     <T k="title_installingUpdatePleaseWait" />
                     <br />

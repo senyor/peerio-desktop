@@ -1,21 +1,19 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action, computed, observable, reaction } from 'mobx';
-import css from 'classnames';
-
-import { Button, Checkbox, Divider, MaterialIcon } from 'peer-ui';
 import { t } from 'peerio-translator';
+import css from 'classnames';
+import { Button, Checkbox, Divider, MaterialIcon } from 'peer-ui';
 import { config, validation } from 'peerio-icebear';
-
 import uiStore from '~/stores/ui-store';
 import routerStore from '~/stores/router-store';
 import T from '~/ui/shared-components/T';
+import ValidatedInput from '~/ui/shared-components/ValidatedInput';
 import * as telemetry from '~/telemetry';
 import * as Mock from '~/ui/shared-components/MockUI';
 
+// Types
 import { SignupStep, StepContentObject } from './SignupStepTypes';
-
-const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
 
 // Input validation
 const { validators } = validation; // use common validation from core

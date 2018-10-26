@@ -6,7 +6,7 @@
  * @returns found attribute value or null
  */
 export function getAttributeInParentChain(
-    element: Element,
+    element: HTMLElement,
     attribute: string
 ): string | null {
     let el = element;
@@ -26,9 +26,9 @@ export function getAttributeInParentChain(
  * @returns found html element or null
  */
 export function getParentWithClass(
-    element: Element,
+    element: HTMLElement,
     className
-): Element | null {
+): HTMLElement | null {
     let el = element;
 
     while (el) {

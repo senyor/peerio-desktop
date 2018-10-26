@@ -4,8 +4,8 @@ const { observer } = require('mobx-react');
 const { Dialog } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { User } = require('peerio-icebear');
-const urls = require('~/config').default.translator.urlMap;
-const config = require('~/config').default;
+const urls = require('~/config').translator.urlMap;
+const config = require('~/config');
 
 @observer
 class ChannelUpgradeDialog extends React.Component {

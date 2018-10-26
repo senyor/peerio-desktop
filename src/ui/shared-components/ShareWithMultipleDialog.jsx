@@ -32,7 +32,7 @@ class ShareWithMultipleDialog extends React.Component {
      * the resolver is set to null, the dialog is hidden.
      *
      * @private
-     * @type {(contactsToShareWith: ReadonlyArray<any> | null) => void | null}
+     * @type {(contactsToShareWith: any[] | null) => void | null}
      */
     @observable.ref resolver;
 

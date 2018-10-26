@@ -1,22 +1,21 @@
-import os from 'os';
-import path from 'path';
-
-import {
+const os = require('os');
+const path = require('path');
+const cfg = require('peerio-icebear').config;
+const app = require('electron').app || require('electron').remote.app;
+const isDevEnv = require('~/helpers/is-dev-env').default;
+const FileStream = require('peerio-icebear/dist/models/files/node-file-stream')
+    .default;
+const StorageEngine = require('peerio-icebear/dist/models/storage/node-json-storage')
+    .default;
+const CacheEngine = require('~/stores/indexed-db-storage');
+const {
     setUrlMap,
     setTagHandler,
     setStringReplacement
-} from 'peerio-translator';
-import { config, Config } from 'peerio-icebear';
-import FileStream from 'peerio-icebear/dist/models/files/node-file-stream';
-import StorageEngine from 'peerio-icebear/dist/models/storage/node-json-storage';
+} = require('peerio-translator');
+const tagHandlers = require('~/ui/shared-components/translator-tag-handlers');
 
-import isDevEnv from '~/helpers/is-dev-env';
-import CacheEngine from '~/stores/indexed-db-storage';
-import tagHandlers from '~/ui/shared-components/translator-tag-handlers';
-
-const app = require('electron').app || require('electron').remote.app;
 const packageJson = require(path.join(app.getAppPath(), 'package.json'));
-
 if (!packageJson) {
     throw new Error(
         `Unable to find package.json (resources path: ${process.resourcesPath})`
@@ -25,42 +24,6 @@ if (!packageJson) {
 if (!packageJson.peerio) {
     throw new Error('Missing "peerio" in package.json');
 }
-
-interface DesktopConfig extends Config {
-    os: string;
-    enableVolumes: boolean;
-    translator: {
-        stringReplacements: { original: string; replacement: string }[];
-        urlMap: { [key: string]: string };
-    };
-    FileStream: typeof FileStream;
-    StorageEngine: typeof StorageEngine;
-    nodeLogFolder: string;
-    devAutologin?: Partial<{
-        username: string;
-        passphrase: number;
-        signupPassphraseOverride: string;
-        autologin: boolean;
-        navigateTo: string;
-        debug: Config['debug'];
-    }>;
-    // From package.json:
-    keychainService: string;
-    appId: string;
-    socketServerUrl: string;
-    ghostFrontendUrl: string;
-    disablePayments: boolean;
-    whiteLabel: {
-        name: string;
-    };
-    contacts: {
-        supportUser: string;
-        supportEmail: string;
-        feedbackUser: string;
-    };
-}
-
-const cfg = config as DesktopConfig;
 
 Object.assign(cfg, packageJson.peerio);
 
@@ -158,4 +121,4 @@ try {
 
 cfg.enableVolumes = true;
 
-export default cfg;
+module.exports = cfg;

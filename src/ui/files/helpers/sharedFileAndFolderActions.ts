@@ -1,9 +1,20 @@
 import { action } from 'mobx';
 
 import { User, fileStore } from 'peerio-icebear';
-import { File, FileFolder } from 'peerio-icebear/dist/models';
+import { File } from 'peerio-icebear/src/models';
 
 import { selectDownloadFolder } from '~/helpers/file';
+
+// TODO/TS: use icebear types when defined
+export interface Folder {
+    name: string;
+    isFolder: true;
+    isShared: boolean;
+    selected: boolean;
+    rename(newName: string): void;
+}
+
+export type FileOrFolder = File | Folder;
 
 export type ShareContext = 'sharefiles' | 'sharefolders' | '';
 
@@ -21,9 +32,7 @@ export type ShareContext = 'sharefiles' | 'sharefolders' | '';
  * like "selected", etc., which currently just reside on the models proper.)
  */
 
-export function isFileOrFolderMoveable(
-    fileOrFolder: File | FileFolder
-): boolean {
+export function isFileOrFolderMoveable(fileOrFolder: FileOrFolder): boolean {
     // if the root folder doesn't have any folders in it, we can't move anything anywhere.
     if (!fileStore.folderStore.root.hasNested) return false;
     // if a folder is shared, it's not moveable.
@@ -43,13 +52,13 @@ export function isFileOwnedByCurrentUser(file: File): boolean {
     return file.fileOwner === User.current.username;
 }
 
-export async function downloadFolder(folder: FileFolder): Promise<void> {
+export async function downloadFolder(folder: Folder): Promise<void> {
     const path = await selectDownloadFolder();
     if (!path) return;
     fileStore.bulk.downloadOne(folder, path);
 }
 
-export function deleteFileOrFolder(fileOrFolder: File | FileFolder): void {
+export function deleteFileOrFolder(fileOrFolder: FileOrFolder): void {
     fileStore.bulk.removeOne(fileOrFolder);
 }
 
@@ -58,12 +67,12 @@ export const handleSearch = action((val: string) => {
 });
 
 export const toggleFileOrFolderSelected = action(
-    (fileOrFolder: File | FileFolder) => {
+    (fileOrFolder: FileOrFolder) => {
         fileOrFolder.selected = !fileOrFolder.selected;
     }
 );
 
-export const setCurrentFolder = action((folder: FileFolder) => {
+export const setCurrentFolder = action((folder: Folder) => {
     if (folder !== fileStore.folderStore.currentFolder) {
         fileStore.folderStore.currentFolder = folder;
         fileStore.searchQuery = '';

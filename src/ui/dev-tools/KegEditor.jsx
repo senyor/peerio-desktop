@@ -145,7 +145,7 @@ class KegEditor extends React.Component {
                 ) : null}
                 {this.loading ? (
                     <div className="spinner-backdrop">
-                        <ProgressBar circular theme="multicolor" />
+                        <ProgressBar type="circular" theme="multicolor" />
                     </div>
                 ) : null}
             </div>

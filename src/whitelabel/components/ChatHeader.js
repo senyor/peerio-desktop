@@ -1,4 +1,4 @@
-const config = require('~/config').default;
+const config = require('~/config');
 
 let ChatHeader = require('~/ui/chat/components/ChatHeader').default;
 

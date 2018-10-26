@@ -1,7 +1,6 @@
 import { action, observable } from 'mobx';
 import { fileStore } from 'peerio-icebear';
 import { pickLocalFiles, getFileTree } from '~/helpers/file';
-import { FileFolder } from 'peerio-icebear/dist/models';
 
 export default class LocalFileManager {
     /**
@@ -21,10 +20,7 @@ export default class LocalFileManager {
     }
 
     @action.bound
-    async uploadFileTree(
-        files: string[],
-        targetFolder: FileFolder
-    ): Promise<void> {
+    async uploadFileTree(files: string[], targetFolder: string): Promise<void> {
         const trees = [];
         try {
             this.preparingForUpload++;
@@ -38,8 +34,7 @@ export default class LocalFileManager {
 
         await Promise.map(trees, tree => {
             if (typeof tree === 'string') {
-                fileStore.upload(tree, null, targetFolder);
-                return Promise.resolve();
+                return fileStore.upload(tree, null, targetFolder);
             }
             return fileStore.uploadFolder(tree, targetFolder);
         });

@@ -10,7 +10,7 @@ import { debounce } from 'lodash';
 import css from 'classnames';
 import { t } from 'peerio-translator';
 import { fileStore, chatStore, clientApp } from 'peerio-icebear';
-import { Button, Menu, MenuItem } from 'peer-ui';
+import { Button, MaterialIcon, Menu, MenuItem } from 'peer-ui';
 
 import FilePicker from '~/ui/files/components/FilePicker';
 import Snackbar from '~/ui/shared-components/Snackbar';
@@ -22,7 +22,7 @@ import MessageInputProseMirror from './MessageInputProseMirror';
 interface MessageInputProps {
     readonly: boolean;
     placeholder: string;
-    onSend: (richText: unknown, legacyText: string) => void;
+    onSend: (richText: Object, legacyText: string) => void;
     onAck: () => void;
     onFileShare: (files: any) => void; // TODO: TS audit
     messageListScrolledUp: boolean;

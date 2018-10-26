@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 
 import { chatStore, contactStore, chatInviteStore, User } from 'peerio-icebear';
+import { Contact, Chat } from 'peerio-icebear/dist/models';
 import { Avatar, List, ListHeading, ListItem, Menu, MenuItem } from 'peer-ui';
 import { t } from 'peerio-translator';
 
@@ -12,13 +13,6 @@ import ContactProfile from '~/ui/contact/components/ContactProfile';
 import ELEMENTS from '~/whitelabel/helpers/elements';
 import { getAttributeInParentChain } from '~/helpers/dom';
 import SideBarSection from './SideBarSection';
-
-// ///////
-// FIXME: use icebear Contact type
-import { ContactProps } from 'peer-ui/dist/components/helpers/interfaces';
-type Contact_TEMP = ContactProps & { fullName: string }; // eslint-disable-line camelcase
-type Chat_TEMP = { isAdmin(contact: Contact_TEMP): boolean }; // eslint-disable-line camelcase
-// ///////
 
 interface MembersSectionProps {
     open: boolean;
@@ -45,25 +39,37 @@ export default class MembersSection extends React.Component<
     // FIXME: stop stashing data in the DOM! just make a separate component
     deleteInvite(ev: React.MouseEvent) {
         ev.stopPropagation();
-        const username = getAttributeInParentChain(ev.target, 'data-username');
+        const username = getAttributeInParentChain(
+            ev.currentTarget,
+            'data-username'
+        );
         chatInviteStore.revokeInvite(chatStore.activeChat.id, username);
     }
 
     deleteParticipant(ev: React.MouseEvent) {
         ev.stopPropagation();
-        const username = getAttributeInParentChain(ev.target, 'data-username');
+        const username = getAttributeInParentChain(
+            ev.currentTarget,
+            'data-username'
+        );
         chatStore.activeChat.removeParticipant(username);
     }
 
     makeAdmin(ev: React.MouseEvent) {
         ev.stopPropagation();
-        const username = getAttributeInParentChain(ev.target, 'data-username');
+        const username = getAttributeInParentChain(
+            ev.currentTarget,
+            'data-username'
+        );
         chatStore.activeChat.promoteToAdmin(contactStore.getContact(username));
     }
 
     demoteAdmin(ev: React.MouseEvent) {
         ev.stopPropagation();
-        const username = getAttributeInParentChain(ev.target, 'data-username');
+        const username = getAttributeInParentChain(
+            ev.currentTarget,
+            'data-username'
+        );
         chatStore.activeChat.demoteAdmin(contactStore.getContact(username));
     }
 
@@ -74,7 +80,7 @@ export default class MembersSection extends React.Component<
     userMenu(username: string) {
         const menuItems = [];
 
-        ELEMENTS.membersSection.userMenuItems(username).forEach(item => {
+        ELEMENTS.membersSection.userMenuItems().forEach(item => {
             menuItems.push(
                 <MenuItem
                     key={item.key}
@@ -140,11 +146,7 @@ export default class MembersSection extends React.Component<
         );
     }
 
-    renderJoinedParticipant = (
-        c: Contact_TEMP,
-        chat: Chat_TEMP,
-        showAdmin: boolean
-    ) => {
+    renderJoinedParticipant = (c: Contact, chat: Chat, showAdmin: boolean) => {
         return (
             <ListItem
                 data-username={c.username}
@@ -173,7 +175,10 @@ export default class MembersSection extends React.Component<
         );
     };
 
-    renderInvitedParticipant = (c: Contact_TEMP, showAdmin: boolean) => {
+    renderInvitedParticipant = (
+        c: { username: string; timestamp?: number },
+        showAdmin: boolean
+    ) => {
         return (
             <ListItem
                 data-username={c.username}

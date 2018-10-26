@@ -312,12 +312,9 @@ export default class Files extends React.Component<FilesProps> {
                         {currentFolder.isRoot &&
                             this.removedFolderNotifVisible &&
                             this.removedFolderNotif}
-                        {(currentFolder.convertingToVolume ||
-                            currentFolder.convertingFromFolder) && (
+                        {currentFolder.convertingToVolume && (
                             <div
                                 className={css('file-ui-subheader', 'row', {
-                                    'volume-in-progress':
-                                        currentFolder.convertingFromFolder,
                                     'converting-to-volume':
                                         currentFolder.convertingToVolume
                                 })}
@@ -327,11 +324,6 @@ export default class Files extends React.Component<FilesProps> {
                                 </div>
 
                                 <div className="file-share-info">
-                                    {currentFolder.convertingFromFolder && (
-                                        <T k="title_convertingFolderNameToShared">
-                                            {{ folderName: currentFolder.name }}
-                                        </T>
-                                    )}
                                     {currentFolder.convertingToVolume && (
                                         <span>
                                             <T
@@ -350,7 +342,7 @@ export default class Files extends React.Component<FilesProps> {
                         )}
                         {this.localFileManager.preparingForUpload ? (
                             <div className="row-container">
-                                <ProgressBar mode="indeterminate" />
+                                <ProgressBar />
                             </div>
                         ) : null}
                         {connectDropTarget(

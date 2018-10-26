@@ -94,7 +94,7 @@ const {
 const setMainMenu = require('~/main-process/main-menu');
 const { isAppInDMG, handleLaunchFromDMG } = require('~/main-process/dmg');
 const updater = require('./main-process/updater');
-const config = require('~/config');
+const config = require('~/config').default;
 
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
 app.commandLine.appendSwitch('disk-cache-size', 200 * 1024 * 1024);

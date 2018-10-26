@@ -18,7 +18,7 @@ export default class NewUser extends React.Component<NewUserProps> {
 
     componentWillMount() {
         this.startTime = Date.now();
-        if (config.devAutoLogin) {
+        if (config.devAutologin) {
             setTimeout(() => this.goToLogin());
         }
     }

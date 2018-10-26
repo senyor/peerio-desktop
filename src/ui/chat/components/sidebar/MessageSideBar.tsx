@@ -3,6 +3,7 @@ import { action, observable, reaction, IReactionDisposer, entries } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { chatStore, systemMessages, contactStore } from 'peerio-icebear';
+import { Message, Contact, ReadReceipt } from 'peerio-icebear/dist/models';
 import { t } from 'peerio-translator';
 import { Avatar, Button, List, ListItem } from 'peer-ui';
 
@@ -15,7 +16,7 @@ import T from '~/ui/shared-components/T';
 export default class MessageSideBar extends React.Component {
     readonly contactProfileRef = React.createRef<ContactProfile>();
 
-    @observable clickedContact: unknown; // TODO/TS icebear model
+    @observable clickedContact: Contact;
 
     disposer!: IReactionDisposer;
 
@@ -48,7 +49,7 @@ export default class MessageSideBar extends React.Component {
             uiStore.selectedMessage = null;
         });
     }
-    renderMessage(m) {
+    renderMessage(m: Message) {
         if (m.systemData) {
             return <em>{systemMessages.getSystemMessageText(m)}</em>;
         }
@@ -60,7 +61,7 @@ export default class MessageSideBar extends React.Component {
             </span>
         );
     }
-    renderReceipt = entry => {
+    renderReceipt = (entry: [Contact, ReadReceipt] | null) => {
         return !entry || entry[1].signatureError ? null : (
             <ListItem
                 data-username={entry[0].username}
@@ -74,22 +75,25 @@ export default class MessageSideBar extends React.Component {
             />
         );
     };
-    compareReceipts(r1, r2) {
+    compareReceipts(
+        r1: [Contact, ReadReceipt] | null,
+        r2: [Contact, ReadReceipt] | null
+    ) {
         if (!r1) return 1;
         if (!r2) return -1;
         return r1[0].fullNameAndUsername.localeCompare(
             r2[0].fullNameAndUsername
         );
     }
-    getReceipts(msg) {
-        const rEntries = entries(chatStore.activeChat.receipts).slice();
-        for (let i = 0; i < rEntries.length; i++) {
-            if (+msg.id > rEntries[i][1].chatPosition) {
-                rEntries[i] = null;
-                continue;
+    getReceipts(msg: Message) {
+        const rEntries = entries(chatStore.activeChat.receipts).map<
+            [Contact, ReadReceipt] | null
+        >(([contactName, readReceipt]) => {
+            if (+msg.id > readReceipt.chatPosition) {
+                return null;
             }
-            rEntries[i][0] = contactStore.getContact(rEntries[i][0]);
-        }
+            return [contactStore.getContact(contactName), readReceipt];
+        });
         rEntries.sort(this.compareReceipts);
 
         return rEntries.map(this.renderReceipt);

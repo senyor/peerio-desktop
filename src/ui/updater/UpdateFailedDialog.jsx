@@ -6,7 +6,7 @@ const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { Dialog } = require('peer-ui');
 const updaterStore = require('~/stores/updater-store');
-const config = require('~/config');
+const config = require('~/config').default;
 
 @observer
 class UpdateFailedDialog extends Component {

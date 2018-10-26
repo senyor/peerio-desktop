@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { observable, computed } from 'mobx';
 
 import { fileStore, chatStore } from 'peerio-icebear';
+import { File } from 'peerio-icebear/dist/models';
 import { t } from 'peerio-translator';
 import { Dialog, ProgressBar } from 'peer-ui';
 
@@ -148,8 +149,9 @@ export default class FilePicker extends React.Component<FilePickerProps> {
                     />
                 ) : (
                     <FileLine
-                        key={f.fileId}
-                        file={f}
+                        // TODO/TS: we need to cast until strictNullTypes is on
+                        key={(f as File).fileId}
+                        file={f as File}
                         checkbox
                         clickToSelect
                         fileDetailsMini
@@ -193,7 +195,7 @@ export default class FilePicker extends React.Component<FilePickerProps> {
     renderLoader() {
         return (
             <div className="text-center">
-                <ProgressBar type="linear" mode="indeterminate" />
+                <ProgressBar />
             </div>
         );
     }

@@ -1,21 +1,26 @@
+import React from 'react';
+import { action, computed, observable, when, IReactionDisposer } from 'mobx';
+import { observer } from 'mobx-react';
+
+import { t } from 'peerio-translator';
+import { Checkbox, Dialog, Input } from 'peer-ui';
+import { User, clientApp } from 'peerio-icebear';
+
 import * as telemetry from '~/telemetry';
-const React = require('react');
-const { Checkbox, Dialog, Input } = require('peer-ui');
-const { action, computed, observable, when } = require('mobx');
-const { observer } = require('mobx-react');
-const { t } = require('peerio-translator');
-const { User, clientApp } = require('peerio-icebear');
+import uiStore from '~/stores/ui-store';
+import { validateCode } from '~/helpers/2fa';
+
 const autologin = require('~/helpers/autologin');
-const uiStore = require('~/stores/ui-store');
-const { validateCode } = require('~/helpers/2fa');
 const appControl = require('~/helpers/app-control');
 
 @observer
-class TwoFADialog extends React.Component {
+export default class TwoFADialog extends React.Component {
+    lastUserReaction!: IReactionDisposer;
+
     componentWillMount() {
         // For telemetry: listen for "last user" object, check if autologin enabled
         this.lastUserReaction = when(
-            () => User,
+            () => User != null,
             () => {
                 User.getLastAuthenticated()
                     .then(lastUser => {
@@ -38,7 +43,7 @@ class TwoFADialog extends React.Component {
     }
 
     @observable totpCode = '';
-    @observable isAutologinEnabled;
+    @observable isAutologinEnabled: boolean | undefined;
 
     @computed
     get readyToSubmit() {
@@ -141,6 +146,7 @@ class TwoFADialog extends React.Component {
                 title={t(this.getTitle(req))}
                 actions={actions}
                 className="twofa-dialog"
+                // @ts-ignore FIXME
                 theme="small"
                 headerImage="./static/img/dialogs/2sv.svg"
             >
@@ -167,5 +173,3 @@ class TwoFADialog extends React.Component {
         );
     }
 }
-
-module.exports = TwoFADialog;

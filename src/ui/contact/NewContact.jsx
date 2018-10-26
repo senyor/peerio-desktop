@@ -229,11 +229,7 @@ class NewContact extends React.Component {
                                         theme="affirmative"
                                     />
                                     {this.waiting && (
-                                        <ProgressBar
-                                            type="circular"
-                                            mode="indeterminate"
-                                            theme="small"
-                                        />
+                                        <ProgressBar circular theme="small" />
                                     )}
                                 </div>
                             </Beacon>

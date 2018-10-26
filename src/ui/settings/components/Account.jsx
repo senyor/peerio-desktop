@@ -5,8 +5,8 @@ const { Button, Dialog, Switch } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { User } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
-const urls = require('~/config').translator.urlMap;
-const config = require('~/config');
+const urls = require('~/config').default.translator.urlMap;
+const config = require('~/config').default;
 
 @observer
 class Account extends React.Component {

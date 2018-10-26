@@ -1,5 +1,6 @@
 import { fileStore } from 'peerio-icebear';
-import { getFileTree } from '~/helpers/file';
+import { FileFolder } from 'peerio-icebear/dist/models';
+import { getFileTree, FileTree } from '~/helpers/file';
 
 export function getAllDraggedItems() {
     return {
@@ -11,9 +12,9 @@ export function getAllDraggedItems() {
 
 export async function uploadDroppedFiles(
     files: { path: string }[],
-    targetFolder
-) {
-    const trees = [];
+    targetFolder: FileFolder
+): Promise<void> {
+    const trees: FileTree[] = [];
     for (let i = 0; i < files.length; i++) {
         const tree = await getFileTree(files[i].path);
         if (tree) trees.push(tree);
@@ -21,7 +22,8 @@ export async function uploadDroppedFiles(
 
     await Promise.map(trees, tree => {
         if (typeof tree === 'string') {
-            return fileStore.upload(tree, null, targetFolder);
+            fileStore.upload(tree, null, targetFolder);
+            return Promise.resolve();
         }
         return fileStore.uploadFolder(tree, targetFolder);
     });

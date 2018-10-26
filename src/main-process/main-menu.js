@@ -1,5 +1,5 @@
 const { app, Menu } = require('electron');
-const config = require('~/config');
+const config = require('~/config').default;
 const isDevEnv = require('~/helpers/is-dev-env').default;
 
 const editMenu = {

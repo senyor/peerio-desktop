@@ -194,7 +194,7 @@ export default class FilePicker extends React.Component<FilePickerProps> {
 
     renderLoader() {
         return (
-            <div className="text-center">
+            <div className="text-center loader">
                 <ProgressBar />
             </div>
         );

@@ -1,31 +1,25 @@
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Dialog } = require('peer-ui');
+const { Button } = require('peer-ui');
 const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
-const Terms = require('~/ui/shared-components/Terms');
 const { socket } = require('peerio-icebear');
 
 const Copyright = require('~/whitelabel/components/Copyright');
 const PoweredBySettings = require('~/whitelabel/components/PoweredBySettings');
+const LegalDialog = require('~/ui/shared-components/LegalDialog').default;
 
 @observer
 class About extends React.Component {
     @observable termsDialogOpen = false;
-
-    hideTermsDialog = () => {
-        this.termsDialogOpen = false;
-    };
+    @observable legalDialogRef = React.createRef();
 
     showTermsDialog = () => {
-        this.termsDialogOpen = true;
+        this.legalDialogRef.current.showDialog();
     };
 
     render() {
-        const termsDialogActions = [
-            { label: t('button_ok'), onClick: this.hideTermsDialog }
-        ];
         return (
             <div>
                 <section className="section-divider">
@@ -35,8 +29,7 @@ class About extends React.Component {
                         {t('title_version')} <strong>{version}</strong>
                     </p>
                     <p>
-                        {t('title_networkLatency')}{' '}
-                        <strong>{socket.latency}ms</strong>
+                        {t('title_networkLatency')} <strong>{socket.latency}ms</strong>
                     </p>
                 </section>
                 <section>
@@ -51,14 +44,7 @@ class About extends React.Component {
                     </div>
                 </section>
 
-                <Dialog
-                    active={this.termsDialogOpen}
-                    actions={termsDialogActions}
-                    onCancel={this.hideTermsDialog}
-                    className="terms-container"
-                >
-                    <Terms />
-                </Dialog>
+                <LegalDialog content="terms" ref={this.legalDialogRef} />
             </div>
         );
     }

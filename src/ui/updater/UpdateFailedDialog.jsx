@@ -6,7 +6,7 @@ const { t } = require('peerio-translator');
 const T = require('~/ui/shared-components/T');
 const { Dialog } = require('peer-ui');
 const updaterStore = require('~/stores/updater-store');
-const config = require('~/config');
+const config = require('~/config').default;
 
 @observer
 class UpdateFailedDialog extends Component {
@@ -33,9 +33,7 @@ class UpdateFailedDialog extends Component {
             <Dialog
                 className="dialog-update-failed"
                 theme="error"
-                active={
-                    updaterStore.lastUpdateFailed && !updaterStore.installing
-                }
+                active={updaterStore.lastUpdateFailed && !updaterStore.installing}
                 title={t('title_updateFailed')}
                 actions={[
                     {

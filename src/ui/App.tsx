@@ -35,7 +35,7 @@ export default class App extends React.Component {
                 <AppNav />
                 {clientApp.updatingAfterReconnect ? (
                     <div className="global-update-progress">
-                        <ProgressBar type="linear" mode="indeterminate" />
+                        <ProgressBar />
                     </div>
                 ) : null}
 

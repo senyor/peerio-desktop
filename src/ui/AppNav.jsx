@@ -1,21 +1,24 @@
+const path = require('path');
+const { remote } = require('electron');
 const React = require('react');
-const { autorunAsync, observable, action, computed } = require('mobx');
+const { autorun, observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
+const css = require('classnames');
+
+const { t } = require('peerio-translator');
 const { Avatar, Divider, Menu, MenuHeader, MenuItem } = require('peer-ui');
 const { User, contactStore, chatStore, fileStore } = require('peerio-icebear');
+
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const SignoutDialog = require('~/ui/shared-components/SignoutDialog');
-const css = require('classnames');
-const { remote } = require('electron');
 const notificationFactory = require('~/helpers/notifications');
 const appControl = require('~/helpers/app-control');
-const AppNavButton = require('./AppNavButton');
-const { t } = require('peerio-translator');
-const routerStore = require('~/stores/router-store');
-const urls = require('~/config').translator.urlMap;
 const autologin = require('~/helpers/autologin');
-const path = require('path');
-const config = require('~/config');
+const routerStore = require('~/stores/router-store');
+
+const config = require('~/config').default;
+const urls = config.translator.urlMap;
+const AppNavBeaconedItem = require('./AppNavBeaconedItem');
 
 const { app, nativeImage } = remote;
 
@@ -25,16 +28,19 @@ function startDockNotifications() {
     // if (dockNotifsStarted || (!app.setBadgeCount && !app.dock && !app.dock.bounce)) return;
     if (dockNotifsStarted) return;
     dockNotifsStarted = true;
-    autorunAsync(() => {
-        const unreadItems = chatStore.unreadMessages;
-        // mac
-        if (app.setBadgeCount && app.dock && app.dock.bounce) {
-            if (app.setBadgeCount) app.setBadgeCount(unreadItems);
-            if (unreadItems > 0) {
-                app.dock.bounce();
+    autorun(
+        () => {
+            const unreadItems = chatStore.unreadMessages;
+            // mac
+            if (app.setBadgeCount && app.dock && app.dock.bounce) {
+                if (app.setBadgeCount) app.setBadgeCount(unreadItems);
+                if (unreadItems > 0) {
+                    app.dock.bounce();
+                }
             }
-        }
-    }, 250);
+        },
+        { delay: 250 }
+    );
 }
 
 let taskbarOverlayStarted = false;
@@ -42,24 +48,21 @@ function startTaskbarOverlay() {
     // if (dockNotifsStarted || (!app.setBadgeCount && !app.dock && !app.dock.bounce)) return;
     if (taskbarOverlayStarted) return;
     taskbarOverlayStarted = true;
-    autorunAsync(() => {
-        const unreadItems = chatStore.unreadMessages;
-        // windows
-        if (typeof remote.getCurrentWindow().setOverlayIcon === 'function') {
-            const overlay = nativeImage.createFromPath(
-                path.join(
-                    app.getAppPath(),
-                    'build/static/img/taskbar-overlay.png'
-                )
-            );
-            remote
-                .getCurrentWindow()
-                .setOverlayIcon(
-                    unreadItems ? overlay : null,
-                    unreadItems ? 'newmessages' : ''
+    autorun(
+        () => {
+            const unreadItems = chatStore.unreadMessages;
+            // windows
+            if (typeof remote.getCurrentWindow().setOverlayIcon === 'function') {
+                const overlay = nativeImage.createFromPath(
+                    path.join(app.getAppPath(), 'build/static/img/taskbar-overlay.png')
                 );
-        }
-    }, 250);
+                remote
+                    .getCurrentWindow()
+                    .setOverlayIcon(unreadItems ? overlay : null, unreadItems ? 'newmessages' : '');
+            }
+        },
+        { delay: 250 }
+    );
 }
 
 let desktopNotificationsStarted = false;
@@ -100,7 +103,6 @@ class AppNav extends React.Component {
             'onboarding'
         ].forEach(route => {
             this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
-                this.enableColorIcons();
                 routerStore.navigateTo(routerStore.ROUTES[route]);
             };
         });
@@ -115,8 +117,7 @@ class AppNav extends React.Component {
 
     @computed
     get menuItems() {
-        const hideUpgrade =
-            config.disablePayments || User.current.hasActivePlans;
+        const hideUpgrade = config.disablePayments || User.current.hasActivePlans;
 
         const menuContent = [
             {
@@ -183,9 +184,7 @@ class AppNav extends React.Component {
             const value = m.value.toLowerCase();
             const className = m.className ? m.className : value;
             const route = m.route ? m.route : value;
-            const clickFunction = m.clickFunction
-                ? m.clickFunction
-                : `to${m.value}`;
+            const clickFunction = m.clickFunction ? m.clickFunction : `to${m.value}`;
 
             return (
                 <MenuItem
@@ -195,23 +194,11 @@ class AppNav extends React.Component {
                     className={className}
                     icon={m.icon}
                     customIcon={m.customIcon}
-                    selected={
-                        routerStore.currentRoute === routerStore.ROUTES[route]
-                    }
+                    selected={routerStore.currentRoute === routerStore.ROUTES[route]}
                     onClick={this[clickFunction]}
                 />
             );
         });
-    }
-
-    @observable colorIcons = true;
-    @action.bound
-    enableColorIcons() {
-        this.colorIcons = true;
-    }
-    @action.bound
-    disableColorIcons() {
-        this.colorIcons = false;
     }
 
     _doSignout = async untrust => {
@@ -246,37 +233,25 @@ class AppNav extends React.Component {
                         })}
                     />
                     <Menu
-                        customButton={
-                            <Avatar contact={contact} size="medium" />
-                        }
+                        customButton={<Avatar contact={contact} size="medium" />}
                         position="top-left"
                         theme="wide"
-                        innerClassName={css('app-nav-menu', {
-                            'color-icons': this.colorIcons
-                        })}
+                        innerClassName="app-nav-menu"
                     >
                         <MenuHeader
                             leftContent={
-                                <Avatar
-                                    contact={contact}
-                                    size="medium"
-                                    onClick={this.toProfile}
-                                />
+                                <Avatar contact={contact} size="medium" onClick={this.toProfile} />
                             }
                             caption={contact.fullName}
                             legend={contact.username}
                         />
                         <Divider />
-                        <div
-                            onMouseEnter={this.disableColorIcons}
-                            onMouseLeave={this.enableColorIcons}
-                        >
-                            {this.menuItems}
-                        </div>
+                        {this.menuItems}
                     </Menu>
                 </div>
                 <div className="app-menu">
-                    <AppNavButton
+                    <AppNavBeaconedItem
+                        beaconName="chat"
                         tooltip={t('title_chats')}
                         icon="forum"
                         active={
@@ -287,22 +262,21 @@ class AppNav extends React.Component {
                         badge={chatStore.badgeCount}
                         onClick={this.toChats}
                     />
-
-                    <AppNavButton
+                    <AppNavBeaconedItem
+                        beaconName="files"
                         tooltip={t('title_files')}
                         icon="folder"
                         active={currentRoute.startsWith(ROUTES.files)}
                         showBadge={fileStore.unreadFiles > 0}
                         onClick={this.toFiles}
                     />
-
-                    <AppNavButton
+                    <AppNavBeaconedItem
+                        beaconName="contact"
                         tooltip={t('title_contacts')}
                         icon="people"
                         active={currentRoute.startsWith(ROUTES.contacts)}
                         onClick={this.toContacts}
                     />
-
                     <UsageCloud onClick={this.toOnboarding} />
                 </div>
                 <SignoutDialog

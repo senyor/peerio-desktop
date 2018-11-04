@@ -65,12 +65,12 @@
 
   .p-input {
     height: auto;
-    padding-left: $padding-small;
-    padding-bottom: $padding-small;
+    padding: 0 $padding-default $padding-small;
     border-bottom: 1px solid $divider-dark;
 
     &.purpose-editor {
       padding-bottom: 0;
+      margin-top: $padding-small;
     }
 
     input,
@@ -83,7 +83,7 @@
 
     textarea {
       padding-top: 0;
-      margin-top: 28px;
+      margin-top: 18px;
       line-height: 1.45em;
     }
   }

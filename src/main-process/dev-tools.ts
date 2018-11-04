@@ -7,20 +7,13 @@ import { MenuItem, Menu, BrowserWindow } from 'electron';
 import * as appControl from '~/helpers/app-control';
 import isDevEnv from '~/helpers/is-dev-env';
 
-const appRootPath = path.resolve(`${__dirname}/../`); // app/build
-const repoRootPath = path.resolve(`${__dirname}/../../../`);
+const appRootPath = path.resolve(`${__dirname}/..`); // build
+const repoRootPath = path.resolve(`${__dirname}/../../`);
 // restart electron when files changed in dev mode
 if (isDevEnv) {
-    const PATH_APP_NODE_MODULES = path.join(
-        repoRootPath,
-        'app',
-        'node_modules'
-    );
+    const PATH_APP_NODE_MODULES = path.join(repoRootPath, 'node_modules');
     require('module').globalPaths.push(PATH_APP_NODE_MODULES);
-    const watchPaths = [
-        appRootPath,
-        path.join(PATH_APP_NODE_MODULES, 'peerio-icebear', 'dist')
-    ];
+    const watchPaths = [appRootPath, path.join(PATH_APP_NODE_MODULES, 'peerio-icebear', 'dist')];
     console.log('electron-reload watching:', watchPaths);
     require('electron-reload')(watchPaths, {
         electron: path.join(repoRootPath, 'node_modules', '.bin', 'electron'),
@@ -91,10 +84,7 @@ export function extendContextMenu(
         new MenuItem({
             label: '☝️ Inspect Element',
             click() {
-                mainWindow.webContents.inspectElement(
-                    rightClickPos.x,
-                    rightClickPos.y
-                );
+                mainWindow.webContents.inspectElement(rightClickPos.x, rightClickPos.y);
             }
         })
     );

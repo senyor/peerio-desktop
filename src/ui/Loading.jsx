@@ -13,8 +13,7 @@ const messages = [
     'title_randomMessage3',
     'title_randomMessage4'
 ];
-const randomMessage =
-    messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
+const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
 
 @observer
 class Loading extends React.Component {
@@ -26,7 +25,7 @@ class Loading extends React.Component {
                 if (chatStore.chats.length || chatInviteStore.received.length) {
                     ELEMENTS.loading.goToActiveChat();
                 } else {
-                    routerStore.navigateTo(routerStore.ROUTES.zeroChats);
+                    routerStore.navigateTo(routerStore.ROUTES.chats);
                 }
                 this.dispose = null;
             }

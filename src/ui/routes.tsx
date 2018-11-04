@@ -5,11 +5,12 @@ import App from '~/ui/App';
 import Root from '~/ui/Root';
 import Chat from '~/whitelabel/components/Chat';
 import NewChannel from '~/whitelabel/components/NewChannel';
-import ZeroChats from '~/whitelabel/components/ZeroChats';
 
+import Welcome from './Welcome';
 import Onboarding from './Onboarding';
 import Login from './login/Login';
 import Signup from './signup/Signup';
+import NewUser from './login/NewUser';
 import Loading from './Loading';
 import ChatView from './chat/ChatView';
 import NewChat from './chat/NewChat';
@@ -39,20 +40,20 @@ import DevSettings from './settings/components/Dev';
 export default (
     <Route path="/" component={Root}>
         <IndexRoute component={Login} />
+        <Route path="/" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/new-user" component={NewUser} />
         <Route path="/new-device" component={NewDevice} />
         <Route path="autologin" component={AutoLogin} />
         <Route path="/app" component={App}>
             <IndexRoute component={Loading} />
+            <Route path="welcome" component={Welcome} />
             <Route path="chats" component={Chat}>
                 <IndexRoute component={ChatView} />
                 <Route path="channel-invite" component={ChannelInvite} />
                 <Route path="new-chat" component={NewChat} />
                 <Route path="new-channel" component={NewChannel} />
-                <Route
-                    path="pending-dm-dismissed"
-                    component={PendingDMDismissed}
-                />
+                <Route path="pending-dm-dismissed" component={PendingDMDismissed} />
                 <Route path="new-patient" component={NewChannel} />
             </Route>
             <Route path="patients" component={Patient}>
@@ -60,7 +61,6 @@ export default (
                 <Route path="new-internal-room" component={NewChannel} />
                 <Route path="new-patient-room" component={NewChannel} />
             </Route>
-            <Route path="zero-chats" component={ZeroChats} />
             <Route path="files" component={Files} />
             <Route path="onboarding" component={Onboarding} />
             <Route path="contacts" component={Contacts}>

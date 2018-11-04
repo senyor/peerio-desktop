@@ -13,17 +13,11 @@
  *
  * Validators are expected to follow the format specified in peerio-icebear
  */
+import * as telemetry from '~/telemetry';
 const React = require('react');
 const _ = require('lodash');
 const { socket } = require('peerio-icebear'); // eslint-disable-line
-const {
-    computed,
-    reaction,
-    when,
-    isObservable,
-    observable,
-    action
-} = require('mobx');
+const { computed, reaction, when, isObservableProp, observable, action } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('peer-ui');
@@ -37,11 +31,10 @@ class ValidatedInput extends Component {
 
     @computed
     get validationMessage() {
-        if (
-            this.props.store[this.fDirty] === true &&
-            this.props.store[this.fMsgText]
-        ) {
-            return t(this.props.store[this.fMsgText]);
+        const errorMsg = this.props.store[this.fMsgText];
+        if (this.props.store[this.fDirty] === true && errorMsg) {
+            if (this.props.onError) this.props.onError(errorMsg);
+            return t(errorMsg);
         }
         return null;
     }
@@ -54,12 +47,7 @@ class ValidatedInput extends Component {
         this.handleChange = this.handleChange.bind(this);
 
         // ward off misuse
-        if (
-            !(
-                this.props.store.constructor.prototype instanceof
-                OrderedFormStore
-            )
-        ) {
+        if (!(this.props.store.constructor.prototype instanceof OrderedFormStore)) {
             throw new Error(
                 'ValidatedInput expects a store property that inherits from OrderedFormStore'
             );
@@ -67,7 +55,7 @@ class ValidatedInput extends Component {
         if (!this.props.name) {
             throw new Error('ValidatedInput expects a name property');
         }
-        if (!isObservable(this.props.store, this.props.name)) {
+        if (!isObservableProp(this.props.store, this.props.name)) {
             throw new Error(
                 `ValidatedInput expects ${
                     this.props.name
@@ -90,11 +78,22 @@ class ValidatedInput extends Component {
     }
 
     componentWillMount() {
-        reaction(
-            () => this.props.store[this.props.name],
-            () => this.validate(),
-            true
-        );
+        reaction(() => this.props.store[this.props.name], () => this.validate(), {
+            fireImmediately: true
+        });
+    }
+
+    @observable inputRef;
+    @action.bound
+    setRef(ref) {
+        if (ref) {
+            this.inputRef = ref;
+        }
+    }
+
+    @action.bound
+    focus() {
+        this.inputRef.focus();
     }
 
     @action
@@ -144,6 +143,11 @@ class ValidatedInput extends Component {
         this.props.store[this.fFocused] = !this.props.store[this.fFocused];
         if (this.props.propagateFocus !== undefined)
             this.props.propagateFocus(this.props.store[this.fFocused]);
+
+        // currently only used for telemetry
+        if (this.props.store[this.fFocused]) {
+            telemetry.shared.validatedInputOnFocus(this.props.telemetry);
+        }
     }
 
     @action
@@ -151,34 +155,38 @@ class ValidatedInput extends Component {
         this.props.store[this.fDirty] = true;
         // mark all subsequent as dirty
         if (this.props.position !== undefined) {
-            _.each(
-                this.props.store.fieldOrders,
-                (otherPosition, otherField) => {
-                    if (otherPosition < this.props.position) {
-                        this.props.store[`${otherField}Dirty`] = true;
-                    }
+            _.each(this.props.store.fieldOrders, (otherPosition, otherField) => {
+                if (otherPosition < this.props.position) {
+                    this.props.store[`${otherField}Dirty`] = true;
                 }
-            );
+            });
         }
         this.toggleFocus();
+
+        // telemetry: send error on input blur
+        if (!this.props.store[this.fFocused]) {
+            telemetry.shared.validatedInputOnBlur(
+                this.props.telemetry,
+                this.props.store[this.fMsgText]
+            );
+        }
     }
 
     @action
     handleChange(val) {
-        this.props.store[this.fName] = this.props.lowercase
-            ? val.toLocaleLowerCase()
-            : val;
+        this.props.store[this.fName] = this.props.lowercase ? val.toLocaleLowerCase() : val;
         this.props.store[this.fDirty] = true;
     }
 
-    onRef = ref => {
-        this.inputRef = ref;
+    onClear = () => {
+        telemetry.shared.validatedInputOnClear(this.props.telemetry);
+        this.props.onClear();
     };
 
     render() {
         return (
             <div
-                className={css('validated-input', this.props.theme, {
+                className={css('validated-input', {
                     focused: this.props.store[this.fFocused]
                 })}
             >
@@ -188,17 +196,17 @@ class ValidatedInput extends Component {
                     label={this.props.label}
                     onChange={this.handleChange}
                     onKeyPress={this.props.onKeyPress}
+                    onClear={this.props.onClear ? this.onClear : null}
                     onBlur={this.handleBlur}
                     onFocus={this.toggleFocus}
                     error={this.validationMessage}
                     className={this.props.className}
                     maxLength={this.props.maxLength}
                     disabled={this.props.disabled}
-                    innerRef={this.onRef}
+                    hint={this.props.hint}
+                    theme={this.props.theme}
+                    ref={this.setRef}
                 />
-                {!this.validationMessage && (
-                    <div className="helper-text">{this.props.hint}</div>
-                )}
             </div>
         );
     }

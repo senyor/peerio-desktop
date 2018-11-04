@@ -1,7 +1,7 @@
 const React = require('react');
 const { Button, Input } = require('peer-ui');
 const { User, socket } = require('peerio-icebear');
-const config = require('~/config');
+const config = require('~/config').default;
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 
@@ -19,9 +19,7 @@ class DevToolsDashboard extends React.Component {
                 </div>
                 <div className="card width-2_3">
                     <div className="headline">Config</div>
-                    <pre className="selectable">
-                        {JSON.stringify(config, null, 2)}
-                    </pre>
+                    <pre className="selectable">{JSON.stringify(config, null, 2)}</pre>
                 </div>
             </div>
         );
@@ -57,9 +55,7 @@ class ChangeServer extends React.Component {
     };
     render() {
         if (User.current) {
-            return (
-                <span>Can't change server after login, sign out first.</span>
-            );
+            return <span>Can't change server after login, sign out first.</span>;
         }
 
         return (
@@ -72,10 +68,7 @@ class ChangeServer extends React.Component {
                     label="Server url"
                 />
                 <br />
-                <Button
-                    label="Change and reconnect"
-                    onClick={this.changeServer}
-                />
+                <Button label="Change and reconnect" onClick={this.changeServer} />
             </span>
         );
     }

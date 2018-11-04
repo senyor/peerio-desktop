@@ -3,8 +3,7 @@
   .body {
     padding: 0;
 
-    .title,
-    .p-progress-bar {
+    .title {
       padding: $padding-large;
       margin: 0;
     }
@@ -53,5 +52,10 @@
     .row-container {
       padding-left: $padding-large;
     }
+  }
+
+  .loader .p-progress-bar {
+    padding: $padding-large;
+    margin: 0;
   }
 }

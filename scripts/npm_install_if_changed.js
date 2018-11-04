@@ -6,24 +6,13 @@ try {
         appExisting = '';
     try {
         existing = fs.readFileSync('.package.json.md5') || '';
-        appExisting = fs.readFileSync('.app.package.json.md5') || '';
     } catch (ex) {
         // don't care
     }
     const actual = execSync(
-        process.platform === 'darwin'
-            ? 'md5 -q package.json'
-            : 'md5sum package.json'
+        process.platform === 'darwin' ? 'md5 -q package.json' : 'md5sum package.json'
     );
-    const appActual = execSync(
-        process.platform === 'darwin'
-            ? 'md5 -q app/package.json'
-            : 'md5sum app/package.json'
-    );
-    if (
-        existing.toString() !== actual.toString() ||
-        appExisting.toString() !== appActual.toString()
-    ) {
+    if (existing.toString() !== actual.toString()) {
         console.log('package.json has changed, running npm install.');
         const ret = spawnSync('npm', ['install']);
         console.log(ret.stderr && ret.stderr.toString());

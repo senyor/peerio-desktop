@@ -3,9 +3,10 @@ const { observer } = require('mobx-react');
 const { chatStore } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
 
-const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup');
+const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup').default;
 const EmojiImage = require('~/ui/emoji/Image');
-const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice');
+const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice')
+    .default;
 
 @observer
 class PendingDMHeader extends React.Component {
@@ -25,9 +26,7 @@ class PendingDMHeader extends React.Component {
                     <div className="main-text">
                         <T k="title_goodNews" />
                         <br />
-                        <T k="title_dmInviteHeading">
-                            {{ contactName: c.fullName }}
-                        </T>
+                        <T k="title_dmInviteHeading">{{ contactName: c.fullName }}</T>
                     </div>
                 )}
 

@@ -1,0 +1,34 @@
+.zero-files {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $padding-xl 0;
+  margin: auto;
+  text-align: center;
+
+  .headline {
+    font-weight: $font-weight-bold;
+    color: $darkblue;
+  }
+
+  .illustration {
+    max-width: 320px;
+    margin: $margin-xl 0;
+  }
+
+  .instructions {
+    .icon {
+      width: 24px;
+    }
+
+    .mock-button {
+      height: 24px;
+      padding: 0 $padding-small;
+      vertical-align: middle;
+      font-weight: $font-weight-semibold;
+      color: $text-light-default;
+      background-color: #cdced9;
+      border-radius: 24px;
+    }
+  }
+}

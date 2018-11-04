@@ -11,6 +11,10 @@
 
   .p-input {
     padding-right: $padding-small;
+
+    .hint-or-error {
+      display: none;
+    }
   }
 
   input {

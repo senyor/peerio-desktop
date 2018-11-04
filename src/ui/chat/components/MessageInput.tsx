@@ -22,7 +22,7 @@ import MessageInputProseMirror from './MessageInputProseMirror';
 interface MessageInputProps {
     readonly: boolean;
     placeholder: string;
-    onSend: (richText: Object, legacyText: string) => void;
+    onSend: (richText: unknown, legacyText: string) => void;
     onAck: () => void;
     onFileShare: (files: any) => void; // TODO: TS audit
     messageListScrolledUp: boolean;
@@ -35,18 +35,21 @@ export default class MessageInput extends React.Component<MessageInputProps> {
     @observable filePickerActive = false;
 
     @observable uploadDialogActive = false;
-    selectedFiles: string[] = [];
+    @observable.shallow selectedFiles: string[] = [];
 
     @action.bound
-    activateUploadDialog() {
+    async activateUploadDialog() {
         const chat = chatStore.activeChat;
         if (!chat) return;
-        pickLocalFiles().then(paths => {
-            const recognizedPaths = getFileList(paths).success;
-            if (!recognizedPaths || !recognizedPaths.length) return;
-            this.selectedFiles = recognizedPaths;
-            this.uploadDialogActive = true;
-        });
+        const files = await pickLocalFiles();
+        if (!files || !files.length) return;
+        this.uploadDialogActive = true;
+        const paths = await getFileList(files);
+        if (!paths || !paths.success || !paths.success.length) {
+            this.uploadDialogActive = false;
+            return;
+        }
+        this.selectedFiles = paths.success;
     }
 
     @action.bound
@@ -141,8 +144,7 @@ export default class MessageInput extends React.Component<MessageInputProps> {
             !this.wheelOverJumpToBottom &&
             (this.props.messageListScrolledUp ||
                 chatStore.activeChat.canGoDown ||
-                (!clientApp.isReadingNewestMessages &&
-                    chatStore.activeChat.unreadCount > 0))
+                (!clientApp.isReadingNewestMessages && chatStore.activeChat.unreadCount > 0))
         );
     }
 
@@ -166,10 +168,7 @@ export default class MessageInput extends React.Component<MessageInputProps> {
                 })}
                 onWheel={this.handleWheelOverJumpToBottom}
             >
-                <Button
-                    icon="keyboard_arrow_down"
-                    onClick={this.props.onJumpToBottom}
-                />
+                <Button icon="keyboard_arrow_down" onClick={this.props.onJumpToBottom} />
                 {chat.unreadCount > 0 && (
                     <div className="unread-badge">
                         {chat.unreadCount < 100 ? chat.unreadCount : '99+'}
@@ -182,10 +181,7 @@ export default class MessageInput extends React.Component<MessageInputProps> {
     render() {
         if (this.uploadDialogActive) {
             return (
-                <UploadDialog
-                    deactivate={this.deactivateUploadDialog}
-                    files={this.selectedFiles}
-                />
+                <UploadDialog deactivate={this.deactivateUploadDialog} files={this.selectedFiles} />
             );
         }
         const chat = chatStore.activeChat;
@@ -197,11 +193,7 @@ export default class MessageInput extends React.Component<MessageInputProps> {
                     })}
                     ref={this.setSnackbarRef}
                 />
-                <div
-                    className="message-input"
-                    onDrop={this.preventDrop}
-                    onPaste={this.onPaste}
-                >
+                <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
                     <Menu
                         position="bottom-left"
                         icon="add_circle_outline"
@@ -218,6 +210,7 @@ export default class MessageInput extends React.Component<MessageInputProps> {
                             onClick={this.activateUploadDialog}
                         />
                     </Menu>
+
                     {this.props.readonly ? (
                         <div className="message-editor-empty">&nbsp;</div>
                     ) : (

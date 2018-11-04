@@ -6,7 +6,7 @@ const isDevEnv = require('~/helpers/is-dev-env').default;
 if (!isDevEnv) require('~/helpers/console-history');
 const { ipcRenderer, webFrame } = require('electron');
 const { when } = require('mobx');
-const languageStore = require('~/stores/language-store');
+const languageStore = require('~/stores/language-store').default;
 
 // apply desktop config values to icebear
 require('~/config');
@@ -14,7 +14,7 @@ require('~/config');
 if (isDevEnv) {
     // to allow require of development modules in dev environment
     const path = require('path');
-    const PATH_APP_NODE_MODULES = path.resolve(path.join('app/node_modules'));
+    const PATH_APP_NODE_MODULES = path.resolve(path.join('node_modules'));
     require('module').globalPaths.push(PATH_APP_NODE_MODULES);
     // enable react-perf chrome dev tool
     // window.Perf = require('react-addons-perf');

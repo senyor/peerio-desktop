@@ -1,26 +1,21 @@
+// @ts-check
+import { requestDownloadPath } from '~/helpers/file';
 const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
-const {
-    Button,
-    Dialog,
-    MaterialIcon,
-    Switch,
-    ProgressBar
-} = require('peer-ui');
-const { User } = require('peerio-icebear');
+const { Button, Dialog, MaterialIcon, Switch, ProgressBar } = require('peer-ui');
+const { User, saveAccountKeyBackup } = require('peerio-icebear');
 const { t } = require('peerio-translator');
 const autologin = require('~/helpers/autologin');
 const electron = require('electron').remote;
 const T = require('~/ui/shared-components/T');
 const QR = require('qrcode');
-const PDFSaver = require('~/ui/shared-components/PDFSaver');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const css = require('classnames');
 const fs = require('fs');
 
 @observer
-class SecuritySettings extends React.Component {
+export default class SecuritySettings extends React.Component {
     @observable passphraseVisible = false;
     @observable twoFASecret = null;
     @observable twoFAQRCode = null;
@@ -55,19 +50,23 @@ class SecuritySettings extends React.Component {
         this.passphraseVisible = !this.passphraseVisible;
     };
 
-    setAccountKeyPDFRef = ref => {
-        this.accountKeyPDFRef = ref;
-    };
-
     backupAccountKey = async () => {
-        const tplVars = {
-            username: User.current.username,
-            email: User.current.email,
-            key: User.current.passphrase
-        };
+        let path = '';
+        try {
+            path = await requestDownloadPath(`${User.current.username}-${t('title_appName')}.pdf`);
+        } catch (err) {
+            // user cancel
+        }
 
-        this.accountKeyPDFRef.save(tplVars, `${User.current.username}.pdf`);
-        await User.current.setAccountKeyBackedUp();
+        if (path) {
+            saveAccountKeyBackup(
+                path,
+                User.current.fullName,
+                User.current.username,
+                User.current.passphrase
+            );
+            User.current.setAccountKeyBackedUp();
+        }
     };
 
     onToggleAutologin(ev) {
@@ -139,9 +138,7 @@ class SecuritySettings extends React.Component {
                 <T k="title_AKDetail" tag="p" />
                 <div className="account-key-toggle">
                     {this.passphraseVisible ? (
-                        <span className="selectable">
-                            {User.current.passphrase}
-                        </span>
+                        <span className="selectable monospace">{User.current.passphrase}</span>
                     ) : (
                         <span>••••••••••••••••••••••••••••••••••••••••••</span>
                     )}&nbsp;&nbsp;
@@ -165,10 +162,6 @@ class SecuritySettings extends React.Component {
                         theme="primary"
                     />
                 </div>
-                <PDFSaver
-                    ref={this.setAccountKeyPDFRef}
-                    template="./AccountKeyBackup.html"
-                />
             </section>
         );
     }
@@ -176,11 +169,7 @@ class SecuritySettings extends React.Component {
     renderAutologinSection() {
         return (
             <section className="with-bg">
-                <T
-                    k="title_securityDeviceSettings"
-                    tag="div"
-                    className="title"
-                />
+                <T k="title_securityDeviceSettings" tag="div" className="title" />
                 <T k="title_securityDeviceSettingsDetail" tag="p" />
                 <Switch
                     checked={User.current.autologinEnabled}
@@ -198,11 +187,7 @@ class SecuritySettings extends React.Component {
                 <p>
                     <T k="title_2FADetailDesktop" />
                     <a onClick={this.openAuthApps}>
-                        <Button
-                            icon="help"
-                            tooltip={t('title_readMore')}
-                            theme="no-hover"
-                        />
+                        <Button icon="help" tooltip={t('title_readMore')} theme="no-hover" />
                     </a>
                     <Dialog
                         active={this.authAppsDialogActive}
@@ -226,10 +211,7 @@ class SecuritySettings extends React.Component {
                                 <div>
                                     <T k="title_scanQRCode" tag="div" />
                                     <br />
-                                    <img
-                                        alt={this.twoFASecret}
-                                        src={this.twoFAQRCode}
-                                    />
+                                    <img alt={this.twoFASecret} src={this.twoFAQRCode} />
                                     <a onClick={this.toggleQRCode}>
                                         <T
                                             k="button_2FAShowSecret"
@@ -242,11 +224,7 @@ class SecuritySettings extends React.Component {
                                 <div>
                                     <T k="title_pasteTOTPKey" tag="div" />
                                     <br />
-                                    <T
-                                        k="title_2FASecretKey"
-                                        className="dark-label"
-                                        tag="div"
-                                    />
+                                    <T k="title_2FASecretKey" className="dark-label" tag="div" />
 
                                     <div className="bold selectable">
                                         {this.twoFASecret}
@@ -254,7 +232,7 @@ class SecuritySettings extends React.Component {
                                             icon="content_copy"
                                             onClick={this.copyTOTPSecret}
                                             tooltip={t('title_copy')}
-                                            primary
+                                            theme="primary"
                                         />
                                     </div>
                                     <br />
@@ -268,7 +246,7 @@ class SecuritySettings extends React.Component {
                                 </div>
                             )
                         ) : (
-                            <ProgressBar type="circular" className="block" />
+                            <ProgressBar circular className="block" />
                         )}
                     </div>
                     <div className="totp-code">
@@ -285,10 +263,7 @@ class SecuritySettings extends React.Component {
                             acceptOnBlur="false"
                         />
                         {this.totpCodeValidating ? (
-                            <ProgressBar
-                                type="circular"
-                                className="totp-progress"
-                            />
+                            <ProgressBar circular className="totp-progress" />
                         ) : null}
                     </div>
                 </div>
@@ -301,10 +276,7 @@ class SecuritySettings extends React.Component {
             <section className="with-bg">
                 <T k="title_2FA" className="title" tag="div" />
                 <p>
-                    <MaterialIcon
-                        icon="check_circle"
-                        className="icon-affirmative icon-large"
-                    />
+                    <MaterialIcon icon="check_circle" className="icon-affirmative icon-large" />
                     &nbsp;&nbsp;
                     <T k="title_2FAEnabledThanks" />
                 </p>
@@ -316,17 +288,13 @@ class SecuritySettings extends React.Component {
                     theme="primary"
                 />
                 <div className="text-right">
-                    <Button
-                        label={t('button_disable')}
-                        onClick={this.disable2fa}
-                    />
+                    <Button label={t('button_disable')} onClick={this.disable2fa} />
                 </div>
             </section>
         );
     }
 
     render() {
-        window.c = this;
         return (
             <div className="security-settings">
                 {this.renderAccountKeySection()}
@@ -338,5 +306,3 @@ class SecuritySettings extends React.Component {
         );
     }
 }
-
-module.exports = SecuritySettings;

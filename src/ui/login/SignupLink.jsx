@@ -1,5 +1,7 @@
+import { login } from '~/telemetry';
 const React = require('react');
 const { Link } = require('react-router');
+const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
 const { observer } = require('mobx-react');
 
@@ -7,9 +9,11 @@ const { observer } = require('mobx-react');
 class SignupLink extends React.Component {
     render() {
         return (
-            <div>
-                {t('title_newUser')} &nbsp;{' '}
-                <Link to="/signup">{t('button_CreateAccount')}</Link>
+            <div className="signup-link">
+                <T k="title_newToApp">{{ appName: t('title_appName') }}</T>&nbsp;
+                <Link onClick={login.navToCreateAccount} to="/signup">
+                    {t('button_CreateAccount')}
+                </Link>
             </div>
         );
     }

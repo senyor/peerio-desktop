@@ -5,26 +5,25 @@ const { Button, Dialog, Switch } = require('peer-ui');
 const { t } = require('peerio-translator');
 const { User } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T');
-const urls = require('~/config').translator.urlMap;
-const config = require('~/config');
+const urls = require('~/config').default.translator.urlMap;
+const config = require('~/config').default;
 
 @observer
 class Account extends React.Component {
     @observable deleteAccountDialogActive = false;
 
     onPromoSubscriptionChanged = ev => {
-        User.current.settings.subscribeToPromoEmails = ev.target.checked;
-        User.current.saveSettings();
-    };
-
-    onErrorTrackingChanged = ev => {
-        User.current.settings.errorTracking = ev.target.checked;
-        User.current.saveSettings();
+        const { checked } = ev.target;
+        User.current.saveSettings(settings => {
+            settings.subscribeToPromoEmails = checked;
+        });
     };
 
     onDataCollectionChanged = ev => {
-        User.current.settings.dataCollection = ev.target.checked;
-        User.current.saveSettings();
+        const { checked } = ev.target;
+        User.current.saveSettings(settings => {
+            settings.dataCollection = checked;
+        });
     };
 
     showConfirmDelete = () => {
@@ -51,22 +50,14 @@ class Account extends React.Component {
         ];
         return (
             <div className="settings-container-account">
-                {config.disablePayments ||
-                User.current.hasActivePlans ? null : (
+                {config.disablePayments || User.current.hasActivePlans ? null : (
                     <section className="upgrade-message-container">
-                        <div className="message">
-                            {t('title_upgradeMessage')}
-                        </div>
-                        <Button
-                            label={t('button_upgrade')}
-                            onClick={this.toUpgrade}
-                        />
+                        <div className="message">{t('title_upgradeMessage')}</div>
+                        <Button label={t('button_upgrade')} onClick={this.toUpgrade} />
                     </section>
                 )}
                 <section className="section-divider">
-                    <div className="title">
-                        {t('title_promoConsentRequestTitle')}
-                    </div>
+                    <div className="title">{t('title_promoConsentRequestTitle')}</div>
                     <Switch
                         checked={User.current.settings.subscribeToPromoEmails}
                         label={t('title_promoConsent')}
@@ -77,21 +68,13 @@ class Account extends React.Component {
                     <div className="title">{t('title_dataPreferences')}</div>
                     <p>{t('title_dataDetail')}</p>
                     <Switch
-                        checked={User.current.settings.errorTracking}
-                        label={t('title_errorTrackingMessage')}
-                        onChange={this.onErrorTrackingChanged}
-                    />
-                    <Switch
                         checked={User.current.settings.dataCollection}
                         label={t('title_dataCollectionMessage')}
                         onChange={this.onDataCollectionChanged}
                     />
                 </section>
                 <section className="delete-account">
-                    <Button
-                        label={t('button_accountDelete')}
-                        onClick={this.showConfirmDelete}
-                    />
+                    <Button label={t('button_accountDelete')} onClick={this.showConfirmDelete} />
                 </section>
                 <Dialog
                     active={this.deleteAccountDialogActive}

@@ -1,5 +1,5 @@
 const { app, Menu } = require('electron');
-const config = require('~/config');
+const config = require('~/config').default;
 const isDevEnv = require('~/helpers/is-dev-env').default;
 
 const editMenu = {
@@ -33,9 +33,7 @@ const helpMenu = {
         {
             label: 'Support', // don't use https: url due to weird redirect issues
             click() {
-                require('electron').shell.openExternal(
-                    config.translator.urlMap.helpCenter
-                );
+                require('electron').shell.openExternal(config.translator.urlMap.helpCenter);
             }
         }
     ]

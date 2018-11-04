@@ -28,15 +28,20 @@ echo "[•••            ] setting flags"
 set -e
 export NODE_ENV=production
 
-echo "[••••••••       ] tagging release"
-./node_modules/.bin/standard-version
-git push && git push --follow-tags origin master
 
 if [[ $1 = "mandatory" ]]; then
-  node ./scripts/update_mandatory_version
+  NEW_VERSION=$(./node_modules/.bin/standard-version --dry-run | grep 'tagging release' | sed -e 's/.*tagging release //g')
+  echo "Mandatory update as version $NEW_VERSION"
+  sed -i '' "s/\(\"lastMandatoryUpdateVersion\": \"\)[^\"]*\(\",\)/\1$NEW_VERSION\2/g" package.json
+  git commit -a -m "chore: set lastMandatoryUpdateVersion to $NEW_VERSION"
 else
   echo "Optional update"
 fi
+
+
+echo "[••••••••       ] tagging release"
+./node_modules/.bin/standard-version
+git push && git push --follow-tags origin master
 
 echo "[•••••••••••••••] building and publishing"
 echo '**'

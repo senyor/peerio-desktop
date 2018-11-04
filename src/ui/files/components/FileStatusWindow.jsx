@@ -68,16 +68,10 @@ class FileStatusWindow extends React.Component {
                 <span className="file-name">{file.name}</span>
 
                 {file.error ? (
-                    <MaterialIcon
-                        icon="error_outline"
-                        className="right-icon error"
-                    />
+                    <MaterialIcon icon="error_outline" className="right-icon error" />
                 ) : file.completed ? (
                     <span className="right-icon">
-                        <MaterialIcon
-                            className="completed confirmation"
-                            icon="check"
-                        />
+                        <MaterialIcon className="completed confirmation" icon="check" />
                         <Button
                             className="find-file"
                             icon="search"
@@ -138,11 +132,7 @@ class FileStatusWindow extends React.Component {
                             theme="small"
                         />
                         {this.allCompleted ? (
-                            <Button
-                                icon="close"
-                                onClick={this.closeWindow}
-                                theme="small"
-                            />
+                            <Button icon="close" onClick={this.closeWindow} theme="small" />
                         ) : null}
                     </div>
                 </div>
@@ -158,9 +148,7 @@ class FileStatusWindow extends React.Component {
                                 <T k="title_downloads" />&nbsp;
                                 <span>({DOWNLOAD_FILES.length})</span>
                             </div>
-                            <div className="files-container">
-                                {this.downloadQueue}
-                            </div>
+                            <div className="files-container">{this.downloadQueue}</div>
                         </React.Fragment>
                     ) : null}
 
@@ -170,9 +158,7 @@ class FileStatusWindow extends React.Component {
                                 <T k="title_uploads" />&nbsp;
                                 <span>({UPLOAD_FILES.length})</span>
                             </div>
-                            <div className="files-container">
-                                {this.uploadQueue}
-                            </div>
+                            <div className="files-container">{this.uploadQueue}</div>
                         </React.Fragment>
                     ) : null}
                 </div>

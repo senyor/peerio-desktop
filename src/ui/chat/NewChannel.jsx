@@ -61,11 +61,6 @@ class NewChannel extends React.Component {
         this.upgradeDialog = ref;
     };
 
-    setNameInputRef = ref => {
-        if (!ref) return;
-        ref.focus();
-    };
-
     render() {
         const textParser = {
             toCreateDM: text => (
@@ -79,7 +74,7 @@ class NewChannel extends React.Component {
             return (
                 <div className="new-channel create-new-chat">
                     <div className="create-channel-loading">
-                        <ProgressBar type="circular" />
+                        <ProgressBar circular />
                     </div>
                 </div>
             );
@@ -101,10 +96,10 @@ class NewChannel extends React.Component {
                             <div className="chip-wrapper">
                                 <Input
                                     placeholder={t('title_channelName')}
-                                    innerRef={this.setNameInputRef}
                                     value={this.channelName}
                                     onChange={this.handleNameChange}
                                     maxLength={config.chat.maxChatNameLength}
+                                    autoFocus
                                 />
                             </div>
                         </div>
@@ -121,11 +116,7 @@ class NewChannel extends React.Component {
                                 />
                             </div>
                         </div>
-                        <T
-                            k="title_optional"
-                            tag="div"
-                            className="helper-text"
-                        />
+                        <T k="title_optional" tag="div" className="helper-text" />
                     </div>
                     <div className="user-picker-container">
                         <UserPicker

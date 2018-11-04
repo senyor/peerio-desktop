@@ -1,31 +1,21 @@
 import React from 'react';
-import {
-    action,
-    computed,
-    observable,
-    reaction,
-    IReactionDisposer
-} from 'mobx';
+import { action, computed, observable, reaction, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
 
-import {
-    Button,
-    CustomIcon,
-    Dialog,
-    MaterialIcon,
-    ProgressBar,
-    Tooltip
-} from 'peer-ui';
+import { Button, CustomIcon, Dialog, MaterialIcon, ProgressBar, Tooltip } from 'peer-ui';
 import { chatStore, chatInviteStore } from 'peerio-icebear';
 import { t } from 'peerio-translator';
 
 import routerStore from '~/stores/router-store';
 import sounds from '~/helpers/sounds';
 import uiStore from '~/stores/ui-store';
+import beaconStore from '~/stores/beacon-store';
+
 import UserPicker from '~/ui/shared-components/UserPicker';
 import FullCoverLoader from '~/ui/shared-components/FullCoverLoader';
 import ELEMENTS from '~/whitelabel/helpers/elements';
+import ZeroChats from '~/whitelabel/components/ZeroChats';
 
 import MessageInput from './components/MessageInput';
 import MessageList from './components/MessageList';
@@ -51,26 +41,22 @@ export default class ChatView extends React.Component {
                     this.showUserPicker = false;
                 }
             )
-
-            // TODO: refactor when SDK is there for chat invites
-            // reaction(() => !chatStore.chats.length && !chatInviteStore.received.length, () => {
-            //     routerStore.navigateTo(routerStore.ROUTES.zeroChats);
-            // }, true)
         ];
 
         if (chatInviteStore.activeInvite) {
             routerStore.navigateTo(routerStore.ROUTES.channelInvite);
         }
 
-        if (!chatStore.chats.length && !chatInviteStore.received.length) {
-            routerStore.navigateTo(routerStore.ROUTES.zeroChats);
-        }
-
         ELEMENTS.chatView.checkActiveSpace();
+
+        if (!chatStore.chats.length && !chatInviteStore.received.length) {
+            beaconStore.addBeacons('startChat');
+        }
     }
 
     componentWillUnmount() {
         this.reactionsToDispose.forEach(dispose => dispose());
+        beaconStore.clearBeacons();
     }
 
     scrollToBottom(): void {
@@ -85,9 +71,7 @@ export default class ChatView extends React.Component {
      */
     sendMessage(text: string): void {
         try {
-            chatStore.activeChat
-                .sendMessage(text)
-                .catch(() => ChatView.playErrorSound());
+            chatStore.activeChat.sendMessage(text).catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
         }
@@ -114,9 +98,7 @@ export default class ChatView extends React.Component {
     sendAck(): void {
         try {
             this.scrollToBottom();
-            chatStore.activeChat
-                .sendAck()
-                .catch(() => ChatView.playErrorSound());
+            chatStore.activeChat.sendAck().catch(() => ChatView.playErrorSound());
         } catch (err) {
             console.error(err);
         }
@@ -157,17 +139,12 @@ export default class ChatView extends React.Component {
     };
 
     showChatNameEditor = () => {
-        if (!(chatStore.activeChat.canIAdmin && chatStore.activeChat.isChannel))
-            return;
+        if (!(chatStore.activeChat.canIAdmin && chatStore.activeChat.isChannel)) return;
         this.chatNameEditorVisible = true;
     };
 
     hideChatNameEditor = () => {
         this.chatNameEditorVisible = false;
-    };
-
-    chatNameEditorRef = ref => {
-        if (ref) ref.nameInput.focus();
     };
 
     @observable jitsiDialogVisible = false;
@@ -183,12 +160,12 @@ export default class ChatView extends React.Component {
     };
 
     @computed
-    get shareInProgress() {
+    get shareInProgress(): boolean {
         const chat = chatStore.activeChat;
         if (!chat) return false;
         return (
-            (chat.uploadQueue && chat.uploadQueue.length) ||
-            (chat.folderShareQueue && chat.folderShareQueue.length)
+            (chat.uploadQueue && chat.uploadQueue.length > 0) ||
+            (chat.folderShareQueue && chat.folderShareQueue.length > 0)
         );
     }
 
@@ -217,6 +194,7 @@ export default class ChatView extends React.Component {
                                 className="name-editor"
                                 readOnly={!chat.canIAdmin}
                                 onBlur={this.hideChatNameEditor}
+                                autoFocus
                             />
                         ) : (
                             <div className="name-editor-inner">
@@ -224,13 +202,9 @@ export default class ChatView extends React.Component {
                                     <MaterialIcon icon="edit" />
                                 ) : null}
                                 {chat.isChannel ? (
-                                    ELEMENTS.chatView.title(
-                                        ELEMENTS.chatEditor.displayName(chat)
-                                    )
+                                    ELEMENTS.chatView.title(ELEMENTS.chatEditor.displayName(chat))
                                 ) : (
-                                    <div className="title-content">
-                                        {chat.name}
-                                    </div>
+                                    <div className="title-content">{chat.name}</div>
                                 )}
                             </div>
                         )}
@@ -246,11 +220,7 @@ export default class ChatView extends React.Component {
                                 {chat.allParticipants.length || ''}
                             </div>
                         ) : chat.changingFavState ? (
-                            <ProgressBar
-                                type="circular"
-                                mode="indeterminate"
-                                size="small"
-                            />
+                            <ProgressBar circular size="small" />
                         ) : (
                             <div
                                 onClick={chat.toggleFavoriteState}
@@ -262,9 +232,7 @@ export default class ChatView extends React.Component {
                             >
                                 <CustomIcon
                                     active={chat.isFavorite}
-                                    icon={
-                                        chat.isFavorite ? 'pin-on' : 'pin-off'
-                                    }
+                                    icon={chat.isFavorite ? 'pin-on' : 'pin-off'}
                                     className="small"
                                     hover={!chat.isFavorite}
                                 />
@@ -332,14 +300,13 @@ export default class ChatView extends React.Component {
 
     @computed
     get pageScrolledUp() {
-        return (
-            this.messageListRef.current &&
-            this.messageListRef.current.pageScrolledUp
-        );
+        return this.messageListRef.current && this.messageListRef.current.pageScrolledUp;
     }
 
     render() {
-        if (!chatStore.chats.length) return null;
+        if (!chatStore.chats.length && !chatInviteStore.received.length) {
+            return <ZeroChats />;
+        }
 
         const chat = chatStore.activeChat;
         if (!chat) return null;
@@ -371,8 +338,7 @@ export default class ChatView extends React.Component {
                         </div>
                     ) : (
                         <div className="messages-container">
-                            {chatStore.chats.length === 0 &&
-                            !chatStore.loading ? null : (
+                            {chatStore.chats.length === 0 && !chatStore.loading ? null : (
                                 <MessageList ref={this.messageListRef} />
                             )}
                             {this.shareInProgress ? (
@@ -382,15 +348,11 @@ export default class ChatView extends React.Component {
                                 />
                             ) : null}
                             <MessageInput
-                                readonly={
-                                    !chat || !chat.metaLoaded || chat.isReadOnly
-                                }
+                                readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
                                 placeholder={
                                     chat
                                         ? t('title_messageInputPlaceholder', {
-                                              chatName: `${
-                                                  chat.isChannel ? '# ' : ''
-                                              }${chat.name}`
+                                              chatName: `${chat.isChannel ? '# ' : ''}${chat.name}`
                                           })
                                         : null
                                 }

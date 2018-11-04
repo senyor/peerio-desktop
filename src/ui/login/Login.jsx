@@ -1,14 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import * as telemetry from '~/telemetry';
 const React = require('react');
 const { Component } = require('react');
 const { Button } = require('peer-ui');
-const {
-    config,
-    socket,
-    User,
-    validation,
-    warnings
-} = require('peerio-icebear');
+const { config, socket, User, validation, warnings } = require('peerio-icebear');
 const { observable, computed, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { t } = require('peerio-translator');
@@ -20,11 +15,14 @@ const css = require('classnames');
 const autologin = require('~/helpers/autologin');
 const routerStore = require('~/stores/router-store');
 const updaterStore = require('~/stores/updater-store');
+const uiStore = require('~/stores/ui-store');
 
 const PoweredByLogin = require('~/whitelabel/components/PoweredByLogin');
 const SignupLink = require('~/whitelabel/components/SignupLink');
-
 const { validators } = validation; // use common validation from core
+import * as Mock from '~/ui/shared-components/MockUI';
+import { MaterialIcon } from 'peer-ui';
+import { clientApp } from 'peerio-icebear';
 
 class LoginStore extends OrderedFormStore {
     @observable fieldsExpected = 2;
@@ -71,14 +69,14 @@ class Login extends Component {
                 if (dev.navigateTo) {
                     when(
                         () =>
-                            routerStore.currentRoute &&
-                            routerStore.currentRoute.startsWith('/app'),
+                            routerStore.currentRoute && routerStore.currentRoute.startsWith('/app'),
                         () => routerStore.navigateTo(dev.navigateTo)
                     );
                 }
                 return;
             }
             if (lastUserObject) {
+                uiStore.newUserPageOpen = false;
                 this.loginStore.lastAuthenticatedUser = lastUserObject;
                 this.loginStore.username = lastUserObject.username;
                 autologin
@@ -98,16 +96,44 @@ class Login extends Component {
                     .catch(() => {
                         this.loginStore.busy = false;
                     });
-            } else this.loginStore.busy = false;
+            } else {
+                this.loginStore.busy = false;
+                if (uiStore.newUserPageOpen) {
+                    routerStore.navigateTo(routerStore.ROUTES.newUser);
+                }
+            }
         });
+
+        // For telemetry: listen for active2FARequest to determine if user has 2FA enabled
+        this.twoFaReaction = when(
+            () =>
+                clientApp &&
+                clientApp.active2FARequest &&
+                clientApp.active2FARequest.type === 'login',
+            () => {
+                this.twoFaEnabled = true;
+            }
+        );
+
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        if (!uiStore.newUserPageOpen) {
+            telemetry.login.duration(this.startTime);
+        }
+
+        if (this.twoFaReaction) this.twoFaReaction();
     }
 
     togglePasswordVisibility = () => {
         this.loginStore.passwordVisible = !this.loginStore.passwordVisible;
-        if (this.akRef) this.akRef.inputRef.focus();
+        if (this.akRef) this.akRef.focus();
+        telemetry.login.toggleAkVisibility(this.loginStore.passwordVisible);
     };
 
     unsetLastUser = () => {
+        telemetry.login.changeUser();
         return User.removeLastAuthenticated().then(() => {
             this.loginStore.lastAuthenticatedUser = undefined;
             this.loginStore.username = undefined;
@@ -116,6 +142,7 @@ class Login extends Component {
 
     onLoginClick = () => {
         this.login();
+        telemetry.login.onLoginClick();
     };
 
     login = (isAutologin = false) => {
@@ -127,14 +154,14 @@ class Login extends Component {
         }
         this.loginStore.busy = true;
         const user = new User();
-        user.username =
-            this.loginStore.username ||
-            this.loginStore.lastAuthenticatedUser.username;
+        user.username = this.loginStore.username || this.loginStore.lastAuthenticatedUser.username;
         user.passphrase = this.loginStore.passcodeOrPassphrase;
         user.autologinEnabled = isAutologin;
         User.current = user;
+
         user.login()
             .then(() => {
+                telemetry.login.loginSuccess(isAutologin, this.twoFaEnabled);
                 if (!User.current.autologinEnabled) {
                     return autologin.shouldSuggestEnabling().then(suggest => {
                         if (suggest) {
@@ -149,16 +176,22 @@ class Login extends Component {
             .catch(() => {
                 User.current = null;
                 this.loginStore.busy = false;
-                // show error inline
-                this.loginStore.passcodeOrPassphraseValidationMessageText = t(
-                    'error_loginFailed'
-                );
+                let errorMsg = 'error_wrongAK';
+
+                // Error messages in snackbar
                 if (user.blacklisted) {
-                    warnings.addSevere(
-                        'error_accountSuspendedText',
-                        'error_accountSuspendedTitle'
-                    );
+                    errorMsg = 'error_accountSuspendedTitle';
+                    warnings.addSevere('error_accountSuspendedText', 'error_accountSuspendedTitle');
                 }
+                if (user.deleted) {
+                    errorMsg = 'title_accountDeleted';
+                    warnings.addSevere('title_accountDeleted');
+                }
+
+                // Error message below AK input
+                this.loginStore.passcodeOrPassphraseValidationMessageText = errorMsg;
+
+                telemetry.login.loginFail();
             });
     };
 
@@ -168,60 +201,92 @@ class Login extends Component {
         }
     };
 
+    usernameHandleKeyPress = e => {
+        if (e.key === '@') {
+            telemetry.login.onLoginWithEmail();
+        }
+        this.handleKeyPress(e);
+    };
+
     onAKRef = ref => {
         this.akRef = ref;
     };
 
     getWelcomeBlock = () => {
         return (
-            <div className="welcome-back-wrapper">
-                <div className="welcome-back" onClick={this.unsetLastUser}>
-                    <div className="overflow ">
-                        {t('title_welcomeBack')}&nbsp;
-                        <strong>
-                            {this.loginStore.lastAuthenticatedUser.firstName ||
-                                this.loginStore.lastAuthenticatedUser.username}
-                        </strong>
-                    </div>
-                    <div className="subtitle">
-                        <div className="overflow">
-                            <T k="button_changeUserDesktop">
-                                {{
-                                    username:
-                                        this.loginStore.lastAuthenticatedUser
-                                            .firstName ||
-                                        this.loginStore.lastAuthenticatedUser
-                                            .username
-                                }}
-                            </T>
-                        </div>
-                    </div>
-                </div>
+            <div className="welcome-back">
+                <T k="title_welcomeBackFirstnameExclamation" tag="h2" className="heading">
+                    {{
+                        firstName:
+                            this.loginStore.lastAuthenticatedUser.firstName ||
+                            this.loginStore.lastAuthenticatedUser.username
+                    }}
+                </T>
+                <T k="title_switchUser" tag="div" className="subtitle">
+                    {{
+                        username:
+                            this.loginStore.lastAuthenticatedUser.firstName ||
+                            this.loginStore.lastAuthenticatedUser.username,
+                        switchUser: text => {
+                            return (
+                                <a className="clickable" onClick={this.unsetLastUser}>
+                                    {text}
+                                </a>
+                            );
+                        }
+                    }}
+                </T>
             </div>
         );
     };
+
     render() {
         return (
-            <div className="app-root">
+            <div className="login">
                 <FullCoverLoader show={this.loginStore.busy} />
-                <div className="login">
-                    <img
-                        alt="Peerio logo"
-                        className="logo"
-                        src="static/img/logo-mark.svg"
-                    />
-                    <PoweredByLogin />
-                    {this.loginStore.lastAuthenticatedUser
-                        ? this.getWelcomeBlock()
-                        : ''}
-                    <div className="login-form">
-                        <div
-                            className={css('title', {
-                                banish: this.loginStore.lastAuthenticatedUser
-                            })}
-                        >
-                            {t('title_login')}
+                <div className="mock-ui-container">
+                    <div className="mock-app-ui">
+                        <div className="row top">
+                            <Mock.Line shade="verydark" width={1} className="tall" />
+                            <Mock.Line shade="verydark" width={1} className="tall" />
                         </div>
+
+                        <div className="row profile">
+                            <Mock.Avatar />
+                            <div className="profile-text">
+                                <div className="lines-container">
+                                    <Mock.Line shade="medium" width={3} className="tall" />
+                                    <Mock.Line shade="light" width={2} />
+                                    <Mock.Line shade="light" width={3} />
+                                </div>
+
+                                <div className="lines-container">
+                                    <Mock.Line shade="medium" width={3} className="tall" />
+                                    <Mock.Line shade="light" width={6} />
+                                    <Mock.Line shade="light" width={3} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row icons">
+                            <MaterialIcon icon="star" className="gold" />
+                            <MaterialIcon icon="question_answer" />
+                        </div>
+                    </div>
+                </div>
+                <div className="real-ui-container">
+                    <div className="real-ui-content-container">
+                        <img
+                            alt="Peerio logo"
+                            className="logo"
+                            src="static/img/logo-withtext.svg"
+                        />
+                        {this.loginStore.lastAuthenticatedUser ? (
+                            this.getWelcomeBlock()
+                        ) : (
+                            <h2 className="heading">{t('title_welcomeBackPeriod')}</h2>
+                        )}
+                        <PoweredByLogin />
                         <ValidatedInput
                             label={t('title_username')}
                             name="username"
@@ -229,19 +294,20 @@ class Login extends Component {
                             lowercase="true"
                             store={this.loginStore}
                             validator={validators.usernameLogin}
-                            onKeyPress={this.handleKeyPress}
+                            onKeyPress={this.usernameHandleKeyPress}
                             className={css({
                                 banish: this.loginStore.lastAuthenticatedUser
                             })}
                             theme="dark"
+                            telemetry={{
+                                item: 'USERNAME',
+                                location: 'SIGN_IN',
+                                sublocation: 'SIGN_IN'
+                            }}
                         />
                         <div className="password">
                             <ValidatedInput
-                                type={
-                                    this.loginStore.passwordVisible
-                                        ? 'text'
-                                        : 'password'
-                                }
+                                type={this.loginStore.passwordVisible ? 'text' : 'password'}
                                 label={t('title_AccountKey')}
                                 position="1"
                                 store={this.loginStore}
@@ -250,6 +316,13 @@ class Login extends Component {
                                 onKeyPress={this.handleKeyPress}
                                 ref={this.onAKRef}
                                 theme="dark"
+                                telemetry={{
+                                    item: 'ACCOUNT_KEY',
+                                    location: 'SIGN_IN',
+                                    sublocation: this.loginStore.lastAuthenticatedUser
+                                        ? 'WELCOME_BACK'
+                                        : 'SIGN_IN'
+                                }}
                             />
                             <Button
                                 icon="visibility"
@@ -259,28 +332,26 @@ class Login extends Component {
                                         ? t('title_hideAccountKey')
                                         : t('title_showAccountKey')
                                 }
-                                tooltipPosition="right"
+                                tooltipPosition="top"
                                 onClick={this.togglePasswordVisibility}
                             />
                         </div>
-                        {/* <Dropdown value={languageStore.language}
-                                  options={languageStore.translationLangsDataSource}
-                                  onChange={languageStore.changeLanguage} />
-                        */}
-                    </div>
-                    <Button
-                        className="login-button"
-                        label={t('button_login')}
-                        onClick={this.onLoginClick}
-                        disabled={this.loginStore.hasErrors}
-                        theme="affirmative"
-                    />
+                        <T k="title_whereToFind" className="find-ak" />
+                        <div className="login-button-container">
+                            <Button
+                                label={t('button_login')}
+                                onClick={this.onLoginClick}
+                                disabled={this.loginStore.hasErrors}
+                                theme="affirmative"
+                            />
+                        </div>
 
-                    <SignupLink />
+                        <SignupLink />
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-module.exports = Login;
+export default Login;

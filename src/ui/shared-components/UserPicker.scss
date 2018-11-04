@@ -75,6 +75,11 @@ $userlist-maxwidth: 608px; // $userpicker-maxwidth - $userpicker-margin-large
     overflow: hidden;
     font-size: 14px;
     text-overflow: ellipsis;
+
+    .legend {
+      font-size: 12px;
+      font-style: italic;
+    }
   }
 
   .user-list-container {

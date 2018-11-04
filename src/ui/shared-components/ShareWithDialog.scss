@@ -25,6 +25,17 @@ $list-header-height: 48px;
     flex-shrink: 0;
     width: calc(100% - 48px); // 2x $margin-large
     margin: 0 $margin-large $margin-large;
+
+    .p-input {
+      height: 48px;
+      width: 100%;
+      margin: 0 $margin-large;
+      border-radius: 24px;
+
+      .hint-or-error {
+        display: none;
+      }
+    }
   }
 
   .chat-list-container {
@@ -78,6 +89,15 @@ $list-header-height: 48px;
 
     .p-list-item {
       min-height: 24px;
+      &.selected {
+        background: $background-hover-accent;
+      }
+    }
+  }
+
+  .p-list-item {
+    &.selected {
+      background: $background-hover-accent;
     }
   }
 

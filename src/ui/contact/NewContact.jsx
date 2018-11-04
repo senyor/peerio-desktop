@@ -9,7 +9,10 @@ const { contactStore, User, warnings } = require('peerio-icebear');
 const UserSearchError = require('~/whitelabel/components/UserSearchError');
 const urls = require('peerio-icebear').config.translator.urlMap;
 
+const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
+const beaconStore = require('~/stores/beacon-store').default;
+const Beacon = require('~/ui/shared-components/Beacon').default;
 
 @observer
 class NewContact extends React.Component {
@@ -18,6 +21,7 @@ class NewContact extends React.Component {
     @observable suggestInviteEmail = '';
     @observable waiting = false;
     @observable isInviteView = false;
+    @observable beaconTimeout;
 
     @computed
     get showSearchError() {
@@ -29,13 +33,33 @@ class NewContact extends React.Component {
     isInviteView = false;
 
     componentWillMount() {
-        this.isInviteView =
-            routerStore.currentRoute === routerStore.ROUTES.newInvite;
+        this.isInviteView = routerStore.currentRoute === routerStore.ROUTES.newInvite;
+
+        if (!contactStore.contacts.length) {
+            beaconStore.addBeacons('search');
+        }
+
+        if (uiStore.firstLogin) {
+            beaconStore.addBeacons('files');
+            beaconStore.queueIncrement(8000, 'search');
+        }
     }
+
     componentWillUpdate() {
-        this.isInviteView =
-            routerStore.currentRoute === routerStore.ROUTES.newInvite;
+        if (this.beaconTimeout) {
+            clearTimeout(this.beaconTimeout);
+        }
+
+        this.isInviteView = routerStore.currentRoute === routerStore.ROUTES.newInvite;
     }
+
+    componentWillUnmount() {
+        clearTimeout(this.beaconTimeout);
+        this.beaconTimeout = null;
+        beaconStore.clearBeacons();
+        beaconStore.clearIncrementQueue();
+    }
+
     // Don't use onKeyUp - text change fires earlier
     handleKeyDown = async e => {
         if (e.key === 'Enter' && this.query !== '') {
@@ -48,11 +72,15 @@ class NewContact extends React.Component {
     handleTextChange(newVal) {
         this.notFound = false;
         this.query = newVal.toLocaleLowerCase().trim();
-    }
 
-    onInputMount(input) {
-        if (!input) return;
-        input.focus();
+        // Beacon management
+        if (beaconStore.activeBeacon === 'search') {
+            beaconStore.clearBeacons();
+        }
+
+        if (uiStore.firstLogin && !beaconStore.beaconsInQueue.length) {
+            beaconStore.queueBeacons('files', 8000);
+        }
     }
 
     tryAdd = async () => {
@@ -61,10 +89,7 @@ class NewContact extends React.Component {
         this.suggestInviteEmail = '';
         this.notFound = false;
 
-        const c = await contactStore.whitelabel.getContact(
-            this.query,
-            'addcontact'
-        );
+        const c = await contactStore.whitelabel.getContact(this.query, 'addcontact');
 
         if (c.notFound || c.isHidden) {
             this.notFound = true;
@@ -77,18 +102,13 @@ class NewContact extends React.Component {
         } else {
             this.query = '';
             contactStore.getContactAndSave(c.username);
-            warnings.add(
-                t('title_contactAdded', { name: c.fullNameAndUsername })
-            );
+            warnings.add(t('title_contactAdded', { name: c.fullNameAndUsername }));
         }
         this.waiting = false;
     };
 
     invite = context => {
-        contactStore.invite(
-            this.isInviteView ? this.query : this.suggestInviteEmail,
-            context
-        );
+        contactStore.invite(this.isInviteView ? this.query : this.suggestInviteEmail, context);
         this.suggestInviteEmail = '';
         this.notFound = false;
         if (this.isInviteView) this.query = '';
@@ -143,11 +163,7 @@ class NewContact extends React.Component {
                 <div className="contacts-view create-new-chat user-picker">
                     <div className="invite-form">
                         {this.isInviteView ? (
-                            <T
-                                k="title_contactZeroState"
-                                className="title"
-                                tag="div"
-                            />
+                            <T k="title_contactZeroState" className="title" tag="div" />
                         ) : null}
 
                         <T
@@ -161,48 +177,43 @@ class NewContact extends React.Component {
                         />
 
                         <div className="message-search-wrapper">
-                            <div className="new-chat-search">
-                                <MaterialIcon icon="search" />
-                                <div className="chip-wrapper">
-                                    <Input
-                                        innerRef={this.onInputMount}
-                                        placeholder={t(
-                                            this.isInviteView
-                                                ? 'title_enterEmail'
-                                                : 'title_userSearch'
+                            <Beacon
+                                name="search"
+                                type="area"
+                                arrowPosition="top"
+                                arrowDistance={75}
+                                offsetX={168}
+                                offsetY={12}
+                            >
+                                <div className="new-chat-search">
+                                    <MaterialIcon icon="search" />
+                                    <div className="chip-wrapper">
+                                        <Input
+                                            placeholder={t(
+                                                this.isInviteView
+                                                    ? 'title_enterEmail'
+                                                    : 'title_userSearch'
+                                            )}
+                                            value={this.query}
+                                            onChange={this.handleTextChange}
+                                            onKeyDown={this.handleKeyDown}
+                                            autoFocus
+                                        />
+                                    </div>
+                                    <Button
+                                        className={css({ hide: hideButton })}
+                                        label={t(
+                                            this.isInviteView ? 'button_invite' : 'button_add'
                                         )}
-                                        value={this.query}
-                                        onChange={this.handleTextChange}
-                                        onKeyDown={this.handleKeyDown}
+                                        onClick={this.isInviteView ? this.invite : this.tryAdd}
+                                        theme="affirmative"
                                     />
+                                    {this.waiting && <ProgressBar circular theme="small" />}
                                 </div>
-                                <Button
-                                    className={css({ hide: hideButton })}
-                                    label={t(
-                                        this.isInviteView
-                                            ? 'button_invite'
-                                            : 'button_add'
-                                    )}
-                                    onClick={
-                                        this.isInviteView
-                                            ? this.invite
-                                            : this.tryAdd
-                                    }
-                                    theme="affirmative"
-                                />
-                                {this.waiting && (
-                                    <ProgressBar
-                                        type="circular"
-                                        mode="indeterminate"
-                                        theme="small"
-                                    />
-                                )}
-                            </div>
+                            </Beacon>
                             {this.showSearchError ? (
                                 <UserSearchError
-                                    userNotFound={
-                                        this.notFound ? this.query : null
-                                    }
+                                    userNotFound={this.notFound ? this.query : null}
                                     suggestInviteEmail={this.suggestInviteEmail}
                                     onInvite={this.invite}
                                     isChannel={routerStore.isNewChannel}
@@ -212,30 +223,20 @@ class NewContact extends React.Component {
                         <div className="invite-elsewhere">
                             <T k="title_shareSocial" tag="strong" />
                             <div className="icons">
-                                <Button
-                                    icon="email"
-                                    href={this.getEmailUrl()}
-                                    theme="no-hover"
-                                />
+                                <Button icon="email" href={this.getEmailUrl()} theme="no-hover" />
                                 <a
                                     className="twitter-share-button"
                                     href={this.getTwitterUrl()}
                                     data-size="large"
                                 >
-                                    <img
-                                        src="./static/img/twitter.png"
-                                        alt="twitter"
-                                    />
+                                    <img src="./static/img/twitter.png" alt="twitter" />
                                 </a>
                                 <a
                                     className="facebook-share-button"
                                     href={this.getFacebookUrl()}
                                     data-size="large"
                                 >
-                                    <img
-                                        src="./static/img/facebook.png"
-                                        alt="twitter"
-                                    />
+                                    <img src="./static/img/facebook.png" alt="twitter" />
                                 </a>
                             </div>
                         </div>

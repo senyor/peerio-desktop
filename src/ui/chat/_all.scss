@@ -64,8 +64,13 @@
       margin: 0;
 
       input {
+        height: 40px;
         padding: 0;
         border-width: 0;
+      }
+
+      .hint-or-error {
+        display: none;
       }
     }
   }
@@ -204,7 +209,6 @@
 @import './Chat';
 @import './NewChannel';
 @import './NewChat';
-@import './ZeroChats';
 @import './components/_ChatComponentsCommon';
 @import './components/ChannelInvite';
 @import './components/ChannelUpgradeOffer';
@@ -224,3 +228,4 @@
 @import './components/UrlPreview';
 @import './components/UrlPreviewConsent';
 @import './components/sidebar/_all';
+@import './components/ZeroChats';

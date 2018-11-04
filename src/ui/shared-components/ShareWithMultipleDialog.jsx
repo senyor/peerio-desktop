@@ -1,17 +1,9 @@
 // @ts-check
 const React = require('react');
-const { observable, computed, action } = require('mobx');
+const { observable, computed, action, values, keys } = require('mobx');
 const { observer } = require('mobx-react');
 const { contactStore, User } = require('peerio-icebear');
-const {
-    Avatar,
-    Dialog,
-    Input,
-    List,
-    ListItem,
-    MaterialIcon,
-    Button
-} = require('peer-ui');
+const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('peer-ui');
 const css = require('classnames');
 const T = require('~/ui/shared-components/T');
 const { t } = require('peerio-translator');
@@ -32,7 +24,7 @@ class ShareWithMultipleDialog extends React.Component {
      * the resolver is set to null, the dialog is hidden.
      *
      * @private
-     * @type {(contactsToShareWith: any[] | null) => void | null}
+     * @type {(contactsToShareWith: ReadonlyArray<any> | null) => void | null}
      */
     @observable.ref resolver;
 
@@ -56,17 +48,16 @@ class ShareWithMultipleDialog extends React.Component {
     }
 
     get existingUsers() {
-        return this.folderWithExistingShare
-            ? this.folderWithExistingShare.otherParticipants
-            : [];
+        return this.folderWithExistingShare ? this.folderWithExistingShare.otherParticipants : [];
     }
 
     filterExisting = c => {
         return !this.existingUsers.find(u => u.username === c.username);
     };
+
     @computed
     get contacts() {
-        const selectedUsernames = this.selectedUsers.keys();
+        const selectedUsernames = keys(this.selectedUsers);
         let ret = contactStore.whitelabel
             .filter(this.query, this.shareContext)
             .filter(c => !c.isDeleted)
@@ -101,9 +92,7 @@ class ShareWithMultipleDialog extends React.Component {
             <div data-username={c.username} key={c.username}>
                 <ListItem
                     className={css({ selected })}
-                    leftIcon={
-                        selected ? 'check_box' : 'check_box_outline_blank'
-                    }
+                    leftIcon={selected ? 'check_box' : 'check_box_outline_blank'}
                     leftContent={<Avatar key="a" contact={c} size="small" />}
                     onClick={this.onContactClick}
                 >
@@ -142,7 +131,7 @@ class ShareWithMultipleDialog extends React.Component {
 
     @action.bound
     share() {
-        this.resolver(this.selectedUsers.values());
+        this.resolver(values(this.selectedUsers));
         this.close();
     }
 
@@ -198,13 +187,12 @@ class ShareWithMultipleDialog extends React.Component {
                     <div className="share-with-contents">
                         <div className="user-search">
                             <MaterialIcon icon="search" />
-                            <div className="chip-wrapper">
-                                <Input
-                                    placeholder={t('title_userSearch')}
-                                    value={this.query}
-                                    onChange={this.handleTextChange}
-                                />
-                            </div>
+
+                            <Input
+                                placeholder={t('title_userSearch')}
+                                value={this.query}
+                                onChange={this.handleTextChange}
+                            />
                         </div>
                         <div className="chat-list-container">
                             <div className="list-dms-container">
@@ -212,18 +200,12 @@ class ShareWithMultipleDialog extends React.Component {
                                     <T k="title_contacts" />
                                     &nbsp;({this.contacts.length})
                                 </div>
-                                <List
-                                    className="list-chats list-contacts"
-                                    clickable
-                                >
+                                <List className="list-chats list-contacts" clickable>
                                     {this.contacts.map(this.renderContact)}
                                 </List>
                             </div>
                         </div>
-                        {item &&
-                        item.isFolder &&
-                        item.isShared &&
-                        this.existingUsers.length ? (
+                        {item && item.isFolder && item.isShared && this.existingUsers.length ? (
                             <div className="receipt-wrapper">
                                 <Button
                                     label={t('title_viewSharedWith')}
@@ -232,10 +214,7 @@ class ShareWithMultipleDialog extends React.Component {
                                 {this.sharedWithBlock}
                             </div>
                         ) : null}
-                        {item &&
-                        item.isFolder &&
-                        !item.isShared &&
-                        !item.parent.isRoot ? (
+                        {item && item.isFolder && !item.isShared && !item.parent.isRoot ? (
                             <div className="move-to-root-notif p-list-heading">
                                 <MaterialIcon icon="info" />
                                 <T k="title_shareWillMoveToRoot" />

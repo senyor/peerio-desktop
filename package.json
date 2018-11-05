@@ -394,7 +394,7 @@
       "commit-msg": "validate-commit-msg",
       "post-checkout": "[ `which opt` ] && opt --in npm-install --exec \"npm install\"",
       "post-merge": "opt --in npm-install --exec \"npm install\"",
-      "pre-commit": "opt --in lint --exec \"npm run verify\""
+      "pre-commit": "opt --in lint --exec \"npm run verify && npm run test:ts\""
     }
   }
 }

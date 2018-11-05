@@ -283,7 +283,8 @@ export default class Files extends React.Component<FilesProps> {
                         {currentFolder.isRoot &&
                             this.removedFolderNotifVisible &&
                             this.removedFolderNotif}
-                        {currentFolder.convertingToVolume && (
+                        {(currentFolder.convertingToVolume ||
+                            currentFolder.convertingFromFolder) && (
                             <div
                                 className={css('file-ui-subheader', 'row', {
                                     'converting-to-volume': currentFolder.convertingToVolume
@@ -307,6 +308,11 @@ export default class Files extends React.Component<FilesProps> {
                                                 }}
                                             </T>)
                                         </span>
+                                    )}
+                                    {currentFolder.convertingFromFolder && (
+                                        <T k="title_convertingFolderNameToShared">
+                                            {{ folderName: currentFolder.name }}
+                                        </T>
                                     )}
                                 </div>
                                 <ProgressBar

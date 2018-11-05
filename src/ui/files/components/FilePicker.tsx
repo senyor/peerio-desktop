@@ -36,7 +36,6 @@ export default class FilePicker extends React.Component<FilePickerProps> {
     }
 
     componentWillUnmount() {
-        fileStore.folderStore.currentFolder = fileStore.folderStore.root;
         fileStore.searchQuery = '';
     }
 

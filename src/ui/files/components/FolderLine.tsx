@@ -156,6 +156,7 @@ export default class FolderLine extends React.Component<FolderLineProps> {
                                 onMenuClick={this.onMenuClick}
                                 onMenuHide={this.onMenuHide}
                                 onActionInProgress={this.onActionInProgress}
+                                downloadVisible
                             />
                         </div>
                     )}

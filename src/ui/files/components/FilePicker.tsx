@@ -129,7 +129,13 @@ export default class FilePicker extends React.Component<FilePickerProps> {
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             if (f.isLegacy && this.props.hideLegacy) continue;
-
+            if (
+                f.isFolder &&
+                fileStore.folderStore.currentFolder.isRoot &&
+                !fileStore.folderStore.currentFolder.isShared &&
+                f.convertingToVolume
+            )
+                continue;
             // TODO: re-enable checkbox when folder sharing is allowed
             items.push(
                 f.isFolder ? (

@@ -21,7 +21,7 @@ class ShareToChatProgress extends React.Component {
         const uploads = this.props.uploadQueue || [];
         const folders = this.props.folderShareQueue || [];
         if (!uploads.length && !folders.length) return null;
-        const item = uploads[0] || folders[0];
+        const item = (uploads.length && uploads[0]) || (folders.length && folders[0]); // mobx complains when accessing array index that doesn't exist
         const queued = uploads.length + folders.length - 1;
         const { progress, progressMax, progressPercentage } = item;
         const uploadProgressPercentage = progress ? Math.floor((progress / progressMax) * 100) : 0;

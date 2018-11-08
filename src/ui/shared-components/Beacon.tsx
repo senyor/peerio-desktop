@@ -7,6 +7,7 @@ import { t } from 'peerio-translator';
 import beaconStore from '~/stores/beacon-store';
 
 const appRoot = document.getElementById('root');
+const BEACON_COLOR = '#5461cc';
 
 interface BeaconBaseProps {
     name: string;
@@ -20,7 +21,6 @@ interface BeaconBaseProps {
 
 export interface SpotBeaconProps extends BeaconBaseProps {
     type: 'spot';
-    circleContent?: any; // duplicates child content if this prop is not provided
     position?: 'right' | 'left'; // position of the bubble
     size?: number; // force a certain bubble size
     onContentClick?: () => void;
@@ -43,6 +43,7 @@ interface RectanglePosition {
     marginLeft?: string | number;
     paddingRight?: string | number;
     paddingLeft?: string | number;
+    background?: string;
 }
 
 @observer
@@ -190,54 +191,80 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
     @observable rectangleRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     @computed
-    get rectanglePosition(): RectanglePosition | null {
-        const ret = {} as RectanglePosition;
-
+    get rectangleDimensions() {
         let rectHeight: number = 0;
         let rectWidth: number = 0;
+
         if (this.rectangleRef && this.rectangleRef.current) {
             const rectangle = this.rectangleRef.current.getBoundingClientRect();
             rectHeight = rectangle.height;
             rectWidth = rectangle.width;
         }
 
+        return { rectHeight, rectWidth };
+    }
+
+    @computed
+    get rectanglePosition(): RectanglePosition | null {
+        const ret = {} as RectanglePosition;
+        const { rectHeight, rectWidth } = this.rectangleDimensions;
+
         /*
             For SpotBeacon, rectangle needs to be positioned very precisely based on own size and circle size.
             There's a lot of offsets based on half of the rectangle height, or half the circle diameter.
+            There's also the "punchout" effect, created by placing a CSS punchout of the rectangle
+            exactly in the same location as the circle.
         */
         if (this.props.type === 'spot') {
             const rectangleOffset = rectHeight / 2;
-            const circleOffset = this.circleSize / 2;
+            const circleRadius = this.circleSize / 2;
+            const punchoutX = this.props.position === 'right' ? '100%' : 0;
+            let punchoutY;
 
             switch (this.slicePosition) {
                 case 1:
                     ret.top = '0';
-                    ret.marginTop = circleOffset;
+                    ret.marginTop = circleRadius;
+                    punchoutY = '0px';
                     break;
                 case 2:
                     ret.top = '0';
+                    punchoutY = `${circleRadius}px`;
                     break;
                 case 3:
                 default:
                     ret.top = '50%';
                     ret.marginTop = -rectangleOffset;
+                    punchoutY = '50%';
                     break;
                 case 4:
                     ret.bottom = '0';
+                    punchoutY = `${rectHeight - circleRadius}px`;
                     break;
                 case 5:
                     ret.bottom = '0';
-                    ret.marginBottom = circleOffset;
+                    ret.marginBottom = circleRadius;
+                    punchoutY = '100%';
                     break;
             }
 
             if (this.props.position === 'right') {
-                ret.paddingRight = circleOffset;
-                ret.marginRight = -circleOffset;
+                ret.paddingRight = circleRadius;
+                ret.marginRight = -circleRadius;
             } else {
-                ret.paddingLeft = circleOffset;
-                ret.marginLeft = -circleOffset;
+                ret.paddingLeft = circleRadius;
+                ret.marginLeft = -circleRadius;
             }
+
+            /*
+                The highlight bubble itself is a transparent circle. However, since it sits on
+                top of the rectangle, the corner of the rectangle will peek through the bubble.
+                To solve this, we take advantage of a funny trick with `radial-gradient`, where
+                we set a gradient from transparent to $peerio-purple, over a span of 1px. This
+                has the effect of making a transparent circle with a radius of `circleRadius`.
+            */
+            ret.background = `radial-gradient(circle at ${punchoutX} ${punchoutY}, transparent ${circleRadius -
+                1}px, ${BEACON_COLOR} ${circleRadius}px)`;
         } else {
             const arrowPos = this.props.arrowPosition || 'bottom';
             const arrowDistance = this.props.arrowDistance || 0;
@@ -357,7 +384,6 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
                     <Bubble
                         position={this.positionClasses}
                         size={this.circleSize}
-                        content={this.props.circleContent || this.props.children}
                         onClick={this.contentClick}
                     />
                 ) : (
@@ -392,7 +418,6 @@ interface BubbleProps {
     classNames?: string;
     position: string;
     size: number;
-    content: any;
     onClick?: () => void;
 }
 
@@ -401,14 +426,16 @@ class Bubble extends React.Component<BubbleProps> {
     render() {
         return (
             <div
-                className={css('circle', this.props.classNames, this.props.position)}
+                className={css('circle', this.props.classNames, this.props.position, {
+                    clickable: !!this.props.onClick
+                })}
                 style={{
                     height: this.props.size,
                     width: this.props.size
                 }}
                 onClick={this.props.onClick}
             >
-                <div className="circle-content">{this.props.content}</div>
+                <div className="circle-inner" />
             </div>
         );
     }

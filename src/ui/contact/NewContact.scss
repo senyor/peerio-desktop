@@ -4,6 +4,8 @@
   .contacts-view.create-new-chat {
     @extend %flex-align-center;
     justify-content: space-between;
+    z-index: 1;
+    background: transparent;
   }
 
   .invite-form {

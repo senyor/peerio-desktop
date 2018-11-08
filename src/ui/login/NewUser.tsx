@@ -7,6 +7,7 @@ import { t } from 'peerio-translator';
 import T from '~/ui/shared-components/T';
 import * as telemetry from '~/telemetry';
 import config from '~/config';
+import NewAccountButton from '~/whitelabel/components/NewAccountButton';
 
 interface NewUserProps {
     onClose: () => void;
@@ -50,9 +51,7 @@ export default class NewUser extends React.Component<NewUserProps> {
                         <T k="title_newUserWelcomeDescription" tag="p" className="guide-text" />
 
                         <div className="buttons-container">
-                            <Button theme="affirmative" onClick={this.goToSignup}>
-                                {t('button_CreateAccount')}
-                            </Button>
+                            <NewAccountButton onClick={this.goToSignup} />
                             <Button theme="affirmative secondary" onClick={this.goToLogin}>
                                 {t('button_login')}
                             </Button>

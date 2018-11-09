@@ -23,6 +23,9 @@ interface FileActionsProps {
     /** is the entire action menu disabled? */
     disabled?: boolean;
 
+    /** Disable move action */
+    disableMove?: boolean;
+
     onMenuClick?: () => void;
     onMenuHide?: () => void;
 
@@ -121,7 +124,7 @@ export default class FileActions extends React.Component<FileActionsProps> {
                         onClick={this.downloadFile}
                         disabled={!fileDownloadUIEnabled(file)}
                     />
-                    {isFileOrFolderMoveable(file) ? (
+                    {!this.props.disableMove && isFileOrFolderMoveable(file) ? (
                         <MenuItem
                             caption={t('button_move')}
                             className="custom-icon-hover-container"

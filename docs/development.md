@@ -11,6 +11,10 @@ Assuming you have nodejs and npm installed.
 By default client will connect to staging server.
 If you want to use a different server, run `PEERIO_STAGING_SOCKET_SERVER=\"wss://your_url\" npm run start-dev`.
 
+## Autologin
+
+In order to perform automatic login and/or navigation to a specific route you are working on,
+copy `autologin.example.json` to `autologin.json`(gitignored) in the repository root and edit it to your liking.
 
 ## Linking the SDK (icebear)
 

@@ -172,7 +172,11 @@ export default class FilePicker extends React.Component<FilePickerProps> {
                         <Search onChange={this.handleSearch} query={fileStore.searchQuery} />
                         {fileStore.searchQuery ? this.searchResultsHeader : this.breadCrumbsHeader}
                         <div className="file-table-wrapper">
-                            <div className="file-table-body" ref={this.setScrollerRef}>
+                            <div
+                                className="file-table-body"
+                                ref={this.setScrollerRef}
+                                onScroll={this.enqueueCheck}
+                            >
                                 {items}
                             </div>
                         </div>

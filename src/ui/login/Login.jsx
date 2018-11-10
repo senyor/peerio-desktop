@@ -17,6 +17,7 @@ const routerStore = require('~/stores/router-store');
 const updaterStore = require('~/stores/updater-store');
 const uiStore = require('~/stores/ui-store');
 
+import WhereToFindAk from '~/whitelabel/components/WhereToFindAk';
 const PoweredByLogin = require('~/whitelabel/components/PoweredByLogin');
 const SignupLink = require('~/whitelabel/components/SignupLink');
 const { validators } = validation; // use common validation from core
@@ -336,7 +337,7 @@ class Login extends Component {
                                 onClick={this.togglePasswordVisibility}
                             />
                         </div>
-                        <T k="title_whereToFind" className="find-ak" />
+                        <WhereToFindAk />
                         <div className="login-button-container">
                             <Button
                                 label={t('button_login')}

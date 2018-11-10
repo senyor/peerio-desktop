@@ -139,6 +139,6 @@ try {
     console.log(err);
 }
 
-cfg.enableVolumes = true;
+cfg.enableVolumes = false;
 
 export default cfg;

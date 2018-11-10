@@ -328,6 +328,7 @@ class InlineFile extends React.Component<InlineFileProps> {
                                     file={file}
                                     onDelete={this.deleteFile}
                                     onUnshare={this.unshareFile}
+                                    disableMove
                                 />
                             </div>
                             {!file.cachingFailed && file.downloading ? (

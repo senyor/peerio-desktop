@@ -129,7 +129,13 @@ export default class FilePicker extends React.Component<FilePickerProps> {
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             if (f.isLegacy && this.props.hideLegacy) continue;
-
+            if (
+                f.isFolder &&
+                fileStore.folderStore.currentFolder.isRoot &&
+                !fileStore.folderStore.currentFolder.isShared &&
+                f.convertingToVolume
+            )
+                continue;
             // TODO: re-enable checkbox when folder sharing is allowed
             items.push(
                 f.isFolder ? (
@@ -166,7 +172,11 @@ export default class FilePicker extends React.Component<FilePickerProps> {
                         <Search onChange={this.handleSearch} query={fileStore.searchQuery} />
                         {fileStore.searchQuery ? this.searchResultsHeader : this.breadCrumbsHeader}
                         <div className="file-table-wrapper">
-                            <div className="file-table-body" ref={this.setScrollerRef}>
+                            <div
+                                className="file-table-body"
+                                ref={this.setScrollerRef}
+                                onScroll={this.enqueueCheck}
+                            >
                                 {items}
                             </div>
                         </div>

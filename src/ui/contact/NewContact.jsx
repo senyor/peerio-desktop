@@ -162,10 +162,6 @@ class NewContact extends React.Component {
             <div className="contacts new-contact">
                 <div className="contacts-view create-new-chat user-picker">
                     <div className="invite-form">
-                        {this.isInviteView ? (
-                            <T k="title_contactZeroState" className="title" tag="div" />
-                        ) : null}
-
                         <T k="title_teamUp" className="title" tag="div" />
 
                         <div className="message-search-wrapper">

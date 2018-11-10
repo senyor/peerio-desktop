@@ -181,16 +181,14 @@ export default class FolderLine extends React.Component<FolderLineProps> {
                         <div className="file-owner">
                             <T k="title_sharingCount">
                                 {{
-                                    count:
-                                        folder.convertingFromFolder.progressMax -
-                                        folder.convertingFromFolder.progress
+                                    count: progressMax - progress
                                 }}
                             </T>
                         </div>
 
-                        <div className="file-uploaded" />
+                        {/* <div className="file-uploaded" />
                         <div className="file-size" />
-                        <div className="file-actions" />
+                        <div className="file-actions" /> */}
                     </div>
                 )}
 

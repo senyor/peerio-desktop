@@ -125,4 +125,11 @@
   .p-switch {
     margin-bottom: $margin-default;
   }
+
+  .attributions {
+    font-size: 80%;
+    .emojione {
+      transform: scale(0.8);
+    }
+  }
 }

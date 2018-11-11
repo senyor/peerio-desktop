@@ -43,6 +43,10 @@ class About extends React.Component {
                         />
                     </div>
                 </section>
+                <section className="attributions">
+                    Emoji support by <span className="emojione emojione-32-nature _1f984" />{' '}
+                    <a href="https://emojione.com">EmojiOne</a>.
+                </section>
 
                 <LegalDialog content="terms" ref={this.legalDialogRef} />
             </div>

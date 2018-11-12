@@ -66,7 +66,7 @@ export default class MembersSection extends React.Component<MembersSectionProps>
     userMenu(username: string) {
         const menuItems = [];
 
-        ELEMENTS.membersSection.userMenuItems().forEach(item => {
+        ELEMENTS.membersSection.userMenuItems(username).forEach(item => {
             menuItems.push(
                 <MenuItem
                     key={item.key}

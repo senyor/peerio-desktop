@@ -236,7 +236,12 @@ class ELEMENTS {
         };
 
         const obj = {
-            userMenuItems: () => [itemMakeAdmin, itemDeleteMember]
+            /*
+                The `username` argument is needed for the MC version of the same function, so we
+                need to accept it here even if it doesn't get used in the non-whitelabel version.
+            */
+            // eslint-disable-next-line no-unused-vars
+            userMenuItems: username => [itemMakeAdmin, itemDeleteMember]
         };
 
         if (

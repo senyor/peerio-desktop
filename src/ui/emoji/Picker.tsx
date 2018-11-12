@@ -4,8 +4,7 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 import { MaterialIcon } from 'peer-ui';
 import _ from 'lodash';
-import { t } from 'peerio-translator';
-import { User } from 'peerio-icebear';
+import { User, t } from 'peerio-icebear';
 
 import {
     Emoji,

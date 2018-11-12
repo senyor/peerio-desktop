@@ -2,8 +2,7 @@ const React = require('react');
 const { computed } = require('mobx');
 const { observer } = require('mobx-react');
 
-const { t } = require('peerio-translator');
-const { chatStore, chatInviteStore } = require('peerio-icebear');
+const { chatStore, chatInviteStore, t } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 
 const css = require('classnames');
@@ -11,7 +10,7 @@ const FlipMove = require('react-flip-move');
 const { List, ListItem, Tooltip } = require('peer-ui');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 const { getAttributeInParentChain } = require('~/helpers/dom');
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 
 @observer
 class PatientList extends React.Component {

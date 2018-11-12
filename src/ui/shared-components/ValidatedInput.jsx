@@ -16,12 +16,11 @@
 import * as telemetry from '~/telemetry';
 const React = require('react');
 const _ = require('lodash');
-const { socket } = require('peerio-icebear'); // eslint-disable-line
+const { socket, t } = require('peerio-icebear');
 const { computed, reaction, when, isObservableProp, observable, action } = require('mobx');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
 const { Input } = require('peer-ui');
-const { t } = require('peerio-translator');
 const OrderedFormStore = require('~/stores/ordered-form-store');
 const css = require('classnames');
 

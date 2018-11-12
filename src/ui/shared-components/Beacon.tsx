@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { action, computed, observable, reaction, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import beaconStore from '~/stores/beacon-store';
 
 const appRoot = document.getElementById('root');
@@ -349,8 +349,9 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
     }
 
     beaconContent() {
-        const title = this.props.title || t(`title_${this.props.name}_beacon`);
-        const description = this.props.description || t(`description_${this.props.name}_beacon`);
+        const title: string = this.props.title || t(`title_${this.props.name}_beacon` as any);
+        const description: string =
+            this.props.description || t(`description_${this.props.name}_beacon` as any);
 
         return (
             <div

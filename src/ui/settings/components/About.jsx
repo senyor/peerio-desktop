@@ -2,9 +2,8 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button } = require('peer-ui');
-const { t } = require('peerio-translator');
 const version = require('electron').remote.app.getVersion();
-const { socket } = require('peerio-icebear');
+const { socket, t } = require('peerio-icebear');
 
 const Copyright = require('~/whitelabel/components/Copyright');
 const PoweredBySettings = require('~/whitelabel/components/PoweredBySettings');

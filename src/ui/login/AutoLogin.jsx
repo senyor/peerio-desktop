@@ -2,8 +2,8 @@ const React = require('react');
 const { Button } = require('peer-ui');
 const { observer } = require('mobx-react');
 const autologin = require('~/helpers/autologin');
-const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
+const { t } = require('peerio-icebear');
+const T = require('~/ui/shared-components/T').default;
 
 @observer
 class AutoLogin extends React.Component {

@@ -1,9 +1,8 @@
 const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore } = require('peerio-icebear');
+const { chatStore, t } = require('peerio-icebear');
 const UserPicker = require('~/ui/shared-components/UserPicker');
-const { t } = require('peerio-translator');
 const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
 const ELEMENTS = require('~/whitelabel/helpers/elements');
 

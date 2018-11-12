@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import routerStore from '~/stores/router-store';
 import uiStore from '~/stores/ui-store';
 import { Button } from 'peer-ui';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import T from '~/ui/shared-components/T';
 import * as telemetry from '~/telemetry';
 import config from '~/config';

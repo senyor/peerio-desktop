@@ -3,8 +3,7 @@ import { observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 
 import { Divider, Menu, MenuItem, Dialog } from 'peer-ui';
-import { chatStore, fileStore } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { chatStore, fileStore, t } from 'peerio-icebear';
 
 import ShareWithMultipleDialog from '~/ui/shared-components/ShareWithMultipleDialog';
 import T from '~/ui/shared-components/T';

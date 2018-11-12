@@ -1,12 +1,13 @@
 const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
-
 const css = require('classnames');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
-const { getContactByEvent } = require('~/helpers/icebear-dom');
+
+const { t } = require('peerio-icebear');
 const { Avatar, Dialog, List, ListItem, Button } = require('peer-ui');
+
+const T = require('~/ui/shared-components/T').default;
+const { getContactByEvent } = require('~/helpers/icebear-dom');
 
 /**
  * onSelectContact

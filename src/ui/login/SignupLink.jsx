@@ -1,8 +1,8 @@
 import { login } from '~/telemetry';
 const React = require('react');
 const { Link } = require('react-router');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T').default;
+const { t } = require('peerio-icebear');
 const { observer } = require('mobx-react');
 
 @observer

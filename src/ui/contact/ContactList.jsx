@@ -2,9 +2,8 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { Avatar, Dropdown, MaterialIcon } = require('peer-ui');
 const { Button, Input, List, ListItem } = require('peer-ui');
-const { contactStore, chatStore } = require('peerio-icebear');
-const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
+const { contactStore, chatStore, t } = require('peerio-icebear');
+const T = require('~/ui/shared-components/T').default;
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const routerStore = require('~/stores/router-store');
 

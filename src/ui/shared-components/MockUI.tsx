@@ -68,7 +68,8 @@ export class ChatEntry extends React.Component<ChatEntryProps> {
     get lines() {
         return _.isArray(this.props.lines)
             ? this.props.lines.map((line, i) => {
-                  return <Line key={`line-${i}`} shade="light" width={line} />; // eslint-disable-line
+                  // eslint-disable-next-line react/no-array-index-key
+                  return <Line key={`line-${i}`} shade="light" width={line} />;
               })
             : this.props.lines;
     }

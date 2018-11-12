@@ -2,8 +2,7 @@ import React from 'react';
 import { observable, computed, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { Dialog, Input } from 'peer-ui';
-import { t } from 'peerio-translator';
-import { fileStore } from 'peerio-icebear';
+import { fileStore, t } from 'peerio-icebear';
 import { FileFolder } from 'peerio-icebear/dist/models';
 
 // As of 22/08/18, only folders can be renamed, not files, so there's a bit of

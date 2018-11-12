@@ -1,9 +1,8 @@
 const React = require('react');
 const { computed, observable, reaction } = require('mobx');
 const { observer } = require('mobx-react');
-const { User, fileStore } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
+const { User, fileStore, t } = require('peerio-icebear');
+const T = require('~/ui/shared-components/T').default;
 const { Dialog, ProgressBar } = require('peer-ui');
 const EmojiImage = require('~/ui/emoji/Image');
 const electron = require('electron').remote;

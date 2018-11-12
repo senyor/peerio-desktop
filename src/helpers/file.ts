@@ -4,8 +4,7 @@ import path from 'path';
 import util from 'util';
 import _ from 'lodash';
 import sanitize from 'sanitize-filename';
-import { t } from 'peerio-translator';
-import { fileHelpers, errors } from 'peerio-icebear';
+import { fileHelpers, errors, t } from 'peerio-icebear';
 import { File } from 'peerio-icebear/dist/models';
 import { IUploadFolder } from 'peerio-icebear/dist/models/files/file-store';
 

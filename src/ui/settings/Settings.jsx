@@ -1,8 +1,7 @@
 const React = require('react');
 const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { User } = require('peerio-icebear');
-const { t } = require('peerio-translator');
+const { User, t } = require('peerio-icebear');
 const { Button } = require('peer-ui');
 const css = require('classnames');
 const appState = require('~/stores/app-state');

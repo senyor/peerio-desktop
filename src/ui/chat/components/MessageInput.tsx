@@ -8,8 +8,7 @@ import { observer } from 'mobx-react';
 import { debounce } from 'lodash';
 
 import css from 'classnames';
-import { t } from 'peerio-translator';
-import { fileStore, chatStore, clientApp } from 'peerio-icebear';
+import { fileStore, chatStore, clientApp, t } from 'peerio-icebear';
 import { Button, Menu, MenuItem } from 'peer-ui';
 
 import FilePicker from '~/ui/files/components/FilePicker';

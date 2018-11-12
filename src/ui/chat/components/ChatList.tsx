@@ -5,8 +5,7 @@ import css from 'classnames';
 import FlipMove from 'react-flip-move';
 import _ from 'lodash';
 
-import { t } from 'peerio-translator';
-import { chatStore, chatInviteStore } from 'peerio-icebear';
+import { chatStore, chatInviteStore, t } from 'peerio-icebear';
 import { Button, List, ListItem, MaterialIcon, ProgressBar, Tooltip } from 'peer-ui';
 
 import routerStore from '~/stores/router-store';

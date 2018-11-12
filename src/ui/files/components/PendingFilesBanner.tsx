@@ -1,7 +1,7 @@
 import React from 'react';
 import uiStore from '~/stores/ui-store';
 import { MaterialIcon, Button } from 'peer-ui';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import config from '~/config';
 
 export default function PendingFilesBanner() {

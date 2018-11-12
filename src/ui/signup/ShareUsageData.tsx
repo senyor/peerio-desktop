@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import T from '~/ui/shared-components/T';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import { Button } from 'peer-ui';
 import * as telemetry from '~/telemetry';
 import { SignupStep } from './SignupStepTypes';

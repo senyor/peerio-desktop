@@ -2,8 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { DropTarget, DropTargetSpec } from 'react-dnd';
 
-import { fileStore, warnings } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { fileStore, warnings, t } from 'peerio-icebear';
 
 import FolderLine, { FolderLineProps } from './FolderLine';
 

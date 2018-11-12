@@ -1,8 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const BetterInput = require('~/ui/shared-components/BetterInput');
-const { chatStore, config } = require('peerio-icebear');
-const { t } = require('peerio-translator');
+const { chatStore, config, t } = require('peerio-icebear');
 const ELEMENTS = require('~/whitelabel/helpers/elements');
 
 @observer

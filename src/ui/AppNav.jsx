@@ -5,9 +5,8 @@ const { autorun, observable, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
 
-const { t } = require('peerio-translator');
 const { Avatar, Divider, Menu, MenuHeader, MenuItem } = require('peer-ui');
-const { User, contactStore, chatStore, fileStore } = require('peerio-icebear');
+const { User, contactStore, chatStore, fileStore, t } = require('peerio-icebear');
 
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
 const SignoutDialog = require('~/ui/shared-components/SignoutDialog');
@@ -186,7 +185,8 @@ class AppNav extends React.Component {
 
         return menuContent.map((m, i) => {
             if (m.hidden) return null;
-            if (m.divider) return <Divider key={`divider-${i}`} />; // eslint-disable-line
+            // eslint-disable-next-line react/no-array-index-key
+            if (m.divider) return <Divider key={`divider-${i}`} />;
 
             const value = m.value.toLowerCase();
             const className = m.className ? m.className : value;

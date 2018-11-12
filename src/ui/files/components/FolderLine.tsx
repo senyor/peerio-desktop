@@ -3,8 +3,7 @@ import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
 
-import { t } from 'peerio-translator';
-import { User, contactStore, fileStore } from 'peerio-icebear';
+import { User, contactStore, fileStore, t } from 'peerio-icebear';
 import { Button, Checkbox, CustomIcon, MaterialIcon, ProgressBar } from 'peer-ui';
 
 import ContactProfile from '~/ui/contact/components/ContactProfile';

@@ -1,8 +1,7 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { Button, List, ListItem } = require('peer-ui');
-const { contactStore } = require('peerio-icebear');
-const { t } = require('peerio-translator');
+const { contactStore, t } = require('peerio-icebear');
 const moment = require('moment');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const routerStore = require('~/stores/router-store');

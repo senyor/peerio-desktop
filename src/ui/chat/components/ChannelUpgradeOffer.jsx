@@ -1,10 +1,9 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 const { Button } = require('peer-ui');
-const { t } = require('peerio-translator');
-const { User } = require('peerio-icebear');
+const { User, t } = require('peerio-icebear');
 const config = require('~/config').default;
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 const urls = require('~/config').default.translator.urlMap;
 
 @observer

@@ -2,7 +2,7 @@ import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import T from '~/ui/shared-components/T';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import { Checkbox, Dialog } from 'peer-ui';
 import uiStore from '~/stores/ui-store';
 

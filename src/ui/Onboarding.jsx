@@ -4,9 +4,8 @@ const { observer } = require('mobx-react');
 const css = require('classnames');
 const { MaterialIcon } = require('peer-ui');
 const UsageCloud = require('~/ui/shared-components/UsageCloud');
-const { User } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
+const { User, t } = require('peerio-icebear');
+const T = require('~/ui/shared-components/T').default;
 
 function createOnboardingItem(
     icon,

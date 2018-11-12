@@ -3,7 +3,7 @@ const { observer } = require('mobx-react');
 
 const routerStore = require('~/stores/router-store');
 const { chatStore } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 
 const { Button } = require('peer-ui');
 const PendingDMHeader = require('./PendingDMHeader');

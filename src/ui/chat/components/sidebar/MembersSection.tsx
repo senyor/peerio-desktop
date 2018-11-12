@@ -3,10 +3,9 @@ import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
 
-import { chatStore, contactStore, chatInviteStore, User } from 'peerio-icebear';
+import { chatStore, contactStore, chatInviteStore, User, t } from 'peerio-icebear';
 import { Contact, Chat } from 'peerio-icebear/dist/models';
 import { Avatar, List, ListHeading, ListItem, Menu, MenuItem } from 'peer-ui';
-import { t } from 'peerio-translator';
 
 import T from '~/ui/shared-components/T';
 import ContactProfile from '~/ui/contact/components/ContactProfile';
@@ -72,7 +71,7 @@ export default class MembersSection extends React.Component<MembersSectionProps>
                     key={item.key}
                     value={item.value}
                     icon={item.icon}
-                    caption={t(item.caption)}
+                    caption={t(item.caption as any) as string}
                     onClick={this[item.onClick]}
                 />
             );

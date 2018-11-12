@@ -7,7 +7,7 @@ const React = require('react');
 const config = require('~/config').default;
 const { contactStore, chatStore, User } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 const STRINGS = require('./strings');
 
 class ELEMENTS {

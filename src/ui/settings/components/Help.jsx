@@ -2,11 +2,10 @@ const React = require('react');
 const { when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button } = require('peer-ui');
-const { t } = require('peerio-translator');
 const T = require('../../shared-components/T');
 const config = require('~/config').default;
 const urls = require('~/config').default.translator.urlMap;
-const { contactStore, chatStore, warnings } = require('peerio-icebear');
+const { contactStore, chatStore, warnings, t } = require('peerio-icebear');
 const { clipboard } = require('electron').remote;
 
 @observer

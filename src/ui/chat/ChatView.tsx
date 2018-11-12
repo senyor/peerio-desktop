@@ -4,8 +4,7 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 
 import { Button, CustomIcon, Dialog, MaterialIcon, ProgressBar, Tooltip } from 'peer-ui';
-import { chatStore, chatInviteStore } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { chatStore, chatInviteStore, t } from 'peerio-icebear';
 
 import routerStore from '~/stores/router-store';
 import sounds from '~/helpers/sounds';

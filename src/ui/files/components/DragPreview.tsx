@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import css from 'classnames';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import { MaterialIcon } from 'peer-ui';
 import FileSpriteIcon from '~/ui/shared-components/FileSpriteIcon';
 

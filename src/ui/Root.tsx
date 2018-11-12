@@ -5,8 +5,7 @@ import { ipcRenderer } from 'electron';
 import { computed, reaction, observable, when } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { socket, clientApp, warnings, chatStore } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { socket, clientApp, warnings, chatStore, t } from 'peerio-icebear';
 import { Button, ProgressBar } from 'peer-ui';
 
 import DragPreviewLayer from '~/ui/files/components/DragPreviewLayer';

@@ -1,6 +1,5 @@
 import { requestDownloadPath } from '~/helpers/file';
-import { saveAccountKeyBackup } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { saveAccountKeyBackup, t } from 'peerio-icebear';
 import * as telemetry from '~/telemetry';
 
 export async function saveAkPdf(store, telemetryObj) {

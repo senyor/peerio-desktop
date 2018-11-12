@@ -24,9 +24,8 @@ import { EditorView } from 'prosemirror-view';
 import { EditorState, Selection, Plugin, Transaction } from 'prosemirror-state';
 import { keymap } from 'prosemirror-keymap';
 
-import { t } from 'peerio-translator';
 import { Button } from 'peer-ui';
-import { chatStore } from 'peerio-icebear';
+import { chatStore, t } from 'peerio-icebear';
 import { Contact } from 'peerio-icebear/dist/models';
 
 import { chatSchema, isWhitespaceOnly, emptyDoc } from '~/helpers/chat/prosemirror/chat-schema';

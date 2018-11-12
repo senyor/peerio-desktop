@@ -4,9 +4,8 @@ import { observer } from 'mobx-react';
 import moment from 'moment';
 
 import { List, ListItem, Menu, MenuItem } from 'peer-ui';
-import { chatStore, fileStore } from 'peerio-icebear';
+import { chatStore, fileStore, t } from 'peerio-icebear';
 import { File } from 'peerio-icebear/dist/models';
-import { t } from 'peerio-translator';
 
 import T from '~/ui/shared-components/T';
 import FileSpriteIcon from '~/ui/shared-components/FileSpriteIcon';

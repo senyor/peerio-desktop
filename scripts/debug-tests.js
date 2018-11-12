@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable */
 const cp = require('child_process');
 let gotUrl = false;
 
@@ -28,7 +27,8 @@ function processMochaOutput(str) {
 }
 
 function openChrome(url) {
-    let cmd =
+    /* eslint-disable prefer-template, no-multi-str */
+    const cmd =
         'osascript <<EOD\n\
    set theURL to "' +
         url +
@@ -43,6 +43,7 @@ function openChrome(url) {
         activate\n\
     end tell\n\
 EOD';
+    /* eslint-enable prefer-template, no-multi-str */
 
     cp.exec(cmd, (err, stdout, stderr) => {
         err && console.error(err);

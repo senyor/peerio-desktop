@@ -5,12 +5,11 @@ const { observer } = require('mobx-react');
 const routerStore = require('~/stores/router-store');
 
 const css = require('classnames');
-const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 const FlipMove = require('react-flip-move');
 const { Button, List, ListItem } = require('peer-ui');
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
-const { chatStore, chatInviteStore } = require('peerio-icebear');
+const { chatStore, chatInviteStore, t } = require('peerio-icebear');
 const { getAttributeInParentChain } = require('~/helpers/dom');
 
 @observer

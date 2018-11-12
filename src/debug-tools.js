@@ -1,11 +1,11 @@
-/* eslint-disable */
+/* global d:false, ice:false */
 window.ice = require('peerio-icebear');
 // shortcut to use with promises
 window.clog = console.log.bind(console);
 window.cerr = console.error.bind(console);
 
 window.d = {};
-//-- Sends messages to active chat
+// -- Sends messages to active chat
 let spamInterval;
 let spamCounter = 0;
 
@@ -23,12 +23,13 @@ d.stopSpam = () => {
     clearInterval(spamInterval);
     spamInterval = null;
 };
-//--------------------------------------
+// --------------------------------------
 
-//-- Loads pages of current chat in the ui until finds a message containing specific text, case-insensitive
+// -- Loads pages of current chat in the ui until finds a message containing specific text, case-insensitive
 d.findMessage = async text => {
     const chat = ice.chatStore.activeChat;
     if (!chat) return;
+    // eslint-disable-next-line no-param-reassign
     text = text.toUpperCase();
     while (chat.canGoUp) {
         chat.loadPreviousPage();

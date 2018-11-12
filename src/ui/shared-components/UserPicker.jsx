@@ -13,10 +13,9 @@ const {
     ProgressBar
 } = require('peer-ui');
 const UserSearchError = require('~/whitelabel/components/UserSearchError');
-const { t } = require('peerio-translator');
-const { fileStore, contactStore, User } = require('peerio-icebear');
+const { fileStore, contactStore, User, t } = require('peerio-icebear');
 const css = require('classnames');
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 const { getAttributeInParentChain } = require('~/helpers/dom');
 const routerStore = require('~/stores/router-store');
 

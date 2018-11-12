@@ -2,10 +2,9 @@ const React = require('react');
 const { observable, action, computed } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Input, MaterialIcon, ProgressBar } = require('peer-ui');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T').default;
 const css = require('classnames');
-const { contactStore, User, warnings } = require('peerio-icebear');
+const { contactStore, User, warnings, t } = require('peerio-icebear');
 const UserSearchError = require('~/whitelabel/components/UserSearchError');
 const urls = require('peerio-icebear').config.translator.urlMap;
 

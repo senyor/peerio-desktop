@@ -2,9 +2,8 @@ import React from 'react';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { Avatar, Button, Dialog, ProgressBar } from 'peer-ui';
-import { contactStore, chatStore } from 'peerio-icebear';
+import { contactStore, chatStore, t } from 'peerio-icebear';
 import { Contact } from 'peerio-icebear/dist/models';
-import { t } from 'peerio-translator';
 import routerStore from '~/stores/router-store';
 import T from '~/ui/shared-components/T';
 

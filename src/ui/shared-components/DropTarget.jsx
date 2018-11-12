@@ -3,8 +3,7 @@ const dragStore = require('~/stores/drag-drop-store');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { MaterialIcon } = require('peer-ui');
-const { fileStore, chatStore } = require('peerio-icebear');
-const { t } = require('peerio-translator');
+const { fileStore, chatStore, t } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
 const UploadDialog = require('../shared-components/UploadDialog');
 

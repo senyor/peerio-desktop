@@ -63,7 +63,8 @@ console.log('Adjusting CSS.');
 let css = fs.readFileSync(srcCss, 'utf8');
 const kindaCheckSum = css.length;
 let repl;
-// eslint-disable-next-line
+
+// eslint-disable-next-line no-constant-condition
 while (true) {
     repl = css.replace(
         '@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx)',
@@ -154,7 +155,7 @@ function convertToArrayAndCleanup(emojiJson) {
         arr.push(item);
     }
 
-    arr.sort((a, b) => (a.order > b.order ? 1 : a.order === b.order ? 0 : -1)); //eslint-disable-line
+    arr.sort((a, b) => (a.order > b.order ? 1 : a.order === b.order ? 0 : -1));
     arr.forEach(item => {
         delete item.order;
     });

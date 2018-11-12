@@ -2,8 +2,7 @@ import React from 'react';
 import { reaction, computed, observable, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { chatStore, clientApp } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { chatStore, clientApp, t } from 'peerio-icebear';
 import { ProgressBar } from 'peer-ui';
 
 import PendingDMHeader from '~/ui/chat/components/PendingDMHeader';

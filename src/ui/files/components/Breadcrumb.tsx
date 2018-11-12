@@ -2,8 +2,8 @@ import React from 'react';
 import { computed, observable, reaction, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { fileStore } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { fileStore, t } from 'peerio-icebear';
+import { FileFolder } from 'peerio-icebear/dist/models';
 import { MaterialIcon } from 'peer-ui';
 
 import T from '~/ui/shared-components/T';
@@ -16,8 +16,8 @@ const FOLDER_MAX_WIDTH = 120;
 
 interface BreadcrumbProps {
     /** The folder we're breadcrumbing. */
-    folder: any; // TODO/TS: icebear model
-    onFolderClick: (folder: any) => void; // TODO/TS: icebear model
+    folder: FileFolder;
+    onFolderClick: (folder: FileFolder) => void;
     noActions?: boolean;
     noSelectionCounter?: boolean;
 }
@@ -28,7 +28,7 @@ export default class Breadcrumb extends React.Component<BreadcrumbProps> {
 
     @computed
     get folderPath() {
-        const folderPath = []; // TODO/TS: icebear model
+        const folderPath: FileFolder[] = [];
         let iterator = this.props.folder;
         do {
             folderPath.unshift(iterator);
@@ -200,8 +200,8 @@ export default class Breadcrumb extends React.Component<BreadcrumbProps> {
 }
 
 interface CrumbProps {
-    folder: any; // TODO/TS: icebear model
-    onClick: (folder: any) => void; // TODO/TS: icebear model
+    folder: FileFolder;
+    onClick: (folder: FileFolder) => void;
     displayText: string;
     arrowAfter: boolean;
 }

@@ -2,7 +2,7 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { chatStore } = require('peerio-icebear');
 
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 const PlusIcon = require('~/ui/shared-components/PlusIcon');
 
 @observer

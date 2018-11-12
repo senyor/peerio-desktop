@@ -3,9 +3,8 @@ import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
 
-import { t } from 'peerio-translator';
 import { Button, MaterialIcon } from 'peer-ui';
-import { fileStore, chatStore, volumeStore } from 'peerio-icebear';
+import { fileStore, chatStore, volumeStore, t } from 'peerio-icebear';
 import { Volume } from 'peerio-icebear/dist/models';
 
 import routerStore from '~/stores/router-store';

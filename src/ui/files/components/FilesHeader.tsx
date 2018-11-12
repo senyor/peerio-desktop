@@ -3,8 +3,7 @@ import { observer } from 'mobx-react';
 import { action, computed } from 'mobx';
 
 import { Button } from 'peer-ui';
-import { fileStore, chatStore, volumeStore } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { fileStore, chatStore, volumeStore, t } from 'peerio-icebear';
 import Beacon from '~/ui/shared-components/Beacon';
 
 import config from '~/config';

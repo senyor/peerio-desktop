@@ -2,11 +2,11 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const css = require('classnames');
-const { t } = require('peerio-translator');
+const { t } = require('peerio-icebear');
 const { Button, MaterialIcon, RadioButtons } = require('peer-ui');
 const uiStore = require('~/stores/ui-store');
 const routerStore = require('~/stores/router-store');
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 
 const ALL_CONTACTS = 'all_contacts';
 const FAV_CONTACTS = 'fav_contacts';

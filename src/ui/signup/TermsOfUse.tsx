@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import css from 'classnames';
 import { Button, Divider, MaterialIcon } from 'peer-ui';
 import * as telemetry from '~/telemetry';
@@ -134,7 +134,7 @@ export default class TermsOfUse extends React.Component<SignupStep> {
             const isSelected = this.selectedTerm === index;
 
             left.push(
-                // eslint-disable-next-line
+                // eslint-disable-next-line react/no-array-index-key
                 <React.Fragment key={`terms-entry-${index}`}>
                     <div
                         className={css('terms-entry', 'clickable', {
@@ -156,7 +156,7 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                         />
                     </div>
                     <Divider
-                        // eslint-disable-next-line
+                        // eslint-disable-next-line react/no-array-index-key
                         key={`divider-${index}`}
                     />
                 </React.Fragment>
@@ -164,7 +164,7 @@ export default class TermsOfUse extends React.Component<SignupStep> {
 
             right.push(
                 <div
-                    // eslint-disable-next-line
+                    // eslint-disable-next-line react/no-array-index-key
                     key={`terms-text-${index}`}
                     className={css('terms-text', {
                         selected: isSelected
@@ -173,10 +173,8 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                     {term.titleRight ? <h3>{term.titleRight}</h3> : null}
                     {term.textContent.map((content, i) => {
                         return (
-                            <React.Fragment
-                                // eslint-disable-next-line
-                                key={`textcontent-${i}`}
-                            >
+                            // eslint-disable-next-line react/no-array-index-key
+                            <React.Fragment key={`textcontent-${i}`}>
                                 {content.heading ? (
                                     <h4 className="question">{content.heading}</h4>
                                 ) : null}

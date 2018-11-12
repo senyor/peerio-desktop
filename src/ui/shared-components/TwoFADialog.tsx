@@ -2,9 +2,9 @@ import React from 'react';
 import { action, computed, observable, when, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { t } from 'peerio-translator';
 import { Checkbox, Dialog, Input } from 'peer-ui';
-import { User, clientApp } from 'peerio-icebear';
+import { User, clientApp, t } from 'peerio-icebear';
+import { TwoFARequest } from 'peerio-icebear/dist/defs/interfaces';
 
 import * as telemetry from '~/telemetry';
 import uiStore from '~/stores/ui-store';
@@ -77,21 +77,21 @@ export default class TwoFADialog extends React.Component {
         clientApp.active2FARequest.cancel();
     }
 
-    getTitle(request) {
+    getTitle(request: TwoFARequest) {
         if (!request) return '';
         switch (request.type) {
             case 'login':
-                return 'title_2FALoginAuth';
+                return t('title_2FALoginAuth');
             case 'backupCodes':
-                return 'title_2FABackupCodeAuth';
+                return t('title_2FABackupCodeAuth');
             case 'disable':
-                return 'title_2FADisableAuth';
+                return t('title_2FADisableAuth');
             default:
                 return '';
         }
     }
 
-    getPreText(request) {
+    getPreText(request: TwoFARequest) {
         if (!request) return '';
         switch (request.type) {
             case 'login':
@@ -105,11 +105,11 @@ export default class TwoFADialog extends React.Component {
         }
     }
 
-    getPostText(request) {
+    getPostText(request: TwoFARequest) {
         if (!request) return '';
         switch (request.type) {
             case 'login':
-                return '';
+                return ''; // TODO?
             case 'backupCodes':
                 return t('title_2FABackupCodeAuthPostText');
             case 'disable':
@@ -137,10 +137,13 @@ export default class TwoFADialog extends React.Component {
                 }
             ];
         }
+
+        const postText = this.getPostText(req);
+
         return (
             <Dialog
                 active={!!req}
-                title={t(this.getTitle(req))}
+                title={this.getTitle(req)}
                 actions={actions}
                 className="twofa-dialog"
                 // @ts-ignore FIXME
@@ -165,7 +168,7 @@ export default class TwoFADialog extends React.Component {
                         onChange={this.onToggleTrust}
                     />
                 ) : null}
-                {this.getPostText(req) ? <p>{this.getPostText(req)}</p> : null}
+                {postText ? <p>{postText}</p> : null}
             </Dialog>
         );
     }

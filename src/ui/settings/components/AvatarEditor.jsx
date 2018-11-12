@@ -4,7 +4,7 @@ const Croppie = require('croppie');
 const { observable } = require('mobx');
 const { Button } = require('peer-ui');
 const electron = require('electron').remote;
-const { t } = require('peerio-translator');
+const { t } = require('peerio-icebear');
 
 @observer
 class AvatarEditor extends React.Component {

@@ -1,8 +1,8 @@
 const React = require('react');
 const { Component } = require('react');
 const { observer } = require('mobx-react');
-const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
+const { t } = require('peerio-icebear');
+const T = require('~/ui/shared-components/T').default;
 const { Dialog, ProgressBar } = require('peer-ui');
 const updaterStore = require('~/stores/updater-store');
 

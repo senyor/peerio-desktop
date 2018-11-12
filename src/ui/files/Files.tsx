@@ -6,8 +6,7 @@ import { DropTarget } from 'react-dnd';
 import _ from 'lodash';
 
 import { Button, Checkbox, ProgressBar, MaterialIcon } from 'peer-ui';
-import { fileStore, clientApp } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { fileStore, clientApp, t } from 'peerio-icebear';
 
 import T from '~/ui/shared-components/T';
 import ConfirmFolderDeleteDialog from '~/ui/shared-components/ConfirmFolderDeleteDialog';

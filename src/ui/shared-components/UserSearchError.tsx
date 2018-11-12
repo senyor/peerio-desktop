@@ -1,15 +1,16 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import T from '~/ui/shared-components/T';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import { Button, MaterialIcon } from 'peer-ui';
+
+import T from '~/ui/shared-components/T';
 
 interface UserSearchErrorProps {
     onInvite: () => void;
-    userAlreadyAdded?: boolean;
-    userNotFound?: boolean;
-    suggestInviteEmail?: boolean;
+    userAlreadyAdded?: string;
+    userNotFound?: string;
+    suggestInviteEmail?: string;
 }
 
 @observer

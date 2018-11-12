@@ -2,8 +2,7 @@ const React = require('react');
 const { Checkbox, Dialog } = require('peer-ui');
 const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { t } = require('peerio-translator');
-const { User } = require('peerio-icebear');
+const { User, t } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 
 @observer

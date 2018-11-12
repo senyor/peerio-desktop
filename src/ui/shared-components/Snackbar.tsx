@@ -25,7 +25,7 @@ export default class Snackbar extends WarningDisplayBase<SnackbarProps> {
                 })}
                 onClick={this.dismiss}
             >
-                <div className="snackbar">{w ? <T k={w.content}>{w.data}</T> : null}</div>
+                <div className="snackbar">{w ? <T k={w.content as any}>{w.data}</T> : null}</div>
             </div>
         );
     }

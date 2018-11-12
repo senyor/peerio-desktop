@@ -3,9 +3,8 @@ import { observer } from 'mobx-react';
 import { observable, action, runInAction } from 'mobx';
 import css from 'classnames';
 
-import { contactStore, systemMessages, User } from 'peerio-icebear';
+import { contactStore, systemMessages, User, t } from 'peerio-icebear';
 import { Chat, Message as IcebearMessage } from 'peerio-icebear/dist/models';
-import { t } from 'peerio-translator';
 import { Button, MaterialIcon } from 'peer-ui';
 
 import T from '~/ui/shared-components/T';

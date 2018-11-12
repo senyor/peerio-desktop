@@ -3,10 +3,9 @@ import { observable, when, Lambda } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
 
-import { fileStore, chatStore } from 'peerio-icebear';
+import { fileStore, chatStore, t } from 'peerio-icebear';
 import { File } from 'peerio-icebear/dist/models';
 import { Button, Dialog, MaterialIcon, ProgressBar, RadioButtons } from 'peer-ui';
-import { t } from 'peerio-translator';
 
 import uiStore from '~/stores/ui-store';
 import routerStore from '~/stores/router-store';

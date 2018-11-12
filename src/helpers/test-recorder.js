@@ -1,4 +1,3 @@
-/* eslint-disable */
 /**
  * Tooling for UI tests -- record some DOM activity and spit it out.
  *
@@ -26,6 +25,7 @@ function recordUI() {
     // needs to reload from virtual dom...
     const inputs = document.getElementsByTagName('input');
     for (let i = 0; i < inputs.length; i++) {
+        // eslint-disable-next-line no-loop-func
         inputs.item(i).onblur = ev => {
             actions.push({
                 event: 'fill',

@@ -3,8 +3,7 @@ import { action, observable, reaction, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
 
-import { chatStore, chatInviteStore, contactStore, User } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { chatStore, chatInviteStore, contactStore, User, t } from 'peerio-icebear';
 import { ProgressBar, Button, Divider } from 'peer-ui';
 
 import T from '~/ui/shared-components/T';

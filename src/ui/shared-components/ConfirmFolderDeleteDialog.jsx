@@ -1,8 +1,8 @@
 const React = require('react');
 const { observable, action } = require('mobx');
 const { observer } = require('mobx-react');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T').default;
+const { t } = require('peerio-icebear');
 const { Dialog } = require('peer-ui');
 
 /**

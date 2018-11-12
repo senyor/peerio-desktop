@@ -1,13 +1,12 @@
 const React = require('react');
 const { action, computed, observable } = require('mobx');
 const { observer } = require('mobx-react');
-const { chatStore, fileHelpers, contactStore } = require('peerio-icebear');
+const { chatStore, fileHelpers, contactStore, t } = require('peerio-icebear');
 const { Button, Dialog, Input, ProgressBar } = require('peer-ui');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 const ShareWithDialog = require('~/ui/shared-components/ShareWithDialog');
 const css = require('classnames');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T').default;
 
 @observer
 class UploadDialog extends React.Component {

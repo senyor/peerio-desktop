@@ -1,8 +1,7 @@
 import React from 'react';
 import { Dialog } from 'peer-ui';
 import { observer } from 'mobx-react';
-import { t } from 'peerio-translator';
-import { warnings } from 'peerio-icebear';
+import { warnings, t } from 'peerio-icebear';
 
 import T from '~/ui/shared-components/T';
 
@@ -21,10 +20,10 @@ export default class SystemWarningDialog extends WarningDisplayBase {
             <Dialog
                 theme="warning"
                 active={this.isVisible}
-                title={w ? t(w.title) : ''}
+                title={w ? (t(w.title as any) as string) : ''}
                 actions={[{ label: t('button_ok'), onClick: this.dismiss }]}
             >
-                {w ? <T k={w.content}>{w.data}</T> : null}
+                {w ? <T k={w.content as any}>{w.data}</T> : null}
             </Dialog>
         );
     }

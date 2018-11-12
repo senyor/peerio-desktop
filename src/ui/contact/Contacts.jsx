@@ -1,12 +1,13 @@
 const React = require('react');
-const { t } = require('peerio-translator');
-const { List, ListItem, Tooltip } = require('peer-ui');
-const PlusIcon = require('~/ui/shared-components/PlusIcon');
-const { action } = require('mobx');
 const { observer } = require('mobx-react');
-const routerStore = require('~/stores/router-store');
-const { contactStore } = require('peerio-icebear');
+const { action } = require('mobx');
 const css = require('classnames');
+
+const { contactStore, t } = require('peerio-icebear');
+const { List, ListItem, Tooltip } = require('peer-ui');
+
+const routerStore = require('~/stores/router-store');
+const PlusIcon = require('~/ui/shared-components/PlusIcon');
 
 @observer
 class Contacts extends React.Component {

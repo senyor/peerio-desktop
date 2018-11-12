@@ -4,11 +4,10 @@ const React = require('react');
 const { observable } = require('mobx');
 const { observer } = require('mobx-react');
 const { Button, Dialog, MaterialIcon, Switch, ProgressBar } = require('peer-ui');
-const { User, saveAccountKeyBackup } = require('peerio-icebear');
-const { t } = require('peerio-translator');
+const { User, saveAccountKeyBackup, t } = require('peerio-icebear');
 const autologin = require('~/helpers/autologin');
 const electron = require('electron').remote;
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 const QR = require('qrcode');
 const BetterInput = require('~/ui/shared-components/BetterInput');
 const css = require('classnames');
@@ -34,7 +33,6 @@ export default class SecuritySettings extends React.Component {
         User.current.setup2fa().then(secret => {
             this.twoFASecret = secret;
             QR.toDataURL(
-                // eslint-disable-next-line
                 `otpauth://totp/Peerio:${
                     User.current.username
                 }?secret=${secret}&issuer=Peerio&algorithm=SHA1&digits=6&period=30`,

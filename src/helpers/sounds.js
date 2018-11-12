@@ -14,7 +14,7 @@ class Sound {
     }
 
     play() {
-        return this.node.play(); //eslint-disable-line
+        return this.node.play();
     }
 
     get volume() {

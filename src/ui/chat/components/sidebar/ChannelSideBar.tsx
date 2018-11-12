@@ -4,8 +4,7 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 
 import { Button, CustomIcon, Dialog, List, ListItem } from 'peer-ui';
-import { chatStore } from 'peerio-icebear';
-import { t } from 'peerio-translator';
+import { chatStore, t } from 'peerio-icebear';
 
 import ChatNameEditor from '~/ui/chat/components/ChatNameEditor';
 import T from '~/ui/shared-components/T';

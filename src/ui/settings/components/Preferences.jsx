@@ -2,9 +2,8 @@ const React = require('react');
 const { observer } = require('mobx-react');
 const { Checkbox } = require('peer-ui');
 const { MaterialIcon, Switch } = require('peer-ui');
-const { t } = require('peerio-translator');
-const T = require('~/ui/shared-components/T');
-const { User, chatStore } = require('peerio-icebear');
+const T = require('~/ui/shared-components/T').default;
+const { User, chatStore, t } = require('peerio-icebear');
 const uiStore = require('~/stores/ui-store');
 const { fileStore } = require('peerio-icebear');
 

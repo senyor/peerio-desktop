@@ -2,9 +2,8 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { observable, computed } from 'mobx';
 
-import { fileStore, chatStore } from 'peerio-icebear';
-import { File } from 'peerio-icebear/dist/models';
-import { t } from 'peerio-translator';
+import { fileStore, chatStore, t } from 'peerio-icebear';
+import { File, FileFolder } from 'peerio-icebear/dist/models';
 import { Dialog, ProgressBar } from 'peer-ui';
 import config from '~/config';
 import Search from '~/ui/shared-components/Search';
@@ -20,7 +19,7 @@ const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 interface FilePickerProps {
     active: boolean;
     hideLegacy?: boolean;
-    onShare(selectedFilesOrFolders: any[]): void; // TODO/TS
+    onShare(selectedFilesOrFolders: (File | FileFolder)[]): void;
     onClose(): void;
 }
 

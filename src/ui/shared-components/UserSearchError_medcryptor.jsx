@@ -3,8 +3,8 @@ const { action, observable } = require('mobx');
 const { observer } = require('mobx-react');
 
 const routerStore = require('~/stores/router-store');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T').default;
+const { t } = require('peerio-icebear');
 const { Button, MaterialIcon, RadioButtons } = require('peer-ui');
 
 const DOCTOR_OR_ADMIN = 'doctor_or_admin';

@@ -1,9 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 
-import { volumeStore } from 'peerio-icebear';
+import { volumeStore, t } from 'peerio-icebear';
 import { Menu, MenuItem, Divider } from 'peer-ui';
-import { t } from 'peerio-translator';
 
 import config from '~/config';
 import ShareWithMultipleDialog from '~/ui/shared-components/ShareWithMultipleDialog';

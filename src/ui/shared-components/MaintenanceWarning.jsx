@@ -2,9 +2,8 @@ const React = require('react');
 const { observable, when } = require('mobx');
 const { observer } = require('mobx-react');
 const { Dialog, MaterialIcon } = require('peer-ui');
-const T = require('~/ui/shared-components/T');
-const { serverSettings } = require('peerio-icebear');
-const { t } = require('peerio-translator');
+const T = require('~/ui/shared-components/T').default;
+const { serverSettings, t } = require('peerio-icebear');
 const moment = require('moment');
 
 @observer

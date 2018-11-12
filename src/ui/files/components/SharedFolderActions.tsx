@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { Menu, MenuItem, Divider } from 'peer-ui';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import { getDataProps } from '~/helpers/dom';
 
 interface SharedFolderActionsProps {

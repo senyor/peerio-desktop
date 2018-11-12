@@ -4,7 +4,7 @@ const { observer } = require('mobx-react');
 
 const { chatStore, chatInviteStore } = require('peerio-icebear');
 const routerStore = require('~/stores/router-store');
-const T = require('~/ui/shared-components/T');
+const T = require('~/ui/shared-components/T').default;
 
 const { Button } = require('peer-ui');
 const EmojiImage = require('~/ui/emoji/Image');

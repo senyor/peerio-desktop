@@ -42,7 +42,7 @@ export async function startAppAndConnect(context: Context): Promise<void> {
         () => {
             return context.app.client
                 .execute(() => {
-                    return ice.socket.connected; // eslint-disable-line no-undef
+                    return ice.socket.connected;
                 })
                 .then(c => {
                     return c.value;

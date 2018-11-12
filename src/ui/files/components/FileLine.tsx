@@ -3,9 +3,8 @@ import { action, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
 
-import { contactStore, fileStore, User } from 'peerio-icebear';
+import { contactStore, fileStore, User, t } from 'peerio-icebear';
 import { File } from 'peerio-icebear/dist/models';
-import { t } from 'peerio-translator';
 import { Checkbox, ProgressBar, Tooltip } from 'peer-ui';
 
 import T from '~/ui/shared-components/T';

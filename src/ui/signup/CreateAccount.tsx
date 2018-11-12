@@ -4,8 +4,7 @@ import { action, computed, observable, reaction } from 'mobx';
 import css from 'classnames';
 
 import { Button, Checkbox, Divider, MaterialIcon } from 'peer-ui';
-import { t } from 'peerio-translator';
-import { config, validation } from 'peerio-icebear';
+import { config, validation, t } from 'peerio-icebear';
 
 import uiStore from '~/stores/ui-store';
 import routerStore from '~/stores/router-store';

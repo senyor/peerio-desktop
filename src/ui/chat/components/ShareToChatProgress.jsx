@@ -2,9 +2,8 @@
 const React = require('react');
 const { observer } = require('mobx-react');
 
-const { fileHelpers } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T');
-const { t } = require('peerio-translator');
+const { fileHelpers, t } = require('peerio-icebear');
+const T = require('~/ui/shared-components/T').default;
 const { Button, MaterialIcon, ProgressBar } = require('peer-ui');
 const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
 

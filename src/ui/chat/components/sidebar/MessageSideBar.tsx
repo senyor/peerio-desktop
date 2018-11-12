@@ -2,9 +2,8 @@ import React from 'react';
 import { action, observable, reaction, IReactionDisposer, entries } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { chatStore, systemMessages, contactStore } from 'peerio-icebear';
+import { chatStore, systemMessages, contactStore, t } from 'peerio-icebear';
 import { Message, Contact, ReadReceipt } from 'peerio-icebear/dist/models';
-import { t } from 'peerio-translator';
 import { Avatar, Button, List, ListItem } from 'peer-ui';
 
 import uiStore from '~/stores/ui-store';

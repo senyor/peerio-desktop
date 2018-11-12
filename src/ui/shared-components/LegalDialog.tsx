@@ -2,7 +2,7 @@ import React from 'react';
 import { action, computed, observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { Dialog } from 'peer-ui';
-import { t } from 'peerio-translator';
+import { t } from 'peerio-icebear';
 import Terms from './Terms';
 import Privacy from './Privacy';
 

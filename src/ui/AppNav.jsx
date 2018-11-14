@@ -1,24 +1,29 @@
-const path = require('path');
-const { remote } = require('electron');
-const React = require('react');
-const { autorun, observable, computed } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
+import path from 'path';
+import { remote } from 'electron';
+import React from 'react';
+import { autorun, observable, computed } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
 
-const { Avatar, Divider, Menu, MenuHeader, MenuItem } = require('peer-ui');
-const { User, contactStore, chatStore, fileStore, t } = require('peerio-icebear');
+import { Avatar, Divider, Menu, MenuHeader, MenuItem } from 'peer-ui';
+import { User, contactStore, chatStore, fileStore, t } from 'peerio-icebear';
 
-const UsageCloud = require('~/ui/shared-components/UsageCloud');
-const SignoutDialog = require('~/ui/shared-components/SignoutDialog');
-const notificationFactory = require('~/helpers/notifications');
-const appControl = require('~/helpers/app-control');
-const autologin = require('~/helpers/autologin');
-const routerStore = require('~/stores/router-store');
+import UsageCloud from '~/ui/shared-components/UsageCloud';
+import SignoutDialog from '~/ui/shared-components/SignoutDialog';
+import {
+    sendMessageNotification,
+    sendInviteAcceptedNotification,
+    sendInviteNotification
+} from '~/helpers/notifications';
+import appControl from '~/helpers/app-control';
+import autologin from '~/helpers/autologin';
+import routerStore from '~/stores/router-store';
 
-const config = require('~/config').default;
+import config from '~/config';
+import updaterStore from '~/stores/updater-store';
+import AppNavBeaconedItem from './AppNavBeaconedItem';
+
 const urls = config.translator.urlMap;
-const AppNavBeaconedItem = require('./AppNavBeaconedItem');
-const updaterStore = require('~/stores/updater-store');
 
 const { app, nativeImage } = remote;
 
@@ -69,22 +74,13 @@ let desktopNotificationsStarted = false;
 function startDesktopNotifications() {
     if (desktopNotificationsStarted) return;
     desktopNotificationsStarted = true;
-    chatStore.events.on(
-        chatStore.EVENT_TYPES.messagesReceived,
-        notificationFactory.sendMessageNotification
-    );
-    chatStore.events.on(
-        chatStore.EVENT_TYPES.invitedToChannel,
-        notificationFactory.sendInviteNotification
-    );
-    contactStore.events.on(
-        contactStore.EVENT_TYPES.inviteAccepted,
-        notificationFactory.sendInviteAcceptedNotification
-    );
+    chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, sendMessageNotification);
+    chatStore.events.on(chatStore.EVENT_TYPES.invitedToChannel, sendInviteNotification);
+    contactStore.events.on(contactStore.EVENT_TYPES.inviteAccepted, sendInviteAcceptedNotification);
 }
 
 @observer
-class AppNav extends React.Component {
+export default class AppNav extends React.Component {
     @observable isConfirmSignOutVisible = false;
 
     constructor() {
@@ -299,5 +295,3 @@ class AppNav extends React.Component {
         );
     }
 }
-
-module.exports = AppNav;

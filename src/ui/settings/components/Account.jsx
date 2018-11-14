@@ -1,11 +1,14 @@
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { Button, Dialog, Switch } = require('peer-ui');
-const { User, t } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
-const urls = require('~/config').default.translator.urlMap;
-const config = require('~/config').default;
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+
+import { Button, Dialog, Switch } from 'peer-ui';
+import { User, t } from 'peerio-icebear';
+
+import T from '~/ui/shared-components/T';
+import config from '~/config';
+
+const urls = config.translator.urlMap;
 
 @observer
 class Account extends React.Component {
@@ -92,4 +95,4 @@ class Account extends React.Component {
     }
 }
 
-module.exports = Account;
+export default Account;

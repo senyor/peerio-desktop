@@ -1,7 +1,7 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { Button } = require('peer-ui');
-const { User } = require('peerio-icebear');
+import React from 'react';
+import { observer } from 'mobx-react';
+import { Button } from 'peer-ui';
+import { User } from 'peerio-icebear';
 
 @observer
 class UsageCloud extends React.Component {
@@ -28,4 +28,4 @@ class UsageCloud extends React.Component {
     }
 }
 
-module.exports = UsageCloud;
+export default UsageCloud;

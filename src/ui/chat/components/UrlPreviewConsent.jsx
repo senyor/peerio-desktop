@@ -1,12 +1,12 @@
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
-const { t } = require('peerio-icebear');
-const { Button, MaterialIcon, RadioButtons } = require('peer-ui');
-const uiStore = require('~/stores/ui-store');
-const routerStore = require('~/stores/router-store');
-const T = require('~/ui/shared-components/T').default;
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+import { t } from 'peerio-icebear';
+import { Button, MaterialIcon, RadioButtons } from 'peer-ui';
+import uiStore from '~/stores/ui-store';
+import routerStore from '~/stores/router-store';
+import T from '~/ui/shared-components/T';
 
 const ALL_CONTACTS = 'all_contacts';
 const FAV_CONTACTS = 'fav_contacts';
@@ -108,4 +108,4 @@ class UrlPreviewConsent extends React.Component {
     }
 }
 
-module.exports = UrlPreviewConsent;
+export default UrlPreviewConsent;

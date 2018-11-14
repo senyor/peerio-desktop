@@ -1,5 +1,5 @@
-const React = require('react');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { observer } from 'mobx-react';
 
 @observer
 class Copyright extends React.Component {
@@ -8,4 +8,4 @@ class Copyright extends React.Component {
     }
 }
 
-module.exports = Copyright;
+export default Copyright;

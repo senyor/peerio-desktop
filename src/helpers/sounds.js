@@ -32,4 +32,4 @@ files.forEach(id => {
     sounds[id] = new Sound(id);
 });
 
-module.exports = sounds;
+export default sounds;

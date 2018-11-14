@@ -1,15 +1,15 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { chatStore } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
+import React from 'react';
+import { observer } from 'mobx-react';
 
-const AvatarWithPopup = require('~/ui/contact/components/AvatarWithPopup').default;
-const EmojiImage = require('~/ui/emoji/Image');
-const IdentityVerificationNotice = require('~/ui/chat/components/IdentityVerificationNotice')
-    .default;
+import { chatStore } from 'peerio-icebear';
+
+import T from '~/ui/shared-components/T';
+import AvatarWithPopup from '~/ui/contact/components/AvatarWithPopup';
+import EmojiImage from '~/ui/emoji/Image';
+import IdentityVerificationNotice from '~/ui/chat/components/IdentityVerificationNotice';
 
 @observer
-class PendingDMHeader extends React.Component {
+export default class PendingDMHeader extends React.Component {
     render() {
         const c = this.props.contact;
         const chat = chatStore.activeChat;
@@ -53,5 +53,3 @@ class PendingDMHeader extends React.Component {
         );
     }
 }
-
-module.exports = PendingDMHeader;

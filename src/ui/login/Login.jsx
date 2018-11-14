@@ -1,28 +1,28 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import * as telemetry from '~/telemetry';
-const React = require('react');
-const { Component } = require('react');
-const { Button } = require('peer-ui');
-const { config, socket, User, validation, warnings, t } = require('peerio-icebear');
-const { observable, computed, when } = require('mobx');
-const { observer } = require('mobx-react');
-const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
-const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
-const T = require('~/ui/shared-components/T').default;
-const OrderedFormStore = require('~/stores/ordered-form-store');
-const css = require('classnames');
-const autologin = require('~/helpers/autologin');
-const routerStore = require('~/stores/router-store');
-const updaterStore = require('~/stores/updater-store');
-const uiStore = require('~/stores/ui-store');
+import React, { Component } from 'react';
+import { observable, computed, when } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+
+import { Button, MaterialIcon } from 'peer-ui';
+import { config, socket, User, validation, warnings, t, clientApp } from 'peerio-icebear';
+
+import ValidatedInput from '~/ui/shared-components/ValidatedInput';
+import FullCoverLoader from '~/ui/shared-components/FullCoverLoader';
+import * as Mock from '~/ui/shared-components/MockUI';
+import T from '~/ui/shared-components/T';
+import OrderedFormStore from '~/stores/ordered-form-store';
+import routerStore from '~/stores/router-store';
+import updaterStore from '~/stores/updater-store';
+import uiStore from '~/stores/ui-store';
+import autologin from '~/helpers/autologin';
 
 import WhereToFindAk from '~/whitelabel/components/WhereToFindAk';
-const PoweredByLogin = require('~/whitelabel/components/PoweredByLogin');
-const SignupLink = require('~/whitelabel/components/SignupLink');
+import PoweredByLogin from '~/whitelabel/components/PoweredByLogin';
+import SignupLink from '~/whitelabel/components/SignupLink';
+
 const { validators } = validation; // use common validation from core
-import * as Mock from '~/ui/shared-components/MockUI';
-import { MaterialIcon } from 'peer-ui';
-import { clientApp } from 'peerio-icebear';
 
 class LoginStore extends OrderedFormStore {
     @observable fieldsExpected = 2;
@@ -48,7 +48,7 @@ class LoginStore extends OrderedFormStore {
 }
 
 @observer
-class Login extends Component {
+export default class Login extends Component {
     constructor() {
         super();
         this.loginStore = new LoginStore();
@@ -353,5 +353,3 @@ class Login extends Component {
         );
     }
 }
-
-export default Login;

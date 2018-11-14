@@ -1,7 +1,7 @@
-const React = require('react');
-const { Button } = require('peer-ui');
-const css = require('classnames');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { Button } from 'peer-ui';
+import css from 'classnames';
+import { observer } from 'mobx-react';
 
 @observer
 class AppNav extends React.Component {
@@ -22,4 +22,4 @@ class AppNav extends React.Component {
     }
 }
 
-module.exports = AppNav;
+export default AppNav;

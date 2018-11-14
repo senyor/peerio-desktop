@@ -1,11 +1,11 @@
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
-const { MaterialIcon } = require('peer-ui');
-const UsageCloud = require('~/ui/shared-components/UsageCloud');
-const { User, t } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+import { MaterialIcon } from 'peer-ui';
+import UsageCloud from '~/ui/shared-components/UsageCloud';
+import { User, t } from 'peerio-icebear';
+import T from '~/ui/shared-components/T';
 
 function createOnboardingItem(
     icon,
@@ -160,4 +160,4 @@ class Onboarding extends React.Component {
     }
 }
 
-module.exports = Onboarding;
+export default Onboarding;

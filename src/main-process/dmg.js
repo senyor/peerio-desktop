@@ -1,10 +1,10 @@
-const fs = require('fs');
-const { app, dialog } = require('electron');
-const TinyDb = require('peerio-icebear/dist/db/tiny-db').default;
+import fs from 'fs';
+import { app, dialog } from 'electron';
+import TinyDb from 'peerio-icebear/dist/db/tiny-db';
 
 const DO_NOT_COPY_SETTING = 'doNotCopyToApplicationsFolder';
 
-async function handleLaunchFromDMG() {
+export async function handleLaunchFromDMG() {
     if (await TinyDb.system.getValue(DO_NOT_COPY_SETTING)) {
         return;
     }
@@ -114,7 +114,7 @@ let isInDMG = null; // cached result of isAppInDMG, to avoid disk access
  *
  * Applies only to macOS, always resolves to false on other OSes.
  */
-function isAppInDMG() {
+export function isAppInDMG() {
     return new Promise(resolve => {
         if (isInDMG != null) {
             resolve(isInDMG);
@@ -131,8 +131,3 @@ function isAppInDMG() {
         });
     });
 }
-
-module.exports = {
-    isAppInDMG,
-    handleLaunchFromDMG
-};

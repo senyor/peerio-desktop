@@ -1,14 +1,14 @@
 // @ts-check
 
-const React = require('react');
-const { computed } = require('mobx');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { computed } from 'mobx';
+import { observer } from 'mobx-react';
 
-const css = require('classnames');
-const { chatStore } = require('peerio-icebear');
-const routerStore = require('~/stores/router-store');
-const PatientSidebar = require('./PatientSidebar');
-const PatientZeroChats = require('./PatientZeroChats');
+import css from 'classnames';
+import { chatStore } from 'peerio-icebear';
+import routerStore from '~/stores/router-store';
+import PatientSidebar from './PatientSidebar';
+import PatientZeroChats from './PatientZeroChats';
 
 @observer
 class Patient extends React.Component {
@@ -36,4 +36,4 @@ class Patient extends React.Component {
     }
 }
 
-module.exports = Patient;
+export default Patient;

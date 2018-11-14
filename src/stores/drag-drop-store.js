@@ -1,8 +1,8 @@
-const { observable, action, autorun } = require('mobx');
-const { User } = require('peerio-icebear');
-const routerStore = require('~/stores/router-store');
-const { getFileTree, getFileList } = require('~/helpers/file');
-const _ = require('lodash');
+import { observable, action, autorun } from 'mobx';
+import { User } from 'peerio-icebear';
+import routerStore from '~/stores/router-store';
+import { getFileTree, getFileList } from '~/helpers/file';
+import _ from 'lodash';
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // There's currently a bug in electron that has broken the normal flow of this store
@@ -139,4 +139,4 @@ autorun(() => {
     }
 });
 
-module.exports = store;
+export default store;

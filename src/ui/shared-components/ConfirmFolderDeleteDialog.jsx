@@ -1,9 +1,9 @@
-const React = require('react');
-const { observable, action } = require('mobx');
-const { observer } = require('mobx-react');
-const T = require('~/ui/shared-components/T').default;
-const { t } = require('peerio-icebear');
-const { Dialog } = require('peer-ui');
+import React from 'react';
+import { observable, action } from 'mobx';
+import { observer } from 'mobx-react';
+import T from '~/ui/shared-components/T';
+import { t } from 'peerio-icebear';
+import { Dialog } from 'peer-ui';
 
 /**
  */
@@ -67,4 +67,4 @@ class ConfirmFolderDeleteDialog extends React.Component {
     }
 }
 
-module.exports = ConfirmFolderDeleteDialog;
+export default ConfirmFolderDeleteDialog;

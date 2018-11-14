@@ -1,9 +1,9 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { observable } = require('mobx');
-const { Button } = require('peer-ui');
-const T = require('~/ui/shared-components/T').default;
-const { fileStore, t } = require('peerio-icebear');
+import React from 'react';
+import { observer } from 'mobx-react';
+import { observable } from 'mobx';
+import { Button } from 'peer-ui';
+import T from '~/ui/shared-components/T';
+import { fileStore, t } from 'peerio-icebear';
 
 const forceShowCache = observable.map();
 
@@ -56,4 +56,4 @@ class UrlPreview extends React.Component {
     }
 }
 
-module.exports = UrlPreview;
+export default UrlPreview;

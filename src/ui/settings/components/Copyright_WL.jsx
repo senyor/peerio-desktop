@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 // @observer
 class Copyright extends React.Component {
@@ -7,4 +7,4 @@ class Copyright extends React.Component {
     }
 }
 
-module.exports = Copyright;
+export default Copyright;

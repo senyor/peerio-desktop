@@ -1,13 +1,14 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const Croppie = require('croppie');
-const { observable } = require('mobx');
-const { Button } = require('peer-ui');
-const electron = require('electron').remote;
-const { t } = require('peerio-icebear');
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { remote as electron } from 'electron';
+import Croppie from 'croppie';
+
+import { t } from 'peerio-icebear';
+import { Button } from 'peer-ui';
 
 @observer
-class AvatarEditor extends React.Component {
+export default class AvatarEditor extends React.Component {
     @observable
     static state = {
         showEditor: false,
@@ -142,5 +143,3 @@ class AvatarEditor extends React.Component {
         );
     }
 }
-
-module.exports = AvatarEditor;

@@ -1,8 +1,8 @@
-const React = require('react');
-const { Button, Chip, Divider, Menu, MenuItem } = require('peer-ui');
-const { User, socket } = require('peerio-icebear');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { Button, Chip, Divider, Menu, MenuItem } from 'peer-ui';
+import { User, socket } from 'peerio-icebear';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 @observer
 class DevTools extends React.Component {
@@ -66,4 +66,4 @@ class DevTools extends React.Component {
     }
 }
 
-module.exports = DevTools;
+export default DevTools;

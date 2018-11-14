@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class PatientList extends React.PureComponent {
     render() {
@@ -6,4 +6,4 @@ class PatientList extends React.PureComponent {
     }
 }
 
-module.exports = PatientList;
+export default PatientList;

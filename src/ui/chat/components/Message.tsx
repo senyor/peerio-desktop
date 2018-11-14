@@ -14,13 +14,14 @@ import ContactProfile from '~/ui/contact/components/ContactProfile';
 import { time } from '~/helpers/formatter';
 import { chatSchema, Renderer } from '~/helpers/chat/prosemirror/chat-schema';
 import uiStore from '~/stores/ui-store';
+import config from '~/config';
 
 import InlineFiles from './InlineFiles';
 import UrlPreview from './UrlPreview';
 import UrlPreviewConsent from './UrlPreviewConsent';
 import InlineSharedFolder from '../../files/components/InlineSharedFolder';
 
-const urls = require('~/config').default.translator.urlMap;
+const urls = config.translator.urlMap;
 
 let legacyProcessMessageForDisplay: (msg: IcebearMessage) => { __html: string };
 

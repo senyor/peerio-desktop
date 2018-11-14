@@ -1,6 +1,6 @@
-const { app, Menu } = require('electron');
-const config = require('~/config').default;
-const isDevEnv = require('~/helpers/is-dev-env').default;
+import { app, Menu } from 'electron';
+import config from '~/config';
+import isDevEnv from '~/helpers/is-dev-env';
 
 const editMenu = {
     label: 'Edit',
@@ -114,10 +114,8 @@ if (process.platform === 'darwin') {
     ];
 }
 
-function setMainMenu() {
+export default function setMainMenu() {
     if (process.platform !== 'darwin') return;
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
 }
-
-module.exports = setMainMenu;

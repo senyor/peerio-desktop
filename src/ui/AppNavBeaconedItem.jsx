@@ -1,9 +1,9 @@
-const React = require('react');
-const AppNavButton = require('./AppNavButton');
-const uiStore = require('~/stores/ui-store');
-const beaconStore = require('~/stores/beacon-store').default;
-const Beacon = require('~/ui/shared-components/Beacon').default;
-const { observer } = require('mobx-react');
+import React from 'react';
+import AppNavButton from './AppNavButton';
+import uiStore from '~/stores/ui-store';
+import beaconStore from '~/stores/beacon-store';
+import Beacon from '~/ui/shared-components/Beacon';
+import { observer } from 'mobx-react';
 
 @observer
 class AppNavBeaconedItem extends React.Component {
@@ -37,4 +37,4 @@ class AppNavBeaconedItem extends React.Component {
     }
 }
 
-module.exports = AppNavBeaconedItem;
+export default AppNavBeaconedItem;

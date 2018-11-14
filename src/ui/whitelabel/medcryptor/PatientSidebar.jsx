@@ -1,16 +1,16 @@
-const React = require('react');
-const { computed, when } = require('mobx');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { computed, when } from 'mobx';
+import { observer } from 'mobx-react';
 
-const routerStore = require('~/stores/router-store');
+import routerStore from '~/stores/router-store';
 
-const css = require('classnames');
-const T = require('~/ui/shared-components/T').default;
-const FlipMove = require('react-flip-move');
-const { Button, List, ListItem } = require('peer-ui');
-const PlusIcon = require('~/ui/shared-components/PlusIcon');
-const { chatStore, chatInviteStore, t } = require('peerio-icebear');
-const { getAttributeInParentChain } = require('~/helpers/dom');
+import css from 'classnames';
+import T from '~/ui/shared-components/T';
+import FlipMove from 'react-flip-move';
+import { Button, List, ListItem } from 'peer-ui';
+import PlusIcon from '~/ui/shared-components/PlusIcon';
+import { chatStore, chatInviteStore, t } from 'peerio-icebear';
+import { getAttributeInParentChain } from '~/helpers/dom';
 
 @observer
 class PatientSidebar extends React.Component {
@@ -188,4 +188,4 @@ class PatientSidebar extends React.Component {
     }
 }
 
-module.exports = PatientSidebar;
+export default PatientSidebar;

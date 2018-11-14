@@ -1,6 +1,6 @@
-const { observable, when } = require('mobx');
-const { ipcRenderer } = require('electron');
-const { clientApp, warnings } = require('peerio-icebear');
+import { observable, when } from 'mobx';
+import { ipcRenderer } from 'electron';
+import { clientApp, warnings } from 'peerio-icebear';
 
 class UpdaterStore {
     /**
@@ -164,4 +164,4 @@ class UpdaterStore {
     }
 }
 
-module.exports = new UpdaterStore();
+export default new UpdaterStore();

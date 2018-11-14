@@ -1,5 +1,5 @@
-const React = require('react');
-const { ProgressBar } = require('peer-ui');
+import React from 'react';
+import { ProgressBar } from 'peer-ui';
 
 function FullCoverLoader(props) {
     return props.show ? (
@@ -9,4 +9,4 @@ function FullCoverLoader(props) {
     ) : null;
 }
 
-module.exports = FullCoverLoader;
+export default FullCoverLoader;

@@ -1,7 +1,7 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { Switch } = require('peer-ui');
-const uiStore = require('~/stores/ui-store');
+import React from 'react';
+import { observer } from 'mobx-react';
+import { Switch } from 'peer-ui';
+import uiStore from '~/stores/ui-store';
 
 @observer
 class Dev extends React.Component {
@@ -24,4 +24,4 @@ class Dev extends React.Component {
     }
 }
 
-module.exports = Dev;
+export default Dev;

@@ -1,9 +1,9 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { chatStore } = require('peerio-icebear');
+import React from 'react';
+import { observer } from 'mobx-react';
+import { chatStore } from 'peerio-icebear';
 
-const T = require('~/ui/shared-components/T').default;
-const PlusIcon = require('~/ui/shared-components/PlusIcon');
+import T from '~/ui/shared-components/T';
+import PlusIcon from '~/ui/shared-components/PlusIcon';
 
 @observer
 class PatientZeroChats extends React.Component {
@@ -35,4 +35,4 @@ class PatientZeroChats extends React.Component {
     }
 }
 
-module.exports = PatientZeroChats;
+export default PatientZeroChats;

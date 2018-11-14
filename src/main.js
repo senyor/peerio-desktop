@@ -2,7 +2,6 @@ if (process.env.NODE_ENV !== 'development') {
     process.env.NODE_ENV = 'production';
 }
 
-/* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
 
 let mainWindow;
@@ -12,6 +11,12 @@ process.on('uncaughtException', error => {
 });
 
 const isDevEnv = require('~/helpers/is-dev-env').default;
+
+if (isDevEnv) {
+    // enable source map support in the electron main process. (the render
+    // process should pick up source maps on its own just fine.)
+    require('source-map-support').install();
+}
 
 let singleInstanceLock;
 
@@ -80,15 +85,15 @@ if (isDevEnv) {
 // configure logging
 require('~/helpers/logging');
 
-const devtools = require('~/main-process/dev-tools');
+const { onAppReady: devtoolsOnAppReady, installExtensions } = require('~/main-process/dev-tools');
 const buildContextMenu = require('~/main-process/context-menu').default;
-const buildGlobalShortcuts = require('~/main-process/global-shortcuts');
-const applyMiscHooks = require('~/main-process/misc-hooks');
+const buildGlobalShortcuts = require('~/main-process/global-shortcuts').default;
+const applyMiscHooks = require('~/main-process/misc-hooks').default;
 const { saveWindowState, getSavedWindowState } = require('~/main-process/state-persistance');
-const setMainMenu = require('~/main-process/main-menu');
+const setMainMenu = require('~/main-process/main-menu').default;
 const setTrayIcon = require('~/main-process/tray').default;
 const { isAppInDMG, handleLaunchFromDMG } = require('~/main-process/dmg');
-const updater = require('./main-process/updater');
+const { start: startUpdater } = require('./main-process/updater');
 const config = require('~/config').default;
 
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
@@ -139,7 +144,7 @@ app.on('ready', async () => {
         winConfig.icon = `${__dirname}/static/img/icon.png`;
     }
 
-    await devtools.installExtensions();
+    await installExtensions();
 
     mainWindow = new BrowserWindow(winConfig);
     mainWindow.loadURL(`file://${__dirname}/index.html`);
@@ -221,10 +226,10 @@ app.on('ready', async () => {
 
     applyMiscHooks(mainWindow);
     buildContextMenu(mainWindow);
-    devtools.onAppReady(mainWindow);
+    devtoolsOnAppReady(mainWindow);
 
     if (!(await isAppInDMG())) {
-        updater.start(mainWindow);
+        startUpdater(mainWindow);
     }
 });
 

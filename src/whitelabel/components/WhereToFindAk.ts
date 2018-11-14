@@ -1,11 +1,9 @@
 import config from '~/config';
 
-// this will not mutate
 // eslint-disable-next-line import/no-mutable-exports
-let WhereToFindAk = require('~/ui/login/WhereToFindAk');
-
+let WhereToFindAk = require('~/ui/login/WhereToFindAk').default;
 if (config.whiteLabel.name) {
-    WhereToFindAk = require('~/ui/login/WhereToFindAk_WL');
+    WhereToFindAk = require('~/ui/login/WhereToFindAk_WL').default;
 }
 
 export default WhereToFindAk;

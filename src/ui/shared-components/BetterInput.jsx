@@ -1,8 +1,8 @@
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { Input } = require('peer-ui');
-const { t } = require('peerio-icebear');
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { Input } from 'peer-ui';
+import { t } from 'peerio-icebear';
 
 @observer
 class BetterInput extends React.Component {
@@ -104,4 +104,4 @@ class BetterInput extends React.Component {
     }
 }
 
-module.exports = BetterInput;
+export default BetterInput;

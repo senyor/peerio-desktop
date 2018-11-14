@@ -1,9 +1,9 @@
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { Input } = require('peer-ui');
-const { User, t } = require('peerio-icebear');
-const _ = require('lodash');
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { Input } from 'peer-ui';
+import { User, t } from 'peerio-icebear';
+import _ from 'lodash';
 
 @observer
 class PasscodeLock extends React.Component {
@@ -48,4 +48,4 @@ class PasscodeLock extends React.Component {
     }
 }
 
-module.exports = PasscodeLock;
+export default PasscodeLock;

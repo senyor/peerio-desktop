@@ -1,13 +1,13 @@
 // @ts-check
-const React = require('react');
-const { observable, computed, action, values, keys } = require('mobx');
-const { observer } = require('mobx-react');
-const { contactStore, User, t } = require('peerio-icebear');
-const { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } = require('peer-ui');
-const css = require('classnames');
-const T = require('~/ui/shared-components/T').default;
-const { getContactByEvent } = require('~/helpers/icebear-dom');
-const { ModifyShareDialog } = require('./ModifyShareDialog');
+import React from 'react';
+import { observable, computed, action, values, keys } from 'mobx';
+import { observer } from 'mobx-react';
+import { contactStore, User, t } from 'peerio-icebear';
+import { Avatar, Dialog, Input, List, ListItem, MaterialIcon, Button } from 'peer-ui';
+import css from 'classnames';
+import T from '~/ui/shared-components/T';
+import { getContactByEvent } from '~/helpers/icebear-dom';
+import { ModifyShareDialog } from './ModifyShareDialog';
 
 /**
  * @typedef {'sharefiles' | 'sharefolders' | ''} ShareContext
@@ -226,4 +226,4 @@ class ShareWithMultipleDialog extends React.Component {
     }
 }
 
-module.exports = ShareWithMultipleDialog;
+export default ShareWithMultipleDialog;

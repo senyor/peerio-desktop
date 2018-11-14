@@ -1,16 +1,16 @@
-const React = require('react');
-const { computed } = require('mobx');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { computed } from 'mobx';
+import { observer } from 'mobx-react';
 
-const { chatStore, chatInviteStore, t } = require('peerio-icebear');
-const routerStore = require('~/stores/router-store');
+import { chatStore, chatInviteStore, t } from 'peerio-icebear';
+import routerStore from '~/stores/router-store';
 
-const css = require('classnames');
-const FlipMove = require('react-flip-move');
-const { List, ListItem, Tooltip } = require('peer-ui');
-const PlusIcon = require('~/ui/shared-components/PlusIcon');
-const { getAttributeInParentChain } = require('~/helpers/dom');
-const T = require('~/ui/shared-components/T').default;
+import css from 'classnames';
+import FlipMove from 'react-flip-move';
+import { List, ListItem, Tooltip } from 'peer-ui';
+import PlusIcon from '~/ui/shared-components/PlusIcon';
+import { getAttributeInParentChain } from '~/helpers/dom';
+import T from '~/ui/shared-components/T';
 
 @observer
 class PatientList extends React.Component {
@@ -79,4 +79,4 @@ class PatientList extends React.Component {
     }
 }
 
-module.exports = PatientList;
+export default PatientList;

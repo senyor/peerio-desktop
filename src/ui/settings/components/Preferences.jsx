@@ -1,11 +1,11 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { Checkbox } = require('peer-ui');
-const { MaterialIcon, Switch } = require('peer-ui');
-const T = require('~/ui/shared-components/T').default;
-const { User, chatStore, t } = require('peerio-icebear');
-const uiStore = require('~/stores/ui-store');
-const { fileStore } = require('peerio-icebear');
+import React from 'react';
+import { observer } from 'mobx-react';
+
+import { Checkbox, MaterialIcon, Switch } from 'peer-ui';
+import { User, chatStore, t, fileStore } from 'peerio-icebear';
+
+import T from '~/ui/shared-components/T';
+import uiStore from '~/stores/ui-store';
 
 @observer
 class Preferences extends React.Component {
@@ -194,4 +194,4 @@ class Preferences extends React.Component {
  </section>
 */
 
-module.exports = Preferences;
+export default Preferences;

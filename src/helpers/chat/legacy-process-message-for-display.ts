@@ -73,7 +73,6 @@ const autolinker = new Autolinker({
  * Also caches the result in the message's processedText field, returning it immediately if it's valid.
  * @returns The processed message, ready for direct use in `dangerouslySetInnerHTML`.
  */
-// eslint-disable-next-line import/prefer-default-export
 export function processMessageForDisplay(msg: {
     lastProcessedVersion;
     version;
@@ -88,7 +87,6 @@ export function processMessageForDisplay(msg: {
 
     // we don't expect any html in original text,
     // if there are any tags - user entered them, we consider them plaintext and encode
-    /** @type {string} */
     let str: string = emojione.toShort(msg.text);
     str = htmlEncoder.encode(str);
     // in case some tags magically sneak in - remove all html except whitelisted

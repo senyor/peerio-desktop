@@ -1,3 +1,3 @@
 const cfg = {};
 
-export default cfg;
+module.exports = cfg;

@@ -1,4 +1,4 @@
-import { startAppAndConnect, login, closeApp, isDev } from './helpers';
+const { startAppAndConnect, login, closeApp, isDev } = require('./helpers');
 
 describe('Login:', function() {
     setupTimeout(this);

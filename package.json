@@ -152,6 +152,7 @@
     "react-flip-move": "3.0.3",
     "react-router": "3.2.0",
     "sanitize-filename": "1.6.1",
+    "source-map-support": "0.5.9",
     "zxcvbn": "4.4.2"
   },
   "devDependencies": {
@@ -214,7 +215,6 @@
     "prettier": "1.13.7",
     "react-addons-perf": "15.4.2",
     "require-global-node-module": "1.1.0",
-    "source-map-support": "0.5.9",
     "spectron": "3.8.0",
     "standard-version": "4.4.0",
     "stylelint": "9.7.1",

@@ -17,7 +17,7 @@ const routerStore = require('~/stores/router-store');
 
 const config = require('~/config').default;
 const urls = config.translator.urlMap;
-const AppNavBeaconedItem = require('./AppNavBeaconedItem');
+const AppNavBeaconedItem = require('./AppNavBeaconedItem').default;
 const updaterStore = require('~/stores/updater-store');
 
 const { app, nativeImage } = remote;

@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 
 import { Avatar, Divider, Menu, MenuHeader, MenuItem } from 'peer-ui';
-import { User, contactStore, chatStore, fileStore, t } from 'peerio-icebear';
+import { User, contactStore, chatStore, t, LocalizationStrings } from 'peerio-icebear';
 
 import UsageCloud from '~/ui/shared-components/UsageCloud';
 import SignoutDialog from '~/ui/shared-components/SignoutDialog';
@@ -15,8 +15,8 @@ import {
     sendInviteAcceptedNotification,
     sendInviteNotification
 } from '~/helpers/notifications';
-import appControl from '~/helpers/app-control';
-import autologin from '~/helpers/autologin';
+import { relaunch as relaunchApp } from '~/helpers/app-control';
+import { disable as disableAutologin } from '~/helpers/autologin';
 import routerStore from '~/stores/router-store';
 
 import config from '~/config';
@@ -24,7 +24,7 @@ import updaterStore from '~/stores/updater-store';
 import AppNavBeaconedItem from './AppNavBeaconedItem';
 
 const urls = config.translator.urlMap;
-
+const { ROUTES } = routerStore;
 const { app, nativeImage } = remote;
 
 // todo: move this somewhere more appropriate
@@ -83,25 +83,16 @@ function startDesktopNotifications() {
 export default class AppNav extends React.Component {
     @observable isConfirmSignOutVisible = false;
 
-    constructor() {
-        super();
-        [
-            'chats',
-            'files',
-            'contacts',
-            'profile',
-            'security',
-            'prefs',
-            'account',
-            'about',
-            'help',
-            'onboarding'
-        ].forEach(route => {
-            this[`to${route[0].toUpperCase()}${route.slice(1)}`] = () => {
-                routerStore.navigateTo(routerStore.ROUTES[route]);
-            };
-        });
-    }
+    toChats = () => routerStore.navigateTo(ROUTES.chats);
+    toFiles = () => routerStore.navigateTo(ROUTES.files);
+    toContacts = () => routerStore.navigateTo(ROUTES.contacts);
+    toProfile = () => routerStore.navigateTo(ROUTES.profile);
+    toSecurity = () => routerStore.navigateTo(ROUTES.security);
+    toPrefs = () => routerStore.navigateTo(ROUTES.prefs);
+    toAccount = () => routerStore.navigateTo(ROUTES.account);
+    toAbout = () => routerStore.navigateTo(ROUTES.about);
+    toHelp = () => routerStore.navigateTo(ROUTES.help);
+    toOnboarding = () => routerStore.navigateTo(ROUTES.onboarding);
 
     componentWillMount() {
         // since this component shows new items notifications, we also make it show dock icon notifications
@@ -114,7 +105,19 @@ export default class AppNav extends React.Component {
     get menuItems() {
         const hideUpgrade = config.disablePayments || User.current.hasActivePlans;
 
-        const menuContent = [
+        interface MenuItem {
+            value?: string;
+            icon?: string;
+            customIcon?: string;
+            caption?: keyof LocalizationStrings;
+            className?: string;
+            hidden?: boolean;
+            divider?: boolean;
+            route?: string;
+            clickFunction?: string;
+        }
+
+        const menuContent: MenuItem[] = [
             {
                 value: 'Profile',
                 customIcon: 'public-profile',
@@ -193,11 +196,11 @@ export default class AppNav extends React.Component {
                 <MenuItem
                     key={value}
                     value={value}
-                    caption={t(m.caption)}
+                    caption={t(m.caption) as string}
                     className={className}
                     icon={m.icon}
                     customIcon={m.customIcon}
-                    selected={routerStore.currentRoute === routerStore.ROUTES[route]}
+                    selected={routerStore.currentRoute === ROUTES[route]}
                     onClick={this[clickFunction]}
                 />
             );
@@ -205,9 +208,9 @@ export default class AppNav extends React.Component {
     }
 
     _doSignout = async untrust => {
-        await autologin.disable();
+        disableAutologin();
         await User.current.signout(untrust);
-        appControl.relaunch();
+        relaunchApp();
     };
 
     signout = async () => {
@@ -228,7 +231,7 @@ export default class AppNav extends React.Component {
 
     render() {
         const contact = contactStore.getContact(User.current.username);
-        const { currentRoute, ROUTES } = routerStore;
+        const { currentRoute } = routerStore;
         const { primaryAddressConfirmed } = User.current;
 
         return (
@@ -266,7 +269,6 @@ export default class AppNav extends React.Component {
                             currentRoute.startsWith(ROUTES.patients)
                         }
                         showBadge={chatStore.badgeCount > 0}
-                        badge={chatStore.badgeCount}
                         onClick={this.toChats}
                     />
                     <AppNavBeaconedItem
@@ -274,7 +276,6 @@ export default class AppNav extends React.Component {
                         tooltip={t('title_files')}
                         icon="folder"
                         active={currentRoute.startsWith(ROUTES.files)}
-                        showBadge={fileStore.unreadFiles > 0}
                         onClick={this.toFiles}
                     />
                     <AppNavBeaconedItem

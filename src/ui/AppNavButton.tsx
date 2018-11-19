@@ -3,8 +3,17 @@ import { Button } from 'peer-ui';
 import css from 'classnames';
 import { observer } from 'mobx-react';
 
+export interface AppNavButtonProps {
+    active: boolean;
+    onClick: () => void;
+    tooltip: string;
+    icon: string;
+    showBadge?: boolean;
+    className?: string;
+}
+
 @observer
-class AppNav extends React.Component {
+export default class AppNavButton extends React.Component<AppNavButtonProps> {
     render() {
         return (
             <div
@@ -21,5 +30,3 @@ class AppNav extends React.Component {
         );
     }
 }
-
-export default AppNav;

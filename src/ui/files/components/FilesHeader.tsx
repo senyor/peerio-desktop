@@ -85,7 +85,8 @@ export default class FilesHeader extends React.Component<{
             {
                 label: t('button_delete'),
                 icon: 'delete',
-                onClick: fileStore.bulk.remove
+                onClick: fileStore.bulk.remove,
+                disabled: !fileStore.bulk.canDelete
             }
         ];
         bulkButtons.unshift({

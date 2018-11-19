@@ -48,21 +48,11 @@ interface RectanglePosition {
 
 @observer
 export default class Beacon extends React.Component<SpotBeaconProps | AreaBeaconProps> {
+    @observable rendered = false;
     @computed
     get active() {
         return beaconStore.activeBeacon === this.props.name;
     }
-
-    // We make a lot of calculations based on child content size and position
-    // `contentRef` stores the ref for the .beacon-container component which contains the child content
-    @observable contentRef;
-    @observable rendered = false;
-    setContentRef = ref => {
-        if (ref) {
-            this.contentRef = ref;
-            this.setContentRect();
-        }
-    };
 
     // `contentRect` stores the bounding rect for the child content.
     // We give it default values to start, to prevent null references
@@ -76,19 +66,22 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
 
     @action.bound
     setContentRect() {
-        if (this.contentRef) {
-            this.contentRect = this.contentRef.getBoundingClientRect();
-        }
+        const contentRef = document.querySelector(`.__beacon-target-id-${this.props.name}`);
+        if (!contentRef) return;
+        this.contentRect = contentRef.getBoundingClientRect();
     }
 
     @observable dispose: IReactionDisposer;
     @observable renderTimeout: NodeJS.Timer;
-    componentWillMount() {
+    componentDidMount() {
+        // setContentRect on mount
+        this.setContentRect();
+
         // Update `contentRect` on window resize
         window.addEventListener('resize', this.setContentRect);
 
         this.dispose = reaction(
-            () => this.active && !!this.contentRef,
+            () => this.active,
             active => {
                 if (active) {
                     this.renderTimeout = setTimeout(() => {
@@ -339,18 +332,20 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
         beaconStore.increment();
     }
 
-    // Render the child content, wrapped in .beacon-container div so we can make the above positioning calculations
-    get childContent() {
-        return (
-            <div key="beacon-container" className="beacon-container" ref={this.setContentRef}>
-                {this.props.children}
-            </div>
-        );
+    // Render a clone of the child content with the `beacon-target` class added
+    @computed
+    get clonedChildContent() {
+        const originalChild = React.Children.only(this.props.children);
+        return React.cloneElement(originalChild, {
+            key: `beacon-target-id-${this.props.name}`,
+            className: css(originalChild.props.className, `__beacon-target-id-${this.props.name}`)
+        });
     }
 
-    beaconContent() {
-        const title: string = this.props.title || t(`title_${this.props.name}_beacon` as any);
-        const description: string =
+    @computed
+    get beaconContent() {
+        const title = this.props.title || t(`title_${this.props.name}_beacon` as any);
+        const description =
             this.props.description || t(`description_${this.props.name}_beacon` as any);
 
         return (
@@ -395,11 +390,8 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
     }
 
     render() {
-        if (!this.active && !this.rendered) return this.childContent;
-
-        const beaconContent = this.beaconContent();
-
-        return [this.childContent, ReactDOM.createPortal(beaconContent, appRoot)];
+        if (!this.active && !this.rendered) return this.clonedChildContent;
+        return [this.clonedChildContent, ReactDOM.createPortal(this.beaconContent, appRoot)];
     }
 }
 

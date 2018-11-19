@@ -6,7 +6,6 @@ import { Button } from 'peer-ui';
 import { fileStore, chatStore, volumeStore, t } from 'peerio-icebear';
 import Beacon from '~/ui/shared-components/Beacon';
 
-import config from '~/config';
 import Search from '~/ui/shared-components/Search';
 import ShareWithMultipleDialog from '~/ui/shared-components/ShareWithMultipleDialog';
 
@@ -89,14 +88,12 @@ export default class FilesHeader extends React.Component<{
                 onClick: fileStore.bulk.remove
             }
         ];
-        if (config.enableVolumes) {
-            bulkButtons.unshift({
-                label: t('button_share'),
-                icon: 'person_add',
-                onClick: this.shareSelected,
-                disabled: !fileStore.bulk.canShare
-            });
-        }
+        bulkButtons.unshift({
+            label: t('button_share'),
+            icon: 'person_add',
+            onClick: this.shareSelected,
+            disabled: !fileStore.bulk.canShare
+        });
         return bulkButtons.map(props => <Button key={props.label} {...props} />);
     }
 

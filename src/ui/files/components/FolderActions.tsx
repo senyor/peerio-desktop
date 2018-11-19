@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import { volumeStore, t } from 'peerio-icebear';
 import { Menu, MenuItem, Divider } from 'peer-ui';
 
-import config from '~/config';
 import ShareWithMultipleDialog from '~/ui/shared-components/ShareWithMultipleDialog';
 
 import AddOrRenameDialog from './AddOrRenameDialog';
@@ -83,7 +82,7 @@ export default class FolderActions extends React.Component<FolderActionsProps> {
                     onHide={this.props.onMenuHide}
                     disabled={this.props.disabled}
                 >
-                    {shareVisible && config.enableVolumes ? (
+                    {shareVisible ? (
                         <MenuItem
                             caption={t('button_share')}
                             icon="person_add"

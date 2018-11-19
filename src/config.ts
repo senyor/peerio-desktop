@@ -22,7 +22,6 @@ if (!packageJson.peerio) {
 
 interface DesktopConfig extends Config {
     os: string;
-    enableVolumes: boolean;
     translator: {
         stringReplacements: { original: string; replacement: string }[];
         urlMap: { [key: string]: string };
@@ -138,7 +137,5 @@ try {
 } catch (err) {
     console.log(err);
 }
-
-cfg.enableVolumes = true;
 
 export default cfg;

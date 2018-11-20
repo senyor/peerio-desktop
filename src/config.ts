@@ -5,6 +5,7 @@ import { setUrlMap, setTagHandler, setStringReplacement } from 'peerio-translato
 import { config, Config } from 'peerio-icebear';
 import FileStream from 'peerio-icebear/dist/models/files/node-file-stream';
 import StorageEngine from 'peerio-icebear/dist/models/storage/node-json-storage';
+import fetchHeaders from 'peerio-icebear/dist/helpers/node-fetch-headers';
 
 import isDevEnv from '~/helpers/is-dev-env';
 import CacheEngine from '~/stores/indexed-db-storage';
@@ -28,6 +29,8 @@ interface DesktopConfig extends Config {
     };
     FileStream: typeof FileStream;
     StorageEngine: typeof StorageEngine;
+    CacheEngine: typeof CacheEngine;
+    unfurlHeadersFetcher: () => typeof fetchHeaders;
     nodeLogFolder: string;
     devAutologin?: Partial<{
         username: string;
@@ -77,6 +80,7 @@ cfg.FileStream.storageFolder = path.join(app.getPath('userData'), 'ImageCache');
 cfg.StorageEngine = StorageEngine;
 cfg.StorageEngine.storageFolder = app.getPath('userData');
 cfg.CacheEngine = CacheEngine;
+cfg.unfurlHeadersFetcher = () => fetchHeaders;
 
 // --- FILE UPLOAD/DOWNLOAD SETTINGS
 cfg.download.parallelism = 4;

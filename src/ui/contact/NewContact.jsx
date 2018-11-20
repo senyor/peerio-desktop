@@ -230,7 +230,10 @@ class NewContact extends React.Component {
                     </div>
                 </div>
                 <div className="image-container">
-                    <img src="./static/img/illustrations/contacts-add-invite.svg" />
+                    <img
+                        src="./static/img/illustrations/contacts-add-invite.svg"
+                        draggable={false}
+                    />
                 </div>
             </div>
         );

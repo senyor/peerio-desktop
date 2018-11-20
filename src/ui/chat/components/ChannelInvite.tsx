@@ -135,7 +135,7 @@ export default class ChannelInvite extends React.Component<ChannelInviteProps> {
         return (
             <div className={css('channel-invite', this.props.className)}>
                 <div className="invite-content">
-                    <img src="./static/img/illustrations/room-invite.svg" />
+                    <img src="./static/img/illustrations/room-invite.svg" draggable={false} />
                     <div className="text">
                         <T k="title_roomInviteTitle">{{ roomName: channelName }}</T>
                     </div>

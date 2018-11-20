@@ -20,7 +20,11 @@ export default class ZeroFiles extends React.Component<ZeroFilesProps> {
                     <T k="title_emptyFolder" className="headline" />
                 )}
 
-                <img src="./static/img/illustrations/zero-files.svg" className="illustration" />
+                <img
+                    src="./static/img/illustrations/zero-files.svg"
+                    className="illustration"
+                    draggable={false}
+                />
                 <div className="instructions">
                     <T k="title_zeroFilesDescription" className="instructions">
                         {{

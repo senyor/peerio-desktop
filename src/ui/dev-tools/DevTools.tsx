@@ -1,30 +1,40 @@
-const React = require('react');
-const { Button, Chip, Divider, Menu, MenuItem } = require('peer-ui');
-const { User, socket } = require('peerio-icebear');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { observable, action } from 'mobx';
+import { observer } from 'mobx-react';
+
+import { User, socket } from 'peerio-icebear';
+import { Button, Chip, Divider, Menu, MenuItem, Dropdown } from 'peer-ui';
+
+import languageStore from '~/stores/language-store';
 
 @observer
-class DevTools extends React.Component {
+export default class DevTools extends React.Component {
     @observable menuActive = false;
-    toggleMenu = () => {
+
+    @action.bound
+    toggleMenu() {
         this.menuActive = !this.menuActive;
-    };
-    hideMenu = () => {
+    }
+
+    @action.bound
+    hideMenu() {
         this.menuActive = false;
-    };
+    }
+
     quit() {
         if (User.current) {
-            window.router.push('/app/chats');
+            (window as any).router.push('/app/chats');
         } else {
-            window.router.push('/');
+            (window as any).router.push('/');
         }
     }
+
     gotoDashboard() {
-        window.router.push('/dev-tools');
+        (window as any).router.push('/dev-tools');
     }
+
     gotoKegEditor() {
-        window.router.push('/dev-tools/kegs');
+        (window as any).router.push('/dev-tools/kegs');
     }
 
     render() {
@@ -47,6 +57,17 @@ class DevTools extends React.Component {
                         <MenuItem icon="close" caption="Close" onClick={this.quit} />
                     </Menu>
                     <div className="separator" />
+                    <Dropdown
+                        label="Language"
+                        options={[
+                            // There's no list of available languages yet.
+                            { value: 'en', label: 'English' },
+                            { value: 'pseudo', label: 'Pseudo' }
+                        ]}
+                        onChange={val => languageStore.changeLanguage(val)}
+                        value={languageStore.language}
+                    />
+                    <div className="separator" />
                     {socket.connected ? (
                         <Chip className="good-bg">connected</Chip>
                     ) : (
@@ -65,5 +86,3 @@ class DevTools extends React.Component {
         );
     }
 }
-
-module.exports = DevTools;

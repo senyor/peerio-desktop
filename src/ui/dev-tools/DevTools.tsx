@@ -1,18 +1,26 @@
 import React from 'react';
-import { Button, Chip, Divider, Menu, MenuItem } from 'peer-ui';
-import { User, socket } from 'peerio-icebear';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 
+import { User, socket } from 'peerio-icebear';
+import { Button, Chip, Divider, Menu, MenuItem, Dropdown } from 'peer-ui';
+
+import languageStore from '~/stores/language-store';
+
 @observer
-class DevTools extends React.Component {
+export default class DevTools extends React.Component {
     @observable menuActive = false;
-    toggleMenu = () => {
+
+    @action.bound
+    toggleMenu() {
         this.menuActive = !this.menuActive;
-    };
-    hideMenu = () => {
+    }
+
+    @action.bound
+    hideMenu() {
         this.menuActive = false;
-    };
+    }
+
     quit() {
         if (User.current) {
             window.router.push('/app/chats');
@@ -20,9 +28,11 @@ class DevTools extends React.Component {
             window.router.push('/');
         }
     }
+
     gotoDashboard() {
         window.router.push('/dev-tools');
     }
+
     gotoKegEditor() {
         window.router.push('/dev-tools/kegs');
     }
@@ -47,6 +57,17 @@ class DevTools extends React.Component {
                         <MenuItem icon="close" caption="Close" onClick={this.quit} />
                     </Menu>
                     <div className="separator" />
+                    <Dropdown
+                        label="Language"
+                        options={[
+                            // There's no list of available languages yet.
+                            { value: 'en', label: 'English' },
+                            { value: 'pseudo', label: 'Pseudo' }
+                        ]}
+                        onChange={val => languageStore.changeLanguage(val)}
+                        value={languageStore.language}
+                    />
+                    <div className="separator" />
                     {socket.connected ? (
                         <Chip className="good-bg">connected</Chip>
                     ) : (
@@ -65,5 +86,3 @@ class DevTools extends React.Component {
         );
     }
 }
-
-export default DevTools;

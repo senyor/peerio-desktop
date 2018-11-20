@@ -5,7 +5,7 @@ import moment from 'moment';
 import { observable, action } from 'mobx';
 
 import { setLocale } from 'peerio-translator';
-import { errors as icebearErrors, TinyDb as db, PhraseDictionary } from 'peerio-icebear';
+import { errors as icebearErrors, TinyDb as db } from 'peerio-icebear';
 
 const electron = require('electron').remote || require('electron');
 const normalizeError = icebearErrors.normalize;
@@ -83,15 +83,6 @@ class LanguageStore {
         return this._dictionaryLangsCache;
     }
 
-    buildDictionary() {
-        const txtPath = path.join(
-            electron.app.getAppPath(),
-            `/node_modules/peerio-copy/phrase/dict/${this.language}.txt`
-        );
-        const dict = fs.readFileSync(txtPath, 'utf8');
-        PhraseDictionary.setDictionary(this.language, dict);
-    }
-
     @action.bound
     changeLanguage(code: string) {
         try {
@@ -104,8 +95,6 @@ class LanguageStore {
             this.language = code;
             // save to local storage
             db.system.setValue('language', code);
-            // load correct passphrase dictionary
-            this.buildDictionary();
             // set locale for dates
             moment.locale(code);
             console.log(`Language changed to ${code}`);

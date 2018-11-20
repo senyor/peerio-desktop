@@ -5,7 +5,6 @@ import { observable, computed } from 'mobx';
 import { fileStore, chatStore, t } from 'peerio-icebear';
 import { File, FileFolder } from 'peerio-icebear/dist/models';
 import { Dialog, ProgressBar } from 'peer-ui';
-import config from '~/config';
 import Search from '~/ui/shared-components/Search';
 
 import FileLine from './FileLine';
@@ -123,8 +122,7 @@ export default class FilePicker extends React.Component<FilePickerProps> {
 
         const items = [];
         const data = this.items;
-        const canShareFolder =
-            config.enableVolumes && chatStore.activeChat && !chatStore.activeChat.isChannel;
+        const canShareFolder = chatStore.activeChat && !chatStore.activeChat.isChannel;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             if (f.isLegacy && this.props.hideLegacy) continue;

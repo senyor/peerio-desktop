@@ -14,7 +14,7 @@ class UrlPreview extends React.Component {
     };
 
     render() {
-        const { url, isOversizeCutoff, isOverInlineSizeLimit } = this.props.urlData;
+        const { url, isOversizeCutoff, isOverInlineSizeLimit, isInsecure } = this.props.urlData;
         const tooBig = !isOversizeCutoff && isOverInlineSizeLimit;
         const showImage = forceShowCache.get(url) || (!tooBig && !isOversizeCutoff);
         return (
@@ -47,7 +47,16 @@ class UrlPreview extends React.Component {
                                     </T>
                                 </div>
                             )}
-                            {showImage && <img src={url} onLoad={this.props.onImageLoaded} />}
+                            {showImage &&
+                                (isInsecure ? (
+                                    <div className="image-insecure">
+                                        <div className="image-insecure-text">
+                                            <T k="title_insecureImagePreviewWarning" />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <img src={url} onLoad={this.props.onImageLoaded} />
+                                ))}
                         </div>
                     </div>
                 </div>

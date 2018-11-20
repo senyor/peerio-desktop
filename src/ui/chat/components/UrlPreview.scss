@@ -45,12 +45,29 @@
       max-height: $image-height;
       overflow: hidden;
 
-      img {
+      img,
+      .image-insecure {
         height: auto;
         width: auto;
         max-height: $image-height;
         max-width: 100%;
         border-radius: 2px;
+      }
+
+      .image-insecure {
+        min-width: 60%;
+        padding: 64px 16px;
+        font-size: 13px;
+        font-style: italic;
+        text-align: center;
+        color: rgba(0, 0, 0, 0.54);
+        background-color: rgba(4, 11, 64, 0.05);
+        border-radius: 4px;
+
+        .image-insecure-text {
+          max-width: 170px;
+          margin: auto;
+        }
       }
     }
   }

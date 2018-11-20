@@ -1,8 +1,9 @@
 ################################################################################
 #
 # This .feature file has been written by Mona Ghassemi for use by Peerio.
-# It is part of a set of .feature files currently included in a folder 
-# called SHARED_FOLDERS_SCENARIOS.
+# It is part of a set of .feature files located in this folder for Desktop 
+# File and Folder scenarios. 
+#
 #
 # The Scenarios have been created based on contents of the "Files Planning"
 #   document available in the Peerio Google drive, and based on the

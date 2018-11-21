@@ -54,7 +54,7 @@ class BetterInput extends React.Component {
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
         if (this.accepted || this.rejected) return;
-        this.props.onAccept(this.value, this.isValid);
+        if (this.props.onAccept) this.props.onAccept(this.value, this.isValid);
         this.accepted = true;
     };
 
@@ -62,7 +62,7 @@ class BetterInput extends React.Component {
         if (e.key === 'Enter') {
             if (!this.isValid) return;
             this.accepted = true;
-            this.props.onAccept(this.value, this.isValid);
+            if (this.props.onAccept) this.props.onAccept(this.value, this.isValid);
             if (this.props.onBlur) this.props.onBlur();
         }
         if (e.key === 'Escape') {

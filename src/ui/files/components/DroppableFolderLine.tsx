@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { DropTarget, DropTargetSpec } from 'react-dnd';
 
-import { fileStore, warnings, t } from 'peerio-icebear';
+import { fileStore, warnings } from 'peerio-icebear';
 
 import FolderLine, { FolderLineProps } from './FolderLine';
 
@@ -17,16 +17,20 @@ const folderDropSpec: DropTargetSpec<DroppableFolderLineProps> = {
         }
 
         const { filesOrFolders } = getAllDraggedItems();
-        const snackbarCopy =
+        const snackbarCopyKey =
             filesOrFolders.length === 1
-                ? t('warning_oneFileOrFolderMoved', {
+                ? 'warning_oneFileOrFolderMoved'
+                : 'warning_multipleFilesOrFoldersMoved';
+        const snackbarCopyParams =
+            filesOrFolders.length === 1
+                ? {
                       fileOrFolderName: filesOrFolders[0].name,
                       targetFolderName: props.folder.name
-                  })
-                : t('warning_multipleFilesOrFoldersMoved', {
+                  }
+                : {
                       count: filesOrFolders.length,
                       targetFolderName: props.folder.name
-                  });
+                  };
 
         if (
             props.folder.root.isShared &&
@@ -35,12 +39,12 @@ const folderDropSpec: DropTargetSpec<DroppableFolderLineProps> = {
             (async () => {
                 if (await props.confirmShare()) {
                     await fileStore.bulk.move(props.folder);
-                    warnings.add(snackbarCopy);
+                    warnings.add(snackbarCopyKey, null, snackbarCopyParams);
                 }
             })();
         } else {
             fileStore.bulk.move(props.folder);
-            warnings.add(snackbarCopy);
+            warnings.add(snackbarCopyKey, null, snackbarCopyParams);
         }
     },
     canDrop(props, monitor) {

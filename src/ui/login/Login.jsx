@@ -16,7 +16,7 @@ import OrderedFormStore from '~/stores/ordered-form-store';
 import routerStore from '~/stores/router-store';
 import updaterStore from '~/stores/updater-store';
 import uiStore from '~/stores/ui-store';
-import autologin from '~/helpers/autologin';
+import * as autologin from '~/helpers/autologin';
 
 import WhereToFindAk from '~/whitelabel/components/WhereToFindAk';
 import PoweredByLogin from '~/whitelabel/components/PoweredByLogin';

@@ -157,6 +157,7 @@ export default class TwoFADialog extends React.Component {
                         value={this.totpCode}
                         onChange={this.onTOTPCodeChange}
                         onKeyDown={this.handleKeyDown}
+                        size="small"
                         label={t('title_2FAInputLabel')}
                         placeholder={t('title_2FAHelperText')}
                         autoFocus

@@ -37,10 +37,7 @@
     @extend %flex-align-center;
     display: flex;
     width: 100%;
-    padding: 0 $padding-small 0 $padding-default;
     overflow: hidden;
-    border: 1px solid $input-border;
-    border-radius: 24px;
 
     + .new-chat-search {
       margin-top: 32px;
@@ -51,33 +48,17 @@
       margin-top: 32px;
     }
 
-    .chip-wrapper {
-      min-height: 46px;
-      padding: 0 $padding-small;
-    }
-
     .p-input {
       flex-grow: 1;
       width: inherit;
       max-width: 100%;
       padding: 0;
       margin: 0;
-
-      input {
-        height: 40px;
-        padding: 0;
-        border-width: 0;
-      }
-
-      .hint-or-error {
-        display: none;
-      }
     }
   }
 
   .helper-text {
     @extend %hint-error-label;
-    margin-left: $margin-default;
     margin-top: $margin-tiny;
     color: $text-dark-hint;
   }
@@ -199,10 +180,6 @@
 
   .message-toolbar-inner-right {
     min-width: 72px; // 2x icon width 36px
-  }
-
-  .search {
-    margin-right: 12px;
   }
 }
 

@@ -31,12 +31,16 @@ $picker-border-radius: 6px;
   .emoji-search-input {
     height: 34px;
     width: 100%;
-    padding: 0 5px;
     font-size: 13px;
-    border: none;
 
-    &:focus {
-      outline: none;
+    .search-icon {
+      left: $margin-tiny;
+    }
+
+    input {
+      height: 32px;
+      padding-left: 32px;
+      border: none;
     }
   }
 

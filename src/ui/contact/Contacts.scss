@@ -30,7 +30,7 @@
     border-bottom: 1px solid $divider-dark;
 
     .material-icons {
-      margin-left: 32px;
+      margin-top: -24px;
       font-size: 48px;
     }
 
@@ -38,12 +38,8 @@
       margin-left: $margin-small;
 
       input {
-        padding: 0;
+        padding-left: 64px;
         border: 0;
-      }
-
-      .hint-or-error {
-        display: none;
       }
     }
   }

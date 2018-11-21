@@ -4,8 +4,7 @@ import { observable, computed } from 'mobx';
 
 import { fileStore, chatStore, t } from 'peerio-icebear';
 import { File, FileFolder } from 'peerio-icebear/dist/models';
-import { Dialog, ProgressBar } from 'peer-ui';
-import Search from '~/ui/shared-components/Search';
+import { Dialog, ProgressBar, SearchInput } from 'peer-ui';
 
 import FileLine from './FileLine';
 import FolderLine from './FolderLine';
@@ -87,6 +86,10 @@ export default class FilePicker extends React.Component<FilePickerProps> {
         fileStore.searchQuery = val;
     };
 
+    readonly handleClear = () => {
+        this.handleSearch('');
+    };
+
     get breadCrumbsHeader() {
         return (
             <Breadcrumb
@@ -166,7 +169,12 @@ export default class FilePicker extends React.Component<FilePickerProps> {
             >
                 {!fileStore.loading && this.props.active ? (
                     <div className="file-picker-body">
-                        <Search onChange={this.handleSearch} query={fileStore.searchQuery} />
+                        <SearchInput
+                            placeholder={t('title_search')}
+                            onChange={this.handleSearch}
+                            onClear={this.handleClear}
+                            value={fileStore.searchQuery}
+                        />
                         {fileStore.searchQuery ? this.searchResultsHeader : this.breadCrumbsHeader}
                         <div className="file-table-wrapper">
                             <div

@@ -2,7 +2,7 @@ const React = require('react');
 const { observable, computed, action } = require('mobx');
 const { observer } = require('mobx-react');
 const { chatStore, contactStore, User, t } = require('peerio-icebear');
-const { Avatar, Dialog, Input, List, ListItem, MaterialIcon } = require('peer-ui');
+const { Avatar, Dialog, List, ListItem, SearchInput } = require('peer-ui');
 const T = require('~/ui/shared-components/T').default;
 const { getChannelByEvent, getContactByEvent } = require('~/helpers/icebear-dom');
 
@@ -84,18 +84,13 @@ class ShareWithDialog extends React.Component {
                 title={t('title_shareWith')}
             >
                 <div className="share-with-contents">
-                    <div className="user-search">
-                        <MaterialIcon icon="search" />
-                        <div className="chip-wrapper">
-                            <Input
-                                placeholder={t('title_enterRoomOrContact')}
-                                value={this.query}
-                                onChange={this.handleTextChange}
-                                onKeyDown={this.handleKeyDown}
-                                noHelperText
-                            />
-                        </div>
-                    </div>
+                    <SearchInput
+                        placeholder={t('title_enterRoomOrContact')}
+                        value={this.query}
+                        onChange={this.handleTextChange}
+                        onKeyDown={this.handleKeyDown}
+                        noHelperText
+                    />
                     <div className="chat-list-container">
                         <div className="list-channels-container">
                             <div className="p-list-heading">

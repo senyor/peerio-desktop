@@ -10,6 +10,15 @@
     width: 100%;
   }
 
+  .new-chat-search {
+    position: relative;
+
+    .p-progress-bar {
+      position: absolute;
+      right: $margin-small;
+    }
+  }
+
   .p-list {
     padding-left: $userpicker-margin-large;
   }

@@ -135,31 +135,25 @@ class NewChannel extends React.Component {
                 </div>
                 <div className="new-channel-inputs">
                     <div className="message-search-wrapper-new-channel message-search-wrapper">
-                        <div className="new-chat-search">
-                            <div className="chip-wrapper">
-                                <Input
-                                    placeholder={t(STRINGS.newChannel.channelName)}
-                                    value={this.channelName}
-                                    onChange={this.handleNameChange}
-                                    maxLength={config.chat.maxChatNameLength}
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            placeholder={t(STRINGS.newChannel.channelName)}
+                            value={this.channelName}
+                            onChange={this.handleNameChange}
+                            maxLength={config.chat.maxChatNameLength}
+                            noHelperText
+                        />
                         <div className="helper-text" />
                     </div>
                     {routerStore.isPatientSpace || routerStore.isNewPatient ? null : (
                         <div className="message-search-wrapper-new-channel message-search-wrapper">
-                            <div className="new-chat-search">
-                                <div className="chip-wrapper">
-                                    <Input
-                                        placeholder={t(STRINGS.newChannel.channelPurpose)}
-                                        value={this.purpose}
-                                        onChange={this.handlePurposeChange}
-                                        maxLength={config.chat.maxChatPurposeLength}
-                                        autoFocus
-                                    />
-                                </div>
-                            </div>
+                            <Input
+                                placeholder={t(STRINGS.newChannel.channelPurpose)}
+                                value={this.purpose}
+                                onChange={this.handlePurposeChange}
+                                maxLength={config.chat.maxChatPurposeLength}
+                                autoFocus
+                                noHelperText
+                            />
                             <T
                                 k={STRINGS.newChannel.purposeHelper}
                                 tag="div"

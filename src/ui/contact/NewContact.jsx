@@ -1,7 +1,7 @@
 const React = require('react');
 const { observable, action, computed } = require('mobx');
 const { observer } = require('mobx-react');
-const { Button, Input, MaterialIcon, ProgressBar } = require('peer-ui');
+const { Button, SearchInput, ProgressBar } = require('peer-ui');
 const T = require('~/ui/shared-components/T').default;
 const css = require('classnames');
 const { contactStore, User, warnings, t } = require('peerio-icebear');
@@ -172,21 +172,20 @@ class NewContact extends React.Component {
                                 offsetX={168}
                                 offsetY={12}
                             >
-                                <div className="new-chat-search">
-                                    <MaterialIcon icon="search" />
-                                    <div className="chip-wrapper">
-                                        <Input
-                                            placeholder={t(
-                                                this.isInviteView
-                                                    ? 'title_enterEmail'
-                                                    : 'title_userSearch'
-                                            )}
-                                            value={this.query}
-                                            onChange={this.handleTextChange}
-                                            onKeyDown={this.handleKeyDown}
-                                            autoFocus
-                                        />
-                                    </div>
+                                <div className="new-contact-search">
+                                    <SearchInput
+                                        placeholder={t(
+                                            this.isInviteView
+                                                ? 'title_enterEmail'
+                                                : 'title_userSearch'
+                                        )}
+                                        value={this.query}
+                                        onChange={this.handleTextChange}
+                                        onKeyDown={this.handleKeyDown}
+                                        autoFocus
+                                        noHelperText
+                                    />
+
                                     <Button
                                         className={css({ hide: hideButton })}
                                         label={t(

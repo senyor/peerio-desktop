@@ -1,7 +1,6 @@
 const React = require('react');
 const { observer } = require('mobx-react');
-const { Avatar, Dropdown, MaterialIcon } = require('peer-ui');
-const { Button, Input, List, ListItem } = require('peer-ui');
+const { Avatar, Dropdown, SearchInput, Button, List, ListItem } = require('peer-ui');
 const { contactStore, chatStore, t } = require('peerio-icebear');
 const T = require('~/ui/shared-components/T').default;
 const { getAttributeInParentChain } = require('~/helpers/dom');
@@ -85,8 +84,7 @@ class ContactList extends React.Component {
         return (
             <div className="contacts-view">
                 <div className="toolbar">
-                    <MaterialIcon icon="search" />
-                    <Input
+                    <SearchInput
                         placeholder={t('title_findAContact')}
                         value={contactStore.uiViewSearchQuery}
                         onChange={this.handleSearchQueryChange}

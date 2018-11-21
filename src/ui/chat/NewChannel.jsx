@@ -91,30 +91,26 @@ class NewChannel extends React.Component {
                 </div>
                 <div className="new-channel-inputs">
                     <div className="message-search-wrapper-new-channel message-search-wrapper">
-                        <div className="new-chat-search">
-                            <div className="chip-wrapper">
-                                <Input
-                                    placeholder={t('title_channelName')}
-                                    value={this.channelName}
-                                    onChange={this.handleNameChange}
-                                    maxLength={config.chat.maxChatNameLength}
-                                    autoFocus
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            placeholder={t('title_channelName')}
+                            value={this.channelName}
+                            onChange={this.handleNameChange}
+                            maxLength={config.chat.maxChatNameLength}
+                            size="small"
+                            autoFocus
+                            noHelperText
+                        />
                         <div className="helper-text" />
                     </div>
                     <div className="message-search-wrapper-new-channel message-search-wrapper">
-                        <div className="new-chat-search">
-                            <div className="chip-wrapper">
-                                <Input
-                                    placeholder={t('title_purpose')}
-                                    value={this.purpose}
-                                    onChange={this.handlePurposeChange}
-                                    maxLength={config.chat.maxChatPurposeLength}
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            placeholder={t('title_purpose')}
+                            value={this.purpose}
+                            onChange={this.handlePurposeChange}
+                            maxLength={config.chat.maxChatPurposeLength}
+                            size="small"
+                            noHelperText
+                        />
                         <T k="title_optional" tag="div" className="helper-text" />
                     </div>
                     <div className="user-picker-container">

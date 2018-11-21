@@ -6,7 +6,7 @@ import FlipMove from 'react-flip-move';
 import _ from 'lodash';
 
 import { chatStore, chatInviteStore, t } from 'peerio-icebear';
-import { Button, List, ListItem, MaterialIcon, ProgressBar, Tooltip } from 'peer-ui';
+import { Button, CustomIcon, List, ListItem, MaterialIcon, ProgressBar, Tooltip } from 'peer-ui';
 
 import routerStore from '~/stores/router-store';
 import T from '~/ui/shared-components/T';
@@ -126,6 +126,7 @@ export default class ChatList extends React.Component {
                     rightContent={rightContent}
                 >
                     {c.name}
+                    {c.isFavorite ? <CustomIcon icon="pin-on" size="small" /> : null}
                 </ListItem>
             );
         });

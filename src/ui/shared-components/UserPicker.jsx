@@ -8,12 +8,11 @@ import {
     Avatar,
     Button,
     Chip,
-    Input,
     List,
     ListHeading,
     ListItem,
-    MaterialIcon,
-    ProgressBar
+    ProgressBar,
+    SearchInput
 } from 'peer-ui';
 
 import T from '~/ui/shared-components/T';
@@ -327,40 +326,46 @@ export default class UserPicker extends React.Component {
                                 <div className="message-search-inner">
                                     {this.props.isDM && <T k="title_to" className="title-to" />}
                                     <div className="new-chat-search">
-                                        <MaterialIcon icon="search" />
                                         <div className="chip-wrapper">
-                                            {this.selected.map(c => (
-                                                <Chip
-                                                    key={c.username}
-                                                    className={css({
-                                                        'not-found': c.notFound || c.isHidden
-                                                    })}
-                                                    onDeleteClick={() => this.selected.remove(c)}
-                                                    deletable
-                                                >
-                                                    {c.loading ? (
-                                                        <ProgressBar
-                                                            type="linear"
-                                                            mode="indeterminate"
-                                                        />
-                                                    ) : (
-                                                        c.username
-                                                    )}
-                                                </Chip>
-                                            ))}
-                                            <Input
+                                            {this.props.isDM
+                                                ? null
+                                                : this.selected.map(c => (
+                                                      <Chip
+                                                          key={c.username}
+                                                          className={css({
+                                                              'not-found': c.notFound || c.isHidden
+                                                          })}
+                                                          onDeleteClick={() =>
+                                                              this.selected.remove(c)
+                                                          }
+                                                          deletable
+                                                      >
+                                                          {c.loading ? (
+                                                              <ProgressBar
+                                                                  type="linear"
+                                                                  mode="indeterminate"
+                                                              />
+                                                          ) : (
+                                                              c.username
+                                                          )}
+                                                      </Chip>
+                                                  ))}
+                                            <SearchInput
                                                 placeholder={
-                                                    routerStore.isNewChannel ||
-                                                    routerStore.isPatientSpace
-                                                        ? t('title_Members')
-                                                        : routerStore.isNewPatient
-                                                            ? t('mcr_title_newPatientRecord')
-                                                            : t('title_userSearch')
+                                                    this.selected.length
+                                                        ? null
+                                                        : routerStore.isNewChannel ||
+                                                          routerStore.isPatientSpace
+                                                            ? t('title_Members')
+                                                            : routerStore.isNewPatient
+                                                                ? t('mcr_title_newPatientRecord')
+                                                                : t('title_userSearch')
                                                 }
                                                 value={this.query}
                                                 onChange={this.handleTextChange}
                                                 onKeyDown={this.handleKeyDown}
                                                 autoFocus={!this.props.noAutoFocus}
+                                                noHelperText
                                             />
                                         </div>
                                         {this.props.limit !== 1 &&

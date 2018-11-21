@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Avatar, Dropdown, MaterialIcon, Button, Input, List, ListItem } from 'peer-ui';
+import { Avatar, Dropdown, SearchInput, Button, List, ListItem } from 'peer-ui';
 import { contactStore, chatStore, t } from 'peerio-icebear';
 import T from '~/ui/shared-components/T';
 import { getAttributeInParentChain } from '~/helpers/dom';
@@ -84,8 +84,7 @@ class ContactList extends React.Component {
         return (
             <div className="contacts-view">
                 <div className="toolbar">
-                    <MaterialIcon icon="search" />
-                    <Input
+                    <SearchInput
                         placeholder={t('title_findAContact')}
                         value={contactStore.uiViewSearchQuery}
                         onChange={this.handleSearchQueryChange}

@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 
 import { contactStore, User, warnings, t } from 'peerio-icebear';
-import { Button, Input, MaterialIcon, ProgressBar } from 'peer-ui';
+import { Button, SearchInput, ProgressBar } from 'peer-ui';
 
 import T from '~/ui/shared-components/T';
 import UserSearchError from '~/whitelabel/components/UserSearchError';
@@ -175,21 +175,20 @@ export default class NewContact extends React.Component {
                                 offsetX={168}
                                 offsetY={12}
                             >
-                                <div className="new-chat-search">
-                                    <MaterialIcon icon="search" />
-                                    <div className="chip-wrapper">
-                                        <Input
-                                            placeholder={t(
-                                                this.isInviteView
-                                                    ? 'title_enterEmail'
-                                                    : 'title_userSearch'
-                                            )}
-                                            value={this.query}
-                                            onChange={this.handleTextChange}
-                                            onKeyDown={this.handleKeyDown}
-                                            autoFocus
-                                        />
-                                    </div>
+                                <div className="new-contact-search">
+                                    <SearchInput
+                                        placeholder={t(
+                                            this.isInviteView
+                                                ? 'title_enterEmail'
+                                                : 'title_userSearch'
+                                        )}
+                                        value={this.query}
+                                        onChange={this.handleTextChange}
+                                        onKeyDown={this.handleKeyDown}
+                                        autoFocus
+                                        noHelperText
+                                    />
+
                                     <Button
                                         className={css({ hide: hideButton })}
                                         label={t(

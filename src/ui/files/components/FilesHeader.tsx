@@ -2,11 +2,10 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { action, computed } from 'mobx';
 
-import { Button } from 'peer-ui';
+import { Button, SearchInput } from 'peer-ui';
 import { fileStore, chatStore, volumeStore, t } from 'peerio-icebear';
 import Beacon from '~/ui/shared-components/Beacon';
 
-import Search from '~/ui/shared-components/Search';
 import ShareWithMultipleDialog from '~/ui/shared-components/ShareWithMultipleDialog';
 
 import AddOrRenameDialog from './AddOrRenameDialog';
@@ -32,6 +31,10 @@ export default class FilesHeader extends React.Component<{
 
     protected readonly showMoveFiles = () => {
         this.moveFileDialogRef.current.show(fileStore.folderStore.currentFolder);
+    };
+
+    protected readonly handleClear = () => {
+        handleSearch('');
     };
 
     @action.bound
@@ -158,7 +161,12 @@ export default class FilesHeader extends React.Component<{
         return (
             <React.Fragment>
                 <div className="files-header-container">
-                    <Search onChange={handleSearch} query={fileStore.searchQuery} />
+                    <SearchInput
+                        placeholder={t('title_search')}
+                        onChange={handleSearch}
+                        onClear={this.handleClear}
+                        value={fileStore.searchQuery}
+                    />
                     {fileStore.searchQuery ? this.searchResultsHeader : this.breadCrumbsHeader}
                 </div>
                 <AddOrRenameDialog ref={this.addFolderDialogRef} />

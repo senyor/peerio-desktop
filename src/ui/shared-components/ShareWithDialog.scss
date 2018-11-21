@@ -21,21 +21,10 @@ $list-header-height: 48px;
     flex-direction: column;
   }
 
-  .user-search {
+  .p-search-input {
     flex-shrink: 0;
-    width: calc(100% - 48px); // 2x $margin-large
-    margin: 0 $margin-large $margin-large;
-
-    .p-input {
-      height: 48px;
-      width: 100%;
-      margin: 0 $margin-large;
-      border-radius: 24px;
-
-      .hint-or-error {
-        display: none;
-      }
-    }
+    width: auto;
+    margin: 0 $margin-large $margin-default;
   }
 
   .chat-list-container {

@@ -81,7 +81,7 @@ export default class TwoFADialog extends React.Component {
         if (!request) return '';
         switch (request.type) {
             case 'login':
-                return t('title_2FALoginAuth');
+                return t('title_2FAInput');
             case 'backupCodes':
                 return t('title_2FABackupCodeAuth');
             case 'disable':
@@ -95,7 +95,7 @@ export default class TwoFADialog extends React.Component {
         if (!request) return '';
         switch (request.type) {
             case 'login':
-                return t('title_2FALoginAuthPreText');
+                return t('title_2FADetail');
             case 'backupCodes':
                 return t('title_2FABackupCodeAuthPreText');
             case 'disable':
@@ -157,14 +157,15 @@ export default class TwoFADialog extends React.Component {
                         value={this.totpCode}
                         onChange={this.onTOTPCodeChange}
                         onKeyDown={this.handleKeyDown}
-                        placeholder={t('title_2FAInputPlaceholder')}
+                        label={t('title_2FAInputLabel')}
+                        placeholder={t('title_2FAHelperText')}
                         autoFocus
                     />
                 </div>
                 {req && req.type === 'login' ? (
                     <Checkbox
                         checked={uiStore.prefs.last2FATrustDeviceSetting}
-                        label={t('title_trustThisDevice')}
+                        label={t('title_verifyDeviceTwoWeeks')}
                         onChange={this.onToggleTrust}
                     />
                 ) : null}

@@ -62,6 +62,9 @@
 // Whitelabel component styles
 @import '../ui/whitelabel/_all';
 
+// a11y overrides
+@import '../../node_modules/peer-ui/src/scss/a11y.scss';
+
 html {
   cursor: default;
   user-select: none;

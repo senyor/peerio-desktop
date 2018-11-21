@@ -1,17 +1,19 @@
-const fs = require('fs');
-const { app, dialog } = require('electron');
-const TinyDb = require('peerio-icebear/dist/db/tiny-db').default;
+import * as fs from 'fs';
+import * as path from 'path';
+import { app, dialog } from 'electron';
+import TinyDb from 'peerio-icebear/dist/db/tiny-db';
+
+// TODO: localize dialogs.
 
 const DO_NOT_COPY_SETTING = 'doNotCopyToApplicationsFolder';
 
-async function handleLaunchFromDMG() {
+export async function handleLaunchFromDMG() {
     if (await TinyDb.system.getValue(DO_NOT_COPY_SETTING)) {
         return;
     }
 
     const canCopy = await canWriteToApplicationsFolder();
 
-    // TODO: localize these dialogs.
     await new Promise(resolve => {
         const appName = app.getName();
 
@@ -105,34 +107,33 @@ function canWriteToApplicationsFolder() {
     });
 }
 
-let isInDMG = null; // cached result of isAppInDMG, to avoid disk access
-
 /**
- * Returns a promise resolving to true if the filesystem
- * from which the current process runs is read-only or
- * false if it's not.
+ * Returns true if the filesystem from which the current process runs is read-only
+ * and has a link to Applications folder, or false if it's not.
  *
  * Applies only to macOS, always resolves to false on other OSes.
  */
-function isAppInDMG() {
-    return new Promise(resolve => {
-        if (isInDMG != null) {
-            resolve(isInDMG);
-            return;
+export function isAppInDMG(execPath: string): boolean {
+    if (process.platform !== 'darwin' || !execPath.startsWith('/Volumes')) {
+        return false;
+    }
+    try {
+        fs.accessSync(execPath, fs.constants.W_OK);
+        return false;
+    } catch (err) {
+        if (err && err.code === 'EROFS') {
+            // Read-only file system, may be a disk image.
+            try {
+                // Resolving from 'Peerio 2.app/Contents/MacOS/Peerio 2' to 'Applications' at the root level.
+                fs.accessSync(
+                    path.join(execPath, '..', '..', '..', '..', 'Applications'),
+                    fs.constants.R_OK
+                );
+                return true; // most likely in DMG
+            } catch (_) {
+                return false;
+            }
         }
-        if (process.platform !== 'darwin' || !process.execPath.startsWith('/Volumes')) {
-            isInDMG = false;
-            resolve(false);
-            return;
-        }
-        fs.access(process.execPath, fs.constants.W_OK, err => {
-            isInDMG = err && err.code === 'EROFS';
-            resolve(isInDMG);
-        });
-    });
+        return false;
+    }
 }
-
-module.exports = {
-    isAppInDMG,
-    handleLaunchFromDMG
-};

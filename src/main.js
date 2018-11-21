@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 /* eslint-disable global-require, import/newline-after-import */
 const { app, BrowserWindow, globalShortcut } = require('electron');
+const { isAppInDMG, handleLaunchFromDMG } = require('~/main-process/dmg');
 
 let mainWindow;
 
@@ -23,7 +24,31 @@ if (!isDevEnv && !process.argv.includes('--allow-multiple-instances')) {
 
     if (!singleInstanceLock) {
         console.log('Another instance is already running, quitting.');
-        process.exit();
+        if (isAppInDMG(process.execPath)) {
+            // We are the second instance running from disk image on macOS.
+            // The first instance will quit, we continue trying to acquire lock.
+            // This is nasty, but we need to block here, and we can't sleep directly in Node,
+            // so we sleep by executing 'sleep'.
+            const { execSync } = require('child_process');
+            for (let i = 0; i < 10; i++) {
+                singleInstanceLock = app.requestSingleInstanceLock();
+                if (singleInstanceLock) break;
+                try {
+                    execSync('sleep 1');
+                } catch (err) {
+                    // ignore
+                }
+            }
+            if (!singleInstanceLock) {
+                // Failed to acquire lock. Maybe the app is an older version
+                // that doesn't exit when launching the second instance from DMG,
+                // or just something else happened. Let's quit.
+                process.exit();
+            }
+            // From now on we're running instead of the first instance.
+        } else {
+            process.exit();
+        }
     }
 }
 
@@ -87,7 +112,6 @@ const applyMiscHooks = require('~/main-process/misc-hooks');
 const { saveWindowState, getSavedWindowState } = require('~/main-process/state-persistance');
 const setMainMenu = require('~/main-process/main-menu');
 const setTrayIcon = require('~/main-process/tray').default;
-const { isAppInDMG, handleLaunchFromDMG } = require('~/main-process/dmg');
 const updater = require('./main-process/updater');
 const config = require('~/config').default;
 
@@ -114,7 +138,7 @@ app.on('ready', async () => {
     }
     app.setAppUserModelId(config.appId);
 
-    if (await isAppInDMG()) {
+    if (isAppInDMG(process.execPath)) {
         await handleLaunchFromDMG();
     }
 
@@ -223,7 +247,7 @@ app.on('ready', async () => {
     buildContextMenu(mainWindow);
     devtools.onAppReady(mainWindow);
 
-    if (!(await isAppInDMG())) {
+    if (!isAppInDMG(process.execPath)) {
         updater.start(mainWindow);
     }
 });
@@ -235,7 +259,17 @@ app.on('activate', () => {
 });
 
 if (singleInstanceLock) {
-    app.on('second-instance', () => {
+    app.on('second-instance', (event, commandLine) => {
+        if (process.platform === 'darwin' && commandLine && commandLine.length > 0) {
+            const secondInstanceExecPath = commandLine[0];
+            if (process.execPath !== secondInstanceExecPath && isAppInDMG(secondInstanceExecPath)) {
+                // Launched another instance from DMG, while the current instance is not from DMG.
+                // We assume the second instance was manually downloaded and thus is a newer version,
+                // so we quit the current app, letting the second instance take over.
+                app.quit();
+                return;
+            }
+        }
         // Restore window if user tried to launch second instance.
         if (mainWindow) {
             mainWindow.show();

@@ -87,10 +87,10 @@
     &.profile,
     &.preferences {
       .p-custom-icon {
-        img.default {
+        svg.default {
           display: none;
         }
-        img.hover {
+        svg.hover {
           display: inline-block;
         }
       }

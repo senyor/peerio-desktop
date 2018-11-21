@@ -3,12 +3,12 @@
     e.g. individual functions and getters, very minor text differences, etc.
 */
 
-const React = require('react');
-const config = require('~/config').default;
-const { contactStore, chatStore, User } = require('peerio-icebear');
-const routerStore = require('~/stores/router-store');
-const T = require('~/ui/shared-components/T').default;
-const STRINGS = require('./strings');
+import React from 'react';
+import config from '~/config';
+import { contactStore, chatStore, User } from 'peerio-icebear';
+import routerStore from '~/stores/router-store';
+import T from '~/ui/shared-components/T';
+import STRINGS from './strings';
 
 class ELEMENTS {
     get currentView() {
@@ -286,4 +286,4 @@ class ELEMENTS {
     }
 }
 
-module.exports = new ELEMENTS();
+export default new ELEMENTS();

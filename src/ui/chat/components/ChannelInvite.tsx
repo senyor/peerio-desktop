@@ -10,8 +10,9 @@ import T from '~/ui/shared-components/T';
 import AvatarWithPopup from '~/ui/contact/components/AvatarWithPopup';
 import EmojiImage from '~/ui/emoji/Image';
 import routerStore from '~/stores/router-store';
+import config from '~/config';
 
-const urls = require('~/config').default.translator.urlMap;
+const urls = config.translator.urlMap;
 
 interface ChannelInviteProps {
     className?: string; // TODO: audit -- isn't this component only mounted on the root? never receives this prop...

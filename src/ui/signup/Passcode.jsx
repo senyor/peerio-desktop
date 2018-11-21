@@ -1,21 +1,22 @@
-const React = require('react');
-const _ = require('lodash');
-const { Component } = require('react');
-const { observable, computed, reaction, action, entries } = require('mobx');
-const { observer } = require('mobx-react');
-const { MaterialIcon } = require('peer-ui');
-const { socket, validation, t } = require('peerio-icebear');
-const zxcvbn = require('zxcvbn');
-const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
-const OrderedFormStore = require('~/stores/ordered-form-store');
-const css = require('classnames');
+import React, { Component } from 'react';
+import _ from 'lodash';
+import { observable, computed, reaction, action, entries } from 'mobx';
+import { observer } from 'mobx-react';
+import zxcvbn from 'zxcvbn';
+import css from 'classnames';
+
+import { socket, validation, t } from 'peerio-icebear';
+import { MaterialIcon } from 'peer-ui';
+
+import ValidatedInput from '~/ui/shared-components/ValidatedInput';
+import OrderedFormStore from '~/stores/ordered-form-store';
 
 const { validators } = validation; // use common validation from core
 
 const MIN_PASSWORD_LENGTH = 8;
 const GLOBAL_BAN_LIST = ['peerio'];
 
-class PasscodeStore extends OrderedFormStore {
+export class PasscodeStore extends OrderedFormStore {
     @observable fieldsExpected = 2;
     @observable passcode = '';
     @observable passcodeRepeat = '';
@@ -87,7 +88,7 @@ class PasscodeStore extends OrderedFormStore {
 }
 
 @observer
-class Passcode extends Component {
+export class Passcode extends Component {
     @observable focusPasscode = false;
 
     constructor() {
@@ -245,5 +246,3 @@ class Passcode extends Component {
         );
     }
 }
-
-module.exports = { Passcode, PasscodeStore };

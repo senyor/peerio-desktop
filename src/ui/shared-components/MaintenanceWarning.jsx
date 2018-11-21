@@ -1,10 +1,10 @@
-const React = require('react');
-const { observable, when } = require('mobx');
-const { observer } = require('mobx-react');
-const { Dialog, MaterialIcon } = require('peer-ui');
-const T = require('~/ui/shared-components/T').default;
-const { serverSettings, t } = require('peerio-icebear');
-const moment = require('moment');
+import React from 'react';
+import { observable, when } from 'mobx';
+import { observer } from 'mobx-react';
+import { Dialog, MaterialIcon } from 'peer-ui';
+import T from '~/ui/shared-components/T';
+import { serverSettings, t } from 'peerio-icebear';
+import moment from 'moment';
 
 @observer
 class MaintenanceWarning extends React.Component {
@@ -67,4 +67,4 @@ class MaintenanceWarning extends React.Component {
     }
 }
 
-module.exports = MaintenanceWarning;
+export default MaintenanceWarning;

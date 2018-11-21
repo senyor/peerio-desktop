@@ -1,11 +1,11 @@
 /* eslint-disable react/no-danger */
-const React = require('react');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { observer } from 'mobx-react';
 
-const { fileHelpers, t } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
-const { Button, MaterialIcon, ProgressBar } = require('peer-ui');
-const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
+import { fileHelpers, t } from 'peerio-icebear';
+import T from '~/ui/shared-components/T';
+import { Button, MaterialIcon, ProgressBar } from 'peer-ui';
+import FileSpriteIcon from '~/ui/shared-components/FileSpriteIcon';
 
 @observer
 class ShareToChatProgress extends React.Component {
@@ -93,4 +93,4 @@ class ShareToChatProgress extends React.Component {
     }
 }
 
-module.exports = ShareToChatProgress;
+export default ShareToChatProgress;

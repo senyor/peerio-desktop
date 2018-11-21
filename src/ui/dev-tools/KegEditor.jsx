@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-const React = require('react');
-const { ProgressBar } = require('peer-ui');
-const { User, socket } = require('peerio-icebear');
-const secret = require('peerio-icebear/dist/crypto/secret');
-const { observable, action } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
-const ChatKegDb = require('peerio-icebear/dist/models/kegs/chat-keg-db').default;
+import React from 'react';
+import { ProgressBar } from 'peer-ui';
+import { User, socket } from 'peerio-icebear';
+import secret from 'peerio-icebear/dist/crypto/secret';
+import { observable, action } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+import ChatKegDb from 'peerio-icebear/dist/models/kegs/chat-keg-db';
 
 @observer
 class KegEditor extends React.Component {
@@ -182,4 +182,4 @@ function ChatInfo(props) {
     );
 }
 
-module.exports = KegEditor;
+export default KegEditor;

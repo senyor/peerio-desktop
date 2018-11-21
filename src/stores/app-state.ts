@@ -1,5 +1,5 @@
-const { observable, action } = require('mobx');
-const electron = require('electron').remote;
+import { observable, action } from 'mobx';
+import { remote as electron } from 'electron';
 
 class AppState {
     @observable isFocused = false;
@@ -33,4 +33,4 @@ class AppState {
     }
 }
 
-module.exports = new AppState();
+export default new AppState();

@@ -1,7 +1,7 @@
-const { observable, reaction, action } = require('mobx');
-const { TinyDb, Clock, User, warnings, clientApp } = require('peerio-icebear');
-const autologin = require('~/helpers/autologin');
-const appControl = require('~/helpers/app-control');
+import { observable, reaction, action } from 'mobx';
+import { TinyDb, Clock, User, warnings, clientApp } from 'peerio-icebear';
+import autologin from '~/helpers/autologin';
+import appControl from '~/helpers/app-control';
 
 const PENDING_FILES_BANNER_KEY = 'hidePendingFilesBanner';
 /**
@@ -156,4 +156,5 @@ class UIStore {
 
 const store = new UIStore();
 clientApp.uiUserPrefs = store.prefs;
-module.exports = store;
+
+export default store;

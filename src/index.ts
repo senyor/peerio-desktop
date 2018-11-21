@@ -1,8 +1,29 @@
+// We import react-router here for typechecking but don't use it yet; this
+// statement should be removed by the compiler. (We could more simply use the
+// `typeof import('react-router')` syntax, but
+// @babel/plugin-transform-typescript doesn't support it yet; see
+// https://github.com/babel/babel/issues/7749.)
+import { createMemoryHistory } from 'react-router';
+
+// declaring the augmented Window here makes `router` available elsewhere in the
+// codebase. (using `Find References` on `router` below should work!)
+//
+// note that if the assignment to `window.router` below is ever removed, this
+// should obviously be deleted as well.
+declare global {
+    interface Window {
+        // TODO:
+        // router: ReturnType<typeof import('react-router').createMemoryHistory>;
+        router: ReturnType<typeof createMemoryHistory>;
+    }
+}
+
 if (process.env.NODE_ENV !== 'development') {
     process.env.NODE_ENV = 'production';
 }
 
-const isDevEnv = require('~/helpers/is-dev-env').default;
+import isDevEnv from '~/helpers/is-dev-env';
+
 if (!isDevEnv) require('~/helpers/console-history');
 const { ipcRenderer, webFrame } = require('electron');
 const { when } = require('mobx');
@@ -37,7 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const React = require('react');
     const { socket } = require('peerio-icebear');
     const { render } = require('react-dom');
-    const { Router, createMemoryHistory } = require('react-router');
+    const { Router, createMemoryHistory } = require('react-router'); // eslint-disable-line no-shadow
+    // if this assignment to `window` is ever removed, make sure the typescript
+    // global declaration above is cleaned up as well.
     window.router = createMemoryHistory();
     const routes = require('~/ui/routes').default;
 
@@ -53,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('root')
             );
 
-            ipcRenderer.on('router', (event, message) => {
+            ipcRenderer.on('router', (_event, message) => {
                 window.router.push(message);
             });
 

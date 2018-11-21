@@ -1,5 +1,5 @@
-const React = require('react');
-const css = require('classnames');
+import React from 'react';
+import css from 'classnames';
 
 class PlusIcon extends React.PureComponent {
     render() {
@@ -17,4 +17,4 @@ class PlusIcon extends React.PureComponent {
     }
 }
 
-module.exports = PlusIcon;
+export default PlusIcon;

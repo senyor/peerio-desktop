@@ -1,7 +1,10 @@
-const React = require('react');
-const { observable, computed, when, transaction, reaction } = require('mobx');
-const { observer } = require('mobx-react');
-const {
+import React from 'react';
+import { observable, computed, when, transaction, reaction } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+
+import { fileStore, contactStore, User, t } from 'peerio-icebear';
+import {
     Avatar,
     Button,
     Chip,
@@ -10,16 +13,15 @@ const {
     ListItem,
     ProgressBar,
     SearchInput
-} = require('peer-ui');
-const UserSearchError = require('~/whitelabel/components/UserSearchError');
-const { fileStore, contactStore, User, t } = require('peerio-icebear');
-const css = require('classnames');
-const T = require('~/ui/shared-components/T').default;
-const { getAttributeInParentChain } = require('~/helpers/dom');
-const routerStore = require('~/stores/router-store');
+} from 'peer-ui';
+
+import T from '~/ui/shared-components/T';
+import { getAttributeInParentChain } from '~/helpers/dom';
+import routerStore from '~/stores/router-store';
+import UserSearchError from '~/whitelabel/components/UserSearchError';
 
 @observer
-class UserPicker extends React.Component {
+export default class UserPicker extends React.Component {
     @observable selected = [];
     @observable query = '';
     accepted = false;
@@ -429,5 +431,3 @@ class UserPicker extends React.Component {
         );
     }
 }
-
-module.exports = UserPicker;

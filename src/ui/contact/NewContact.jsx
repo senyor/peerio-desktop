@@ -1,20 +1,23 @@
-const React = require('react');
-const { observable, action, computed } = require('mobx');
-const { observer } = require('mobx-react');
-const { Button, SearchInput, ProgressBar } = require('peer-ui');
-const T = require('~/ui/shared-components/T').default;
-const css = require('classnames');
-const { contactStore, User, warnings, t } = require('peerio-icebear');
-const UserSearchError = require('~/whitelabel/components/UserSearchError');
-const urls = require('peerio-icebear').config.translator.urlMap;
+import React from 'react';
+import { observable, action, computed } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
 
-const uiStore = require('~/stores/ui-store');
-const routerStore = require('~/stores/router-store');
-const beaconStore = require('~/stores/beacon-store').default;
-const Beacon = require('~/ui/shared-components/Beacon').default;
+import { contactStore, User, warnings, t } from 'peerio-icebear';
+import { Button, SearchInput, ProgressBar } from 'peer-ui';
+
+import T from '~/ui/shared-components/T';
+import UserSearchError from '~/whitelabel/components/UserSearchError';
+import config from '~/config';
+import uiStore from '~/stores/ui-store';
+import routerStore from '~/stores/router-store';
+import beaconStore from '~/stores/beacon-store';
+import Beacon from '~/ui/shared-components/Beacon';
+
+const urls = config.translator.urlMap;
 
 @observer
-class NewContact extends React.Component {
+export default class NewContact extends React.Component {
     @observable query = '';
     @observable notFound = false;
     @observable suggestInviteEmail = '';
@@ -238,5 +241,3 @@ class NewContact extends React.Component {
         );
     }
 }
-
-module.exports = NewContact;

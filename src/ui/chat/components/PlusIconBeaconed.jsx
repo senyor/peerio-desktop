@@ -1,7 +1,7 @@
-const React = require('react');
-const PlusIcon = require('~/ui/shared-components/PlusIcon');
-const Beacon = require('~/ui/shared-components/Beacon').default;
-const { observer } = require('mobx-react');
+import React from 'react';
+import PlusIcon from '~/ui/shared-components/PlusIcon';
+import Beacon from '~/ui/shared-components/Beacon';
+import { observer } from 'mobx-react';
 
 @observer
 class PlusIconBeaconed extends React.Component {
@@ -21,4 +21,4 @@ class PlusIconBeaconed extends React.Component {
     }
 }
 
-module.exports = PlusIconBeaconed;
+export default PlusIconBeaconed;

@@ -1,5 +1,5 @@
-const config = require('~/config').default;
-const routerStore = require('~/stores/router-store');
+import config from '~/config';
+import routerStore from '~/stores/router-store';
 
 class STRINGS {
     get currentView() {
@@ -54,4 +54,4 @@ class STRINGS {
     }
 }
 
-module.exports = new STRINGS();
+export default new STRINGS();

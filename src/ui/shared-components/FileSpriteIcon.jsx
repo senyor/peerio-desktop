@@ -1,6 +1,6 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const css = require('classnames');
+import React from 'react';
+import { observer } from 'mobx-react';
+import css from 'classnames';
 
 @observer
 class FileSpriteIcon extends React.Component {
@@ -29,4 +29,4 @@ class FileSpriteIcon extends React.Component {
     }
 }
 
-module.exports = FileSpriteIcon;
+export default FileSpriteIcon;

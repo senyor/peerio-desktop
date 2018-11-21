@@ -1,10 +1,11 @@
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { Dialog } = require('peer-ui');
-const { User, t } = require('peerio-icebear');
-const urls = require('~/config').default.translator.urlMap;
-const config = require('~/config').default;
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { Dialog } from 'peer-ui';
+import { User, t } from 'peerio-icebear';
+import config from '~/config';
+
+const urls = config.translator.urlMap;
 
 @observer
 class ChannelUpgradeDialog extends React.Component {
@@ -47,4 +48,4 @@ class ChannelUpgradeDialog extends React.Component {
     }
 }
 
-module.exports = ChannelUpgradeDialog;
+export default ChannelUpgradeDialog;

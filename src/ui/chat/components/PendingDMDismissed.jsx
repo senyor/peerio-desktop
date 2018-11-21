@@ -1,14 +1,14 @@
-const React = require('react');
-const { computed } = require('mobx');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { computed } from 'mobx';
+import { observer } from 'mobx-react';
 
-const { chatStore, chatInviteStore } = require('peerio-icebear');
-const routerStore = require('~/stores/router-store');
-const T = require('~/ui/shared-components/T').default;
+import { chatStore, chatInviteStore } from 'peerio-icebear';
+import routerStore from '~/stores/router-store';
+import T from '~/ui/shared-components/T';
 
-const { Button } = require('peer-ui');
-const EmojiImage = require('~/ui/emoji/Image');
-const PlusIcon = require('~/ui/shared-components/PlusIcon');
+import { Button } from 'peer-ui';
+import EmojiImage from '~/ui/emoji/Image';
+import PlusIcon from '~/ui/shared-components/PlusIcon';
 
 @observer
 class PendingDMDismissed extends React.Component {
@@ -42,4 +42,4 @@ class PendingDMDismissed extends React.Component {
     }
 }
 
-module.exports = PendingDMDismissed;
+export default PendingDMDismissed;

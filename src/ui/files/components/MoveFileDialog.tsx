@@ -1,9 +1,11 @@
 import React from 'react';
 import { observable, action, computed, reaction, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
+import css from 'classnames';
+
 import { Button, Dialog, MaterialIcon, SearchInput } from 'peer-ui';
 import { fileStore, t } from 'peerio-icebear';
-import css from 'classnames';
+
 import ShareConfirmDialog from './ShareConfirmDialog';
 
 // HACK: circular require :(

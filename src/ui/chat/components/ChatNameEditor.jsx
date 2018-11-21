@@ -1,8 +1,8 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const BetterInput = require('~/ui/shared-components/BetterInput');
-const { chatStore, config, t } = require('peerio-icebear');
-const ELEMENTS = require('~/whitelabel/helpers/elements');
+import React from 'react';
+import { observer } from 'mobx-react';
+import BetterInput from '~/ui/shared-components/BetterInput';
+import { chatStore, config, t } from 'peerio-icebear';
+import ELEMENTS from '~/whitelabel/helpers/elements';
 
 @observer
 class ChatNameEditor extends React.Component {
@@ -51,4 +51,4 @@ class ChatNameEditor extends React.Component {
     }
 }
 
-module.exports = ChatNameEditor;
+export default ChatNameEditor;

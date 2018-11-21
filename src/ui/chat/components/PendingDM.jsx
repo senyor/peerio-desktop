@@ -1,12 +1,12 @@
-const React = require('react');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { observer } from 'mobx-react';
 
-const routerStore = require('~/stores/router-store');
-const { chatStore } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
+import routerStore from '~/stores/router-store';
+import { chatStore } from 'peerio-icebear';
+import T from '~/ui/shared-components/T';
 
-const { Button } = require('peer-ui');
-const PendingDMHeader = require('./PendingDMHeader');
+import { Button } from 'peer-ui';
+import PendingDMHeader from './PendingDMHeader';
 
 @observer
 class PendingDM extends React.Component {
@@ -42,4 +42,4 @@ class PendingDM extends React.Component {
     }
 }
 
-module.exports = PendingDM;
+export default PendingDM;

@@ -1,10 +1,10 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { Button, List, ListItem } = require('peer-ui');
-const { contactStore, t } = require('peerio-icebear');
-const moment = require('moment');
-const { getAttributeInParentChain } = require('~/helpers/dom');
-const routerStore = require('~/stores/router-store');
+import React from 'react';
+import { observer } from 'mobx-react';
+import { Button, List, ListItem } from 'peer-ui';
+import { contactStore, t } from 'peerio-icebear';
+import moment from 'moment';
+import { getAttributeInParentChain } from '~/helpers/dom';
+import routerStore from '~/stores/router-store';
 
 @observer
 class InvitedContacts extends React.Component {
@@ -78,4 +78,4 @@ class InvitedContacts extends React.Component {
     }
 }
 
-module.exports = InvitedContacts;
+export default InvitedContacts;

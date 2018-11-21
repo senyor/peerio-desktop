@@ -14,7 +14,7 @@ import * as Mock from '~/ui/shared-components/MockUI';
 
 import { SignupStep, StepContentObject } from './SignupStepTypes';
 
-const ValidatedInput = require('~/ui/shared-components/ValidatedInput');
+import ValidatedInput from '~/ui/shared-components/ValidatedInput';
 
 // Input validation
 const { validators } = validation; // use common validation from core

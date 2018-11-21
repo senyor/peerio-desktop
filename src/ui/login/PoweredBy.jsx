@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 // @observer
 class PoweredBy extends React.Component {
@@ -7,4 +7,4 @@ class PoweredBy extends React.Component {
     }
 }
 
-module.exports = PoweredBy;
+export default PoweredBy;

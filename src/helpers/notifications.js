@@ -1,12 +1,16 @@
-const { when } = require('mobx');
-const sounds = require('~/helpers/sounds');
-const uiStore = require('~/stores/ui-store');
-const appState = require('~/stores/app-state');
-const routerStore = require('~/stores/router-store');
-const { contactStore, chatStore, chatInviteStore, t } = require('peerio-icebear');
-const path = require('path');
-const { app, getCurrentWindow } = require('electron').remote;
-const config = require('~/config').default;
+import path from 'path';
+import { when } from 'mobx';
+import { remote as electron } from 'electron';
+
+import { contactStore, chatStore, chatInviteStore, t } from 'peerio-icebear';
+
+import sounds from '~/helpers/sounds';
+import uiStore from '~/stores/ui-store';
+import appState from '~/stores/app-state';
+import routerStore from '~/stores/router-store';
+import config from '~/config';
+
+const { app, getCurrentWindow } = electron;
 
 function bringAppToFront() {
     // Put app window into foreground.
@@ -113,7 +117,7 @@ class DMNotification extends MessageNotification {
     }
 }
 
-function sendMessageNotification(props) {
+export function sendMessageNotification(props) {
     if (props.chat.otherParticipants.length <= 1) {
         const m = new DMNotification(props);
         m.send();
@@ -196,7 +200,7 @@ class InviteNotification {
     }
 }
 
-function sendInviteNotification(props) {
+export function sendInviteNotification(props) {
     const n = new InviteNotification(props);
     n.send();
 }
@@ -271,12 +275,12 @@ class InviteAcceptedNotification {
     }
 }
 
-function sendInviteAcceptedNotification(props) {
+export function sendInviteAcceptedNotification(props) {
     const n = new InviteAcceptedNotification(props);
     n.send();
 }
 
-function sendWindowHiddenNotification() {
+export function sendWindowHiddenNotification() {
     const props = {
         body: t('notification_peerioInTrayBody'),
         silent: true
@@ -287,10 +291,3 @@ function sendWindowHiddenNotification() {
     }
     new Notification(t('notification_peerioInTrayTitle'), props); // eslint-disable-line no-new
 }
-
-module.exports = {
-    sendMessageNotification,
-    sendInviteNotification,
-    sendInviteAcceptedNotification,
-    sendWindowHiddenNotification
-};

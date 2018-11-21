@@ -1,13 +1,20 @@
-const React = require('react');
-const { when } = require('mobx');
-const { observer } = require('mobx-react');
-const { chatStore, chatInviteStore, crypto } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
-const { ProgressBar } = require('peer-ui');
-const routerStore = require('~/stores/router-store');
-const ELEMENTS = require('~/whitelabel/helpers/elements');
+import React from 'react';
+import { when, IReactionDisposer } from 'mobx';
+import { observer } from 'mobx-react';
 
-const messages = [
+import { chatStore, chatInviteStore, crypto } from 'peerio-icebear';
+import { ProgressBar } from 'peer-ui';
+
+import T from '~/ui/shared-components/T';
+import routerStore from '~/stores/router-store';
+import ELEMENTS from '~/whitelabel/helpers/elements';
+
+const messages: ReadonlyArray<
+    | 'title_randomMessage1'
+    | 'title_randomMessage2'
+    | 'title_randomMessage3'
+    | 'title_randomMessage4'
+> = [
     'title_randomMessage1',
     'title_randomMessage2',
     'title_randomMessage3',
@@ -16,7 +23,9 @@ const messages = [
 const randomMessage = messages[crypto.cryptoUtil.getRandomNumber(0, messages.length - 1)];
 
 @observer
-class Loading extends React.Component {
+export default class Loading extends React.Component {
+    dispose!: IReactionDisposer;
+
     componentDidMount() {
         this.dispose = when(
             () => chatStore.loaded,
@@ -39,7 +48,7 @@ class Loading extends React.Component {
     render() {
         return (
             <div className="loading-screen">
-                <ProgressBar type="linear" mode="indeterminate" />
+                <ProgressBar />
                 <div className="random-messages">
                     <T k={randomMessage} className="headline" tag="div" />
                 </div>
@@ -47,5 +56,3 @@ class Loading extends React.Component {
         );
     }
 }
-
-module.exports = Loading;

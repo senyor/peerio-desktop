@@ -2,15 +2,19 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { computed, observable } from 'mobx';
 import css from 'classnames';
-import { Button, MaterialIcon } from 'peer-ui';
+import { remote as electron } from 'electron';
+
 import { warnings, t } from 'peerio-icebear';
+import { Button, MaterialIcon } from 'peer-ui';
+
 import T from '~/ui/shared-components/T';
+import * as Mock from '~/ui/shared-components/MockUI';
+import isDevEnv from '~/helpers/is-dev-env';
 import { saveAkPdf } from '~/helpers/account-key';
 import * as telemetry from '~/telemetry';
-import * as Mock from '~/ui/shared-components/MockUI';
 import { SignupStep } from './SignupStepTypes';
-const { clipboard } = require('electron').remote;
-import isDevEnv from '~/helpers/is-dev-env';
+
+const { clipboard } = electron;
 
 const telemetryObject = { location: 'ONBOARDING', sublocation: 'ACCOUNT_KEY' };
 

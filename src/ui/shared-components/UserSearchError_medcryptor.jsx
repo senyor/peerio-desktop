@@ -1,11 +1,11 @@
-const React = require('react');
-const { action, observable } = require('mobx');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { action, observable } from 'mobx';
+import { observer } from 'mobx-react';
 
-const routerStore = require('~/stores/router-store');
-const T = require('~/ui/shared-components/T').default;
-const { t } = require('peerio-icebear');
-const { Button, MaterialIcon, RadioButtons } = require('peer-ui');
+import routerStore from '~/stores/router-store';
+import T from '~/ui/shared-components/T';
+import { t } from 'peerio-icebear';
+import { Button, MaterialIcon, RadioButtons } from 'peer-ui';
 
 const DOCTOR_OR_ADMIN = 'doctor_or_admin';
 const PATIENT = 'patient';
@@ -82,4 +82,4 @@ class UserSearchError extends React.Component {
     }
 }
 
-module.exports = UserSearchError;
+export default UserSearchError;

@@ -1,5 +1,5 @@
 // global UI store
-const { observable } = require('mobx');
+import { observable } from 'mobx';
 
 class RouterStore {
     @observable currentRoute = window.router.getCurrentLocation().pathname;
@@ -90,4 +90,4 @@ class RouterStore {
     }
 }
 
-module.exports = new RouterStore();
+export default new RouterStore();

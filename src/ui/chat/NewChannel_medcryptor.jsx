@@ -3,16 +3,16 @@
     as well as new patient space, new patient room, and new internal room
 */
 
-const React = require('react');
-const { observable, when } = require('mobx');
-const { observer } = require('mobx-react');
-const { chatStore, config, t } = require('peerio-icebear');
-const UserPicker = require('~/ui/shared-components/UserPicker');
-const T = require('~/ui/shared-components/T').default;
-const { Input, ProgressBar } = require('peer-ui');
-const ELEMENTS = require('~/whitelabel/helpers/elements');
-const STRINGS = require('~/whitelabel/helpers/strings');
-const routerStore = require('~/stores/router-store');
+import React from 'react';
+import { observable, when } from 'mobx';
+import { observer } from 'mobx-react';
+import { chatStore, config, t } from 'peerio-icebear';
+import UserPicker from '~/ui/shared-components/UserPicker';
+import T from '~/ui/shared-components/T';
+import { Input, ProgressBar } from 'peer-ui';
+import ELEMENTS from '~/whitelabel/helpers/elements';
+import STRINGS from '~/whitelabel/helpers/strings';
+import routerStore from '~/stores/router-store';
 
 @observer
 class NewChannel extends React.Component {
@@ -179,4 +179,4 @@ class NewChannel extends React.Component {
     }
 }
 
-module.exports = NewChannel;
+export default NewChannel;

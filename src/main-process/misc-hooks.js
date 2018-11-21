@@ -1,9 +1,9 @@
-const { shell } = require('electron');
+import { shell } from 'electron';
 
-const { isUrlAllowed } = require('../helpers/url');
-const certData = require('../cert_fingerprints');
+import { isUrlAllowed } from '../helpers/url';
+import certData from '../cert_fingerprints';
 
-function applyMiscHooks(mainWindow) {
+export default function applyMiscHooks(mainWindow) {
     console.log('Attaching misc webContents hooks.');
 
     // make all attempts to navigate browser window open in external browser
@@ -43,5 +43,3 @@ function applyMiscHooks(mainWindow) {
         callback(-3);
     });
 }
-
-module.exports = applyMiscHooks;

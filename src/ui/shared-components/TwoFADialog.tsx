@@ -10,8 +10,8 @@ import * as telemetry from '~/telemetry';
 import uiStore from '~/stores/ui-store';
 import { validateCode } from '~/helpers/2fa';
 
-const autologin = require('~/helpers/autologin');
-const appControl = require('~/helpers/app-control');
+import { getPassphrase } from '~/helpers/autologin';
+import { signout } from '~/helpers/app-control';
 
 @observer
 export default class TwoFADialog extends React.Component {
@@ -24,7 +24,7 @@ export default class TwoFADialog extends React.Component {
             () => {
                 User.getLastAuthenticated()
                     .then(lastUser => {
-                        return lastUser ? autologin.getPassphrase(lastUser.username) : null;
+                        return lastUser ? getPassphrase(lastUser.username) : null;
                     })
                     .then(passphrase => {
                         this.isAutologinEnabled = !!passphrase;
@@ -72,7 +72,7 @@ export default class TwoFADialog extends React.Component {
 
     cancel() {
         if (clientApp.active2FARequest.type === 'login') {
-            appControl.signout();
+            signout();
         }
         clientApp.active2FARequest.cancel();
     }

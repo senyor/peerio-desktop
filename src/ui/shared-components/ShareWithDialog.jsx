@@ -1,10 +1,10 @@
-const React = require('react');
-const { observable, computed, action } = require('mobx');
-const { observer } = require('mobx-react');
-const { chatStore, contactStore, User, t } = require('peerio-icebear');
-const { Avatar, Dialog, List, ListItem, SearchInput } = require('peer-ui');
-const T = require('~/ui/shared-components/T').default;
-const { getChannelByEvent, getContactByEvent } = require('~/helpers/icebear-dom');
+import React from 'react';
+import { observable, computed, action } from 'mobx';
+import { observer } from 'mobx-react';
+import { chatStore, contactStore, User, t } from 'peerio-icebear';
+import { Avatar, Dialog, List, ListItem, SearchInput } from 'peer-ui';
+import T from '~/ui/shared-components/T';
+import { getChannelByEvent, getContactByEvent } from '~/helpers/icebear-dom';
 
 /**
  * onSelectContact
@@ -117,4 +117,4 @@ class ShareWithDialog extends React.Component {
     }
 }
 
-module.exports = ShareWithDialog;
+export default ShareWithDialog;

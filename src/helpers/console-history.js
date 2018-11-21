@@ -1,4 +1,4 @@
-const safeJsonStringify = require('safe-json-stringify');
+import safeJsonStringify from 'safe-json-stringify';
 
 const originals = {
     log: console.log,

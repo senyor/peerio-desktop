@@ -1,11 +1,10 @@
-// @ts-check
-const Autolinker = require('autolinker');
-const htmlEncoder = require('html-entities').AllHtmlEntities;
+import Autolinker from 'autolinker';
+import { AllHtmlEntities as htmlEncoder } from 'html-entities';
 
-const { User, contactStore } = require('peerio-icebear');
+import { User, contactStore } from 'peerio-icebear';
 
-const { sanitizeChatMessage } = require('~/helpers/sanitizer');
-const { isUrlAllowed } = require('~/helpers/url');
+import { sanitizeChatMessage } from '~/helpers/sanitizer';
+import { isUrlAllowed } from '~/helpers/url';
 
 const emojione = require('~/static/emoji/emojione.js');
 
@@ -15,7 +14,7 @@ emojione.sprites = false;
 emojione.greedyMatch = true;
 
 let ownMentionRegex;
-function highlightMentions(str) {
+function highlightMentions(str: string) {
     // eslint-disable-next-line no-return-assign
     return str.replace(
         ownMentionRegex ||
@@ -40,7 +39,6 @@ function formatPre(str) {
         .replace(inlinePreRegex, '<span class="pre">$1</span>');
 }
 
-/** @type {any} */
 const autolinker = new Autolinker({
     urls: {
         schemeMatches: true,
@@ -73,11 +71,14 @@ const autolinker = new Autolinker({
  * Given an Icebear message, sanitizes it and processes it for display in a React Message component.
  *
  * Also caches the result in the message's processedText field, returning it immediately if it's valid.
- * @param {{lastProcessedVersion, version, processedText : { __html : string }, text : string}} msg
- * @returns {{ __html : string }} The processed message, ready for direct use in `dangerouslySetInnerHTML`.
+ * @returns The processed message, ready for direct use in `dangerouslySetInnerHTML`.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function processMessageForDisplay(msg) {
+export function processMessageForDisplay(msg: {
+    lastProcessedVersion;
+    version;
+    processedText: { __html: string };
+    text: string;
+}): { __html: string } {
     if (msg.lastProcessedVersion !== msg.version) msg.processedText = null;
     if (msg.processedText != null) return msg.processedText;
 
@@ -86,8 +87,7 @@ export function processMessageForDisplay(msg) {
 
     // we don't expect any html in original text,
     // if there are any tags - user entered them, we consider them plaintext and encode
-    /** @type {string} */
-    let str = emojione.toShort(msg.text);
+    let str: string = emojione.toShort(msg.text);
     str = htmlEncoder.encode(str);
     // in case some tags magically sneak in - remove all html except whitelisted
     str = sanitizeChatMessage(str);

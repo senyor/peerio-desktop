@@ -1,8 +1,8 @@
 // @ts-check
 
-const React = require('react');
-const { observer } = require('mobx-react');
-const ChatList = require('./components/ChatList').default;
+import React from 'react';
+import { observer } from 'mobx-react';
+import ChatList from './components/ChatList';
 
 @observer
 class Chat extends React.Component {
@@ -16,4 +16,4 @@ class Chat extends React.Component {
     }
 }
 
-module.exports = Chat;
+export default Chat;

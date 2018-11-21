@@ -1,12 +1,12 @@
-const React = require('react');
-const { computed, observable, reaction } = require('mobx');
-const { observer } = require('mobx-react');
-const { User, fileStore, t } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
-const { Dialog, ProgressBar } = require('peer-ui');
-const EmojiImage = require('~/ui/emoji/Image');
-const electron = require('electron').remote;
-const fs = require('fs');
+import React from 'react';
+import { computed, observable, reaction } from 'mobx';
+import { observer } from 'mobx-react';
+import { User, fileStore, t } from 'peerio-icebear';
+import T from '~/ui/shared-components/T';
+import { Dialog, ProgressBar } from 'peer-ui';
+import EmojiImage from '~/ui/emoji/Image';
+import { remote as electron } from 'electron';
+import fs from 'fs';
 
 const migrationInProgressMessages = [];
 const MIGRATION_MESSAGES_COUNT = 10;
@@ -184,4 +184,4 @@ class MigrationDialog extends React.Component {
     }
 }
 
-module.exports = MigrationDialog;
+export default MigrationDialog;

@@ -65,8 +65,8 @@ cfg.arch = os.arch();
 cfg.os = os.type();
 
 setUrlMap(cfg.translator.urlMap);
-for (const name in tagHandlers) {
-    setTagHandler(name, tagHandlers[name]);
+for (const [tag, handler] of Object.entries(tagHandlers)) {
+    setTagHandler(tag, handler);
 }
 
 // replace config-specific strings

@@ -23,18 +23,18 @@ export default class DevTools extends React.Component {
 
     quit() {
         if (User.current) {
-            (window as any).router.push('/app/chats');
+            window.router.push('/app/chats');
         } else {
-            (window as any).router.push('/');
+            window.router.push('/');
         }
     }
 
     gotoDashboard() {
-        (window as any).router.push('/dev-tools');
+        window.router.push('/dev-tools');
     }
 
     gotoKegEditor() {
-        (window as any).router.push('/dev-tools/kegs');
+        window.router.push('/dev-tools/kegs');
     }
 
     render() {

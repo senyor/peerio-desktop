@@ -1,15 +1,16 @@
-const React = require('react');
-const { Component } = require('react');
-const { observer } = require('mobx-react');
-const { shell, remote } = require('electron');
-const { t } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
-const { Dialog } = require('peer-ui');
-const updaterStore = require('~/stores/updater-store');
-const config = require('~/config').default;
+import React, { Component } from 'react';
+import { observer } from 'mobx-react';
+import { shell, remote } from 'electron';
+
+import { t } from 'peerio-icebear';
+import { Dialog } from 'peer-ui';
+
+import T from '~/ui/shared-components/T';
+import updaterStore from '~/stores/updater-store';
+import config from '~/config';
 
 @observer
-class UpdateFailedDialog extends Component {
+export default class UpdateFailedDialog extends Component {
     handleTryAgain() {
         updaterStore.quitAndRetryInstall();
     }
@@ -55,5 +56,3 @@ class UpdateFailedDialog extends Component {
         );
     }
 }
-
-module.exports = UpdateFailedDialog;

@@ -1,11 +1,11 @@
-const React = require('react');
-const { action, observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { User, t } = require('peerio-icebear');
-const { Button } = require('peer-ui');
-const css = require('classnames');
-const appState = require('~/stores/app-state');
-const routerStore = require('~/stores/router-store');
+import React from 'react';
+import { action, observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { User, t } from 'peerio-icebear';
+import { Button } from 'peer-ui';
+import css from 'classnames';
+import appState from '~/stores/app-state';
+import routerStore from '~/stores/router-store';
 
 @observer
 class Settings extends React.Component {
@@ -125,4 +125,4 @@ class Settings extends React.Component {
     }
 }
 
-module.exports = Settings;
+export default Settings;

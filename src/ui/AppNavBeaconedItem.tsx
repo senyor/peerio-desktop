@@ -1,15 +1,18 @@
 import React from 'react';
-import AppNavButton from './AppNavButton';
+import { observer } from 'mobx-react';
+
 import uiStore from '~/stores/ui-store';
 import beaconStore from '~/stores/beacon-store';
 import Beacon from '~/ui/shared-components/Beacon';
-import { observer } from 'mobx-react';
+
+import AppNavButton, { AppNavButtonProps } from './AppNavButton';
+
+interface AppNavBeaconedItemProps extends AppNavButtonProps {
+    beaconName: string;
+}
 
 @observer
-export default class AppNavBeaconedItem extends React.Component<{
-    onClick?: () => void;
-    beaconName: string;
-}> {
+export default class AppNavBeaconedItem extends React.Component<AppNavBeaconedItemProps> {
     // When Beacon is directly dismissed (rather than Beacon bubble being clicked), cancel remaining onboarding beacons
     cancelOnboardingBeacons() {
         if (uiStore.firstLogin) {

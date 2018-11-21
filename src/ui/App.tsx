@@ -1,9 +1,11 @@
 import React from 'react';
+import { observer } from 'mobx-react';
+
+import { Dialog, ProgressBar } from 'peer-ui';
+import { clientApp, t } from 'peerio-icebear';
+
 import AppNav from '~/ui/AppNav';
 import uiStore from '~/stores/ui-store';
-import { Dialog, ProgressBar } from 'peer-ui';
-import { observer } from 'mobx-react';
-import { clientApp, t } from 'peerio-icebear';
 import MigrationDialog from '~/ui/shared-components/MigrationDialog';
 
 @observer

@@ -2,4 +2,4 @@ function WhereToFindAk() {
     return null;
 }
 
-module.exports = WhereToFindAk;
+export default WhereToFindAk;

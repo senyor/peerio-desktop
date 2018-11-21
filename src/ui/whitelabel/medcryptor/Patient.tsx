@@ -1,17 +1,16 @@
-// @ts-check
+import React from 'react';
+import { computed } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
 
-const React = require('react');
-const { computed } = require('mobx');
-const { observer } = require('mobx-react');
+import { chatStore } from 'peerio-icebear';
 
-const css = require('classnames');
-const { chatStore } = require('peerio-icebear');
-const routerStore = require('~/stores/router-store');
-const PatientSidebar = require('./PatientSidebar');
-const PatientZeroChats = require('./PatientZeroChats');
+import routerStore from '~/stores/router-store';
+import PatientSidebar from './PatientSidebar';
+import PatientZeroChats from './PatientZeroChats';
 
 @observer
-class Patient extends React.Component {
+export default class Patient extends React.Component {
     @computed
     get zeroState() {
         return (
@@ -35,5 +34,3 @@ class Patient extends React.Component {
         );
     }
 }
-
-module.exports = Patient;

@@ -1,7 +1,10 @@
-const path = require('path');
-const isDevEnv = require('~/helpers/is-dev-env').default;
-const { app, ipcMain } = require('electron');
-const TinyDb = require('peerio-icebear/dist/db/tiny-db').default;
+import path from 'path';
+import { app, ipcMain } from 'electron';
+
+import TinyDb from 'peerio-icebear/dist/db/tiny-db';
+
+import isDevEnv from '~/helpers/is-dev-env';
+
 const autoUpdater = require('@peerio/updater')();
 
 TinyDb.system
@@ -16,7 +19,7 @@ TinyDb.system
         console.error('Failed to retrieve prerelease update setting from TinyDb', err);
     });
 
-function start(mainWindow) {
+export function start(mainWindow) {
     function sendStatusToMainWindow(text) {
         console.log(text);
         mainWindow.webContents.send('console_log', text);
@@ -109,5 +112,3 @@ function start(mainWindow) {
         sendStatusToMainWindow(String(ex));
     }
 }
-
-module.exports = { start };

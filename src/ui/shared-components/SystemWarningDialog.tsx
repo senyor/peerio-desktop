@@ -20,7 +20,7 @@ export default class SystemWarningDialog extends WarningDisplayBase {
             <Dialog
                 theme="warning"
                 active={this.isVisible}
-                title={w ? (t(w.title as any) as string) : ''}
+                title={w && w.title ? (t(w.title as any) as string) : ''}
                 actions={[{ label: t('button_ok'), onClick: this.dismiss }]}
             >
                 {w ? <T k={w.content as any}>{w.data}</T> : null}

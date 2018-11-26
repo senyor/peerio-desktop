@@ -356,10 +356,10 @@ export default class UserPicker extends React.Component {
                                                         ? null
                                                         : routerStore.isNewChannel ||
                                                           routerStore.isPatientSpace
-                                                            ? t('title_Members')
-                                                            : routerStore.isNewPatient
-                                                                ? t('mcr_title_newPatientRecord')
-                                                                : t('title_userSearch')
+                                                        ? t('title_Members')
+                                                        : routerStore.isNewPatient
+                                                        ? t('mcr_title_newPatientRecord')
+                                                        : t('title_userSearch')
                                                 }
                                                 value={this.query}
                                                 onChange={this.handleTextChange}

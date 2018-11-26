@@ -22,22 +22,21 @@ class UrlPreview extends React.Component {
                 <div>
                     <div className="url-content">
                         <div className="url-image">
-                            {!showImage &&
-                                tooBig && (
-                                    <div className="image-over-limit-warning">
-                                        <T k="title_imageSizeWarning">
-                                            {{
-                                                size: fileStore.inlineImageSizeLimitFormatted
-                                            }}
-                                        </T>
-                                        <Button
-                                            className="display-this-image display-over-limit-image"
-                                            onClick={this.forceDownload}
-                                        >
-                                            {t('button_displayThisImageAfterWarning')}
-                                        </Button>
-                                    </div>
-                                )}
+                            {!showImage && tooBig && (
+                                <div className="image-over-limit-warning">
+                                    <T k="title_imageSizeWarning">
+                                        {{
+                                            size: fileStore.inlineImageSizeLimitFormatted
+                                        }}
+                                    </T>
+                                    <Button
+                                        className="display-this-image display-over-limit-image"
+                                        onClick={this.forceDownload}
+                                    >
+                                        {t('button_displayThisImageAfterWarning')}
+                                    </Button>
+                                </div>
+                            )}
                             {isOversizeCutoff && (
                                 <div className="image-over-limit-warning">
                                     <T k="title_imageTooBigCutoff">

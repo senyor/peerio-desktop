@@ -23,7 +23,7 @@ export default function applyMiscHooks(mainWindow) {
 
     mainWindow.webContents.session.setCertificateVerifyProc((request, callback) => {
         let ok = true;
-        certData.forEach(d => {
+        for (const d of certData) {
             if (request.hostname.match(d.hostRegex)) {
                 // The reason for implementing check like this is
                 // that we may want to include more fingerprints
@@ -32,8 +32,9 @@ export default function applyMiscHooks(mainWindow) {
                 // match can override the previous non-match,
                 // setting ok back to true.
                 ok = d.fingerprint === request.certificate.fingerprint;
+                if (ok) break;
             }
-        });
+        }
         if (!ok) {
             // Verification failure.
             callback(-2);

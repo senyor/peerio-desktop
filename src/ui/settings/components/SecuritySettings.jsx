@@ -141,7 +141,8 @@ export default class SecuritySettings extends React.Component {
                         <span className="selectable monospace">{User.current.passphrase}</span>
                     ) : (
                         <span>••••••••••••••••••••••••••••••••••••••••••</span>
-                    )}&nbsp;&nbsp;
+                    )}
+                    &nbsp;&nbsp;
                     <Button
                         icon="visibility"
                         tooltip={

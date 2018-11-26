@@ -299,13 +299,15 @@ export default class Files extends React.Component<FilesProps> {
                                             <MaterialIcon icon="sync" />
                                             &nbsp;
                                             <T k="title_filesInQueue" tag="span" />
-                                            &nbsp; (<T k="title_filesLeftCount" tag="span">
+                                            &nbsp; (
+                                            <T k="title_filesLeftCount" tag="span">
                                                 {{
                                                     count:
                                                         currentFolder.progressMax -
                                                         currentFolder.progress
                                                 }}
-                                            </T>)
+                                            </T>
+                                            )
                                         </span>
                                     )}
                                     {currentFolder.convertingFromFolder && (

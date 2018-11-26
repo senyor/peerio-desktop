@@ -28,8 +28,10 @@ for (let i = 1; i <= MIGRATION_MESSAGES_COUNT; i++) {
             random,
             0,
             <span>
-                <T k={`title_migrationInProgressMessage${i}a`} />&nbsp;
-                <EmojiImage emoji="muscle" />.&nbsp;
+                <T k={`title_migrationInProgressMessage${i}a`} />
+                &nbsp;
+                <EmojiImage emoji="muscle" />
+                .&nbsp;
                 <T k={`title_migrationInProgressMessage${i}b`} />
             </span>
         );

@@ -325,7 +325,8 @@ export default class CreateAccount extends React.Component<SignupStep> {
             <React.Fragment>
                 <span className="full-name">
                     {`${this.props.store.firstName} ${this.props.store.lastName}`}
-                </span>&nbsp;
+                </span>
+                &nbsp;
                 <span className="username">@{this.props.store.username}</span>
             </React.Fragment>
         );
@@ -336,7 +337,8 @@ export default class CreateAccount extends React.Component<SignupStep> {
                     username: () => {
                         return (
                             <span className="username-highlight">
-                                @{this.props.store.usernameValid
+                                @
+                                {this.props.store.usernameValid
                                     ? this.props.store.username
                                     : 'username'}
                             </span>

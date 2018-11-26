@@ -299,8 +299,9 @@ export default class Message extends React.Component<MessageProps> {
                                       />
                                   ))
                                 : null}
-                            {!uiStore.prefs.externalContentConsented &&
-                                m.hasUrls && <UrlPreviewConsent />}
+                            {!uiStore.prefs.externalContentConsented && m.hasUrls && (
+                                <UrlPreviewConsent />
+                            )}
                         </div>
                         {/* m.inlineImages.map(url => (
                             <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />)) */}
@@ -377,7 +378,9 @@ function renderError(
                                     `${t('error_messageErrorMessagePlaintext')}: ${msg.text}`,
                                     `${t('error_messageErrorMessageRichtext')}: ` +
                                         (msg.richText && JSON.stringify(msg.richText, undefined, 2))
-                                ].map((l, i) => <li key={i}>{l}</li>)}
+                                ].map((l, i) => (
+                                    <li key={i}>{l}</li>
+                                ))}
                             </ul>
                         ) : (
                             t('error_messageErrorNotAvailable')

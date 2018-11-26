@@ -74,7 +74,8 @@ class UrlPreviewConsent extends React.Component {
                 </div>
                 <div className="warning-body">
                     <p className="text">
-                        <T k="title_UrlPreviewsWarning2" />&nbsp;
+                        <T k="title_UrlPreviewsWarning2" />
+                        &nbsp;
                         <T k="title_learnMore" />
                     </p>
                     <RadioButtons

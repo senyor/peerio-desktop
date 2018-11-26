@@ -161,13 +161,15 @@ class ELEMENTS {
                 obj.title = name => {
                     return (
                         <div className="title-content">
-                            {name}&nbsp; (<T
+                            {name}&nbsp; (
+                            <T
                                 k={
                                     chatStore.spaces.isPatientRoomOpen
                                         ? 'mcr_title_patientRoom'
                                         : 'mcr_title_internalRoom'
                                 }
-                            />)
+                            />
+                            )
                         </div>
                     );
                 };

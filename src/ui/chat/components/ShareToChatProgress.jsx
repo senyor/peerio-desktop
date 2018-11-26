@@ -39,7 +39,8 @@ class ShareToChatProgress extends React.Component {
                     <div className="text">
                         {item.isFolder ? (
                             <div>
-                                <T k="title_sharing" tag="span" />&nbsp;
+                                <T k="title_sharing" tag="span" />
+                                &nbsp;
                                 <span>
                                     <i>{item.name}</i>
                                 </span>
@@ -60,8 +61,8 @@ class ShareToChatProgress extends React.Component {
                             {item.isFolder
                                 ? `${progressPercentage}%`
                                 : queued
-                                    ? null
-                                    : `${uploadProgressPercentage}%`}
+                                ? null
+                                : `${uploadProgressPercentage}%`}
                         </span>
 
                         {item.isFolder ? null : !progress || progress < progressMax ? ( // TODO: mocks show ability to cancel folder share-in-progress as well

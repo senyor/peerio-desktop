@@ -280,7 +280,7 @@ export default class UserPicker extends React.Component {
         const selectedFiles = fileStore.selectedFiles;
 
         return (
-            <div className="user-picker">
+            <div className={css('user-picker', this.props.className)}>
                 <div
                     className={css('selected-items', {
                         banish: !this.props.sharing

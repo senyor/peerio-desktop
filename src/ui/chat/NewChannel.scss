@@ -70,43 +70,6 @@
   .user-picker {
     height: auto;
 
-    /*
-      `chip-wrapper` makes the Chip components appear to be inside the input.
-      However this is not actually possible in HTML. So we take the border off
-      the Input component and apply the same border to `chip-wrapper`, and then
-      align the search icon with `chip-wrapper` as well.
-    */
-    .chip-wrapper {
-      position: relative;
-      max-height: 100px;
-      padding-left: 48px;
-      overflow-x: hidden;
-      overflow-y: auto;
-      border: 1px solid $input-border;
-      border-radius: 4px;
-
-      .p-chip {
-        margin-top: $margin-small;
-        margin-bottom: 0;
-      }
-
-      .p-search-input {
-        display: inline-flex;
-        position: static;
-        width: auto;
-
-        .search-icon {
-          top: 12px;
-          margin-top: 0;
-        }
-
-        input {
-          padding: 0;
-          border: 0;
-        }
-      }
-    }
-
     .p-list {
       padding-left: $userpicker-margin-large;
     }

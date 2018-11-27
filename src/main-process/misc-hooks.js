@@ -43,4 +43,12 @@ export default function applyMiscHooks(mainWindow) {
         // Let chromium verify it further.
         callback(-3);
     });
+
+    mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+        if (details.responseHeaders.link) {
+            // Remove 'link' headers to avoid 'preload' by XMLHttpRequest.
+            delete details.responseHeaders.link;
+        }
+        callback({ cancel: false, responseHeaders: details.responseHeaders });
+    });
 }

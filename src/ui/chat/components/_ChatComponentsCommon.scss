@@ -1,3 +1,5 @@
+$message-max-width: calc(100% - 100px);
+
 // The input box styles and the rendered message styles should be identical unless explicitly overridden.
 %chat-message {
   $paragraph-line-height: 1.4;
@@ -29,7 +31,7 @@
 
   p {
     flex-grow: 1;
-    max-width: calc(100% - 100px);
+    max-width: $message-max-width;
     min-width: 96px;
     margin: 0 0 0 $margin-default;
     line-height: $paragraph-line-height;
@@ -90,19 +92,10 @@
   // }
 }
 
-// UrlPreviewConsent and InlineFiles both have consent dialogs which are identical despite being in different components
-$urlpreview-width: 480px;
-
 .first-time {
-  max-width: 496px; // $urlpreview-width + 16px
+  max-width: 496px; // $preview-max-width + 16px
   padding: $padding-default 0;
   margin-left: $margin-default;
-
-  .warning-body,
-  .url-content {
-    padding-left: $padding-default;
-    border-left: 1px solid $divider-dark;
-  }
 
   .warning-header {
     @extend %title;
@@ -121,6 +114,7 @@ $urlpreview-width: 480px;
     // half of icon width
     padding-left: 12px;
     margin-left: 12px;
+    border-left: 1px solid $divider-dark;
 
     p.text {
       max-width: 100%; // override of a general <p> style in MessageList

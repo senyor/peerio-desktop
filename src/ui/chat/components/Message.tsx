@@ -290,15 +290,22 @@ export default class Message extends React.Component<MessageProps> {
                             ) : null}
                             {/* SECURITY: sanitize if you change this to  render in dangerouslySetInnerHTML */
                             this.renderSystemData(m)}
-                            {m.hasUrls
-                                ? m.externalImages.map((urlData, ind) => (
-                                      <UrlPreview
-                                          key={ind} // eslint-disable-line react/no-array-index-key
-                                          urlData={urlData}
-                                          onImageLoaded={this.props.onImageLoaded}
-                                      />
-                                  ))
-                                : null}
+                            {m.externalWebsites.map((urlData, ind) => (
+                                <UrlPreview
+                                    type="html"
+                                    key={ind} // eslint-disable-line react/no-array-index-key
+                                    urlData={urlData}
+                                    onImageLoaded={this.props.onImageLoaded}
+                                />
+                            ))}
+                            {m.externalImages.map((urlData, ind) => (
+                                <UrlPreview
+                                    type="image"
+                                    key={ind} // eslint-disable-line react/no-array-index-key
+                                    urlData={urlData}
+                                    onImageLoaded={this.props.onImageLoaded}
+                                />
+                            ))}
                             {!uiStore.prefs.externalContentConsented && m.hasUrls && (
                                 <UrlPreviewConsent />
                             )}

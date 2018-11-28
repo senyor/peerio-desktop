@@ -93,8 +93,8 @@ class BeaconStore {
     // Push to currentBeacons but check beacon read status in User profile first.
     // This is not intended to be called directly. Component should use addBeacons.
     @action.bound
-    private async pushBeacon(b: string): Promise<void> {
-        const beaconStatus = await User.current.beacons.get(b);
+    private pushBeacon(b: string): void {
+        const beaconStatus = User.current.beacons.get(b);
         if (!beaconStatus) {
             this.currentBeacons.push(b);
         }

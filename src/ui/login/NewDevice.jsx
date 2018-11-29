@@ -1,12 +1,12 @@
-const React = require('react');
-const { Button } = require('peer-ui');
-const { User, warnings, t } = require('peerio-icebear');
-const { observable, action } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
-const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
-const { Passcode, PasscodeStore } = require('../signup/Passcode');
-const T = require('~/ui/shared-components/T').default;
+import React from 'react';
+import { Button } from 'peer-ui';
+import { User, warnings, t } from 'peerio-icebear';
+import { observable, action } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+import FullCoverLoader from '~/ui/shared-components/FullCoverLoader';
+import { Passcode, PasscodeStore } from '../signup/Passcode';
+import T from '~/ui/shared-components/T';
 
 @observer
 class NewDevice extends React.Component {
@@ -93,4 +93,4 @@ class NewDevice extends React.Component {
     }
 }
 
-module.exports = NewDevice;
+export default NewDevice;

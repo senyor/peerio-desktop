@@ -2,8 +2,8 @@
  * Placeholder of things to come, and also makes the dev aware that
  * a store is related to ValidatedInputs on the component.
  */
-const { extendObservable, observable, computed } = require('mobx');
-const _ = require('lodash');
+import { extendObservable, observable, computed } from 'mobx';
+import _ from 'lodash';
 
 class OrderedFormStore {
     /**
@@ -71,4 +71,4 @@ class OrderedFormStore {
     }
 }
 
-module.exports = OrderedFormStore;
+export default OrderedFormStore;

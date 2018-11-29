@@ -259,7 +259,8 @@ class InlineFile extends React.Component<InlineFileProps> {
             <div className="image-over-limit-warning">
                 <T k="title_imageSizeWarning" className="text">
                     {{ size: fileStore.inlineImageSizeLimitFormatted }}
-                </T>&nbsp;
+                </T>
+                &nbsp;
                 <Button
                     className="display-this-image display-over-limit-image"
                     onClick={this.forceDownload}
@@ -311,18 +312,13 @@ class InlineFile extends React.Component<InlineFileProps> {
                                     <div className="file-name">{file.nameWithoutExtension}</div>
                                     <div className="file-ext">.{file.ext}</div>
                                 </div>
-                                {file.isImage &&
-                                    uiStore.prefs.peerioContentConsented && (
-                                        <Button
-                                            icon={
-                                                this.isExpanded
-                                                    ? 'arrow_drop_up'
-                                                    : 'arrow_drop_down'
-                                            }
-                                            onClick={this.toggleExpand}
-                                            theme="no-hover"
-                                        />
-                                    )}
+                                {file.isImage && uiStore.prefs.peerioContentConsented && (
+                                    <Button
+                                        icon={this.isExpanded ? 'arrow_drop_up' : 'arrow_drop_down'}
+                                        onClick={this.toggleExpand}
+                                        theme="no-hover"
+                                    />
+                                )}
                                 <FileActions
                                     file={file}
                                     onDelete={this.deleteFile}
@@ -335,49 +331,44 @@ class InlineFile extends React.Component<InlineFileProps> {
                             ) : null}
                         </div>
                     </div>
-                    {this.isExpanded &&
-                        uiStore.prefs.peerioContentConsented && (
-                            <div
-                                className={css('inline-files-expanded', {
-                                    'display-image':
-                                        uiStore.prefs.peerioContentEnabled &&
-                                        (file.tmpCached || !file.isOverInlineSizeLimit)
-                                })}
-                            >
-                                {file.tmpCached || uiStore.prefs.peerioContentEnabled ? (
-                                    <div className="inline-files-dropdown">
-                                        {file.tmpCached &&
-                                            (this.errorLoading ? (
-                                                <span>{t('error_loadingImage')}</span>
-                                            ) : (
-                                                <img
-                                                    src={file.tmpCachePath}
-                                                    onLoad={this.props.onImageLoaded}
-                                                    onError={this.onErrorLoadingImage}
-                                                    onClick={this.imageClick}
-                                                />
-                                            ))}
-                                        {!file.tmpCached &&
-                                            !file.downloading &&
-                                            file.isOverInlineSizeLimit &&
-                                            !file.isOversizeCutoff &&
-                                            this.renderOversizeWarning()}
-                                        {file.isOversizeCutoff &&
-                                            this.renderOversizeCutoffWarning()}
-                                        {file.cachingFailed ? (
-                                            <span>{t('error_downloadFailed')}</span>
-                                        ) : null}
-                                    </div>
-                                ) : (
-                                    <Button
-                                        className="display-this-image"
-                                        onClick={this.forceDownload}
-                                    >
-                                        {t('button_displayThisImage')}
-                                    </Button>
-                                )}
-                            </div>
-                        )}
+                    {this.isExpanded && uiStore.prefs.peerioContentConsented && (
+                        <div
+                            className={css('inline-files-expanded', {
+                                'display-image':
+                                    uiStore.prefs.peerioContentEnabled &&
+                                    (file.tmpCached || !file.isOverInlineSizeLimit)
+                            })}
+                        >
+                            {file.tmpCached || uiStore.prefs.peerioContentEnabled ? (
+                                <div className="inline-files-dropdown">
+                                    {file.tmpCached &&
+                                        (this.errorLoading ? (
+                                            <span>{t('error_loadingImage')}</span>
+                                        ) : (
+                                            <img
+                                                src={file.tmpCachePath}
+                                                onLoad={this.props.onImageLoaded}
+                                                onError={this.onErrorLoadingImage}
+                                                onClick={this.imageClick}
+                                            />
+                                        ))}
+                                    {!file.tmpCached &&
+                                        !file.downloading &&
+                                        file.isOverInlineSizeLimit &&
+                                        !file.isOversizeCutoff &&
+                                        this.renderOversizeWarning()}
+                                    {file.isOversizeCutoff && this.renderOversizeCutoffWarning()}
+                                    {file.cachingFailed ? (
+                                        <span>{t('error_downloadFailed')}</span>
+                                    ) : null}
+                                </div>
+                            ) : (
+                                <Button className="display-this-image" onClick={this.forceDownload}>
+                                    {t('button_displayThisImage')}
+                                </Button>
+                            )}
+                        </div>
+                    )}
                     {this.currentImageSrc && this.imagePopup}
                 </div>
                 <div>

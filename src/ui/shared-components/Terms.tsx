@@ -47,7 +47,8 @@ export default class Terms extends React.Component<{
                     data is handled, please view our{' '}
                     <a className="clickable" onClick={this.openPrivacy}>
                         Privacy Policy
-                    </a>.
+                    </a>
+                    .
                 </p>
 
                 <p>
@@ -58,7 +59,8 @@ export default class Terms extends React.Component<{
                         onClick={telemetry.shared.lawEnforcementLink}
                     >
                         Law Enforcement Guidelines
-                    </a>.
+                    </a>
+                    .
                 </p>
 
                 <h3>1. Acceptance of Terms</h3>
@@ -452,7 +454,8 @@ export default class Terms extends React.Component<{
                     By using the Services, you also agree to be bound by Peerio's{' '}
                     <a className="clickable" onClick={this.openPrivacy}>
                         Privacy Policy
-                    </a>.
+                    </a>
+                    .
                 </p>
 
                 <h3>20. Miscellaneous</h3>

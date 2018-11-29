@@ -1,11 +1,9 @@
-// const { globalShortcut } = require('electron');
-// const appControl = require('../helpers/app-control');
+// import { globalShortcut } from 'electron';
+// import appControl from '../helpers/app-control';
 
-function buildGlobalShortcuts() {
+export default function buildGlobalShortcuts() {
     console.log('Registering global shortcuts.');
     // globalShortcut.register('CommandOrControl+R', () => {
     //    appControl.relaunch();
     // });
 }
-
-module.exports = buildGlobalShortcuts;

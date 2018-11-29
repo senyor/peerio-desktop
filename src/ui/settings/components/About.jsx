@@ -1,16 +1,19 @@
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { Button } = require('peer-ui');
-const version = require('electron').remote.app.getVersion();
-const { socket, t } = require('peerio-icebear');
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { remote as electron } from 'electron';
 
-const Copyright = require('~/whitelabel/components/Copyright');
-const PoweredBySettings = require('~/whitelabel/components/PoweredBySettings');
-const LegalDialog = require('~/ui/shared-components/LegalDialog').default;
+import { socket, t } from 'peerio-icebear';
+import { Button } from 'peer-ui';
+
+import Copyright from '~/whitelabel/components/Copyright';
+import PoweredBySettings from '~/whitelabel/components/PoweredBySettings';
+import LegalDialog from '~/ui/shared-components/LegalDialog';
+
+const version = electron.app.getVersion();
 
 @observer
-class About extends React.Component {
+export default class About extends React.Component {
     @observable termsDialogOpen = false;
     @observable legalDialogRef = React.createRef();
 
@@ -52,5 +55,3 @@ class About extends React.Component {
         );
     }
 }
-
-module.exports = About;

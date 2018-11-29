@@ -22,13 +22,13 @@ if (!packageJson.peerio) {
 
 interface DesktopConfig extends Config {
     os: string;
-    enableVolumes: boolean;
     translator: {
         stringReplacements: { original: string; replacement: string }[];
         urlMap: { [key: string]: string };
     };
     FileStream: typeof FileStream;
     StorageEngine: typeof StorageEngine;
+    CacheEngine: typeof CacheEngine;
     nodeLogFolder: string;
     devAutologin?: Partial<{
         username: string;
@@ -63,8 +63,8 @@ cfg.arch = os.arch();
 cfg.os = os.type();
 
 setUrlMap(cfg.translator.urlMap);
-for (const name in tagHandlers) {
-    setTagHandler(name, tagHandlers[name]);
+for (const [tag, handler] of Object.entries(tagHandlers)) {
+    setTagHandler(tag, handler);
 }
 
 // replace config-specific strings
@@ -138,7 +138,5 @@ try {
 } catch (err) {
     console.log(err);
 }
-
-cfg.enableVolumes = true;
 
 export default cfg;

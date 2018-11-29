@@ -1,8 +1,8 @@
-// const isDevEnv = require('~/helpers/is-dev-env');
-// const Airbrake = require('airbrake-js');
-// const config = require('~/config').default;
-// const { User, socket } = require('peerio-icebear');
-// const { reaction } = require('mobx');
+// import isDevEnv from '~/helpers/is-dev-env';
+// import Airbrake from 'airbrake-js';
+// import config from '~/config';
+// import { User, socket } from 'peerio-icebear';
+// import { reaction } from 'mobx';
 
 // /**
 //  * Plugs into the Airbrake API in order to send errors.

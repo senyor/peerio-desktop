@@ -1,8 +1,8 @@
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { Input } = require('peer-ui');
-const { t } = require('peerio-icebear');
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { Input } from 'peer-ui';
+import { t } from 'peerio-icebear';
 
 @observer
 class BetterInput extends React.Component {
@@ -54,7 +54,7 @@ class BetterInput extends React.Component {
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
         if (this.accepted || this.rejected) return;
-        this.props.onAccept(this.value, this.isValid);
+        if (this.props.onAccept) this.props.onAccept(this.value, this.isValid);
         this.accepted = true;
     };
 
@@ -62,7 +62,7 @@ class BetterInput extends React.Component {
         if (e.key === 'Enter') {
             if (!this.isValid) return;
             this.accepted = true;
-            this.props.onAccept(this.value, this.isValid);
+            if (this.props.onAccept) this.props.onAccept(this.value, this.isValid);
             if (this.props.onBlur) this.props.onBlur();
         }
         if (e.key === 'Escape') {
@@ -104,4 +104,4 @@ class BetterInput extends React.Component {
     }
 }
 
-module.exports = BetterInput;
+export default BetterInput;

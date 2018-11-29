@@ -10,8 +10,8 @@ import * as telemetry from '~/telemetry';
 import uiStore from '~/stores/ui-store';
 import { validateCode } from '~/helpers/2fa';
 
-const autologin = require('~/helpers/autologin');
-const appControl = require('~/helpers/app-control');
+import { getPassphrase } from '~/helpers/autologin';
+import { signout } from '~/helpers/app-control';
 
 @observer
 export default class TwoFADialog extends React.Component {
@@ -24,7 +24,7 @@ export default class TwoFADialog extends React.Component {
             () => {
                 User.getLastAuthenticated()
                     .then(lastUser => {
-                        return lastUser ? autologin.getPassphrase(lastUser.username) : null;
+                        return lastUser ? getPassphrase(lastUser.username) : null;
                     })
                     .then(passphrase => {
                         this.isAutologinEnabled = !!passphrase;
@@ -72,7 +72,7 @@ export default class TwoFADialog extends React.Component {
 
     cancel() {
         if (clientApp.active2FARequest.type === 'login') {
-            appControl.signout();
+            signout();
         }
         clientApp.active2FARequest.cancel();
     }
@@ -81,7 +81,7 @@ export default class TwoFADialog extends React.Component {
         if (!request) return '';
         switch (request.type) {
             case 'login':
-                return t('title_2FALoginAuth');
+                return t('title_2FAInput');
             case 'backupCodes':
                 return t('title_2FABackupCodeAuth');
             case 'disable':
@@ -95,7 +95,7 @@ export default class TwoFADialog extends React.Component {
         if (!request) return '';
         switch (request.type) {
             case 'login':
-                return t('title_2FALoginAuthPreText');
+                return t('title_2FADetail');
             case 'backupCodes':
                 return t('title_2FABackupCodeAuthPreText');
             case 'disable':
@@ -157,14 +157,16 @@ export default class TwoFADialog extends React.Component {
                         value={this.totpCode}
                         onChange={this.onTOTPCodeChange}
                         onKeyDown={this.handleKeyDown}
-                        placeholder={t('title_2FAInputPlaceholder')}
+                        size="small"
+                        label={t('title_2FAInputLabel')}
+                        placeholder={t('title_2FAHelperText')}
                         autoFocus
                     />
                 </div>
                 {req && req.type === 'login' ? (
                     <Checkbox
                         checked={uiStore.prefs.last2FATrustDeviceSetting}
-                        label={t('title_trustThisDevice')}
+                        label={t('title_verifyDeviceTwoWeeks')}
                         onChange={this.onToggleTrust}
                     />
                 ) : null}

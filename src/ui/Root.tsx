@@ -6,7 +6,7 @@ import { computed, reaction, observable, when } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { socket, clientApp, warnings, chatStore, t } from 'peerio-icebear';
-import { Button, ProgressBar } from 'peer-ui';
+import { A11yWrapper, Button, ProgressBar } from 'peer-ui';
 
 import DragPreviewLayer from '~/ui/files/components/DragPreviewLayer';
 import TwoFADialog from '~/ui/shared-components/TwoFADialog';
@@ -113,7 +113,7 @@ export default class Root extends React.Component {
 
     render() {
         return (
-            <div>
+            <A11yWrapper>
                 <div className={`status-bar ${this.showOfflineNotification ? 'visible' : ''}`}>
                     {this.showOfflineNotification ? (
                         <ProgressBar circular theme="light" size="small" />
@@ -131,7 +131,7 @@ export default class Root extends React.Component {
                 <InstallingUpdateDialog />
                 <DragPreviewLayer />
                 <DropTarget />
-            </div>
+            </A11yWrapper>
         );
     }
 }

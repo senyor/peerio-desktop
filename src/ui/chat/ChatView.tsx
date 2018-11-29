@@ -326,6 +326,7 @@ export default class ChatView extends React.Component {
                     {this.showUserPicker ? (
                         <div className="create-new-chat">
                             <UserPicker
+                                className="add-users-to-room"
                                 closeable
                                 onClose={this.closeUserPicker}
                                 onAccept={this.addParticipants}

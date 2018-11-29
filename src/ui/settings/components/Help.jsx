@@ -1,15 +1,19 @@
-const React = require('react');
-const { when } = require('mobx');
-const { observer } = require('mobx-react');
-const { Button } = require('peer-ui');
-const T = require('../../shared-components/T').default;
-const config = require('~/config').default;
-const urls = require('~/config').default.translator.urlMap;
-const { contactStore, chatStore, warnings, t } = require('peerio-icebear');
-const { clipboard } = require('electron').remote;
+import React from 'react';
+import { when } from 'mobx';
+import { observer } from 'mobx-react';
+import { remote as electron } from 'electron';
+
+import { contactStore, chatStore, warnings, t } from 'peerio-icebear';
+import { Button } from 'peer-ui';
+
+import T from '~/ui/shared-components/T';
+import config from '~/config';
+
+const { clipboard } = electron;
+const urls = config.translator.urlMap;
 
 @observer
-class Help extends React.Component {
+export default class Help extends React.Component {
     support = () => {
         const support = contactStore.getContact(config.contacts.supportUser);
         when(
@@ -84,5 +88,3 @@ class Help extends React.Component {
         );
     }
 }
-
-module.exports = Help;

@@ -1,7 +1,7 @@
-const React = require('react');
-const { Button, Input, MaterialIcon } = require('peer-ui');
-const { t } = require('peerio-icebear');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { Button, Input, MaterialIcon } from 'peer-ui';
+import { t } from 'peerio-icebear';
+import { observer } from 'mobx-react';
 
 @observer
 class Search extends React.Component {
@@ -29,4 +29,4 @@ class Search extends React.Component {
         );
     }
 }
-module.exports = Search;
+export default Search;

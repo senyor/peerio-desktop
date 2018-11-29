@@ -1,10 +1,11 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { Button } = require('peer-ui');
-const { User, t } = require('peerio-icebear');
-const config = require('~/config').default;
-const T = require('~/ui/shared-components/T').default;
-const urls = require('~/config').default.translator.urlMap;
+import React from 'react';
+import { observer } from 'mobx-react';
+import { Button } from 'peer-ui';
+import { User, t } from 'peerio-icebear';
+import config from '~/config';
+import T from '~/ui/shared-components/T';
+
+const urls = config.translator.urlMap;
 
 @observer
 class ChannelUpgradeOffer extends React.Component {
@@ -27,4 +28,4 @@ class ChannelUpgradeOffer extends React.Component {
     }
 }
 
-module.exports = ChannelUpgradeOffer;
+export default ChannelUpgradeOffer;

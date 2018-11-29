@@ -4,7 +4,7 @@
  * Output will have redundant stuff, e.g. both a click and an set value for an input.
  * State-related classes will be stripped, e.g. those conveying error and focus status.
  */
-const csspath = require('cssman');
+import csspath from 'cssman';
 
 let actions = [];
 
@@ -61,4 +61,4 @@ function stopRecording() {
     actions = [];
 }
 
-module.exports = { recordUI, stopRecording };
+export default { recordUI, stopRecording };

@@ -1,20 +1,20 @@
-const React = require('react');
-const { observable, computed, action } = require('mobx');
-const { observer } = require('mobx-react');
-const css = require('classnames');
+import React from 'react';
+import { observable, computed, action } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
 
-const { t } = require('peerio-icebear');
-const { Avatar, Dialog, List, ListItem, Button } = require('peer-ui');
+import { t } from 'peerio-icebear';
+import { Avatar, Dialog, List, ListItem, Button } from 'peer-ui';
 
-const T = require('~/ui/shared-components/T').default;
-const { getContactByEvent } = require('~/helpers/icebear-dom');
+import T from '~/ui/shared-components/T';
+import { getContactByEvent } from '~/helpers/icebear-dom';
 
 /**
  * onSelectContact
  * onSelectChannel
  */
 @observer
-class ModifyShareDialog extends React.Component {
+export class ModifyShareDialog extends React.Component {
     @observable visible = false;
     @observable selection = [];
 
@@ -113,7 +113,7 @@ class ModifyShareDialog extends React.Component {
 }
 
 @observer
-class ModifyShareListItem extends ListItem {
+export class ModifyShareListItem extends ListItem {
     @observable isClicked = false;
 
     @action.bound
@@ -160,5 +160,3 @@ class ModifyShareListItem extends ListItem {
         );
     }
 }
-
-module.exports = { ModifyShareDialog, ModifyShareListItem };

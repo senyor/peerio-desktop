@@ -2,7 +2,7 @@ import React from 'react';
 import { observable, computed, action, runInAction, IObservableValue } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
-import { MaterialIcon } from 'peer-ui';
+import { MaterialIcon, SearchInput } from 'peer-ui';
 import _ from 'lodash';
 import { User, t } from 'peerio-icebear';
 
@@ -155,13 +155,13 @@ class EmojiSearch extends React.Component<{
     onSearchKeywordChange: (keyword: string) => void;
 }> {
     @observable keyword = '';
-    inputRef(ref) {
-        if (ref) ref.focus();
-    }
-    onKeywordChange = ev => {
-        this.keyword = ev.target.value;
+
+    @action.bound
+    onKeywordChange(value) {
+        this.keyword = value;
         this.fireChangeEvent();
-    };
+    }
+
     fireChangeEvent = _.throttle(() => {
         this.props.onSearchKeywordChange(this.keyword);
     }, 250);
@@ -173,14 +173,12 @@ class EmojiSearch extends React.Component<{
         // Don't make IconButton out of clear search keyword button, it messes up blur event
         return (
             <div className="emoji-search">
-                <MaterialIcon icon="search" className="search-icon" />
-                <input
+                <SearchInput
                     className="emoji-search-input"
-                    type="text"
                     placeholder={t('title_search')}
-                    ref={this.inputRef}
                     onChange={this.onKeywordChange}
                     value={this.keyword}
+                    autoFocus
                 />
                 {this.props.searchKeyword ? (
                     <MaterialIcon

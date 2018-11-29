@@ -34,21 +34,6 @@
     width: 100%;
   }
 
-  .user-picker-container {
-    display: flex;
-    height: auto;
-    width: 100%;
-  }
-
-  .user-picker {
-    height: auto;
-
-    .p-list {
-      padding-left: $userpicker-margin-large;
-    }
-  }
-
-  // TODO: needs pretty serious refactor (in JSX) to share style with NewChat
   .new-channel-inputs {
     display: flex;
     flex-direction: column;
@@ -65,11 +50,29 @@
       max-width: calc(#{$userpicker-maxwidth} - 64px); // TODO: hardcoded values
       margin: 0 auto $margin-default $margin-xxl;
       overflow: hidden;
+
+      .p-input input {
+        padding-left: $padding-default;
+      }
     }
   }
 
   .helper-text {
     height: $margin-default;
+  }
+
+  .user-picker-container {
+    display: flex;
+    height: auto;
+    width: 100%;
+  }
+
+  .user-picker {
+    height: auto;
+
+    .p-list {
+      padding-left: $userpicker-margin-large;
+    }
   }
 
   .new-channel-button-container {

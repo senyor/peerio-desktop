@@ -10,8 +10,9 @@ import T from '~/ui/shared-components/T';
 import AvatarWithPopup from '~/ui/contact/components/AvatarWithPopup';
 import EmojiImage from '~/ui/emoji/Image';
 import routerStore from '~/stores/router-store';
+import config from '~/config';
 
-const urls = require('~/config').default.translator.urlMap;
+const urls = config.translator.urlMap;
 
 interface ChannelInviteProps {
     className?: string; // TODO: audit -- isn't this component only mounted on the root? never receives this prop...
@@ -135,7 +136,7 @@ export default class ChannelInvite extends React.Component<ChannelInviteProps> {
         return (
             <div className={css('channel-invite', this.props.className)}>
                 <div className="invite-content">
-                    <img src="./static/img/illustrations/room-invite.svg" />
+                    <img src="./static/img/illustrations/room-invite.svg" draggable={false} />
                     <div className="text">
                         <T k="title_roomInviteTitle">{{ roomName: channelName }}</T>
                     </div>

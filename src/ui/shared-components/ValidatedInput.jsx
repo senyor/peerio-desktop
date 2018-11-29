@@ -1,3 +1,15 @@
+import React, { Component } from 'react';
+import css from 'classnames';
+import _ from 'lodash';
+import { computed, reaction, when, isObservableProp, observable, action } from 'mobx';
+import { observer } from 'mobx-react';
+
+import { socket, t } from 'peerio-icebear';
+import { Input } from 'peer-ui';
+
+import OrderedFormStore from '~/stores/ordered-form-store';
+import * as telemetry from '~/telemetry';
+
 /**
  * Component meant to live inside a form with a store.
  *
@@ -13,19 +25,8 @@
  *
  * Validators are expected to follow the format specified in peerio-icebear
  */
-import * as telemetry from '~/telemetry';
-const React = require('react');
-const _ = require('lodash');
-const { socket, t } = require('peerio-icebear');
-const { computed, reaction, when, isObservableProp, observable, action } = require('mobx');
-const { Component } = require('react');
-const { observer } = require('mobx-react');
-const { Input } = require('peer-ui');
-const OrderedFormStore = require('~/stores/ordered-form-store');
-const css = require('classnames');
-
 @observer
-class ValidatedInput extends Component {
+export default class ValidatedInput extends Component {
     @observable isFocused = false;
 
     @computed
@@ -210,4 +211,3 @@ class ValidatedInput extends Component {
         );
     }
 }
-module.exports = ValidatedInput;

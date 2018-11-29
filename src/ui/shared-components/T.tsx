@@ -10,8 +10,8 @@ interface TBaseProps {
 type TProps<K extends keyof LocalizationStrings> = LocalizationStrings[K] extends () => any
     ? { k: K } & TBaseProps
     : LocalizationStrings[K] extends (params: infer U) => any
-        ? { k: K; children: U } & TBaseProps
-        : never;
+    ? { k: K; children: U } & TBaseProps
+    : never;
 
 /**
  * given a translation file:

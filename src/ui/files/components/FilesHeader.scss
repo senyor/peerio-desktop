@@ -10,6 +10,7 @@
     justify-content: space-between;
     height: 80px;
     width: 100%;
+    padding-right: $padding-default;
 
     .breadcrumb {
       margin-left: $margin-large;
@@ -37,13 +38,5 @@
     @extend %title;
     margin-left: $margin-xl;
     color: $text-dark-inactive;
-  }
-
-  // .search is also defined (unscoped) in its own component file; all props
-  // currently here are overrides.
-  .search {
-    height: 48px;
-    width: 100%;
-    border-radius: 24px;
   }
 }

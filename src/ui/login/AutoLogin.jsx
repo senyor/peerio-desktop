@@ -1,9 +1,9 @@
-const React = require('react');
-const { Button } = require('peer-ui');
-const { observer } = require('mobx-react');
-const autologin = require('~/helpers/autologin');
-const { t } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
+import React from 'react';
+import { Button } from 'peer-ui';
+import { observer } from 'mobx-react';
+import autologin from '~/helpers/autologin';
+import { t } from 'peerio-icebear';
+import T from '~/ui/shared-components/T';
 
 @observer
 class AutoLogin extends React.Component {
@@ -51,4 +51,4 @@ class AutoLogin extends React.Component {
     }
 }
 
-module.exports = AutoLogin;
+export default AutoLogin;

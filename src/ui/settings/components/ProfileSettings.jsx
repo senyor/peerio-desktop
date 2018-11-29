@@ -1,11 +1,11 @@
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { Avatar, Button, List, ListItem, MaterialIcon, ProgressBar } = require('peer-ui');
-const { User, contactStore, validation, t } = require('peerio-icebear');
-const BetterInput = require('~/ui/shared-components/BetterInput');
-const css = require('classnames');
-const AvatarEditor = require('./AvatarEditor');
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { Avatar, Button, List, ListItem, MaterialIcon, ProgressBar } from 'peer-ui';
+import { User, contactStore, validation, t } from 'peerio-icebear';
+import BetterInput from '~/ui/shared-components/BetterInput';
+import css from 'classnames';
+import AvatarEditor from './AvatarEditor';
 
 @observer
 class Profile extends React.Component {
@@ -264,4 +264,4 @@ class Profile extends React.Component {
         );
     }
 }
-module.exports = Profile;
+export default Profile;

@@ -4,9 +4,7 @@ import { observable, computed } from 'mobx';
 
 import { fileStore, chatStore, t } from 'peerio-icebear';
 import { File, FileFolder } from 'peerio-icebear/dist/models';
-import { Dialog, ProgressBar } from 'peer-ui';
-import config from '~/config';
-import Search from '~/ui/shared-components/Search';
+import { Dialog, ProgressBar, SearchInput } from 'peer-ui';
 
 import FileLine from './FileLine';
 import FolderLine from './FolderLine';
@@ -88,6 +86,10 @@ export default class FilePicker extends React.Component<FilePickerProps> {
         fileStore.searchQuery = val;
     };
 
+    readonly handleClear = () => {
+        this.handleSearch('');
+    };
+
     get breadCrumbsHeader() {
         return (
             <Breadcrumb
@@ -123,8 +125,7 @@ export default class FilePicker extends React.Component<FilePickerProps> {
 
         const items = [];
         const data = this.items;
-        const canShareFolder =
-            config.enableVolumes && chatStore.activeChat && !chatStore.activeChat.isChannel;
+        const canShareFolder = chatStore.activeChat && !chatStore.activeChat.isChannel;
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             if (f.isLegacy && this.props.hideLegacy) continue;
@@ -168,7 +169,12 @@ export default class FilePicker extends React.Component<FilePickerProps> {
             >
                 {!fileStore.loading && this.props.active ? (
                     <div className="file-picker-body">
-                        <Search onChange={this.handleSearch} query={fileStore.searchQuery} />
+                        <SearchInput
+                            placeholder={t('title_search')}
+                            onChange={this.handleSearch}
+                            onClear={this.handleClear}
+                            value={fileStore.searchQuery}
+                        />
                         {fileStore.searchQuery ? this.searchResultsHeader : this.breadCrumbsHeader}
                         <div className="file-table-wrapper">
                             <div

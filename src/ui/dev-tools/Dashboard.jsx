@@ -1,9 +1,9 @@
-const React = require('react');
-const { Button, Input } = require('peer-ui');
-const { User, socket } = require('peerio-icebear');
-const config = require('~/config').default;
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { Button, Input } from 'peer-ui';
+import { User, socket } from 'peerio-icebear';
+import config from '~/config';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
 
 class DevToolsDashboard extends React.Component {
     render() {
@@ -74,4 +74,4 @@ class ChangeServer extends React.Component {
     }
 }
 
-module.exports = DevToolsDashboard;
+export default DevToolsDashboard;

@@ -1,10 +1,11 @@
 import React from 'react';
 import { observable, action, computed, reaction, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
-import { Button, Dialog, MaterialIcon } from 'peer-ui';
-import { fileStore, t } from 'peerio-icebear';
-import Search from '~/ui/shared-components/Search';
 import css from 'classnames';
+
+import { Button, Dialog, MaterialIcon, SearchInput } from 'peer-ui';
+import { fileStore, t } from 'peerio-icebear';
+
 import ShareConfirmDialog from './ShareConfirmDialog';
 
 // HACK: circular require :(
@@ -145,6 +146,10 @@ export default class MoveFileDialog extends React.Component {
         this.query = val;
     }
 
+    handleClear = () => {
+        this.handleSearch('');
+    };
+
     @action.bound
     setCurrentFolder(folder) {
         this.currentFolder = folder;
@@ -174,7 +179,11 @@ export default class MoveFileDialog extends React.Component {
                     title={t('title_moveFileTo')}
                     className="move-file-dialog"
                 >
-                    <Search onChange={this.handleSearch} query={this.query} />
+                    <SearchInput
+                        onChange={this.handleSearch}
+                        onClear={this.handleClear}
+                        value={this.query}
+                    />
                     <Breadcrumb
                         folder={this.currentFolder}
                         onFolderClick={this.setCurrentFolder}

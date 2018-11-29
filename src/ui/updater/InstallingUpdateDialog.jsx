@@ -1,13 +1,14 @@
-const React = require('react');
-const { Component } = require('react');
-const { observer } = require('mobx-react');
-const { t } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
-const { Dialog, ProgressBar } = require('peer-ui');
-const updaterStore = require('~/stores/updater-store');
+import React, { Component } from 'react';
+import { observer } from 'mobx-react';
+
+import { t } from 'peerio-icebear';
+import { Dialog, ProgressBar } from 'peer-ui';
+
+import T from '~/ui/shared-components/T';
+import updaterStore from '~/stores/updater-store';
 
 @observer
-class InstallingUpdateDialog extends Component {
+export default class InstallingUpdateDialog extends Component {
     render() {
         return (
             <Dialog
@@ -25,5 +26,3 @@ class InstallingUpdateDialog extends Component {
         );
     }
 }
-
-module.exports = InstallingUpdateDialog;

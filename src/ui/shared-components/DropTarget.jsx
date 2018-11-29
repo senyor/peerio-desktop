@@ -1,11 +1,11 @@
-const React = require('react');
-const dragStore = require('~/stores/drag-drop-store');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { MaterialIcon } = require('peer-ui');
-const { fileStore, chatStore, t } = require('peerio-icebear');
-const routerStore = require('~/stores/router-store');
-const UploadDialog = require('../shared-components/UploadDialog');
+import React from 'react';
+import dragStore from '~/stores/drag-drop-store';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { MaterialIcon } from 'peer-ui';
+import { fileStore, chatStore, t } from 'peerio-icebear';
+import routerStore from '~/stores/router-store';
+import UploadDialog from '../shared-components/UploadDialog';
 
 @observer
 class DropTarget extends React.Component {
@@ -72,4 +72,4 @@ class DropTarget extends React.Component {
     }
 }
 
-module.exports = DropTarget;
+export default DropTarget;

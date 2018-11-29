@@ -1,10 +1,10 @@
-const React = require('react');
-const { observable, when } = require('mobx');
-const { observer } = require('mobx-react');
-const { chatStore, t } = require('peerio-icebear');
-const UserPicker = require('~/ui/shared-components/UserPicker');
-const FullCoverLoader = require('~/ui/shared-components/FullCoverLoader');
-const ELEMENTS = require('~/whitelabel/helpers/elements');
+import React from 'react';
+import { observable, when } from 'mobx';
+import { observer } from 'mobx-react';
+import { chatStore, t } from 'peerio-icebear';
+import UserPicker from '~/ui/shared-components/UserPicker';
+import FullCoverLoader from '~/ui/shared-components/FullCoverLoader';
+import ELEMENTS from '~/whitelabel/helpers/elements';
 
 @observer
 class NewChat extends React.Component {
@@ -59,4 +59,4 @@ class NewChat extends React.Component {
     }
 }
 
-module.exports = NewChat;
+export default NewChat;

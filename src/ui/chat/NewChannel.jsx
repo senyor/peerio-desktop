@@ -1,10 +1,10 @@
-const React = require('react');
-const { observable, when } = require('mobx');
-const { observer } = require('mobx-react');
-const { chatStore, config, User, t } = require('peerio-icebear');
-const UserPicker = require('~/ui/shared-components/UserPicker');
-const T = require('~/ui/shared-components/T').default;
-const { Input, ProgressBar } = require('peer-ui');
+import React from 'react';
+import { observable, when } from 'mobx';
+import { observer } from 'mobx-react';
+import { chatStore, config, User, t } from 'peerio-icebear';
+import UserPicker from '~/ui/shared-components/UserPicker';
+import T from '~/ui/shared-components/T';
+import { Input, ProgressBar } from 'peer-ui';
 
 @observer
 class NewChannel extends React.Component {
@@ -91,30 +91,26 @@ class NewChannel extends React.Component {
                 </div>
                 <div className="new-channel-inputs">
                     <div className="message-search-wrapper-new-channel message-search-wrapper">
-                        <div className="new-chat-search">
-                            <div className="chip-wrapper">
-                                <Input
-                                    placeholder={t('title_channelName')}
-                                    value={this.channelName}
-                                    onChange={this.handleNameChange}
-                                    maxLength={config.chat.maxChatNameLength}
-                                    autoFocus
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            placeholder={t('title_channelName')}
+                            value={this.channelName}
+                            onChange={this.handleNameChange}
+                            maxLength={config.chat.maxChatNameLength}
+                            size="small"
+                            autoFocus
+                            noHelperText
+                        />
                         <div className="helper-text" />
                     </div>
                     <div className="message-search-wrapper-new-channel message-search-wrapper">
-                        <div className="new-chat-search">
-                            <div className="chip-wrapper">
-                                <Input
-                                    placeholder={t('title_purpose')}
-                                    value={this.purpose}
-                                    onChange={this.handlePurposeChange}
-                                    maxLength={config.chat.maxChatPurposeLength}
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            placeholder={t('title_purpose')}
+                            value={this.purpose}
+                            onChange={this.handlePurposeChange}
+                            maxLength={config.chat.maxChatPurposeLength}
+                            size="small"
+                            noHelperText
+                        />
                         <T k="title_optional" tag="div" className="helper-text" />
                     </div>
                     <div className="user-picker-container">
@@ -135,4 +131,4 @@ class NewChannel extends React.Component {
     }
 }
 
-module.exports = NewChannel;
+export default NewChannel;

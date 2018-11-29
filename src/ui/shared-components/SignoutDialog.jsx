@@ -1,9 +1,9 @@
-const React = require('react');
-const { Checkbox, Dialog } = require('peer-ui');
-const { action, observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { User, t } = require('peerio-icebear');
-const uiStore = require('~/stores/ui-store');
+import React from 'react';
+import { Checkbox, Dialog } from 'peer-ui';
+import { action, observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { User, t } from 'peerio-icebear';
+import uiStore from '~/stores/ui-store';
 
 @observer
 class SignoutDialog extends React.Component {
@@ -49,4 +49,4 @@ class SignoutDialog extends React.Component {
     }
 }
 
-module.exports = SignoutDialog;
+export default SignoutDialog;

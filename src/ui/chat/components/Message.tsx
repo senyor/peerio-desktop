@@ -14,13 +14,14 @@ import ContactProfile from '~/ui/contact/components/ContactProfile';
 import { time } from '~/helpers/formatter';
 import { chatSchema, Renderer } from '~/helpers/chat/prosemirror/chat-schema';
 import uiStore from '~/stores/ui-store';
+import config from '~/config';
 
 import InlineFiles from './InlineFiles';
 import UrlPreview from './UrlPreview';
 import UrlPreviewConsent from './UrlPreviewConsent';
 import InlineSharedFolder from '../../files/components/InlineSharedFolder';
 
-const urls = require('~/config').default.translator.urlMap;
+const urls = config.translator.urlMap;
 
 let legacyProcessMessageForDisplay: (msg: IcebearMessage) => { __html: string };
 
@@ -289,17 +290,25 @@ export default class Message extends React.Component<MessageProps> {
                             ) : null}
                             {/* SECURITY: sanitize if you change this to  render in dangerouslySetInnerHTML */
                             this.renderSystemData(m)}
-                            {m.hasUrls
-                                ? m.externalImages.map((urlData, ind) => (
-                                      <UrlPreview
-                                          key={ind} // eslint-disable-line react/no-array-index-key
-                                          urlData={urlData}
-                                          onImageLoaded={this.props.onImageLoaded}
-                                      />
-                                  ))
-                                : null}
-                            {!uiStore.prefs.externalContentConsented &&
-                                m.hasUrls && <UrlPreviewConsent />}
+                            {m.externalWebsites.map((urlData, ind) => (
+                                <UrlPreview
+                                    type="html"
+                                    key={ind} // eslint-disable-line react/no-array-index-key
+                                    urlData={urlData}
+                                    onImageLoaded={this.props.onImageLoaded}
+                                />
+                            ))}
+                            {m.externalImages.map((urlData, ind) => (
+                                <UrlPreview
+                                    type="image"
+                                    key={ind} // eslint-disable-line react/no-array-index-key
+                                    urlData={urlData}
+                                    onImageLoaded={this.props.onImageLoaded}
+                                />
+                            ))}
+                            {!uiStore.prefs.externalContentConsented && m.hasUrls && (
+                                <UrlPreviewConsent />
+                            )}
                         </div>
                         {/* m.inlineImages.map(url => (
                             <img key={url} className="inline-image" onLoad={this.props.onImageLoaded} src={url} />)) */}
@@ -376,7 +385,9 @@ function renderError(
                                     `${t('error_messageErrorMessagePlaintext')}: ${msg.text}`,
                                     `${t('error_messageErrorMessageRichtext')}: ` +
                                         (msg.richText && JSON.stringify(msg.richText, undefined, 2))
-                                ].map((l, i) => <li key={i}>{l}</li>)}
+                                ].map((l, i) => (
+                                    <li key={i}>{l}</li>
+                                ))}
                             </ul>
                         ) : (
                             t('error_messageErrorNotAvailable')

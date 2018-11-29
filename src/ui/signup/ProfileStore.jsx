@@ -1,6 +1,6 @@
-const { observable } = require('mobx');
-const { socket, crypto } = require('peerio-icebear');
-const OrderedFormStore = require('~/stores/ordered-form-store');
+import { observable } from 'mobx';
+import { socket, crypto } from 'peerio-icebear';
+import OrderedFormStore from '~/stores/ordered-form-store';
 
 class ProfileStore extends OrderedFormStore {
     @observable fieldsExpected = 4;
@@ -31,4 +31,4 @@ class ProfileStore extends OrderedFormStore {
     }
 }
 
-module.exports = ProfileStore;
+export default ProfileStore;

@@ -1,9 +1,9 @@
-const { shell } = require('electron');
+import { shell } from 'electron';
 
-const { isUrlAllowed } = require('../helpers/url');
-const certData = require('../cert_fingerprints');
+import { isUrlAllowed } from '../helpers/url';
+import certData from '../cert_fingerprints';
 
-function applyMiscHooks(mainWindow) {
+export default function applyMiscHooks(mainWindow) {
     console.log('Attaching misc webContents hooks.');
 
     // make all attempts to navigate browser window open in external browser
@@ -23,7 +23,7 @@ function applyMiscHooks(mainWindow) {
 
     mainWindow.webContents.session.setCertificateVerifyProc((request, callback) => {
         let ok = true;
-        certData.forEach(d => {
+        for (const d of certData) {
             if (request.hostname.match(d.hostRegex)) {
                 // The reason for implementing check like this is
                 // that we may want to include more fingerprints
@@ -32,8 +32,9 @@ function applyMiscHooks(mainWindow) {
                 // match can override the previous non-match,
                 // setting ok back to true.
                 ok = d.fingerprint === request.certificate.fingerprint;
+                if (ok) break;
             }
-        });
+        }
         if (!ok) {
             // Verification failure.
             callback(-2);
@@ -42,6 +43,12 @@ function applyMiscHooks(mainWindow) {
         // Let chromium verify it further.
         callback(-3);
     });
-}
 
-module.exports = applyMiscHooks;
+    mainWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+        if (details.responseHeaders.link) {
+            // Remove 'link' headers to avoid 'preload' by XMLHttpRequest.
+            delete details.responseHeaders.link;
+        }
+        callback({ cancel: false, responseHeaders: details.responseHeaders });
+    });
+}

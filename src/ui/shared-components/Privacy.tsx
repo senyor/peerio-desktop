@@ -95,7 +95,8 @@ export default class Privacy extends React.Component<{
                         (see{' '}
                         <a href="https://peerio.zendesk.com/hc/en-us/articles/204394135">
                             “Peerio ID#”
-                        </a>).
+                        </a>
+                        ).
                     </li>
                     <li>
                         <strong>Unauthorized account access</strong> — Peerio protects a user’s
@@ -103,7 +104,8 @@ export default class Privacy extends React.Component<{
                         generated Account Key and optional{' '}
                         <a href="https://peerio.zendesk.com/hc/en-us/articles/203665635">
                             two-factor authentication (2FA)
-                        </a>.
+                        </a>
+                        .
                     </li>
                 </ul>
 
@@ -175,7 +177,8 @@ export default class Privacy extends React.Component<{
                     of Peerio’s TLS configuration on{' '}
                     <a href="https://www.ssllabs.com/ssltest/analyze.html?d=icebear.peerio.com&amp;latest">
                         SSL Labs
-                    </a>.
+                    </a>
+                    .
                 </p>
 
                 <p>

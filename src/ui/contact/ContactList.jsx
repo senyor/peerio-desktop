@@ -1,11 +1,10 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { Avatar, Dropdown, MaterialIcon } = require('peer-ui');
-const { Button, Input, List, ListItem } = require('peer-ui');
-const { contactStore, chatStore, t } = require('peerio-icebear');
-const T = require('~/ui/shared-components/T').default;
-const { getAttributeInParentChain } = require('~/helpers/dom');
-const routerStore = require('~/stores/router-store');
+import React from 'react';
+import { observer } from 'mobx-react';
+import { Avatar, Dropdown, SearchInput, Button, List, ListItem } from 'peer-ui';
+import { contactStore, chatStore, t } from 'peerio-icebear';
+import T from '~/ui/shared-components/T';
+import { getAttributeInParentChain } from '~/helpers/dom';
+import routerStore from '~/stores/router-store';
 
 @observer
 class ContactList extends React.Component {
@@ -85,8 +84,7 @@ class ContactList extends React.Component {
         return (
             <div className="contacts-view">
                 <div className="toolbar">
-                    <MaterialIcon icon="search" />
-                    <Input
+                    <SearchInput
                         placeholder={t('title_findAContact')}
                         value={contactStore.uiViewSearchQuery}
                         onChange={this.handleSearchQueryChange}
@@ -128,7 +126,7 @@ class ContactList extends React.Component {
                         <T k="error_contactNotFound" className="text">
                             {textParser}
                         </T>
-                        <img src="./static/img/illustrations/no-results.svg" />
+                        <img src="./static/img/illustrations/no-results.svg" draggable={false} />
                     </div>
                 )}
             </div>
@@ -136,4 +134,4 @@ class ContactList extends React.Component {
     }
 }
 
-module.exports = ContactList;
+export default ContactList;

@@ -1,13 +1,13 @@
-const React = require('react');
-const { observer } = require('mobx-react');
-const { action } = require('mobx');
-const css = require('classnames');
+import React from 'react';
+import { observer } from 'mobx-react';
+import { action } from 'mobx';
+import css from 'classnames';
 
-const { contactStore, t } = require('peerio-icebear');
-const { List, ListItem, Tooltip } = require('peer-ui');
+import { contactStore, t } from 'peerio-icebear';
+import { List, ListItem, Tooltip } from 'peer-ui';
 
-const routerStore = require('~/stores/router-store');
-const PlusIcon = require('~/ui/shared-components/PlusIcon');
+import routerStore from '~/stores/router-store';
+import PlusIcon from '~/ui/shared-components/PlusIcon';
 
 @observer
 class Contacts extends React.Component {
@@ -82,4 +82,4 @@ class Contacts extends React.Component {
     }
 }
 
-module.exports = Contacts;
+export default Contacts;

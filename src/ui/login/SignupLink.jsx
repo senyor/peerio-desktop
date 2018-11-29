@@ -1,9 +1,9 @@
 import { login } from '~/telemetry';
-const React = require('react');
-const { Link } = require('react-router');
-const T = require('~/ui/shared-components/T').default;
-const { t } = require('peerio-icebear');
-const { observer } = require('mobx-react');
+import React from 'react';
+import { Link } from 'react-router';
+import T from '~/ui/shared-components/T';
+import { t } from 'peerio-icebear';
+import { observer } from 'mobx-react';
 
 @observer
 class SignupLink extends React.Component {
@@ -19,4 +19,4 @@ class SignupLink extends React.Component {
     }
 }
 
-module.exports = SignupLink;
+export default SignupLink;

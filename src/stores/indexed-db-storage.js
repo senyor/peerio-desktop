@@ -1,6 +1,6 @@
-const { CacheEngineBase } = require('peerio-icebear');
+import { CacheEngineBase } from 'peerio-icebear';
 
-class IndexedDbStorage extends CacheEngineBase {
+export default class IndexedDbStorage extends CacheEngineBase {
     constructor(name, keyPath) {
         super(name, keyPath);
         this._stores = [this.name]; //  a little optimization to avoid creating arrays all the time
@@ -120,5 +120,3 @@ class IndexedDbStorage extends CacheEngineBase {
         return indexedDB.deleteDatabase(name);
     }
 }
-
-module.exports = IndexedDbStorage;

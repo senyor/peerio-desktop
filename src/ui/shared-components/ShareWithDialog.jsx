@@ -1,10 +1,10 @@
-const React = require('react');
-const { observable, computed, action } = require('mobx');
-const { observer } = require('mobx-react');
-const { chatStore, contactStore, User, t } = require('peerio-icebear');
-const { Avatar, Dialog, Input, List, ListItem, MaterialIcon } = require('peer-ui');
-const T = require('~/ui/shared-components/T').default;
-const { getChannelByEvent, getContactByEvent } = require('~/helpers/icebear-dom');
+import React from 'react';
+import { observable, computed, action } from 'mobx';
+import { observer } from 'mobx-react';
+import { chatStore, contactStore, User, t } from 'peerio-icebear';
+import { Avatar, Dialog, List, ListItem, SearchInput } from 'peer-ui';
+import T from '~/ui/shared-components/T';
+import { getChannelByEvent, getContactByEvent } from '~/helpers/icebear-dom';
 
 /**
  * onSelectContact
@@ -84,18 +84,13 @@ class ShareWithDialog extends React.Component {
                 title={t('title_shareWith')}
             >
                 <div className="share-with-contents">
-                    <div className="user-search">
-                        <MaterialIcon icon="search" />
-                        <div className="chip-wrapper">
-                            <Input
-                                placeholder={t('title_enterRoomOrContact')}
-                                value={this.query}
-                                onChange={this.handleTextChange}
-                                onKeyDown={this.handleKeyDown}
-                                noHelperText
-                            />
-                        </div>
-                    </div>
+                    <SearchInput
+                        placeholder={t('title_enterRoomOrContact')}
+                        value={this.query}
+                        onChange={this.handleTextChange}
+                        onKeyDown={this.handleKeyDown}
+                        noHelperText
+                    />
                     <div className="chat-list-container">
                         <div className="list-channels-container">
                             <div className="p-list-heading">
@@ -122,4 +117,4 @@ class ShareWithDialog extends React.Component {
     }
 }
 
-module.exports = ShareWithDialog;
+export default ShareWithDialog;

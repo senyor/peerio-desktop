@@ -14,16 +14,10 @@
     flex-direction: column;
   }
 
-  .search {
+  .p-search-input {
     flex-grow: 1;
-    height: 48px;
     width: auto;
     margin: 0 $margin-large;
-    border-radius: 24px;
-
-    input {
-      font-size: 12px;
-    }
   }
 
   .breadcrumb-container {

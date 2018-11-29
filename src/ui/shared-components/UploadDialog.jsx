@@ -1,12 +1,12 @@
-const React = require('react');
-const { action, computed, observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { chatStore, fileHelpers, contactStore, t } = require('peerio-icebear');
-const { Button, Dialog, Input, ProgressBar } = require('peer-ui');
-const FileSpriteIcon = require('~/ui/shared-components/FileSpriteIcon');
-const ShareWithDialog = require('~/ui/shared-components/ShareWithDialog');
-const css = require('classnames');
-const T = require('~/ui/shared-components/T').default;
+import React from 'react';
+import { action, computed, observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { chatStore, fileHelpers, contactStore, t } from 'peerio-icebear';
+import { Button, Dialog, Input, ProgressBar } from 'peer-ui';
+import FileSpriteIcon from '~/ui/shared-components/FileSpriteIcon';
+import ShareWithDialog from '~/ui/shared-components/ShareWithDialog';
+import css from 'classnames';
+import T from '~/ui/shared-components/T';
 
 @observer
 class UploadDialog extends React.Component {
@@ -309,4 +309,4 @@ class UploadDialog extends React.Component {
     }
 }
 
-module.exports = UploadDialog;
+export default UploadDialog;

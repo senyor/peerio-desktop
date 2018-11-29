@@ -5,4 +5,4 @@ function WhereToFindAk() {
     return <T k="title_whereToFind" className="find-ak" />;
 }
 
-module.exports = WhereToFindAk;
+export default WhereToFindAk;

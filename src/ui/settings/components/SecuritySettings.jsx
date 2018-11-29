@@ -1,17 +1,19 @@
 // @ts-check
+import fs from 'fs';
+import React from 'react';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react';
+import { remote as electron } from 'electron';
+import css from 'classnames';
+import QR from 'qrcode';
+
+import { User, saveAccountKeyBackup, t } from 'peerio-icebear';
+import { Button, Dialog, MaterialIcon, Switch, ProgressBar } from 'peer-ui';
+
 import { requestDownloadPath } from '~/helpers/file';
-const React = require('react');
-const { observable } = require('mobx');
-const { observer } = require('mobx-react');
-const { Button, Dialog, MaterialIcon, Switch, ProgressBar } = require('peer-ui');
-const { User, saveAccountKeyBackup, t } = require('peerio-icebear');
-const autologin = require('~/helpers/autologin');
-const electron = require('electron').remote;
-const T = require('~/ui/shared-components/T').default;
-const QR = require('qrcode');
-const BetterInput = require('~/ui/shared-components/BetterInput');
-const css = require('classnames');
-const fs = require('fs');
+import { enable as enableAutologin, disable as disableAutologin } from '~/helpers/autologin';
+import T from '~/ui/shared-components/T';
+import BetterInput from '~/ui/shared-components/BetterInput';
 
 @observer
 export default class SecuritySettings extends React.Component {
@@ -68,7 +70,7 @@ export default class SecuritySettings extends React.Component {
     };
 
     onToggleAutologin(ev) {
-        ev.target.checked ? autologin.enable() : autologin.disable();
+        ev.target.checked ? enableAutologin() : disableAutologin();
     }
 
     toggleQRCode = () => {
@@ -139,7 +141,8 @@ export default class SecuritySettings extends React.Component {
                         <span className="selectable monospace">{User.current.passphrase}</span>
                     ) : (
                         <span>••••••••••••••••••••••••••••••••••••••••••</span>
-                    )}&nbsp;&nbsp;
+                    )}
+                    &nbsp;&nbsp;
                     <Button
                         icon="visibility"
                         tooltip={

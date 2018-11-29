@@ -1,26 +1,27 @@
-const React = require('react');
-const { observable, computed, when, transaction, reaction } = require('mobx');
-const { observer } = require('mobx-react');
-const {
+import React from 'react';
+import { observable, computed, when, transaction, reaction } from 'mobx';
+import { observer } from 'mobx-react';
+import css from 'classnames';
+
+import { fileStore, contactStore, User, t } from 'peerio-icebear';
+import {
     Avatar,
     Button,
     Chip,
-    Input,
     List,
     ListHeading,
     ListItem,
-    MaterialIcon,
-    ProgressBar
-} = require('peer-ui');
-const UserSearchError = require('~/whitelabel/components/UserSearchError');
-const { fileStore, contactStore, User, t } = require('peerio-icebear');
-const css = require('classnames');
-const T = require('~/ui/shared-components/T').default;
-const { getAttributeInParentChain } = require('~/helpers/dom');
-const routerStore = require('~/stores/router-store');
+    ProgressBar,
+    SearchInput
+} from 'peer-ui';
+
+import T from '~/ui/shared-components/T';
+import { getAttributeInParentChain } from '~/helpers/dom';
+import routerStore from '~/stores/router-store';
+import UserSearchError from '~/whitelabel/components/UserSearchError';
 
 @observer
-class UserPicker extends React.Component {
+export default class UserPicker extends React.Component {
     @observable selected = [];
     @observable query = '';
     accepted = false;
@@ -279,7 +280,7 @@ class UserPicker extends React.Component {
         const selectedFiles = fileStore.selectedFiles;
 
         return (
-            <div className="user-picker">
+            <div className={css('user-picker', this.props.className)}>
                 <div
                     className={css('selected-items', {
                         banish: !this.props.sharing
@@ -325,40 +326,46 @@ class UserPicker extends React.Component {
                                 <div className="message-search-inner">
                                     {this.props.isDM && <T k="title_to" className="title-to" />}
                                     <div className="new-chat-search">
-                                        <MaterialIcon icon="search" />
                                         <div className="chip-wrapper">
-                                            {this.selected.map(c => (
-                                                <Chip
-                                                    key={c.username}
-                                                    className={css({
-                                                        'not-found': c.notFound || c.isHidden
-                                                    })}
-                                                    onDeleteClick={() => this.selected.remove(c)}
-                                                    deletable
-                                                >
-                                                    {c.loading ? (
-                                                        <ProgressBar
-                                                            type="linear"
-                                                            mode="indeterminate"
-                                                        />
-                                                    ) : (
-                                                        c.username
-                                                    )}
-                                                </Chip>
-                                            ))}
-                                            <Input
+                                            {this.props.isDM
+                                                ? null
+                                                : this.selected.map(c => (
+                                                      <Chip
+                                                          key={c.username}
+                                                          className={css({
+                                                              'not-found': c.notFound || c.isHidden
+                                                          })}
+                                                          onDeleteClick={() =>
+                                                              this.selected.remove(c)
+                                                          }
+                                                          deletable
+                                                      >
+                                                          {c.loading ? (
+                                                              <ProgressBar
+                                                                  type="linear"
+                                                                  mode="indeterminate"
+                                                              />
+                                                          ) : (
+                                                              c.username
+                                                          )}
+                                                      </Chip>
+                                                  ))}
+                                            <SearchInput
                                                 placeholder={
-                                                    routerStore.isNewChannel ||
-                                                    routerStore.isPatientSpace
+                                                    this.selected.length
+                                                        ? null
+                                                        : routerStore.isNewChannel ||
+                                                          routerStore.isPatientSpace
                                                         ? t('title_Members')
                                                         : routerStore.isNewPatient
-                                                            ? t('mcr_title_newPatientRecord')
-                                                            : t('title_userSearch')
+                                                        ? t('mcr_title_newPatientRecord')
+                                                        : t('title_userSearch')
                                                 }
                                                 value={this.query}
                                                 onChange={this.handleTextChange}
                                                 onKeyDown={this.handleKeyDown}
                                                 autoFocus={!this.props.noAutoFocus}
+                                                noHelperText
                                             />
                                         </div>
                                         {this.props.limit !== 1 &&
@@ -424,5 +431,3 @@ class UserPicker extends React.Component {
         );
     }
 }
-
-module.exports = UserPicker;

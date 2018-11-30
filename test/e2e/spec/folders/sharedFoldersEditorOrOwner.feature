@@ -20,7 +20,7 @@ Feature: Shared Folders (volumes) editor
     available exclusively to volume owners.
 
 Background: 
-    Given I am the editor of the folder
+    Given I am the editor or owner of the folder
 
 Scenario: I want to share a folder from files tab
     Given I have navigated to the files tab

@@ -1,21 +1,8 @@
 ################################################################################
 #
 # This .feature file has been written by Mona Ghassemi for use by Peerio.
-# It is part of a set of .feature files currently included in a folder 
-# called SHARED_FOLDERS_SCENARIOS.
-#
-# The Scenarios have been created based on contents of the "Files Planning"
-#   document available in the Peerio Google drive, and based on the
-#   functionality of the Peerio staging app, Desktop, as of this date: 
-#   November 9, 2018. 
-#   Version 3.8.3-staging. 
-#   November 12, 2018: CONFIRMED THAT THIS FILE MATCHES CURRENT IMPLEMENTATION
-#   AND/OR EXPECTED FUNCTIONALITY. 
-#   
-# This file is a DRAFT. 
-# It is intended to be used as documentation for the features here specified.
-# It is also intended as a starting point for future regression testing. 
-# It may contain inconsistencies with actual or intended functionality. 
+# It is part of a set of .feature files located in the desktop repository
+# branch files-folders-scenarios
 # 
 # If you have any questions, comments, or concerns regarding the contents 
 # of this file, please contact Mona Ghassemi, @bluemona, on Peerio. 
@@ -63,7 +50,7 @@ Scenario: Invalid folder name
     Then  A dialog appears telling me "invalid folder name"
     And   The folder is not created 
 
-#this one might need to be reviewed (JUST BECAUSE IT IS VERY SPECIFIC)
+#this one might need to be reviewed (JUST BECAUSE IT IS VERY SPECIFIC about UI)
 Scenario: I want to drag and drop a file to a folder
     Given I have navigated to a view where both the file and the folder are visible
     And   I drag the file over the folder
@@ -76,7 +63,7 @@ Scenario: I want to drag and drop a file to a folder
 Scenario: I want to move a file into a folder
     Given I have created the folder
     And   I have uploaded the file 
-    When  I click the file options 
+    When  I click the file options (...)
     And   I click "Move"
     Then  A dialog shows prompting me to choose a folder
     When  I select the folder 

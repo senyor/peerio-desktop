@@ -12,12 +12,9 @@ export default function PendingFilesBanner() {
             </div>
             <div className="banner-note">
                 {/* No sense in localizing the text below for this very temporary banner */}
-                <div className="title">
-                    Files marked "pending" will be removed by November 15th 2018.
-                </div>
+                <div className="title">Files you have shared previously are now unshared.</div>
                 <div className="subtitle">
-                    Encourage the owners of these files to sign into Peerio to migrate, or download
-                    and re-upload these files to keep a copy.
+                    Learn more about updated file system from our help centre.
                 </div>
             </div>
             <div className="banner-buttons">

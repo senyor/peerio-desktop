@@ -22,14 +22,20 @@ Feature: Shared Folders (volumes) owner
 Background:
     Given I am the owner of a file
 
-#This is also available to other users (CHECK SPEC)
-Scenario Outline: I want to share a folder in a <chat>
-    When I share a folder in a <chat>
-    Then <users> get an invite prompting them to accept the share
-    Examples:
-    | chat | users            |
-    | DM   | recipient        |
-    | room | all room members |
+#can't share with rooms
+#Scenario Outline: I want to share a folder in a <chat>
+#    When I share a folder in a <chat>
+#    Then <users> get an invite prompting them to accept the share
+#    Examples:
+#    | chat | users            |
+#    | DM   | recipient        |
+#    | room | all room members |
+
+Scenario: I want to share a folder in a chat 
+    When I share a folder in a chat (dm)
+    Then the recipient gets an invite prompting them to accept the share
+    And The folder becomes a volume 
+
 
 Scenario Outline: remove a user from file tab (as editor)
     Given I have navigated to the files tab
@@ -43,17 +49,6 @@ Scenario Outline: remove a user from file tab (as editor)
     And   The file volume will be removed from the user's "Files"
     And   Any chats in which the folder was shared will show "Folder was unshared" instead
     And   My chat messages where I have shared the folder will have an option "Reshare"
-
-Scenario Outline: I begin to remove a user from file tab but I change my mind (as editor)
-    Given I have navigated to the files tab
-    And   I click on the volume options
-    And   I click on share
-    And   I click on "View Shared With"
-    And   I click the "-" next to a user 
-    Then  The app will show "removed" next to the user's name
-    When  I click "Undo"
-    And   The user's privileges to the volume will NOT be revoked
-    And   The file volume will be NOT removed from the user's "All Files"
 
 Scenario Outline: I delete a <file or folder> (only available to owners)
     Given I am the owner of the <file or folder>
@@ -80,7 +75,7 @@ Scenario Outline: unshare file (as owner)
 Examples: 
     | chat_volume | users                 |  
     | DM          | recipient             | 
-    | room        | all room members      |
+    #| room        | all room members      |
     | volume      | all volume recipients | 
 
 Scenario: move file from volume (shared folder) into regular folder

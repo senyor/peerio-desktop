@@ -15,8 +15,7 @@
 Feature: Shared Folders (volumes) editor
     As a Peerio user, I have access to shared folders called volumes. I may have different 
     privileges (editor, owner) with respect to a given volume.
-    Because we may one day implement "viewers" who are not editors,  
-    This feature contains volume operations available only to editors and owners. It does not contain operations
+    This feature contains volume operations available only to editors. It does not contain operations
     available exclusively to volume owners.
     In most cases this amounts to the specification that I can not remove privileges from the Owner. 
 

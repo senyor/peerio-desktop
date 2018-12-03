@@ -32,25 +32,33 @@ Scenario: I want to share a folder from files tab
 
 Scenario: I want to share a folder via chat
     Given I have navigated to the chat tab
-    When  I click "Share to chat"
+    And   I have selected a direct message
+    When  I select "Share to chat"
     Then  a menu pops up to share files 
     When  I select "Share from Peerio files"
     Then  A dialog pops up prompting me to select a file or folder
     When  I select a folder 
     Then  The folder will become a volume
     Then  The volume will appear in the chat
-    #And   The volume will be added to the recipient(s) "All Files"
+    And   The volume will be added to the recipient(s) "Files"
     And   The recipient(s) will be able to navigate to the volume by clicking on the volume's icon in the chat
+
+Scenario: I can not share a folder to a room 
+    Given I have navigated to the chat tab
+    And   I have selected a room
+    When  I select "Share to chat"
+    Then  a menu pops up to share files 
+    And   I do not have the option to select folders
 
 Scenario Outline: remove a user from file tab (as editor)
     Given I have navigated to the files tab
     And   I click on the volume options (...)
     And   I click on share
     And   I click on "View Shared With"
-    And   I click the "-" next to a user 
+    And   I click the "-" next to a user EXCEPT THE EDITOR 
     Then  The app will show "removed" next to the user's name
     When  I click "Save"
-    And   The user's privileges to the volume will be revoked
+    And   The user's privileges to the volume will be revoked 
     And   The file volume will be removed from the user's "Files"
     And   Any chats in which the folder was shared will show "Folder was unshared" instead
     And   My chat messages where I have shared the folder will have an option "Reshare"

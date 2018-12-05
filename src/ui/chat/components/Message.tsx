@@ -12,7 +12,6 @@ import AvatarWithPopup from '~/ui/contact/components/AvatarWithPopup';
 import IdentityVerificationNotice from '~/ui/chat/components/IdentityVerificationNotice';
 import ContactProfile from '~/ui/contact/components/ContactProfile';
 import { time } from '~/helpers/formatter';
-import { chatSchema, Renderer } from '~/helpers/chat/prosemirror/chat-schema';
 import uiStore from '~/stores/ui-store';
 import config from '~/config';
 
@@ -20,10 +19,9 @@ import InlineFiles from './InlineFiles';
 import UrlPreview from './UrlPreview';
 import UrlPreviewConsent from './UrlPreviewConsent';
 import InlineSharedFolder from '../../files/components/InlineSharedFolder';
+import MessageText from './MessageText';
 
 const urls = config.translator.urlMap;
-
-let legacyProcessMessageForDisplay: (msg: IcebearMessage) => { __html: string };
 
 interface MessageProps {
     /**
@@ -79,69 +77,6 @@ export default class Message extends React.Component<MessageProps> {
     onClickContact(ev) {
         this.clickedContact = contactStore.getContact(ev.target.attributes['data-username'].value);
         this.contactProfileRef.current!.openDialog();
-    }
-
-    /**
-     * Given an Icebear message (which may or may not have a richText field),
-     * return the sanitized HTML representation.
-     *
-     * @param message An Icebear message keg.
-     * @returns The processed rich text as a DOM fragment if we successfully
-     *         parsed it, or else an object with an HTML string ready to
-     *         directly be used in `dangerouslySetInnerHTML`.
-     */
-    getMessageComponent(message: IcebearMessage): JSX.Element {
-        const richText = message.richText;
-        if (
-            richText &&
-            typeof richText === 'object' &&
-            // @ts-ignore needs icebear fixes
-            richText.type === 'doc' &&
-            // @ts-ignore needs icebear fixes
-            richText.content
-        ) {
-            try {
-                // Creating the ProseMirror node from the JSON may seem like an
-                // added step/layer of indirection, but it lets us validate the
-                // rich text payload and ensure it conforms to the schema.
-                const proseMirrorNode = chatSchema.nodeFromJSON(richText);
-
-                // Note that an error in the renderer component won't get caught
-                // by this try-catch -- it's not actually invoked in this stack
-                // frame.
-                return (
-                    <Renderer
-                        fragment={proseMirrorNode.content}
-                        onClickContact={this.onClickContact}
-                        currentUser={User.current.username}
-                    />
-                );
-            } catch (e) {
-                console.warn(`Couldn't deserialize message rich text:`, e);
-            }
-        }
-
-        if (typeof message.text !== 'string') {
-            // HACK: React error boundaries only catch errors in children, so we
-            // wrap this throw in a createElement.
-            return React.createElement(() => {
-                throw new Error("Can't render rich text and message has no plaintext!");
-            });
-        }
-
-        // lazily load legacy message processing logic. the emojione file it
-        // requires is pretty huge and slows startup, so we should only require
-        // it if it's necessary.
-        legacyProcessMessageForDisplay =
-            legacyProcessMessageForDisplay ||
-            require('~/helpers/chat/legacy-process-message-for-display').processMessageForDisplay;
-        return (
-            <p
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={legacyProcessMessageForDisplay(message)}
-                className="selectable"
-            />
-        );
     }
 
     renderSystemData(m) {
@@ -230,8 +165,6 @@ export default class Message extends React.Component<MessageProps> {
 
         const invalidSign = m.signatureError === true;
 
-        const MessageComponent = this.getMessageComponent(m);
-
         return (
             <div
                 className={css('message-content-wrapper', {
@@ -260,7 +193,9 @@ export default class Message extends React.Component<MessageProps> {
                             </div>
                         )}
                         <div className="message-body">
-                            {m.systemData || m.files || m.folders ? null : MessageComponent}
+                            {m.systemData || m.files || m.folders ? null : (
+                                <MessageText message={m} onClickContact={this.onClickContact} />
+                            )}
                             {m.files || m.folders ? (
                                 <div className="inline-files-and-optional-message">
                                     {m.folders
@@ -284,7 +219,12 @@ export default class Message extends React.Component<MessageProps> {
                                         />
                                     ) : null}
                                     {!!m.text && (
-                                        <div className="optional-message">{MessageComponent}</div>
+                                        <div className="optional-message">
+                                            <MessageText
+                                                message={m}
+                                                onClickContact={this.onClickContact}
+                                            />
+                                        </div>
                                     )}
                                 </div>
                             ) : null}

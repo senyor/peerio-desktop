@@ -10,6 +10,7 @@ import T from '~/ui/shared-components/T';
 import { downloadFile } from '~/helpers/file';
 
 import MoveFileDialog from './MoveFileDialog';
+import AddOrRenameDialog from './AddOrRenameDialog';
 import {
     isFileOrFolderMoveable,
     isFileShareable,
@@ -39,9 +40,6 @@ interface FileActionsProps {
      */
     onUnshare?: () => any;
 
-    /** not implemented */
-    onRename?: () => any;
-
     /**
      * Currently used when Move or Share dialog has been opened, to affect
      * selection state in parent FileLine
@@ -60,6 +58,7 @@ interface FileActionsProps {
 export default class FileActions extends React.Component<FileActionsProps> {
     moveFileDialogRef = React.createRef<MoveFileDialog>();
     shareWithMultipleDialogRef = React.createRef<ShareWithMultipleDialog>();
+    renameFileDialogRef = React.createRef<AddOrRenameDialog>();
 
     @observable limitedActionsVisible = false;
     @action.bound
@@ -88,6 +87,10 @@ export default class FileActions extends React.Component<FileActionsProps> {
 
         contacts.forEach(c => chatStore.startChatAndShareFiles([c], this.props.file));
         if (this.props.onActionComplete) this.props.onActionComplete();
+    };
+
+    renameFile = () => {
+        this.renameFileDialogRef.current.show(this.props.file);
     };
 
     render() {
@@ -131,13 +134,11 @@ export default class FileActions extends React.Component<FileActionsProps> {
                             onClick={this.moveFile}
                         />
                     ) : null}
-                    {false ? ( // eslint-disable-line no-constant-condition, TODO
-                        <MenuItem
-                            caption={t('button_rename')}
-                            icon="mode_edit"
-                            onClick={this.props.onRename}
-                        />
-                    ) : null}
+                    <MenuItem
+                        caption={t('button_rename')}
+                        icon="mode_edit"
+                        onClick={this.renameFile}
+                    />
                     {this.props.file.deleteable ? (
                         <React.Fragment>
                             <Divider />
@@ -164,6 +165,7 @@ export default class FileActions extends React.Component<FileActionsProps> {
                     active={this.limitedActionsVisible}
                     onDismiss={this.hideLimitedActions}
                 />
+                <AddOrRenameDialog ref={this.renameFileDialogRef} />
                 <ShareWithMultipleDialog ref={this.shareWithMultipleDialogRef} />
                 <MoveFileDialog ref={this.moveFileDialogRef} />
             </React.Fragment>

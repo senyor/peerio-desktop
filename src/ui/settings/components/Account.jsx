@@ -37,7 +37,7 @@ class Account extends React.Component {
         this.deleteAccountDialogActive = false;
     };
 
-    onDeleteConfirmed = () => {
+    onDeleteConfirmed = async () => {
         this.deleteAccountDialogActive = false;
         await User.current.deleteAccount(User.current.username);
         signout();

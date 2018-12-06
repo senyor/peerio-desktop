@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import { Button, Dialog, Switch } from 'peer-ui';
 import { User, t } from 'peerio-icebear';
 
+import { signout } from '~/helpers/app-control';
 import T from '~/ui/shared-components/T';
 import config from '~/config';
 
@@ -37,8 +38,9 @@ class Account extends React.Component {
     };
 
     onDeleteConfirmed = () => {
-        User.current.deleteAccount(User.current.username);
         this.deleteAccountDialogActive = false;
+        await User.current.deleteAccount(User.current.username);
+        signout();
     };
 
     toUpgrade() {

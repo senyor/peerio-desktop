@@ -126,7 +126,7 @@ export function pickLocalFiles(): Promise<string[]> {
     });
 }
 
-interface FileList {
+export interface FileList {
     success: string[];
     error: string[];
     restricted: string[];

@@ -4,6 +4,7 @@ import { action, computed } from 'mobx';
 
 import { Button, SearchInput } from 'peer-ui';
 import { fileStore, chatStore, volumeStore, t } from 'peerio-icebear';
+import { Volume } from 'peerio-icebear/dist/models';
 import Beacon from '~/ui/shared-components/Beacon';
 
 import ShareWithMultipleDialog from '~/ui/shared-components/ShareWithMultipleDialog';
@@ -52,7 +53,7 @@ export default class FilesHeader extends React.Component<{
         // needs refactor
         const contacts = await this.shareWithMultipleDialogRef.current.show(
             fileStore.selectedFolders.length > 0 && fileStore.selectedFiles.length === 0
-                ? fileStore.selectedFolders[0]
+                ? (fileStore.selectedFolders[0] as Volume) // TODO: audit
                 : null,
             context
         );

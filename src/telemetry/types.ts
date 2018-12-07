@@ -23,6 +23,5 @@ export type ValidatedInputObject = {
     item: string;
     location?: string;
     sublocation?: string;
-    errorMsg?;
-    string;
+    errorMsg?: string;
 };

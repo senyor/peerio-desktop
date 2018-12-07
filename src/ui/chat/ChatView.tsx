@@ -5,6 +5,7 @@ import css from 'classnames';
 
 import { Button, CustomIcon, Dialog, MaterialIcon, ProgressBar, Tooltip } from 'peer-ui';
 import { chatStore, chatInviteStore, t } from 'peerio-icebear';
+import { Contact } from 'peerio-icebear/dist/models';
 
 import routerStore from '~/stores/router-store';
 import sounds from '~/helpers/sounds';
@@ -115,7 +116,7 @@ export default class ChatView extends React.Component {
         }
     }
 
-    addParticipants = contacts => {
+    addParticipants = (contacts: Contact[]) => {
         chatStore.activeChat.addParticipants(contacts);
         this.closeUserPicker();
     };

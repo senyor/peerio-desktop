@@ -74,8 +74,10 @@ export default class Message extends React.Component<MessageProps> {
 
     @observable clickedContact;
     @action.bound
-    onClickContact(ev) {
-        this.clickedContact = contactStore.getContact(ev.target.attributes['data-username'].value);
+    onClickContact(ev: React.MouseEvent) {
+        this.clickedContact = contactStore.getContact(
+            ev.currentTarget.attributes['data-username'].value
+        );
         this.contactProfileRef.current!.openDialog();
     }
 

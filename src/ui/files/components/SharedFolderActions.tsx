@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Menu, MenuItem, Divider } from 'peer-ui';
 import { t } from 'peerio-icebear';
-import { getDataProps } from '~/helpers/dom';
 
 interface SharedFolderActionsProps {
     /** is the entire action menu disabled? */
@@ -32,7 +31,6 @@ export default class SharedFolderActions extends React.Component<SharedFolderAct
                 position={this.props.position || 'bottom-right'}
                 onClick={this.props.onClick}
                 disabled={this.props.disabled}
-                {...getDataProps(this.props)}
             >
                 {this.props.onShare ? (
                     <MenuItem

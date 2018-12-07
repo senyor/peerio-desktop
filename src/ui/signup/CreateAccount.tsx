@@ -123,7 +123,7 @@ export default class CreateAccount extends React.Component<SignupStep> {
     }
 
     @action.bound
-    handleKeyPress(ev: KeyboardEvent) {
+    handleKeyPress(ev: React.KeyboardEvent) {
         if (ev.key === 'Enter') {
             this.advanceStep();
         }
@@ -245,7 +245,7 @@ export default class CreateAccount extends React.Component<SignupStep> {
                     key="username"
                     label={t('title_username')}
                     position={3}
-                    lowercase="true"
+                    lowercase
                     validator={validators.username}
                     maxLength={MAX_USERNAME_LENGTH}
                     name="username"
@@ -373,7 +373,7 @@ export default class CreateAccount extends React.Component<SignupStep> {
                     key="email"
                     label={t('title_email')}
                     position={4}
-                    lowercase="true"
+                    lowercase
                     validator={validators.email}
                     name="email"
                     store={this.props.store}

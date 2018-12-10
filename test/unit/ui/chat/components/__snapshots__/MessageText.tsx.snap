@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MessageText> should match the snapshot for all fixtures 1`] = `
+<div
+  class=""
+>
+  <p>
+    rich 
+    <strong>
+      rich 
+    </strong>
+    <em>
+      <strong>
+        very rich 
+      </strong>
+    </em>
+    <s>
+      test
+    </s>
+     text
+  </p>
+</div>
+`;
+
+exports[`<MessageText> should match the snapshot for all fixtures 2`] = `
+<div
+  class=""
+>
+  <p>
+    yo 
+    <img
+      alt="😎"
+      class="emojione"
+      src="./static/emoji/png/1f60e.png"
+      title=":sunglasses:"
+    />
+  </p>
+</div>
+`;
+
+exports[`<MessageText> should match the snapshot for all fixtures 3`] = `
+<div
+  class=""
+>
+  <p>
+    <img
+      alt="🍎"
+      class="emojione"
+      src="./static/emoji/png/1f34e.png"
+      title=":apple:"
+    />
+    <img
+      alt="🍏"
+      class="emojione"
+      src="./static/emoji/png/1f34f.png"
+      title=":green_apple:"
+    />
+    <img
+      alt="🍈"
+      class="emojione"
+      src="./static/emoji/png/1f348.png"
+      title=":melon:"
+    />
+    <img
+      alt="🥥"
+      class="emojione"
+      src="./static/emoji/png/1f965.png"
+      title=":coconut:"
+    />
+  </p>
+</div>
+`;
+
+exports[`<MessageText> should match the snapshot for all fixtures 4`] = `
+<div
+  class="jumboji"
+>
+  <p>
+    <img
+      alt="😚"
+      class="emojione"
+      src="./static/emoji/png/1f61a.png"
+      title=":kissing_closed_eyes:"
+    />
+    <img
+      alt="🏈"
+      class="emojione"
+      src="./static/emoji/png/1f3c8.png"
+      title=":football:"
+    />
+  </p>
+</div>
+`;
+
+exports[`<MessageText> should match the snapshot for all fixtures 5`] = `
+<div
+  class=""
+>
+  <p>
+    hey 
+    <span
+      class="mention clickable"
+      data-username="butt"
+    >
+      @butt
+    </span>
+     how's... 
+    <em>
+      life
+    </em>
+  </p>
+</div>
+`;

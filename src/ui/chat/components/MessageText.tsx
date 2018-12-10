@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Message } from 'peerio-icebear/dist/models';
 import { chatSchema, Renderer } from '~/helpers/chat/prosemirror/chat-schema';
-import { User } from 'peerio-icebear';
 
 let legacyProcessMessageForDisplay: (msg: Message) => { __html: string };
 
@@ -12,12 +11,15 @@ interface MessageTextProps {
 
     /** handler of event when user clicks on contact */
     onClickContact: (ev: React.MouseEvent<Element>) => void;
+
+    /** the current user's username (for rendering a highlight when you're @ed) */
+    currentUsername: string;
 }
 
 @observer
 export default class MessageText extends React.Component<MessageTextProps> {
     render() {
-        const { message, onClickContact } = this.props;
+        const { message, onClickContact, currentUsername } = this.props;
 
         if (!message) return null;
 
@@ -31,6 +33,14 @@ export default class MessageText extends React.Component<MessageTextProps> {
             richText.content
         ) {
             try {
+                const richTextElements = (this.props.message.richText as any).content[0]
+                    .content as any[];
+
+                const className =
+                    richTextElements.length <= 3 && richTextElements.every(e => e.type === 'emoji')
+                        ? 'jumboji'
+                        : '';
+
                 // Creating the ProseMirror node from the JSON may seem like an
                 // added step/layer of indirection, but it lets us validate the
                 // rich text payload and ensure it conforms to the schema.
@@ -40,11 +50,13 @@ export default class MessageText extends React.Component<MessageTextProps> {
                 // by this try-catch -- it's not actually invoked in this stack
                 // frame.
                 return (
-                    <Renderer
-                        fragment={proseMirrorNode.content}
-                        onClickContact={onClickContact}
-                        currentUser={User.current.username}
-                    />
+                    <div className={className}>
+                        <Renderer
+                            fragment={proseMirrorNode.content}
+                            onClickContact={onClickContact}
+                            currentUser={currentUsername}
+                        />
+                    </div>
                 );
             } catch (e) {
                 console.warn(`Couldn't deserialize message rich text:`, e);

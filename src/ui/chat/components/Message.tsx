@@ -196,7 +196,11 @@ export default class Message extends React.Component<MessageProps> {
                         )}
                         <div className="message-body">
                             {m.systemData || m.files || m.folders ? null : (
-                                <MessageText message={m} onClickContact={this.onClickContact} />
+                                <MessageText
+                                    message={m}
+                                    onClickContact={this.onClickContact}
+                                    currentUsername={User.current.username}
+                                />
                             )}
                             {m.files || m.folders ? (
                                 <div className="inline-files-and-optional-message">
@@ -225,6 +229,7 @@ export default class Message extends React.Component<MessageProps> {
                                             <MessageText
                                                 message={m}
                                                 onClickContact={this.onClickContact}
+                                                currentUsername={User.current.username}
                                             />
                                         </div>
                                     )}

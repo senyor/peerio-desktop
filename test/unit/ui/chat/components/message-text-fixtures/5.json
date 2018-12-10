@@ -1,0 +1,33 @@
+{
+  "type": "doc",
+  "content": [
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "text": "hey "
+        },
+        {
+          "type": "mention",
+          "attrs": {
+            "username": "butt"
+          }
+        },
+        {
+          "type": "text",
+          "text": " how's... "
+        },
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "em"
+            }
+          ],
+          "text": "life"
+        }
+      ]
+    }
+  ]
+}

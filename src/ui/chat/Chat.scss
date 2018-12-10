@@ -51,10 +51,17 @@
     margin: -0.2ex 0.15em 0.2ex;
     vertical-align: middle;
     transition: transform 50ms ease;
-    //  width: auto;
-
     &:hover {
       transform: scale(1.4);
+    }
+  }
+
+  .jumboji {
+    img.emojione {
+      height: 64px;
+      &:hover {
+        transform: none;
+      }
     }
   }
 }

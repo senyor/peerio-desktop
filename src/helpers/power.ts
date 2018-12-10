@@ -2,6 +2,7 @@ import { remote as electron } from 'electron';
 import { socket } from 'peerio-icebear';
 import { when } from 'mobx';
 import IdleMonitor from './idle-monitor';
+import appState from '../stores/app-state';
 
 /*
   When we receive power event there can be 3 cases:
@@ -79,23 +80,29 @@ let screenLocked = false;
 function lockScreenHandler(): void {
     console.log('The screen is locked.');
     screenLocked = true;
+    appState.isIdle = true;
     enablePushNotification();
 }
 
 function unlockScreenHandler(): void {
     console.log('The screen is unlocked.');
     screenLocked = false;
+    appState.isIdle = false;
     disablePushNotifications();
 }
 
 function systemIdleHandler(): void {
     console.log('The system became idle.');
+    appState.isIdle = true;
     enablePushNotification();
 }
 
 function systemActiveHandler(): void {
     console.log('The system became active (not idle).');
-    if (!screenLocked) disablePushNotifications();
+    if (!screenLocked) {
+        appState.isIdle = false;
+        disablePushNotifications();
+    }
 }
 
 const idleMonitor = new IdleMonitor(5 * 60); // TODO(dchest): move 5 minutes to config?

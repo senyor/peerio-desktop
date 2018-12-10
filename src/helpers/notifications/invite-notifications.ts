@@ -42,7 +42,7 @@ class InviteNotification {
     }
 
     showDesktopNotification() {
-        if (!appState.isFocused) {
+        if (!appState.isActive) {
             const { username, channelName } = this.invite;
             const contact = contactStore.getContact(username);
             when(
@@ -127,7 +127,7 @@ class InviteAcceptedNotification {
     }
 
     showDesktopNotification() {
-        if (!appState.isFocused) {
+        if (!appState.isActive) {
             const { username } = this.contact;
             if (!username) return;
             const contact = contactStore.getContact(username);

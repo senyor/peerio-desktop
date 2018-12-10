@@ -1,11 +1,17 @@
-import { observable, action } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import { remote as electron } from 'electron';
 
 class AppState {
     @observable isFocused = false;
+    @observable isIdle = false;
     @observable devModeEnabled = false;
     // network status as reported by chromium
     @observable isOnline = navigator.onLine;
+
+    @computed
+    get isActive() {
+        return this.isFocused && !this.isIdle;
+    }
 
     @action.bound
     changeOnlineStatus() {

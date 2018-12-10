@@ -46,7 +46,7 @@ class MessageNotification {
     }
 
     showDesktopNotification() {
-        if (!appState.isFocused) {
+        if (!appState.isActive) {
             let body = this.lastMessageText;
             if (this.counter >= config.chat.pageSize) {
                 body = t(`notification_manyNew${

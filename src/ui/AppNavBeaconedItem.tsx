@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import { t } from 'peerio-icebear';
 
 import uiStore from '~/stores/ui-store';
 import beaconStore from '~/stores/beacon-store';
@@ -31,6 +32,8 @@ export default class AppNavBeaconedItem extends React.Component<AppNavBeaconedIt
             <Beacon
                 type="spot"
                 name={this.props.beaconName}
+                title={t(`title_${this.props.beaconName}_beacon` as any)}
+                description={t(`description_${this.props.beaconName}_beacon` as any)}
                 size={48}
                 className="appnav-beacon"
                 onContentClick={this.props.onClick}

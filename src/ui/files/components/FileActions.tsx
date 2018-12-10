@@ -17,7 +17,7 @@ import {
     fileDownloadUIEnabled
 } from '../helpers/sharedFileAndFolderActions';
 
-interface FileActionsProps {
+export interface FileActionsProps {
     file: any;
 
     /** is the entire action menu disabled? */
@@ -25,6 +25,12 @@ interface FileActionsProps {
 
     /** Disable move action */
     disableMove?: boolean;
+
+    /**
+     * For the rare cases where you need to directly access the ref of
+     * the Menu, e.g. to force Menu open on some other event.
+     */
+    menuRef?: React.RefObject<Menu>;
 
     onMenuClick?: () => void;
     onMenuHide?: () => void;
@@ -105,6 +111,7 @@ export default class FileActions extends React.Component<FileActionsProps> {
                     onClick={this.props.onMenuClick}
                     onHide={this.props.onMenuHide}
                     disabled={this.props.disabled}
+                    ref={this.props.menuRef}
                 >
                     {file.isLegacy ? (
                         <MenuItem

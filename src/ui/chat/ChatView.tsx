@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, computed, observable, reaction, IReactionDisposer } from 'mobx';
+import { action, computed, observable, reaction, when, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
 
@@ -7,6 +7,7 @@ import { Button, CustomIcon, Dialog, MaterialIcon, ProgressBar, Tooltip } from '
 import { chatStore, chatInviteStore, t } from 'peerio-icebear';
 import { Contact } from 'peerio-icebear/dist/models';
 
+import config from '~/config';
 import routerStore from '~/stores/router-store';
 import sounds from '~/helpers/sounds';
 import uiStore from '~/stores/ui-store';
@@ -16,6 +17,7 @@ import UserPicker from '~/ui/shared-components/UserPicker';
 import FullCoverLoader from '~/ui/shared-components/FullCoverLoader';
 import ELEMENTS from '~/whitelabel/helpers/elements';
 import ZeroChats from '~/whitelabel/components/ZeroChats';
+import Beacon from '~/ui/shared-components/Beacon';
 
 import MessageInput from './components/MessageInput';
 import MessageList from './components/MessageList';
@@ -40,6 +42,12 @@ export default class ChatView extends React.Component {
                 () => {
                     this.showUserPicker = false;
                 }
+            ),
+            when(
+                () => chatStore.activeChat.recentFiles.length > 0,
+                () => {
+                    beaconStore.addBeacons('infoPanel_desktop');
+                }
             )
         ];
 
@@ -51,6 +59,10 @@ export default class ChatView extends React.Component {
 
         if (!chatStore.chats.length && !chatInviteStore.received.length) {
             beaconStore.addBeacons('startChat');
+        }
+
+        if (chatStore.directMessages.length > config.beacons.dmCountPinPrompt) {
+            beaconStore.addBeacons('pin_desktop');
         }
     }
 
@@ -223,19 +235,33 @@ export default class ChatView extends React.Component {
                             <ProgressBar circular size="small" />
                         ) : (
                             <div
-                                onClick={chat.toggleFavoriteState}
                                 className={css(
                                     'pin-toggle',
                                     'clickable',
                                     'custom-icon-hover-container'
                                 )}
                             >
-                                <CustomIcon
-                                    active={chat.isFavorite}
-                                    icon={chat.isFavorite ? 'pin-on' : 'pin-off'}
-                                    className="small"
-                                    hover={!chat.isFavorite}
-                                />
+                                <Beacon
+                                    name="pin_desktop"
+                                    type="spot"
+                                    description={t('description_pin_beacon')}
+                                    size={40}
+                                    onContentClick={chat.toggleFavoriteState}
+                                    offsetY={-2}
+                                    markReadOnUnmount
+                                >
+                                    <Button
+                                        onClick={chat.toggleFavoriteState}
+                                        theme="small no-hover"
+                                    >
+                                        <CustomIcon
+                                            active={chat.isFavorite}
+                                            icon={chat.isFavorite ? 'pin-on' : 'pin-off'}
+                                            className="small"
+                                            hover={!chat.isFavorite}
+                                        />
+                                    </Button>
+                                </Beacon>
                                 <Tooltip
                                     text={
                                         chat.isFavorite
@@ -257,14 +283,23 @@ export default class ChatView extends React.Component {
                         tooltipPosition="bottom"
                         tooltipSize="small"
                     />
-                    <Button
-                        icon="chrome_reader_mode"
-                        onClick={this.toggleSidebar}
-                        active={uiStore.prefs.chatSideBarIsOpen}
-                        tooltip={t('button_toggleSidebar')}
-                        tooltipPosition="bottom"
-                        tooltipSize="small"
-                    />
+                    <Beacon
+                        type="spot"
+                        name="infoPanel_desktop"
+                        description={t('description_infoPanel_beacon_desktop')}
+                        position="right"
+                        onContentClick={this.toggleSidebar}
+                        markReadOnUnmount
+                    >
+                        <Button
+                            icon="chrome_reader_mode"
+                            onClick={this.toggleSidebar}
+                            active={uiStore.prefs.chatSideBarIsOpen}
+                            tooltip={t('button_toggleSidebar')}
+                            tooltipPosition="bottom"
+                            tooltipSize="small"
+                        />
+                    </Beacon>
                 </div>
             </div>
         );

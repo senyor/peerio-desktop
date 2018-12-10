@@ -11,13 +11,12 @@ import { Button, CustomIcon, List, ListItem, MaterialIcon, ProgressBar, Tooltip 
 import routerStore from '~/stores/router-store';
 import T from '~/ui/shared-components/T';
 import AvatarWithPopup from '~/ui/contact/components/AvatarWithPopup';
+import Beacon from '~/ui/shared-components/Beacon';
 import PlusIcon from '~/ui/shared-components/PlusIcon';
 import MaintenanceWarning from '~/ui/shared-components/MaintenanceWarning';
 import { getAttributeInParentChain } from '~/helpers/dom';
 import PatientList from '~/whitelabel/components/PatientList';
 import ELEMENTS from '~/whitelabel/helpers/elements';
-
-import PlusIconBeaconed from './PlusIconBeaconed';
 
 // Variables to calculate position-in-window of unread messages
 const paddingTop = 20;
@@ -338,11 +337,22 @@ export default class ChatList extends React.Component {
 
                         <List clickable>
                             <div>
-                                <PlusIconBeaconed
-                                    beaconName="startChat"
-                                    label={t('title_directMessages')}
-                                    onClick={this.newMessage}
-                                />
+                                <Beacon
+                                    name="startChat"
+                                    title={t(`title_startChat_beacon`)}
+                                    description={t(`description_startChat_beacon`)}
+                                    type="spot"
+                                    size={48}
+                                    offsetX={100}
+                                    className="chatlist-plusicon-beacon"
+                                    onContentClick={this.newMessage}
+                                    markReadOnUnmount
+                                >
+                                    <PlusIcon
+                                        label={t('title_directMessages')}
+                                        onClick={this.newMessage}
+                                    />
+                                </Beacon>
                                 <Tooltip text={t('title_addDirectMessage')} position="right" />
                             </div>
                             {routerStore.isNewChat && (

@@ -1,9 +1,11 @@
 import React from 'react';
-import { reaction, computed, observable, IReactionDisposer } from 'mobx';
+import { reaction, computed, observable, when, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { chatStore, clientApp, t } from 'peerio-icebear';
 import { ProgressBar } from 'peer-ui';
+import config from '~/config';
+import beaconStore from '~/stores/beacon-store';
 
 import PendingDMHeader from '~/ui/chat/components/PendingDMHeader';
 import ChatHeader from '~/whitelabel/components/ChatHeader';
@@ -22,6 +24,7 @@ export default class MessageList extends React.Component {
     private _topLoadReaction!: IReactionDisposer;
     private _botLoadReaction!: IReactionDisposer;
     private _initialLoadReaction!: IReactionDisposer;
+    private beaconReaction!: IReactionDisposer;
 
     @observable pageScrolledUp = false;
 
@@ -76,6 +79,19 @@ export default class MessageList extends React.Component {
                 this.lastTopElement = null;
             }
         );
+
+        // If this is user's only chat, we show them the share-to-chat menu beacon
+        // after a certain number of messages have been sent or received.
+        if (chatStore.chats.length === 1) {
+            this.beaconReaction = when(
+                () =>
+                    chatStore.activeChat &&
+                    chatStore.activeChat.messages.length > config.beacons.messageCountSharePrompt,
+                () => {
+                    beaconStore.addBeacons('shareFileInChat');
+                }
+            );
+        }
     }
 
     componentWillUnmount() {
@@ -83,6 +99,7 @@ export default class MessageList extends React.Component {
         this._topLoadReaction();
         this._botLoadReaction();
         this._initialLoadReaction();
+        if (this.beaconReaction) this.beaconReaction();
     }
 
     componentDidMount() {

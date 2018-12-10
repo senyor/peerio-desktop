@@ -5,17 +5,20 @@ import css from 'classnames';
 
 import { contactStore, fileStore, User, t } from 'peerio-icebear';
 import { File } from 'peerio-icebear/dist/models';
-import { Checkbox, ProgressBar, Tooltip } from 'peer-ui';
+import { Checkbox, Menu, ProgressBar, Tooltip } from 'peer-ui';
 
 import T from '~/ui/shared-components/T';
 import ContactProfile from '~/ui/contact/components/ContactProfile';
 import FileSpriteIcon from '~/ui/shared-components/FileSpriteIcon';
+import Beacon from '~/ui/shared-components/Beacon';
 
 import { downloadFile } from '~/helpers/file';
 
 import FileActions from './FileActions';
 import FileFolderDetailsRow from './FileFolderDetailsRow';
 import { isFileOwnedByCurrentUser } from '../helpers/sharedFileAndFolderActions';
+
+import { FileBeaconContext } from '../helpers/fileBeaconContext';
 
 interface FileLineProps {
     file: File;
@@ -92,14 +95,61 @@ export default class FileLine extends React.Component<FileLineProps> {
         this.contactProfileRef.current.openDialog();
     }
 
+    static contextType = FileBeaconContext;
+
+    fileNameConditionalBeacon = children => {
+        if (this.context.firstReceivedFileId === this.props.file.fileId) {
+            return (
+                <Beacon
+                    name="receivedFile"
+                    type="area"
+                    arrowPosition="top"
+                    arrowDistance={20}
+                    offsetY={24}
+                    description={t('description_receivedFile_beacon')}
+                    markReadOnUnmount
+                >
+                    {children}
+                </Beacon>
+            );
+        }
+        return children;
+    };
+
+    fileActionsConditionalBeacon = children => {
+        if (this.context.firstListedFileId === this.props.file.fileId) {
+            return (
+                <Beacon
+                    name="fileOptions"
+                    type="spot"
+                    position="right"
+                    description={t('description_moreFiles_beacon')}
+                    onContentClick={this.onFileActionsBeaconClick}
+                    markReadOnUnmount
+                >
+                    {children}
+                </Beacon>
+            );
+        }
+        return children;
+    };
+
+    @observable
+    fileActionsMenuRef = React.createRef<Menu>();
+
+    onFileActionsBeaconClick = () => {
+        console.log(this.fileActionsMenuRef);
+        this.fileActionsMenuRef.current.handleMenuClick();
+    };
+
     render() {
         const { file, isDragging } = this.props;
 
         return (
             /*
-                This superfluous row-container is needed to make styles consistent with FolderLine,
-                which *does* need the container to hold elements other than .row
-            */
+                            This superfluous row-container is needed to make styles consistent with
+                            FolderLine, which *does* need the container to hold elements other than .row
+                        */
             <div
                 className={css('row-container', 'file-row-container', this.props.className, {
                     hover: this.hovered,
@@ -119,7 +169,6 @@ export default class FileLine extends React.Component<FileLineProps> {
                     ) : (
                         <div className="file-checkbox" />
                     )}
-
                     <div
                         className="file-icon"
                         onClick={this.props.clickToSelect ? this.toggleSelected : this.download}
@@ -127,13 +176,20 @@ export default class FileLine extends React.Component<FileLineProps> {
                         <FileSpriteIcon type={file.iconType} size="medium" />
                     </div>
 
-                    <div
-                        className="file-name"
-                        onClick={this.props.clickToSelect ? this.toggleSelected : this.download}
-                    >
-                        {file.name}
-
-                        {this.props.fileDetailsMini && <FileFolderDetailsRow file={file} />}
+                    <div className="file-name">
+                        {this.fileNameConditionalBeacon(
+                            <span
+                                className="clickable"
+                                onClick={
+                                    this.props.clickToSelect ? this.toggleSelected : this.download
+                                }
+                            >
+                                {this.props.file.name}
+                            </span>
+                        )}
+                        {this.props.fileDetailsMini && (
+                            <FileFolderDetailsRow file={this.props.file} />
+                        )}
                     </div>
 
                     {this.props.fileDetails && (
@@ -143,7 +199,6 @@ export default class FileLine extends React.Component<FileLineProps> {
                                 : file.fileOwner}
                         </div>
                     )}
-
                     {this.props.fileDetails && (
                         <div className="file-uploaded" title={file.uploadedAt.toLocaleString()}>
                             {file.uploadTimeFormatted}
@@ -155,23 +210,23 @@ export default class FileLine extends React.Component<FileLineProps> {
                             )}
                         </div>
                     )}
-
                     {this.props.fileDetails && (
                         <div className="file-size">{file.sizeFormatted}</div>
                     )}
-
-                    {this.props.fileActions && (
-                        <div className="file-actions">
-                            <FileActions
-                                file={file}
-                                onMenuClick={this.onMenuClick}
-                                onMenuHide={this.onMenuHide}
-                                onActionInProgress={this.onActionInProgress}
-                                onActionComplete={this.onActionComplete}
-                                onDelete={this.deleteFile}
-                            />
-                        </div>
-                    )}
+                    {this.props.fileActions &&
+                        this.fileActionsConditionalBeacon(
+                            <div className="file-actions">
+                                <FileActions
+                                    file={this.props.file}
+                                    onMenuClick={this.onMenuClick}
+                                    onMenuHide={this.onMenuHide}
+                                    onActionInProgress={this.onActionInProgress}
+                                    onActionComplete={this.onActionComplete}
+                                    onDelete={this.deleteFile}
+                                    menuRef={this.fileActionsMenuRef}
+                                />
+                            </div>
+                        )}
                 </div>
 
                 {file.downloading || file.uploading ? (

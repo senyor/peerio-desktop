@@ -12,7 +12,7 @@ export default function PendingFilesBanner() {
             </div>
             <div className="banner-note">
                 {/* No sense in localizing the text below for this very temporary banner */}
-                <div className="title">Files you have shared previously are now unshared.</div>
+                <div className="title">Files marked "pending" will be removed.</div>
                 <div className="subtitle">
                     Learn more about updated file system from our help centre.
                 </div>

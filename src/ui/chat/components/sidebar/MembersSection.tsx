@@ -10,7 +10,6 @@ import { Avatar, List, ListHeading, ListItem, Menu, MenuItem } from 'peer-ui';
 import T from '~/ui/shared-components/T';
 import ContactProfile from '~/ui/contact/components/ContactProfile';
 import ELEMENTS from '~/whitelabel/helpers/elements';
-import { getAttributeInParentChain } from '~/helpers/dom';
 import SideBarSection from './SideBarSection';
 
 interface MembersSectionProps {
@@ -23,153 +22,13 @@ interface MembersSectionProps {
 export default class MembersSection extends React.Component<MembersSectionProps> {
     contactProfileRef = React.createRef<ContactProfile>();
 
-    @observable clickedContact;
+    @observable.ref clickedContact: Contact | null = null;
 
     @action.bound
-    openContact(ev: React.MouseEvent) {
-        this.clickedContact = contactStore.getContact(
-            ev.currentTarget.attributes['data-username'].value
-        );
+    openContact(contact: Contact) {
+        this.clickedContact = contact;
         this.contactProfileRef.current!.openDialog();
     }
-
-    // FIXME: stop stashing data in the DOM! just make a separate component
-    deleteInvite(ev: React.MouseEvent) {
-        ev.stopPropagation();
-        const username = getAttributeInParentChain(ev.currentTarget, 'data-username');
-        chatInviteStore.revokeInvite(chatStore.activeChat.id, username);
-    }
-
-    deleteParticipant(ev: React.MouseEvent) {
-        ev.stopPropagation();
-        const username = getAttributeInParentChain(ev.currentTarget, 'data-username');
-        chatStore.activeChat.removeParticipant(username);
-    }
-
-    makeAdmin(ev: React.MouseEvent) {
-        ev.stopPropagation();
-        const username = getAttributeInParentChain(ev.currentTarget, 'data-username');
-        chatStore.activeChat.promoteToAdmin(contactStore.getContact(username));
-    }
-
-    demoteAdmin(ev: React.MouseEvent) {
-        ev.stopPropagation();
-        const username = getAttributeInParentChain(ev.currentTarget, 'data-username');
-        chatStore.activeChat.demoteAdmin(contactStore.getContact(username));
-    }
-
-    stopPropagation(ev: React.MouseEvent) {
-        ev.stopPropagation();
-    }
-
-    userMenu(username: string) {
-        const menuItems = [];
-
-        ELEMENTS.membersSection.userMenuItems(username).forEach(item => {
-            menuItems.push(
-                <MenuItem
-                    key={item.key}
-                    value={item.value}
-                    icon={item.icon}
-                    caption={t(item.caption as any) as string}
-                    onClick={this[item.onClick]}
-                />
-            );
-        });
-
-        return (
-            <Menu
-                icon="more_vert"
-                position="bottom-right"
-                onClick={this.stopPropagation}
-                data-username={username}
-            >
-                {menuItems}
-            </Menu>
-        );
-    }
-
-    adminMenu(username: string) {
-        // FIXME: make a separate component, don't try to stash data in the dom
-        return (
-            <Menu
-                icon="more_vert"
-                position="bottom-right"
-                onClick={this.stopPropagation}
-                data-username={username}
-            >
-                <MenuItem
-                    value="demote_admin"
-                    icon="highlight_off"
-                    caption={t('button_demoteAdmin')}
-                    onClick={this.demoteAdmin}
-                />
-                <MenuItem
-                    value="delete"
-                    icon="remove_circle_outline"
-                    caption={t('button_remove')}
-                    onClick={this.deleteParticipant}
-                />
-            </Menu>
-        );
-    }
-
-    inviteMenu(username: string) {
-        return (
-            <Menu
-                icon="more_vert"
-                position="bottom-right"
-                onClick={this.stopPropagation}
-                data-username={username}
-            >
-                <MenuItem
-                    icon="remove_circle_outline"
-                    caption={t('button_remove')}
-                    onClick={this.deleteInvite}
-                />
-            </Menu>
-        );
-    }
-
-    renderJoinedParticipant = (c: Contact, chat: Chat, showAdmin: boolean) => {
-        return (
-            <ListItem
-                data-username={c.username}
-                key={c.username}
-                leftContent={<Avatar key="a" contact={c} size="small" clickable />}
-                caption={c.fullName}
-                legend={
-                    <div className="user-caption">
-                        <span className="username">{c.username}</span>
-                        {chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}
-                    </div>
-                }
-                rightContent={
-                    showAdmin && User.current.username !== c.username
-                        ? chat.isAdmin(c)
-                            ? this.adminMenu(c.username)
-                            : this.userMenu(c.username)
-                        : null
-                }
-                onClick={this.openContact}
-            />
-        );
-    };
-
-    renderInvitedParticipant = (
-        c: { username: string; timestamp?: number },
-        showAdmin: boolean
-    ) => {
-        return (
-            <ListItem
-                data-username={c.username}
-                key={`invited--${c.username}`}
-                caption={c.username}
-                rightContent={showAdmin && this.inviteMenu(c.username)}
-                onClick={this.openContact}
-            />
-        );
-    };
 
     render() {
         const chat = chatStore.activeChat;
@@ -205,19 +64,173 @@ export default class MembersSection extends React.Component<MembersSectionProps>
                         </List>
                     ) : null}
                     <List clickable>
-                        {chat.allJoinedParticipants.map(c =>
-                            this.renderJoinedParticipant(c, chat, showAdmin)
-                        )}
+                        {chat.allJoinedParticipants.map(c => (
+                            <JoinedParticipant
+                                key={c.username}
+                                contact={c}
+                                chat={chat}
+                                showAdmin={showAdmin}
+                                onClickContact={this.openContact}
+                            />
+                        ))}
                         {invited && invited.length ? (
                             <ListHeading caption={t('title_invited')} />
                         ) : null}
                         {invited
-                            ? invited.map(c => this.renderInvitedParticipant(c, showAdmin))
+                            ? invited.map(c => (
+                                  <InvitedParticipant
+                                      key={c.username}
+                                      c={c}
+                                      showAdmin={showAdmin}
+                                      onClickContact={this.openContact}
+                                  />
+                              ))
                             : null}
                     </List>
                 </div>
                 <ContactProfile ref={this.contactProfileRef} contact={this.clickedContact} />
             </SideBarSection>
+        );
+    }
+}
+
+function stopPropagation(ev: React.MouseEvent) {
+    ev.stopPropagation();
+}
+
+function deleteParticipant(username: string) {
+    chatStore.activeChat.removeParticipant(username);
+}
+
+class AdminMenu extends React.Component<{ username: string }> {
+    deleteParticipant = () => {
+        deleteParticipant(this.props.username);
+    };
+
+    demoteAdmin = () => {
+        chatStore.activeChat.demoteAdmin(contactStore.getContact(this.props.username));
+    };
+
+    render() {
+        return (
+            <Menu icon="more_vert" position="bottom-right" onClick={stopPropagation}>
+                <MenuItem
+                    value="demote_admin"
+                    icon="highlight_off"
+                    caption={t('button_demoteAdmin')}
+                    onClick={this.demoteAdmin}
+                />
+                <MenuItem
+                    value="delete"
+                    icon="remove_circle_outline"
+                    caption={t('button_remove')}
+                    onClick={this.deleteParticipant}
+                />
+            </Menu>
+        );
+    }
+}
+
+class UserMenu extends React.Component<{ username: string }> {
+    deleteParticipant = () => {
+        deleteParticipant(this.props.username);
+    };
+
+    makeAdmin = () => {
+        chatStore.activeChat.promoteToAdmin(contactStore.getContact(this.props.username));
+    };
+
+    render() {
+        return (
+            <Menu icon="more_vert" position="bottom-right" onClick={stopPropagation}>
+                {ELEMENTS.membersSection.userMenuItems(this.props.username).map(item => (
+                    <MenuItem
+                        key={item.key}
+                        value={item.value}
+                        icon={item.icon}
+                        caption={t(item.caption as any) as string}
+                        onClick={this[item.onClick]} // FIXME: audit
+                    />
+                ))}
+            </Menu>
+        );
+    }
+}
+
+class InviteMenu extends React.Component<{ username: string }> {
+    deleteInvite = () => {
+        chatInviteStore.revokeInvite(chatStore.activeChat.id, this.props.username);
+    };
+
+    render() {
+        return (
+            <Menu icon="more_vert" position="bottom-right" onClick={stopPropagation}>
+                <MenuItem
+                    icon="remove_circle_outline"
+                    caption={t('button_remove')}
+                    onClick={this.deleteInvite}
+                />
+            </Menu>
+        );
+    }
+}
+
+class JoinedParticipant extends React.Component<{
+    contact: Contact;
+    chat: Chat;
+    showAdmin: boolean;
+    onClickContact: (contact: Contact) => void;
+}> {
+    onClick = () => {
+        this.props.onClickContact(this.props.contact);
+    };
+
+    render() {
+        const { contact: c, chat, showAdmin } = this.props;
+
+        return (
+            <ListItem
+                leftContent={<Avatar key="a" contact={c} size="small" clickable />}
+                caption={c.fullName}
+                legend={
+                    <div className="user-caption">
+                        <span className="username">{c.username}</span>
+                        {chat.isAdmin(c) ? <T k="title_admin" className="tag" /> : null}
+                    </div>
+                }
+                rightContent={
+                    showAdmin && User.current.username !== c.username ? (
+                        chat.isAdmin(c) ? (
+                            <AdminMenu username={c.username} />
+                        ) : (
+                            <UserMenu username={c.username} />
+                        )
+                    ) : null
+                }
+                onClick={this.onClick}
+            />
+        );
+    }
+}
+
+class InvitedParticipant extends React.Component<{
+    c: { username: string; timestamp?: number };
+    showAdmin: boolean;
+    onClickContact: (contact: Contact) => void;
+}> {
+    onClick = () => {
+        this.props.onClickContact(contactStore.getContact(this.props.c.username));
+    };
+
+    render() {
+        const { c, showAdmin } = this.props;
+
+        return (
+            <ListItem
+                caption={c.username}
+                rightContent={showAdmin && <InviteMenu username={c.username} />}
+                onClick={this.onClick}
+            />
         );
     }
 }

@@ -1,13 +1,14 @@
 import React from 'react';
 import css from 'classnames';
 import { observer } from 'mobx-react';
-import { observable, action, computed, reaction, IReactionDisposer } from 'mobx';
+import { observable, action, computed, reaction, when, IReactionDisposer } from 'mobx';
 import { DropTarget } from 'react-dnd';
 import _ from 'lodash';
 
 import { Button, Checkbox, ProgressBar, MaterialIcon } from 'peer-ui';
-import { fileStore, clientApp, t } from 'peerio-icebear';
+import { chatStore, fileStore, clientApp, t } from 'peerio-icebear';
 
+import config from '~/config';
 import T from '~/ui/shared-components/T';
 import ConfirmFolderDeleteDialog from '~/ui/shared-components/ConfirmFolderDeleteDialog';
 import uiStore from '~/stores/ui-store';
@@ -24,6 +25,8 @@ import DragDropTypes from './helpers/dragDropTypes';
 import { uploadDroppedFiles } from './helpers/dragDropHelpers';
 import LocalFileManager from './helpers/LocalFileManager';
 import PendingFilesBanner from './components/PendingFilesBanner';
+
+import { FileBeaconContext } from './helpers/fileBeaconContext';
 
 const DEFAULT_RENDERED_ITEMS_COUNT = 15;
 
@@ -72,6 +75,24 @@ export default class Files extends React.Component<FilesProps> {
                 () => fileStore.folderStore.currentFolder,
                 () => {
                     this.renderedItemsCount = DEFAULT_RENDERED_ITEMS_COUNT;
+                }
+            ),
+            when(
+                () => !!this.firstListedFileId,
+                () => {
+                    beaconStore.addBeacons('fileOptions');
+                }
+            ),
+            when(
+                () => !!this.firstReceivedFileId,
+                () => {
+                    beaconStore.addBeacons('receivedFile');
+                }
+            ),
+            when(
+                () => this.promptAddFolder,
+                () => {
+                    beaconStore.addBeacons('folders');
                 }
             )
         ];
@@ -142,6 +163,38 @@ export default class Files extends React.Component<FilesProps> {
         await this.localFileManager.pickAndUpload();
     };
 
+    // Beacon states, handed down to FileLine via FileBeaconContext
+    @computed
+    get firstListedFileId() {
+        if (fileStore.files.length === 0 || this.items.length === 0) return '';
+        return this.items[0].fileId;
+    }
+
+    @computed
+    get firstReceivedFileId() {
+        let fileId = '';
+
+        for (let i = 0; !fileId && i < this.renderedItemsCount && i < this.items.length; i++) {
+            if (this.recentReceivedFileIds.includes(this.items[i].fileId)) {
+                fileId = this.items[i].fileId;
+            }
+        }
+        return fileId;
+    }
+
+    @computed
+    get recentReceivedFileIds() {
+        return chatStore.recentReceivedFiles.map(f => f.fileId);
+    }
+
+    @computed
+    get promptAddFolder() {
+        return (
+            fileStore.files.length >= config.beacons.fileCountFolderPrompt &&
+            fileStore.folderStore.folders.length === 0
+        );
+    }
+
     @computed
     get items(): any[] {
         return fileStore.searchQuery
@@ -155,6 +208,7 @@ export default class Files extends React.Component<FilesProps> {
 
         const renderedItems: JSX.Element[] = [];
         const data = this.items;
+
         for (let i = 0; i < this.renderedItemsCount && i < data.length; i++) {
             const f = data[i];
             if (
@@ -336,11 +390,18 @@ export default class Files extends React.Component<FilesProps> {
                                 <div
                                     ref={this.setContainerRef}
                                     onScroll={this.enqueueCheck}
-                                    className={css('file-table-body', {
+                                    className={css('file-table-body scrollable', {
                                         'hide-checkboxes': selectedCount === 0
                                     })}
                                 >
-                                    {this.renderedItems}
+                                    <FileBeaconContext.Provider
+                                        value={{
+                                            firstListedFileId: this.firstListedFileId,
+                                            firstReceivedFileId: this.firstReceivedFileId
+                                        }}
+                                    >
+                                        {this.renderedItems}
+                                    </FileBeaconContext.Provider>
                                     {fileStore.loaded && currentFolder.isEmpty ? (
                                         <ZeroFiles
                                             isRoot={currentFolder.isRoot && !currentFolder.isShared}

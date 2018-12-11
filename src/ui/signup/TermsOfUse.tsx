@@ -1,24 +1,101 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { action, observable } from 'mobx';
-import { t } from 'peerio-icebear';
 import css from 'classnames';
+
+import { t, LocalizationStrings } from 'peerio-icebear';
 import { Button, Divider, MaterialIcon } from 'peer-ui';
+
 import * as telemetry from '~/telemetry';
 
-// Stores and helpers
 import routerStore from '~/stores/router-store';
 import { saveAkPdf } from '~/helpers/account-key';
 
-// UI
 import T from '~/ui/shared-components/T';
 import FileSpriteIcon from '~/ui/shared-components/FileSpriteIcon';
 import LegalDialog from '~/ui/shared-components/LegalDialog';
 
-// Types
 import { SignupStep } from './SignupStepTypes';
 
 const telemetryObject = { location: 'ONBOARDING', sublocation: 'TOP_DRAWER' };
+
+interface TermsItem {
+    icon?: string;
+    spriteIcon?: string;
+    titleLeft: keyof LocalizationStrings;
+    titleRight?: keyof LocalizationStrings;
+    textContent: {
+        heading: keyof LocalizationStrings | null;
+        paragraph: keyof LocalizationStrings;
+    }[];
+}
+
+const termsTextContent: TermsItem[] = [
+    {
+        icon: 'help_outline',
+        titleLeft: 'title_termsDataCollection',
+        titleRight: 'title_termsDataCollection',
+        textContent: [
+            {
+                heading: null,
+                paragraph: 'title_termsDataCollectionIntro'
+            },
+            {
+                heading: 'title_metadata',
+                paragraph: 'title_termsMetadataParagraph'
+            },
+            {
+                heading: 'title_accountInformation',
+                paragraph: 'title_termsAccountInfoParagraph'
+            },
+            {
+                heading: 'title_ipAddress',
+                paragraph: 'title_termsIpParagraph'
+            }
+        ]
+    },
+    {
+        icon: 'settings',
+        titleLeft: 'title_termsDataThirdParty',
+        titleRight: 'title_termsDataThirdParty',
+        textContent: [
+            {
+                heading: 'title_service',
+                paragraph: 'title_termsServiceParagraph'
+            },
+            {
+                heading: 'title_communications',
+                paragraph: 'title_termsCommunicationsParagraph'
+            },
+            {
+                heading: 'title_analytics',
+                paragraph: 'title_termsAnalyticsParagraph'
+            }
+        ]
+    },
+    {
+        spriteIcon: 'txt',
+        titleLeft: 'title_termsMainPoints',
+        textContent: [
+            {
+                heading: null,
+                paragraph: 'title_termsIntro'
+            },
+            {
+                heading: 'title_content',
+                paragraph: 'title_termsContentParagraph'
+            },
+            {
+                heading: 'title_behaviour',
+                paragraph: 'title_termsBehaviourParagraph'
+            },
+            {
+                heading: 'title_security',
+                paragraph: 'title_termsSecurityParagraph'
+            }
+        ]
+    }
+];
 
 @observer
 export default class TermsOfUse extends React.Component<SignupStep> {
@@ -54,83 +131,16 @@ export default class TermsOfUse extends React.Component<SignupStep> {
     // Term content itself
     @observable selectedTerm = -1;
     @action.bound
-    selectTerm(number) {
-        this.selectedTerm = number;
-        telemetry.signup.readMore(this.termsTextContent[this.selectedTerm].titleLeft);
+    selectTerm(index: number) {
+        this.selectedTerm = index;
+        telemetry.signup.readMore(t(termsTextContent[this.selectedTerm].titleLeft) as string);
     }
-
-    termsTextContent = [
-        {
-            icon: 'help_outline',
-            titleLeft: t('title_termsDataCollection'),
-            titleRight: t('title_termsDataCollection'),
-            textContent: [
-                {
-                    heading: null,
-                    paragraph: t('title_termsDataCollectionIntro')
-                },
-                {
-                    heading: t('title_metadata'),
-                    paragraph: t('title_termsMetadataParagraph')
-                },
-                {
-                    heading: t('title_accountInformation'),
-                    paragraph: t('title_termsAccountInfoParagraph')
-                },
-                {
-                    heading: t('title_ipAddress'),
-                    paragraph: t('title_termsIpParagraph')
-                }
-            ]
-        },
-        {
-            icon: 'settings',
-            titleLeft: t('title_termsDataThirdParty'),
-            titleRight: t('title_termsDataThirdParty'),
-            textContent: [
-                {
-                    heading: t('title_service'),
-                    paragraph: t('title_termsServiceParagraph')
-                },
-                {
-                    heading: t('title_communications'),
-                    paragraph: t('title_termsCommunicationsParagraph')
-                },
-                {
-                    heading: t('title_analytics'),
-                    paragraph: t('title_termsAnalyticsParagraph')
-                }
-            ]
-        },
-        {
-            spriteIcon: 'txt',
-            titleLeft: t('title_termsMainPoints'),
-            textContent: [
-                {
-                    heading: null,
-                    paragraph: t('title_termsIntro')
-                },
-                {
-                    heading: t('title_content'),
-                    paragraph: t('title_termsContentParagraph')
-                },
-                {
-                    heading: t('title_behaviour'),
-                    paragraph: t('title_termsBehaviourParagraph')
-                },
-                {
-                    heading: t('title_security'),
-                    paragraph: t('title_termsSecurityParagraph')
-                }
-            ]
-        }
-    ];
 
     get termsItems() {
         const left = [];
         const right = [];
 
-        this.termsTextContent.forEach((term, index) => {
+        termsTextContent.forEach((term, index) => {
             const isSelected = this.selectedTerm === index;
 
             left.push(
@@ -146,7 +156,7 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                             <FileSpriteIcon type={term.spriteIcon} size="small" />
                         ) : null}
                         {term.icon ? <MaterialIcon icon={term.icon} /> : null}
-                        <span className="question">{term.titleLeft}</span>
+                        <span className="question">{t(term.titleLeft)}</span>
                         <MaterialIcon className="right-arrow" icon="keyboard_arrow_right" />
                         <MaterialIcon
                             className={css('left-arrow', {
@@ -170,15 +180,15 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                         selected: isSelected
                     })}
                 >
-                    {term.titleRight ? <h3>{term.titleRight}</h3> : null}
+                    {term.titleRight ? <h3>{t(term.titleRight)}</h3> : null}
                     {term.textContent.map((content, i) => {
                         return (
                             // eslint-disable-next-line react/no-array-index-key
                             <React.Fragment key={`textcontent-${i}`}>
                                 {content.heading ? (
-                                    <h4 className="question">{content.heading}</h4>
+                                    <h4 className="question">{t(content.heading)}</h4>
                                 ) : null}
-                                <p>{content.paragraph}</p>
+                                <p>{t(content.paragraph)}</p>
                             </React.Fragment>
                         );
                     })}
@@ -230,14 +240,14 @@ export default class TermsOfUse extends React.Component<SignupStep> {
                     <T k="title_whyRequired" tag="div" className="subheading" />
                     <T k="title_whyRequiredExplanation" tag="p">
                         {{
-                            openPrivacy: text => {
+                            openPrivacy: (text: string) => {
                                 return (
                                     <Button onClick={this.showPrivacyDialog} theme="link">
                                         {text}
                                     </Button>
                                 );
                             },
-                            openTerms: text => {
+                            openTerms: (text: string) => {
                                 return (
                                     <Button onClick={this.showTermsDialog} theme="link">
                                         {text}

@@ -9,8 +9,9 @@ import { debounce } from 'lodash';
 
 import css from 'classnames';
 import { fileStore, chatStore, clientApp, t } from 'peerio-icebear';
-import { Button, Menu, MenuItem } from 'peer-ui';
+import { Button, MenuItem } from 'peer-ui';
 
+import MenuBeaconed from '~/ui/shared-components/MenuBeaconed';
 import FilePicker from '~/ui/files/components/FilePicker';
 import Snackbar from '~/ui/shared-components/Snackbar';
 import { pickLocalFiles, getFileList } from '~/helpers/file';
@@ -193,10 +194,20 @@ export default class MessageInput extends React.Component<MessageInputProps> {
                     ref={this.setSnackbarRef}
                 />
                 <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
-                    <Menu
-                        position="bottom-left"
-                        icon="add_circle_outline"
-                        tooltip={t('title_shareToChat')}
+                    <MenuBeaconed
+                        menuProps={{
+                            position: 'bottom-left',
+                            icon: 'add_circle_outline',
+                            tooltip: t('title_shareToChat')
+                        }}
+                        beaconProps={{
+                            type: 'spot',
+                            name: 'shareFileInChat',
+                            position: 'left',
+                            title: t('title_shareInChat_beacon'),
+                            description: t('description_shareInChat_beacon_desktop'),
+                            markReadOnUnmount: true
+                        }}
                     >
                         <MenuItem
                             value="share"
@@ -208,7 +219,7 @@ export default class MessageInput extends React.Component<MessageInputProps> {
                             caption={t('title_uploadAndShare')}
                             onClick={this.activateUploadDialog}
                         />
-                    </Menu>
+                    </MenuBeaconed>
 
                     {this.props.readonly ? (
                         <div className="message-editor-empty">&nbsp;</div>

@@ -90,11 +90,11 @@ export default class Root extends React.Component {
     }
 
     componentWillMount() {
-        clientApp.isFocused = appState.isFocused;
+        clientApp.isFocused = appState.isActive;
         reaction(
-            () => appState.isFocused,
-            focused => {
-                clientApp.isFocused = focused;
+            () => appState.isActive,
+            active => {
+                clientApp.isFocused = active;
             }
         );
     }

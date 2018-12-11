@@ -153,6 +153,7 @@ $userlist-maxwidth: 608px; // $userpicker-maxwidth - $userpicker-margin-large
       display: inline-flex;
       position: static;
       width: auto;
+      min-width: 192px;
 
       .search-icon {
         top: 12px;

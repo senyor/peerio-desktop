@@ -169,6 +169,8 @@ export default class NewContact extends React.Component {
                         <div className="message-search-wrapper">
                             <Beacon
                                 name="search"
+                                title={t('title_search_beacon')}
+                                description={t('description_search_beacon')}
                                 type="area"
                                 arrowPosition="top"
                                 arrowDistance={75}

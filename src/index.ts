@@ -22,7 +22,8 @@ if (process.env.NODE_ENV !== 'development') {
     process.env.NODE_ENV = 'production';
 }
 
-import isDevEnv from '~/helpers/is-dev-env';
+// Do not change to import! This has to go after fixing process.env above.
+const isDevEnv = require('~/helpers/is-dev-env').default;
 
 if (!isDevEnv) require('~/helpers/console-history');
 const { ipcRenderer, webFrame } = require('electron');

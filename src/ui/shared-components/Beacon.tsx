@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { action, computed, observable, reaction, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
-import { t } from 'peerio-icebear';
+import _ from 'lodash';
 import beaconStore from '~/stores/beacon-store';
 
 const appRoot = document.getElementById('root');
@@ -11,25 +11,38 @@ const BEACON_COLOR = '#5461cc';
 
 interface BeaconBaseProps {
     name: string;
-    title?: string; // if no title, will check t('title_${name}_beacon')
-    description?: string; // if no description, will use t('description_${name}_beacon')
+    title?: string;
+    description?: string;
     className?: string; // applied to the beacon itself. needed for styling, since beacon is portaled to appRoot.
+    markReadOnUnmount?: boolean;
+
+    /** Offset beacon in the X direction by a pixel value */
     offsetX?: number;
+
+    /** Offset beacon in the Y direction by a pixel value */
     offsetY?: number;
     onBeaconClick?: () => void;
 }
 
 export interface SpotBeaconProps extends BeaconBaseProps {
     type: 'spot';
-    position?: 'right' | 'left'; // position of the bubble
-    size?: number; // force a certain bubble size
+
+    /** Position of the bubble */
+    position?: 'right' | 'left';
+
+    /** Force a certain bubble size (radius in pixels) */
+    size?: number;
     onContentClick?: () => void;
 }
 
 export interface AreaBeaconProps extends BeaconBaseProps {
     type: 'area';
-    arrowPosition?: 'top' | 'right' | 'bottom' | 'left'; // position of the arrow on the rectangle
-    arrowDistance?: number; // how far along the side of the rectangle to place the arrow, as a percentage
+
+    /** Position of the arrow on the rectangle */
+    arrowPosition?: 'top' | 'right' | 'bottom' | 'left';
+
+    /** How far along the side of the rectangle to place the arrow, as a percentage */
+    arrowDistance?: number;
 }
 
 interface RectanglePosition {
@@ -54,6 +67,17 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
         return beaconStore.activeBeacon === this.props.name;
     }
 
+    getScrollContainer(element: Element): Element | null {
+        let el = element;
+
+        while (el) {
+            const attr = el.classList.contains('scrollable');
+            if (attr) return el;
+            el = el.parentElement;
+        }
+        return null;
+    }
+
     // `contentRect` stores the bounding rect for the child content.
     // We give it default values to start, to prevent null references
     @observable
@@ -64,41 +88,79 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
         width: 0
     };
 
+    // Ref to the original child content
+    @observable contentRef: Element;
+
+    // Ref to the closest scrollable parent, if it exists, so that positioning recalculates on scroll.
+    @observable scrollContainer: Element;
+
     @action.bound
     setContentRect() {
-        const contentRef = document.querySelector(`.__beacon-target-id-${this.props.name}`);
-        if (!contentRef) return;
-        this.contentRect = contentRef.getBoundingClientRect();
+        if (!this.contentRef) {
+            const beaconTargetRef = document.querySelector(
+                `.__beacon-target-id-${this.props.name}`
+            );
+            if (!beaconTargetRef) return;
+            this.contentRef = beaconTargetRef;
+
+            // Update `contentRect` on scroll, if scrollContainer parent exists
+            const parentScrollRef = this.getScrollContainer(beaconTargetRef);
+            if (parentScrollRef) {
+                this.scrollContainer = parentScrollRef;
+                this.scrollContainer.addEventListener('scroll', this.setContentRect);
+            }
+        }
+
+        this.contentRect = this.contentRef.getBoundingClientRect();
     }
 
-    @observable dispose: IReactionDisposer;
+    reactionsToDispose: IReactionDisposer[];
     @observable renderTimeout: NodeJS.Timer;
     componentDidMount() {
         // setContentRect on mount
-        this.setContentRect();
+        setTimeout(() => this.setContentRect());
 
         // Update `contentRect` on window resize
         window.addEventListener('resize', this.setContentRect);
 
-        this.dispose = reaction(
-            () => this.active,
-            active => {
-                if (active) {
-                    this.renderTimeout = setTimeout(() => {
-                        this.rendered = true;
-                    }, 1);
-                } else {
-                    this.rendered = false;
+        // If component mounts with beacon already active, just show it immediately
+        if (this.active) {
+            setTimeout(() => {
+                this.rendered = true;
+            });
+        }
+
+        // Otherwise, set `rendered` true on `active`, with timeout for fade-in via CSS
+        this.reactionsToDispose = [
+            reaction(
+                () => this.active,
+                active => {
+                    if (active) {
+                        this.renderTimeout = setTimeout(() => {
+                            this.rendered = true;
+                        }, 1);
+                    } else {
+                        this.rendered = false;
+                        if (this.props.markReadOnUnmount) {
+                            beaconStore.markAsRead(this.props.name);
+                        }
+                    }
                 }
-            }
-        );
+            )
+        ];
     }
 
     componentWillUnmount() {
         window.removeEventListener('resize', this.setContentRect);
-        this.dispose();
-        clearTimeout(this.renderTimeout);
-        this.renderTimeout = null;
+        if (this.scrollContainer) {
+            this.scrollContainer.addEventListener('scroll', this.setContentRect);
+        }
+
+        this.reactionsToDispose.forEach(d => d());
+        if (this.renderTimeout) {
+            clearTimeout(this.renderTimeout);
+            this.renderTimeout = null;
+        }
     }
 
     // The size of the SpotBeacon bubble can be defined in prop `size`.
@@ -344,10 +406,6 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
 
     @computed
     get beaconContent() {
-        const title = this.props.title || t(`title_${this.props.name}_beacon` as any);
-        const description =
-            this.props.description || t(`description_${this.props.name}_beacon` as any);
-
         return (
             <div
                 key="beacon-content"
@@ -371,8 +429,8 @@ export default class Beacon extends React.Component<SpotBeaconProps | AreaBeacon
                     onClick={this.beaconClick}
                 >
                     <div className="rectangle-content">
-                        {title ? <div className="header">{title}</div> : null}
-                        {description}
+                        {this.props.title ? <div className="header">{this.props.title}</div> : null}
+                        {this.props.description}
                     </div>
                 </div>
 

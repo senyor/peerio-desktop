@@ -1,6 +1,10 @@
+// TODO: remove all uses of this
+
 /**
- * Looks for an attribute value in html element's parent chain.
- * Starts checks from the element itself.
+ * Looks for an attribute value in html element's parent chain. Starts checks
+ * from the element itself.
+ * @deprecated just create a React component if you need to associate data with
+ *             an element. that's what React is for!
  * @param element - html element
  * @param attribute - attribute name
  * @returns found attribute value or null
@@ -14,37 +18,4 @@ export function getAttributeInParentChain(element: Element, attribute: string): 
         el = el.parentElement;
     }
     return null;
-}
-
-/**
- * Returns html element in parent chain that has a certain class.
- * @param element - html element
- * @param attribute - attribute name
- * @returns found html element or null
- */
-export function getParentWithClass(element: Element, className): Element | null {
-    let el = element;
-
-    while (el) {
-        const attr = el.classList.contains(className);
-        if (attr) return el;
-        el = el.parentElement;
-    }
-    return null;
-}
-
-/**
- * Finds all 'data-...' props of an instance of a component
- * @param props from component
- */
-export function getDataProps<T extends {}>(props: T): T {
-    const dataProps = {} as T;
-
-    Object.keys(props)
-        .filter(p => p.startsWith('data-'))
-        .forEach(key => {
-            dataProps[key] = props[key];
-        });
-
-    return dataProps;
 }

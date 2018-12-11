@@ -4,7 +4,9 @@ import { action, computed } from 'mobx';
 
 import { Button, SearchInput } from 'peer-ui';
 import { fileStore, chatStore, volumeStore, t } from 'peerio-icebear';
+import { Volume } from 'peerio-icebear/dist/models';
 import Beacon from '~/ui/shared-components/Beacon';
+import beaconStore from '~/stores/beacon-store';
 
 import ShareWithMultipleDialog from '~/ui/shared-components/ShareWithMultipleDialog';
 
@@ -27,6 +29,7 @@ export default class FilesHeader extends React.Component<{
 
     protected readonly showAddFolder = () => {
         this.addFolderDialogRef.current.show();
+        beaconStore.increment('folders');
     };
 
     protected readonly showMoveFiles = () => {
@@ -52,7 +55,7 @@ export default class FilesHeader extends React.Component<{
         // needs refactor
         const contacts = await this.shareWithMultipleDialogRef.current.show(
             fileStore.selectedFolders.length > 0 && fileStore.selectedFiles.length === 0
-                ? fileStore.selectedFolders[0]
+                ? (fileStore.selectedFolders[0] as Volume) // TODO: audit
                 : null,
             context
         );
@@ -118,18 +121,32 @@ export default class FilesHeader extends React.Component<{
                     <div className="buttons-container bulk-buttons">{this.bulkActionButtons}</div>
                 ) : (
                     <div className="buttons-container file-buttons">
-                        <Button
-                            label={t('button_newFolder')}
-                            className="new-folder"
-                            onClick={this.showAddFolder}
-                            theme="affirmative secondary"
-                        />
                         <Beacon
                             type="area"
+                            name="folders"
+                            title={t('title_folders_beacon')}
+                            description={t('description_folders_beacon')}
+                            arrowPosition="top"
+                            arrowDistance={80}
+                            offsetY={12}
+                            markReadOnUnmount
+                        >
+                            <Button
+                                label={t('button_newFolder')}
+                                className="new-folder"
+                                onClick={this.showAddFolder}
+                                theme="affirmative secondary"
+                            />
+                        </Beacon>
+                        <Beacon
+                            type="area"
+                            name="uploadFiles"
+                            title={t('title_uploadFiles_beacon')}
+                            description={t('description_uploadFiles_beacon')}
                             arrowPosition="top"
                             arrowDistance={90}
-                            name="uploadFiles"
                             offsetY={16}
+                            markReadOnUnmount
                         >
                             <Button
                                 className="button-affirmative"

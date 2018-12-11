@@ -237,29 +237,24 @@ class ELEMENTS {
             onClick: 'deleteParticipant'
         };
 
-        const obj = {
-            /*
-                The `username` argument is needed for the MC version of the same function, so we
-                need to accept it here even if it doesn't get used in the non-whitelabel version.
-            */
-            // eslint-disable-next-line no-unused-vars
-            userMenuItems: username => [itemMakeAdmin, itemDeleteMember]
-        };
-
         if (
             config.whiteLabel.name === 'medcryptor' &&
             User.current.isMCAdmin &&
             routerStore.isPatientSpace
         ) {
-            obj.userMenuItems = username => {
-                if (contactStore.whitelabel.checkMCDoctor(username)) {
-                    return [itemDeleteMember];
+            return {
+                userMenuItems: username => {
+                    if (contactStore.whitelabel.checkMCDoctor(username)) {
+                        return [itemDeleteMember];
+                    }
+                    return [itemMakeAdmin, itemDeleteMember];
                 }
-                return [itemMakeAdmin, itemDeleteMember];
             };
         }
 
-        return obj;
+        return {
+            userMenuItems: () => [itemMakeAdmin, itemDeleteMember]
+        };
     }
 
     get loading() {

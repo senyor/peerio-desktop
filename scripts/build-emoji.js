@@ -8,7 +8,7 @@ const cp = require('child_process');
 /** @type {any} */
 const emojione = require('emojione');
 
-const srcImages = './node_modules/emojione-assets/png/32/';
+const srcImages = './node_modules/emojione-assets/png/64/';
 const srcSprites = './node_modules/emojione-assets/sprites/*-32-*@2x.png';
 const srcCss = './node_modules/emojione-assets/sprites/emojione-sprite-32.css';
 const srcJson = './node_modules/emojione/emoji.json';

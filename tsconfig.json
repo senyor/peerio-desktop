@@ -23,6 +23,6 @@
       "~/*": ["./*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "test/setup-enzyme.ts", "test/unit/**/*"],
   "exclude": ["src/static/**/*"]
 }

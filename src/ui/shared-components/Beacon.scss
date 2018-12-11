@@ -196,6 +196,7 @@ $arrow-size: 12px;
 
   .rectangle {
     pointer-events: all;
+    box-shadow: $shadow-8;
     background-color: $peerio-purple;
   }
 

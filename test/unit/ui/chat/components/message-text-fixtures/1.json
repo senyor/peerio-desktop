@@ -1,0 +1,48 @@
+{
+  "type": "doc",
+  "content": [
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "text": "rich "
+        },
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "strong"
+            }
+          ],
+          "text": "rich "
+        },
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "em"
+            },
+            {
+              "type": "strong"
+            }
+          ],
+          "text": "very rich "
+        },
+        {
+          "type": "text",
+          "marks": [
+            {
+              "type": "strike"
+            }
+          ],
+          "text": "test"
+        },
+        {
+          "type": "text",
+          "text": " text"
+        }
+      ]
+    }
+  ]
+}

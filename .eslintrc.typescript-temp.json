@@ -1,9 +1,28 @@
 {
     "root": true,
-    "parser": "typescript-eslint-parser",
+    "parser": "babel-eslint",
     "extends": ["./.eslintrc"],
     "rules": {
-      "no-undef": 0,
-      "no-unused-vars": 0
+      "no-undef": 2,
+      "no-unused-vars": 2
+    },
+    "globals": {
+        "document": false,
+        "navigator": false,
+        "alert": false,
+        "confirm": false,
+        "window": false,
+        "WebSocket": false,
+        "beforeEach": false,
+        "afterEach": false,
+        "xit": false,
+        "delay": false,
+        "testUser": false,
+        "XMLHttpRequest": false,
+        "performance": false,
+        "FileReader": false,
+        "L": false,
+        "Notification": false,
+        "indexedDB": false
     }
 }

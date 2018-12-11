@@ -10,13 +10,14 @@ import T from '~/ui/shared-components/T';
 import { downloadFile } from '~/helpers/file';
 
 import MoveFileDialog from './MoveFileDialog';
+import AddOrRenameDialog from './AddOrRenameDialog';
 import {
     isFileOrFolderMoveable,
     isFileShareable,
     fileDownloadUIEnabled
 } from '../helpers/sharedFileAndFolderActions';
 
-interface FileActionsProps {
+export interface FileActionsProps {
     file: any;
 
     /** is the entire action menu disabled? */
@@ -24,6 +25,12 @@ interface FileActionsProps {
 
     /** Disable move action */
     disableMove?: boolean;
+
+    /**
+     * For the rare cases where you need to directly access the ref of
+     * the Menu, e.g. to force Menu open on some other event.
+     */
+    menuRef?: React.RefObject<Menu>;
 
     onMenuClick?: () => void;
     onMenuHide?: () => void;
@@ -38,9 +45,6 @@ interface FileActionsProps {
      * FileLine in the Files view.
      */
     onUnshare?: () => any;
-
-    /** not implemented */
-    onRename?: () => any;
 
     /**
      * Currently used when Move or Share dialog has been opened, to affect
@@ -60,6 +64,7 @@ interface FileActionsProps {
 export default class FileActions extends React.Component<FileActionsProps> {
     moveFileDialogRef = React.createRef<MoveFileDialog>();
     shareWithMultipleDialogRef = React.createRef<ShareWithMultipleDialog>();
+    renameFileDialogRef = React.createRef<AddOrRenameDialog>();
 
     @observable limitedActionsVisible = false;
     @action.bound
@@ -90,6 +95,10 @@ export default class FileActions extends React.Component<FileActionsProps> {
         if (this.props.onActionComplete) this.props.onActionComplete();
     };
 
+    renameFile = () => {
+        this.renameFileDialogRef.current.show(this.props.file);
+    };
+
     render() {
         const { file } = this.props;
 
@@ -102,6 +111,7 @@ export default class FileActions extends React.Component<FileActionsProps> {
                     onClick={this.props.onMenuClick}
                     onHide={this.props.onMenuHide}
                     disabled={this.props.disabled}
+                    ref={this.props.menuRef}
                 >
                     {file.isLegacy ? (
                         <MenuItem
@@ -131,13 +141,11 @@ export default class FileActions extends React.Component<FileActionsProps> {
                             onClick={this.moveFile}
                         />
                     ) : null}
-                    {false ? ( // eslint-disable-line no-constant-condition, TODO
-                        <MenuItem
-                            caption={t('button_rename')}
-                            icon="mode_edit"
-                            onClick={this.props.onRename}
-                        />
-                    ) : null}
+                    <MenuItem
+                        caption={t('button_rename')}
+                        icon="mode_edit"
+                        onClick={this.renameFile}
+                    />
                     {this.props.file.deleteable ? (
                         <React.Fragment>
                             <Divider />
@@ -164,6 +172,7 @@ export default class FileActions extends React.Component<FileActionsProps> {
                     active={this.limitedActionsVisible}
                     onDismiss={this.hideLimitedActions}
                 />
+                <AddOrRenameDialog ref={this.renameFileDialogRef} />
                 <ShareWithMultipleDialog ref={this.shareWithMultipleDialogRef} />
                 <MoveFileDialog ref={this.moveFileDialogRef} />
             </React.Fragment>

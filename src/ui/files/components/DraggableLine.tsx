@@ -60,6 +60,7 @@ interface DraggableLineProps {
     connectDragPreview?: (image: HTMLImageElement) => void;
     connectDragSource?: (el: JSX.Element) => JSX.Element;
     isDragging?: boolean;
+    className?: string;
 }
 
 @DragSource(
@@ -80,7 +81,13 @@ export default class DraggableLine extends React.Component<DraggableLineProps> {
     }
 
     render() {
-        const { fileOrFolder: f, isDragging, connectDragSource, confirmShare } = this.props;
+        const {
+            fileOrFolder: f,
+            isDragging,
+            connectDragSource,
+            confirmShare,
+            className
+        } = this.props;
 
         return connectDragSource(
             <div>
@@ -94,7 +101,14 @@ export default class DraggableLine extends React.Component<DraggableLineProps> {
                         confirmShare={confirmShare}
                     />
                 ) : (
-                    <FileLine file={f} fileActions fileDetails checkbox isDragging={isDragging} />
+                    <FileLine
+                        file={f}
+                        fileActions
+                        fileDetails
+                        checkbox
+                        isDragging={isDragging}
+                        className={className}
+                    />
                 )}
             </div>
         );

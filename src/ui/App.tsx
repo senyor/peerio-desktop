@@ -6,7 +6,6 @@ import { clientApp, t } from 'peerio-icebear';
 
 import AppNav from '~/ui/AppNav';
 import uiStore from '~/stores/ui-store';
-import MigrationDialog from '~/ui/shared-components/MigrationDialog';
 
 @observer
 export default class App extends React.Component {
@@ -41,7 +40,6 @@ export default class App extends React.Component {
                 ) : null}
 
                 {this.props.children}
-                <MigrationDialog />
                 {this.signatureErrorDialog}
             </div>
         );

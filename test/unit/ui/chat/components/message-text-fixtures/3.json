@@ -1,0 +1,34 @@
+{
+  "type": "doc",
+  "content": [
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "emoji",
+          "attrs": {
+            "shortname": ":apple:"
+          }
+        },
+        {
+          "type": "emoji",
+          "attrs": {
+            "shortname": ":green_apple:"
+          }
+        },
+        {
+          "type": "emoji",
+          "attrs": {
+            "shortname": ":melon:"
+          }
+        },
+        {
+          "type": "emoji",
+          "attrs": {
+            "shortname": ":coconut:"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
     "root": true,
-    "parser": "babel-eslint",
+    "parser": "typescript-eslint-parser",
     "parserOptions": {
         "ecmaVersion": 6,
         "sourceType": "module",
@@ -47,25 +47,8 @@
         "no-nested-ternary": 0,
         "prefer-destructuring": 0,
         "strict": 0,
-        "typescript/no-unused-vars": 2
-    },
-    "globals": {
-        "document": false,
-        "navigator": false,
-        "alert": false,
-        "confirm": false,
-        "window": false,
-        "WebSocket": false,
-        "beforeEach": false,
-        "afterEach": false,
-        "xit": false,
-        "delay": false,
-        "testUser": false,
-        "XMLHttpRequest": false,
-        "performance": false,
-        "FileReader": false,
-        "L": false,
-        "Notification": false,
-        "indexedDB": false
+        "typescript/no-unused-vars": 2,
+        "no-undef": 0,
+        "no-unused-vars": 0
     }
 }

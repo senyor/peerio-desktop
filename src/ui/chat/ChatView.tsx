@@ -44,7 +44,7 @@ export default class ChatView extends React.Component {
                 }
             ),
             when(
-                () => chatStore.activeChat.recentFiles.length > 0,
+                () => chatStore.activeChat && chatStore.activeChat.recentFiles.length > 0,
                 () => {
                     beaconStore.addBeacons('infoPanel_desktop');
                 }

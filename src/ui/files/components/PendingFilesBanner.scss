@@ -8,7 +8,10 @@
   background-color: $peerio-purple;
 
   .banner-icon {
+    display: flex;
     flex: 0 0;
+    align-items: center;
+    justify-content: center;
     height: 40px;
     min-width: 40px;
     margin-right: $margin-large;

@@ -2,6 +2,7 @@ import React from 'react';
 import { action, computed, observable, reaction, when, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 import css from 'classnames';
+import { DropTarget } from 'react-dnd';
 
 import { Button, CustomIcon, Dialog, MaterialIcon, ProgressBar, Tooltip } from 'peer-ui';
 import { chatStore, chatInviteStore, t } from 'peerio-icebear';
@@ -10,6 +11,7 @@ import { Contact } from 'peerio-icebear/dist/models';
 import config from '~/config';
 import routerStore from '~/stores/router-store';
 import sounds from '~/helpers/sounds';
+import DragDropTypes from '../files/helpers/dragDropTypes';
 import uiStore from '~/stores/ui-store';
 import beaconStore from '~/stores/beacon-store';
 
@@ -28,8 +30,27 @@ import ChatNameEditor from './components/ChatNameEditor';
 import ShareToChatProgress from './components/ShareToChatProgress';
 import PendingDM from './components/PendingDM';
 
+interface ChatViewProps {
+    connectDropTarget?: (el: JSX.Element) => JSX.Element;
+    isBeingDraggedOver?: boolean;
+}
+
+@DropTarget(
+    [DragDropTypes.NATIVEFILE],
+    {
+        drop(_props, monitor) {
+            if (monitor.didDrop()) return; // drop was already handled by eg. a droppable folder line
+            console.log('dropped!');
+            // uploadDroppedFiles(monitor.getItem().files, fileStore.folderStore.currentFolder);
+        }
+    },
+    (connect, monitor) => ({
+        connectDropTarget: connect.dropTarget(),
+        isBeingDraggedOver: monitor.isOver({ shallow: true })
+    })
+)
 @observer
-export default class ChatView extends React.Component {
+export default class ChatView extends React.Component<ChatViewProps> {
     reactionsToDispose!: IReactionDisposer[];
 
     @observable chatNameEditorVisible = false;
@@ -339,6 +360,8 @@ export default class ChatView extends React.Component {
     }
 
     render() {
+        const { connectDropTarget, isBeingDraggedOver } = this.props;
+
         if (!chatStore.chats.length && !chatInviteStore.received.length) {
             return <ZeroChats />;
         }
@@ -373,33 +396,39 @@ export default class ChatView extends React.Component {
                             />
                         </div>
                     ) : (
-                        <div className="messages-container">
-                            {chatStore.chats.length === 0 && !chatStore.loading ? null : (
-                                <MessageList ref={this.messageListRef} />
-                            )}
-                            {this.shareInProgress ? (
-                                <ShareToChatProgress
-                                    uploadQueue={chat.uploadQueue}
-                                    folderShareQueue={chat.folderShareQueue}
+                        connectDropTarget(
+                                <div className={css('messages-container', {
+                                    'messages-container-droppable-hovered': isBeingDraggedOver
+                                })}>
+                                {chatStore.chats.length === 0 && !chatStore.loading ? null : (
+                                    <MessageList ref={this.messageListRef} />
+                                )}
+                                {this.shareInProgress ? (
+                                    <ShareToChatProgress
+                                        uploadQueue={chat.uploadQueue}
+                                        folderShareQueue={chat.folderShareQueue}
+                                    />
+                                ) : null}
+                                <MessageInput
+                                    readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
+                                    placeholder={
+                                        chat
+                                            ? t('title_messageInputPlaceholder', {
+                                                  chatName: `${chat.isChannel ? '# ' : ''}${
+                                                      chat.name
+                                                  }`
+                                              })
+                                            : null
+                                    }
+                                    onSend={this.sendRichTextMessage}
+                                    onAck={this.sendAck}
+                                    onFileShare={this.shareFilesAndFolders}
+                                    messageListScrolledUp={this.pageScrolledUp}
+                                    onJumpToBottom={this.jumpToBottom}
+                                    shareInProgress={this.shareInProgress}
                                 />
-                            ) : null}
-                            <MessageInput
-                                readonly={!chat || !chat.metaLoaded || chat.isReadOnly}
-                                placeholder={
-                                    chat
-                                        ? t('title_messageInputPlaceholder', {
-                                              chatName: `${chat.isChannel ? '# ' : ''}${chat.name}`
-                                          })
-                                        : null
-                                }
-                                onSend={this.sendRichTextMessage}
-                                onAck={this.sendAck}
-                                onFileShare={this.shareFilesAndFolders}
-                                messageListScrolledUp={this.pageScrolledUp}
-                                onJumpToBottom={this.jumpToBottom}
-                                shareInProgress={this.shareInProgress}
-                            />
-                        </div>
+                            </div>
+                        )
                     )}
                     {this.sidebar}
                 </div>

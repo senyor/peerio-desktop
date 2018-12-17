@@ -38,6 +38,25 @@
       position: relative;
       max-width: 100%;
       min-width: 0;
+
+      // part 1 of pseudo overlay for drop effect (since directly setting the
+      // background colour draws under the message contents ofc)
+      &::after {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        transition: background-color 100ms ease, border 100ms ease;
+      }
+    }
+
+    // part 2 of pseudo overlay.
+    .messages-container-droppable-hovered::after {
+      background-color: rgba($peerio-teal, 0.12);
+      border: solid 2px $peerio-teal;
     }
   }
 

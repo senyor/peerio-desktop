@@ -82,9 +82,22 @@ $pending-files-banner-height: 100px;
     @extend %flex-grow-1;
     @extend %flex-shrink-0;
     flex: 1;
-  }
+    position: relative;
 
-  .drop-zone-droppable-hovered {
-    background-color: rgba($peerio-teal, 0.12);
+    &::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 8px; // not sure why :(
+      transition: background-color 100ms ease, border 100ms ease;
+    }
+
+    &.drop-zone-droppable-hovered::after {
+      background-color: rgba($peerio-teal, 0.12);
+      border: solid 2px $peerio-teal;
+    }
   }
 }

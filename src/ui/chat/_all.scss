@@ -171,10 +171,9 @@
       @extend %flex-row;
       @extend %flex-align-center;
       height: 20px;
-      margin-left: -12px;
 
       .material-icons {
-        padding: $padding-small;
+        padding-right: $padding-small;
       }
     }
   }

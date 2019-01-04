@@ -1,4 +1,5 @@
 import React from 'react';
+import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 import { DropTarget } from 'react-dnd';
 import css from 'classnames';
@@ -8,16 +9,33 @@ import { contactStore, chatStore, t } from 'peerio-icebear';
 import { Contact } from 'peerio-icebear/dist/models';
 
 import routerStore from '~/stores/router-store';
+import UploadDialog from '~/ui/shared-components/UploadDialog';
 import T from '~/ui/shared-components/T';
 import DragDropTypes from '../files/helpers/dragDropTypes';
 
 @observer
 export default class ContactList extends React.Component {
-    sortOptions = [
+    readonly sortOptions = [
         { value: 'firstName', label: t('title_firstName') },
         { value: 'lastName', label: t('title_lastName') },
         { value: 'username', label: t('title_username') }
     ];
+
+    @observable.ref
+    shareContext: { contact: Contact; files: string[] } | null = null;
+
+    @action.bound
+    setShareContext(contact: Contact, files: string[]) {
+        this.shareContext = {
+            contact,
+            files
+        };
+    }
+
+    @action.bound
+    deactivateUploadDialog() {
+        this.shareContext = null;
+    }
 
     componentWillMount() {
         if (contactStore.uiView.length) return;
@@ -47,52 +65,71 @@ export default class ContactList extends React.Component {
             )
         };
         return (
-            <div className="contacts-view">
-                <div className="toolbar">
-                    <SearchInput
-                        placeholder={t('title_findAContact')}
-                        value={contactStore.uiViewSearchQuery}
-                        onChange={this.handleSearchQueryChange}
+            <>
+                {this.shareContext ? (
+                    <UploadDialog
+                        deactivate={this.deactivateUploadDialog}
+                        files={this.shareContext.files}
+                        initialTargetContact={this.shareContext.contact}
                     />
-                </div>
-
-                <div className="list-sort">
-                    <Dropdown
-                        label={t('title_sort')}
-                        options={this.sortOptions}
-                        onChange={this.handleSortChange}
-                        value={contactStore.uiViewSortBy}
-                    />
-                </div>
-
-                {contactStore.uiView.length ? (
-                    <div className="contact-list">
-                        {contactStore.uiView.map(section => (
-                            <div key={section.letter} className="contact-list-section">
-                                <div className="contact-list-section-marker">{section.letter}</div>
-                                <List className="contact-list-section-content" theme="large">
-                                    {section.items.map(c => (
-                                        <ContactListItem contact={c} key={c.username} />
-                                    ))}
-                                </List>
-                            </div>
-                        ))}
+                ) : null}
+                <div className="contacts-view">
+                    <div className="toolbar">
+                        <SearchInput
+                            placeholder={t('title_findAContact')}
+                            value={contactStore.uiViewSearchQuery}
+                            onChange={this.handleSearchQueryChange}
+                        />
                     </div>
-                ) : (
-                    <div className="no-contact-found">
-                        <T k="error_contactNotFound" className="text">
-                            {textParser}
-                        </T>
-                        <img src="./static/img/illustrations/no-results.svg" draggable={false} />
+
+                    <div className="list-sort">
+                        <Dropdown
+                            label={t('title_sort')}
+                            options={this.sortOptions}
+                            onChange={this.handleSortChange}
+                            value={contactStore.uiViewSortBy}
+                        />
                     </div>
-                )}
-            </div>
+
+                    {contactStore.uiView.length ? (
+                        <div className="contact-list">
+                            {contactStore.uiView.map(section => (
+                                <div key={section.letter} className="contact-list-section">
+                                    <div className="contact-list-section-marker">
+                                        {section.letter}
+                                    </div>
+                                    <List className="contact-list-section-content" theme="large">
+                                        {section.items.map(c => (
+                                            <ContactListItem
+                                                contact={c}
+                                                key={c.username}
+                                                setShareContext={this.setShareContext}
+                                            />
+                                        ))}
+                                    </List>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="no-contact-found">
+                            <T k="error_contactNotFound" className="text">
+                                {textParser}
+                            </T>
+                            <img
+                                src="./static/img/illustrations/no-results.svg"
+                                draggable={false}
+                            />
+                        </div>
+                    )}
+                </div>
+            </>
         );
     }
 }
 
 interface ContactListItemProps {
     contact: Contact;
+    setShareContext: (contact: Contact, files: string[]) => void;
     connectDropTarget?: (el: JSX.Element) => JSX.Element;
     isBeingDraggedOver?: boolean;
 }
@@ -101,9 +138,8 @@ interface ContactListItemProps {
     [DragDropTypes.NATIVEFILE],
     {
         drop(props, monitor) {
-            if (monitor.didDrop()) return; // drop was already handled by eg. a droppable folder line
-            console.log(`dropped! ${props.contact.username}`);
-            // uploadDroppedFiles(monitor.getItem().files, fileStore.folderStore.currentFolder);
+            if (monitor.didDrop()) return; // drop was already handled
+            props.setShareContext(props.contact, monitor.getItem().files.map(f => f.path));
         }
     },
     (connect, monitor) => ({

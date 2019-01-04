@@ -1,17 +1,16 @@
 import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
-import { DropTarget } from 'react-dnd';
-import css from 'classnames';
 
-import { Avatar, Dropdown, SearchInput, Button, List, ListItem } from 'peer-ui';
+import { Dropdown, SearchInput, List } from 'peer-ui';
 import { contactStore, chatStore, t } from 'peerio-icebear';
 import { Contact } from 'peerio-icebear/dist/models';
 
 import routerStore from '~/stores/router-store';
 import UploadDialog from '~/ui/shared-components/UploadDialog';
 import T from '~/ui/shared-components/T';
-import DragDropTypes from '../files/helpers/dragDropTypes';
+
+import ContactListItem from './ContactListItem';
 
 @observer
 export default class ContactList extends React.Component {
@@ -41,6 +40,11 @@ export default class ContactList extends React.Component {
         if (contactStore.uiView.length) return;
         this.goToAddContact();
     }
+
+    startChat = (contact: Contact) => {
+        chatStore.startChat([contact]);
+        routerStore.navigateTo(routerStore.ROUTES.chats);
+    };
 
     goToAddContact = () => {
         routerStore.navigateTo(routerStore.ROUTES.newContact);
@@ -104,6 +108,9 @@ export default class ContactList extends React.Component {
                                             <ContactListItem
                                                 contact={c}
                                                 key={c.username}
+                                                onStartChat={this.startChat}
+                                                onAddContact={contactStore.addContact}
+                                                onRemoveContact={contactStore.removeContact}
                                                 setShareContext={this.setShareContext}
                                             />
                                         ))}
@@ -124,87 +131,6 @@ export default class ContactList extends React.Component {
                     )}
                 </div>
             </>
-        );
-    }
-}
-
-interface ContactListItemProps {
-    contact: Contact;
-    setShareContext: (contact: Contact, files: string[]) => void;
-    connectDropTarget?: (el: JSX.Element) => JSX.Element;
-    isBeingDraggedOver?: boolean;
-}
-
-@DropTarget<ContactListItemProps>(
-    [DragDropTypes.NATIVEFILE],
-    {
-        drop(props, monitor) {
-            if (monitor.didDrop()) return; // drop was already handled
-            props.setShareContext(props.contact, monitor.getItem().files.map(f => f.path));
-        }
-    },
-    (connect, monitor) => ({
-        connectDropTarget: connect.dropTarget(),
-        isBeingDraggedOver: monitor.isOver({ shallow: true })
-    })
-)
-@observer
-class ContactListItem extends React.Component<ContactListItemProps> {
-    startChat = () => {
-        chatStore.startChat([this.props.contact]);
-        window.router.push('/app/chats');
-    };
-
-    removeContact = () => {
-        contactStore.removeContact(this.props.contact.username);
-    };
-
-    addContact = () => {
-        contactStore.addContact(this.props.contact.username);
-    };
-
-    render() {
-        const { contact, isBeingDraggedOver, connectDropTarget } = this.props;
-        return connectDropTarget(
-            <div className="contact-list-item-wrapper">
-                <div
-                    className={css('contact-list-item', {
-                        'contact-list-item-droppable-hovered': isBeingDraggedOver
-                    })}
-                >
-                    <ListItem
-                        leftContent={<Avatar key="a" contact={contact} size="medium" />}
-                        legend={contact.username}
-                        caption={`${contact.firstName} ${contact.lastName}`}
-                        rightContent={
-                            <div>
-                                {contact.isDeleted ? null : (
-                                    <Button
-                                        icon="forum"
-                                        tooltip={t('title_haveAChat')}
-                                        onClick={this.startChat}
-                                    />
-                                )}
-                                {contact.isAdded ? (
-                                    <Button
-                                        className="gold"
-                                        icon="star"
-                                        tooltip={t('button_removeFavourite')}
-                                        onClick={this.removeContact}
-                                    />
-                                ) : (
-                                    <Button
-                                        icon="star_outline"
-                                        tooltip={t('button_addFavourite')}
-                                        onClick={this.addContact}
-                                    />
-                                )}
-                            </div>
-                        }
-                        data-test-id={`listItem_${contact.username}`}
-                    />
-                </div>
-            </div>
         );
     }
 }

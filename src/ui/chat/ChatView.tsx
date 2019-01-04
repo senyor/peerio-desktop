@@ -131,6 +131,7 @@ export default class ChatView extends React.Component {
                 <div className="message-view">
                     <ChatHeader
                         chat={chat}
+                        generateJitsiUrl={chatStore.generateJitsiUrl}
                         toggleSidebar={this.toggleSidebar}
                         sidebarIsOpen={uiStore.prefs.chatSideBarIsOpen}
                     />

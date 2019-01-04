@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import css from 'classnames';
 
 import { Button, CustomIcon, Dialog, MaterialIcon, ProgressBar, Tooltip } from 'peer-ui';
-import { chatStore, t } from 'peerio-icebear';
+import { t } from 'peerio-icebear';
 import { Chat } from 'peerio-icebear/dist/models';
 
 import ELEMENTS from '~/whitelabel/helpers/elements';
@@ -13,6 +13,7 @@ import ChatNameEditor from './components/ChatNameEditor';
 
 interface ChatHeaderProps {
     chat: Chat;
+    generateJitsiUrl: () => string;
     toggleSidebar: () => void;
     sidebarIsOpen: boolean;
 }
@@ -21,7 +22,7 @@ interface ChatHeaderProps {
 export default class ChatHeader extends React.Component<ChatHeaderProps> {
     @observable chatNameEditorVisible = false;
     showChatNameEditor = () => {
-        if (!(chatStore.activeChat.canIAdmin && chatStore.activeChat.isChannel)) return;
+        if (!(this.props.chat.canIAdmin && this.props.chat.isChannel)) return;
         this.chatNameEditorVisible = true;
     };
     hideChatNameEditor = () => {
@@ -34,8 +35,10 @@ export default class ChatHeader extends React.Component<ChatHeaderProps> {
         this.jitsiDialogVisible = !this.jitsiDialogVisible;
     };
     postJitsiLink = () => {
-        const jitsiLink = chatStore.generateJitsiUrl();
-        chatStore.activeChat && chatStore.activeChat.createVideoCall(jitsiLink);
+        const jitsiLink = this.props.generateJitsiUrl();
+        if (this.props.chat) {
+            this.props.chat.createVideoCall(jitsiLink);
+        }
         this.toggleJitsiDialog();
     };
 
@@ -45,7 +48,7 @@ export default class ChatHeader extends React.Component<ChatHeaderProps> {
     ];
 
     render() {
-        const chat = chatStore.activeChat;
+        const { chat } = this.props;
         if (!chat) return null;
         const participants = chat.participantUsernames;
         let listMembers = participants[0];

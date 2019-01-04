@@ -48,7 +48,7 @@ export default class ChatMainView extends React.Component<ChatMainViewProps> {
     }
     @computed
     get shareInProgress(): boolean {
-        const chat = chatStore.activeChat;
+        const { chat } = this.props;
         if (!chat) return false;
         return (
             (chat.uploadQueue && chat.uploadQueue.length > 0) ||
@@ -61,7 +61,7 @@ export default class ChatMainView extends React.Component<ChatMainViewProps> {
      */
     sendMessage(text: string): void {
         try {
-            chatStore.activeChat.sendMessage(text).catch(() => playErrorSound());
+            this.props.chat.sendMessage(text).catch(() => playErrorSound());
         } catch (err) {
             console.error(err);
         }
@@ -75,9 +75,7 @@ export default class ChatMainView extends React.Component<ChatMainViewProps> {
     sendRichTextMessage(richText: unknown, legacyText: string): void {
         try {
             this.scrollToBottom();
-            chatStore.activeChat
-                .sendRichTextMessage(richText, legacyText)
-                .catch(() => playErrorSound());
+            this.props.chat.sendRichTextMessage(richText, legacyText).catch(() => playErrorSound());
         } catch (err) {
             console.error(err);
         }
@@ -86,7 +84,7 @@ export default class ChatMainView extends React.Component<ChatMainViewProps> {
     sendAck(): void {
         try {
             this.scrollToBottom();
-            chatStore.activeChat.sendAck().catch(() => playErrorSound());
+            this.props.chat.sendAck().catch(() => playErrorSound());
         } catch (err) {
             console.error(err);
         }
@@ -95,9 +93,7 @@ export default class ChatMainView extends React.Component<ChatMainViewProps> {
     shareFilesAndFolders(filesAndFolders) {
         try {
             this.scrollToBottom();
-            chatStore.activeChat
-                .shareFilesAndFolders(filesAndFolders)
-                .catch(() => playErrorSound());
+            this.props.chat.shareFilesAndFolders(filesAndFolders).catch(() => playErrorSound());
         } catch (err) {
             console.error(err);
         }
@@ -105,7 +101,7 @@ export default class ChatMainView extends React.Component<ChatMainViewProps> {
     @observable.ref
     messageListRef = React.createRef<MessageList>();
     jumpToBottom = () => {
-        const chat = chatStore.activeChat;
+        const { chat } = this.props;
         if (chat.canGoDown) {
             chat.reset();
             return;

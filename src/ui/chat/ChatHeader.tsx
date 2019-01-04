@@ -83,7 +83,14 @@ export default class ChatHeader extends React.Component<ChatHeaderProps> {
                                             ELEMENTS.chatEditor.displayName(chat)
                                         )
                                     ) : (
-                                        <div className="title-content">{chat.name}</div>
+                                        <div className="title-content">
+                                            <span className="full-name">{chat.name}</span>
+                                            <span className="username">
+                                                {chat.otherParticipants.length > 0
+                                                    ? chat.otherParticipants[0].username
+                                                    : chat.participantUsernames[0]}
+                                            </span>
+                                        </div>
                                     )}
                                 </div>
                             )}

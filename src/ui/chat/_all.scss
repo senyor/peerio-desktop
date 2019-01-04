@@ -135,6 +135,13 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      .username {
+        margin-left: $margin-small;
+        font-style: italic;
+        font-weight: $font-weight-regular;
+        color: $text-dark-secondary;
+      }
     }
 
     // styling for edit icon in title bar thing.

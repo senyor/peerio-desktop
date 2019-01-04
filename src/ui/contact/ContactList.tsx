@@ -79,6 +79,7 @@ export default class ContactList extends React.Component {
                             placeholder={t('title_findAContact')}
                             value={contactStore.uiViewSearchQuery}
                             onChange={this.handleSearchQueryChange}
+                            testId="input_contactSearch"
                         />
                     </div>
 
@@ -200,6 +201,7 @@ class ContactListItem extends React.Component<ContactListItemProps> {
                                 )}
                             </div>
                         }
+                        data-test-id={`listItem_${contact.username}`}
                     />
                 </div>
             </div>

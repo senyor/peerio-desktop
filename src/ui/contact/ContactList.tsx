@@ -14,11 +14,13 @@ import ContactListItem from './ContactListItem';
 
 @observer
 export default class ContactList extends React.Component {
-    readonly sortOptions = [
-        { value: 'firstName', label: t('title_firstName') },
-        { value: 'lastName', label: t('title_lastName') },
-        { value: 'username', label: t('title_username') }
-    ];
+    get sortOptions() {
+        return [
+            { value: 'firstName', label: t('title_firstName') },
+            { value: 'lastName', label: t('title_lastName') },
+            { value: 'username', label: t('title_username') }
+        ];
+    }
 
     @observable.ref
     shareContext: { contact: Contact; files: string[] } | null = null;

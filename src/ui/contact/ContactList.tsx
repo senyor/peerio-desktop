@@ -7,13 +7,7 @@ import { getAttributeInParentChain } from '~/helpers/dom';
 import routerStore from '~/stores/router-store';
 
 @observer
-class ContactList extends React.Component {
-    sortOptions = [
-        { value: 'firstName', label: t('title_firstName') },
-        { value: 'lastName', label: t('title_lastName') },
-        { value: 'username', label: t('title_username') }
-    ];
-
+export default class ContactList extends React.Component {
     componentWillMount() {
         if (contactStore.uiView.length) return;
         this.goToAddContact();
@@ -24,19 +18,19 @@ class ContactList extends React.Component {
         contactStore.uiViewSearchQuery = '';
     };
 
-    startChat(ev) {
-        const username = getAttributeInParentChain(ev.target, 'data-id');
+    startChat(ev: React.MouseEvent<HTMLButtonElement>) {
+        const username = getAttributeInParentChain(ev.target as HTMLElement, 'data-id');
         chatStore.startChat([contactStore.getContact(username)]);
         window.router.push('/app/chats');
     }
 
-    removeContact(ev) {
-        const username = getAttributeInParentChain(ev.target, 'data-id');
+    removeContact(ev: React.MouseEvent<HTMLButtonElement>) {
+        const username = getAttributeInParentChain(ev.target as HTMLElement, 'data-id');
         contactStore.removeContact(username);
     }
 
-    addContact(ev) {
-        const username = getAttributeInParentChain(ev.target, 'data-id');
+    addContact(ev: React.MouseEvent<HTMLButtonElement>) {
+        const username = getAttributeInParentChain(ev.target as HTMLElement, 'data-id');
         contactStore.addContact(username);
     }
 
@@ -64,11 +58,11 @@ class ContactList extends React.Component {
         );
     }
 
-    handleSortChange(val) {
+    handleSortChange(val: string) {
         contactStore.uiViewSortBy = val;
     }
 
-    handleSearchQueryChange(val) {
+    handleSearchQueryChange(val: string) {
         contactStore.uiViewSearchQuery = val;
     }
 
@@ -95,7 +89,11 @@ class ContactList extends React.Component {
                 <div className="list-sort">
                     <Dropdown
                         label={t('title_sort')}
-                        options={this.sortOptions}
+                        options={[
+                            { value: 'firstName', label: t('title_firstName') },
+                            { value: 'lastName', label: t('title_lastName') },
+                            { value: 'username', label: t('title_username') }
+                        ]}
                         onChange={this.handleSortChange}
                         value={contactStore.uiViewSortBy}
                     />
@@ -135,5 +133,3 @@ class ContactList extends React.Component {
         );
     }
 }
-
-export default ContactList;

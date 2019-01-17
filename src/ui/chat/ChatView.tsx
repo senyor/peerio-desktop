@@ -2,7 +2,7 @@ import React from 'react';
 import { action, observable, reaction, when, IReactionDisposer } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { chatStore, chatInviteStore, t } from 'peerio-icebear';
+import { chatStore, chatInviteStore, t, fileStore } from 'peerio-icebear';
 import { Contact } from 'peerio-icebear/dist/models';
 
 import config from '~/config';
@@ -41,9 +41,21 @@ export default class ChatView extends React.Component {
                 }
             ),
             when(
-                () => chatStore.activeChat && chatStore.activeChat.recentFiles.length > 0,
+                () =>
+                    chatStore.activeChat &&
+                    chatStore.activeChat.recentFiles.length === 1 &&
+                    fileStore.files.length === 1,
                 () => {
                     beaconStore.addBeacons('infoPanel_desktop');
+                }
+            ),
+
+            // Mark 'pin_desktop' beacon read if user ever pins a chat.
+            // Beacon will not show if user unpins all chats and goes back to 0 fav.
+            when(
+                () => chatStore.activeChat && chatStore.myChats.favorites.length > 0,
+                () => {
+                    beaconStore.markAsRead('pin_desktop');
                 }
             )
         ];
@@ -58,7 +70,10 @@ export default class ChatView extends React.Component {
             beaconStore.addBeacons('startChat');
         }
 
-        if (chatStore.directMessages.length > config.beacons.dmCountPinPrompt) {
+        if (
+            chatStore.myChats.favorites.length === 0 &&
+            chatStore.directMessages.length > config.beacons.dmCountPinPrompt
+        ) {
             beaconStore.addBeacons('pin_desktop');
         }
     }

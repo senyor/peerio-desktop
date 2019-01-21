@@ -14,14 +14,6 @@ import ContactListItem from './ContactListItem';
 
 @observer
 export default class ContactList extends React.Component {
-    get sortOptions() {
-        return [
-            { value: 'firstName', label: t('title_firstName') },
-            { value: 'lastName', label: t('title_lastName') },
-            { value: 'username', label: t('title_username') }
-        ];
-    }
-
     @observable.ref
     shareContext: { contact: Contact; files: string[] } | null = null;
 
@@ -92,7 +84,11 @@ export default class ContactList extends React.Component {
                     <div className="list-sort">
                         <Dropdown
                             label={t('title_sort')}
-                            options={this.sortOptions}
+                            options={[
+                                { value: 'firstName', label: t('title_firstName') },
+                                { value: 'lastName', label: t('title_lastName') },
+                                { value: 'username', label: t('title_username') }
+                            ]}
                             onChange={this.handleSortChange}
                             value={contactStore.uiViewSortBy}
                         />

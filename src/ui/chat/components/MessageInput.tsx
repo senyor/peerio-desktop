@@ -43,13 +43,12 @@ export default class MessageInput extends React.Component<MessageInputProps> {
         if (!chat) return;
         const files = await pickLocalFiles();
         if (!files || !files.length) return;
-        this.uploadDialogActive = true;
         const paths = await getFileList(files);
         if (!paths || !paths.success || !paths.success.length) {
-            this.uploadDialogActive = false;
             return;
         }
         this.selectedFiles = paths.success;
+        this.uploadDialogActive = true;
     }
 
     @action.bound

@@ -7,14 +7,22 @@ import T from '~/ui/shared-components/T';
 import { Input, ProgressBar } from 'peer-ui';
 
 @observer
-class NewChannel extends React.Component {
+export default class NewChannel extends React.Component {
+    /**
+     * UI "waiting" state after starting a new chat.
+     * Shows a loading spinner if true.
+     */
     @observable waiting = false;
+
+    /** The name that the Room will be given. */
     @observable channelName = '';
+
+    /** "Purpose" field of the new Room. */
     @observable purpose = '';
 
-    componentDidMount() {
-        if (this.isLimitReached) this.upgradeDialog.show();
-    }
+    // componentDidMount() {
+    //     if (this.isLimitReached) this.upgradeDialog.show();
+    // }
 
     get isLimitReached() {
         return User.current.channelsLeft === 0;
@@ -23,7 +31,7 @@ class NewChannel extends React.Component {
     handleAccept = async () => {
         this.waiting = true;
         const chat = await chatStore.startChat(
-            this.userPicker.selected,
+            this.userPickerRef.current.selected,
             true,
             this.channelName,
             this.purpose
@@ -44,25 +52,23 @@ class NewChannel extends React.Component {
         window.router.push('/app/chats/new-chat');
     }
 
-    handleNameChange = val => {
+    handleNameChange = (val: string) => {
         this.channelName = val;
     };
 
-    handlePurposeChange = val => {
+    handlePurposeChange = (val: string) => {
         this.purpose = val;
     };
 
-    setUserPickerRef = ref => {
-        this.userPicker = ref;
-    };
+    userPickerRef = React.createRef<UserPicker>();
 
-    setUpgradeDialogRef = ref => {
-        this.upgradeDialog = ref;
-    };
+    // setUpgradeDialogRef = ref => {
+    //     this.upgradeDialog = ref;
+    // };
 
     render() {
         const textParser = {
-            toCreateDM: text => (
+            toCreateDM: (text: string) => (
                 <a className="clickable" onClick={this.gotoNewChat}>
                     {text}
                 </a>
@@ -116,7 +122,7 @@ class NewChannel extends React.Component {
                     </div>
                     <div className="user-picker-container">
                         <UserPicker
-                            ref={this.setUserPickerRef}
+                            ref={this.userPickerRef}
                             title={t('title_chatWith')}
                             noHeader
                             onlyPick
@@ -131,5 +137,3 @@ class NewChannel extends React.Component {
         );
     }
 }
-
-export default NewChannel;

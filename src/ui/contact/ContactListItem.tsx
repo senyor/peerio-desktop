@@ -4,7 +4,7 @@ import { DropTarget } from 'react-dnd';
 import css from 'classnames';
 
 import { Avatar, Button, ListItem } from 'peer-ui';
-import { t } from 'peerio-icebear';
+import { contactStore, t } from 'peerio-icebear';
 import { Contact } from 'peerio-icebear/dist/models';
 
 import DragDropTypes from '../files/helpers/dragDropTypes';
@@ -13,8 +13,6 @@ interface ContactListItemProps {
     contact: Contact;
     setShareContext: (contact: Contact, files: string[]) => void;
     onStartChat: (contacts: Contact) => void;
-    onAddContact: (username: string) => void;
-    onRemoveContact: (username: string) => void;
     connectDropTarget?: (el: JSX.Element) => JSX.Element;
     isBeingDraggedOver?: boolean;
 }
@@ -39,11 +37,11 @@ export default class ContactListItem extends React.Component<ContactListItemProp
     };
 
     addContact = () => {
-        this.props.onAddContact(this.props.contact.username);
+        contactStore.addContact(this.props.contact.username);
     };
 
     removeContact = () => {
-        this.props.onRemoveContact(this.props.contact.username);
+        contactStore.removeContact(this.props.contact.username);
     };
 
     render() {

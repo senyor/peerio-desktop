@@ -107,8 +107,6 @@ export default class ContactList extends React.Component {
                                                 contact={c}
                                                 key={c.username}
                                                 onStartChat={this.startChat}
-                                                onAddContact={contactStore.addContact}
-                                                onRemoveContact={contactStore.removeContact}
                                                 setShareContext={this.setShareContext}
                                             />
                                         ))}

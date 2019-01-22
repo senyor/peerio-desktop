@@ -12,6 +12,7 @@ import ValidatedInput from '~/ui/shared-components/ValidatedInput';
 import FullCoverLoader from '~/ui/shared-components/FullCoverLoader';
 import * as Mock from '~/ui/shared-components/MockUI';
 import T from '~/ui/shared-components/T';
+import ClosingSimpleBanner from '~/ui/shared-components/closing/ClosingSimpleBanner';
 import OrderedFormStore from '~/stores/ordered-form-store';
 import routerStore from '~/stores/router-store';
 import updaterStore from '~/stores/updater-store';
@@ -246,112 +247,115 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div className="login">
-                <FullCoverLoader show={this.loginStore.busy} />
-                <div className="mock-ui-container">
-                    <div className="mock-app-ui">
-                        <div className="row top">
-                            <Mock.Line shade="verydark" width={1} className="tall" />
-                            <Mock.Line shade="verydark" width={1} className="tall" />
-                        </div>
+            <div className="content-with-banner">
+                <ClosingSimpleBanner />
+                <div className="login">
+                    <FullCoverLoader show={this.loginStore.busy} />
+                    <div className="mock-ui-container">
+                        <div className="mock-app-ui">
+                            <div className="row top">
+                                <Mock.Line shade="verydark" width={1} className="tall" />
+                                <Mock.Line shade="verydark" width={1} className="tall" />
+                            </div>
 
-                        <div className="row profile">
-                            <Mock.Avatar />
-                            <div className="profile-text">
-                                <div className="lines-container">
-                                    <Mock.Line shade="medium" width={3} className="tall" />
-                                    <Mock.Line shade="light" width={2} />
-                                    <Mock.Line shade="light" width={3} />
-                                </div>
+                            <div className="row profile">
+                                <Mock.Avatar />
+                                <div className="profile-text">
+                                    <div className="lines-container">
+                                        <Mock.Line shade="medium" width={3} className="tall" />
+                                        <Mock.Line shade="light" width={2} />
+                                        <Mock.Line shade="light" width={3} />
+                                    </div>
 
-                                <div className="lines-container">
-                                    <Mock.Line shade="medium" width={3} className="tall" />
-                                    <Mock.Line shade="light" width={6} />
-                                    <Mock.Line shade="light" width={3} />
+                                    <div className="lines-container">
+                                        <Mock.Line shade="medium" width={3} className="tall" />
+                                        <Mock.Line shade="light" width={6} />
+                                        <Mock.Line shade="light" width={3} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="row icons">
-                            <MaterialIcon icon="star" className="gold" />
-                            <MaterialIcon icon="question_answer" />
+                            <div className="row icons">
+                                <MaterialIcon icon="star" className="gold" />
+                                <MaterialIcon icon="question_answer" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="real-ui-container">
-                    <div className="real-ui-content-container">
-                        <img
-                            alt="Peerio logo"
-                            className="logo"
-                            src="static/img/logo-withtext.svg"
-                        />
-                        {this.loginStore.lastAuthenticatedUser ? (
-                            this.getWelcomeBlock()
-                        ) : (
-                            <h2 className="heading">{t('title_welcomeBackPeriod')}</h2>
-                        )}
-                        <PoweredByLogin />
-                        <ValidatedInput
-                            label={t('title_username')}
-                            name="username"
-                            position="0"
-                            lowercase="true"
-                            store={this.loginStore}
-                            validator={validators.usernameLogin}
-                            onKeyPress={this.usernameHandleKeyPress}
-                            className={css({
-                                banish: this.loginStore.lastAuthenticatedUser
-                            })}
-                            theme="dark"
-                            telemetry={{
-                                item: 'USERNAME',
-                                location: 'SIGN_IN',
-                                sublocation: 'SIGN_IN'
-                            }}
-                        />
-                        <div className="password">
+                    <div className="real-ui-container">
+                        <div className="real-ui-content-container">
+                            <img
+                                alt="Peerio logo"
+                                className="logo"
+                                src="static/img/logo-withtext.svg"
+                            />
+                            {this.loginStore.lastAuthenticatedUser ? (
+                                this.getWelcomeBlock()
+                            ) : (
+                                <h2 className="heading">{t('title_welcomeBackPeriod')}</h2>
+                            )}
+                            <PoweredByLogin />
                             <ValidatedInput
-                                type={this.loginStore.passwordVisible ? 'text' : 'password'}
-                                label={t('title_AccountKey')}
-                                position="1"
+                                label={t('title_username')}
+                                name="username"
+                                position="0"
+                                lowercase="true"
                                 store={this.loginStore}
-                                validator={validators.stringExists}
-                                name="passcodeOrPassphrase"
-                                onKeyPress={this.handleKeyPress}
-                                ref={this.onAKRef}
+                                validator={validators.usernameLogin}
+                                onKeyPress={this.usernameHandleKeyPress}
+                                className={css({
+                                    banish: this.loginStore.lastAuthenticatedUser
+                                })}
                                 theme="dark"
                                 telemetry={{
-                                    item: 'ACCOUNT_KEY',
+                                    item: 'USERNAME',
                                     location: 'SIGN_IN',
-                                    sublocation: this.loginStore.lastAuthenticatedUser
-                                        ? 'WELCOME_BACK'
-                                        : 'SIGN_IN'
+                                    sublocation: 'SIGN_IN'
                                 }}
                             />
-                            <Button
-                                icon="visibility"
-                                active={this.loginStore.passwordVisible}
-                                tooltip={
-                                    this.loginStore.passwordVisible
-                                        ? t('title_hideAccountKey')
-                                        : t('title_showAccountKey')
-                                }
-                                tooltipPosition="top"
-                                onClick={this.togglePasswordVisibility}
-                            />
-                        </div>
-                        <WhereToFindAk />
-                        <div className="login-button-container">
-                            <Button
-                                label={t('button_login')}
-                                onClick={this.onLoginClick}
-                                disabled={this.loginStore.hasErrors}
-                                theme="affirmative"
-                                testId="button_signIn"
-                            />
-                        </div>
+                            <div className="password">
+                                <ValidatedInput
+                                    type={this.loginStore.passwordVisible ? 'text' : 'password'}
+                                    label={t('title_AccountKey')}
+                                    position="1"
+                                    store={this.loginStore}
+                                    validator={validators.stringExists}
+                                    name="passcodeOrPassphrase"
+                                    onKeyPress={this.handleKeyPress}
+                                    ref={this.onAKRef}
+                                    theme="dark"
+                                    telemetry={{
+                                        item: 'ACCOUNT_KEY',
+                                        location: 'SIGN_IN',
+                                        sublocation: this.loginStore.lastAuthenticatedUser
+                                            ? 'WELCOME_BACK'
+                                            : 'SIGN_IN'
+                                    }}
+                                />
+                                <Button
+                                    icon="visibility"
+                                    active={this.loginStore.passwordVisible}
+                                    tooltip={
+                                        this.loginStore.passwordVisible
+                                            ? t('title_hideAccountKey')
+                                            : t('title_showAccountKey')
+                                    }
+                                    tooltipPosition="top"
+                                    onClick={this.togglePasswordVisibility}
+                                />
+                            </div>
+                            <WhereToFindAk />
+                            <div className="login-button-container">
+                                <Button
+                                    label={t('button_login')}
+                                    onClick={this.onLoginClick}
+                                    disabled={this.loginStore.hasErrors}
+                                    theme="affirmative"
+                                    testId="button_signIn"
+                                />
+                            </div>
 
-                        <SignupLink />
+                            <SignupLink />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -57,6 +57,8 @@ Given('I have signed up', async function() {
     await this.signup.acceptButton.click();
     await this.signup.shareButton.click();
 
+    await this.login.closingOverlayButton.click();
+
     await this.signup.element(this.username);
 });
 

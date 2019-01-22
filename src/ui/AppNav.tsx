@@ -19,11 +19,9 @@ import { relaunch as relaunchApp } from '~/helpers/app-control';
 import { disable as disableAutologin } from '~/helpers/autologin';
 import routerStore from '~/stores/router-store';
 
-import config from '~/config';
 import updaterStore from '~/stores/updater-store';
 import AppNavBeaconedItem from './AppNavBeaconedItem';
 
-const urls = config.translator.urlMap;
 const { ROUTES } = routerStore;
 const { app, nativeImage } = remote;
 
@@ -103,8 +101,6 @@ export default class AppNav extends React.Component {
 
     @computed
     get menuItems() {
-        const hideUpgrade = config.disablePayments || User.current.hasActivePlans;
-
         interface MenuItem {
             value?: string;
             icon?: string;
@@ -155,14 +151,12 @@ export default class AppNav extends React.Component {
                 caption: 'title_help'
             },
             {
-                hidden: hideUpgrade,
                 divider: true
             },
             {
-                hidden: hideUpgrade,
-                value: 'Upgrade',
+                value: 'Closure',
                 icon: 'open_in_browser',
-                caption: 'button_upgrade'
+                caption: 'title_peerioClosure'
             },
             {
                 divider: true
@@ -225,8 +219,10 @@ export default class AppNav extends React.Component {
         this.isConfirmSignOutVisible = false;
     };
 
-    toUpgrade() {
-        return window.open(urls.upgrade);
+    toClosure() {
+        return window.open(
+            'https://support.peerio.com/hc/en-us/articles/360021688172-Peerio-Service-Closure-FAQs'
+        );
     }
 
     render() {

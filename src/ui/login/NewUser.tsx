@@ -5,6 +5,8 @@ import uiStore from '~/stores/ui-store';
 import { Button } from 'peer-ui';
 import { t } from 'peerio-icebear';
 import T from '~/ui/shared-components/T';
+import BackgroundIllustration from '~/ui/shared-components/BackgroundIllustration';
+import ClosingSimpleBanner from '~/ui/shared-components/closing/ClosingSimpleBanner';
 import * as telemetry from '~/telemetry';
 import config from '~/config';
 import NewAccountButton from '~/whitelabel/components/NewAccountButton';
@@ -42,9 +44,7 @@ export default class NewUser extends React.Component<NewUserProps> {
     render() {
         return (
             <div className="new-user-page">
-                <div className="top-bar">
-                    <img src="static/img/logo-withtext-white.svg" />
-                </div>
+                <ClosingSimpleBanner />
                 <div className="content-parent">
                     <div className="content">
                         <T k="title_newUserWelcome" tag="h2" className="heading" />
@@ -62,6 +62,12 @@ export default class NewUser extends React.Component<NewUserProps> {
                         </div>
                     </div>
                 </div>
+                <BackgroundIllustration
+                    src="./static/img/illustrations/closing-large.svg"
+                    height={264}
+                    width={1080}
+                    distance={60}
+                />
             </div>
         );
     }

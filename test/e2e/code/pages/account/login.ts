@@ -22,4 +22,8 @@ export default class Login extends Page {
     get loginButton() {
         return this.element('button_login');
     }
+
+    get closingOverlayButton() {
+        return this.element('button_closingOverlayButton');
+    }
 }

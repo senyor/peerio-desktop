@@ -7,9 +7,6 @@ import { User, t } from 'peerio-icebear';
 
 import { signout } from '~/helpers/app-control';
 import T from '~/ui/shared-components/T';
-import config from '~/config';
-
-const urls = config.translator.urlMap;
 
 @observer
 export default class Account extends React.Component {
@@ -43,10 +40,6 @@ export default class Account extends React.Component {
         signout();
     };
 
-    toUpgrade() {
-        return window.open(urls.upgrade);
-    }
-
     render() {
         const dialogActions = [
             { label: t('button_cancel'), onClick: this.hideConfirmDelete },
@@ -54,12 +47,6 @@ export default class Account extends React.Component {
         ];
         return (
             <div className="settings-container-account">
-                {config.disablePayments || User.current.hasActivePlans ? null : (
-                    <section className="upgrade-message-container">
-                        <div className="message">{t('title_upgradeMessage')}</div>
-                        <Button label={t('button_upgrade')} onClick={this.toUpgrade} />
-                    </section>
-                )}
                 <section className="section-divider">
                     <div className="title">{t('title_promoConsentRequestTitle')}</div>
                     <Switch

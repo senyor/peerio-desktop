@@ -24,7 +24,7 @@ import ShareConfirmDialog from './components/ShareConfirmDialog';
 import DragDropTypes from './helpers/dragDropTypes';
 import { uploadDroppedFiles } from './helpers/dragDropHelpers';
 import LocalFileManager from './helpers/LocalFileManager';
-import PendingFilesBanner from './components/PendingFilesBanner';
+import Banner from '~/ui/shared-components/Banner';
 
 import { FileBeaconContext } from './helpers/fileBeaconContext';
 
@@ -58,15 +58,6 @@ export default class Files extends React.Component<FilesProps> {
 
     disposers!: IReactionDisposer[];
     container: HTMLElement | null = null;
-
-    @computed
-    get showPendingFilesBanner() {
-        return (
-            uiStore.pendingFilesBannerVisible &&
-            fileStore.loaded &&
-            fileStore.folderStore.root.hasLegacyFiles
-        );
-    }
 
     componentWillMount() {
         clientApp.isInFilesView = true;
@@ -297,6 +288,11 @@ export default class Files extends React.Component<FilesProps> {
         fileStore.bulk.deleteFolderConfirmator = ref && ref.show;
     };
 
+    @action
+    hideClosingBanner() {
+        uiStore.closingBannersVisible.files = false;
+    }
+
     render() {
         const currentFolder = fileStore.folderStore.currentFolder;
         const selectedCount = fileStore.selectedFilesOrFolders.length;
@@ -306,12 +302,22 @@ export default class Files extends React.Component<FilesProps> {
         this.enqueueCheck();
         return (
             <div className="files">
-                {this.showPendingFilesBanner ? <PendingFilesBanner /> : null}
+                {uiStore.closingBannersVisible.files ? (
+                    <Banner
+                        headerText="Backup your files"
+                        mainText="Peerio will be closing on July 2019. We recommend you begin transitioning your files and important information out of Peerio."
+                        onDismiss={this.hideClosingBanner}
+                        actionButton={{
+                            label: 'Learn How',
+                            url: 'https://support.peerio.com/hc/en-us/articles/360021688052'
+                        }}
+                    />
+                ) : null}
                 <FilesHeader onUpload={this.onUploadClick} />
                 <div className="file-wrapper">
                     <div
                         className={css('file-table-wrapper', {
-                            'with-banner': this.showPendingFilesBanner
+                            'with-banner': uiStore.closingBannersVisible.files
                         })}
                     >
                         <div className="file-table-header row-container">

@@ -15,6 +15,7 @@ When('I log in', async function() {
     await this.login.username.setValue(this.users.current.username);
     await this.login.accountKey.setValue(this.users.current.passphrase);
     await this.login.signInButton.click();
+    await this.login.closingOverlayButton.click();
 });
 
 When('I start a DM with a user', async function() {

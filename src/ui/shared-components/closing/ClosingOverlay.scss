@@ -1,0 +1,46 @@
+.closing-overlay {
+  display: flex;
+  position: fixed;
+  z-index: 100;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  background-color: $background-root;
+
+  .left,
+  .right {
+    height: 100%;
+    width: 50%;
+  }
+
+  .left {
+    @include onboarding-content-sizing();
+
+    p {
+      font-size: 16px;
+    }
+
+    .button-container {
+      display: flex;
+      width: 100%;
+      margin-top: $margin-default;
+
+      .p-button {
+        margin-left: auto;
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba($darkblue, 0.15);
+
+    .background-illustration {
+      height: 128px;
+      margin-top: auto;
+      background-color: rgba($darkblue, 0.05);
+    }
+  }
+}

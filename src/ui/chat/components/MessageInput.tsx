@@ -43,13 +43,12 @@ export default class MessageInput extends React.Component<MessageInputProps> {
         if (!chat) return;
         const files = await pickLocalFiles();
         if (!files || !files.length) return;
-        this.uploadDialogActive = true;
         const paths = await getFileList(files);
         if (!paths || !paths.success || !paths.success.length) {
-            this.uploadDialogActive = false;
             return;
         }
         this.selectedFiles = paths.success;
+        this.uploadDialogActive = true;
     }
 
     @action.bound
@@ -179,71 +178,74 @@ export default class MessageInput extends React.Component<MessageInputProps> {
     }
 
     render() {
-        if (this.uploadDialogActive) {
-            return (
-                <UploadDialog deactivate={this.deactivateUploadDialog} files={this.selectedFiles} />
-            );
-        }
         const chat = chatStore.activeChat;
         return (
-            <div className="message-input-wrapper">
-                <Snackbar
-                    className={css('snackbar-chat', {
-                        'share-in-progress': this.props.shareInProgress
-                    })}
-                    ref={this.setSnackbarRef}
-                />
-                <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
-                    <MenuBeaconed
-                        menuProps={{
-                            position: 'bottom-left',
-                            icon: 'add_circle_outline',
-                            tooltip: t('title_shareToChat')
-                        }}
-                        beaconProps={{
-                            type: 'spot',
-                            name: 'shareFileInChat',
-                            position: 'left',
-                            title: t('title_shareInChat_beacon'),
-                            description: t('description_shareInChat_beacon_desktop'),
-                            markReadOnUnmount: true
-                        }}
-                    >
-                        <MenuItem
-                            value="share"
-                            caption={t('title_shareFromFiles')}
-                            onClick={this.showFilePicker}
-                        />
-                        <MenuItem
-                            value="upload"
-                            caption={t('title_uploadAndShare')}
-                            onClick={this.activateUploadDialog}
-                        />
-                    </MenuBeaconed>
-
-                    {this.props.readonly ? (
-                        <div className="message-editor-empty">&nbsp;</div>
-                    ) : (
-                        <MessageInputProseMirror
-                            placeholder={this.props.placeholder}
-                            onSend={this.props.onSend}
-                        />
-                    )}
-                    <Button
-                        disabled={!chat || !chat.canSendAck}
-                        icon="thumb_up"
-                        onClick={this.props.onAck}
-                        className="thumbs-up"
-                        tooltip={t('button_thumbsUp')}
-                        tooltipSize="small"
-                        theme="no-hover"
+            <>
+                {this.uploadDialogActive ? (
+                    <UploadDialog
+                        deactivate={this.deactivateUploadDialog}
+                        files={this.selectedFiles}
                     />
+                ) : null}
+                <div className="message-input-wrapper">
+                    <Snackbar
+                        className={css('snackbar-chat', {
+                            'share-in-progress': this.props.shareInProgress
+                        })}
+                        ref={this.setSnackbarRef}
+                    />
+                    <div className="message-input" onDrop={this.preventDrop} onPaste={this.onPaste}>
+                        <MenuBeaconed
+                            menuProps={{
+                                position: 'bottom-left',
+                                icon: 'add_circle_outline',
+                                tooltip: t('title_shareToChat')
+                            }}
+                            beaconProps={{
+                                type: 'spot',
+                                name: 'shareFileInChat',
+                                position: 'left',
+                                title: t('title_shareInChat_beacon'),
+                                description: t('description_shareInChat_beacon_desktop'),
+                                markReadOnUnmount: true
+                            }}
+                        >
+                            <MenuItem
+                                value="share"
+                                caption={t('title_shareFromFiles')}
+                                onClick={this.showFilePicker}
+                            />
+                            <MenuItem
+                                value="upload"
+                                caption={t('title_uploadAndShare')}
+                                onClick={this.activateUploadDialog}
+                            />
+                        </MenuBeaconed>
 
-                    {this.renderFilePicker()}
-                    {this.renderJumpToBottom()}
+                        {this.props.readonly ? (
+                            <div className="message-editor-empty">&nbsp;</div>
+                        ) : (
+                            <MessageInputProseMirror
+                                placeholder={this.props.placeholder}
+                                onSend={this.props.onSend}
+                            />
+                        )}
+                        <Button
+                            disabled={!chat || !chat.canSendAck}
+                            icon="thumb_up"
+                            onClick={this.props.onAck}
+                            className="thumbs-up"
+                            tooltip={t('button_thumbsUp')}
+                            tooltipSize="small"
+                            theme="no-hover"
+                        />
+
+                        {this.renderFilePicker()}
+                        {this.renderJumpToBottom()}
+                    </div>
+                    {this.props.readonly ? <div className="backdrop" /> : null}
                 </div>
-                {this.props.readonly ? <div className="backdrop" /> : null}
-            </div>
+            </>
         );
     }
 }

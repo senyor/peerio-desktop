@@ -7,11 +7,14 @@ import { chatStore, fileHelpers, contactStore, t } from 'peerio-icebear';
 import { Contact, Chat } from 'peerio-icebear/dist/models';
 import { Button, Dialog, Input, ProgressBar } from 'peer-ui';
 
+import routerStore from '~/stores/router-store';
+
 import T from '~/ui/shared-components/T';
 import FileSpriteIcon from '~/ui/shared-components/FileSpriteIcon';
 import ShareWithDialog from '~/ui/shared-components/ShareWithDialog';
 
 interface UploadDialogProps {
+    initialTargetContact?: Contact;
     files: string[];
     deactivate: () => void;
 }
@@ -19,7 +22,19 @@ interface UploadDialogProps {
 @observer
 export default class UploadDialog extends React.Component<UploadDialogProps> {
     componentWillMount() {
-        this.targetChat = chatStore.activeChat;
+        // not mirrored in componentWillReceiveProps which is kind of un-react-y;
+        // refactoring this to lift out targetChat/targetContact could be a TODO
+        if (this.props.initialTargetContact) {
+            this.targetContact = this.props.initialTargetContact;
+        } else {
+            this.targetChat = chatStore.activeChat;
+        }
+
+        if (this.props.files || this.props.files.length > 0) {
+            setTimeout(() => {
+                this.previewNextFile();
+            });
+        }
     }
 
     componentWillReceiveProps(nextProps: UploadDialogProps) {
@@ -152,7 +167,11 @@ export default class UploadDialog extends React.Component<UploadDialogProps> {
         } catch (err) {
             console.error(err);
         }
+
         this.previewNextFile();
+        if (this.props.files.length <= this.currentFileIndex) {
+            routerStore.navigateTo(routerStore.ROUTES.chats);
+        }
     }
 
     // Check if user manually added filename extension back, remove it if so
@@ -242,7 +261,7 @@ export default class UploadDialog extends React.Component<UploadDialogProps> {
             );
         }
 
-        const haveFiles = this.props.files && this.props.files.length;
+        const haveFiles = this.props.files && this.props.files.length > 0;
 
         return (
             <Dialog

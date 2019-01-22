@@ -21,7 +21,6 @@ import isDevEnv from '~/helpers/is-dev-env';
 import * as appControl from '~/helpers/app-control';
 import { sendWindowHiddenNotification } from '~/helpers/notifications';
 
-import DropTarget from './shared-components/DropTarget';
 import UpdateFailedDialog from './updater/UpdateFailedDialog';
 import InstallingUpdateDialog from './updater/InstallingUpdateDialog';
 import ReadyToInstallUpdateDialog from './updater/ReadyToInstallUpdateDialog';
@@ -130,7 +129,6 @@ export default class Root extends React.Component {
                 <ReadyToInstallUpdateDialog />
                 <InstallingUpdateDialog />
                 <DragPreviewLayer />
-                <DropTarget />
             </A11yWrapper>
         );
     }

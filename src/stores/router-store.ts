@@ -8,16 +8,16 @@ class RouterStore {
         window.router.listen(this.handleRouteChange);
     }
 
-    handleRouteChange = route => {
+    handleRouteChange = (route: { pathname: string }) => {
         this.currentRoute = route.pathname;
     };
 
-    navigateTo(path) {
+    navigateTo(path: string) {
         if (this.currentRoute === path) return;
         window.router.push(path);
     }
 
-    navigateToAsync(path) {
+    navigateToAsync(path: string) {
         setTimeout(() => {
             if (this.currentRoute === path) return;
             window.router.push(path);

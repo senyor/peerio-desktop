@@ -17,10 +17,10 @@ export default class PendingDM extends React.Component {
         return chatStore.activeChat as ChatPendingDM;
     }
 
-    onDismiss() {
+    onDismiss = () => {
         routerStore.navigateTo(routerStore.ROUTES.pendingDMDismissed);
         this.activeChat.dismiss();
-    }
+    };
 
     onMessage = () => {
         this.activeChat.start();

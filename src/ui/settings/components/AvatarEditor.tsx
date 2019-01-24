@@ -2,7 +2,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { remote as electron } from 'electron';
-import Croppie from 'croppie';
+import { Croppie } from 'croppie';
 
 import { t } from 'peerio-icebear';
 import { Button } from 'peer-ui';
@@ -44,14 +44,14 @@ export default class AvatarEditor extends React.Component<AvatarEditorProps> {
         AvatarEditor.state.showEditor = false;
     };
 
-    static closeAndReturnBuffers = blobs => {
+    static closeAndReturnBuffers = (blobs): Promise<ArrayBuffer[]> => {
         AvatarEditor.close();
         return new Promise(resolve => {
-            const buffers = [];
+            const buffers: ArrayBuffer[] = [];
             let c = 0;
             const reader = new FileReader();
             reader.onload = function() {
-                buffers.push(reader.result);
+                buffers.push(reader.result as ArrayBuffer);
                 if (c === 1) {
                     resolve(buffers);
                     return;

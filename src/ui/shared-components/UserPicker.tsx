@@ -31,7 +31,7 @@ import UserSearchError from '~/whitelabel/components/UserSearchError';
 
 interface UserPickerProps {
     title: string;
-    description?: string;
+    description?: string | JSX.Element | JSX.Element[];
     limit?: number;
     /**
      * If this is a room creation user picker, which is based on some global
@@ -41,10 +41,10 @@ interface UserPickerProps {
      * the render method below.
      */
     onAccept: (contacts: Contact[]) => void;
-    onClose: () => void;
+    onClose?: () => void;
     onChange?: (contacts: Contact[]) => void;
     isDM?: boolean;
-    context: 'newchat';
+    context?: 'newchat' | 'newpatientspace' | 'patientroom';
     sharing?: boolean;
     onlyPick?: boolean;
     closeable?: boolean;
@@ -358,60 +358,74 @@ export default class UserPicker extends React.Component<UserPickerProps> {
                             <div className="message-search-wrapper">
                                 <div className="message-search-inner">
                                     {this.props.isDM && <T k="title_to" className="title-to" />}
-                                    <div className="new-chat-search">
-                                        <div className="chip-wrapper">
-                                            {this.props.isDM
-                                                ? null
-                                                : this.selected.map(c => (
-                                                      <Chip
-                                                          key={c.username}
-                                                          className={css({
-                                                              'not-found': c.notFound || c.isHidden
-                                                          })}
-                                                          onDeleteClick={() =>
-                                                              this.selected.remove(c)
-                                                          }
-                                                          deletable
-                                                      >
-                                                          {c.loading ? <ProgressBar /> : c.username}
-                                                      </Chip>
-                                                  ))}
-                                            <SearchInput
-                                                placeholder={
-                                                    this.selected.length
-                                                        ? null
-                                                        : routerStore.isNewChannel ||
-                                                          routerStore.isPatientSpace
-                                                        ? t('title_Members')
-                                                        : routerStore.isNewPatient
-                                                        ? t('mcr_title_newPatientRecord')
-                                                        : t('title_userSearch')
-                                                }
-                                                value={this.query}
-                                                onChange={this.handleTextChange}
-                                                onKeyDown={this.handleKeyDown}
-                                                autoFocus={!this.props.noAutoFocus}
-                                                noHelperText
-                                            />
-                                        </div>
-                                        {this.props.limit !== 1 &&
-                                            this.props.onAccept &&
-                                            !this.isRoomCreation && (
-                                                <Button
-                                                    label={this.props.button || t('button_go')}
-                                                    onClick={this.accept}
-                                                    disabled={
-                                                        !this.isValid ||
-                                                        (this.queryIsEmpty &&
-                                                            this.selected.length === 0)
+                                    <form className="new-chat-search">
+                                        {/* HACK: wrapping entire div in `label` means that clicking
+                                            anywhere in here will focus the input. */}
+                                        <label htmlFor="user-search-input">
+                                            <div className="chip-wrapper">
+                                                {this.props.isDM
+                                                    ? null
+                                                    : this.selected.map(c => (
+                                                          <Chip
+                                                              key={c.username}
+                                                              className={css({
+                                                                  'not-found':
+                                                                      c.notFound || c.isHidden
+                                                              })}
+                                                              onDeleteClick={() =>
+                                                                  this.selected.remove(c)
+                                                              }
+                                                              deletable
+                                                          >
+                                                              {c.loading ? (
+                                                                  <ProgressBar />
+                                                              ) : (
+                                                                  c.username
+                                                              )}
+                                                          </Chip>
+                                                      ))}
+                                                <SearchInput
+                                                    inputId="user-search-input"
+                                                    testId="input_userSearch"
+                                                    placeholder={
+                                                        this.selected.length
+                                                            ? null
+                                                            : routerStore.isNewChannel ||
+                                                              routerStore.isPatientSpace
+                                                            ? t('title_Members')
+                                                            : routerStore.isNewPatient
+                                                            ? t('mcr_title_newPatientRecord')
+                                                            : t('title_userSearch')
                                                     }
-                                                    theme="affirmative"
+                                                    value={this.query}
+                                                    onChange={this.handleTextChange}
+                                                    onKeyDown={this.handleKeyDown}
+                                                    autoFocus={!this.props.noAutoFocus}
+                                                    noHelperText
                                                 />
+                                            </div>
+
+                                            {this.props.limit !== 1 &&
+                                                this.props.onAccept &&
+                                                !this.isRoomCreation && (
+                                                    <Button
+                                                        label={this.props.button || t('button_go')}
+                                                        onClick={this.accept}
+                                                        disabled={
+                                                            !this.isValid ||
+                                                            (this.queryIsEmpty &&
+                                                                this.selected.length === 0)
+                                                        }
+                                                        theme="affirmative"
+                                                        testId="button_createDm"
+                                                    />
+                                                )}
+                                            {(this.contactLoading ||
+                                                this._searchUsernameTimeout) && (
+                                                <ProgressBar circular size="small" />
                                             )}
-                                        {(this.contactLoading || this._searchUsernameTimeout) && (
-                                            <ProgressBar circular size="small" />
-                                        )}
-                                    </div>
+                                        </label>
+                                    </form>
                                 </div>
                                 {this.isRoomCreation && (
                                     <div className="helper-text">
@@ -429,6 +443,7 @@ export default class UserPicker extends React.Component<UserPickerProps> {
                                         onClick={this.props.onAccept as any}
                                         disabled={this.props.noSubmit}
                                         theme="affirmative"
+                                        testId="button_createRoom"
                                     />
                                 </div>
                             )}
@@ -508,6 +523,7 @@ class ListContact extends React.Component<ListContactProps> {
                 caption={contact.fullName}
                 legend={contact.username}
                 onClick={this.onClick}
+                data-test-id={`listItem_${contact.username}`}
             />
         );
     }

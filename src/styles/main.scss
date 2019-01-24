@@ -112,6 +112,13 @@ body,
   @extend %flex-row;
 }
 
+.content-with-banner {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
 textarea,
 section {
   outline: 0;

@@ -5,6 +5,7 @@ import css from 'classnames';
 
 import { User, t } from 'peerio-icebear';
 import { Button } from 'peer-ui';
+import ClosingFullBanner from '~/ui/shared-components/closing/ClosingFullBanner';
 
 import appState from '~/stores/app-state';
 import routerStore from '~/stores/router-store';
@@ -51,27 +52,31 @@ const buttons = computed(() =>
 export default class Settings extends React.Component {
     render() {
         return (
-            <div className="settings">
-                <div className="tab-wrapper">
-                    <div className="headline">{t('title_settings')}</div>
-                    <div className="tabs">
-                        {buttons.get().map(button => (
-                            <Button
-                                key={button.label}
-                                label={t(button.label as any)}
-                                className={button.className || button.route}
-                                disabled={
-                                    routerStore.currentRoute === routerStore.ROUTES[button.route]
-                                }
-                                onClick={() => {
-                                    routerStore.navigateTo(routerStore.ROUTES[button.route]);
-                                }}
-                                theme="secondary"
-                            />
-                        ))}
+            <div className="content-with-banner">
+                <ClosingFullBanner />
+                <div className="settings">
+                    <div className="tab-wrapper">
+                        <div className="headline">{t('title_settings')}</div>
+                        <div className="tabs">
+                            {buttons.get().map(button => (
+                                <Button
+                                    key={button.label}
+                                    label={t(button.label as any)}
+                                    className={button.className || button.route}
+                                    disabled={
+                                        routerStore.currentRoute ===
+                                        routerStore.ROUTES[button.route]
+                                    }
+                                    onClick={() => {
+                                        routerStore.navigateTo(routerStore.ROUTES[button.route]);
+                                    }}
+                                    theme="secondary"
+                                />
+                            ))}
+                        </div>
                     </div>
+                    {this.props.children}
                 </div>
-                {this.props.children}
             </div>
         );
     }

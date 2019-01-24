@@ -53,6 +53,29 @@
         }
       }
     }
+
+    // pseudo overlay for drop effect (since directly setting the background
+    // colour draws under the message contents)
+    .contact-list-item-wrapper {
+      position: relative;
+    }
+    .contact-list-item {
+      &::after {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        transition: background-color 100ms ease, border 100ms ease;
+      }
+
+      &.contact-list-item-droppable-hovered::after {
+        background-color: rgba($peerio-teal, 0.12);
+        border: solid 2px $peerio-teal;
+      }
+    }
   }
 
   .no-contact-found {

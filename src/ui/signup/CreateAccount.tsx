@@ -11,6 +11,7 @@ import routerStore from '~/stores/router-store';
 import T from '~/ui/shared-components/T';
 import * as telemetry from '~/telemetry';
 import * as Mock from '~/ui/shared-components/MockUI';
+import ClosingSimpleBanner from '~/ui/shared-components/closing/ClosingSimpleBanner';
 
 import { SignupStep, StepContentObject } from './SignupStepTypes';
 
@@ -442,42 +443,46 @@ export default class CreateAccount extends React.Component<SignupStep> {
         const noAdvance = this.advanceDisabled();
 
         return (
-            <div className={css('create-account', `step-${this.currentStep}`)}>
-                <div className="real-ui-container">
-                    <div className="real-ui-content-container">
-                        <h2 className="heading">
-                            <Button
-                                className={css({
-                                    banish: this.retreatDisabled
-                                })}
-                                icon="arrow_back"
-                                onClick={this.retreatStep}
-                            />
-                            {t('title_createYourAccount')}
-                        </h2>
-                        {this.progressIndicator}
-                        {content.left}
+            <div className="content-with-banner">
+                {this.currentStep === 0 ? <ClosingSimpleBanner /> : null}
+                <div className={css('create-account', `step-${this.currentStep}`)}>
+                    <div className="real-ui-container">
+                        <div className="real-ui-content-container">
+                            <h2 className="heading">
+                                <Button
+                                    className={css({
+                                        banish: this.retreatDisabled
+                                    })}
+                                    icon="arrow_back"
+                                    onClick={this.retreatStep}
+                                />
+                                {t('title_createYourAccount')}
+                            </h2>
+                            {this.progressIndicator}
+                            {content.left}
 
-                        <div className="buttons-container">
-                            <Button
-                                className="advance-button"
-                                onClick={this.advanceStep}
-                                theme="affirmative"
-                                disabled={noAdvance}
-                            >
-                                {t('button_next')}
-                            </Button>
-                        </div>
-
-                        {this.currentStep === 0 ? (
-                            <div className="back-to-login">
-                                <T k="title_alreadyHaveAccount">{textParser}</T>
+                            <div className="buttons-container">
+                                <Button
+                                    testId="button_next"
+                                    className="advance-button"
+                                    onClick={this.advanceStep}
+                                    theme="affirmative"
+                                    disabled={noAdvance}
+                                >
+                                    {t('button_next')}
+                                </Button>
                             </div>
-                        ) : null}
+
+                            {this.currentStep === 0 ? (
+                                <div className="back-to-login">
+                                    <T k="title_alreadyHaveAccount">{textParser}</T>
+                                </div>
+                            ) : null}
+                        </div>
                     </div>
-                </div>
-                <div className="mock-ui-container">
-                    <div className="mock-app-ui">{content.right}</div>
+                    <div className="mock-ui-container">
+                        <div className="mock-app-ui">{content.right}</div>
+                    </div>
                 </div>
             </div>
         );

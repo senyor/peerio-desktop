@@ -10,6 +10,16 @@ const PENDING_FILES_BANNER_KEY = 'hidePendingFilesBanner';
  * Every time you remove something from here - you're getting smarter.
  */
 class UIStore {
+    /**
+     * Closing banners should show on every new session, but they can be
+     * cleared in a given session, so we track their visible status here.
+     */
+    @observable closingBannersVisible = {
+        chat: true,
+        appOverlay: true,
+        files: true
+    };
+
     // Display NewUser page
     @observable newUserPageOpen = true;
 

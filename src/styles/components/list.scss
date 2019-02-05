@@ -26,7 +26,7 @@
   @extend %flex-col;
   @extend %flex-shrink-0;
   position: relative;
-  height: 100vh;
+  height: auto;
   width: $width-list;
 
   .list {

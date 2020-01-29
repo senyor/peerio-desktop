@@ -3,7 +3,7 @@
   "productName": "Peerio 2",
   "description": "Peerio 2",
   "version": "3.13.12",
-  "lastMandatoryUpdateVersion": "v3.13.12",
+  "lastMandatoryUpdateVersion": "v3.13.13",
   "main": "build/main.js",
   "scripts": {
     "=== HOOKS ===": "",

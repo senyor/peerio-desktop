@@ -43,7 +43,7 @@
     "test:obs-dec": "./scripts/test-observer-decorator.sh",
     "=== BUILD ===": "",
     "internal-build": "NODE_ENV=production npm run compile && NODE_ENV=production build --mac --windows --x64 --publish never",
-    "internal-build-mac": "NODE_ENV=production npm run compile && DEBUG='electron-builder' NODE_ENV=production build --mac --x64 --publish never",
+    "internal-build-mac": "NODE_ENV=production npm run compile && DEBUG='electron-builder' NODE_ENV=production electron-builder build --mac --x64 --publish never",
     "internal-build-linux": "NODE_ENV=production npm run compile && NODE_ENV=production build --linux --x64 --publish never",
     "internal-build-windows": "NODE_ENV=production npm run compile && NODE_ENV=production build --windows --x64 --publish never",
     "=== HELPERS ===": "",
@@ -75,7 +75,7 @@
   "peerio": {
     "appId": "com.peerio.desktop",
     "keychainService": "PeerioMessenger",
-    "socketServerUrl": "",
+    "socketServerUrl": "wss://icebear.peerio.com",
     "disablePayments": false,
     "whiteLabel": {
       "name": ""
@@ -199,7 +199,7 @@
     "debounce-queue": "0.3.0",
     "devtron": "1.4.0",
     "electron": "3.0.10",
-    "electron-builder": "20.31.2",
+    "electron-builder": "21.2.0",
     "electron-devtools-installer": "2.2.4",
     "electron-reload": "1.4.0",
     "emojione": "4.0.0",
@@ -261,7 +261,7 @@
     "appId": "com.peerio.desktop",
     "productName": "Peerio 2",
     "artifactName": "${productName}-${arch}-${version}.${ext}",
-    "npmSkipBuildFromSource": true,
+    "buildDependenciesFromSource": true,
     "directories": {
       "buildResources": "dist-assets"
     },
@@ -343,23 +343,6 @@
           "path": "/Applications"
         }
       ]
-    },
-    "linux": {
-      "category": "Network",
-      "artifactName": "${name}-${os}-x86_64.${ext}",
-      "icon": "dist-assets/linux-icon",
-      "target": [
-        {
-          "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
-    },
-    "appImage": {
-      "systemIntegration": "doNotAsk",
-      "artifactName": "${name}-${os}-x86_64.${ext}"
     }
   },
   "standard-version": {

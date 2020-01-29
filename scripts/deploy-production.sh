@@ -50,4 +50,5 @@ echo '**'
 ./node_modules/.bin/peerio-desktop-release --key ~/Development/signify_release_private.key \
                        --shared ~/winnie \
                        --repository PeerioTechnologies/peerio-desktop \
-                       --publish
+                       --publish \
+                       --platforms windows,mac

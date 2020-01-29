@@ -10,3 +10,5 @@ npm-debug.log
 .app.package.json.md5
 .package.json.md5
 test-results
+/.python-version
+/.node-version

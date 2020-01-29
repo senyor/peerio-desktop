@@ -7,11 +7,11 @@ case "$choice" in
 esac
 
 # Check if there are uncommited changes
-if ! git diff-index --quiet HEAD --; then
-    git status
-    echo "*** There are uncommited changes, please commit or stash them"
-    exit 1
-fi
+# if ! git diff-index --quiet HEAD --; then
+#     git status
+#     echo "*** There are uncommited changes, please commit or stash them"
+#     exit 1
+# fi
 
 # this is important for locales, we need to pull latest en.json
 npm install
@@ -47,7 +47,7 @@ echo "[•••••••••••••••] building and publishing"
 echo '**'
 echo '** NOTE: on Windows, run: peerio-desktop-signer --shared Y:\ --certificate "certificate subject name"'
 echo '**'
-./node_modules/.bin/peerio-desktop-release --key ~/.peerio-updater/secret.key \
-                       --shared ~/Win \
+./node_modules/.bin/peerio-desktop-release --key ~/Development/signify_release_private.key \
+                       --shared ~/winnie \
                        --repository PeerioTechnologies/peerio-desktop \
                        --publish
